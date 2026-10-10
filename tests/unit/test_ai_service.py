@@ -1,4 +1,4 @@
-from services.ai.app.main import triage_text
+from services.ai.app.main import analyze_nutrition_text, triage_text
 
 
 def test_triage_access_case():
@@ -17,3 +17,12 @@ def test_triage_general_case():
         "Need clarification about the process for next week.",
     )
     assert result.label == "general"
+
+
+def test_analyze_nutrition_for_known_foods():
+    result = analyze_nutrition_text("200g chicken breast and 230g cooked white rice")
+
+    assert result.calories == 629.0
+    assert result.protein_g == 68.2
+    assert result.carbs_g == 64.4
+    assert result.fat_g == 7.9

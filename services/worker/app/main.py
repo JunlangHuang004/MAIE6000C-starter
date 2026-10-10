@@ -9,8 +9,17 @@ from sqlalchemy.orm import Session
 
 from services.common.config import configure_logging, get_settings
 from services.common.db import get_session_factory
-from services.common.models import Case, CaseStatus, Job, JobStatus, utcnow
-from services.common.schemas import TriageResponse
+from services.common.models import (
+    Analysis,
+    AnalysisStatus,
+    Case,
+    CaseStatus,
+    Job,
+    JobStatus,
+    JobType,
+    utcnow,
+)
+from services.common.schemas import NutritionAnalysisResponse, TriageResponse
 
 configure_logging()
 logger = logging.getLogger("services.worker.main")
@@ -43,7 +52,7 @@ def mark_job_failed(job_id: int, error_message: str) -> None:
         if job is None:
             return
 
-        case = db.get(Case, job.case_id)
+        case = db.get(Case, job.case_id) if job.case_id else None
         job.status = JobStatus.FAILED.value
         job.error = error_message[:1000]
         job.completed_at = utcnow()
@@ -51,10 +60,14 @@ def mark_job_failed(job_id: int, error_message: str) -> None:
         if case is not None:
             case.status = CaseStatus.FAILED.value
 
+        analysis = db.get(Analysis, job.analysis_id) if job.analysis_id else None
+        if analysis is not None:
+            analysis.status = AnalysisStatus.FAILED.value
+
         db.commit()
 
 
-def process_job(job_id: int) -> None:
+def process_triage_job(job_id: int) -> None:
     session_factory = get_session_factory()
 
     with session_factory() as db:
@@ -102,6 +115,70 @@ def process_job(job_id: int) -> None:
     logger.info("job_completed", extra={"job_id": job_id, "label": triage.label})
 
 
+def process_nutrition_job(job_id: int) -> None:
+    session_factory = get_session_factory()
+
+    with session_factory() as db:
+        job = db.get(Job, job_id)
+        if job is None:
+            return
+
+        analysis = db.get(Analysis, job.analysis_id) if job.analysis_id else None
+        if analysis is None:
+            raise RuntimeError(f"Analysis not found for job {job_id}")
+
+        payload = {
+            "analysis_id": analysis.id,
+            "food_text": analysis.food_text,
+        }
+
+    response = httpx.post(
+        f"{settings.ai_service_url}/analyze-nutrition",
+        json=payload,
+        timeout=settings.worker_request_timeout_seconds,
+    )
+    response.raise_for_status()
+    nutrition = NutritionAnalysisResponse.model_validate(response.json())
+
+    with session_factory() as db:
+        job = db.get(Job, job_id)
+        if job is None:
+            return
+
+        analysis = db.get(Analysis, job.analysis_id) if job.analysis_id else None
+        if analysis is None:
+            raise RuntimeError(f"Analysis not found while completing job {job_id}")
+
+        analysis.status = AnalysisStatus.COMPLETED.value
+        analysis.calories = nutrition.calories
+        analysis.protein_g = nutrition.protein_g
+        analysis.carbs_g = nutrition.carbs_g
+        analysis.fat_g = nutrition.fat_g
+
+        job.status = JobStatus.COMPLETED.value
+        job.error = None
+        job.completed_at = utcnow()
+        db.commit()
+
+    logger.info("job_completed", extra={"job_id": job_id, "analysis_id": payload["analysis_id"]})
+
+
+def process_job(job_id: int) -> None:
+    session_factory = get_session_factory()
+    with session_factory() as db:
+        job = db.get(Job, job_id)
+        if job is None:
+            return
+        job_type = job.job_type
+
+    if job_type == JobType.TRIAGE_CASE.value:
+        process_triage_job(job_id)
+    elif job_type == JobType.ANALYZE_NUTRITION.value:
+        process_nutrition_job(job_id)
+    else:
+        raise RuntimeError(f"Unsupported job type: {job_type}")
+
+
 def run_worker() -> None:
     session_factory = get_session_factory()
     logger.info(
@@ -122,7 +199,14 @@ def run_worker() -> None:
                 time.sleep(settings.worker_poll_seconds)
                 continue
 
-            logger.info("job_claimed", extra={"job_id": job.id, "case_id": job.case_id})
+            logger.info(
+                "job_claimed",
+                extra={
+                    "job_id": job.id,
+                    "case_id": job.case_id,
+                    "analysis_id": job.analysis_id,
+                },
+            )
             process_job(job.id)
 
         except KeyboardInterrupt:

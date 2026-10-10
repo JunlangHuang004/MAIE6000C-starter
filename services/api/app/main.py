@@ -15,8 +15,19 @@ from sqlalchemy.orm import Session
 
 from services.common.config import configure_logging
 from services.common.db import get_db
-from services.common.models import Case, CaseStatus, Job, JobStatus, JobType
+from services.common.models import (
+    Analysis,
+    AnalysisStatus,
+    Case,
+    CaseStatus,
+    Job,
+    JobStatus,
+    JobType,
+)
 from services.common.schemas import (
+    AnalysisCreate,
+    AnalysisCreateResponse,
+    AnalysisRead,
     CaseCreate,
     CaseCreateResponse,
     CaseRead,
@@ -40,6 +51,7 @@ HTTP_REQUEST_LATENCY = Histogram(
     ["method", "path"],
 )
 CASES_CREATED = Counter("api_cases_created_total", "Total cases created")
+ANALYSES_CREATED = Counter("api_analyses_created_total", "Total analyses created")
 
 
 def create_case_with_job(db: Session, payload: CaseCreate) -> tuple[Case, Job]:
@@ -74,6 +86,33 @@ def get_case(db: Session, case_id: str) -> Case | None:
 
 def get_job(db: Session, job_id: int) -> Job | None:
     return db.get(Job, job_id)
+
+
+def create_analysis_with_job(
+    db: Session,
+    payload: AnalysisCreate,
+) -> tuple[Analysis, Job]:
+    analysis = Analysis(
+        food_text=payload.food_text.strip(),
+        status=AnalysisStatus.QUEUED.value,
+    )
+    db.add(analysis)
+    db.flush()
+
+    job = Job(
+        analysis_id=analysis.id,
+        job_type=JobType.ANALYZE_NUTRITION.value,
+        status=JobStatus.PENDING.value,
+    )
+    db.add(job)
+    db.commit()
+    db.refresh(analysis)
+    db.refresh(job)
+    return analysis, job
+
+
+def get_analysis(db: Session, analysis_id: str) -> Analysis | None:
+    return db.get(Analysis, analysis_id)
 
 
 @app.middleware("http")
@@ -154,3 +193,31 @@ def read_job(job_id: int, db: Session = Depends(get_db)) -> JobRead:
     if job is None:
         raise HTTPException(status_code=404, detail="Job not found")
     return JobRead.model_validate(job)
+
+
+@app.post("/analyses", response_model=AnalysisCreateResponse, status_code=201)
+def create_analysis(
+    payload: AnalysisCreate,
+    db: Session = Depends(get_db),
+) -> AnalysisCreateResponse:
+    analysis, job = create_analysis_with_job(db, payload)
+    ANALYSES_CREATED.inc()
+    logger.info(
+        "analysis_created",
+        extra={"analysis_id": analysis.id, "job_id": job.id},
+    )
+    return AnalysisCreateResponse(
+        analysis=AnalysisRead.model_validate(analysis),
+        job=JobRead.model_validate(job),
+    )
+
+
+@app.get("/analyses/{analysis_id}", response_model=AnalysisRead)
+def read_analysis(
+    analysis_id: str,
+    db: Session = Depends(get_db),
+) -> AnalysisRead:
+    analysis = get_analysis(db, analysis_id)
+    if analysis is None:
+        raise HTTPException(status_code=404, detail="Analysis not found")
+    return AnalysisRead.model_validate(analysis)

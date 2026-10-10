@@ -21,6 +21,12 @@ class CaseStatus(StrEnum):
     FAILED = "failed"
 
 
+class AnalysisStatus(StrEnum):
+    QUEUED = "queued"
+    COMPLETED = "completed"
+    FAILED = "failed"
+
+
 class JobStatus(StrEnum):
     PENDING = "pending"
     CLAIMED = "claimed"
@@ -30,6 +36,7 @@ class JobStatus(StrEnum):
 
 class JobType(StrEnum):
     TRIAGE_CASE = "triage_case"
+    ANALYZE_NUTRITION = "analyze_nutrition"
 
 
 class Case(Base):
@@ -66,6 +73,45 @@ class Case(Base):
     jobs: Mapped[list["Job"]] = relationship(
         back_populates="case",
         cascade="all, delete-orphan",
+        foreign_keys="Job.case_id",
+    )
+
+
+class Analysis(Base):
+    __tablename__ = "analyses"
+
+    id: Mapped[str] = mapped_column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid.uuid4()),
+    )
+    food_text: Mapped[str] = mapped_column(Text, nullable=False)
+    status: Mapped[str] = mapped_column(
+        String(20),
+        nullable=False,
+        default=AnalysisStatus.QUEUED.value,
+        index=True,
+    )
+    calories: Mapped[float | None] = mapped_column(Float, nullable=True)
+    protein_g: Mapped[float | None] = mapped_column(Float, nullable=True)
+    carbs_g: Mapped[float | None] = mapped_column(Float, nullable=True)
+    fat_g: Mapped[float | None] = mapped_column(Float, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utcnow,
+        nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        default=utcnow,
+        onupdate=utcnow,
+        nullable=False,
+    )
+
+    jobs: Mapped[list["Job"]] = relationship(
+        back_populates="analysis",
+        cascade="all, delete-orphan",
+        foreign_keys="Job.analysis_id",
     )
 
 
@@ -73,9 +119,14 @@ class Job(Base):
     __tablename__ = "jobs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    case_id: Mapped[str] = mapped_column(
+    case_id: Mapped[str | None] = mapped_column(
         ForeignKey("cases.id", ondelete="CASCADE"),
-        nullable=False,
+        nullable=True,
+        index=True,
+    )
+    analysis_id: Mapped[str | None] = mapped_column(
+        ForeignKey("analyses.id", ondelete="CASCADE"),
+        nullable=True,
         index=True,
     )
     job_type: Mapped[str] = mapped_column(
@@ -111,4 +162,11 @@ class Job(Base):
         nullable=False,
     )
 
-    case: Mapped[Case] = relationship(back_populates="jobs")
+    case: Mapped[Case | None] = relationship(
+        back_populates="jobs",
+        foreign_keys=[case_id],
+    )
+    analysis: Mapped[Analysis | None] = relationship(
+        back_populates="jobs",
+        foreign_keys=[analysis_id],
+    )
