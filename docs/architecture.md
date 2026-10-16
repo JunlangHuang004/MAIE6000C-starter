@@ -1,3 +1,30 @@
+# Current NutriChat extension (2026-10-16)
+
+This section supersedes the historical Week 7 deferral of review/update below.
+
+- `GET /app`: meal UI; `GET /foods`: supported catalogue and active provider.
+- `POST /analyses`: validate input, save queued analysis and pending job atomically.
+- `GET /analyses/{id}`: saved state, totals, interpreted food text, revision and confirmed timestamp.
+- `PATCH /analyses/{id}`: `{ "food_text": "200g egg", "revision": 1 }` corrects a
+  completed or failed analysis, clears results, increments revision, creates a job;
+  returns the analysis and job. Queued and confirmed analyses cannot be edited.
+- `POST /analyses/{id}/confirm`: `{ "revision": 2 }` confirms only a completed
+  analysis, increments revision and records `confirmed_at`; returns the analysis.
+- Missing records return 404; invalid input returns 422; stale revision or disallowed
+  state returns 409. Conditional database updates serialize correction/confirmation.
+- Worker: queued → completed or failed. API: completed/failed → queued (correction),
+  completed → confirmed. Completed means ready for review, not user confirmed.
+- Demo mode rejects unsupported/partial input synchronously. Qwen mode checks text
+  length synchronously and validates structured extraction asynchronously; unsupported
+  food or model errors produce failed analysis/job state. No fallback estimates.
+- Qwen extraction runs in the internal AI service; arithmetic uses the shared demo
+  catalogue. The interpreted meal is persisted so the user can inspect it.
+- Configure Qwen and cloud hosting using [cloud deployment](cloud-deployment.md).
+
+The following is the historical course evidence/plan retained for context.
+
+---
+
 # Nutrition Analysis Architecture
 
 ## Components
@@ -103,3 +130,11 @@ Its purpose is to demonstrate the engineering shape of the course contract:
 - no authentication or authorization
 - no retry strategy beyond basic failure recording
 - minimal domain model
+
+
+## Chinese nutrition dialogue extension
+
+See [nutrition data and dialogue](nutrition-data.md) for the current catalogue,
+`needs_input` state, revision-checked reply API, provenance and deployment checks.
+Migration `20261016_0004` adds JSON conversation/draft/questions/details and a user-facing
+error field. Existing records remain readable; no tables or meal records are removed.

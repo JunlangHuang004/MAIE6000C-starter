@@ -4,9 +4,11 @@
 
 1. copy `.env.example` to `.env`
 2. run `docker compose up --build`
-3. open the API docs if desired
-4. submit a case through the API
-5. confirm the worker processes the job
+3. open `http://localhost:8000/app`
+4. submit a supported meal with gram weights
+5. review, correct if needed, and confirm the estimate
+
+For Qwen and a cloud VM, see [cloud deployment](cloud-deployment.md).
 
 ## Health endpoints
 
@@ -41,3 +43,11 @@ If AI processing fails:
 To remove local database state:
 
 - `docker compose down -v --remove-orphans`
+
+
+## Chinese nutrition dialogue extension
+
+See [nutrition data and dialogue](nutrition-data.md) for the current catalogue,
+`needs_input` state, revision-checked reply API, provenance and deployment checks.
+Migration `20261016_0004` adds JSON conversation/draft/questions/details and a user-facing
+error field. Existing records remain readable; no tables or meal records are removed.

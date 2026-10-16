@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import logging
 from time import perf_counter
+from pathlib import Path
 
+from fastapi.responses import FileResponse
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
@@ -10,14 +12,15 @@ from prometheus_client import (
     Histogram,
     generate_latest,
 )
-from sqlalchemy import select, text
+from sqlalchemy import select, text, update
 from sqlalchemy.orm import Session
 
-from services.common.config import configure_logging
+from services.common.config import configure_logging, get_settings
 from services.common.db import get_db
 from services.common.models import (
     Analysis,
     AnalysisStatus,
+    utcnow,
     Case,
     CaseStatus,
     Job,
@@ -25,6 +28,10 @@ from services.common.models import (
     JobType,
 )
 from services.common.schemas import (
+    AnalysisMode,
+    AnalysisReply,
+    AnalysisConfirm,
+    AnalysisCorrection,
     AnalysisCreate,
     AnalysisCreateResponse,
     AnalysisRead,
@@ -38,7 +45,7 @@ from services.common.schemas import (
 configure_logging()
 logger = logging.getLogger("services.api.main")
 
-app = FastAPI(title="MAIE 6000C Starter API", version="0.1.0")
+app = FastAPI(title="NutriChat API", version="0.1.0")
 
 HTTP_REQUESTS = Counter(
     "api_http_requests_total",
@@ -94,6 +101,8 @@ def create_analysis_with_job(
 ) -> tuple[Analysis, Job]:
     analysis = Analysis(
         food_text=payload.food_text.strip(),
+        conversation=[{"role":"user", "content":payload.food_text.strip()}],
+        mode=payload.mode,
         status=AnalysisStatus.QUEUED.value,
     )
     db.add(analysis)
@@ -221,3 +230,142 @@ def read_analysis(
     if analysis is None:
         raise HTTPException(status_code=404, detail="Analysis not found")
     return AnalysisRead.model_validate(analysis)
+
+
+@app.get("/app", include_in_schema=False)
+def meal_app():
+    return FileResponse(Path(__file__).parent / "static" / "index.html")
+
+
+@app.get("/foods")
+def supported_foods():
+    from services.common.nutrition import NUTRITION_PER_100G
+    from services.common.meal_engine import catalogue
+    return {"provider": get_settings().nutrition_provider,
+            "catalogue": catalogue(), "foods": list(NUTRITION_PER_100G),
+            "unit": "grams", "max_grams": 10000,
+            "source": "USDA SR Legacy CC0 + user-reviewed project reference recipes."}
+
+
+def change_analysis(db, analysis_id, revision, allowed_states, values):
+    if db.get(Analysis, analysis_id) is None:
+        raise HTTPException(status_code=404, detail="Analysis not found")
+    result = db.execute(
+        update(Analysis).where(
+            Analysis.id == analysis_id,
+            Analysis.revision == revision,
+            Analysis.status.in_(allowed_states),
+        ).values(**values, revision=Analysis.revision + 1, updated_at=utcnow())
+    )
+    if result.rowcount != 1:
+        db.rollback()
+        raise HTTPException(
+            status_code=409, detail="State or revision changed; reload the estimate."
+        )
+
+
+@app.patch("/analyses/{analysis_id}", response_model=AnalysisCreateResponse)
+def correct_analysis(
+    analysis_id: str, payload: AnalysisCorrection, db: Session = Depends(get_db),
+):
+    change_analysis(db, analysis_id, payload.revision, ["completed", "failed", "needs_input"], {
+        "food_text": payload.food_text, "status": "queued", "confirmed_at": None,
+        "conversation": [{"role":"user", "content":payload.food_text}],
+        "draft": [], "questions": [], "details": [], "error_message": None,
+        "interpreted_food_text": None, "calories": None, "protein_g": None,
+        "carbs_g": None, "fat_g": None,
+    })
+    job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
+              status=JobStatus.PENDING.value)
+    db.add(job)
+    db.commit()
+    db.expire_all()
+    return AnalysisCreateResponse(
+        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        job=JobRead.model_validate(job),
+    )
+
+
+@app.post("/analyses/{analysis_id}/confirm", response_model=AnalysisRead)
+def confirm_analysis(
+    analysis_id: str, payload: AnalysisConfirm, db: Session = Depends(get_db),
+):
+    change_analysis(db, analysis_id, payload.revision, ["completed"], {
+        "status": "confirmed", "confirmed_at": utcnow(),
+    })
+    db.commit()
+    db.expire_all()
+    return AnalysisRead.model_validate(db.get(Analysis, analysis_id))
+
+
+@app.post("/analyses/{analysis_id}/reply", response_model=AnalysisCreateResponse)
+def reply_analysis(analysis_id: str, payload: AnalysisReply, db: Session = Depends(get_db)):
+    import json
+    from services.common.meal_engine import apply_answers, catalogue
+    analysis = db.get(Analysis, analysis_id)
+    if analysis is None:
+        raise HTTPException(status_code=404, detail="Analysis not found")
+    if (analysis.revision != payload.revision
+            or analysis.status not in ("needs_input", "completed", "failed")):
+        raise HTTPException(status_code=409, detail="记录已更新，请刷新后回答。")
+    if len(analysis.conversation) >= 36:
+        raise HTTPException(status_code=422, detail="本次对话较长，请整理餐食描述后重新估算。")
+    try:
+        draft = (apply_answers(analysis.draft, payload.answers, analysis.mode)
+                 if payload.answers else [])
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    if payload.answers:
+        names = {f['id']: f['name'] for f in catalogue()['foods']}
+        content = '已回答：'+json.dumps(payload.answers, ensure_ascii=False)
+        # Include complete slot state for later natural-language corrections, but no nutrition.
+        state = [{**item, 'catalogue_name':names.get(item.get('food_id'))} for item in draft]
+        content += '\n当前餐食资料：'+json.dumps(state, ensure_ascii=False)
+    else:
+        content = payload.message.strip()
+    conversation = analysis.conversation or [{"role":"user", "content":analysis.food_text}]
+    display = payload.message.strip() if payload.message else '已补充：' + '；'.join(
+        q['label'].split('？')[0] + ' → ' + (
+            '已核对配方及成品重量' if q['kind'] == 'recipe' else
+            '确认' if q['kind'] == 'confirm' else
+            next((o['label'] for o in q.get('options', [])
+                  if o['value'] == payload.answers[q['key']]), str(payload.answers[q['key']])))
+        for q in analysis.questions if q['key'] in payload.answers)
+    conversation = [*conversation, {"role":"user", "content":content, "display":display}]
+    if len(json.dumps(conversation, ensure_ascii=False)) > 45000:
+        raise HTTPException(status_code=422, detail="对话资料过长，请整理后开始新餐食。")
+    change_analysis(db, analysis_id, payload.revision, ["needs_input", "completed", "failed"], {
+        "conversation":conversation, "draft":draft, "questions":[], "details":[],
+        "status":"queued", "confirmed_at":None, "error_message":None,
+        "interpreted_food_text":None, "calories":None, "protein_g":None,
+        "carbs_g":None, "fat_g":None,
+    })
+    job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
+              status=JobStatus.PENDING.value)
+    db.add(job)
+    db.commit()
+    db.expire_all()
+    return AnalysisCreateResponse(
+        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+                                  job=JobRead.model_validate(job))
+
+
+@app.post("/analyses/{analysis_id}/mode", response_model=AnalysisCreateResponse)
+def switch_analysis_mode(analysis_id: str, payload: AnalysisMode, db: Session = Depends(get_db)):
+    analysis = db.get(Analysis, analysis_id)
+    if analysis is None:
+        raise HTTPException(status_code=404, detail="Analysis not found")
+    # Reuse explicit facts only. Basic-mode defaults are never written into this draft.
+    change_analysis(db, analysis_id, payload.revision, ["needs_input", "completed", "failed"], {
+        "mode":payload.mode, "status":"queued", "questions":[], "details":[],
+        "calories":None, "protein_g":None, "carbs_g":None, "fat_g":None,
+        "interpreted_food_text":None, "error_message":None,
+    })
+    job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
+              status=JobStatus.PENDING.value)
+    db.add(job)
+    db.commit()
+    db.expire_all()
+    return AnalysisCreateResponse(
+        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        job=JobRead.model_validate(job))

@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import logging
 from functools import lru_cache
+from typing import Literal
+
+from pydantic import SecretStr, Field
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pythonjsonlogger import jsonlogger
@@ -14,6 +17,11 @@ class Settings(BaseSettings):
     ai_service_url: str = "http://ai:8100"
     worker_poll_seconds: float = 2.0
     worker_request_timeout_seconds: float = 20.0
+    nutrition_provider: Literal["demo", "qwen"] = "demo"
+    dashscope_api_key: SecretStr = SecretStr("")
+    qwen_base_url: str = ""
+    qwen_model: str = "qwen-plus"
+    qwen_timeout_seconds: float = Field(default=12.0, gt=0)
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

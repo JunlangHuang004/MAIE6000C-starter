@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NutriChat · 中餐营养估算</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#173c32;background:#f3f6ef}*{box-sizing:border-box}body{margin:0}main{max-width:900px;margin:32px auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:36px;margin-bottom:8px}h2{font-size:22px}p{line-height:1.7}.muted,small{color:#587268}.card{background:#fff;border:1px solid #dbe5dc;border-radius:18px;padding:24px;margin-top:20px}label{display:block;font-weight:600;margin:12px 0 8px}textarea,input,select{font:inherit;padding:12px;border:1px solid #b8cbbb;border-radius:9px;max-width:100%;background:white;color:#173c32}textarea{width:100%;min-height:100px;resize:vertical}select{width:100%}input[type=number]{width:150px}input[type=checkbox]{width:20px;height:20px;vertical-align:middle}button{background:#246149;color:white;border:0;padding:12px 18px;border-radius:9px;font:inherit;cursor:pointer;margin:8px 8px 0 0}button.secondary{background:#edf3eb;color:#245740}button:disabled{opacity:.45;cursor:default}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:#f3f6ef;padding:16px;border-radius:12px}.metric b{display:block;font-size:26px}.metric span{font-size:13px}.question{border-top:1px solid #e0e7df;padding:12px 0}.ingredient{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0}.bubble{white-space:pre-wrap;padding:14px 18px;border-radius:12px;background:#f0f5ed;margin:12px 0;overflow-wrap:anywhere}.bubble.user{background:#e2eee8;margin-left:35px}.bubble strong{display:block;font-size:12px;margin-bottom:8px}.error{color:#a12c20!important}#message{white-space:pre-wrap}.tag{font-size:13px;color:#287257}.sources{font-size:12px;overflow-wrap:anywhere}a{color:#246149}details{margin:12px 0}summary{cursor:pointer;font-weight:600}[hidden]{display:none!important}@media(max-width:550px){main{margin:8px auto;padding:14px}.card{padding:18px}.metrics{grid-template-columns:1fr 1fr}h1{font-size:28px}.ingredient input{width:100px}}
+</style></head><body><main>
+<header><strong>◉ NutriChat</strong><form action="/logout" method="post"><button class="secondary">退出登录</button></form></header>
+<h1>说说这餐吃了什么</h1><p class="muted">基础版快速了解大概热量；进阶版补充份量、做法和配方，细化营养估算。</p>
+<section class="card"><label for="mode">选择估算模式</label>
+<select id="mode"><option value="basic">基础版 · 快速大概估算</option><option value="advanced">进阶版 · 补充细节精算</option></select>
+<p class="muted" id="mode-help">按已有信息估算；缺少份量和配方时使用明确标注的参考值。</p>
+<button id="switch-mode" class="secondary" type="button" hidden>切换到进阶版补充细节</button>
+<form id="meal-form"><label for="meal">餐食描述</label>
+<textarea id="meal" required maxlength="2000" placeholder="例如：番茄炒蛋200克，少油，配150克熟米饭。"></textarea>
+<button id="estimate">开始估算</button><button id="new" type="button" class="secondary" hidden>新的一餐</button>
+<small id="catalogue-info"></small></form>
+<details><summary>查看支持的食材和菜谱</summary><input id="search" type="search" placeholder="搜索食物／菜名" aria-label="搜索食物"><div id="food-list"></div></details></section>
+<p id="message" role="status" aria-live="polite"></p>
+<section class="card" id="dialogue" hidden><h2 id="dialogue-title">餐食对话</h2><details id="history-panel"><summary>查看本餐对话记录</summary><div id="history"></div></details>
+<form id="answer-form" hidden><div id="questions"></div><button id="answer-submit">提交回答</button><small>可以先回答已知的问题。不知道用量时，请在下方说明。</small></form>
+<form id="reply-form" hidden><label for="reply">继续对话／补充或更正</label><textarea id="reply" maxlength="2000" required placeholder="例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。"></textarea><button id="reply-submit">发送补充说明</button></form></section>
+<section class="card" id="result" hidden><span class="tag" id="status"></span><h2>本餐营养估算</h2><p id="interpreted"></p>
+<div class="metrics"><div class="metric"><b id="calories">—</b><span>热量 · kcal</span></div><div class="metric"><b id="protein_g">—</b><span>蛋白质 · g</span></div><div class="metric"><b id="fat_g">—</b><span>脂肪 · g</span></div><div class="metric"><b id="carbs_g">—</b><span>碳水 · g</span></div></div>
+<div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、油糖用量及参考配方。需要更改时，在上方继续对话；更改后会重新估算。</p><button id="confirm">确认并保存</button><p><small id="record"></small></p></section>
+<p><small>参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。</small></p>
+</main><script>
+const $=id=>document.getElementById(id);let analysis=null,busy=false,timer=null,catalogue=[];
+const labels={queued:'正在分析…',needs_input:'等待补充信息',completed:'待核对确认',failed:'暂未完成',confirmed:'已确认保存'};
+const el=(tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;return e};
+function message(t,error=false){$('message').textContent=t;$('message').classList.toggle('error',error)}
+async function api(path,method='GET',body){const res=await fetch(path,{method,headers:{'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});if(res.redirected&&new URL(res.url).pathname==='/login'){location.href='/login';throw Error('请重新登录')}const type=res.headers.get('content-type')||'';if(!type.includes('application/json'))throw Error('连接暂时不可用，请稍后重试');const data=await res.json();if(!res.ok)throw Error(Array.isArray(data.detail)?data.detail.map(x=>x.msg).join('\n'):data.detail||'请求失败');return data}
+function controls(){const locked=busy||analysis?.status==='queued';$('meal').disabled=locked||!!analysis;$('estimate').hidden=!!analysis;$('new').hidden=!analysis;$('new').disabled=locked;for(const id of ['reply-submit','answer-submit'])$(id).disabled=locked;$('confirm').disabled=locked||analysis?.status!=='completed';$('reply').disabled=locked;
+ $('mode').disabled=!!analysis||busy;
+ $('switch-mode').hidden=!analysis||analysis.status==='confirmed';
+ $('switch-mode').disabled=locked;
+ $('switch-mode').textContent=analysis?.mode==='basic'?'切换到进阶版补充细节':'切换到基础版快速估算';
+}
+function numberInput(value,min=0,max=10000){const e=el('input');e.type='number';e.step='any';e.min=min;e.max=max;if(value!=null)e.value=value;return e}
+function renderQuestions(){const box=$('questions');box.replaceChildren();for(const q of analysis.questions||[]){const row=el('div');row.className='question';row.dataset.key=q.key;row.dataset.kind=q.kind;const label=el('label',q.label);row.append(label);
+ if(q.kind==='number'){const input=numberInput(null,q.min,q.max);input.dataset.answer='value';input.id='q-'+q.key;label.htmlFor=input.id;row.append(input,el('span',' 克'));}
+ else if(q.kind==='choice'||q.kind==='food'){const input=el('select');input.id='q-'+q.key;label.htmlFor=input.id;input.dataset.answer='value';const empty=el('option','请选择');empty.value='';input.append(empty);for(const o of q.options){const opt=el('option',o.label);opt.value=o.value;input.append(opt)}row.append(input);}
+ else if(q.kind==='confirm'){const input=el('input');input.type='checkbox';input.dataset.answer='value';input.id='q-'+q.key;label.htmlFor=input.id;row.append(input,el('span',' 我已核对并确认'));}
+ else if(q.kind==='recipe'){row.append(el('p','参考做法：'+q.method));for(const ing of q.ingredients){const line=el('div');line.className='ingredient';const input=numberInput(ing.grams);input.dataset.ingredient=ing.id;input.id='q-'+q.key+'-'+ing.id;const lab=el('label',ing.name+'（克／整锅）');lab.htmlFor=input.id;line.append(lab,input);row.append(line)}const yieldInput=numberInput(q.recipe.yield_g,.1);yieldInput.dataset.yield='true';yieldInput.id='yield-'+q.key;const yl=el('label','整锅做熟后的成品总重（克）');yl.htmlFor=yieldInput.id;row.append(yl,yieldInput);const confirm=el('input');confirm.type='checkbox';confirm.dataset.accept='true';confirm.id='accept-'+q.key;const cl=el('label');cl.htmlFor=confirm.id;cl.append(confirm,document.createTextNode(' 我接受以上配方和成品重量作为本次估算依据'));row.append(cl)}box.append(row)}}
+function render(){const state=analysis?.status;$('dialogue').hidden=!analysis;$('result').hidden=!analysis||!['completed','confirmed'].includes(state);$('answer-form').hidden=state!=='needs_input';$('reply-form').hidden=!['needs_input','completed','failed'].includes(state);if(analysis){$('mode').value=analysis.mode;modeHelp();$('dialogue-title').textContent=analysis.mode==='basic'?'餐食记录与补充':'进阶版 · 补充餐食信息';$('history').replaceChildren();for(const m of analysis.conversation||[]){const bubble=el('div');bubble.className='bubble '+m.role;bubble.append(el('strong',m.role==='user'?'你':'NutriChat'),document.createTextNode(m.display||m.content));$('history').append(bubble)}if(state==='needs_input')renderQuestions();$('status').textContent=(analysis.mode==='basic'?'基础版 · ':'进阶版 · ')+labels[state];$('interpreted').textContent=analysis.interpreted_food_text||'';for(const k of ['calories','protein_g','carbs_g','fat_g'])$(k).textContent=analysis[k]??'—';$('record').textContent='记录 '+analysis.id+' · 第 '+analysis.revision+' 版';$('confirm').hidden=state==='confirmed';$('review-help').textContent=state==='confirmed'?'这份估算已确认保存。需要再次修改，请开始新的一餐。':'请核对食用重量、做法、用油及配方。需要修改时，在上方继续对话。';$('evidence').replaceChildren();for(const d of analysis.details||[]){const block=el('details');block.open=true;block.append(el('summary',d.name+' · '+d.grams+'g · '+d.nutrients.calories+' kcal'));for(const a of d.assumptions)block.append(el('p',a));const sources=el('p');sources.className='sources';sources.append(document.createTextNode('数据来源：'));const seen=new Set();for(const src of d.sources){if(seen.has(src.url))continue;seen.add(src.url);const a=el('a',src.name+' #'+src.id+'（'+src.license+'）');if(src.url?.startsWith('https://fdc.nal.usda.gov/')){a.href=src.url;a.target='_blank';a.rel='noopener noreferrer'}sources.append(a,document.createTextNode(' '))}block.append(sources);$('evidence').append(block)}}controls()}
+function saved(data){analysis=data.analysis||data;localStorage.setItem('nutrichat.analysis',analysis.id);$('meal').value=analysis.food_text;render();clearTimeout(timer);if(analysis.status==='queued'){message('正在解析并检查缺失信息…');timer=setTimeout(poll,1200)}}
+async function poll(){try{const next=await api('/analyses/'+analysis.id);analysis=next;render();if(next.status==='queued')timer=setTimeout(poll,1500);else message(next.status==='needs_input'?'还需要这些信息，回答后会继续估算。':next.status==='failed'?(next.error_message||'估算暂未完成，请补充描述后重试。'):'估算已保存，请核对后确认。',next.status==='failed')}catch(e){message(e.message+' 刷新页面可恢复记录。',true)}}
+async function submit(work){busy=true;controls();try{await work()}catch(e){message(e.message,true)}finally{busy=false;controls()}}
+$('meal-form').addEventListener('submit',e=>{e.preventDefault();submit(async()=>saved(await api('/analyses','POST',{food_text:$('meal').value,mode:$('mode').value}))) });
+$('reply-form').addEventListener('submit', e => {
+ e.preventDefault();
+ submit(async () => {
+  const text = $('reply').value.trim();
+  if (!text) return;
+  saved(await api('/analyses/'+analysis.id+'/reply', 'POST', {
+   revision:analysis.revision, message:text
+  }));
+  $('reply').value='';
+ });
+});
+$('answer-form').addEventListener('submit', e => {
+ e.preventDefault();
+ submit(async () => {
+  const answers = {};
+  for (const row of $('questions').children) {
+   const kind=row.dataset.kind;
+   let value;
+   if (kind==='recipe') {
+    if (!row.querySelector('[data-accept]').checked) continue;
+    const ingredients={};
+    for (const input of row.querySelectorAll('[data-ingredient]')) {
+     if (input.value==='') throw Error('请填完整配方数值，零用量请填 0');
+     ingredients[input.dataset.ingredient]=Number(input.value);
+    }
+    const y=row.querySelector('[data-yield]');
+    if(y.value==='') throw Error('请填成品总重');
+    value={ingredients,yield_g:Number(y.value)};
+   } else {
+    const input=row.querySelector('[data-answer]');
+    if (kind==='confirm') {
+     if(!input.checked) continue;
+     value=true;
+    } else {
+     if(input.value==='') continue;
+     value=kind==='number'?Number(input.value):input.value;
+    }
+   }
+   answers[row.dataset.key]=value;
+  }
+  if(!Object.keys(answers).length) throw Error('请至少回答一个问题，或使用下方对话补充。');
+  saved(await api('/analyses/'+analysis.id+'/reply','POST',{revision:analysis.revision,answers}));
+ });
+});
+$('confirm').addEventListener('click',()=>submit(async()=>{
+ saved(await api('/analyses/'+analysis.id+'/confirm','POST',{revision:analysis.revision}));
+ message('这餐的估算已确认并保存。');
+}));
+$('new').addEventListener('click',()=>{
+ clearTimeout(timer);analysis=null;localStorage.removeItem('nutrichat.analysis');
+ $('meal').value='';$('reply').value='';message('');render();$('meal').focus();
+});
+function modeHelp(){
+ $('mode-help').textContent=$('mode').value==='basic'
+  ? '按已有信息估算；缺少份量和配方时使用明确标注的参考值。'
+  : '逐项追问不明确的重量、生熟状态、做法和用油；配方可自行填写和调整。';
+}
+$('mode').addEventListener('change',modeHelp);
+$('switch-mode').addEventListener('click',()=>submit(async()=>{
+ saved(await api('/analyses/'+analysis.id+'/mode','POST',{
+  revision:analysis.revision,mode:analysis.mode==='basic'?'advanced':'basic'
+ }));
+}));
+function showFoods(){const search=$('search').value.trim().toLowerCase();$('food-list').replaceChildren();for(const f of catalogue.filter(f=>[f.name,...f.aliases].join(' ').toLowerCase().includes(search))){const d=el('details');d.append(el('summary',f.name+(f.kind==='recipe'?' · 参考菜谱':'')));d.append(el('p',f.kind==='recipe'?f.method+'；配料及成品重量可在估算时修改。':'每100g：'+f.nutrients.calories+' kcal，蛋白质 '+f.nutrients.protein_g+'g，脂肪 '+f.nutrients.fat_g+'g，碳水 '+f.nutrients.carbs_g+'g。来源：USDA SR Legacy #'+f.fdc_id+'，CC0。'));$('food-list').append(d)}}$('search').addEventListener('input',showFoods);
+async function init(){try{const data=await api('/foods');catalogue=data.catalogue.foods;$('catalogue-info').textContent=' '+catalogue.filter(f=>f.kind==='ingredient').length+'种食材 · '+catalogue.filter(f=>f.kind==='recipe').length+'道参考菜谱';showFoods();if(data.provider==='demo')message('当前为演示模式，仅支持原有英文克数输入；中餐对话需配置千问。');const id=localStorage.getItem('nutrichat.analysis');if(id){analysis=await api('/analyses/'+encodeURIComponent(id));$('meal').value=analysis.food_text;render();if(analysis.status==='queued')timer=setTimeout(poll,500)}}catch(e){message(e.message,true)}}init();
+</script></body></html>

@@ -1,0 +1,1261 @@
+[
+  {
+    "id": "rice",
+    "name": "白米饭",
+    "state": "cooked",
+    "fdc_id": 168878,
+    "aliases": [
+      "白米饭",
+      "米饭",
+      "白饭",
+      "白米飯",
+      "熟米饭",
+      "cooked rice"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 150
+  },
+  {
+    "id": "rice_raw",
+    "name": "生大米",
+    "state": "raw",
+    "fdc_id": 168877,
+    "aliases": [
+      "生大米",
+      "大米",
+      "生米"
+    ],
+    "default_portion_g": 50
+  },
+  {
+    "id": "brown_rice",
+    "name": "糙米饭",
+    "state": "cooked",
+    "fdc_id": 169704,
+    "aliases": [
+      "糙米饭"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "glutinous",
+    "name": "生糯米",
+    "state": "raw",
+    "fdc_id": 168883,
+    "aliases": [
+      "生糯米"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "oats",
+    "name": "干燕麦",
+    "state": "raw",
+    "fdc_id": 169705,
+    "aliases": [
+      "干燕麦"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "wheat_flour",
+    "name": "小麦面粉",
+    "state": "raw",
+    "fdc_id": 169761,
+    "aliases": [
+      "小麦面粉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "noodles",
+    "name": "熟鸡蛋面",
+    "state": "cooked",
+    "fdc_id": 168919,
+    "aliases": [
+      "熟鸡蛋面"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 200
+  },
+  {
+    "id": "rice_noodles",
+    "name": "熟米粉",
+    "state": "cooked",
+    "fdc_id": 168914,
+    "aliases": [
+      "熟米粉"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 200
+  },
+  {
+    "id": "bread",
+    "name": "白面包",
+    "state": "as_sold",
+    "fdc_id": 174924,
+    "aliases": [
+      "白面包"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "corn",
+    "name": "生甜玉米粒",
+    "state": "raw",
+    "fdc_id": 169998,
+    "aliases": [
+      "生甜玉米粒"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "potato",
+    "name": "生土豆",
+    "state": "raw",
+    "fdc_id": 170026,
+    "aliases": [
+      "生土豆",
+      "土豆",
+      "马铃薯",
+      "馬鈴薯"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "sweet_potato",
+    "name": "生红薯",
+    "state": "raw",
+    "fdc_id": 168482,
+    "aliases": [
+      "生红薯"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "taro",
+    "name": "生芋头",
+    "state": "raw",
+    "fdc_id": 169308,
+    "aliases": [
+      "生芋头"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "millet",
+    "name": "生小米",
+    "state": "raw",
+    "fdc_id": 169702,
+    "aliases": [
+      "生小米"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "barley",
+    "name": "生珍珠大麦",
+    "state": "raw",
+    "fdc_id": 170284,
+    "aliases": [
+      "生珍珠大麦"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "quinoa",
+    "name": "熟藜麦",
+    "state": "cooked",
+    "fdc_id": 168917,
+    "aliases": [
+      "熟藜麦"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "buckwheat",
+    "name": "生荞麦",
+    "state": "raw",
+    "fdc_id": 170286,
+    "aliases": [
+      "生荞麦"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken",
+    "name": "生去皮鸡胸肉",
+    "state": "raw",
+    "fdc_id": 171077,
+    "aliases": [
+      "生去皮鸡胸肉",
+      "生雞胸肉",
+      "生鸡胸"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken_roast",
+    "name": "烤去皮鸡胸肉",
+    "state": "cooked",
+    "fdc_id": 171477,
+    "aliases": [
+      "烤去皮鸡胸肉",
+      "烤雞胸肉"
+    ],
+    "preparations": [
+      "as_served",
+      "roasted"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken_stew",
+    "name": "炖去皮鸡胸肉",
+    "state": "cooked",
+    "fdc_id": 171478,
+    "aliases": [
+      "炖去皮鸡胸肉"
+    ],
+    "preparations": [
+      "as_served",
+      "braised",
+      "boiled"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken_thigh",
+    "name": "生去皮鸡腿肉",
+    "state": "raw",
+    "fdc_id": 173627,
+    "aliases": [
+      "生去皮鸡腿肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken_wing",
+    "name": "生带皮鸡翅可食部分",
+    "state": "raw",
+    "fdc_id": 172390,
+    "aliases": [
+      "生带皮鸡翅可食部分"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pork_belly",
+    "name": "生五花肉",
+    "state": "raw",
+    "fdc_id": 167812,
+    "aliases": [
+      "生五花肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pork",
+    "name": "生猪里脊",
+    "state": "raw",
+    "fdc_id": 168249,
+    "aliases": [
+      "生猪里脊",
+      "猪里脊",
+      "豬里脊"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pork_ground",
+    "name": "生猪肉末",
+    "state": "raw",
+    "fdc_id": 167902,
+    "aliases": [
+      "生猪肉末"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "beef",
+    "name": "生牛肉末（85%瘦肉）",
+    "state": "raw",
+    "fdc_id": 171796,
+    "aliases": [
+      "生牛肉末（85%瘦肉）"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "lamb",
+    "name": "生羊肉末",
+    "state": "raw",
+    "fdc_id": 174370,
+    "aliases": [
+      "生羊肉末"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "duck",
+    "name": "生去皮鸭肉",
+    "state": "raw",
+    "fdc_id": 172410,
+    "aliases": [
+      "生去皮鸭肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "liver",
+    "name": "生猪肝",
+    "state": "raw",
+    "fdc_id": 167862,
+    "aliases": [
+      "生猪肝"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "salmon",
+    "name": "生养殖大西洋三文鱼",
+    "state": "raw",
+    "fdc_id": 175167,
+    "aliases": [
+      "生养殖大西洋三文鱼"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "salmon_cooked",
+    "name": "熟养殖大西洋三文鱼",
+    "state": "cooked",
+    "fdc_id": 175168,
+    "aliases": [
+      "熟养殖大西洋三文鱼"
+    ],
+    "preparations": [
+      "as_served",
+      "roasted"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "cod",
+    "name": "生大西洋鳕鱼",
+    "state": "raw",
+    "fdc_id": 171955,
+    "aliases": [
+      "生大西洋鳕鱼"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "tilapia",
+    "name": "生罗非鱼",
+    "state": "raw",
+    "fdc_id": 175176,
+    "aliases": [
+      "生罗非鱼"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "carp",
+    "name": "生鲤鱼",
+    "state": "raw",
+    "fdc_id": 171952,
+    "aliases": [
+      "生鲤鱼"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "shrimp",
+    "name": "生虾仁",
+    "state": "raw",
+    "fdc_id": 174210,
+    "aliases": [
+      "生虾仁",
+      "蝦仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "squid",
+    "name": "生鱿鱼",
+    "state": "raw",
+    "fdc_id": 174223,
+    "aliases": [
+      "生鱿鱼"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "clam",
+    "name": "生蛤蜊肉",
+    "state": "raw",
+    "fdc_id": 174214,
+    "aliases": [
+      "生蛤蜊肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "mussel",
+    "name": "生青口肉",
+    "state": "raw",
+    "fdc_id": 174216,
+    "aliases": [
+      "生青口肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "crab",
+    "name": "生蓝蟹肉",
+    "state": "raw",
+    "fdc_id": 174204,
+    "aliases": [
+      "生蓝蟹肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "scallop",
+    "name": "生扇贝肉",
+    "state": "raw",
+    "fdc_id": 174220,
+    "aliases": [
+      "生扇贝肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "egg_raw",
+    "name": "生鸡蛋液",
+    "state": "raw",
+    "fdc_id": 171287,
+    "aliases": [
+      "生鸡蛋液",
+      "生鸡蛋",
+      "雞蛋液"
+    ],
+    "default_portion_g": 50
+  },
+  {
+    "id": "egg",
+    "name": "水煮鸡蛋（去壳）",
+    "state": "cooked",
+    "fdc_id": 173424,
+    "aliases": [
+      "水煮鸡蛋（去壳）",
+      "水煮蛋",
+      "煮鸡蛋",
+      "水煮雞蛋"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 50
+  },
+  {
+    "id": "egg_white",
+    "name": "生蛋清",
+    "state": "raw",
+    "fdc_id": 172183,
+    "aliases": [
+      "生蛋清"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "duck_egg",
+    "name": "生鸭蛋液",
+    "state": "raw",
+    "fdc_id": 172189,
+    "aliases": [
+      "生鸭蛋液"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "milk",
+    "name": "全脂牛奶",
+    "state": "as_sold",
+    "fdc_id": 171265,
+    "aliases": [
+      "全脂牛奶"
+    ],
+    "default_portion_g": 250
+  },
+  {
+    "id": "yogurt",
+    "name": "全脂原味酸奶",
+    "state": "as_sold",
+    "fdc_id": 171284,
+    "aliases": [
+      "全脂原味酸奶"
+    ],
+    "default_portion_g": 150
+  },
+  {
+    "id": "soy_milk",
+    "name": "原味豆奶",
+    "state": "as_sold",
+    "fdc_id": 172446,
+    "aliases": [
+      "原味豆奶"
+    ],
+    "default_portion_g": 250
+  },
+  {
+    "id": "tofu",
+    "name": "硬豆腐（硫酸钙及卤水）",
+    "state": "as_sold",
+    "fdc_id": 172448,
+    "aliases": [
+      "硬豆腐（硫酸钙及卤水）",
+      "硬豆腐"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "tofu_soft",
+    "name": "软豆腐（硫酸钙及卤水）",
+    "state": "as_sold",
+    "fdc_id": 172449,
+    "aliases": [
+      "软豆腐（硫酸钙及卤水）",
+      "嫩豆腐"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "soybeans",
+    "name": "干黄豆",
+    "state": "raw",
+    "fdc_id": 174270,
+    "aliases": [
+      "干黄豆"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "edamame",
+    "name": "熟毛豆仁",
+    "state": "cooked",
+    "fdc_id": 168411,
+    "aliases": [
+      "熟毛豆仁"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "mung",
+    "name": "干绿豆",
+    "state": "raw",
+    "fdc_id": 174256,
+    "aliases": [
+      "干绿豆"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "adzuki",
+    "name": "干红豆",
+    "state": "raw",
+    "fdc_id": 173727,
+    "aliases": [
+      "干红豆"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "kidney",
+    "name": "熟红腰豆",
+    "state": "cooked",
+    "fdc_id": 175194,
+    "aliases": [
+      "熟红腰豆"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "peas",
+    "name": "生豌豆",
+    "state": "raw",
+    "fdc_id": 170419,
+    "aliases": [
+      "生豌豆"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "peanut",
+    "name": "生花生仁",
+    "state": "raw",
+    "fdc_id": 172430,
+    "aliases": [
+      "生花生仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "sesame",
+    "name": "芝麻仁",
+    "state": "as_sold",
+    "fdc_id": 170150,
+    "aliases": [
+      "芝麻仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "walnut",
+    "name": "核桃仁",
+    "state": "as_sold",
+    "fdc_id": 170187,
+    "aliases": [
+      "核桃仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "cashew",
+    "name": "生腰果",
+    "state": "raw",
+    "fdc_id": 170162,
+    "aliases": [
+      "生腰果"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "almond",
+    "name": "杏仁",
+    "state": "as_sold",
+    "fdc_id": 170567,
+    "aliases": [
+      "杏仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "broccoli",
+    "name": "生西兰花",
+    "state": "raw",
+    "fdc_id": 170379,
+    "aliases": [
+      "生西兰花",
+      "生西蘭花"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "broccoli_cooked",
+    "name": "水煮西兰花",
+    "state": "cooked",
+    "fdc_id": 169967,
+    "aliases": [
+      "水煮西兰花"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled",
+      "steamed"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "cauliflower",
+    "name": "生菜花",
+    "state": "raw",
+    "fdc_id": 169986,
+    "aliases": [
+      "生菜花"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "cabbage",
+    "name": "生卷心菜",
+    "state": "raw",
+    "fdc_id": 169975,
+    "aliases": [
+      "生卷心菜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "napa",
+    "name": "生大白菜",
+    "state": "raw",
+    "fdc_id": 169979,
+    "aliases": [
+      "生大白菜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "bok_choy",
+    "name": "生小白菜",
+    "state": "raw",
+    "fdc_id": 170390,
+    "aliases": [
+      "生小白菜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "spinach",
+    "name": "生菠菜",
+    "state": "raw",
+    "fdc_id": 168462,
+    "aliases": [
+      "生菠菜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "lettuce",
+    "name": "生生菜",
+    "state": "raw",
+    "fdc_id": 169249,
+    "aliases": [
+      "生生菜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "celery",
+    "name": "生芹菜",
+    "state": "raw",
+    "fdc_id": 169988,
+    "aliases": [
+      "生芹菜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "tomato",
+    "name": "生番茄",
+    "state": "raw",
+    "fdc_id": 170457,
+    "aliases": [
+      "生番茄",
+      "西红柿",
+      "西紅柿",
+      "番茄"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "cucumber",
+    "name": "带皮生黄瓜",
+    "state": "raw",
+    "fdc_id": 168409,
+    "aliases": [
+      "带皮生黄瓜",
+      "青瓜",
+      "黃瓜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "eggplant",
+    "name": "生茄子",
+    "state": "raw",
+    "fdc_id": 169228,
+    "aliases": [
+      "生茄子"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "zucchini",
+    "name": "生西葫芦",
+    "state": "raw",
+    "fdc_id": 169291,
+    "aliases": [
+      "生西葫芦"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pumpkin",
+    "name": "生南瓜",
+    "state": "raw",
+    "fdc_id": 168448,
+    "aliases": [
+      "生南瓜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "winter_melon",
+    "name": "生冬瓜",
+    "state": "raw",
+    "fdc_id": 170069,
+    "aliases": [
+      "生冬瓜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "bitter_melon",
+    "name": "生苦瓜",
+    "state": "raw",
+    "fdc_id": 168393,
+    "aliases": [
+      "生苦瓜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "carrot",
+    "name": "生胡萝卜",
+    "state": "raw",
+    "fdc_id": 170393,
+    "aliases": [
+      "生胡萝卜",
+      "胡蘿蔔",
+      "红萝卜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "radish",
+    "name": "生白萝卜",
+    "state": "raw",
+    "fdc_id": 168451,
+    "aliases": [
+      "生白萝卜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "onion",
+    "name": "生洋葱",
+    "state": "raw",
+    "fdc_id": 170000,
+    "aliases": [
+      "生洋葱"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "spring_onion",
+    "name": "生葱",
+    "state": "raw",
+    "fdc_id": 170005,
+    "aliases": [
+      "生葱"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "garlic",
+    "name": "生大蒜",
+    "state": "raw",
+    "fdc_id": 169230,
+    "aliases": [
+      "生大蒜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "ginger",
+    "name": "生姜",
+    "state": "raw",
+    "fdc_id": 169231,
+    "aliases": [
+      "生姜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pepper",
+    "name": "生青椒",
+    "state": "raw",
+    "fdc_id": 170427,
+    "aliases": [
+      "生青椒"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "red_pepper",
+    "name": "生红甜椒",
+    "state": "raw",
+    "fdc_id": 170108,
+    "aliases": [
+      "生红甜椒"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chili",
+    "name": "生红辣椒",
+    "state": "raw",
+    "fdc_id": 170106,
+    "aliases": [
+      "生红辣椒"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "mushroom",
+    "name": "生白蘑菇",
+    "state": "raw",
+    "fdc_id": 169251,
+    "aliases": [
+      "生白蘑菇"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "shiitake",
+    "name": "生鲜香菇",
+    "state": "raw",
+    "fdc_id": 169242,
+    "aliases": [
+      "生鲜香菇"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "enoki",
+    "name": "生金针菇",
+    "state": "raw",
+    "fdc_id": 169382,
+    "aliases": [
+      "生金针菇"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "wood_ear",
+    "name": "干木耳",
+    "state": "as_sold",
+    "fdc_id": 168581,
+    "aliases": [
+      "干木耳"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "kelp",
+    "name": "生海带",
+    "state": "raw",
+    "fdc_id": 168457,
+    "aliases": [
+      "生海带"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "lotus",
+    "name": "生莲藕",
+    "state": "raw",
+    "fdc_id": 169250,
+    "aliases": [
+      "生莲藕"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "bamboo",
+    "name": "生竹笋",
+    "state": "raw",
+    "fdc_id": 169210,
+    "aliases": [
+      "生竹笋"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "bean_sprout",
+    "name": "生绿豆芽",
+    "state": "raw",
+    "fdc_id": 169957,
+    "aliases": [
+      "生绿豆芽"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "green_bean",
+    "name": "生四季豆",
+    "state": "raw",
+    "fdc_id": 169961,
+    "aliases": [
+      "生四季豆"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "apple",
+    "name": "带皮苹果",
+    "state": "as_sold",
+    "fdc_id": 171688,
+    "aliases": [
+      "带皮苹果"
+    ],
+    "default_portion_g": 150
+  },
+  {
+    "id": "banana",
+    "name": "香蕉果肉",
+    "state": "as_sold",
+    "fdc_id": 173944,
+    "aliases": [
+      "香蕉果肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "orange",
+    "name": "橙子果肉",
+    "state": "as_sold",
+    "fdc_id": 169097,
+    "aliases": [
+      "橙子果肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pear",
+    "name": "梨（带皮）",
+    "state": "as_sold",
+    "fdc_id": 169118,
+    "aliases": [
+      "梨（带皮）"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "grape",
+    "name": "葡萄",
+    "state": "as_sold",
+    "fdc_id": 174683,
+    "aliases": [
+      "葡萄"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "watermelon",
+    "name": "西瓜果肉",
+    "state": "as_sold",
+    "fdc_id": 167765,
+    "aliases": [
+      "西瓜果肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "mango",
+    "name": "芒果果肉",
+    "state": "as_sold",
+    "fdc_id": 169910,
+    "aliases": [
+      "芒果果肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pineapple",
+    "name": "菠萝果肉",
+    "state": "as_sold",
+    "fdc_id": 169124,
+    "aliases": [
+      "菠萝果肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "strawberry",
+    "name": "草莓",
+    "state": "as_sold",
+    "fdc_id": 167762,
+    "aliases": [
+      "草莓"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "kiwi",
+    "name": "猕猴桃果肉",
+    "state": "as_sold",
+    "fdc_id": 168153,
+    "aliases": [
+      "猕猴桃果肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "oil",
+    "name": "大豆食用油",
+    "state": "as_sold",
+    "fdc_id": 171411,
+    "aliases": [
+      "大豆食用油",
+      "食用油",
+      "豆油"
+    ],
+    "default_portion_g": 10
+  },
+  {
+    "id": "sesame_oil",
+    "name": "芝麻油",
+    "state": "as_sold",
+    "fdc_id": 171016,
+    "aliases": [
+      "芝麻油"
+    ],
+    "default_portion_g": 5
+  },
+  {
+    "id": "butter",
+    "name": "有盐黄油",
+    "state": "as_sold",
+    "fdc_id": 173410,
+    "aliases": [
+      "有盐黄油"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "sugar",
+    "name": "白砂糖",
+    "state": "as_sold",
+    "fdc_id": 169655,
+    "aliases": [
+      "白砂糖",
+      "砂糖",
+      "白糖"
+    ],
+    "default_portion_g": 5
+  },
+  {
+    "id": "honey",
+    "name": "蜂蜜",
+    "state": "as_sold",
+    "fdc_id": 169640,
+    "aliases": [
+      "蜂蜜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "soy_sauce",
+    "name": "普通酱油",
+    "state": "as_sold",
+    "fdc_id": 174277,
+    "aliases": [
+      "普通酱油",
+      "酱油",
+      "醬油"
+    ],
+    "default_portion_g": 10
+  },
+  {
+    "id": "vinegar",
+    "name": "蒸馏醋",
+    "state": "as_sold",
+    "fdc_id": 172237,
+    "aliases": [
+      "蒸馏醋"
+    ],
+    "default_portion_g": 10
+  },
+  {
+    "id": "starch",
+    "name": "玉米淀粉",
+    "state": "as_sold",
+    "fdc_id": 169698,
+    "aliases": [
+      "玉米淀粉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "salt",
+    "name": "食盐",
+    "state": "as_sold",
+    "fdc_id": 173468,
+    "aliases": [
+      "食盐"
+    ],
+    "default_portion_g": 2
+  },
+  {
+    "id": "water",
+    "name": "饮用水",
+    "state": "as_sold",
+    "fdc_id": 173647,
+    "aliases": [
+      "饮用水"
+    ],
+    "default_portion_g": 250
+  },
+  {
+    "id": "chocolate_milk",
+    "name": "牛奶巧克力",
+    "state": "as_sold",
+    "fdc_id": 167587,
+    "aliases": [
+      "牛奶巧克力",
+      "牛奶朱古力",
+      "milk chocolate"
+    ],
+    "default_portion_g": 25
+  },
+  {
+    "id": "chocolate_dark",
+    "name": "黑巧克力（70–85%可可）",
+    "state": "as_sold",
+    "fdc_id": 170273,
+    "aliases": [
+      "黑巧克力（70–85%可可）",
+      "黑朱古力",
+      "70%黑巧克力"
+    ],
+    "default_portion_g": 25
+  }
+]

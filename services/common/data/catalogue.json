@@ -1,0 +1,4463 @@
+{
+  "version": "2026-10-16.1",
+  "foods": [
+    {
+      "id": "rice",
+      "name": "白米饭",
+      "state": "cooked",
+      "fdc_id": 168878,
+      "aliases": [
+        "白米饭",
+        "米饭",
+        "白饭",
+        "白米飯",
+        "熟米饭",
+        "cooked rice"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 150,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.69,
+        "fat_g": 0.28,
+        "carbs_g": 28.17,
+        "calories": 130.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168878",
+        "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+        "description": "Rice, white, long-grain, regular, enriched, cooked",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "rice_raw",
+      "name": "生大米",
+      "state": "raw",
+      "fdc_id": 168877,
+      "aliases": [
+        "生大米",
+        "大米",
+        "生米"
+      ],
+      "default_portion_g": 50,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.66,
+        "carbs_g": 79.95,
+        "calories": 365.0,
+        "protein_g": 7.13
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168877",
+        "url": "https://fdc.nal.usda.gov/food-details/168877/nutrients",
+        "description": "Rice, white, long-grain, regular, raw, enriched",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "brown_rice",
+      "name": "糙米饭",
+      "state": "cooked",
+      "fdc_id": 169704,
+      "aliases": [
+        "糙米饭"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.74,
+        "fat_g": 0.97,
+        "carbs_g": 25.58,
+        "calories": 123.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169704",
+        "url": "https://fdc.nal.usda.gov/food-details/169704/nutrients",
+        "description": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "glutinous",
+      "name": "生糯米",
+      "state": "raw",
+      "fdc_id": 168883,
+      "aliases": [
+        "生糯米"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 6.81,
+        "fat_g": 0.55,
+        "carbs_g": 81.68,
+        "calories": 370.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168883",
+        "url": "https://fdc.nal.usda.gov/food-details/168883/nutrients",
+        "description": "Rice, white, glutinous, unenriched, uncooked",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "oats",
+      "name": "干燕麦",
+      "state": "raw",
+      "fdc_id": 169705,
+      "aliases": [
+        "干燕麦"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 16.89,
+        "fat_g": 6.9,
+        "carbs_g": 66.27,
+        "calories": 389.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169705",
+        "url": "https://fdc.nal.usda.gov/food-details/169705/nutrients",
+        "description": "Oats (Includes foods for USDA's Food Distribution Program)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "wheat_flour",
+      "name": "小麦面粉",
+      "state": "raw",
+      "fdc_id": 169761,
+      "aliases": [
+        "小麦面粉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.98,
+        "carbs_g": 76.31,
+        "calories": 364.0,
+        "protein_g": 10.33
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169761",
+        "url": "https://fdc.nal.usda.gov/food-details/169761/nutrients",
+        "description": "Wheat flour, white, all-purpose, unenriched",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "noodles",
+      "name": "熟鸡蛋面",
+      "state": "cooked",
+      "fdc_id": 168919,
+      "aliases": [
+        "熟鸡蛋面"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 200,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 4.54,
+        "fat_g": 2.07,
+        "carbs_g": 25.16,
+        "calories": 138.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168919",
+        "url": "https://fdc.nal.usda.gov/food-details/168919/nutrients",
+        "description": "Noodles, egg, cooked, enriched, with added salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "rice_noodles",
+      "name": "熟米粉",
+      "state": "cooked",
+      "fdc_id": 168914,
+      "aliases": [
+        "熟米粉"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 200,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.2,
+        "carbs_g": 24.01,
+        "calories": 108.0,
+        "protein_g": 1.79
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168914",
+        "url": "https://fdc.nal.usda.gov/food-details/168914/nutrients",
+        "description": "Rice noodles, cooked",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "bread",
+      "name": "白面包",
+      "state": "as_sold",
+      "fdc_id": 174924,
+      "aliases": [
+        "白面包"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 3.33,
+        "carbs_g": 49.42,
+        "calories": 266.0,
+        "protein_g": 8.85
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174924",
+        "url": "https://fdc.nal.usda.gov/food-details/174924/nutrients",
+        "description": "Bread, white, commercially prepared (includes soft bread crumbs)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "corn",
+      "name": "生甜玉米粒",
+      "state": "raw",
+      "fdc_id": 169998,
+      "aliases": [
+        "生甜玉米粒"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 3.27,
+        "fat_g": 1.35,
+        "carbs_g": 18.7,
+        "calories": 86.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169998",
+        "url": "https://fdc.nal.usda.gov/food-details/169998/nutrients",
+        "description": "Corn, sweet, yellow, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "potato",
+      "name": "生土豆",
+      "state": "raw",
+      "fdc_id": 170026,
+      "aliases": [
+        "生土豆",
+        "土豆",
+        "马铃薯",
+        "馬鈴薯"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.09,
+        "calories": 77.0,
+        "protein_g": 2.05,
+        "carbs_g": 17.49
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170026",
+        "url": "https://fdc.nal.usda.gov/food-details/170026/nutrients",
+        "description": "Potatoes, flesh and skin, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "sweet_potato",
+      "name": "生红薯",
+      "state": "raw",
+      "fdc_id": 168482,
+      "aliases": [
+        "生红薯"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 20.12,
+        "calories": 86.0,
+        "fat_g": 0.05,
+        "protein_g": 1.57
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168482",
+        "url": "https://fdc.nal.usda.gov/food-details/168482/nutrients",
+        "description": "Sweet potato, raw, unprepared (Includes foods for USDA's Food Distribution Program)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "taro",
+      "name": "生芋头",
+      "state": "raw",
+      "fdc_id": 169308,
+      "aliases": [
+        "生芋头"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 112.0,
+        "protein_g": 1.5,
+        "fat_g": 0.2,
+        "carbs_g": 26.46
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169308",
+        "url": "https://fdc.nal.usda.gov/food-details/169308/nutrients",
+        "description": "Taro, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "millet",
+      "name": "生小米",
+      "state": "raw",
+      "fdc_id": 169702,
+      "aliases": [
+        "生小米"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 4.22,
+        "carbs_g": 72.85,
+        "calories": 378.0,
+        "protein_g": 11.02
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169702",
+        "url": "https://fdc.nal.usda.gov/food-details/169702/nutrients",
+        "description": "Millet, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "barley",
+      "name": "生珍珠大麦",
+      "state": "raw",
+      "fdc_id": 170284,
+      "aliases": [
+        "生珍珠大麦"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.16,
+        "carbs_g": 77.72,
+        "calories": 352.0,
+        "protein_g": 9.91
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170284",
+        "url": "https://fdc.nal.usda.gov/food-details/170284/nutrients",
+        "description": "Barley, pearled, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "quinoa",
+      "name": "熟藜麦",
+      "state": "cooked",
+      "fdc_id": 168917,
+      "aliases": [
+        "熟藜麦"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 4.4,
+        "fat_g": 1.92,
+        "carbs_g": 21.3,
+        "calories": 120.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168917",
+        "url": "https://fdc.nal.usda.gov/food-details/168917/nutrients",
+        "description": "Quinoa, cooked",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "buckwheat",
+      "name": "生荞麦",
+      "state": "raw",
+      "fdc_id": 170286,
+      "aliases": [
+        "生荞麦"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 3.4,
+        "carbs_g": 71.5,
+        "calories": 343.0,
+        "protein_g": 13.25
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170286",
+        "url": "https://fdc.nal.usda.gov/food-details/170286/nutrients",
+        "description": "Buckwheat",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken",
+      "name": "生去皮鸡胸肉",
+      "state": "raw",
+      "fdc_id": 171077,
+      "aliases": [
+        "生去皮鸡胸肉",
+        "生雞胸肉",
+        "生鸡胸"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 2.62,
+        "calories": 120.0,
+        "protein_g": 22.5,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171077",
+        "url": "https://fdc.nal.usda.gov/food-details/171077/nutrients",
+        "description": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_roast",
+      "name": "烤去皮鸡胸肉",
+      "state": "cooked",
+      "fdc_id": 171477,
+      "aliases": [
+        "烤去皮鸡胸肉",
+        "烤雞胸肉"
+      ],
+      "preparations": [
+        "as_served",
+        "roasted"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 3.57,
+        "carbs_g": 0.0,
+        "calories": 165.0,
+        "protein_g": 31.02
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171477",
+        "url": "https://fdc.nal.usda.gov/food-details/171477/nutrients",
+        "description": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_stew",
+      "name": "炖去皮鸡胸肉",
+      "state": "cooked",
+      "fdc_id": 171478,
+      "aliases": [
+        "炖去皮鸡胸肉"
+      ],
+      "preparations": [
+        "as_served",
+        "braised",
+        "boiled"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 28.98,
+        "fat_g": 3.03,
+        "carbs_g": 0.0,
+        "calories": 151.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171478",
+        "url": "https://fdc.nal.usda.gov/food-details/171478/nutrients",
+        "description": "Chicken, broilers or fryers, breast, meat only, cooked, stewed",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_thigh",
+      "name": "生去皮鸡腿肉",
+      "state": "raw",
+      "fdc_id": 173627,
+      "aliases": [
+        "生去皮鸡腿肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 121.0,
+        "fat_g": 4.12,
+        "protein_g": 19.66,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173627",
+        "url": "https://fdc.nal.usda.gov/food-details/173627/nutrients",
+        "description": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_wing",
+      "name": "生带皮鸡翅可食部分",
+      "state": "raw",
+      "fdc_id": 172390,
+      "aliases": [
+        "生带皮鸡翅可食部分"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 17.52,
+        "calories": 191.0,
+        "carbs_g": 0.0,
+        "fat_g": 12.85
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172390",
+        "url": "https://fdc.nal.usda.gov/food-details/172390/nutrients",
+        "description": "Chicken, broilers or fryers, wing, meat and skin, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_belly",
+      "name": "生五花肉",
+      "state": "raw",
+      "fdc_id": 167812,
+      "aliases": [
+        "生五花肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 53.01,
+        "carbs_g": 0.0,
+        "calories": 518.0,
+        "protein_g": 9.34
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167812",
+        "url": "https://fdc.nal.usda.gov/food-details/167812/nutrients",
+        "description": "Pork, fresh, belly, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork",
+      "name": "生猪里脊",
+      "state": "raw",
+      "fdc_id": 168249,
+      "aliases": [
+        "生猪里脊",
+        "猪里脊",
+        "豬里脊"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 2.17,
+        "protein_g": 20.95,
+        "calories": 109.0,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168249",
+        "url": "https://fdc.nal.usda.gov/food-details/168249/nutrients",
+        "description": "Pork, fresh, loin, tenderloin, separable lean only, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_ground",
+      "name": "生猪肉末",
+      "state": "raw",
+      "fdc_id": 167902,
+      "aliases": [
+        "生猪肉末"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 16.88,
+        "fat_g": 21.19,
+        "carbs_g": 0.0,
+        "calories": 263.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167902",
+        "url": "https://fdc.nal.usda.gov/food-details/167902/nutrients",
+        "description": "Pork, fresh, ground, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "beef",
+      "name": "生牛肉末（85%瘦肉）",
+      "state": "raw",
+      "fdc_id": 171796,
+      "aliases": [
+        "生牛肉末（85%瘦肉）"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 15.0,
+        "protein_g": 18.59,
+        "carbs_g": 0.0,
+        "calories": 215.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171796",
+        "url": "https://fdc.nal.usda.gov/food-details/171796/nutrients",
+        "description": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lamb",
+      "name": "生羊肉末",
+      "state": "raw",
+      "fdc_id": 174370,
+      "aliases": [
+        "生羊肉末"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 23.41,
+        "carbs_g": 0.0,
+        "calories": 282.0,
+        "protein_g": 16.56
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174370",
+        "url": "https://fdc.nal.usda.gov/food-details/174370/nutrients",
+        "description": "Lamb, ground, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "duck",
+      "name": "生去皮鸭肉",
+      "state": "raw",
+      "fdc_id": 172410,
+      "aliases": [
+        "生去皮鸭肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 0.94,
+        "calories": 135.0,
+        "protein_g": 18.28,
+        "fat_g": 5.95
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172410",
+        "url": "https://fdc.nal.usda.gov/food-details/172410/nutrients",
+        "description": "Duck, domesticated, meat only, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "liver",
+      "name": "生猪肝",
+      "state": "raw",
+      "fdc_id": 167862,
+      "aliases": [
+        "生猪肝"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 21.39,
+        "fat_g": 3.65,
+        "carbs_g": 2.47,
+        "calories": 134.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167862",
+        "url": "https://fdc.nal.usda.gov/food-details/167862/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, liver, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "salmon",
+      "name": "生养殖大西洋三文鱼",
+      "state": "raw",
+      "fdc_id": 175167,
+      "aliases": [
+        "生养殖大西洋三文鱼"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 208.0,
+        "fat_g": 13.42,
+        "protein_g": 20.42,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "175167",
+        "url": "https://fdc.nal.usda.gov/food-details/175167/nutrients",
+        "description": "Fish, salmon, Atlantic, farmed, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "salmon_cooked",
+      "name": "熟养殖大西洋三文鱼",
+      "state": "cooked",
+      "fdc_id": 175168,
+      "aliases": [
+        "熟养殖大西洋三文鱼"
+      ],
+      "preparations": [
+        "as_served",
+        "roasted"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 12.35,
+        "carbs_g": 0.0,
+        "protein_g": 22.1,
+        "calories": 206.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "175168",
+        "url": "https://fdc.nal.usda.gov/food-details/175168/nutrients",
+        "description": "Fish, salmon, Atlantic, farmed, cooked, dry heat",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cod",
+      "name": "生大西洋鳕鱼",
+      "state": "raw",
+      "fdc_id": 171955,
+      "aliases": [
+        "生大西洋鳕鱼"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 82.0,
+        "protein_g": 17.81,
+        "fat_g": 0.67,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171955",
+        "url": "https://fdc.nal.usda.gov/food-details/171955/nutrients",
+        "description": "Fish, cod, Atlantic, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "tilapia",
+      "name": "生罗非鱼",
+      "state": "raw",
+      "fdc_id": 175176,
+      "aliases": [
+        "生罗非鱼"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.7,
+        "protein_g": 20.08,
+        "carbs_g": 0.0,
+        "calories": 96.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "175176",
+        "url": "https://fdc.nal.usda.gov/food-details/175176/nutrients",
+        "description": "Fish, tilapia, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "carp",
+      "name": "生鲤鱼",
+      "state": "raw",
+      "fdc_id": 171952,
+      "aliases": [
+        "生鲤鱼"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 5.6,
+        "carbs_g": 0.0,
+        "calories": 127.0,
+        "protein_g": 17.83
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171952",
+        "url": "https://fdc.nal.usda.gov/food-details/171952/nutrients",
+        "description": "Fish, carp, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "shrimp",
+      "name": "生虾仁",
+      "state": "raw",
+      "fdc_id": 174210,
+      "aliases": [
+        "生虾仁",
+        "蝦仁"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.01,
+        "carbs_g": 0.91,
+        "calories": 71.0,
+        "protein_g": 13.61
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174210",
+        "url": "https://fdc.nal.usda.gov/food-details/174210/nutrients",
+        "description": "Crustaceans, shrimp, mixed species, raw (may contain additives to retain moisture)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "squid",
+      "name": "生鱿鱼",
+      "state": "raw",
+      "fdc_id": 174223,
+      "aliases": [
+        "生鱿鱼"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 15.58,
+        "fat_g": 1.38,
+        "carbs_g": 3.08,
+        "calories": 92.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174223",
+        "url": "https://fdc.nal.usda.gov/food-details/174223/nutrients",
+        "description": "Mollusks, squid, mixed species, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "clam",
+      "name": "生蛤蜊肉",
+      "state": "raw",
+      "fdc_id": 174214,
+      "aliases": [
+        "生蛤蜊肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.96,
+        "carbs_g": 3.57,
+        "calories": 86.0,
+        "protein_g": 14.67
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174214",
+        "url": "https://fdc.nal.usda.gov/food-details/174214/nutrients",
+        "description": "Mollusks, clam, mixed species, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "mussel",
+      "name": "生青口肉",
+      "state": "raw",
+      "fdc_id": 174216,
+      "aliases": [
+        "生青口肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 2.24,
+        "carbs_g": 3.69,
+        "calories": 86.0,
+        "protein_g": 11.9
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174216",
+        "url": "https://fdc.nal.usda.gov/food-details/174216/nutrients",
+        "description": "Mollusks, mussel, blue, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "crab",
+      "name": "生蓝蟹肉",
+      "state": "raw",
+      "fdc_id": 174204,
+      "aliases": [
+        "生蓝蟹肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.08,
+        "carbs_g": 0.04,
+        "calories": 87.0,
+        "protein_g": 18.06
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174204",
+        "url": "https://fdc.nal.usda.gov/food-details/174204/nutrients",
+        "description": "Crustaceans, crab, blue, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "scallop",
+      "name": "生扇贝肉",
+      "state": "raw",
+      "fdc_id": 174220,
+      "aliases": [
+        "生扇贝肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 12.06,
+        "fat_g": 0.49,
+        "carbs_g": 3.18,
+        "calories": 69.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174220",
+        "url": "https://fdc.nal.usda.gov/food-details/174220/nutrients",
+        "description": "Mollusks, scallop, mixed species, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "egg_raw",
+      "name": "生鸡蛋液",
+      "state": "raw",
+      "fdc_id": 171287,
+      "aliases": [
+        "生鸡蛋液",
+        "生鸡蛋",
+        "雞蛋液"
+      ],
+      "default_portion_g": 50,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 143.0,
+        "protein_g": 12.56,
+        "fat_g": 9.51,
+        "carbs_g": 0.72
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171287",
+        "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+        "description": "Egg, whole, raw, fresh",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "egg",
+      "name": "水煮鸡蛋（去壳）",
+      "state": "cooked",
+      "fdc_id": 173424,
+      "aliases": [
+        "水煮鸡蛋（去壳）",
+        "水煮蛋",
+        "煮鸡蛋",
+        "水煮雞蛋"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 50,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 155.0,
+        "protein_g": 12.58,
+        "fat_g": 10.61,
+        "carbs_g": 1.12
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173424",
+        "url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+        "description": "Egg, whole, cooked, hard-boiled",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "egg_white",
+      "name": "生蛋清",
+      "state": "raw",
+      "fdc_id": 172183,
+      "aliases": [
+        "生蛋清"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 10.9,
+        "fat_g": 0.17,
+        "calories": 52.0,
+        "carbs_g": 0.73
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172183",
+        "url": "https://fdc.nal.usda.gov/food-details/172183/nutrients",
+        "description": "Egg, white, raw, fresh",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "duck_egg",
+      "name": "生鸭蛋液",
+      "state": "raw",
+      "fdc_id": 172189,
+      "aliases": [
+        "生鸭蛋液"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 12.81,
+        "fat_g": 13.77,
+        "carbs_g": 1.45,
+        "calories": 185.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172189",
+        "url": "https://fdc.nal.usda.gov/food-details/172189/nutrients",
+        "description": "Egg, duck, whole, fresh, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "milk",
+      "name": "全脂牛奶",
+      "state": "as_sold",
+      "fdc_id": 171265,
+      "aliases": [
+        "全脂牛奶"
+      ],
+      "default_portion_g": 250,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 3.25,
+        "carbs_g": 4.8,
+        "calories": 61.0,
+        "protein_g": 3.15
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171265",
+        "url": "https://fdc.nal.usda.gov/food-details/171265/nutrients",
+        "description": "Milk, whole, 3.25% milkfat, with added vitamin D",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "yogurt",
+      "name": "全脂原味酸奶",
+      "state": "as_sold",
+      "fdc_id": 171284,
+      "aliases": [
+        "全脂原味酸奶"
+      ],
+      "default_portion_g": 150,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 61.0,
+        "protein_g": 3.47,
+        "fat_g": 3.25,
+        "carbs_g": 4.66
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171284",
+        "url": "https://fdc.nal.usda.gov/food-details/171284/nutrients",
+        "description": "Yogurt, plain, whole milk",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "soy_milk",
+      "name": "原味豆奶",
+      "state": "as_sold",
+      "fdc_id": 172446,
+      "aliases": [
+        "原味豆奶"
+      ],
+      "default_portion_g": 250,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.75,
+        "carbs_g": 6.28,
+        "calories": 54.0,
+        "protein_g": 3.27
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172446",
+        "url": "https://fdc.nal.usda.gov/food-details/172446/nutrients",
+        "description": "Soymilk, original and vanilla, unfortified",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "tofu",
+      "name": "硬豆腐（硫酸钙及卤水）",
+      "state": "as_sold",
+      "fdc_id": 172448,
+      "aliases": [
+        "硬豆腐（硫酸钙及卤水）",
+        "硬豆腐"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 9.04,
+        "carbs_g": 2.85,
+        "calories": 78.0,
+        "fat_g": 4.17
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172448",
+        "url": "https://fdc.nal.usda.gov/food-details/172448/nutrients",
+        "description": "Tofu, firm, prepared with calcium sulfate and magnesium chloride (nigari)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "tofu_soft",
+      "name": "软豆腐（硫酸钙及卤水）",
+      "state": "as_sold",
+      "fdc_id": 172449,
+      "aliases": [
+        "软豆腐（硫酸钙及卤水）",
+        "嫩豆腐"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 61.0,
+        "carbs_g": 1.18,
+        "protein_g": 7.17,
+        "fat_g": 3.69
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172449",
+        "url": "https://fdc.nal.usda.gov/food-details/172449/nutrients",
+        "description": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "soybeans",
+      "name": "干黄豆",
+      "state": "raw",
+      "fdc_id": 174270,
+      "aliases": [
+        "干黄豆"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 30.16,
+        "calories": 446.0,
+        "protein_g": 36.49,
+        "fat_g": 19.94
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174270",
+        "url": "https://fdc.nal.usda.gov/food-details/174270/nutrients",
+        "description": "Soybeans, mature seeds, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "edamame",
+      "name": "熟毛豆仁",
+      "state": "cooked",
+      "fdc_id": 168411,
+      "aliases": [
+        "熟毛豆仁"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 5.2,
+        "carbs_g": 8.91,
+        "calories": 121.0,
+        "protein_g": 11.91
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168411",
+        "url": "https://fdc.nal.usda.gov/food-details/168411/nutrients",
+        "description": "Edamame, frozen, prepared",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "mung",
+      "name": "干绿豆",
+      "state": "raw",
+      "fdc_id": 174256,
+      "aliases": [
+        "干绿豆"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 62.62,
+        "calories": 347.0,
+        "protein_g": 23.86,
+        "fat_g": 1.15
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174256",
+        "url": "https://fdc.nal.usda.gov/food-details/174256/nutrients",
+        "description": "Mung beans, mature seeds, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "adzuki",
+      "name": "干红豆",
+      "state": "raw",
+      "fdc_id": 173727,
+      "aliases": [
+        "干红豆"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 19.87,
+        "fat_g": 0.53,
+        "carbs_g": 62.9,
+        "calories": 329.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173727",
+        "url": "https://fdc.nal.usda.gov/food-details/173727/nutrients",
+        "description": "Beans, adzuki, mature seeds, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "kidney",
+      "name": "熟红腰豆",
+      "state": "cooked",
+      "fdc_id": 175194,
+      "aliases": [
+        "熟红腰豆"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 22.8,
+        "calories": 127.0,
+        "fat_g": 0.5,
+        "protein_g": 8.67
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "175194",
+        "url": "https://fdc.nal.usda.gov/food-details/175194/nutrients",
+        "description": "Beans, kidney, red, mature seeds, cooked, boiled, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "peas",
+      "name": "生豌豆",
+      "state": "raw",
+      "fdc_id": 170419,
+      "aliases": [
+        "生豌豆"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 14.45,
+        "calories": 81.0,
+        "protein_g": 5.42,
+        "fat_g": 0.4
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170419",
+        "url": "https://fdc.nal.usda.gov/food-details/170419/nutrients",
+        "description": "Peas, green, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "peanut",
+      "name": "生花生仁",
+      "state": "raw",
+      "fdc_id": 172430,
+      "aliases": [
+        "生花生仁"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 25.8,
+        "fat_g": 49.24,
+        "carbs_g": 16.13,
+        "calories": 567.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172430",
+        "url": "https://fdc.nal.usda.gov/food-details/172430/nutrients",
+        "description": "Peanuts, all types, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "sesame",
+      "name": "芝麻仁",
+      "state": "as_sold",
+      "fdc_id": 170150,
+      "aliases": [
+        "芝麻仁"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 17.73,
+        "fat_g": 49.67,
+        "carbs_g": 23.45,
+        "calories": 573.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170150",
+        "url": "https://fdc.nal.usda.gov/food-details/170150/nutrients",
+        "description": "Seeds, sesame seeds, whole, dried",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "walnut",
+      "name": "核桃仁",
+      "state": "as_sold",
+      "fdc_id": 170187,
+      "aliases": [
+        "核桃仁"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 13.71,
+        "calories": 654.0,
+        "protein_g": 15.23,
+        "fat_g": 65.21
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170187",
+        "url": "https://fdc.nal.usda.gov/food-details/170187/nutrients",
+        "description": "Nuts, walnuts, english",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cashew",
+      "name": "生腰果",
+      "state": "raw",
+      "fdc_id": 170162,
+      "aliases": [
+        "生腰果"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 18.22,
+        "fat_g": 43.85,
+        "carbs_g": 30.19,
+        "calories": 553.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170162",
+        "url": "https://fdc.nal.usda.gov/food-details/170162/nutrients",
+        "description": "Nuts, cashew nuts, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "almond",
+      "name": "杏仁",
+      "state": "as_sold",
+      "fdc_id": 170567,
+      "aliases": [
+        "杏仁"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 21.15,
+        "fat_g": 49.93,
+        "carbs_g": 21.55,
+        "calories": 579.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170567",
+        "url": "https://fdc.nal.usda.gov/food-details/170567/nutrients",
+        "description": "Nuts, almonds",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "broccoli",
+      "name": "生西兰花",
+      "state": "raw",
+      "fdc_id": 170379,
+      "aliases": [
+        "生西兰花",
+        "生西蘭花"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 6.64,
+        "calories": 34.0,
+        "fat_g": 0.37,
+        "protein_g": 2.82
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170379",
+        "url": "https://fdc.nal.usda.gov/food-details/170379/nutrients",
+        "description": "Broccoli, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "broccoli_cooked",
+      "name": "水煮西兰花",
+      "state": "cooked",
+      "fdc_id": 169967,
+      "aliases": [
+        "水煮西兰花"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.41,
+        "protein_g": 2.38,
+        "carbs_g": 7.18,
+        "calories": 35.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169967",
+        "url": "https://fdc.nal.usda.gov/food-details/169967/nutrients",
+        "description": "Broccoli, cooked, boiled, drained, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cauliflower",
+      "name": "生菜花",
+      "state": "raw",
+      "fdc_id": 169986,
+      "aliases": [
+        "生菜花"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 4.97,
+        "calories": 25.0,
+        "protein_g": 1.92,
+        "fat_g": 0.28
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169986",
+        "url": "https://fdc.nal.usda.gov/food-details/169986/nutrients",
+        "description": "Cauliflower, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cabbage",
+      "name": "生卷心菜",
+      "state": "raw",
+      "fdc_id": 169975,
+      "aliases": [
+        "生卷心菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.1,
+        "carbs_g": 5.8,
+        "calories": 25.0,
+        "protein_g": 1.28
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169975",
+        "url": "https://fdc.nal.usda.gov/food-details/169975/nutrients",
+        "description": "Cabbage, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "napa",
+      "name": "生大白菜",
+      "state": "raw",
+      "fdc_id": 169979,
+      "aliases": [
+        "生大白菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 3.23,
+        "protein_g": 1.2,
+        "fat_g": 0.2,
+        "calories": 16.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169979",
+        "url": "https://fdc.nal.usda.gov/food-details/169979/nutrients",
+        "description": "Cabbage, chinese (pe-tsai), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "bok_choy",
+      "name": "生小白菜",
+      "state": "raw",
+      "fdc_id": 170390,
+      "aliases": [
+        "生小白菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 1.5,
+        "fat_g": 0.2,
+        "carbs_g": 2.18,
+        "calories": 13.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170390",
+        "url": "https://fdc.nal.usda.gov/food-details/170390/nutrients",
+        "description": "Cabbage, chinese (pak-choi), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "spinach",
+      "name": "生菠菜",
+      "state": "raw",
+      "fdc_id": 168462,
+      "aliases": [
+        "生菠菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.86,
+        "fat_g": 0.39,
+        "carbs_g": 3.63,
+        "calories": 23.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168462",
+        "url": "https://fdc.nal.usda.gov/food-details/168462/nutrients",
+        "description": "Spinach, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lettuce",
+      "name": "生生菜",
+      "state": "raw",
+      "fdc_id": 169249,
+      "aliases": [
+        "生生菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 2.87,
+        "calories": 15.0,
+        "protein_g": 1.36,
+        "fat_g": 0.15
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169249",
+        "url": "https://fdc.nal.usda.gov/food-details/169249/nutrients",
+        "description": "Lettuce, green leaf, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "celery",
+      "name": "生芹菜",
+      "state": "raw",
+      "fdc_id": 169988,
+      "aliases": [
+        "生芹菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 14.0,
+        "carbs_g": 2.97,
+        "fat_g": 0.17,
+        "protein_g": 0.69
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169988",
+        "url": "https://fdc.nal.usda.gov/food-details/169988/nutrients",
+        "description": "Celery, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "tomato",
+      "name": "生番茄",
+      "state": "raw",
+      "fdc_id": 170457,
+      "aliases": [
+        "生番茄",
+        "西红柿",
+        "西紅柿",
+        "番茄"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 3.89,
+        "calories": 18.0,
+        "fat_g": 0.2,
+        "protein_g": 0.88
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170457",
+        "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+        "description": "Tomatoes, red, ripe, raw, year round average",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cucumber",
+      "name": "带皮生黄瓜",
+      "state": "raw",
+      "fdc_id": 168409,
+      "aliases": [
+        "带皮生黄瓜",
+        "青瓜",
+        "黃瓜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 3.63,
+        "calories": 15.0,
+        "fat_g": 0.11,
+        "protein_g": 0.65
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168409",
+        "url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+        "description": "Cucumber, with peel, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "eggplant",
+      "name": "生茄子",
+      "state": "raw",
+      "fdc_id": 169228,
+      "aliases": [
+        "生茄子"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.18,
+        "carbs_g": 5.88,
+        "calories": 25.0,
+        "protein_g": 0.98
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169228",
+        "url": "https://fdc.nal.usda.gov/food-details/169228/nutrients",
+        "description": "Eggplant, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "zucchini",
+      "name": "生西葫芦",
+      "state": "raw",
+      "fdc_id": 169291,
+      "aliases": [
+        "生西葫芦"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.32,
+        "carbs_g": 3.11,
+        "calories": 17.0,
+        "protein_g": 1.21
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169291",
+        "url": "https://fdc.nal.usda.gov/food-details/169291/nutrients",
+        "description": "Squash, summer, zucchini, includes skin, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pumpkin",
+      "name": "生南瓜",
+      "state": "raw",
+      "fdc_id": 168448,
+      "aliases": [
+        "生南瓜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 6.5,
+        "calories": 26.0,
+        "fat_g": 0.1,
+        "protein_g": 1.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168448",
+        "url": "https://fdc.nal.usda.gov/food-details/168448/nutrients",
+        "description": "Pumpkin, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "winter_melon",
+      "name": "生冬瓜",
+      "state": "raw",
+      "fdc_id": 170069,
+      "aliases": [
+        "生冬瓜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.2,
+        "carbs_g": 3.0,
+        "calories": 13.0,
+        "protein_g": 0.4
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170069",
+        "url": "https://fdc.nal.usda.gov/food-details/170069/nutrients",
+        "description": "Waxgourd, (chinese preserving melon), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "bitter_melon",
+      "name": "生苦瓜",
+      "state": "raw",
+      "fdc_id": 168393,
+      "aliases": [
+        "生苦瓜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 3.7,
+        "calories": 17.0,
+        "protein_g": 1.0,
+        "fat_g": 0.17
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168393",
+        "url": "https://fdc.nal.usda.gov/food-details/168393/nutrients",
+        "description": "Balsam-pear (bitter gourd), pods, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "carrot",
+      "name": "生胡萝卜",
+      "state": "raw",
+      "fdc_id": 170393,
+      "aliases": [
+        "生胡萝卜",
+        "胡蘿蔔",
+        "红萝卜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.93,
+        "fat_g": 0.24,
+        "carbs_g": 9.58,
+        "calories": 41.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170393",
+        "url": "https://fdc.nal.usda.gov/food-details/170393/nutrients",
+        "description": "Carrots, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "radish",
+      "name": "生白萝卜",
+      "state": "raw",
+      "fdc_id": 168451,
+      "aliases": [
+        "生白萝卜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 4.1,
+        "calories": 18.0,
+        "protein_g": 0.6,
+        "fat_g": 0.1
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168451",
+        "url": "https://fdc.nal.usda.gov/food-details/168451/nutrients",
+        "description": "Radishes, oriental, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "onion",
+      "name": "生洋葱",
+      "state": "raw",
+      "fdc_id": 170000,
+      "aliases": [
+        "生洋葱"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.1,
+        "carbs_g": 9.34,
+        "calories": 40.0,
+        "protein_g": 1.1
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170000",
+        "url": "https://fdc.nal.usda.gov/food-details/170000/nutrients",
+        "description": "Onions, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "spring_onion",
+      "name": "生葱",
+      "state": "raw",
+      "fdc_id": 170005,
+      "aliases": [
+        "生葱"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 32.0,
+        "fat_g": 0.19,
+        "protein_g": 1.83,
+        "carbs_g": 7.34
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170005",
+        "url": "https://fdc.nal.usda.gov/food-details/170005/nutrients",
+        "description": "Onions, spring or scallions (includes tops and bulb), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "garlic",
+      "name": "生大蒜",
+      "state": "raw",
+      "fdc_id": 169230,
+      "aliases": [
+        "生大蒜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 33.06,
+        "calories": 149.0,
+        "protein_g": 6.36,
+        "fat_g": 0.5
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169230",
+        "url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+        "description": "Garlic, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "ginger",
+      "name": "生姜",
+      "state": "raw",
+      "fdc_id": 169231,
+      "aliases": [
+        "生姜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.75,
+        "protein_g": 1.82,
+        "carbs_g": 17.77,
+        "calories": 80.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169231",
+        "url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+        "description": "Ginger root, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pepper",
+      "name": "生青椒",
+      "state": "raw",
+      "fdc_id": 170427,
+      "aliases": [
+        "生青椒"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.17,
+        "protein_g": 0.86,
+        "carbs_g": 4.64,
+        "calories": 20.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170427",
+        "url": "https://fdc.nal.usda.gov/food-details/170427/nutrients",
+        "description": "Peppers, sweet, green, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "red_pepper",
+      "name": "生红甜椒",
+      "state": "raw",
+      "fdc_id": 170108,
+      "aliases": [
+        "生红甜椒"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 26.0,
+        "carbs_g": 6.03,
+        "protein_g": 0.99,
+        "fat_g": 0.3
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170108",
+        "url": "https://fdc.nal.usda.gov/food-details/170108/nutrients",
+        "description": "Peppers, sweet, red, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chili",
+      "name": "生红辣椒",
+      "state": "raw",
+      "fdc_id": 170106,
+      "aliases": [
+        "生红辣椒"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.44,
+        "carbs_g": 8.81,
+        "calories": 40.0,
+        "protein_g": 1.87
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170106",
+        "url": "https://fdc.nal.usda.gov/food-details/170106/nutrients",
+        "description": "Peppers, hot chili, red, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "mushroom",
+      "name": "生白蘑菇",
+      "state": "raw",
+      "fdc_id": 169251,
+      "aliases": [
+        "生白蘑菇"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.34,
+        "protein_g": 3.09,
+        "carbs_g": 3.26,
+        "calories": 22.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169251",
+        "url": "https://fdc.nal.usda.gov/food-details/169251/nutrients",
+        "description": "Mushrooms, white, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "shiitake",
+      "name": "生鲜香菇",
+      "state": "raw",
+      "fdc_id": 169242,
+      "aliases": [
+        "生鲜香菇"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.49,
+        "protein_g": 2.24,
+        "carbs_g": 6.79,
+        "calories": 34.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169242",
+        "url": "https://fdc.nal.usda.gov/food-details/169242/nutrients",
+        "description": "Mushrooms, shiitake, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "enoki",
+      "name": "生金针菇",
+      "state": "raw",
+      "fdc_id": 169382,
+      "aliases": [
+        "生金针菇"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 7.81,
+        "calories": 37.0,
+        "fat_g": 0.29,
+        "protein_g": 2.66
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169382",
+        "url": "https://fdc.nal.usda.gov/food-details/169382/nutrients",
+        "description": "Mushrooms, enoki, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "wood_ear",
+      "name": "干木耳",
+      "state": "as_sold",
+      "fdc_id": 168581,
+      "aliases": [
+        "干木耳"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 73.01,
+        "calories": 284.0,
+        "fat_g": 0.73,
+        "protein_g": 9.25
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168581",
+        "url": "https://fdc.nal.usda.gov/food-details/168581/nutrients",
+        "description": "Fungi, Cloud ears, dried",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "kelp",
+      "name": "生海带",
+      "state": "raw",
+      "fdc_id": 168457,
+      "aliases": [
+        "生海带"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 9.57,
+        "calories": 43.0,
+        "protein_g": 1.68,
+        "fat_g": 0.56
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168457",
+        "url": "https://fdc.nal.usda.gov/food-details/168457/nutrients",
+        "description": "Seaweed, kelp, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lotus",
+      "name": "生莲藕",
+      "state": "raw",
+      "fdc_id": 169250,
+      "aliases": [
+        "生莲藕"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.1,
+        "protein_g": 2.6,
+        "carbs_g": 17.23,
+        "calories": 74.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169250",
+        "url": "https://fdc.nal.usda.gov/food-details/169250/nutrients",
+        "description": "Lotus root, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "bamboo",
+      "name": "生竹笋",
+      "state": "raw",
+      "fdc_id": 169210,
+      "aliases": [
+        "生竹笋"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 5.2,
+        "calories": 27.0,
+        "protein_g": 2.6,
+        "fat_g": 0.3
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169210",
+        "url": "https://fdc.nal.usda.gov/food-details/169210/nutrients",
+        "description": "Bamboo shoots, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "bean_sprout",
+      "name": "生绿豆芽",
+      "state": "raw",
+      "fdc_id": 169957,
+      "aliases": [
+        "生绿豆芽"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 5.94,
+        "calories": 30.0,
+        "protein_g": 3.04,
+        "fat_g": 0.18
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169957",
+        "url": "https://fdc.nal.usda.gov/food-details/169957/nutrients",
+        "description": "Mung beans, mature seeds, sprouted, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "green_bean",
+      "name": "生四季豆",
+      "state": "raw",
+      "fdc_id": 169961,
+      "aliases": [
+        "生四季豆"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.22,
+        "protein_g": 1.83,
+        "carbs_g": 6.97,
+        "calories": 31.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169961",
+        "url": "https://fdc.nal.usda.gov/food-details/169961/nutrients",
+        "description": "Beans, snap, green, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "apple",
+      "name": "带皮苹果",
+      "state": "as_sold",
+      "fdc_id": 171688,
+      "aliases": [
+        "带皮苹果"
+      ],
+      "default_portion_g": 150,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 13.81,
+        "calories": 52.0,
+        "fat_g": 0.17,
+        "protein_g": 0.26
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171688",
+        "url": "https://fdc.nal.usda.gov/food-details/171688/nutrients",
+        "description": "Apples, raw, with skin (Includes foods for USDA's Food Distribution Program)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "banana",
+      "name": "香蕉果肉",
+      "state": "as_sold",
+      "fdc_id": 173944,
+      "aliases": [
+        "香蕉果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 22.84,
+        "calories": 89.0,
+        "protein_g": 1.09,
+        "fat_g": 0.33
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173944",
+        "url": "https://fdc.nal.usda.gov/food-details/173944/nutrients",
+        "description": "Bananas, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "orange",
+      "name": "橙子果肉",
+      "state": "as_sold",
+      "fdc_id": 169097,
+      "aliases": [
+        "橙子果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.12,
+        "carbs_g": 11.75,
+        "calories": 47.0,
+        "protein_g": 0.94
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169097",
+        "url": "https://fdc.nal.usda.gov/food-details/169097/nutrients",
+        "description": "Oranges, raw, all commercial varieties",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pear",
+      "name": "梨（带皮）",
+      "state": "as_sold",
+      "fdc_id": 169118,
+      "aliases": [
+        "梨（带皮）"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.14,
+        "carbs_g": 15.23,
+        "calories": 57.0,
+        "protein_g": 0.36
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169118",
+        "url": "https://fdc.nal.usda.gov/food-details/169118/nutrients",
+        "description": "Pears, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "grape",
+      "name": "葡萄",
+      "state": "as_sold",
+      "fdc_id": 174683,
+      "aliases": [
+        "葡萄"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.16,
+        "protein_g": 0.72,
+        "carbs_g": 18.1,
+        "calories": 69.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174683",
+        "url": "https://fdc.nal.usda.gov/food-details/174683/nutrients",
+        "description": "Grapes, red or green (European type, such as Thompson seedless), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "watermelon",
+      "name": "西瓜果肉",
+      "state": "as_sold",
+      "fdc_id": 167765,
+      "aliases": [
+        "西瓜果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.61,
+        "fat_g": 0.15,
+        "carbs_g": 7.55,
+        "calories": 30.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167765",
+        "url": "https://fdc.nal.usda.gov/food-details/167765/nutrients",
+        "description": "Watermelon, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "mango",
+      "name": "芒果果肉",
+      "state": "as_sold",
+      "fdc_id": 169910,
+      "aliases": [
+        "芒果果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.38,
+        "protein_g": 0.82,
+        "carbs_g": 14.98,
+        "calories": 60.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169910",
+        "url": "https://fdc.nal.usda.gov/food-details/169910/nutrients",
+        "description": "Mangos, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pineapple",
+      "name": "菠萝果肉",
+      "state": "as_sold",
+      "fdc_id": 169124,
+      "aliases": [
+        "菠萝果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.54,
+        "fat_g": 0.12,
+        "carbs_g": 13.12,
+        "calories": 50.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169124",
+        "url": "https://fdc.nal.usda.gov/food-details/169124/nutrients",
+        "description": "Pineapple, raw, all varieties",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "strawberry",
+      "name": "草莓",
+      "state": "as_sold",
+      "fdc_id": 167762,
+      "aliases": [
+        "草莓"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.3,
+        "protein_g": 0.67,
+        "carbs_g": 7.68,
+        "calories": 32.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167762",
+        "url": "https://fdc.nal.usda.gov/food-details/167762/nutrients",
+        "description": "Strawberries, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "kiwi",
+      "name": "猕猴桃果肉",
+      "state": "as_sold",
+      "fdc_id": 168153,
+      "aliases": [
+        "猕猴桃果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 1.14,
+        "fat_g": 0.52,
+        "carbs_g": 14.66,
+        "calories": 61.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168153",
+        "url": "https://fdc.nal.usda.gov/food-details/168153/nutrients",
+        "description": "Kiwifruit, green, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "oil",
+      "name": "大豆食用油",
+      "state": "as_sold",
+      "fdc_id": 171411,
+      "aliases": [
+        "大豆食用油",
+        "食用油",
+        "豆油"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.0,
+        "fat_g": 100.0,
+        "carbs_g": 0.0,
+        "calories": 884.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171411",
+        "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+        "description": "Oil, soybean, salad or cooking",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "sesame_oil",
+      "name": "芝麻油",
+      "state": "as_sold",
+      "fdc_id": 171016,
+      "aliases": [
+        "芝麻油"
+      ],
+      "default_portion_g": 5,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.0,
+        "fat_g": 100.0,
+        "carbs_g": 0.0,
+        "calories": 884.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171016",
+        "url": "https://fdc.nal.usda.gov/food-details/171016/nutrients",
+        "description": "Oil, sesame, salad or cooking",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "butter",
+      "name": "有盐黄油",
+      "state": "as_sold",
+      "fdc_id": 173410,
+      "aliases": [
+        "有盐黄油"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 717.0,
+        "fat_g": 81.11,
+        "carbs_g": 0.06,
+        "protein_g": 0.85
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173410",
+        "url": "https://fdc.nal.usda.gov/food-details/173410/nutrients",
+        "description": "Butter, salted",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "sugar",
+      "name": "白砂糖",
+      "state": "as_sold",
+      "fdc_id": 169655,
+      "aliases": [
+        "白砂糖",
+        "砂糖",
+        "白糖"
+      ],
+      "default_portion_g": 5,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.0,
+        "fat_g": 0.0,
+        "calories": 387.0,
+        "carbs_g": 99.98
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169655",
+        "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+        "description": "Sugars, granulated",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "honey",
+      "name": "蜂蜜",
+      "state": "as_sold",
+      "fdc_id": 169640,
+      "aliases": [
+        "蜂蜜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.3,
+        "fat_g": 0.0,
+        "carbs_g": 82.4,
+        "calories": 304.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169640",
+        "url": "https://fdc.nal.usda.gov/food-details/169640/nutrients",
+        "description": "Honey",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "soy_sauce",
+      "name": "普通酱油",
+      "state": "as_sold",
+      "fdc_id": 174277,
+      "aliases": [
+        "普通酱油",
+        "酱油",
+        "醬油"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.57,
+        "carbs_g": 4.93,
+        "protein_g": 8.14,
+        "calories": 53.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174277",
+        "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+        "description": "Soy sauce made from soy and wheat (shoyu)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "vinegar",
+      "name": "蒸馏醋",
+      "state": "as_sold",
+      "fdc_id": 172237,
+      "aliases": [
+        "蒸馏醋"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.0,
+        "protein_g": 0.0,
+        "carbs_g": 0.04,
+        "calories": 18.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172237",
+        "url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+        "description": "Vinegar, distilled",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "starch",
+      "name": "玉米淀粉",
+      "state": "as_sold",
+      "fdc_id": 169698,
+      "aliases": [
+        "玉米淀粉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.05,
+        "carbs_g": 91.27,
+        "calories": 381.0,
+        "protein_g": 0.26
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169698",
+        "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+        "description": "Cornstarch",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "salt",
+      "name": "食盐",
+      "state": "as_sold",
+      "fdc_id": 173468,
+      "aliases": [
+        "食盐"
+      ],
+      "default_portion_g": 2,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.0,
+        "fat_g": 0.0,
+        "carbs_g": 0.0,
+        "calories": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173468",
+        "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+        "description": "Salt, table",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "water",
+      "name": "饮用水",
+      "state": "as_sold",
+      "fdc_id": 173647,
+      "aliases": [
+        "饮用水"
+      ],
+      "default_portion_g": 250,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.0,
+        "carbs_g": 0.0,
+        "calories": 0.0,
+        "protein_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173647",
+        "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+        "description": "Beverages, water, tap, drinking",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chocolate_milk",
+      "name": "牛奶巧克力",
+      "state": "as_sold",
+      "fdc_id": 167587,
+      "aliases": [
+        "牛奶巧克力",
+        "牛奶朱古力",
+        "milk chocolate"
+      ],
+      "default_portion_g": 25,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 29.66,
+        "protein_g": 7.65,
+        "carbs_g": 59.4,
+        "calories": 535.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167587",
+        "url": "https://fdc.nal.usda.gov/food-details/167587/nutrients",
+        "description": "Candies, milk chocolate",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chocolate_dark",
+      "name": "黑巧克力（70–85%可可）",
+      "state": "as_sold",
+      "fdc_id": 170273,
+      "aliases": [
+        "黑巧克力（70–85%可可）",
+        "黑朱古力",
+        "70%黑巧克力"
+      ],
+      "default_portion_g": 25,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 42.63,
+        "carbs_g": 45.9,
+        "calories": 598.0,
+        "protein_g": 7.79
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170273",
+        "url": "https://fdc.nal.usda.gov/food-details/170273/nutrients",
+        "description": "Chocolate, dark, 70-85% cacao solids",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "dish_001",
+      "name": "番茄炒蛋",
+      "aliases": [
+        "西红柿炒鸡蛋",
+        "番茄炒蛋",
+        "番茄炒雞蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "tomato": 300.0,
+          "egg_raw": 150.0,
+          "oil": 15.0,
+          "sugar": 5.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_002",
+      "name": "青椒肉丝",
+      "aliases": [
+        "青椒肉絲",
+        "青椒肉丝"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 420.0,
+        "ingredients": {
+          "pork": 200.0,
+          "pepper": 200.0,
+          "oil": 15.0,
+          "soy_sauce": 15.0,
+          "starch": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_003",
+      "name": "宫保鸡丁",
+      "aliases": [
+        "宫保鸡丁",
+        "宮保雞丁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒（简化家常配方）",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "chicken": 250.0,
+          "cucumber": 100.0,
+          "peanut": 30.0,
+          "oil": 15.0,
+          "sugar": 10.0,
+          "soy_sauce": 15.0,
+          "vinegar": 10.0,
+          "chili": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_004",
+      "name": "麻婆豆腐",
+      "aliases": [
+        "麻婆豆腐"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "烧（简化家常配方，不含豆瓣酱）",
+      "recipe": {
+        "yield_g": 620.0,
+        "ingredients": {
+          "tofu_soft": 400.0,
+          "pork_ground": 80.0,
+          "oil": 15.0,
+          "soy_sauce": 20.0,
+          "chili": 10.0,
+          "starch": 10.0,
+          "water": 150.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_005",
+      "name": "红烧肉",
+      "aliases": [
+        "紅燒肉",
+        "红烧肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "红烧",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "pork_belly": 400.0,
+          "sugar": 25.0,
+          "soy_sauce": 25.0,
+          "oil": 10.0,
+          "water": 200.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_006",
+      "name": "鱼香肉丝",
+      "aliases": [
+        "魚香肉絲",
+        "鱼香肉丝"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒（简化家常配方）",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "pork": 200.0,
+          "carrot": 100.0,
+          "pepper": 80.0,
+          "bamboo": 80.0,
+          "oil": 15.0,
+          "sugar": 15.0,
+          "vinegar": 15.0,
+          "soy_sauce": 15.0,
+          "starch": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_007",
+      "name": "回锅肉",
+      "aliases": [
+        "回锅肉",
+        "回鍋肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "煮后炒（简化家常配方）",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "pork_belly": 250.0,
+          "pepper": 150.0,
+          "oil": 10.0,
+          "soy_sauce": 20.0,
+          "sugar": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_008",
+      "name": "土豆炖牛肉",
+      "aliases": [
+        "土豆燉牛肉",
+        "土豆炖牛肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炖（牛肉末参考版）",
+      "recipe": {
+        "yield_g": 850.0,
+        "ingredients": {
+          "beef": 250.0,
+          "potato": 300.0,
+          "carrot": 100.0,
+          "tomato": 100.0,
+          "oil": 10.0,
+          "soy_sauce": 20.0,
+          "water": 250.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_009",
+      "name": "香菇滑鸡",
+      "aliases": [
+        "香菇滑雞",
+        "香菇滑鸡"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "蒸",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "chicken_thigh": 300.0,
+          "shiitake": 100.0,
+          "oil": 10.0,
+          "soy_sauce": 20.0,
+          "starch": 10.0,
+          "water": 100.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_010",
+      "name": "清蒸鲤鱼",
+      "aliases": [
+        "清蒸鯉魚",
+        "清蒸鲤鱼"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "清蒸，鱼肉净重",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "carp": 400.0,
+          "ginger": 15.0,
+          "spring_onion": 20.0,
+          "soy_sauce": 20.0,
+          "oil": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_011",
+      "name": "蒜蓉虾仁",
+      "aliases": [
+        "蒜蓉虾仁",
+        "蒜蓉蝦仁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "蒸",
+      "recipe": {
+        "yield_g": 300.0,
+        "ingredients": {
+          "shrimp": 300.0,
+          "garlic": 20.0,
+          "oil": 10.0,
+          "soy_sauce": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_012",
+      "name": "虾仁炒蛋",
+      "aliases": [
+        "蝦仁炒蛋",
+        "虾仁炒蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "shrimp": 200.0,
+          "egg_raw": 200.0,
+          "oil": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_013",
+      "name": "葱炒鸡蛋",
+      "aliases": [
+        "葱炒鸡蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒（葱版本）",
+      "recipe": {
+        "yield_g": 270.0,
+        "ingredients": {
+          "egg_raw": 200.0,
+          "spring_onion": 80.0,
+          "oil": 10.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_014",
+      "name": "蒸水蛋",
+      "aliases": [
+        "鸡蛋羹",
+        "蒸水蛋",
+        "蒸蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "蒸",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "egg_raw": 150.0,
+          "water": 300.0,
+          "soy_sauce": 10.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_015",
+      "name": "肉末蒸蛋",
+      "aliases": [
+        "肉沫蒸蛋",
+        "肉末蒸蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "蒸",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "egg_raw": 150.0,
+          "pork_ground": 100.0,
+          "water": 300.0,
+          "soy_sauce": 15.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_016",
+      "name": "凉拌黄瓜",
+      "aliases": [
+        "涼拌黃瓜",
+        "拍黄瓜",
+        "凉拌黄瓜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "凉拌",
+      "recipe": {
+        "yield_g": 350.0,
+        "ingredients": {
+          "cucumber": 300.0,
+          "garlic": 10.0,
+          "vinegar": 20.0,
+          "soy_sauce": 15.0,
+          "sesame_oil": 10.0,
+          "sugar": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_017",
+      "name": "清炒西兰花",
+      "aliases": [
+        "清炒西蘭花",
+        "清炒西兰花"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 300.0,
+        "ingredients": {
+          "broccoli": 350.0,
+          "garlic": 10.0,
+          "oil": 10.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_018",
+      "name": "蒜蓉小白菜",
+      "aliases": [
+        "蒜蓉白菜",
+        "蒜蓉小白菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 300.0,
+        "ingredients": {
+          "bok_choy": 400.0,
+          "garlic": 15.0,
+          "oil": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_019",
+      "name": "清炒菠菜",
+      "aliases": [
+        "蒜蓉菠菜",
+        "清炒菠菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 280.0,
+        "ingredients": {
+          "spinach": 400.0,
+          "garlic": 10.0,
+          "oil": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_020",
+      "name": "清炒生菜",
+      "aliases": [
+        "清炒生菜",
+        "蒜蓉生菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 260.0,
+        "ingredients": {
+          "lettuce": 400.0,
+          "garlic": 15.0,
+          "oil": 15.0,
+          "soy_sauce": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_021",
+      "name": "手撕包菜",
+      "aliases": [
+        "手撕包菜",
+        "手撕卷心菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 330.0,
+        "ingredients": {
+          "cabbage": 400.0,
+          "oil": 15.0,
+          "chili": 5.0,
+          "soy_sauce": 10.0,
+          "vinegar": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_022",
+      "name": "酸辣土豆丝",
+      "aliases": [
+        "酸辣土豆絲",
+        "酸辣土豆丝"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 360.0,
+        "ingredients": {
+          "potato": 350.0,
+          "pepper": 30.0,
+          "chili": 5.0,
+          "oil": 15.0,
+          "vinegar": 20.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_023",
+      "name": "地三鲜",
+      "aliases": [
+        "地三鮮",
+        "地三鲜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒（非过油版）",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "eggplant": 250.0,
+          "potato": 250.0,
+          "pepper": 150.0,
+          "oil": 25.0,
+          "soy_sauce": 20.0,
+          "starch": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_024",
+      "name": "红烧茄子",
+      "aliases": [
+        "紅燒茄子",
+        "红烧茄子"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "烧（非油炸版）",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "eggplant": 500.0,
+          "oil": 25.0,
+          "soy_sauce": 20.0,
+          "sugar": 10.0,
+          "garlic": 15.0,
+          "water": 100.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_025",
+      "name": "西葫芦炒蛋",
+      "aliases": [
+        "西葫蘆炒蛋",
+        "西葫芦炒蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "zucchini": 350.0,
+          "egg_raw": 150.0,
+          "oil": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_026",
+      "name": "苦瓜炒蛋",
+      "aliases": [
+        "苦瓜炒蛋",
+        "苦瓜炒雞蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "bitter_melon": 300.0,
+          "egg_raw": 150.0,
+          "oil": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_027",
+      "name": "冬瓜虾仁",
+      "aliases": [
+        "冬瓜蝦仁",
+        "冬瓜虾仁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炖",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "winter_melon": 400.0,
+          "shrimp": 150.0,
+          "oil": 10.0,
+          "water": 100.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_028",
+      "name": "香菇豆腐",
+      "aliases": [
+        "香菇豆腐",
+        "香菇燒豆腐"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "烧",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "tofu": 350.0,
+          "shiitake": 150.0,
+          "oil": 15.0,
+          "soy_sauce": 20.0,
+          "water": 100.0,
+          "starch": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_029",
+      "name": "白菜炖豆腐",
+      "aliases": [
+        "白菜燉豆腐",
+        "白菜炖豆腐"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炖",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "napa": 400.0,
+          "tofu": 300.0,
+          "oil": 10.0,
+          "water": 200.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_030",
+      "name": "芹菜炒肉",
+      "aliases": [
+        "芹菜炒肉",
+        "芹菜肉丝"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 420.0,
+        "ingredients": {
+          "celery": 300.0,
+          "pork": 150.0,
+          "oil": 15.0,
+          "soy_sauce": 15.0,
+          "starch": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_031",
+      "name": "青椒炒蛋",
+      "aliases": [
+        "青椒炒雞蛋",
+        "青椒炒蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 380.0,
+        "ingredients": {
+          "pepper": 250.0,
+          "egg_raw": 200.0,
+          "oil": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_032",
+      "name": "洋葱炒肉",
+      "aliases": [
+        "洋葱炒肉",
+        "洋蔥炒肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 420.0,
+        "ingredients": {
+          "onion": 300.0,
+          "pork": 200.0,
+          "oil": 15.0,
+          "soy_sauce": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_033",
+      "name": "蘑菇炒鸡",
+      "aliases": [
+        "蘑菇炒鸡",
+        "蘑菇炒雞"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "mushroom": 250.0,
+          "chicken": 250.0,
+          "oil": 15.0,
+          "soy_sauce": 15.0,
+          "starch": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_034",
+      "name": "莲藕炒肉",
+      "aliases": [
+        "莲藕炒肉",
+        "蓮藕炒肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "lotus": 300.0,
+          "pork": 200.0,
+          "oil": 15.0,
+          "soy_sauce": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_035",
+      "name": "清炒绿豆芽",
+      "aliases": [
+        "清炒绿豆芽",
+        "清炒豆芽"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 300.0,
+        "ingredients": {
+          "bean_sprout": 400.0,
+          "oil": 10.0,
+          "spring_onion": 10.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_036",
+      "name": "清炒四季豆",
+      "aliases": [
+        "清炒四季豆"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "煮熟后炒",
+      "recipe": {
+        "yield_g": 320.0,
+        "ingredients": {
+          "green_bean": 400.0,
+          "oil": 15.0,
+          "garlic": 10.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_037",
+      "name": "番茄鸡蛋汤",
+      "aliases": [
+        "西红柿鸡蛋汤",
+        "番茄蛋湯",
+        "番茄鸡蛋汤"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "煮汤",
+      "recipe": {
+        "yield_g": 950.0,
+        "ingredients": {
+          "tomato": 250.0,
+          "egg_raw": 100.0,
+          "water": 600.0,
+          "sesame_oil": 5.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_038",
+      "name": "冬瓜肉丸汤",
+      "aliases": [
+        "冬瓜肉丸湯",
+        "冬瓜肉丸汤"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "煮汤",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "winter_melon": 300.0,
+          "pork_ground": 200.0,
+          "water": 600.0,
+          "salt": 3.0,
+          "starch": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_039",
+      "name": "萝卜牛肉汤",
+      "aliases": [
+        "萝卜牛肉汤",
+        "蘿蔔牛肉湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炖（牛肉末参考版）",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "radish": 400.0,
+          "beef": 200.0,
+          "water": 600.0,
+          "ginger": 10.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_040",
+      "name": "玉米鸡肉汤",
+      "aliases": [
+        "玉米鸡肉汤",
+        "玉米雞肉湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炖汤",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "corn": 250.0,
+          "chicken": 200.0,
+          "carrot": 100.0,
+          "water": 600.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_041",
+      "name": "蛋炒饭",
+      "aliases": [
+        "蛋炒饭",
+        "蛋炒飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "rice": 350.0,
+          "egg_raw": 100.0,
+          "peas": 30.0,
+          "carrot": 30.0,
+          "oil": 15.0,
+          "soy_sauce": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_042",
+      "name": "虾仁炒饭",
+      "aliases": [
+        "虾仁炒饭",
+        "蝦仁炒飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "rice": 350.0,
+          "shrimp": 100.0,
+          "egg_raw": 50.0,
+          "peas": 30.0,
+          "oil": 15.0,
+          "soy_sauce": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_043",
+      "name": "鸡肉炒饭",
+      "aliases": [
+        "鸡肉炒饭",
+        "雞肉炒飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "rice": 350.0,
+          "chicken": 150.0,
+          "carrot": 50.0,
+          "oil": 15.0,
+          "soy_sauce": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_044",
+      "name": "番茄鸡蛋面",
+      "aliases": [
+        "番茄雞蛋麵",
+        "番茄鸡蛋面"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "汤面",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "noodles": 300.0,
+          "tomato": 200.0,
+          "egg_raw": 100.0,
+          "oil": 10.0,
+          "water": 250.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_045",
+      "name": "肉丝炒面",
+      "aliases": [
+        "肉絲炒麵",
+        "肉丝炒面"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "noodles": 300.0,
+          "pork": 100.0,
+          "cabbage": 150.0,
+          "oil": 20.0,
+          "soy_sauce": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_046",
+      "name": "蔬菜炒米粉",
+      "aliases": [
+        "蔬菜炒米粉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "炒",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "rice_noodles": 300.0,
+          "carrot": 80.0,
+          "cabbage": 100.0,
+          "oil": 20.0,
+          "soy_sauce": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_047",
+      "name": "白粥",
+      "aliases": [
+        "白粥",
+        "白米粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "熬粥",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "rice_raw": 100.0,
+          "water": 800.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_048",
+      "name": "小米粥",
+      "aliases": [
+        "小米粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "熬粥",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "millet": 100.0,
+          "water": 800.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_049",
+      "name": "南瓜粥",
+      "aliases": [
+        "南瓜粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "熬粥",
+      "recipe": {
+        "yield_g": 900.0,
+        "ingredients": {
+          "rice_raw": 80.0,
+          "pumpkin": 200.0,
+          "water": 800.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    },
+    {
+      "id": "dish_050",
+      "name": "红豆粥",
+      "aliases": [
+        "红豆粥",
+        "紅豆粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "method": "熬粥",
+      "recipe": {
+        "yield_g": 900.0,
+        "ingredients": {
+          "rice_raw": 80.0,
+          "adzuki": 50.0,
+          "water": 900.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight"
+    }
+  ]
+}

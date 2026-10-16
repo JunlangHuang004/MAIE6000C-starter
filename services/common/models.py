@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 from enum import StrEnum
 
-from sqlalchemy import DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from services.common.db import Base
@@ -22,6 +22,8 @@ class CaseStatus(StrEnum):
 
 
 class AnalysisStatus(StrEnum):
+    NEEDS_INPUT = "needs_input"
+    CONFIRMED = "confirmed"
     QUEUED = "queued"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -85,6 +87,15 @@ class Analysis(Base):
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
     )
+    mode: Mapped[str] = mapped_column(String(20), nullable=False, default="advanced")
+    conversation: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
+    draft: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
+    questions: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
+    details: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
+    error_message: Mapped[str | None] = mapped_column(Text, nullable=True)
+    interpreted_food_text: Mapped[str | None] = mapped_column(Text, nullable=True)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     food_text: Mapped[str] = mapped_column(Text, nullable=False)
     status: Mapped[str] = mapped_column(
         String(20),

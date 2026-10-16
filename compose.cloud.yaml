@@ -1,0 +1,66 @@
+# Standalone single-VM deployment. Access privately through an SSH tunnel.
+x-app: &app
+  build: .
+  restart: unless-stopped
+  environment: &environment
+    APP_ENV: production
+    DATABASE_URL: postgresql+psycopg://nutrichat:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}@db:5432/nutrichat
+    AI_SERVICE_URL: http://ai:8100
+    NUTRITION_PROVIDER: qwen
+    WORKER_REQUEST_TIMEOUT_SECONDS: 45
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: '3'
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: nutrichat
+      POSTGRES_DB: nutrichat
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - cloud_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U nutrichat -d nutrichat']
+      interval: 5s
+      retries: 10
+  ai:
+    <<: *app
+    command: uvicorn services.ai.app.main:app --host 0.0.0.0 --port 8100
+    environment:
+      <<: *environment
+      DASHSCOPE_API_KEY: ${DASHSCOPE_API_KEY:?Set DASHSCOPE_API_KEY}
+      QWEN_BASE_URL: ${QWEN_BASE_URL:?Set QWEN_BASE_URL}
+      QWEN_MODEL: ${QWEN_MODEL:-qwen-plus}
+      QWEN_TIMEOUT_SECONDS: 30
+    healthcheck:
+      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8100/health/live')"]
+      interval: 10s
+      retries: 10
+  api:
+    <<: *app
+    command: /bin/sh -c 'alembic upgrade head && uvicorn services.api.app.main:app --host 0.0.0.0 --port 8000'
+    ports:
+      - '127.0.0.1:8000:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 10s
+      retries: 10
+  worker:
+    <<: *app
+    command: python -m services.worker.app.main
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  cloud_postgres:

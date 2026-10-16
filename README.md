@@ -1,3 +1,49 @@
+# NutriChat
+
+NutriChat estimates calories, protein, fat and carbohydrates from supported foods
+and explicit gram weights. Users review the saved result, correct the meal and
+recalculate, then confirm it.
+
+## Run the application
+
+```sh
+# First setup only: copy .env.example to .env if .env does not exist.
+docker compose up -d --build
+```
+
+Open http://localhost:8000/app (UI) or http://localhost:8000/docs (API).
+Example: `200g chicken breast and 230g cooked white rice`.
+The default demo mode works without an API key. For Qwen extraction and an optional
+cloud VM deployment, see [cloud deployment](docs/cloud-deployment.md).
+
+- Basic mode provides a quick estimate with visible portion/recipe assumptions.
+- Advanced mode asks for details and allows editing recipe quantities before calculation.
+- Switch modes within an unconfirmed meal; default guesses never become user facts.
+- Qwen mode: 116 source-backed ingredients and 50 editable Chinese reference recipes.
+- Describe food names, quantities and preparation in Chinese; missing information triggers
+  a saved clarification dialogue rather than fabricated weights or partial totals.
+- Review raw/cooked weight, preparation, consumed oil, recipe ingredients and batch yield.
+- Answer structured questions or continue in natural language; reload preserves the dialogue.
+- Each completed estimate displays its assumptions and USDA source IDs.
+- Confirm only after reviewing; confirmed records are locked.
+- Demo mode retains the original six English catalogue names and strict gram parser.
+- See [data sources and dialogue contract](docs/nutrition-data.md) for provenance,
+  limitations, reproducible imports and APIs. Recipe templates are project-authored
+  assumptions, not measured nutritional data or standardized recipes.
+
+## Verification
+
+```sh
+docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q
+docker compose run --rm --no-deps api ruff check services tests alembic
+SMOKE_BASE_URL=http://localhost:8000 pytest tests/smoke -q
+```
+
+The existing starter architecture, case routes, health checks and metrics remain
+available. The course starter notes below describe the original baseline.
+
+---
+
 # MAIE 6000C Starter Template
 
 This repository is the starter template for MAIE 6000C: **Engineering AI Products: From Prototype to Production**.

@@ -216,3 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Private public-deployment credentials and certificates
+deploy/public/
+
+# macOS Finder metadata
+.DS_Store

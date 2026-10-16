@@ -1,0 +1,1345 @@
+[
+  {
+    "id": "dish_001",
+    "name": "番茄炒蛋",
+    "aliases": [
+      "西红柿炒鸡蛋",
+      "番茄炒蛋",
+      "番茄炒雞蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 400.0,
+      "ingredients": {
+        "tomato": 300.0,
+        "egg_raw": 150.0,
+        "oil": 15.0,
+        "sugar": 5.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_002",
+    "name": "青椒肉丝",
+    "aliases": [
+      "青椒肉絲",
+      "青椒肉丝"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 420.0,
+      "ingredients": {
+        "pork": 200.0,
+        "pepper": 200.0,
+        "oil": 15.0,
+        "soy_sauce": 15.0,
+        "starch": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_003",
+    "name": "宫保鸡丁",
+    "aliases": [
+      "宫保鸡丁",
+      "宮保雞丁"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒（简化家常配方）",
+    "recipe": {
+      "yield_g": 400.0,
+      "ingredients": {
+        "chicken": 250.0,
+        "cucumber": 100.0,
+        "peanut": 30.0,
+        "oil": 15.0,
+        "sugar": 10.0,
+        "soy_sauce": 15.0,
+        "vinegar": 10.0,
+        "chili": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_004",
+    "name": "麻婆豆腐",
+    "aliases": [
+      "麻婆豆腐"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "烧（简化家常配方，不含豆瓣酱）",
+    "recipe": {
+      "yield_g": 620.0,
+      "ingredients": {
+        "tofu_soft": 400.0,
+        "pork_ground": 80.0,
+        "oil": 15.0,
+        "soy_sauce": 20.0,
+        "chili": 10.0,
+        "starch": 10.0,
+        "water": 150.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_005",
+    "name": "红烧肉",
+    "aliases": [
+      "紅燒肉",
+      "红烧肉"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "红烧",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "pork_belly": 400.0,
+        "sugar": 25.0,
+        "soy_sauce": 25.0,
+        "oil": 10.0,
+        "water": 200.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_006",
+    "name": "鱼香肉丝",
+    "aliases": [
+      "魚香肉絲",
+      "鱼香肉丝"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒（简化家常配方）",
+    "recipe": {
+      "yield_g": 500.0,
+      "ingredients": {
+        "pork": 200.0,
+        "carrot": 100.0,
+        "pepper": 80.0,
+        "bamboo": 80.0,
+        "oil": 15.0,
+        "sugar": 15.0,
+        "vinegar": 15.0,
+        "soy_sauce": 15.0,
+        "starch": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_007",
+    "name": "回锅肉",
+    "aliases": [
+      "回锅肉",
+      "回鍋肉"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "煮后炒（简化家常配方）",
+    "recipe": {
+      "yield_g": 400.0,
+      "ingredients": {
+        "pork_belly": 250.0,
+        "pepper": 150.0,
+        "oil": 10.0,
+        "soy_sauce": 20.0,
+        "sugar": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_008",
+    "name": "土豆炖牛肉",
+    "aliases": [
+      "土豆燉牛肉",
+      "土豆炖牛肉"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炖（牛肉末参考版）",
+    "recipe": {
+      "yield_g": 850.0,
+      "ingredients": {
+        "beef": 250.0,
+        "potato": 300.0,
+        "carrot": 100.0,
+        "tomato": 100.0,
+        "oil": 10.0,
+        "soy_sauce": 20.0,
+        "water": 250.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_009",
+    "name": "香菇滑鸡",
+    "aliases": [
+      "香菇滑雞",
+      "香菇滑鸡"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "蒸",
+    "recipe": {
+      "yield_g": 500.0,
+      "ingredients": {
+        "chicken_thigh": 300.0,
+        "shiitake": 100.0,
+        "oil": 10.0,
+        "soy_sauce": 20.0,
+        "starch": 10.0,
+        "water": 100.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_010",
+    "name": "清蒸鲤鱼",
+    "aliases": [
+      "清蒸鯉魚",
+      "清蒸鲤鱼"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "清蒸，鱼肉净重",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "carp": 400.0,
+        "ginger": 15.0,
+        "spring_onion": 20.0,
+        "soy_sauce": 20.0,
+        "oil": 10.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_011",
+    "name": "蒜蓉虾仁",
+    "aliases": [
+      "蒜蓉虾仁",
+      "蒜蓉蝦仁"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "蒸",
+    "recipe": {
+      "yield_g": 300.0,
+      "ingredients": {
+        "shrimp": 300.0,
+        "garlic": 20.0,
+        "oil": 10.0,
+        "soy_sauce": 15.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_012",
+    "name": "虾仁炒蛋",
+    "aliases": [
+      "蝦仁炒蛋",
+      "虾仁炒蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 400.0,
+      "ingredients": {
+        "shrimp": 200.0,
+        "egg_raw": 200.0,
+        "oil": 15.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_013",
+    "name": "葱炒鸡蛋",
+    "aliases": [
+      "葱炒鸡蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒（葱版本）",
+    "recipe": {
+      "yield_g": 270.0,
+      "ingredients": {
+        "egg_raw": 200.0,
+        "spring_onion": 80.0,
+        "oil": 10.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_014",
+    "name": "蒸水蛋",
+    "aliases": [
+      "鸡蛋羹",
+      "蒸水蛋",
+      "蒸蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "蒸",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "egg_raw": 150.0,
+        "water": 300.0,
+        "soy_sauce": 10.0,
+        "sesame_oil": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_015",
+    "name": "肉末蒸蛋",
+    "aliases": [
+      "肉沫蒸蛋",
+      "肉末蒸蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "蒸",
+    "recipe": {
+      "yield_g": 520.0,
+      "ingredients": {
+        "egg_raw": 150.0,
+        "pork_ground": 100.0,
+        "water": 300.0,
+        "soy_sauce": 15.0,
+        "sesame_oil": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_016",
+    "name": "凉拌黄瓜",
+    "aliases": [
+      "涼拌黃瓜",
+      "拍黄瓜",
+      "凉拌黄瓜"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "凉拌",
+    "recipe": {
+      "yield_g": 350.0,
+      "ingredients": {
+        "cucumber": 300.0,
+        "garlic": 10.0,
+        "vinegar": 20.0,
+        "soy_sauce": 15.0,
+        "sesame_oil": 10.0,
+        "sugar": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_017",
+    "name": "清炒西兰花",
+    "aliases": [
+      "清炒西蘭花",
+      "清炒西兰花"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 300.0,
+      "ingredients": {
+        "broccoli": 350.0,
+        "garlic": 10.0,
+        "oil": 10.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_018",
+    "name": "蒜蓉小白菜",
+    "aliases": [
+      "蒜蓉白菜",
+      "蒜蓉小白菜"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 300.0,
+      "ingredients": {
+        "bok_choy": 400.0,
+        "garlic": 15.0,
+        "oil": 15.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_019",
+    "name": "清炒菠菜",
+    "aliases": [
+      "蒜蓉菠菜",
+      "清炒菠菜"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 280.0,
+      "ingredients": {
+        "spinach": 400.0,
+        "garlic": 10.0,
+        "oil": 15.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_020",
+    "name": "清炒生菜",
+    "aliases": [
+      "清炒生菜",
+      "蒜蓉生菜"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 260.0,
+      "ingredients": {
+        "lettuce": 400.0,
+        "garlic": 15.0,
+        "oil": 15.0,
+        "soy_sauce": 10.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_021",
+    "name": "手撕包菜",
+    "aliases": [
+      "手撕包菜",
+      "手撕卷心菜"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 330.0,
+      "ingredients": {
+        "cabbage": 400.0,
+        "oil": 15.0,
+        "chili": 5.0,
+        "soy_sauce": 10.0,
+        "vinegar": 10.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_022",
+    "name": "酸辣土豆丝",
+    "aliases": [
+      "酸辣土豆絲",
+      "酸辣土豆丝"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 360.0,
+      "ingredients": {
+        "potato": 350.0,
+        "pepper": 30.0,
+        "chili": 5.0,
+        "oil": 15.0,
+        "vinegar": 20.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_023",
+    "name": "地三鲜",
+    "aliases": [
+      "地三鮮",
+      "地三鲜"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒（非过油版）",
+    "recipe": {
+      "yield_g": 650.0,
+      "ingredients": {
+        "eggplant": 250.0,
+        "potato": 250.0,
+        "pepper": 150.0,
+        "oil": 25.0,
+        "soy_sauce": 20.0,
+        "starch": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_024",
+    "name": "红烧茄子",
+    "aliases": [
+      "紅燒茄子",
+      "红烧茄子"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "烧（非油炸版）",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "eggplant": 500.0,
+        "oil": 25.0,
+        "soy_sauce": 20.0,
+        "sugar": 10.0,
+        "garlic": 15.0,
+        "water": 100.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_025",
+    "name": "西葫芦炒蛋",
+    "aliases": [
+      "西葫蘆炒蛋",
+      "西葫芦炒蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "zucchini": 350.0,
+        "egg_raw": 150.0,
+        "oil": 15.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_026",
+    "name": "苦瓜炒蛋",
+    "aliases": [
+      "苦瓜炒蛋",
+      "苦瓜炒雞蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 400.0,
+      "ingredients": {
+        "bitter_melon": 300.0,
+        "egg_raw": 150.0,
+        "oil": 15.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_027",
+    "name": "冬瓜虾仁",
+    "aliases": [
+      "冬瓜蝦仁",
+      "冬瓜虾仁"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炖",
+    "recipe": {
+      "yield_g": 550.0,
+      "ingredients": {
+        "winter_melon": 400.0,
+        "shrimp": 150.0,
+        "oil": 10.0,
+        "water": 100.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_028",
+    "name": "香菇豆腐",
+    "aliases": [
+      "香菇豆腐",
+      "香菇燒豆腐"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "烧",
+    "recipe": {
+      "yield_g": 550.0,
+      "ingredients": {
+        "tofu": 350.0,
+        "shiitake": 150.0,
+        "oil": 15.0,
+        "soy_sauce": 20.0,
+        "water": 100.0,
+        "starch": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_029",
+    "name": "白菜炖豆腐",
+    "aliases": [
+      "白菜燉豆腐",
+      "白菜炖豆腐"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炖",
+    "recipe": {
+      "yield_g": 800.0,
+      "ingredients": {
+        "napa": 400.0,
+        "tofu": 300.0,
+        "oil": 10.0,
+        "water": 200.0,
+        "salt": 3.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_030",
+    "name": "芹菜炒肉",
+    "aliases": [
+      "芹菜炒肉",
+      "芹菜肉丝"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 420.0,
+      "ingredients": {
+        "celery": 300.0,
+        "pork": 150.0,
+        "oil": 15.0,
+        "soy_sauce": 15.0,
+        "starch": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_031",
+    "name": "青椒炒蛋",
+    "aliases": [
+      "青椒炒雞蛋",
+      "青椒炒蛋"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 380.0,
+      "ingredients": {
+        "pepper": 250.0,
+        "egg_raw": 200.0,
+        "oil": 15.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_032",
+    "name": "洋葱炒肉",
+    "aliases": [
+      "洋葱炒肉",
+      "洋蔥炒肉"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 420.0,
+      "ingredients": {
+        "onion": 300.0,
+        "pork": 200.0,
+        "oil": 15.0,
+        "soy_sauce": 15.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_033",
+    "name": "蘑菇炒鸡",
+    "aliases": [
+      "蘑菇炒鸡",
+      "蘑菇炒雞"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "mushroom": 250.0,
+        "chicken": 250.0,
+        "oil": 15.0,
+        "soy_sauce": 15.0,
+        "starch": 5.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_034",
+    "name": "莲藕炒肉",
+    "aliases": [
+      "莲藕炒肉",
+      "蓮藕炒肉"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 450.0,
+      "ingredients": {
+        "lotus": 300.0,
+        "pork": 200.0,
+        "oil": 15.0,
+        "soy_sauce": 15.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_035",
+    "name": "清炒绿豆芽",
+    "aliases": [
+      "清炒绿豆芽",
+      "清炒豆芽"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 300.0,
+      "ingredients": {
+        "bean_sprout": 400.0,
+        "oil": 10.0,
+        "spring_onion": 10.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_036",
+    "name": "清炒四季豆",
+    "aliases": [
+      "清炒四季豆"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "煮熟后炒",
+    "recipe": {
+      "yield_g": 320.0,
+      "ingredients": {
+        "green_bean": 400.0,
+        "oil": 15.0,
+        "garlic": 10.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_037",
+    "name": "番茄鸡蛋汤",
+    "aliases": [
+      "西红柿鸡蛋汤",
+      "番茄蛋湯",
+      "番茄鸡蛋汤"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "煮汤",
+    "recipe": {
+      "yield_g": 950.0,
+      "ingredients": {
+        "tomato": 250.0,
+        "egg_raw": 100.0,
+        "water": 600.0,
+        "sesame_oil": 5.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_038",
+    "name": "冬瓜肉丸汤",
+    "aliases": [
+      "冬瓜肉丸湯",
+      "冬瓜肉丸汤"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "煮汤",
+    "recipe": {
+      "yield_g": 1000.0,
+      "ingredients": {
+        "winter_melon": 300.0,
+        "pork_ground": 200.0,
+        "water": 600.0,
+        "salt": 3.0,
+        "starch": 10.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_039",
+    "name": "萝卜牛肉汤",
+    "aliases": [
+      "萝卜牛肉汤",
+      "蘿蔔牛肉湯"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炖（牛肉末参考版）",
+    "recipe": {
+      "yield_g": 1100.0,
+      "ingredients": {
+        "radish": 400.0,
+        "beef": 200.0,
+        "water": 600.0,
+        "ginger": 10.0,
+        "salt": 3.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_040",
+    "name": "玉米鸡肉汤",
+    "aliases": [
+      "玉米鸡肉汤",
+      "玉米雞肉湯"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炖汤",
+    "recipe": {
+      "yield_g": 1100.0,
+      "ingredients": {
+        "corn": 250.0,
+        "chicken": 200.0,
+        "carrot": 100.0,
+        "water": 600.0,
+        "salt": 3.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_041",
+    "name": "蛋炒饭",
+    "aliases": [
+      "蛋炒饭",
+      "蛋炒飯"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 500.0,
+      "ingredients": {
+        "rice": 350.0,
+        "egg_raw": 100.0,
+        "peas": 30.0,
+        "carrot": 30.0,
+        "oil": 15.0,
+        "soy_sauce": 10.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_042",
+    "name": "虾仁炒饭",
+    "aliases": [
+      "虾仁炒饭",
+      "蝦仁炒飯"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 550.0,
+      "ingredients": {
+        "rice": 350.0,
+        "shrimp": 100.0,
+        "egg_raw": 50.0,
+        "peas": 30.0,
+        "oil": 15.0,
+        "soy_sauce": 10.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_043",
+    "name": "鸡肉炒饭",
+    "aliases": [
+      "鸡肉炒饭",
+      "雞肉炒飯"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 550.0,
+      "ingredients": {
+        "rice": 350.0,
+        "chicken": 150.0,
+        "carrot": 50.0,
+        "oil": 15.0,
+        "soy_sauce": 15.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_044",
+    "name": "番茄鸡蛋面",
+    "aliases": [
+      "番茄雞蛋麵",
+      "番茄鸡蛋面"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "汤面",
+    "recipe": {
+      "yield_g": 800.0,
+      "ingredients": {
+        "noodles": 300.0,
+        "tomato": 200.0,
+        "egg_raw": 100.0,
+        "oil": 10.0,
+        "water": 250.0,
+        "salt": 2.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_045",
+    "name": "肉丝炒面",
+    "aliases": [
+      "肉絲炒麵",
+      "肉丝炒面"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 550.0,
+      "ingredients": {
+        "noodles": 300.0,
+        "pork": 100.0,
+        "cabbage": 150.0,
+        "oil": 20.0,
+        "soy_sauce": 20.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_046",
+    "name": "蔬菜炒米粉",
+    "aliases": [
+      "蔬菜炒米粉"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "炒",
+    "recipe": {
+      "yield_g": 500.0,
+      "ingredients": {
+        "rice_noodles": 300.0,
+        "carrot": 80.0,
+        "cabbage": 100.0,
+        "oil": 20.0,
+        "soy_sauce": 20.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_047",
+    "name": "白粥",
+    "aliases": [
+      "白粥",
+      "白米粥"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "熬粥",
+    "recipe": {
+      "yield_g": 800.0,
+      "ingredients": {
+        "rice_raw": 100.0,
+        "water": 800.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_048",
+    "name": "小米粥",
+    "aliases": [
+      "小米粥"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "熬粥",
+    "recipe": {
+      "yield_g": 800.0,
+      "ingredients": {
+        "millet": 100.0,
+        "water": 800.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_049",
+    "name": "南瓜粥",
+    "aliases": [
+      "南瓜粥"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "熬粥",
+    "recipe": {
+      "yield_g": 900.0,
+      "ingredients": {
+        "rice_raw": 80.0,
+        "pumpkin": 200.0,
+        "water": 800.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  },
+  {
+    "id": "dish_050",
+    "name": "红豆粥",
+    "aliases": [
+      "红豆粥",
+      "紅豆粥"
+    ],
+    "kind": "recipe",
+    "state": "cooked",
+    "method": "熬粥",
+    "recipe": {
+      "yield_g": 900.0,
+      "ingredients": {
+        "rice_raw": 80.0,
+        "adzuki": 50.0,
+        "water": 900.0
+      }
+    },
+    "source": {
+      "name": "NutriChat 可编辑参考配方 v1（项目自建假设，非标准菜谱）",
+      "license": "Project-authored",
+      "url": null
+    },
+    "nutrition_basis": "recipe_batch_then_cooked_weight"
+  }
+]

@@ -32,6 +32,7 @@ def claim_next_pending_job(db: Session) -> Job | None:
         .where(Job.status == JobStatus.PENDING.value)
         .order_by(Job.created_at.asc())
         .limit(1)
+        .with_for_update(skip_locked=True)
     )
     job = db.execute(stmt).scalars().first()
     if job is None:
@@ -63,6 +64,7 @@ def mark_job_failed(job_id: int, error_message: str) -> None:
         analysis = db.get(Analysis, job.analysis_id) if job.analysis_id else None
         if analysis is not None:
             analysis.status = AnalysisStatus.FAILED.value
+            analysis.error_message = "估算服务暂时不可用，请重试或补充更清楚的餐食描述。"
 
         db.commit()
 
@@ -130,6 +132,8 @@ def process_nutrition_job(job_id: int) -> None:
         payload = {
             "analysis_id": analysis.id,
             "food_text": analysis.food_text,
+            "conversation": analysis.conversation, "draft": analysis.draft,
+            "mode": analysis.mode,
         }
 
     response = httpx.post(
@@ -149,7 +153,15 @@ def process_nutrition_job(job_id: int) -> None:
         if analysis is None:
             raise RuntimeError(f"Analysis not found while completing job {job_id}")
 
-        analysis.status = AnalysisStatus.COMPLETED.value
+        analysis.status = "needs_input" if nutrition.questions else "completed"
+        analysis.draft = nutrition.draft
+        analysis.questions = nutrition.questions
+        analysis.details = nutrition.details
+        analysis.error_message = None
+        if nutrition.questions:
+            analysis.conversation = [*analysis.conversation, {
+                "role": "assistant", "content": "\n".join(q['label'] for q in nutrition.questions)}]
+        analysis.interpreted_food_text = nutrition.interpreted_food_text
         analysis.calories = nutrition.calories
         analysis.protein_g = nutrition.protein_g
         analysis.carbs_g = nutrition.carbs_g
