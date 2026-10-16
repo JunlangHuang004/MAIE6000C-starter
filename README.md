@@ -1,322 +1,101 @@
 # NutriChat
 
-NutriChat estimates calories, protein, fat and carbohydrates from supported foods
-and explicit gram weights. Users review the saved result, correct the meal and
-recalculate, then confirm it.
+NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions,
+including Chinese ingredients, dish names, cooking methods and follow-up details.
+Users review and correct the estimate before confirming it. Confirmed records are locked.
 
-## Run the application
+The Qwen workflow includes **116 USDA ingredient records and 50 editable Chinese
+reference recipes**. Qwen interprets descriptions; Python calculates nutrients from
+source-backed data. This project does not train or fine-tune a model.
+
+## Estimation modes
+
+| Mode | Use case | Handling missing information |
+| --- | --- | --- |
+| Basic | Quickly estimate a description such as “一份番茄炒蛋，两个水煮鸡蛋” | Apply and display reference portions, recipes and oil assumptions; ask about unmatched foods or contradictory facts |
+| Advanced | Supply weights, preparation and recipe details | Ask for edible grams, raw/cooked state, preparation and consumed oil; require review of batch ingredients and finished recipe weight |
+
+The UI defaults to basic mode; the API defaults to advanced when `mode` is omitted.
+Unconfirmed records can switch modes. Basic-mode assumptions never become facts
+supplied by the user. Pending clarification leaves all nutrient totals null.
+Dialogue, calculation evidence and results are stored in PostgreSQL and restored on reload.
+
+Advanced mode makes inputs more specific, but does not guarantee measured accuracy.
+Reference recipes are project-authored examples, not standardized recipes. Brands,
+cooking losses and actual portion sizes affect results. See [data provenance and
+limitations](docs/nutrition-data.md).
+
+## Run locally
+
+Install Docker and Docker Compose, then run from the repository root:
 
 ```sh
-# First setup only: copy .env.example to .env if .env does not exist.
+# Create .env only on first setup; preserve existing settings and secrets.
+test -f .env || cp .env.example .env
 docker compose up -d --build
 ```
 
-Open http://localhost:8000/app (UI) or http://localhost:8000/docs (API).
-Example: `200g chicken breast and 230g cooked white rice`.
-The default demo mode works without an API key. For Qwen extraction and an optional
-cloud VM deployment, see [cloud deployment](docs/cloud-deployment.md).
+Open the [application](http://localhost:8000/app) or [API documentation](http://localhost:8000/docs).
 
-- Basic mode provides a quick estimate with visible portion/recipe assumptions.
-- Advanced mode asks for details and allows editing recipe quantities before calculation.
-- Switch modes within an unconfirmed meal; default guesses never become user facts.
-- Qwen mode: 116 source-backed ingredients and 50 editable Chinese reference recipes.
-- Describe food names, quantities and preparation in Chinese; missing information triggers
-  a saved clarification dialogue rather than fabricated weights or partial totals.
-- Review raw/cooked weight, preparation, consumed oil, recipe ingredients and batch yield.
-- Answer structured questions or continue in natural language; reload preserves the dialogue.
-- Each completed estimate displays its assumptions and USDA source IDs.
-- Confirm only after reviewing; confirmed records are locked.
-- Demo mode retains the original six English catalogue names and strict gram parser.
-- See [data sources and dialogue contract](docs/nutrition-data.md) for provenance,
-  limitations, reproducible imports and APIs. Recipe templates are project-authored
-  assumptions, not measured nutritional data or standardized recipes.
+- The default `NUTRITION_PROVIDER=demo` needs no API key. It supports only the legacy
+  six English catalogue names and explicit gram weights, for example
+  `200g chicken breast and 230g cooked white rice`. It does not provide the full Chinese dialogue workflow.
+- For Chinese descriptions and both estimation modes, configure `NUTRITION_PROVIDER=qwen`,
+  `DASHSCOPE_API_KEY`, `QWEN_BASE_URL` and `QWEN_MODEL` in the private `.env`, then rerun
+  the startup command. The key, workspace and endpoint region must match. See
+  [Qwen configuration and cloud deployment](docs/cloud-deployment.md).
+- Local Compose publishes API, AI and database development ports. Public deployment
+  uses the separate cloud configuration and HTTPS session gateway.
+
+## Meal workflow
+
+1. Select basic or advanced mode and describe the meal.
+2. Wait for background processing. Answer questions or provide natural-language corrections.
+3. Review each food, portion, recipe, default assumption and nutrition source. Switch modes to recalculate if needed.
+4. Confirm the saved estimate. Start a new meal to revise an already-confirmed record.
 
 ## Verification
 
+Build the current images first. Unit/integration tests do not require Qwen credentials:
+
 ```sh
-docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q
-docker compose run --rm --no-deps api ruff check services tests alembic
-SMOKE_BASE_URL=http://localhost:8000 pytest tests/smoke -q
+docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
+docker compose run --rm --no-deps api ruff check services tests alembic scripts/import_usda.py scripts/check_qwen.py scripts/check_dialogue.py
 ```
 
-The existing starter architecture, case routes, health checks and metrics remain
-available. The course starter notes below describe the original baseline.
+After configuring Qwen and starting the stack, run the live checks below. These
+consume model quota; the dialogue check creates synthetic saved meal records.
 
----
-
-# MAIE 6000C Starter Template
-
-This repository is the starter template for MAIE 6000C: **Engineering AI Products: From Prototype to Production**.
-
-It is intentionally small, but it already demonstrates the core engineering shape expected in the course:
-
-- a public-facing API service
-- a separate internal AI service
-- a worker process
-- a PostgreSQL database
-- Alembic migrations
-- Docker Compose deployment
-- unit, integration, and smoke testing support
-- structured logging
-- health checks
-- basic metrics
-
-## Purpose of this repository
-
-This repository is **not** meant to be a feature-complete product.
-
-Its purpose is to provide a working baseline that teams will extend into their semester project while preserving the course’s engineering contract.
-
-## Course engineering contract
-
-Every passing team project built from this template must ultimately include:
-
-- a meaningful relational database layer
-- a service or API layer
-- a worker or async path outside the immediate request cycle
-- an AI-enabled function integrated into the workflow
-- reproducible local deployment
-- tests or credible verification
-- documentation
-- structured logs
-- health checks
-- basic observability
-
-## Baseline workflow in the starter
-
-The starter demonstrates a simple end-to-end flow:
-
-1. create a case through the API
-2. store that case in PostgreSQL
-3. create a background job
-4. let the worker claim and process the job
-5. call the internal AI service over HTTP
-6. persist the result
-7. retrieve updated state through the API
-
-This gives you a starting point for:
-
-- persistence
-- inter-service communication
-- worker-based execution
-- deployment
-- testing
-- observability
-
-## Repository structure
-
-Typical structure:
-
-```text
-.
-├─ .github/
-├─ alembic/
-├─ docs/
-├─ observability/
-├─ scripts/
-├─ services/
-│  └─ api/
-├─ submissions/
-│  ├─ week04/
-│  ├─ week07/
-│  └─ week13/
-├─ tests/
-├─ .env.example
-├─ compose.yaml
-├─ Makefile
-├─ pyproject.toml
-└─ README.md
+```sh
+docker compose run --rm --no-deps api python scripts/check_qwen.py --live
+docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
 ```
 
-## Core services
-
-### API service
-
-The API service is the main entry point for requests and exposes routes for core system actions.
-
-### AI service
-
-The AI service is a separate internal service used to demonstrate service-to-service communication for an AI-enabled function.
-
-### Worker
-
-The worker processes jobs outside the immediate request cycle.
-
-### Database
-
-PostgreSQL is used as the relational persistence layer.
-
-## Quick start
-
-### 1. Copy environment file
-
-```bash
-cp .env.example .env
-```
-
-### 2. Start the stack
-
-```bash
-docker compose up --build
-```
-
-### 3. Optional observability profile
-
-```bash
-docker compose --profile observability up --build
-```
-
-### 4. Open the relevant endpoints
-
-- API docs: `http://localhost:8000/docs`
-- AI service docs: `http://localhost:8100/docs`
-- Prometheus: `http://localhost:9090` if the observability profile is enabled
-
-## Typical development commands
-
-### Start the stack
-
-```bash
-docker compose up --build
-```
-
-### Stop the stack
-
-```bash
-docker compose down --remove-orphans
-```
-
-### Stop and remove volumes
-
-```bash
-docker compose down -v --remove-orphans
-```
-
-### Run tests
-
-```bash
-pytest -q
-```
-
-### Run smoke tests against a running stack
-
-```bash
-SMOKE_BASE_URL=http://localhost:8000 pytest tests/smoke -q
-```
-
-### Run migrations
-
-```bash
-docker compose run --rm api alembic upgrade head
-```
-
-### Seed demo data
-
-```bash
-docker compose run --rm api python scripts/seed_demo_data.py
-```
-
-## What teams are expected to change
-
-Teams are expected to extend or replace:
-
-- the domain model
-- routes and workflows
-- worker job types
-- AI-enabled logic
-- tests
-- documentation
-- observability depth
-
-Teams are not expected to replace the course operating model or ignore the required repository structure.
-
-## Required living documents for team repositories
-
-By the time this template becomes a semester team project repo, it should maintain:
-
-- `README.md`
-- `docs/architecture.md`
-- `docs/operations.md`
-- `docs/adrs/`
-- `submissions/week04/`
-- `submissions/week07/`
-- `submissions/week13/`
-
-## Required milestone tags for team projects
-
-When this repo is used as a semester project repository, the required milestone tags are:
-
-- `w04-proposal`
-- `w07-midterm`
-- `w13-final`
-
-## Branch conventions
-
-Recommended branch prefixes:
-
-- `feature/...`
-- `fix/...`
-- `docs/...`
-- `submission/...`
-
-Default branch:
-
-- `main`
-
-## Testing expectations
-
-A strong project should maintain some combination of:
-
-- unit tests
-- integration tests
-- smoke tests
-- credible end-to-end verification
-
-The exact test mix may vary, but important behavior must be checkable and explainable.
-
-## Observability expectations
-
-At minimum, projects should support:
-
-- structured logs
-- health checks
-- basic metrics or equivalent observability signals
-
-Do not wait until the end of the semester to add operational visibility.
-
-## Data and privacy expectations
-
-Projects in this course must use only:
-
-- public data
-- synthetic data
-- anonymized data
-- instructor-approved sources
-
-Do not commit secrets to the repository.
-
-Do not log sensitive or unnecessary data carelessly.
-
-## AI use reminder
-
-If you use generative AI tools during development, you must remain able to explain your work and include the required AI Use Statement in major submissions.
-
-The AI-enabled feature in your system is separate from optional AI tool use during development.
-
-## Suggested first steps for teams
-
-When beginning your project, do the following early:
-
-- confirm the repo boots from a clean clone
-- understand the current workflow end to end
-- choose a narrow core workflow
-- identify your main persistent entities
-- identify your worker path
-- decide where the AI-enabled function belongs
-- update documentation as soon as design changes
-
-## Final reminder
-
-This course rewards engineering maturity.
-
-A smaller, reliable, well-documented system built from this template is stronger than a large but fragile system built on rushed changes.
+The 2026-10-17 feature release passed 59 unit/integration tests, Ruff, a JavaScript
+syntax check, and real-Qwen workflows locally and on ECS. See the
+[change log](docs/change-log.md) for scope and recorded validation.
+
+## Architecture and documentation
+
+FastAPI API → PostgreSQL job queue → worker → internal AI service → Qwen extraction /
+Python calculation → persisted result. Qwen runs in the cloud; the VM needs no GPU.
+
+| Document | Contents |
+| --- | --- |
+| [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
+| [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
+| [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
+| [Operations](docs/operations.md) | Local checks, logs, failure handling and migrations |
+| [Cloud deployment](docs/cloud-deployment.md) | Qwen, ECS, login, HTTPS and backups |
+| [Design decision](docs/adrs/0002-source-backed-dual-mode.md) | Two modes and the model/calculation responsibility split |
+| [Change log](docs/change-log.md) | Feature, documentation and validation records |
+
+The project retains the course engineering contract: relational persistence, an API,
+an asynchronous worker, a separate AI service, migrations, tests, structured logs,
+health checks and metrics. The original `/cases` workflow remains available.
+[Starter notes](docs/history/starter-readme.md) and [early API course evidence](docs/history/week05-api-contract.md)
+are archived for context and do not define the current feature scope.
+
+This is a shared-account learning prototype without per-user data isolation,
+idempotency keys, automatic retries or recovery of interrupted claimed jobs.
+Never commit API keys, login passwords, certificates or database backups.

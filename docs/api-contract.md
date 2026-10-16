@@ -1,300 +1,85 @@
-# Current NutriChat extension (2026-10-16)
+# NutriChat API contract
 
-This section supersedes the historical Week 7 deferral of review/update below.
+Current implementation: 2026-10-17. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
-- `GET /app`: meal UI; `GET /foods`: supported catalogue and active provider.
-- `POST /analyses`: validate input, save queued analysis and pending job atomically.
-- `GET /analyses/{id}`: saved state, totals, interpreted food text, revision and confirmed timestamp.
-- `PATCH /analyses/{id}`: `{ "food_text": "200g egg", "revision": 1 }` corrects a
-  completed or failed analysis, clears results, increments revision, creates a job;
-  returns the analysis and job. Queued and confirmed analyses cannot be edited.
-- `POST /analyses/{id}/confirm`: `{ "revision": 2 }` confirms only a completed
-  analysis, increments revision and records `confirmed_at`; returns the analysis.
-- Missing records return 404; invalid input returns 422; stale revision or disallowed
-  state returns 409. Conditional database updates serialize correction/confirmation.
-- Worker: queued → completed or failed. API: completed/failed → queued (correction),
-  completed → confirmed. Completed means ready for review, not user confirmed.
-- Demo mode rejects unsupported/partial input synchronously. Qwen mode checks text
-  length synchronously and validates structured extraction asynchronously; unsupported
-  food or model errors produce failed analysis/job state. No fallback estimates.
-- Qwen extraction runs in the internal AI service; arithmetic uses the shared demo
-  catalogue. The interpreted meal is persisted so the user can inspect it.
-- Configure Qwen and cloud hosting using [cloud deployment](cloud-deployment.md).
+## Routes
 
-The following is the historical course evidence/plan retained for context.
-
----
-
-# Week 5 API Contract Evidence and Plan
-
-## Scope
-
-The Week 7 vertical slice accepts a text description of food, creates a persistent
-nutrition analysis and background job, processes the job through the worker and
-internal AI service, and exposes the persisted calories and macronutrients.
-
-In scope:
-
-- `POST /analyses`
-- `GET /analyses/{analysis_id}`
-- asynchronous API -> database/job -> worker -> AI -> persisted-result flow
-- calories, protein, carbohydrates, and fat
-
-Out of scope for Week 7:
-
-- image recognition
-- authentication and authorization
-- idempotency keys and automatic retries
-- production-grade nutrition data or medical guidance
-
-## Activity A: API Contract Evidence Map
-
-This evidence map records the starter behavior that was observed before defining the
-project-specific nutrition interface.
-
-| Evidence | Actual repository evidence | Observed or intended |
+| Route | Request / purpose | Success |
 | --- | --- | --- |
-| Workflow-starting route | `POST /cases` in `services/api/app/main.py`; route function `create_case()` | Observed starter behavior |
-| Request schema | `CaseCreate` in `services/common/schemas.py` | Observed starter behavior |
-| Validation rules | `title`: 3-200 characters; `description`: 5-4000 characters | Observed starter behavior |
-| Main-record/job function | `create_case_with_job()` in `services/api/app/main.py` | Observed starter behavior |
-| Records created | `Case` and `Job` from `services/common/models.py` | Observed starter behavior |
-| Initial states | Case `queued`; Job `pending`; job type `triage_case` | Observed starter behavior |
-| Response model | `CaseCreateResponse`, containing `CaseRead` and `JobRead` | Observed starter behavior |
-| Missing-record behavior | `GET /cases/{case_id}` returns `404 {"detail":"Case not found"}` | Observed starter behavior |
-| Validation-error behavior | Invalid or missing fields return FastAPI/Pydantic `422` details | Observed starter behavior |
-| Integration test | `test_create_and_read_case_and_job()` in `tests/integration/test_api_case_flow.py` | Executed evidence |
-| Project route | `POST /analyses` and `GET /analyses/{analysis_id}` | Implemented project behavior |
-| Project schemas | `AnalysisCreate`, `AnalysisRead`, and `AnalysisCreateResponse` | Implemented project behavior |
-| Project persistence | `Analysis` plus an `analyze_nutrition` `Job` | Implemented project behavior |
-| Project integration test | `tests/integration/test_api_analysis_flow.py` | Executed evidence |
+| `POST /analyses` | `{food_text, mode?}`; atomically create an analysis and pending job | 201, `{analysis, job}` |
+| `GET /analyses/{id}` | Read saved state, dialogue and result | 200, analysis |
+| `PATCH /analyses/{id}` | `{food_text, revision}`; replace description and reset dialogue, preserving mode | 200, `{analysis, job}` |
+| `POST /analyses/{id}/reply` | `{revision, message}` OR `{revision, answers}`; supplement or correct | 200, `{analysis, job}` |
+| `POST /analyses/{id}/mode` | `{revision, mode}`; switch mode on the same record | 200, `{analysis, job}` |
+| `POST /analyses/{id}/confirm` | `{revision}`; confirm a completed result | 200, analysis |
+| `GET /foods` | Active provider, catalogue, legacy names and gram limit | 200, object |
+| `GET /jobs/{id}` | Background job status and operational error | 200, job |
+| `GET /app` | Application page | 200, HTML |
 
-### Route-to-test trace
+Existing `/cases` routes and internal `/triage` are retained from the starter. The internal AI service receives `POST /analyze-nutrition`; it is not a public model endpoint.
+
+## Creation and saved fields
+
+```json
+{"food_text": "一份番茄炒蛋，两个水煮鸡蛋", "mode": "basic"}
+```
+
+`food_text` is trimmed and must contain 1–2000 characters. `mode` is `basic` or `advanced`; API default is `advanced`, while the UI explicitly sends `basic` by default. Each valid POST creates a new record; there is no idempotency key.
+
+The response contains the new analysis (initial `revision: 1`, `status: queued`) and pending job. Poll `GET /analyses/{id}` for the saved result. Do not assume a particular final revision; use the latest returned value for every mutation.
+
+Analysis fields include `id`, `food_text`, `mode`, `status`, `revision`, timestamps, `confirmed_at`, `interpreted_food_text`, `error_message`, four nutrient totals (`calories`, `protein_g`, `carbs_g`, `fat_g`), and:
+
+- `conversation`: saved user/assistant messages, with optional display text.
+- `draft`: extracted and user-supplied facts. Basic-mode defaults are not persisted as facts.
+- `questions`: current structured clarification slots, labels and applicable options.
+- `details`: per-food calculation, assumptions and source references.
+
+## Clarification and corrections
+
+Natural-language reply example (replace the revision with the current value):
+
+```json
+{"revision": 2, "message": "鸡蛋可食部分是80克，水煮，没有额外用油"}
+```
+
+Structured reply example, only if `0.grams` is a current issued question:
+
+```json
+{"revision": 2, "answers": {"0.grams": 180}}
+```
+
+Exactly one nonblank message or nonempty answers map is required. Messages are limited to 2000 characters and answers to 150 entries. Use server-issued question keys and values; do not manufacture fields or submit nutrition totals. Keys include item index plus `grams`, `weight_basis`, `preparation`, `oil_g`, `food_id`, `resolved` or `recipe`.
+
+A recipe answer has the shape `{ingredients: {ingredient_id: grams}, yield_g: finished_batch_grams}`. It must match the issued recipe ingredient set. Set omitted ingredients to zero; describe added ingredients in a natural-language reply. Structured replies validate and update the draft without another Qwen call. Natural-language replies re-extract facts using the saved conversation, so advanced recipes require renewed approval.
+
+Replies reject an existing conversation of 36 or more messages or a resulting serialized conversation above 45,000 characters. Extraction permits up to 30 items. Food grams must be positive and at most 10,000; recipe ingredient grams may be zero and at most 10,000; batch yield must be positive and at most 10,000; consumed extra oil is 0–1000g.
+
+`PATCH` replaces the description and clears the old conversation/draft. `/reply` continues the conversation. `/mode` retains explicit draft facts and conversation, but clears results and requeues calculation. Use `/mode` to change modes; `PATCH` does not change mode.
+
+## State and revision rules
 
 ```text
-POST /analyses
-  -> AnalysisCreate
-  -> create_analysis()
-  -> create_analysis_with_job()
-  -> Analysis + Job database rows
-  -> AnalysisCreateResponse
-  -> test_create_and_read_analysis_and_job()
+POST -> queued -> completed -> confirmed
+               -> needs_input
+               -> failed
+needs_input / completed / failed -> queued (reply, correction or mode switch)
 ```
 
-### API design question and decision
+The worker owns processing transitions from `queued`. Clarification is a successful job outcome: the analysis becomes `needs_input` and all nutrient totals remain null. A valid complete result becomes `completed`, ready for user review. Upstream/API/parsing failures become `failed` with a user-facing error. Job states are `pending -> claimed -> completed/failed`.
 
-**Question:** Should repeated identical `POST /analyses` requests return the same
-analysis or create separate analyses?
+User mutations compare both the current state and revision in a conditional database update. Correction, reply and mode switch are permitted only from `needs_input`, `completed` or `failed`. They clear prior totals, evidence and errors and create a new job. Confirmation accepts only `completed`, increments revision and records `confirmed_at`. Queued records cannot be edited; confirmed records are locked.
 
-**Week 7 decision:** Each valid POST creates a separate analysis. Idempotency keys are
-deferred and this limitation is visible in the contract.
+## Provider and error behavior
 
-## Activity B: Observed API Behavior Matrix
+- Demo provider synchronously rejects unsupported English/gram input with 422; it retains the legacy small catalogue.
+- Qwen provider validates text length synchronously, then extracts catalogue IDs and meal facts asynchronously. Unmatched foods and missing facts produce clarification when representable; invalid model responses and service failures fail the job. There is no fabricated fallback total.
+- Basic mode uses visible reference assumptions for missing portions/recipes/oil where supported; advanced mode asks for details. Unknown foods or contradictory state/preparation can still require clarification in basic mode.
+- Missing record: 404. Invalid payload or answer: 422. Stale revision or disallowed state: 409; reload before retrying.
+- No automatic retry or recovery of interrupted claimed jobs is implemented.
 
-The first four rows record starter behavior observed during the Lab. The final row
-records the worker-completed starter flow that was also observed.
+## Access and evidence
 
-| Scenario | Request | Observed status | Response/state shape | Expected vs. actual | Evidence |
-| --- | --- | --- | --- | --- | --- |
-| Valid create | `POST /cases` with valid `title` and `description` | `201` | Case `queued`; Job `pending`; job type `triage_case` | Match | `create_case()`, `create_case_with_job()`, integration test |
-| Retrieve created record | `GET /cases/{case_id}` | `200` | Current Case record | Match | `read_case()`, integration test |
-| Missing required fields | `POST /cases` with `{}` | `422` | Structured validation details for `title` and `description` | Match | `CaseCreate` |
-| Valid-format missing ID | `GET /cases/00000000-0000-0000-0000-000000000000` | `404` | `{"detail":"Case not found"}` | Match | `read_case()` |
-| Worker-completed retrieval | Start worker, then repeat `GET /cases/{case_id}` | `200` | Case changed from `queued` with null AI fields to `triaged` with persisted AI result | Match | Worker and AI logs observed during Lab |
+Local API has no built-in per-user authentication. The optional public deployment adds an HTTPS session gateway: unauthenticated application requests redirect to `/login`, wrong passwords return 401, and `/metrics` is blocked externally. This is a shared-account demo, not per-user authorization.
 
-## Activity C: Project Endpoint Contracts
-
-### `POST /analyses`
-
-**Caller and purpose:** A user-facing nutrition application calls this endpoint to
-start an asynchronous nutrition analysis from food text.
-
-**Request:**
-
-```json
-{
-  "food_text": "200g chicken breast and 230g cooked white rice"
-}
-```
-
-`food_text` is required. Surrounding whitespace is removed, after which the value
-must contain 3-2000 characters.
-
-**Success:** `201 Created`
-
-```json
-{
-  "analysis": {
-    "id": "analysis-uuid",
-    "food_text": "200g chicken breast and 230g cooked white rice",
-    "status": "queued",
-    "calories": null,
-    "protein_g": null,
-    "carbs_g": null,
-    "fat_g": null,
-    "created_at": "2026-10-10T00:00:00Z",
-    "updated_at": "2026-10-10T00:00:00Z"
-  },
-  "job": {
-    "id": 1,
-    "case_id": null,
-    "analysis_id": "analysis-uuid",
-    "job_type": "analyze_nutrition",
-    "status": "pending",
-    "attempts": 0,
-    "error": null,
-    "created_at": "2026-10-10T00:00:00Z",
-    "claimed_at": null,
-    "completed_at": null
-  }
-}
-```
-
-**Visible errors:** Invalid or missing input returns `422`. A database failure may
-surface as a server error and must not return a false successful state.
-
-**Database writes:** The API writes one `Analysis` and one `Job` in the same database
-transaction. The analysis starts as `queued`; the job starts as `pending` with job
-type `analyze_nutrition`.
-
-**Allowed API transition:** Analysis does not exist -> `queued`; Job does not exist ->
-`pending`. The API does not mark processing complete.
-
-**Authentication:** Not required for the Week 7 prototype.
-
-**Retry/idempotency:** Repeated POST requests may create separate analyses. No
-idempotency key is included in Week 7.
-
-**Verification:** `test_create_and_read_analysis_and_job()` and
-`test_create_analysis_validates_food_text_length()`.
-
-### `GET /analyses/{analysis_id}`
-
-**Caller and purpose:** The user-facing application retrieves the current state and
-persisted nutrition result.
-
-**Request:** No request body. `analysis_id` is supplied in the path.
-
-**Queued response:** `200 OK`
-
-```json
-{
-  "id": "analysis-uuid",
-  "food_text": "200g chicken breast and 230g cooked white rice",
-  "status": "queued",
-  "calories": null,
-  "protein_g": null,
-  "carbs_g": null,
-  "fat_g": null,
-  "created_at": "2026-10-10T00:00:00Z",
-  "updated_at": "2026-10-10T00:00:00Z"
-}
-```
-
-**Completed response:** `200 OK`
-
-```json
-{
-  "id": "analysis-uuid",
-  "food_text": "200g chicken breast and 230g cooked white rice",
-  "status": "completed",
-  "calories": 629.0,
-  "protein_g": 68.2,
-  "carbs_g": 64.4,
-  "fat_g": 7.9,
-  "created_at": "2026-10-10T00:00:00Z",
-  "updated_at": "2026-10-10T00:00:02Z"
-}
-```
-
-**Visible error:** An unknown ID returns `404` with
-`{"detail":"Analysis not found"}`.
-
-**Database read:** Reads the current `Analysis` row. It does not calculate results or
-change state.
-
-**Allowed transition:** None; this is a read-only endpoint.
-
-**Authentication and retry:** Authentication is outside Week 7 scope. GET is safe to
-repeat.
-
-**Verification:** `test_read_missing_analysis_returns_404()` and
-`test_worker_persists_nutrition_result()`.
-
-**Optional endpoint decision:** No optional endpoint is required for the Week 7
-vertical slice. Retry, update, review, and list endpoints are deferred.
-
-## Activity D: State Ownership, Errors, and Boundaries
-
-| Question | Team decision for Week 7 |
-| --- | --- |
-| Which transition does the API make? | Create Analysis `queued` and Job `pending` in one transaction |
-| Which transitions belong to the worker? | Job `pending` -> `claimed` -> `completed`; Analysis `queued` -> `completed` |
-| What happens when input is invalid? | API returns `422`; no Analysis or Job is written |
-| What happens when the record does not exist? | GET returns `404 {"detail":"Analysis not found"}` |
-| What happens when AI processing fails or times out? | Worker marks Analysis and Job `failed`; Job stores a bounded error message |
-| What must not be repeated accidentally? | A client should avoid retrying POST after an ambiguous response because Week 7 has no idempotency key |
-| What is the authorization scope? | No authentication/authorization in Week 7; required before multi-user or sensitive-data use |
-| What is the AI timeout policy? | Worker HTTP call uses the configured timeout; timeout or invalid response follows the failed-state path |
-
-The client-visible failure path is `Analysis.status = "failed"`. The existing GET
-endpoint exposes this state without pretending that a nutrition result exists.
-
-## Activity E: Week 7 Contract-Test Plan
-
-Interim documentation/test owner: **Junlang Huang (repository owner; team should
-confirm ownership before submission).** Completed dates below record the current
-implementation work; the live-stack target remains the Week 7 demo deadline.
-
-| Test name | Setup | Request/action | Expected HTTP response | Expected persisted state | Owner | Target/status |
-| --- | --- | --- | --- | --- | --- | --- |
-| `test_create_and_read_analysis_and_job` | Empty test database | Valid `POST /analyses`, then GET returned ID | POST `201`; GET `200` | Analysis `queued`; Job `pending`; result fields null | Junlang Huang | Completed 2026-10-10 |
-| `test_create_analysis_validates_food_text_length` | Empty test database | POST too-short, whitespace-only, and too-long food text | `422` for each request | No Analysis or Job created | Junlang Huang | Completed 2026-10-10 |
-| `test_read_missing_analysis_returns_404` | Empty test database | GET valid-format missing analysis ID | `404` with stable detail | No state change | Junlang Huang | Completed 2026-10-10 |
-| `test_worker_persists_nutrition_result` | Create queued analysis; mock internal AI HTTP response | Claim and process job, then GET analysis and job | GET responses `200` | Analysis and Job `completed`; four nutrition fields persisted | Junlang Huang | Completed 2026-10-10 |
-| Live-stack end-to-end test | PostgreSQL migration applied; API, worker, and AI services running | POST analysis -> wait for worker -> GET result | POST `201`; final GET `200` | Real database contains completed Analysis and Job | Junlang Huang | Before Week 7 demo; exact Canvas date to confirm |
-
-Latest automated result recorded on 2026-10-10: `10 passed, 1 skipped`. The skipped
-test is the smoke test that requires a running stack. The two warnings are third-party
-deprecation warnings and are not test failures.
-
-## Peer Review Preparation
-
-The following is a self-review prepared for the required team exchange. It must not be
-presented as peer feedback until another team member actually reviews it.
-
-- **Strength:** The API response is truthful while processing is incomplete: status is
-  `queued` and nutrition fields remain null.
-- **Ambiguity to review:** Decide whether future clients need an idempotency key or a
-  retry endpoint after an ambiguous network failure.
-- **Risk/recommendation:** The current deterministic nutrition catalogue is suitable
-  for the vertical slice but not for production accuracy; a validated data source,
-  uncertainty policy, and broader parsing strategy are future decisions.
-
-Actual peer reviewer: **TBD**
-
-Peer-review date: **TBD**
-
-Peer feedback or confirmation: **TBD**
-
-## Exit Checklist
-
-- [x] Evidence map based on actual starter code
-- [x] Observed API behavior matrix
-- [x] Two required project endpoints defined
-- [x] No optional endpoint added without justification
-- [x] State-transition ownership table
-- [x] Error, timeout, retry/idempotency, and authorization-scope decisions
-- [x] At least three planned API tests with current implementation status
-- [x] Interim documentation owner recorded
-- [x] Clear Week 7 vertical-slice target
-- [ ] Actual peer review completed and reviewer feedback recorded
-- [ ] Live Docker/PostgreSQL end-to-end smoke test completed
-
-
-## Chinese nutrition dialogue extension
-
-See [nutrition data and dialogue](nutrition-data.md) for the current catalogue,
-`needs_input` state, revision-checked reply API, provenance and deployment checks.
-Migration `20261016_0004` adds JSON conversation/draft/questions/details and a user-facing
-error field. Existing records remain readable; no tables or meal records are removed.
+Tests in `tests/integration/test_api_analysis_flow.py` and the other integration/unit modules cover persistence, validation, questions, correction, mode switching and confirmation conflicts. `scripts/check_dialogue.py` exercises the real-provider workflow with synthetic meals. See [operations](operations.md) and [change log](change-log.md) for commands and recorded validation.

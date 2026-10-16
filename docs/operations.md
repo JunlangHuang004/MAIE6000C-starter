@@ -1,53 +1,78 @@
-# Operations Notes
+# NutriChat operations
 
-## Local startup
+## Local startup and configuration
 
-1. copy `.env.example` to `.env`
-2. run `docker compose up --build`
-3. open `http://localhost:8000/app`
-4. submit a supported meal with gram weights
-5. review, correct if needed, and confirm the estimate
+Run from the repository root with Docker and Docker Compose installed:
 
-For Qwen and a cloud VM, see [cloud deployment](cloud-deployment.md).
+```sh
+test -f .env || cp .env.example .env
+docker compose up -d --build
+docker compose ps
+```
 
-## Health endpoints
+Open [the local application](http://localhost:8000/app). Demo provider accepts supported English food names and explicit grams. Configure Qwen for Chinese descriptions, recipes and the full two-mode workflow; see [cloud deployment](cloud-deployment.md). Keep the existing `.env` when upgrading.
 
-- API live: `/health/live`
-- API ready: `/health/ready`
-- AI live: `/health/live`
-- AI ready: `/health/ready`
+`.env.example` uses Qwen timeout 12 seconds and worker HTTP timeout 20 seconds. For local multi-turn Qwen testing, 30 and 45 seconds respectively match the cloud configuration. The worker timeout must exceed the Qwen timeout. `compose.cloud.yaml` explicitly sets 30/45; changing `.env` alone does not override these cloud values.
 
-## Metrics
+## Health, logs and metrics
 
-- API metrics: `/metrics`
-- AI metrics: `/metrics`
-- Prometheus: enable the `observability` profile
+| Check | What it establishes |
+| --- | --- |
+| API `/health/live` | API process responds |
+| API `/health/ready` | API can execute a PostgreSQL query |
+| AI `/health/live`, `/health/ready` | AI process responds; neither verifies Qwen credentials |
+| API / AI `/metrics` | Internal service metrics; public proxy blocks `/metrics` |
 
-## Common useful commands
+```sh
+docker compose logs --tail=100 api worker ai
+docker compose --profile observability up -d prometheus
+```
 
-- run tests: `pytest -q`
-- run smoke tests: `SMOKE_BASE_URL=http://localhost:8000 pytest tests/smoke -q`
-- run migrations: `docker compose run --rm api alembic upgrade head`
-- seed demo data: `docker compose run --rm api python scripts/seed_demo_data.py`
+Inspect logs locally; redact secrets and private meal descriptions before sharing. Prometheus is available on development port 9090 when its profile is enabled.
 
-## Failure handling in the starter
+## Verification
 
-If AI processing fails:
+After building the current source:
 
-- the job is marked failed
-- the case is marked failed
-- the error is recorded on the job row
+```sh
+docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
+docker compose run --rm --no-deps api ruff check services tests alembic scripts/import_usda.py scripts/check_qwen.py scripts/check_dialogue.py
+```
 
-## Resetting local state
+The legacy smoke tests assert demo-catalogue values. Run them only against a stack
+started with `NUTRITION_PROVIDER=demo` consistently for API and AI. They create saved
+records. With that stack running, they can reach the API from inside Compose:
 
-To remove local database state:
+```sh
+docker compose exec -T -e SMOKE_BASE_URL=http://api:8000 api pytest tests/smoke -q
+```
 
-- `docker compose down -v --remove-orphans`
+Configuration and live-provider checks:
 
+```sh
+docker compose run --rm --no-deps api python scripts/check_qwen.py
+docker compose run --rm --no-deps api python scripts/check_qwen.py --live
+docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
+```
 
-## Chinese nutrition dialogue extension
+The first command checks configuration only. Live checks consume model quota; the dialogue script creates synthetic saved records. Mocked tests cannot establish model account access. Recorded results are in the [change log](change-log.md).
 
-See [nutrition data and dialogue](nutrition-data.md) for the current catalogue,
-`needs_input` state, revision-checked reply API, provenance and deployment checks.
-Migration `20261016_0004` adds JSON conversation/draft/questions/details and a user-facing
-error field. Existing records remain readable; no tables or meal records are removed.
+## Diagnose processing
+
+- `needs_input`: normal clarification. Answer the issued questions; the worker job has completed successfully.
+- `failed`: inspect the bounded operational `Job.error`, service logs and user-facing `Analysis.error_message`. Check endpoint region/workspace, model access, structured response and timeouts. Correct or resubmit the meal after resolving the cause.
+- Long-lived `queued`: check worker health, database access and whether the job is `pending` or `claimed`. Interrupted claimed jobs have no automatic recovery. Inspect before resubmitting as a new analysis; repeated submissions create separate records.
+- 409 on edit/confirm: reload the latest revision and state. Queued or confirmed records cannot be edited.
+- Login redirects: verify the HTTPS origin, signed session cookie and gateway configuration; sessions last eight hours. Local Compose does not use the public login gateway.
+
+## Updates, data and recovery
+
+API startup runs `alembic upgrade head`. Before upgrading, back up the database and preserve previous code/images. Stop accepting new work and allow active jobs to finish before stopping the worker. Do not delete volumes as part of routine deployment. For cloud upgrades use the matching standalone Compose files throughout, as described in [cloud deployment](cloud-deployment.md).
+
+Stop the local stack while retaining data:
+
+```sh
+docker compose down
+```
+
+`docker compose down -v` deletes the local database volume and is only for an intentional data reset. Cloud and local Compose use different database volumes. Restoring an older image alone does not revert a migration; recovery requires compatible code/schema or a tested database backup.

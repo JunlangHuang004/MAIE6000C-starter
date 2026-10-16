@@ -2,8 +2,9 @@
 
 Version 2026-10-16.1 contains 116 ingredient records and 50 editable Chinese recipe
 reference templates. No model training is required. Qwen extracts explicit facts
-and catalogue IDs; Python calculates nutrients. Missing facts create `needs_input`,
-not a failed job or a partial calorie total.
+and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
+facts; basic mode uses visible reference assumptions where supported. Unresolved
+questions create `needs_input`, not a failed job or a partial calorie total.
 
 ## Data provenance
 
@@ -24,7 +25,8 @@ The 50 recipe templates in `recipes.json` are **project-authored illustrative
 formulations**, not measurements, authentic standardized recipes, or imports of
 HowToCook/Figshare. Some use simplified ingredients, clearly described by `method`.
 Their nutrient numbers are computed from USDA ingredients; every assumed ingredient
-amount and finished batch weight must be explicitly reviewed/accepted by the user.
+amount and finished batch weight must be explicitly reviewed/accepted in advanced
+mode. Basic mode uses these reference values as labelled, unconfirmed assumptions.
 The user can change every amount, set omitted ingredients to zero, or describe
 additional ingredients in conversation. Recipe weights refer to the whole batch;
 the meal weight refers to the cooked edible portion consumed.
@@ -32,8 +34,10 @@ the meal weight refers to the cooked edible portion consumed.
 Recipe total = sum(ingredient grams × nutrient per 100g / 100).
 Eaten portion = recipe total × consumed cooked grams / cooked batch grams.
 Water contributes no macros but affects the finished batch weight. No universal
-raw-to-cooked conversion, frying multiplier, or automatic bowl-to-gram conversion
-is used. Consumed additional oil is a separate gram quantity for ingredient meals.
+raw-to-cooked conversion or frying multiplier is used. Advanced mode requires
+explicit gram weights; basic mode can use labelled reference bowl/portion weights,
+which are project assumptions rather than measured conversions. Consumed additional
+oil is a separate gram quantity for ingredient meals.
 Cooking losses, nutrient retention and drained fat are not modelled; estimates are
 not laboratory measurements. Generic ingredients may differ from local brands.
 
@@ -50,10 +54,11 @@ Open Food Facts has not been mixed into this CC0 ingredient snapshot.
 - POST `/analyses/{id}/reply`: `{revision, answers}` for server-issued slots OR
   `{revision, message}` for natural language. Structured answers are validated and
   evaluated without another model call. Natural language is parsed with prior dialogue.
-- A recipe never receives automatic approval from model output. Its editable batch
-  recipe must be explicitly accepted through the question form.
+- A recipe never receives automatic approval from model output. In advanced mode,
+  its editable batch must be explicitly accepted through the question form; basic
+  mode labels it as an unconfirmed reference assumption.
 - `completed` persists per-item calculations, assumptions and source references.
-- Corrections clear old totals; natural-language changes require fresh recipe approval.
+- Corrections clear old totals; advanced-mode natural-language changes require fresh recipe approval.
 - Confirmation only accepts `completed` at the current revision and locks the record.
 - Dialogue, evidence and accepted recipe are stored in PostgreSQL; reload restores them.
 - 30 items per meal, 10,000g max per food/ingredient, bounded dialogue history.
@@ -82,3 +87,22 @@ facts the user did not supply. `/analyses/{id}/mode` accepts `{revision, mode}` 
 requeues the same record, clears old totals and keeps explicit facts. Switching to
 advanced reopens missing-detail questions and requires recipe acceptance. Confirmed
 records cannot switch mode. Migration `20261017_0005` persists the chosen mode.
+
+## Extending the catalogue
+
+For a new ingredient, select a compatible USDA SR Legacy record and add its source
+ID, Chinese label/aliases, state and preparation mapping to
+`services/common/data/usda_selection.json`. Re-run the importer against the official
+ZIP, review nutrient values and source metadata, and rebuild the service images.
+Keep missing nutrients as an import error rather than filling them with zero.
+
+For a dish, add an illustrative template to `services/common/data/recipes.json`
+using supported ingredient IDs, whole-batch ingredient grams, finished cooked batch
+weight and a clear method description. Re-run the importer to regenerate the runtime
+catalogue. Review the assumed formula and exercise both basic and advanced flows;
+adding a dish name alone does not establish its nutrition.
+
+Reference portion weights and the default extra oil quantity are project
+assumptions, not USDA-measured serving sizes. More detailed input can improve an
+estimate's relevance but does not guarantee laboratory accuracy. Neither catalogue
+updates nor user corrections retrain the cloud model.

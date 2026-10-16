@@ -22,17 +22,25 @@ NUTRITION_PROVIDER=qwen
 DASHSCOPE_API_KEY=your-secret-key
 QWEN_BASE_URL=your-workspace-compatible-base-url
 QWEN_MODEL=qwen-plus
-QWEN_TIMEOUT_SECONDS=12
-WORKER_REQUEST_TIMEOUT_SECONDS=20
+QWEN_TIMEOUT_SECONDS=30
+WORKER_REQUEST_TIMEOUT_SECONDS=45
 ```
 
 Then run `docker compose up -d --build`. API and AI must use the same provider mode.
 With `NUTRITION_PROVIDER=demo`, no API key is needed and a strict English parser is used.
-In Qwen mode, food text is sent to Model Studio. The result must contain supported
-food names and positive explicit gram weights. Unknown items or invalid responses
-fail the job; there is no fabricated fallback estimate. LLM extraction can still
-misinterpret input, so users review the saved interpreted meal before confirming.
-Nutrition numbers come from the demo catalogue, not the model.
+In Qwen mode, meal descriptions and bounded follow-up conversation are sent to Model
+Studio for extraction of supported catalogue IDs and explicit facts. Basic mode
+uses labelled reference assumptions; advanced mode asks for grams, preparation,
+weight state, consumed oil and recipe approval. Unknown foods or contradictory
+facts can require clarification in either mode. Invalid model responses or service
+errors fail the job; there is no fabricated fallback total. Structured answers are
+validated without another model call. Python calculates nutrition using the USDA
+snapshot and editable recipe templates, not model-generated nutrient numbers.
+Users review the saved interpretation, assumptions and sources before confirming.
+See [nutrition data](nutrition-data.md) and the [API contract](api-contract.md).
+
+The local `.env.example` retains shorter 12/20-second defaults; the values above
+match the 30/45-second settings explicitly supplied by `compose.cloud.yaml`.
 
 ## Deploy a private cloud demo
 
@@ -53,8 +61,9 @@ Nutrition numbers come from the demo catalogue, not the model.
    ssh -L 8080:127.0.0.1:8000 user@your-vm
    ```
 
-5. Open `http://localhost:8080/app`. Submit `100克鸡蛋` in Qwen mode, wait for the
-   estimate, verify the interpreted meal, correct it to `200克鸡蛋`, then confirm.
+5. Open `http://localhost:8080/app`. In basic mode submit `一份番茄炒蛋，两个水煮鸡蛋`.
+   Review the reference assumptions, switch to advanced, answer the questions and
+   edit/accept the batch recipe. Correct the meal if necessary, then confirm.
    Reload the page to verify persistence.
 
 Only the API binds a loopback port; DB and AI have no published ports. Restrict
@@ -67,15 +76,18 @@ local `compose.yaml`. It uses a separate persistent database volume.
 - Logs: `docker compose -f compose.cloud.yaml logs --tail=100 api worker ai`
 - Back up before upgrades:
   `docker compose -f compose.cloud.yaml exec -T db pg_dump -U nutrichat nutrichat > backup.sql`
-- Deploy updates: `docker compose -f compose.cloud.yaml up -d --build`
+- Deploy private-stack updates: `docker compose -f compose.cloud.yaml up -d --build`
 - Stop without removing data: `docker compose -f compose.cloud.yaml down`
 - Do not use `down -v` unless intentionally deleting the database.
 
 Migrations run before the API starts; the worker waits for API health. Qwen's timeout
 must be shorter than the worker HTTP timeout. Failed estimates can be corrected and
 resubmitted. Automatic retries and recovery of jobs interrupted while claimed are
-not yet implemented. Keep one worker for the demo. Cloud infrastructure and real
-Qwen credentials have not been exercised by the repository's mocked tests.
+not yet implemented. Keep one worker for the demo. Mocked tests do not establish
+cloud connectivity or account access. On 2026-10-17, the live synthetic dialogue
+check passed locally and on the Hong Kong ECS deployment; this is separate evidence
+from the mocked tests, not a guarantee for a different account or later deployment.
+See the [change log](change-log.md).
 
 ## Check configuration before enabling Qwen
 
@@ -96,6 +108,20 @@ The check does not print credentials. Once it passes, set `NUTRITION_PROVIDER=qw
 recreate the services with `docker compose up -d --build`, and test the UI. The
 repository's mocked Qwen tests verify routing and error propagation; they do not
 establish that an account has model access or that its region configuration is correct.
+
+## Live dialogue check on the cloud stack
+
+The cloud API container intentionally does not receive the Qwen API key. Run the
+end-to-end script there to exercise API → worker → internal AI → Qwen:
+
+```sh
+docker compose -f compose.cloud.yaml exec -T api python scripts/check_dialogue.py --base-url http://api:8000
+```
+
+This consumes model quota and creates synthetic records. It checks basic estimates,
+advanced questions, recipe editing, natural-language correction, confirmation and
+persistence. For a direct credential check on an already-running cloud stack, run
+`python scripts/check_qwen.py --live` with `exec -T ai` instead of `exec -T api`.
 
 ## Optional public demo with an IP address
 
@@ -151,3 +177,25 @@ ports closed if TLS or authentication cannot be verified.
 To remove public access without deleting meal data:
 `docker compose -f compose.cloud.yaml -f compose.public.yaml stop proxy`,
 then remove the website rules from the security group.
+
+## Updating an existing public deployment
+
+Keep the private `.env`, `deploy/public/` runtime files and database volume. Back up
+PostgreSQL and retain the previous code/images before upgrading. Allow current
+jobs to finish before stopping the worker; interrupted claimed jobs are not
+recovered automatically. Run all public-stack commands with both Compose files:
+
+```sh
+docker compose -f compose.cloud.yaml -f compose.public.yaml build api ai worker gateway
+docker compose -f compose.cloud.yaml -f compose.public.yaml stop worker
+docker compose -f compose.cloud.yaml -f compose.public.yaml up -d --no-build ai api worker gateway
+docker compose -f compose.cloud.yaml -f compose.public.yaml exec -T proxy nginx -t
+docker compose -f compose.cloud.yaml -f compose.public.yaml exec -T proxy nginx -s reload
+docker compose -f compose.cloud.yaml -f compose.public.yaml ps
+```
+
+Reloading Nginx refreshes upstream resolution after container replacement. Validate
+health and the live dialogue flow, then verify HTTPS/login through the public URL.
+If an upgrade fails, preserve logs and restore a compatible code/schema pair;
+restoring an old image alone does not undo database migrations. Backups contain
+meal data and must remain outside Git with restricted access.

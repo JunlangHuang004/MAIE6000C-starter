@@ -1,140 +1,58 @@
-# Current NutriChat extension (2026-10-16)
+# NutriChat architecture
 
-This section supersedes the historical Week 7 deferral of review/update below.
+Current implementation: 2026-10-17.
 
-- `GET /app`: meal UI; `GET /foods`: supported catalogue and active provider.
-- `POST /analyses`: validate input, save queued analysis and pending job atomically.
-- `GET /analyses/{id}`: saved state, totals, interpreted food text, revision and confirmed timestamp.
-- `PATCH /analyses/{id}`: `{ "food_text": "200g egg", "revision": 1 }` corrects a
-  completed or failed analysis, clears results, increments revision, creates a job;
-  returns the analysis and job. Queued and confirmed analyses cannot be edited.
-- `POST /analyses/{id}/confirm`: `{ "revision": 2 }` confirms only a completed
-  analysis, increments revision and records `confirmed_at`; returns the analysis.
-- Missing records return 404; invalid input returns 422; stale revision or disallowed
-  state returns 409. Conditional database updates serialize correction/confirmation.
-- Worker: queued → completed or failed. API: completed/failed → queued (correction),
-  completed → confirmed. Completed means ready for review, not user confirmed.
-- Demo mode rejects unsupported/partial input synchronously. Qwen mode checks text
-  length synchronously and validates structured extraction asynchronously; unsupported
-  food or model errors produce failed analysis/job state. No fallback estimates.
-- Qwen extraction runs in the internal AI service; arithmetic uses the shared demo
-  catalogue. The interpreted meal is persisted so the user can inspect it.
-- Configure Qwen and cloud hosting using [cloud deployment](cloud-deployment.md).
+## Services and data flow
 
-The following is the historical course evidence/plan retained for context.
-
----
-
-# Nutrition Analysis Architecture
-
-## Components
-
-- **API service**: accepts requests, validates input, persists workflow state
-- **PostgreSQL**: stores analyses, cases, and background jobs
-- **Worker**: polls pending jobs and processes them outside the request cycle
-- **AI service**: estimates calories and macronutrients from food text; the starter triage
-  endpoint remains available
-
-## Primary API contract
-
-The detailed Week 5 evidence map, observed behavior matrix, endpoint contracts, and
-Week 7 test plan are recorded in [`docs/api-contract.md`](api-contract.md).
-
-### `POST /analyses`
-
-Starts a nutrition-analysis workflow. The request is:
-
-```json
-{
-  "food_text": "200g chicken breast and 230g cooked white rice"
-}
+```text
+Browser -> [optional HTTPS proxy + session gateway] -> FastAPI API
+                                                       | PostgreSQL
+                                                       | analyses + jobs
+                                                     Worker
+                                                       | HTTP
+                                                Internal AI service
+                                                  |           |
+                                             Qwen API    Python meal engine
+                                                  |           |
+                                              extraction   catalogue arithmetic
 ```
 
-`food_text` is required and must contain 3-2000 characters after surrounding
-whitespace is removed. A successful request returns `201 Created` with an
-`Analysis` in `queued` state and an `analyze_nutrition` `Job` in `pending` state.
-Nutrition result fields are `null` until background processing completes.
+The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers only the last analysis ID for restoration.
 
-### `GET /analyses/{analysis_id}`
+- API: validation, revision/state checks, saved records, catalogue and HTML UI.
+- Worker: asynchronous orchestration and job/error bookkeeping.
+- AI service: Qwen extraction or legacy demo parsing, followed by deterministic evaluation.
+- Shared meal engine: catalogue validation, questions, structured answers, assumptions and nutrient arithmetic.
+- PostgreSQL: analyses, conversations, drafts, questions, evidence and jobs; historical cases remain available.
 
-Returns the current persisted analysis state and the `calories`, `protein_g`,
-`carbs_g`, and `fat_g` result fields. An unknown ID returns `404` with
-`{"detail": "Analysis not found"}`.
+## Qwen's role
 
-## Nutrition-analysis flow
+Qwen runs in Alibaba Cloud Model Studio, not on ECS. It interprets Chinese descriptions, names, preparation, quantities and corrections and maps them to supported catalogue IDs. The adapter requests structured JSON, with `enable_thinking=false`, temperature 0 and a configurable model (default `qwen-plus`). Disabling deep-thinking mode does not remove language inference or guarantee correctness.
 
-1. client sends `POST /analyses`
-2. API writes an analysis and pending job in one transaction
-3. worker claims the pending `analyze_nutrition` job
-4. worker calls the internal AI service at `POST /analyze-nutrition`
-5. worker persists the nutrition result and marks the analysis and job completed
-6. client retrieves the persisted result with `GET /analyses/{analysis_id}`
+The model does not supply authoritative calorie/macronutrient values, approve recipes, or train on project updates. Python validates the extracted facts and calculates from the versioned catalogue. Structured question answers bypass another model call; natural-language replies use the bounded conversation as context. Updating aliases, food data or prompts changes application behavior without retraining model weights.
 
-## State ownership
+## Two modes and uncertainty
 
-| State change | Owner |
-| --- | --- |
-| analysis does not exist -> `queued` | API |
-| job does not exist -> `pending` | API |
-| job `pending` -> `claimed` | Worker |
-| analysis `queued` -> `completed` | Worker, after a valid AI response |
-| job `claimed` -> `completed` | Worker |
-| analysis/job -> `failed` | Worker, after processing failure |
+Basic mode applies labelled defaults to a calculation copy: reference portions, reference recipes and applicable extra-oil assumptions. The stored draft retains missing fields, so switching to advanced mode asks for details that were never supplied.
 
-## Errors and scope decisions
+Advanced mode asks for grams, weight state, preparation and consumed oil as needed. Recipe calculations require explicit acceptance of editable ingredient quantities and finished batch yield. Unmatched foods or contradictory raw/cooked/preparation facts can require questions in either mode. Pending questions leave every nutrient total null.
 
-- invalid or missing `food_text` returns `422`
-- an unknown analysis ID returns `404`
-- an AI timeout or invalid AI response marks both the job and analysis `failed` and
-  records the error on the job
-- repeated `POST /analyses` calls create separate analyses; Week 7 has no idempotency key
-- authentication and authorization are outside the Week 7 prototype scope
-- image recognition is outside the Week 7 prototype scope
+Nutrients equal the sum of ingredient grams multiplied by their per-100g data. Recipe portions scale the whole-batch nutrients by consumed cooked weight divided by finished batch weight. Data provenance, limits and exceptions are detailed in [nutrition data](nutrition-data.md).
 
-## Week 7 test plan
+## Persistence and concurrency
 
-- valid create returns `201`, `queued` analysis, and `pending` nutrition job
-- invalid `food_text` returns `422`
-- existing and missing analysis retrieval return `200` and `404` respectively
-- worker completion persists all four nutrition fields and completed states
+Analysis states are `queued`, `needs_input`, `completed`, `failed`, `confirmed`. Jobs track `pending`, `claimed`, `completed`, `failed`. A question is a completed worker operation, not a failed job. User correction/reply/mode-switch requests check the current revision and state; confirmation locks completed records. The [API contract](api-contract.md) defines the payloads and transitions.
 
-## Baseline flow
+Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. API startup runs migrations before the worker starts.
 
-1. client sends `POST /cases`
-2. API writes a case row
-3. API writes a pending job row
-4. worker claims the pending job
-5. worker calls the internal AI service
-6. worker writes the triage result back to the case
-7. API exposes the updated case state
+## Deployment boundaries
 
-## Why this starter exists
+Local Compose publishes development ports for API, AI and PostgreSQL. Cloud Compose exposes only API loopback access; AI and database remain internal. Optional public Compose adds Nginx on 80/443 and an internal session gateway. Secrets and certificates are external runtime files excluded from Git. See [cloud deployment](cloud-deployment.md).
 
-This starter is intentionally small.
-
-Its purpose is to demonstrate the engineering shape of the course contract:
-
-- persistence
-- API boundaries
-- async work
-- service-to-service communication
-- testing
-- observability
-- reproducible deployment
+The API readiness probe checks PostgreSQL. AI readiness reports service availability but does not call Qwen. Structured logging and Prometheus metrics support observation; they do not constitute end-to-end model validation.
 
 ## Current limitations
 
-- single polling worker
-- deterministic, small-catalogue nutrition estimator rather than a production model or
-  authoritative nutrition database
-- no authentication or authorization
-- no retry strategy beyond basic failure recording
-- minimal domain model
+The public account is shared and analyses have no per-user ownership. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
 
-
-## Chinese nutrition dialogue extension
-
-See [nutrition data and dialogue](nutrition-data.md) for the current catalogue,
-`needs_input` state, revision-checked reply API, provenance and deployment checks.
-Migration `20261016_0004` adds JSON conversation/draft/questions/details and a user-facing
-error field. Existing records remain readable; no tables or meal records are removed.
+See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
