@@ -1,5 +1,15 @@
 # NutriChat change log
 
+## 2026-10-17 — Week 6 worker lifecycle evidence and test plan
+
+- Extend architecture documentation with the worker sequence, state ownership, service boundaries, timeout policy and Week 7 demo/test plan.
+- Add an Activities A–G workflow guide, actual HTTP/PostgreSQL/log evidence and verification notes.
+- Add six lifecycle test cases covering claim metadata, success, timeout, HTTP errors, malformed results and duplicate POST behavior.
+- Add an isolated demo-only Compose overlay for reproducing the lab without stopping existing application services or using model credentials.
+- Verify 65 unit/integration tests, two isolated-stack smoke tests and Ruff. Document SQLite/concurrency limits and unimplemented retry/recovery/idempotency behavior.
+- Add README and operations links. Team role assignments and the AI Use Statement remain pending; no AI Use Statement file is included in this update.
+
+
 ## 2026-10-17 — Documentation alignment
 
 - Rewrite the README, current API contract, architecture and operations guide to match the two-mode clarification workflow.

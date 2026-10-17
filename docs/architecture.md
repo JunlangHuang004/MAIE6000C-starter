@@ -56,3 +56,71 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 The public account is shared and analyses have no per-user ownership. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
+
+## Week 6: worker contract and state ownership
+
+The selected asynchronous step is meal interpretation and nutrition evaluation.
+An external Qwen request has variable latency; the API validates/enqueues and returns
+201 without waiting for it. The no-key demo provider exercises the same durable
+worker path with deterministic input. See [the Week 6 evidence and workflow](async-workflow.md).
+
+```mermaid
+sequenceDiagram
+    participant Client
+    participant API
+    participant DB as PostgreSQL
+    participant Worker
+    participant AI as Internal AI service
+    Client->>API: POST /analyses
+    API->>DB: Commit Analysis(queued) + Job(pending)
+    API-->>Client: 201 with analysis ID and job ID
+    Worker->>DB: Lock eligible pending row, claim, attempts += 1
+    Worker->>AI: POST /analyze-nutrition (finite timeout)
+    AI-->>Worker: Validated result, questions or error
+    Worker->>DB: Persist completed/needs_input or failure + job outcome
+    Client->>API: GET /analyses/{id} and /jobs/{id}
+    API->>DB: Read current saved state
+    API-->>Client: Result, questions or failure
+```
+
+| Analysis / Job state | Owner | Entry condition and persisted evidence | API-visible meaning / next step |
+| --- | --- | --- | --- |
+| `queued` / `pending` | API | Valid input; both rows committed together; attempts 0 | Accepted, waiting for worker |
+| `queued` / `claimed` | Worker | Pending job selected with `FOR UPDATE SKIP LOCKED`; claim time and attempts increment committed | Processing visible through Job; Analysis has no separate processing state |
+| `completed` / `completed` | Worker | Valid complete result; all four totals and job completion timestamp saved | Ready for review; user may correct, switch mode or confirm |
+| `needs_input` / `completed` | Worker | Draft/questions saved; all totals null; job completion timestamp saved | Clarification required, not a failed processing attempt |
+| `failed` / `failed` | Worker | Caught exception; generic analysis error, bounded job error and completion timestamp saved | Correct/reply to enqueue a new job after resolving the cause |
+| `queued` / new `pending` job | API | Revision/state checked correction, reply or mode switch; old totals cleared | New work; previous job remains historical evidence |
+| `confirmed` / previous job unchanged | API | Current completed revision confirmed; timestamp saved | Locked; start another analysis for changes |
+
+The client cannot directly set lifecycle states. The AI component receives only the
+analysis ID, meal text, mode, bounded conversation and draft from the worker, and
+returns structured extraction/evaluation results. It does not write analysis/job
+rows or confirm user records. There is no scheduler in this implementation.
+
+### Timeout, failure, retry and idempotency decisions
+
+- Cloud Qwen timeout: 30 seconds; worker-to-AI timeout: 45 seconds. Local example
+  defaults are 12/20 seconds; configurable values must preserve this ordering.
+- Each job is attempted once. Timeout, HTTP error and malformed output are terminal
+  failures; there is no `retry_wait`, retry delay or automatic retry budget.
+- A user correction or reply creates a new job; it does not replay the failed job.
+- A worker crash after claim can leave `claimed` indefinitely. Recovery is a
+  documented gap; the polling loop only selects `pending`. There is no exactly-once guarantee.
+- Idempotency keys are deferred beyond the Week 7 minimum. Repeated POST requests
+  create distinct analyses/jobs and can incur duplicate work/provider usage.
+- Analysis failures expose a generic message. No stable public error-code taxonomy
+  exists yet. `/jobs/{id}` exposes bounded operational error text, so it must not be
+  described as a fully sanitized error interface or multi-tenant production API.
+
+### Week 7 demo and test plan
+
+Demonstrate stopped-worker submission, saved queued/pending state, worker start,
+claimed/completed job evidence, persisted nutrition and GET retrieval. Then show
+clarification and confirmation on the Qwen path if configured. Use deadline-based
+polling rather than a fixed long sleep. Capture HTTP responses, selected database
+columns and matching job-ID logs separately.
+
+The [workflow guide](async-workflow.md) maps the four minimum test categories to
+actual test names, records evidence, and lists remaining gaps. The lab uses an
+isolated Compose project so existing local and public demos keep running.

@@ -76,3 +76,15 @@ docker compose down
 ```
 
 `docker compose down -v` deletes the local database volume and is only for an intentional data reset. Cloud and local Compose use different database volumes. Restoring an older image alone does not revert a migration; recovery requires compatible code/schema or a tested database backup.
+
+## Week 6 isolated worker lab
+
+Use [the asynchronous workflow guide](async-workflow.md) for the stopped-worker
+observation, state ownership, reproduction commands and saved evidence. The
+`compose.week06.yaml` overlay is for a dedicated `nutrichat-week06` Compose project:
+it uses the demo provider, `.env.example`, no model credentials and no published
+host ports. It does not replace the running local or public configuration.
+
+Run the lab smoke tests only against this demo stack. Shut it down with the same
+project name and both Compose files; omit `-v` to keep the lab database. Current
+results and verification limits are in [the Week 6 verification record](evidence/week06-verification.md).

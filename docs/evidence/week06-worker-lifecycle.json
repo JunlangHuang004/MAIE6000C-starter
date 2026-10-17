@@ -1,0 +1,363 @@
+{
+  "observed_at": "2026-10-17T16:09:48.883527+08:00",
+  "scope": "Isolated local Docker Compose; real PostgreSQL and internal HTTP; demo provider; synthetic data only.",
+  "compose_project": "nutrichat-week06",
+  "compose_files": [
+    "compose.yaml",
+    "compose.week06.yaml"
+  ],
+  "source_base_commit": "5a95cafd51b29718153e36b1c3ca4f5b818d5c5f",
+  "note": "Week 6 changes were uncommitted during observation; application service source was unchanged. Worker used the just-built API image, tagged nutrichat-week06-worker (same Dockerfile).",
+  "worker_started_only_after_initial_reads": true,
+  "initial_http": {
+    "health_live": {
+      "http_status": 200,
+      "body": {
+        "service": "api",
+        "status": "ok"
+      }
+    },
+    "health_ready": {
+      "http_status": 200,
+      "body": {
+        "service": "api",
+        "status": "ok"
+      }
+    },
+    "case_create": {
+      "http_status": 201,
+      "body": {
+        "case": {
+          "id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+          "title": "Week 6 worker lifecycle observation",
+          "description": "Synthetic course record to observe durable jobs and worker processing.",
+          "status": "queued",
+          "ai_label": null,
+          "ai_summary": null,
+          "ai_confidence": null,
+          "created_at": "2026-10-17T08:09:46.227141Z",
+          "updated_at": "2026-10-17T08:09:46.227149Z"
+        },
+        "job": {
+          "id": 1,
+          "case_id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+          "analysis_id": null,
+          "job_type": "triage_case",
+          "status": "pending",
+          "attempts": 0,
+          "error": null,
+          "created_at": "2026-10-17T08:09:46.229430Z",
+          "claimed_at": null,
+          "completed_at": null
+        }
+      }
+    },
+    "analysis_create": {
+      "http_status": 201,
+      "body": {
+        "analysis": {
+          "mode": "advanced",
+          "conversation": [
+            {
+              "role": "user",
+              "content": "100g egg"
+            }
+          ],
+          "draft": [],
+          "questions": [],
+          "details": [],
+          "error_message": null,
+          "interpreted_food_text": null,
+          "revision": 1,
+          "confirmed_at": null,
+          "id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+          "food_text": "100g egg",
+          "status": "queued",
+          "calories": null,
+          "protein_g": null,
+          "carbs_g": null,
+          "fat_g": null,
+          "created_at": "2026-10-17T08:09:46.244786Z",
+          "updated_at": "2026-10-17T08:09:46.244788Z"
+        },
+        "job": {
+          "id": 2,
+          "case_id": null,
+          "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+          "job_type": "analyze_nutrition",
+          "status": "pending",
+          "attempts": 0,
+          "error": null,
+          "created_at": "2026-10-17T08:09:46.245629Z",
+          "claimed_at": null,
+          "completed_at": null
+        }
+      }
+    },
+    "case_get": {
+      "http_status": 200,
+      "body": {
+        "id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+        "title": "Week 6 worker lifecycle observation",
+        "description": "Synthetic course record to observe durable jobs and worker processing.",
+        "status": "queued",
+        "ai_label": null,
+        "ai_summary": null,
+        "ai_confidence": null,
+        "created_at": "2026-10-17T08:09:46.227141Z",
+        "updated_at": "2026-10-17T08:09:46.227149Z"
+      }
+    },
+    "analysis_get": {
+      "http_status": 200,
+      "body": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100g egg"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+        "food_text": "100g egg",
+        "status": "queued",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-17T08:09:46.244786Z",
+        "updated_at": "2026-10-17T08:09:46.244788Z"
+      }
+    },
+    "jobs": [
+      {
+        "http_status": 200,
+        "body": {
+          "id": 1,
+          "case_id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+          "analysis_id": null,
+          "job_type": "triage_case",
+          "status": "pending",
+          "attempts": 0,
+          "error": null,
+          "created_at": "2026-10-17T08:09:46.229430Z",
+          "claimed_at": null,
+          "completed_at": null
+        }
+      },
+      {
+        "http_status": 200,
+        "body": {
+          "id": 2,
+          "case_id": null,
+          "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+          "job_type": "analyze_nutrition",
+          "status": "pending",
+          "attempts": 0,
+          "error": null,
+          "created_at": "2026-10-17T08:09:46.245629Z",
+          "claimed_at": null,
+          "completed_at": null
+        }
+      }
+    ]
+  },
+  "initial_database": [
+    {
+      "id": 1,
+      "job_type": "triage_case",
+      "job_status": "pending",
+      "attempts": 0,
+      "claimed_at": null,
+      "completed_at": null,
+      "case_id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+      "case_status": "queued",
+      "ai_label": null,
+      "analysis_id": null,
+      "analysis_status": null,
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null
+    },
+    {
+      "id": 2,
+      "job_type": "analyze_nutrition",
+      "job_status": "pending",
+      "attempts": 0,
+      "claimed_at": null,
+      "completed_at": null,
+      "case_id": null,
+      "case_status": null,
+      "ai_label": null,
+      "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+      "analysis_status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null
+    }
+  ],
+  "final_http": {
+    "poll_count": 4,
+    "case_get": {
+      "http_status": 200,
+      "body": {
+        "id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+        "title": "Week 6 worker lifecycle observation",
+        "description": "Synthetic course record to observe durable jobs and worker processing.",
+        "status": "triaged",
+        "ai_label": "general",
+        "ai_summary": "Week 6 worker lifecycle observation: Synthetic course record to observe durable jobs and worker processing.",
+        "ai_confidence": 0.45,
+        "created_at": "2026-10-17T08:09:46.227141Z",
+        "updated_at": "2026-10-17T08:09:48.485779Z"
+      }
+    },
+    "analysis_get": {
+      "http_status": 200,
+      "body": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100g egg"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": "100g egg",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+        "food_text": "100g egg",
+        "status": "completed",
+        "calories": 155.0,
+        "protein_g": 13.0,
+        "carbs_g": 1.1,
+        "fat_g": 11.0,
+        "created_at": "2026-10-17T08:09:46.244786Z",
+        "updated_at": "2026-10-17T08:09:48.507357Z"
+      }
+    },
+    "jobs": [
+      {
+        "http_status": 200,
+        "body": {
+          "id": 1,
+          "case_id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+          "analysis_id": null,
+          "job_type": "triage_case",
+          "status": "completed",
+          "attempts": 1,
+          "error": null,
+          "created_at": "2026-10-17T08:09:46.229430Z",
+          "claimed_at": "2026-10-17T08:09:48.444832Z",
+          "completed_at": "2026-10-17T08:09:48.485266Z"
+        }
+      },
+      {
+        "http_status": 200,
+        "body": {
+          "id": 2,
+          "case_id": null,
+          "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+          "job_type": "analyze_nutrition",
+          "status": "completed",
+          "attempts": 1,
+          "error": null,
+          "created_at": "2026-10-17T08:09:46.245629Z",
+          "claimed_at": "2026-10-17T08:09:48.487631Z",
+          "completed_at": "2026-10-17T08:09:48.506877Z"
+        }
+      }
+    ]
+  },
+  "final_database": [
+    {
+      "id": 1,
+      "job_type": "triage_case",
+      "job_status": "completed",
+      "attempts": 1,
+      "claimed_at": "2026-10-17T08:09:48.444832+00:00",
+      "completed_at": "2026-10-17T08:09:48.485266+00:00",
+      "case_id": "90ad1d78-674e-424f-a651-213ed23e3f3e",
+      "case_status": "triaged",
+      "ai_label": "general",
+      "analysis_id": null,
+      "analysis_status": null,
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null
+    },
+    {
+      "id": 2,
+      "job_type": "analyze_nutrition",
+      "job_status": "completed",
+      "attempts": 1,
+      "claimed_at": "2026-10-17T08:09:48.487631+00:00",
+      "completed_at": "2026-10-17T08:09:48.506877+00:00",
+      "case_id": null,
+      "case_status": null,
+      "ai_label": null,
+      "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+      "analysis_status": "completed",
+      "calories": 155,
+      "protein_g": 13,
+      "carbs_g": 1.1,
+      "fat_g": 11
+    }
+  ],
+  "worker_log_events": [
+    {
+      "asctime": "2026-10-17 08:09:48,448",
+      "levelname": "INFO",
+      "service": null,
+      "message": "job_claimed",
+      "job_id": 1,
+      "analysis_id": null,
+      "case_id": "90ad1d78-674e-424f-a651-213ed23e3f3e"
+    },
+    {
+      "asctime": "2026-10-17 08:09:48,486",
+      "levelname": "INFO",
+      "service": null,
+      "message": "job_completed",
+      "job_id": 1,
+      "label": "general"
+    },
+    {
+      "asctime": "2026-10-17 08:09:48,488",
+      "levelname": "INFO",
+      "service": null,
+      "message": "job_claimed",
+      "job_id": 2,
+      "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282",
+      "case_id": null
+    },
+    {
+      "asctime": "2026-10-17 08:09:48,508",
+      "levelname": "INFO",
+      "service": null,
+      "message": "job_completed",
+      "job_id": 2,
+      "analysis_id": "e9609fe4-8c3b-4760-88af-bc03d1fe2282"
+    }
+  ],
+  "database_query": "SELECT coalesce(json_agg(t ORDER BY id), '[]'::json) FROM (\nSELECT j.id,j.job_type,j.status AS job_status,j.attempts,j.claimed_at,j.completed_at,\nc.id AS case_id,c.status AS case_status,c.ai_label,\na.id AS analysis_id,a.status AS analysis_status,a.calories,a.protein_g,a.carbs_g,a.fat_g\nFROM jobs j LEFT JOIN cases c ON c.id=j.case_id LEFT JOIN analyses a ON a.id=j.analysis_id\nWHERE j.id IN (1,2)) t;",
+  "limits": [
+    "Single worker only; no concurrent claim proof.",
+    "No real Qwen request.",
+    "No live process-crash injection; recovery is not implemented."
+  ]
+}

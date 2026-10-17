@@ -1,0 +1,21 @@
+# Isolated offline lab: use with -p nutrichat-week06 and compose.yaml.
+# No host ports or real-provider credentials; separate project database volume.
+x-lab: &lab
+  env_file: !override
+    - .env.example
+  environment:
+    NUTRITION_PROVIDER: demo
+    DASHSCOPE_API_KEY: ''
+    QWEN_BASE_URL: ''
+
+services:
+  db:
+    ports: !reset []
+  ai:
+    <<: *lab
+    ports: !reset []
+  api:
+    <<: *lab
+    ports: !reset []
+  worker:
+    <<: *lab

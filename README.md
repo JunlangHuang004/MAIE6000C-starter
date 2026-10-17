@@ -85,6 +85,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
+| [Week 6 worker workflow](docs/async-workflow.md) | Lifecycle evidence, failure decisions, ownership and Week 7 test/demo plan |
 | [Operations](docs/operations.md) | Local checks, logs, failure handling and migrations |
 | [Cloud deployment](docs/cloud-deployment.md) | Qwen, ECS, login, HTTPS and backups |
 | [Design decision](docs/adrs/0002-source-backed-dual-mode.md) | Two modes and the model/calculation responsibility split |
@@ -99,3 +100,16 @@ are archived for context and do not define the current feature scope.
 This is a shared-account learning prototype without per-user data isolation,
 idempotency keys, automatic retries or recovery of interrupted claimed jobs.
 Never commit API keys, login passwords, certificates or database backups.
+
+## Week 6 lab verification
+
+See [the asynchronous workflow guide](docs/async-workflow.md) for the isolated
+Compose observation and the evidence map. Run the additional lifecycle tests with:
+
+```sh
+docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest tests/integration/test_worker_lifecycle.py -q
+```
+
+Build the current image first. Tests cover claim metadata, terminal processor
+failures, success persistence and duplicate-POST behavior. Team role assignments
+and the course-required AI Use Statement remain pending before submission.
