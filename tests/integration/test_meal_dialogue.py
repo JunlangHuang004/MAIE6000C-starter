@@ -99,3 +99,56 @@ def test_mode_switch_removes_basic_assumptions_and_locks_confirmed(
     row.status='confirmed'
     db_session.commit()
     assert client.post(path+'/mode',json={'revision':2,'mode':'basic'}).status_code==409
+
+
+@pytest.mark.parametrize('name', [
+    '糖醋里脊', '青椒牛肉', '白切鸡', '糖醋鱼', '清蒸南瓜',
+    '虾仁蒸蛋', '香菇鸡汤', '白菜猪肉饺子',
+])
+def test_expanded_dish_mode_switch_edit_save_reload_and_lock(
+        name, client, db_session, monkeypatch, qwen_mode):
+    from services.common.meal_engine import catalogue, evaluate_mode
+    food = next(f for f in catalogue()['foods'] if f['name'] == name)
+    initial = [ExtractedItem(name=name, food_id=food['id']).model_dump()]
+    monkeypatch.setattr(worker, 'get_session_factory',
+                        lambda: make_session_factory(db_session.get_bind()))
+
+    def respond(url, **kwargs):
+        payload = kwargs['json']
+        result = evaluate_mode(payload.get('draft') or initial, payload['mode'])
+        return httpx.Response(200, request=httpx.Request('POST', url), json=result)
+
+    monkeypatch.setattr(worker.httpx, 'post', respond)
+
+    def run_job(response):
+        assert response.status_code in (200, 201)
+        data = response.json()
+        worker.process_nutrition_job(data['job']['id'])
+        db_session.expire_all()
+        return client.get('/analyses/'+data['analysis']['id']).json()
+
+    meal = run_job(client.post('/analyses', json={'food_text':name, 'mode':'basic'}))
+    assert meal['status'] == 'completed'
+    assert meal['draft'][0]['grams'] is None
+    path = '/analyses/'+meal['id']
+    meal = run_job(client.post(path+'/mode', json={
+        'revision':meal['revision'], 'mode':'advanced'}))
+    assert meal['status'] == 'needs_input' and meal['calories'] is None
+    assert client.post(path+'/confirm', json={'revision':meal['revision']}).status_code == 409
+    recipe = next(q['recipe'] for q in meal['questions'] if q['kind'] == 'recipe')
+    if 'oil' in recipe['ingredients']:
+        recipe['ingredients']['oil'] = 0
+    recipe['yield_g'] += 100
+    meal = run_job(client.post(path+'/reply', json={
+        'revision':meal['revision'], 'answers':{
+            '0.grams':150, '0.weight_basis':'cooked', '0.recipe':recipe}}))
+    assert meal['status'] == 'completed' and meal['calories'] > 0
+    assert meal['draft'][0]['recipe'] == recipe
+    assert meal['details'][0]['grams'] == 150
+    assert meal['details'][0]['sources']
+    confirmed = client.post(path+'/confirm', json={'revision':meal['revision']})
+    assert confirmed.status_code == 200
+    assert confirmed.json()['status'] == 'confirmed'
+    assert client.get(path).json()['details'] == meal['details']
+    assert client.post(path+'/mode', json={
+        'revision':confirmed.json()['revision'], 'mode':'basic'}).status_code == 409

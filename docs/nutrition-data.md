@@ -1,6 +1,6 @@
 # Chinese food catalogue and clarification dialogue
 
-Version 2026-10-16.1 contains 116 ingredient records and 50 editable Chinese recipe
+Version 2026-10-19.1 contains 138 ingredient records and 250 editable Chinese recipe
 reference templates. No model training is required. Qwen extracts explicit facts
 and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
 facts; basic mode uses visible reference assumptions where supported. Unresolved
@@ -21,7 +21,7 @@ Chinese labels and aliases are project-maintained mappings and may be refined.
 - Reproduce: `python scripts/import_usda.py /path/to/official-sr-legacy.zip`
 - Runtime snapshot: `services/common/data/catalogue.json` (included in Python package)
 
-The 50 recipe templates in `recipes.json` are **project-authored illustrative
+The 250 recipe templates in `recipes.json` are **project-authored illustrative
 formulations**, not measurements, authentic standardized recipes, or imports of
 HowToCook/Figshare. Some use simplified ingredients, clearly described by `method`.
 Their nutrient numbers are computed from USDA ingredients; every assumed ingredient
@@ -44,6 +44,66 @@ not laboratory measurements. Generic ingredients may differ from local brands.
 Figshare Chinese dish datasets remain research candidates: their serving/whole-
 recipe bases and source ingredient details need further normalization before import.
 Open Food Facts has not been mixed into this CC0 ingredient snapshot.
+
+## Dish coverage policy
+
+Maintain one home-style reference formulation per dish. Alternative names share
+one ID, rather than adding regional editions of the same dish. Distinct preparations
+such as steamed versus braised fish can remain separate dishes. This is a curated
+coverage list, not a measured ranking of the most popular Chinese dishes. See the
+[dish index](recipe-catalogue.md) for all 250 names and their reference methods.
+
+The expansion adds 200 recipes and 22 USDA ingredients. New records include whole
+beef cuts, boneless edible pork rib meat, skin-on edible chicken, dry glass noodles,
+oyster sauce and selected vegetables. The original 116 ingredient records are
+unchanged. The existing potato/beef stew and radish/beef soup now use whole beef
+instead of the ground-beef record. Existing dish IDs remain stable; historical saved
+totals and evidence are not recalculated by a catalogue update.
+
+Weights for ribs, fish, shellfish and bone-in chicken dishes refer to edible flesh,
+excluding bones, shells and other discarded parts. If the user explicitly supplies
+bone-in or shell-on gross weight, extraction records `weight_includes_inedible`.
+Basic mode uses a visibly labelled 60% edible-weight convenience assumption to
+avoid an extra question. This is a coarse project default, not a USDA conversion,
+and can be inaccurate for particular foods, especially shellfish. Advanced mode
+asks for actual edible grams. The original gross grams and flag remain in the draft,
+so switching modes never treats the rough conversion as a measured net weight.
+Dry noodles and wood ear are
+explicitly labelled by their dry ingredient weights, while finished recipe yields
+include retained water. Fried recipes use an assumed amount of oil retained in the
+food, not the entire frying bath. Soup estimates assume the specified share of both
+solids and broth is eaten; users who leave broth should edit the reference mixture
+and amount. These assumptions are not measured cooking conversion factors.
+
+Some dishes use simplified or substitute seasonings, disclosed in `method` (for
+example, hoisin in the illustrative sauce for Jingjiang shredded pork). The recipe
+amounts and batch yields are project-authored assumptions, not quantities imported
+from an external recipe collection. No claim of a universal or regionally authentic
+recipe is made. Missing brand-specific ingredients should be clarified, not silently
+treated as nutritionally equivalent.
+
+Basic mode can use distinct labelled `portion_weights_g` for pieces, bowls and
+servings where defined. For example, a reference dumpling is 20g, whereas a serving
+is 200g. Explicit user grams always take precedence. These weights remain assumptions
+on the calculation copy; switching to advanced still asks for actual weights.
+
+Qwen receives the supported catalogue and maps aliases to existing IDs. A regional
+adjective alone does not create a new recipe. Explicit differences in preparation,
+ingredients or quantities must remain available for clarification and editing. The
+catalogue is still sent in full; candidate retrieval and production latency tuning
+are not part of this data expansion.
+
+Explicit changes such as no peanuts or 5g oil for the whole batch must populate
+`recipe_ingredients`, not only an uncertainty message. Batch oil is distinct from
+the consumed serving's additional `oil_g`. Qualitative wording such as "less oil"
+does not establish a gram value: basic mode can retain labelled reference values,
+while advanced mode presents the recipe for review.
+
+A small extraction guard rejects the obvious mistake of copying a piece/serving
+count into `grams` when that gram value has no explicit mass-unit evidence in user
+text. Basic mode then uses the visible reference portion. Assistant suggestions do
+not count as user evidence. This catches the observed "10 dumplings = 10 grams"
+error; it is not a complete proof that every model-extracted quantity is correct.
 
 ## Dialogue contract
 
@@ -101,6 +161,19 @@ using supported ingredient IDs, whole-batch ingredient grams, finished cooked ba
 weight and a clear method description. Re-run the importer to regenerate the runtime
 catalogue. Review the assumed formula and exercise both basic and advanced flows;
 adding a dish name alone does not establish its nutrition.
+
+The importer validates unique IDs and recipe aliases, supported ingredient-only
+references, finite nonnegative ingredient weights, positive finished yields and
+valid reference portion weights before writing the runtime snapshot. It rejects
+duplicate FDC selections instead of silently dropping them. To check the expanded
+catalogue and both calculation modes without model credentials, run
+`pytest -q tests/unit/test_expanded_catalogue.py`.
+
+For an opt-in real-provider test through the running API, worker and database, run
+`python scripts/check_expanded_dialogue.py --base-url http://localhost:8000 --live`.
+It consumes model quota and creates synthetic records. The check covers new dishes,
+piece weights, mode switching, recipe changes, dialogue corrections, saving,
+reload, confirmation locking and coarse gross-weight estimates.
 
 Reference portion weights and the default extra oil quantity are project
 assumptions, not USDA-measured serving sizes. More detailed input can improve an

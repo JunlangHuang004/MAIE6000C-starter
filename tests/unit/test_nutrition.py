@@ -67,3 +67,32 @@ def test_qwen_timeout_does_not_fabricate_result(monkeypatch):
     monkeypatch.setattr('services.ai.app.qwen.httpx.post', timeout)
     with pytest.raises(RuntimeError, match='暂时不可用'):
         analyze_with_qwen('100g egg', config())
+
+
+def test_model_piece_count_is_not_accepted_as_an_unstated_gram_weight(monkeypatch):
+    mock_qwen(monkeypatch, json.dumps({'items':[{
+        'food_id':'dish_241', 'name':'白菜猪肉饺子', 'grams':10,
+        'portion_count':10, 'portion_unit':'piece',
+    }]}))
+    result = analyze_with_qwen('十个白菜猪肉饺子', config(), mode='basic')
+    assert result.draft[0]['grams'] is None
+    assert result.details[0]['grams'] == 200
+
+
+@pytest.mark.parametrize('text', ['十克白菜猪肉饺子，共十个', '10g白菜猪肉饺子，共十个'])
+def test_explicit_grams_equal_to_piece_count_are_preserved(monkeypatch, text):
+    mock_qwen(monkeypatch, json.dumps({'items':[{
+        'food_id':'dish_241', 'name':'白菜猪肉饺子', 'grams':10,
+        'portion_count':10, 'portion_unit':'piece',
+    }]}))
+    result = analyze_with_qwen(text, config(), mode='basic')
+    assert result.draft[0]['grams'] == 10
+    assert result.details[0]['grams'] == 10
+
+
+def test_weight_evidence_excludes_assistant_suggestions():
+    from services.ai.app.qwen import _explicit_weights
+    assert _explicit_weights('十个饺子', [
+        {'role':'assistant', 'content':'是否每个10克？'},
+        {'role':'user', 'content':'另有半斤牛肉和0.2kg米饭，菜是二百五十克。'},
+    ]) == {250, 200}

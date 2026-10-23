@@ -24,6 +24,7 @@ class ExtractedItem(BaseModel):
     food_id: str | None = Field(default=None, max_length=100)
     name: str = Field(min_length=1, max_length=120)
     grams: float | None = Field(default=None, gt=0, le=10000)
+    weight_includes_inedible: bool | None = None
     weight_basis: Literal['raw', 'cooked', 'as_sold'] | None = None
     preparation: Literal['raw', 'as_served', 'boiled', 'steamed', 'roasted',
                          'stir_fried', 'fried', 'braised', 'other'] | None = None
@@ -59,6 +60,11 @@ def evaluate(draft):
                 'food', options=[{'value': f['id'], 'label': f['name']} for f in foods.values()]))
             continue
         name = food['name']
+        if item.get('weight_includes_inedible'):
+            questions.append(question(prefix+'grams',
+                f'{name}提供的重量包含骨头、壳等不可食部分。请填写实际吃下的可食部分克数，'
+                '不能直接按带骨或带壳重量计算。', min=0.1, max=10000))
+            continue
         if (food['kind'] == 'ingredient' and food.get('preparations')
                 and item.get('preparation') is not None
                 and item['preparation'] not in food['preparations']):
@@ -178,6 +184,8 @@ def apply_answers(draft, answers, mode='advanced'):
             if not q['min'] <= value <= q['max']:
                 raise ValueError('重量超出允许范围。')
             item[field] = value
+            if field == 'grams' and item.get('weight_includes_inedible'):
+                item['weight_includes_inedible'] = False
         elif q['kind'] == 'confirm':
             if value is not True:
                 raise ValueError('请确认或补充说明。')
@@ -213,15 +221,28 @@ def evaluate_mode(draft, mode='advanced'):
         if not food:
             assumptions.append(notes)
             continue
+        if item.get('weight_includes_inedible'):
+            # Convenience-mode assumption, not an empirical conversion or a user fact.
+            if item.get('grams') is not None:
+                gross = item['grams']
+                item['grams'] = gross * 0.6
+                notes.append(f'提供的 {gross:g}g 含骨或壳，基础版暂按 60% 可食比例，'
+                             f'估算可食重量 {item["grams"]:g}g；这是粗略假设，'
+                             '并非实测去骨率，可在进阶版填写实际净重。')
+            item['weight_includes_inedible'] = False
         if item.get('grams') is None:
             per_portion = food.get('default_portion_g', 200 if food['kind']=='recipe' else 100)
+            unit = item.get('portion_unit') or 'serving'
+            per_portion = food.get('portion_weights_g', {}).get(unit, per_portion)
+            unit_label = {'bowl':'碗', 'piece':'个', 'cup':'杯', 'serving':'份'}[unit]
             count = item.get('portion_count') or 1
             item['grams'] = min(per_portion * count, 10000)
             if per_portion * count > 10000:
                 item['grams'] = None
                 assumptions.append(['份量过大，请填写实际克数。'])
                 continue
-            notes.append(f'未提供克数，暂按 {count:g} 份、每份 {per_portion:g}g，'
+            notes.append(f'未提供克数，暂按 {count:g} {unit_label}、'
+                         f'每{unit_label} {per_portion:g}g，'
                          f'共 {item["grams"]:g}g 估算。')
         if item.get('weight_basis') is None:
             item['weight_basis'] = food['state']

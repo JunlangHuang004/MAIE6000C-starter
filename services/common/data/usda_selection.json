@@ -1257,5 +1257,247 @@
       "70%黑巧克力"
     ],
     "default_portion_g": 25
+  },
+  {
+    "id": "beef_chunk",
+    "name": "生牛肩肉（炖煮用，含部分脂肪）",
+    "state": "raw",
+    "fdc_id": 171206,
+    "aliases": [
+      "牛肉块",
+      "牛肩肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "beef_lean",
+    "name": "生去脂牛肩肉",
+    "state": "raw",
+    "fdc_id": 169445,
+    "aliases": [
+      "瘦牛肉",
+      "牛肉片",
+      "牛肉丝"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pork_ribs",
+    "name": "生猪排骨可食肉（不含骨）",
+    "state": "raw",
+    "fdc_id": 167853,
+    "aliases": [
+      "猪排骨可食肉",
+      "去骨排骨"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken_skin",
+    "name": "生带皮鸡肉可食部分（不含骨）",
+    "state": "raw",
+    "fdc_id": 171447,
+    "aliases": [
+      "带皮鸡肉",
+      "去骨带皮鸡肉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "glass_noodles",
+    "name": "干绿豆粉丝",
+    "state": "as_sold",
+    "fdc_id": 174258,
+    "aliases": [
+      "干粉丝",
+      "绿豆粉丝"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "oyster_sauce",
+    "name": "蚝油",
+    "state": "as_sold",
+    "fdc_id": 174529,
+    "aliases": [
+      "蚝油",
+      "蠔油"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "hoisin",
+    "name": "海鲜酱",
+    "state": "as_sold",
+    "fdc_id": 172886,
+    "aliases": [
+      "海鲜酱",
+      "海鮮醬"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "ketchup",
+    "name": "调味番茄酱",
+    "state": "as_sold",
+    "fdc_id": 168556,
+    "aliases": [
+      "番茄沙司",
+      "番茄酱"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "snow_pea",
+    "name": "生荷兰豆（可食豆荚）",
+    "state": "raw",
+    "fdc_id": 170010,
+    "aliases": [
+      "荷兰豆",
+      "荷蘭豆"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chestnut",
+    "name": "生板栗仁（去壳）",
+    "state": "raw",
+    "fdc_id": 170164,
+    "aliases": [
+      "板栗仁",
+      "栗子仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "water_chestnut",
+    "name": "生荸荠（去皮）",
+    "state": "raw",
+    "fdc_id": 170066,
+    "aliases": [
+      "荸荠",
+      "马蹄"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "cilantro",
+    "name": "生香菜叶",
+    "state": "raw",
+    "fdc_id": 169997,
+    "aliases": [
+      "香菜",
+      "芫荽"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "gai_lan",
+    "name": "生芥蓝",
+    "state": "raw",
+    "fdc_id": 169404,
+    "aliases": [
+      "芥蓝",
+      "芥蘭"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "fava",
+    "name": "生鲜蚕豆仁",
+    "state": "raw",
+    "fdc_id": 170377,
+    "aliases": [
+      "鲜蚕豆",
+      "蚕豆仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "black_pepper",
+    "name": "黑胡椒粉",
+    "state": "as_sold",
+    "fdc_id": 170931,
+    "aliases": [
+      "黑胡椒",
+      "黑椒粉"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "fermented_tofu",
+    "name": "腐乳",
+    "state": "as_sold",
+    "fdc_id": 174280,
+    "aliases": [
+      "腐乳",
+      "豆腐乳"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "fried_tofu",
+    "name": "炸豆腐",
+    "state": "as_sold",
+    "fdc_id": 172451,
+    "aliases": [
+      "油豆腐",
+      "炸豆腐"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "sesame_paste",
+    "name": "纯烤芝麻酱（无花生）",
+    "state": "as_sold",
+    "fdc_id": 170189,
+    "aliases": [
+      "纯芝麻酱",
+      "芝麻酱"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "pine_nut",
+    "name": "松仁",
+    "state": "as_sold",
+    "fdc_id": 170591,
+    "aliases": [
+      "松子仁",
+      "松仁"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "okra",
+    "name": "生秋葵",
+    "state": "raw",
+    "fdc_id": 169260,
+    "aliases": [
+      "秋葵"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "loofah",
+    "name": "生丝瓜",
+    "state": "raw",
+    "fdc_id": 168414,
+    "aliases": [
+      "丝瓜",
+      "絲瓜"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "yeast",
+    "name": "干酵母",
+    "state": "as_sold",
+    "fdc_id": 175043,
+    "aliases": [
+      "干酵母",
+      "烘焙干酵母"
+    ],
+    "default_portion_g": 100
   }
 ]

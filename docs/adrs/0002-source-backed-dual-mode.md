@@ -10,7 +10,7 @@ Chinese meal names rarely determine a unique recipe, weight or oil amount. Requi
 
 ## Decision
 
-Use Qwen for structured extraction and catalogue matching, and Python for validation, clarification and nutrient arithmetic. Keep 116 USDA ingredient records with provenance and 50 project-authored editable recipe templates. Do not fine-tune a model or accept model-generated nutrient numbers.
+Use Qwen for structured extraction and catalogue matching, and Python for validation, clarification and nutrient arithmetic. Maintain USDA ingredient records with provenance and project-authored editable recipe templates. The initial catalogue held 116 ingredients and 50 recipes; the 2026-10-19 expansion holds 138 ingredients and 250 recipes, with one home-style reference per dish rather than regional duplicates. Do not fine-tune a model or accept model-generated nutrient numbers.
 
 Provide basic and advanced modes. Basic uses visible reference assumptions on a calculation copy. Advanced requests missing details and explicit recipe approval. Persist only explicit facts in the draft, so switching to advanced does not inherit guesses as user facts. Keep questions, dialogue, assumptions and sources with the saved analysis.
 

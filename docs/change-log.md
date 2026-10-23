@@ -1,5 +1,27 @@
 # NutriChat change log
 
+## 2026-10-19 — 250 home-style reference dishes
+
+- Expand the catalogue from 50 to 250 editable recipes and from 116 to 138 USDA SR Legacy ingredients.
+- Keep one reference formulation per dish, group alternative names under one ID and disclose simplified methods. Amounts and cooked yields remain project-authored assumptions, not imported measurements.
+- Add whole beef, boneless edible rib meat, skin-on chicken and missing pantry ingredients with original FDC IDs and CC0 provenance. Preserve the existing 116 ingredient records.
+- Correct the two existing whole-beef recipes that previously used ground beef, while retaining their dish IDs and historical saved results.
+- Distinguish reference piece and serving weights for dumplings, wontons, buns and selected other foods. Preserve explicit grams and ask for actual details in advanced mode.
+- Preserve explicit ingredient exclusions and whole-batch oil corrections in structured recipe fields. For explicit gross bone/shell weights, basic mode shows a coarse 60% edible-weight assumption; advanced mode asks for edible grams without carrying the assumption into user facts.
+- Guard against copying a piece count into an unsupported gram value, and constrain model output to concise structured facts. Live checks exposed both missing recipe corrections and a count-as-weight error.
+- Reject invalid catalogue references, duplicate IDs/aliases and invalid yields or portions during import. Exercise all 250 recipes through basic estimation and advanced approval.
+- Add an English coverage policy and a complete dish index. No model retraining or database migration is required.
+
+### Validation
+
+- Pass 359 unit/integration tests and Ruff. Exercise every recipe in both calculation modes, plus eight category-level API dialogue flows; these automated tests do not measure Qwen extraction accuracy.
+- Regenerate the runtime catalogue from the cached official USDA archive and verify byte-identical output. Confirm that the original 116 ingredient records remain unchanged.
+- Verify real Qwen extraction and the local API/worker/PostgreSQL flow for new dishes, piece weights, mode switching, recipe edits, natural-language corrections, confirmation, reload and locking.
+- Separately pass the real-provider gross-weight flow after the prompt correction: retain 200g gross weight in the draft, calculate a labelled 120g edible-weight estimate in basic mode, then request net grams without totals in advanced mode. The full live script did not complete without interruption across these checks; successful subflows and intermittent failures are reported separately.
+- Earlier live runs exposed missing structured recipe corrections, a piece-count/gram mix-up and confusion between gross weight and weight state; add prompt guidance and a narrow explicit-weight guard with regression tests. Correct the live test's assumption that every recipe contains the same oil ingredient.
+- Live calls also intermittently returned invalid provider data and were rejected without nutrition totals. A successful synthetic flow is not a guarantee of provider reliability; no automatic retry or recovery was added.
+- Perform the validation above on local service images. Public ECS deployment is separate from this source update.
+
 ## 2026-10-17 — Week 6 worker lifecycle evidence and test plan
 
 - Extend architecture documentation with the worker sequence, state ownership, service boundaries, timeout policy and Week 7 demo/test plan.

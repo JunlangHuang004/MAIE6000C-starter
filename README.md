@@ -4,9 +4,12 @@ NutriChat estimates calories, protein, fat and carbohydrates from meal descripti
 including Chinese ingredients, dish names, cooking methods and follow-up details.
 Users review and correct the estimate before confirming it. Confirmed records are locked.
 
-The Qwen workflow includes **116 USDA ingredient records and 50 editable Chinese
+The Qwen workflow includes **138 USDA ingredient records and 250 editable Chinese
 reference recipes**. Qwen interprets descriptions; Python calculates nutrients from
 source-backed data. This project does not train or fine-tune a model.
+
+Each dish has one home-style reference recipe. Alternative names share an entry;
+regional variants are not separate catalogue items. See the [250-dish index](docs/recipe-catalogue.md).
 
 ## Estimation modes
 
@@ -85,6 +88,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
+| [Dish index](docs/recipe-catalogue.md) | All 250 reference dishes, alternative names and cooking methods |
 | [Week 6 worker workflow](docs/async-workflow.md) | Lifecycle evidence, failure decisions, ownership and Week 7 test/demo plan |
 | [Operations](docs/operations.md) | Local checks, logs, failure handling and migrations |
 | [Cloud deployment](docs/cloud-deployment.md) | Qwen, ECS, login, HTTPS and backups |
