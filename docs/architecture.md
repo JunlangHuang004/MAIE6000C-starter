@@ -1,6 +1,10 @@
 # NutriChat architecture
 
-Current implementation: 2026-10-17.
+Current implementation reviewed: 2026-10-27.
+
+The Qwen catalogue contains 138 USDA ingredient records and 250 project-authored
+reference recipes. Expansion changes versioned data and validation, not model
+weights or the database schema. The public deployment is older than this milestone.
 
 ## Services and data flow
 
@@ -124,3 +128,11 @@ columns and matching job-ID logs separately.
 The [workflow guide](async-workflow.md) maps the four minimum test categories to
 actual test names, records evidence, and lists remaining gaps. The lab uses an
 isolated Compose project so existing local and public demos keep running.
+
+## Week 7 evidence
+
+The [midterm artifact](../submissions/week07/README.md) records the current scope and
+team responsibilities. A [fresh rehearsal](evidence/week07-verification.md) captures
+real PostgreSQL writes, worker processing, persisted output, confirmation and
+operational signals using the offline provider. Qwen observations are listed
+separately; health checks alone do not establish provider correctness.

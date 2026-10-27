@@ -1,5 +1,20 @@
 # NutriChat change log
 
+## 2026-10-27 — Week 7 midterm checkpoint
+
+- Add the milestone README, confirmed team responsibilities, live demo guide,
+  realistic Week 7–13 priorities and a truthful AI Use Statement.
+- Reproduce and fix the pytest console-entry script-import failure. Keep existing
+  workflow triggers; the original `main` CI validates the commit mirrored to the fork.
+- Add a host rehearsal script and fresh synthetic HTTP/PostgreSQL/worker evidence
+  for queued input, durable output, confirmation, reload and locked corrections.
+- Pass 359 unit/integration tests, whole-repository Ruff and two isolated-stack
+  smoke tests. Complete the expanded real-Qwen dialogue script in one run; record
+  provider validation separately from deterministic checks and retain reliability limits.
+- Refresh README, architecture, operations and ownership notes. Public ECS remains
+  an older deployment; no public upgrade or Canvas submission is included.
+- See [Week 7 verification](evidence/week07-verification.md) for commands and evidence.
+
 ## 2026-10-19 — 250 home-style reference dishes
 
 - Expand the catalogue from 50 to 250 editable recipes and from 116 to 138 USDA SR Legacy ingredients.

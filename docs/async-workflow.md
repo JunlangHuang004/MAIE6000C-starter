@@ -180,12 +180,15 @@ responses; this run did not interrupt a live Qwen request or kill a worker proce
 
 ## Sprint ownership and outstanding work
 
-The lab requests an implementation owner, documentation owner, test owner and
-integration/Compose owner. Team assignments have not been supplied, so all four
-assignments remain **to be confirmed by the team**. This document does not invent
-participants, peer reviews or personal verification claims.
+Current assignments (confirmed by the team representative on 2026-10-27):
 
-- [ ] Record agreed team owners.
-- [ ] Add the course-required AI Use Statement before submission; deferred from this update.
+- Implementation: Junlang Huang; supporting development: Jiacheng Cao.
+- Documentation and deployment/integration: Zhou Ran.
+- Testing: Yixing Huang.
+
+The [Week 7 milestone](../submissions/week07/README.md) and
+[AI Use Statement](../submissions/week07/AI_USE_STATEMENT.md) now supersede the
+pending ownership/statement notes in the historical Week 6 evidence.
+
 - [ ] Review the shared-account/error-detail limitations before wider public use.
 - [ ] If expanding scope, design idempotency and claimed-job recovery with appropriate tests.

@@ -1,0 +1,213 @@
+{
+  "observed_at": "2026-10-27T08:14:32.517713+00:00",
+  "source_base_commit": "7754ef41e51a3de61c09c78a7cbb7bed6a3870fe",
+  "scope": "Week 7 checkout; real PostgreSQL and internal HTTP; offline demo provider.",
+  "project": "nutrichat-week07",
+  "health": {
+    "status": 200,
+    "body": {
+      "service": "api",
+      "status": "ok"
+    }
+  },
+  "create": {
+    "status": 201,
+    "body": {
+      "analysis": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100g egg"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+        "food_text": "100g egg",
+        "status": "queued",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-27T08:14:33.136814Z",
+        "updated_at": "2026-10-27T08:14:33.136829Z"
+      },
+      "job": {
+        "id": 1,
+        "case_id": null,
+        "analysis_id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+        "job_type": "analyze_nutrition",
+        "status": "pending",
+        "attempts": 0,
+        "error": null,
+        "created_at": "2026-10-27T08:14:33.139964Z",
+        "claimed_at": null,
+        "completed_at": null
+      }
+    }
+  },
+  "before_worker": {
+    "job_id": 1,
+    "job_status": "pending",
+    "attempts": 0,
+    "claimed_at": null,
+    "completed_at": null,
+    "analysis_id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+    "analysis_status": "queued",
+    "revision": 1,
+    "calories": null,
+    "protein_g": null,
+    "fat_g": null,
+    "carbs_g": null,
+    "confirmed_at": null
+  },
+  "result": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "100g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "100g egg",
+      "revision": 1,
+      "confirmed_at": null,
+      "id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+      "food_text": "100g egg",
+      "status": "completed",
+      "calories": 155.0,
+      "protein_g": 13.0,
+      "carbs_g": 1.1,
+      "fat_g": 11.0,
+      "created_at": "2026-10-27T08:14:33.136814Z",
+      "updated_at": "2026-10-27T08:14:35.502154Z"
+    }
+  },
+  "after_worker": {
+    "job_id": 1,
+    "job_status": "completed",
+    "attempts": 1,
+    "claimed_at": "2026-10-27T08:14:35.408972+00:00",
+    "completed_at": "2026-10-27T08:14:35.5007+00:00",
+    "analysis_id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+    "analysis_status": "completed",
+    "revision": 1,
+    "calories": 155,
+    "protein_g": 13,
+    "fat_g": 11,
+    "carbs_g": 1.1,
+    "confirmed_at": null
+  },
+  "confirmed": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "100g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "100g egg",
+      "revision": 2,
+      "confirmed_at": "2026-10-27T08:14:36.164518Z",
+      "id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+      "food_text": "100g egg",
+      "status": "confirmed",
+      "calories": 155.0,
+      "protein_g": 13.0,
+      "carbs_g": 1.1,
+      "fat_g": 11.0,
+      "created_at": "2026-10-27T08:14:33.136814Z",
+      "updated_at": "2026-10-27T08:14:36.168933Z"
+    }
+  },
+  "reloaded": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "100g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "100g egg",
+      "revision": 2,
+      "confirmed_at": "2026-10-27T08:14:36.164518Z",
+      "id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+      "food_text": "100g egg",
+      "status": "confirmed",
+      "calories": 155.0,
+      "protein_g": 13.0,
+      "carbs_g": 1.1,
+      "fat_g": 11.0,
+      "created_at": "2026-10-27T08:14:33.136814Z",
+      "updated_at": "2026-10-27T08:14:36.168933Z"
+    }
+  },
+  "after_confirmation": {
+    "job_id": 1,
+    "job_status": "completed",
+    "attempts": 1,
+    "claimed_at": "2026-10-27T08:14:35.408972+00:00",
+    "completed_at": "2026-10-27T08:14:35.5007+00:00",
+    "analysis_id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9",
+    "analysis_status": "confirmed",
+    "revision": 2,
+    "calories": 155,
+    "protein_g": 13,
+    "fat_g": 11,
+    "carbs_g": 1.1,
+    "confirmed_at": "2026-10-27T08:14:36.164518+00:00"
+  },
+  "locked_edit": {
+    "status": 409,
+    "body": {
+      "detail": "State or revision changed; reload the estimate."
+    }
+  },
+  "worker_events": [
+    {
+      "asctime": "2026-10-27 08:14:35,413",
+      "levelname": "INFO",
+      "service": null,
+      "name": "services.worker.main",
+      "message": "job_claimed",
+      "job_id": 1,
+      "case_id": null,
+      "analysis_id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9"
+    },
+    {
+      "asctime": "2026-10-27 08:14:35,505",
+      "levelname": "INFO",
+      "service": null,
+      "name": "services.worker.main",
+      "message": "job_completed",
+      "job_id": 1,
+      "analysis_id": "6509bfc1-2674-4ff1-8175-a5e5497b09b9"
+    }
+  ],
+  "service_tree_sha256": "1541c12772158e6be73180c63f34cd4176aa54fe413d5b1ef8ab8329b9f70b32",
+  "source_note": "Application .py/.json/.html files in both the local Qwen API image and isolated demo API image matched the checkout. Milestone docs, test configuration and host rehearsal script were uncommitted during verification; application service files were unchanged from source_base_commit."
+}

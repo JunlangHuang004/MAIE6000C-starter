@@ -36,7 +36,7 @@ After building the current source:
 
 ```sh
 docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
-docker compose run --rm --no-deps api ruff check services tests alembic scripts/import_usda.py scripts/check_qwen.py scripts/check_dialogue.py
+docker compose run --rm --no-deps api ruff check .
 ```
 
 The legacy smoke tests assert demo-catalogue values. Run them only against a stack
@@ -53,6 +53,7 @@ Configuration and live-provider checks:
 docker compose run --rm --no-deps api python scripts/check_qwen.py
 docker compose run --rm --no-deps api python scripts/check_qwen.py --live
 docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
+docker compose exec -T api python scripts/check_expanded_dialogue.py --base-url http://api:8000 --live
 ```
 
 The first command checks configuration only. Live checks consume model quota; the dialogue script creates synthetic saved records. Mocked tests cannot establish model account access. Recorded results are in the [change log](change-log.md).
@@ -88,3 +89,19 @@ host ports. It does not replace the running local or public configuration.
 Run the lab smoke tests only against this demo stack. Shut it down with the same
 project name and both Compose files; omit `-v` to keep the lab database. Current
 results and verification limits are in [the Week 6 verification record](evidence/week06-verification.md).
+
+## Week 7 milestone rehearsal
+
+Use the [demo guide](../submissions/week07/DEMO.md) and
+`scripts/rehearse_midterm.py` with the dedicated `nutrichat-week07` project. The
+existing Week 6 overlay is reusable; its project name determines isolation. The
+script creates synthetic records and stops/starts only that project's worker.
+Build the checkout first and keep the regular Qwen stack separate. Recorded
+results and limits are in [Week 7 verification](evidence/week07-verification.md).
+
+CI runs Ruff, PostgreSQL migrations and `pytest -q tests/unit tests/integration`
+on `main` pushes and pull requests. The fork's `nutrichat` branch mirrors the same
+commit but does not trigger push CI. Pytest includes the repository root so
+script imports work with both the console and module entry points. The public ECS
+is not updated by a Git push; deployment and rollback require the separate cloud
+workflow. Do not present the older public build as the Week 7 tag.

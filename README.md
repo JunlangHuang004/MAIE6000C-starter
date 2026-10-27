@@ -63,7 +63,7 @@ Build the current images first. Unit/integration tests do not require Qwen crede
 
 ```sh
 docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
-docker compose run --rm --no-deps api ruff check services tests alembic scripts/import_usda.py scripts/check_qwen.py scripts/check_dialogue.py
+docker compose run --rm --no-deps api ruff check .
 ```
 
 After configuring Qwen and starting the stack, run the live checks below. These
@@ -74,9 +74,11 @@ docker compose run --rm --no-deps api python scripts/check_qwen.py --live
 docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
 ```
 
-The 2026-10-17 feature release passed 59 unit/integration tests, Ruff, a JavaScript
-syntax check, and real-Qwen workflows locally and on ECS. See the
-[change log](docs/change-log.md) for scope and recorded validation.
+The 2026-10-27 milestone passed 359 unit/integration tests using the CI pytest
+entry point. See the [Week 7 verification record](docs/evidence/week07-verification.md)
+for static checks, fresh PostgreSQL/worker evidence, smoke tests and separately
+reported provider results. Earlier checks remain in the [change log](docs/change-log.md).
+The public ECS deployment has not been updated to this 250-dish milestone.
 
 ## Architecture and documentation
 
@@ -85,6 +87,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 
 | Document | Contents |
 | --- | --- |
+| [Week 7 milestone](submissions/week07/README.md) | Team, current status, demo sequence, evidence, risks and next priorities |
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
@@ -115,5 +118,6 @@ docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest tests/in
 ```
 
 Build the current image first. Tests cover claim metadata, terminal processor
-failures, success persistence and duplicate-POST behavior. Team role assignments
-and the course-required AI Use Statement remain pending before submission.
+failures, success persistence and duplicate-POST behavior. Current team assignments
+and the [AI Use Statement](submissions/week07/AI_USE_STATEMENT.md) are included in
+the [Week 7 milestone](submissions/week07/README.md).
