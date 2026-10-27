@@ -3,9 +3,37 @@
 <title>NutriChat · 中餐营养估算</title>
 <style>
 :root{font-family:system-ui,sans-serif;color:#173c32;background:#f3f6ef}*{box-sizing:border-box}body{margin:0}main{max-width:900px;margin:32px auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:36px;margin-bottom:8px}h2{font-size:22px}p{line-height:1.7}.muted,small{color:#587268}.card{background:#fff;border:1px solid #dbe5dc;border-radius:18px;padding:24px;margin-top:20px}label{display:block;font-weight:600;margin:12px 0 8px}textarea,input,select{font:inherit;padding:12px;border:1px solid #b8cbbb;border-radius:9px;max-width:100%;background:white;color:#173c32}textarea{width:100%;min-height:100px;resize:vertical}select{width:100%}input[type=number]{width:150px}input[type=checkbox]{width:20px;height:20px;vertical-align:middle}button{background:#246149;color:white;border:0;padding:12px 18px;border-radius:9px;font:inherit;cursor:pointer;margin:8px 8px 0 0}button.secondary{background:#edf3eb;color:#245740}button:disabled{opacity:.45;cursor:default}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:#f3f6ef;padding:16px;border-radius:12px}.metric b{display:block;font-size:26px}.metric span{font-size:13px}.question{border-top:1px solid #e0e7df;padding:12px 0}.ingredient{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0}.bubble{white-space:pre-wrap;padding:14px 18px;border-radius:12px;background:#f0f5ed;margin:12px 0;overflow-wrap:anywhere}.bubble.user{background:#e2eee8;margin-left:35px}.bubble strong{display:block;font-size:12px;margin-bottom:8px}.error{color:#a12c20!important}#message{white-space:pre-wrap}.tag{font-size:13px;color:#287257}.sources{font-size:12px;overflow-wrap:anywhere}a{color:#246149}details{margin:12px 0}summary{cursor:pointer;font-weight:600}[hidden]{display:none!important}@media(max-width:550px){main{margin:8px auto;padding:14px}.card{padding:18px}.metrics{grid-template-columns:1fr 1fr}h1{font-size:28px}.ingredient input{width:100px}}
+.profile-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.profile-heading h2{margin:0 0 6px}.profile-heading p{margin:0}.profile-badge{background:#e8f1e8;border-radius:20px;padding:6px 12px;white-space:nowrap;font-size:13px}.profile-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 16px}.profile-fields input{width:100%}.profile-hint{font-size:13px;line-height:1.6}.profile-reference{border-top:1px solid #e0e7df;margin-top:20px;padding-top:8px}.profile-reference h3{font-size:16px}.profile-notice{background:#f8f3e7;border:1px solid #e8dbb8;padding:14px 16px;border-radius:12px;line-height:1.7}.profile-assumptions{font-size:14px}.profile-assumptions p{margin:8px 0}.profile-actions{display:flex;flex-wrap:wrap;align-items:center;gap:4px}#profile-message{margin-bottom:0;white-space:pre-wrap}input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #83aa88;outline-offset:3px}@media(max-width:550px){.profile-fields{grid-template-columns:1fr 1fr}.profile-heading{display:block}.profile-badge{display:inline-block;margin-top:12px}.profile-fields .profile-wide{grid-column:1/-1}}
 </style></head><body><main>
 <header><strong>◉ NutriChat</strong><div><span id="account-name" class="muted" aria-live="polite">正在验证登录…</span> <button id="logout" type="button" class="secondary" disabled>退出登录</button></div></header>
 <h1>说说这餐吃了什么</h1><p class="muted">基础版快速了解大概热量；进阶版补充份量、做法和配方，细化营养估算。</p>
+<section class="card" id="profile-card" aria-labelledby="profile-title">
+<div class="profile-heading"><div><h2 id="profile-title">你的每日营养参考</h2><p class="muted">结合身体资料、活动量和目标，了解一天的大概需求。</p></div><span class="profile-badge" id="profile-badge">正在读取</span></div>
+<p class="profile-hint muted">资料只保存在当前账号下。不填写也可以继续估算餐食。</p>
+<details id="profile-editor" open><summary id="profile-editor-title">填写个人资料</summary>
+<form id="profile-form">
+<div class="profile-fields">
+<div><label for="profile-age">年龄（岁）</label><input id="profile-age" name="age_years" type="number" min="18" max="80" step="1" required inputmode="numeric" autocomplete="off" disabled><small>18–80 岁</small></div>
+<div><label for="profile-height">身高（cm）</label><input id="profile-height" name="height_cm" type="number" min="120" max="220" step="any" required inputmode="decimal" autocomplete="off" disabled><small>120–220 cm</small></div>
+<div><label for="profile-weight">当前体重（kg）</label><input id="profile-weight" name="weight_kg" type="number" min="30" max="250" step="any" required inputmode="decimal" autocomplete="off" disabled><small>30–250 kg</small></div>
+<div><label for="profile-sex">性别（公式参数）</label><select id="profile-sex" name="sex" required aria-describedby="profile-sex-help" disabled><option value="">请选择</option><option value="male">男性系数</option><option value="female">女性系数</option></select></div>
+<div><label for="profile-goal">你的目标</label><select id="profile-goal" name="goal" required disabled><option value="">请选择</option><option value="gain_muscle">增肌</option><option value="lose_fat">减脂</option></select></div>
+<div class="profile-wide"><label for="profile-activity">日常活动量</label><select id="profile-activity" name="activity_level" required aria-describedby="profile-activity-help" disabled><option value="">请选择活动量</option><option value="sedentary">久坐 · 日常很少走动或运动</option><option value="light">轻度 · 日常走动或轻量运动</option><option value="moderate">中度 · 日常较活跃并规律运动</option><option value="high">高度 · 体力工作或经常高强度运动</option></select></div>
+</div>
+<p id="profile-activity-help" class="profile-hint muted">结合日常工作、走动和运动选择。活动系数只是近似参考，不代表精确的消耗测量。</p>
+<p id="profile-sex-help" class="profile-hint muted">这个公式只提供男性、女性两组系数，用于粗略计算，不代表性别认同；不确定适用系数时，可先跳过本功能。</p>
+<div class="profile-actions"><button id="profile-save" type="submit" disabled>保存并计算参考</button></div>
+</form></details>
+<p id="profile-message" class="muted" role="status" aria-live="polite">正在读取个人资料…</p>
+<button id="profile-reload" class="secondary" type="button" hidden>重新读取资料</button>
+<div id="profile-reference" class="profile-reference" hidden>
+<h3 id="profile-target-title">每天的大概参考</h3>
+<div id="profile-targets" class="metrics"><div class="metric"><b id="profile-calories">—</b><span>热量 · kcal / 天</span></div><div class="metric"><b id="profile-protein">—</b><span>蛋白质 · g / 天</span></div><div class="metric"><b id="profile-fat">—</b><span>脂肪 · g / 天</span></div><div class="metric"><b id="profile-carbs">—</b><span>碳水 · g / 天</span></div></div>
+<div id="profile-review" class="profile-notice" role="status" hidden></div>
+<details class="profile-assumptions"><summary>计算依据与适用范围</summary><p id="profile-energy-basis"></p><p id="profile-goal-basis"></p><p id="profile-macro-basis"></p><div id="profile-notes"></div><p class="sources">来源：<a href="https://pubmed.ncbi.nlm.nih.gov/2305711/" target="_blank" rel="noopener noreferrer">Mifflin–St Jeor 静息能量公式</a> · <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html" target="_blank" rel="noopener noreferrer">成人营养素热量占比参考范围</a>。本项目的具体营养比例与增肌、减脂调整为简化假设。</p></details>
+</div>
+<p class="profile-hint muted">适用于 18–80 岁一般健康成人的粗略参考。孕期、哺乳期或有临床饮食需求时，请由专业人员评估；这些数值不保证增肌或减脂效果。</p>
+</section>
 <section class="card"><label for="mode">选择估算模式</label>
 <select id="mode"><option value="basic">基础版 · 快速大概估算</option><option value="advanced">进阶版 · 补充细节精算</option></select>
 <p class="muted" id="mode-help">按已有信息估算；缺少份量和配方时使用明确标注的参考值。</p>
@@ -26,6 +54,8 @@
 <p><small>参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。</small></p>
 </main><script>
 const $=id=>document.getElementById(id);let analysis=null,busy=false,timer=null,catalogue=[],currentUser=null,sessionVersion=0,loggingOut=false,recentVersion=0;
+let profile=null,profileReference=null,profileLoaded=false,profileLoading=false,profileSaving=false,profileDirty=false,profileConflict=false,profileRequest=0;
+const profileFields={age_years:'profile-age',height_cm:'profile-height',weight_kg:'profile-weight',sex:'profile-sex',goal:'profile-goal',activity_level:'profile-activity'};
 const authEventKey='nutrichat.auth-change';
 const stored={get(key){try{return localStorage.getItem(key)}catch{return null}},set(key,value){try{localStorage.setItem(key,value)}catch{}},remove(key){try{localStorage.removeItem(key)}catch{}}};
 const analysisKey=()=>currentUser?'nutrichat.analysis.user.'+currentUser.id:null;
@@ -34,6 +64,7 @@ const labels={queued:'正在分析…',needs_input:'等待补充信息',complete
 const el=(tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;return e};
 function message(t,error=false){$('message').textContent=t;$('message').classList.toggle('error',error)}
 function clearSession(){sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
+ clearProfile();
  for(const id of ['meal','reply'])$(id).value='';
  for(const id of ['history','questions','evidence'])$(id).replaceChildren();
  for(const id of ['record','interpreted','status'])$(id).textContent='';
@@ -55,12 +86,55 @@ async function api(path,method='GET',body){
  if(!res.ok)throw Object.assign(Error(Array.isArray(data.detail)?data.detail.map(x=>x.msg).join('\n'):data.detail||'请求失败'),{status:res.status});return data;
 }
 function controls(){const locked=!currentUser||busy||analysis?.status==='queued';$('meal').disabled=locked||!!analysis;$('estimate').hidden=!!analysis;$('estimate').disabled=locked;$('new').hidden=!analysis;$('new').disabled=locked;for(const id of ['reply-submit','answer-submit'])$(id).disabled=locked;$('confirm').disabled=locked||analysis?.status!=='completed';$('reply').disabled=locked;
+ profileControls();
  $('mode').disabled=!currentUser||!!analysis||busy;
  $('recent').disabled=locked;$('recent-open').disabled=locked||!$('recent').value;$('recent-refresh').disabled=!currentUser||busy;
  $('switch-mode').hidden=!analysis||analysis.status==='confirmed';
  $('switch-mode').disabled=locked;
  $('switch-mode').textContent=analysis?.mode==='basic'?'切换到进阶版补充细节':'切换到基础版快速估算';
 }
+function profileMessage(text,error=false){$('profile-message').textContent=text;$('profile-message').classList.toggle('error',error)}
+function profileControls(){const locked=!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict;
+ for(const id of Object.values(profileFields))$(id).disabled=locked;
+ $('profile-save').disabled=locked||(!profileDirty&&!!profile);$('profile-save').textContent=profileSaving?'正在保存…':'保存并计算参考';
+ $('profile-reload').disabled=!currentUser||profileLoading||profileSaving;
+ $('profile-form').setAttribute('aria-busy',String(profileLoading||profileSaving));
+}
+function clearProfile(){profileRequest++;profile=null;profileReference=null;profileLoaded=false;profileLoading=false;profileSaving=false;profileDirty=false;profileConflict=false;
+ $('profile-form').reset();$('profile-editor').open=true;$('profile-editor-title').textContent='填写个人资料';$('profile-badge').textContent='请先登录';profileMessage('');$('profile-reload').hidden=true;
+ $('profile-reference').hidden=true;$('profile-review').hidden=true;$('profile-review').replaceChildren();$('profile-notes').replaceChildren();
+ for(const id of ['profile-energy-basis','profile-goal-basis','profile-macro-basis'])$(id).textContent='';
+ for(const id of ['profile-calories','profile-protein','profile-fat','profile-carbs'])$(id).textContent='—';$('profile-target-title').textContent='每天的大概参考';profileControls();
+}
+const activityNames={sedentary:'久坐',light:'轻度活动',moderate:'中度活动',high:'高度活动'};
+const profileNumber=(value,digits=0)=>Number.isFinite(value)?value.toLocaleString('zh-CN',{maximumFractionDigits:digits,minimumFractionDigits:0}):'—';
+function renderProfileReference(){const reference=profileReference;$('profile-reference').hidden=!profile||!reference||profileDirty;if(!profile||!reference||profileDirty)return;
+ const estimated=reference.status==='estimated';$('profile-target-title').textContent=(profile.goal==='gain_muscle'?'增肌':'减脂')+' · 每日参考';$('profile-targets').hidden=!estimated;$('profile-review').hidden=estimated;
+ for(const [id,key] of [['profile-calories','calories'],['profile-protein','protein_g'],['profile-fat','fat_g'],['profile-carbs','carbs_g']])$(id).textContent=estimated?'≈ '+profileNumber(reference[key],key==='calories'?0:1):'—';
+ $('profile-energy-basis').textContent='采用 Mifflin–St Jeor 公式估计静息需求约 '+profileNumber(reference.resting_kcal)+' kcal / 天；按'+(activityNames[profile.activity_level]||'所选活动量')+'（系数 '+profileNumber(reference.activity_factor,3)+'）估计，维持当前体重约需 '+profileNumber(reference.maintenance_kcal)+' kcal / 天。';
+ $('profile-goal-basis').textContent=profile.goal==='gain_muscle'?'增肌参考：在估计维持热量上增加约 5%。':'减脂参考：在估计维持热量上减少约 10%。';
+ $('profile-macro-basis').textContent='营养比例暂按蛋白质 25%、脂肪 30%、碳水 45% 的热量分配。这是通用的起点，实际需要会因训练、身体状况和生活习惯而变化。';
+ $('profile-notes').replaceChildren();for(const note of reference.notes||[])$('profile-notes').append(el('p',note));
+ $('profile-review').replaceChildren();if(!estimated){$('profile-review').append(el('strong','资料已保存，暂不提供减脂或增肌目标数值。'));const reasons=new Set();for(const code of reference.reason_codes||[]){reasons.add(code==='underweight_fat_loss'?'按当前身高体重推算，暂不自动生成减脂参考；建议先咨询专业人士。':'计算结果超出本工具自动估算范围，请核对资料并咨询专业人士。');}if(!reasons.size)reasons.add('当前资料需要进一步评估，不能仅靠通用公式给出合适目标。');for(const reason of reasons)$('profile-review').append(el('p',reason));$('profile-review').append(el('p','你仍可照常使用餐食估算。'));}
+}
+function applyProfile(data){profile=data.profile;profileReference=data.reference;profileLoaded=true;profileDirty=false;profileConflict=false;$('profile-form').reset();
+ if(profile)for(const [key,id] of Object.entries(profileFields))$(id).value=profile[key];
+ $('profile-editor').open=!profile;$('profile-editor-title').textContent=profile?'修改个人资料':'填写个人资料';$('profile-badge').textContent=!profile?'尚未填写':profileReference?.status==='estimated'?'已保存 · 参考估算':'已保存 · 需评估';$('profile-reload').hidden=true;renderProfileReference();
+}
+async function loadProfile(){if(!currentUser||profileSaving)return;const version=sessionVersion,request=++profileRequest;profileLoading=true;$('profile-reference').hidden=true;profileMessage('正在读取个人资料…');profileControls();
+ try{const data=await api('/profile');if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(profile?'已载入当前账号的资料。':'填写并保存后，会在这里显示你的每日参考。');}
+ catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){profileLoaded=false;profileMessage(e.message+' 餐食估算仍可照常使用。',true);$('profile-badge').textContent='暂未读取';$('profile-reload').hidden=false;$('profile-reload').textContent='重新读取资料';}}
+ finally{if(version===sessionVersion&&request===profileRequest){profileLoading=false;profileControls();}}
+}
+for(const id of Object.values(profileFields))$(id).addEventListener('input',()=>{if(!profileLoaded||profileSaving||profileConflict)return;profileDirty=true;$('profile-badge').textContent='有未保存修改';$('profile-reference').hidden=true;profileMessage('资料尚未保存。保存后将按新资料重新计算参考。');profileControls()});
+$('profile-reload').addEventListener('click',()=>loadProfile());
+$('profile-form').addEventListener('submit',async event=>{event.preventDefault();if(!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict||!$('profile-form').reportValidity())return;
+ const version=sessionVersion,request=++profileRequest;const body={revision:profile?.revision??0};for(const [key,id] of Object.entries(profileFields))body[key]=['age_years','height_cm','weight_kg'].includes(key)?Number($(id).value):$(id).value;
+ profileSaving=true;profileMessage('正在保存并计算…');profileControls();
+ try{const data=await api('/profile','PUT',body);if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage('资料已保存。'+(data.reference?.status==='estimated'?'下方为每日参考值。':'请查看下方的适用范围提示。'));}
+ catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){if(e.status===409){profileConflict=true;$('profile-badge').textContent='资料已在别处更新';profileMessage('资料已在其他页面更新。请先载入最新资料，再重新修改；重新载入会替换当前未保存的内容。',true);$('profile-reload').hidden=false;$('profile-reload').textContent='载入最新资料';}else profileMessage(e.message+' 当前修改还没有保存，请重试。',true);}}
+ finally{if(version===sessionVersion&&request===profileRequest){profileSaving=false;profileControls();}}
+});
 function numberInput(value,min=0,max=10000){const e=el('input');e.type='number';e.step='any';e.min=min;e.max=max;if(value!=null)e.value=value;return e}
 function renderQuestions(){const box=$('questions');box.replaceChildren();for(const q of analysis.questions||[]){const row=el('div');row.className='question';row.dataset.key=q.key;row.dataset.kind=q.kind;const label=el('label',q.label);row.append(label);
  if(q.kind==='number'){const input=numberInput(null,q.min,q.max);input.dataset.answer='value';input.id='q-'+q.key;label.htmlFor=input.id;row.append(input,el('span',' 克'));}
@@ -163,7 +237,7 @@ window.addEventListener('pageshow',event=>{if(event.persisted){clearSession();lo
 async function init(){
  controls();stored.remove('nutrichat.analysis');
  try{
-  currentUser=await api('/auth/me');$('account-name').textContent=currentUser.username;$('logout').disabled=false;controls();void refreshRecent();
+  currentUser=await api('/auth/me');$('account-name').textContent=currentUser.username;$('logout').disabled=false;controls();void refreshRecent();void loadProfile();
   const data=await api('/foods');catalogue=data.catalogue.foods;$('catalogue-info').textContent=' '+catalogue.filter(f=>f.kind==='ingredient').length+'种食材 · '+catalogue.filter(f=>f.kind==='recipe').length+'道参考菜谱';showFoods();
   if(data.provider==='demo')message('当前为演示模式，仅支持原有英文克数输入；中餐对话需配置千问。');
   const id=stored.get(analysisKey());if(id){try{const record=await api('/analyses/'+encodeURIComponent(id));saved(record)}catch(e){if(e.status===404){stored.remove(analysisKey());message('上次记录已不可用，可以开始新的一餐。')}else throw e}}

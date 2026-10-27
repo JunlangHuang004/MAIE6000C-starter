@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 from enum import StrEnum
 
-from sqlalchemy import JSON, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import JSON, CheckConstraint, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from services.common.db import Base
@@ -69,6 +69,41 @@ class AuthSession(Base):
         DateTime(timezone=True), nullable=False, index=True,
     )
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class UserProfile(Base):
+    __tablename__ = "user_profiles"
+    __table_args__ = (
+        CheckConstraint("age_years BETWEEN 18 AND 80", name="ck_user_profiles_age"),
+        CheckConstraint("height_cm BETWEEN 120 AND 220", name="ck_user_profiles_height"),
+        CheckConstraint("weight_kg BETWEEN 30 AND 250", name="ck_user_profiles_weight"),
+        CheckConstraint("sex IN ('male', 'female')", name="ck_user_profiles_sex"),
+        CheckConstraint(
+            "goal IN ('gain_muscle', 'lose_fat')", name="ck_user_profiles_goal",
+        ),
+        CheckConstraint(
+            "activity_level IN ('sedentary', 'light', 'moderate', 'high')",
+            name="ck_user_profiles_activity",
+        ),
+        CheckConstraint("revision >= 1", name="ck_user_profiles_revision"),
+    )
+
+    user_id: Mapped[str] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True,
+    )
+    age_years: Mapped[int] = mapped_column(Integer, nullable=False)
+    height_cm: Mapped[float] = mapped_column(Float, nullable=False)
+    weight_kg: Mapped[float] = mapped_column(Float, nullable=False)
+    sex: Mapped[str] = mapped_column(String(10), nullable=False)
+    goal: Mapped[str] = mapped_column(String(20), nullable=False)
+    activity_level: Mapped[str] = mapped_column(String(20), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
 
 
 class Case(Base):

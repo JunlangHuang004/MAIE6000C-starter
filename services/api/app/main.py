@@ -19,6 +19,7 @@ from sqlalchemy.orm import Session
 
 from services.common.config import configure_logging, get_settings
 from services.api.app.auth import get_current_user, get_optional_user, router as auth_router
+from services.api.app.profile import router as profile_router
 from services.common.db import get_db
 from services.common.models import (
     Analysis,
@@ -51,6 +52,7 @@ logger = logging.getLogger("services.api.main")
 
 app = FastAPI(title="NutriChat API", version="0.1.0")
 app.include_router(auth_router)
+app.include_router(profile_router)
 
 HTTP_REQUESTS = Counter(
     "api_http_requests_total",
@@ -157,6 +159,14 @@ async def safe_validation_errors(request: Request, exc: RequestValidationError):
             "detail": "Use a 3–32 character username (letters, digits or _) and a "
                       "10–128 character password.",
         })
+    if request.url.path == "/profile":
+        # Do not reflect personal inputs (or non-JSON NaN/Infinity) in errors.
+        return JSONResponse(status_code=422, content={
+            "detail": [
+                {key: error[key] for key in ("loc", "msg", "type")}
+                for error in exc.errors()
+            ],
+        })
     return await request_validation_exception_handler(request, exc)
 
 
@@ -175,7 +185,7 @@ async def observe_requests(request: Request, call_next):
             })
         else:
             response = await call_next(request)
-        if request.url.path.startswith(("/auth/", "/analyses", "/cases", "/jobs")) or (
+        if request.url.path.startswith(("/auth/", "/analyses", "/cases", "/jobs", "/profile")) or (
             request.url.path in {"/app", "/login"}
         ):
             response.headers["Cache-Control"] = "no-store"

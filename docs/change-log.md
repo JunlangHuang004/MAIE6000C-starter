@@ -1,5 +1,23 @@
 # NutriChat change log
 
+## 2026-10-27 — Personal profiles and daily references on `test`
+
+- Add private, editable age, height, weight, formula sex, activity level and
+  muscle-gain/fat-loss goal. A profile remains optional for meal estimation.
+- Calculate approximate daily energy and macro references using a versioned Python
+  formula, with visible activity/goal/macro assumptions and source links. No profile
+  inputs are sent to Qwen. Unsupported target cases retain the saved inputs and
+  withhold all four target values.
+- Persist one current profile per account using migration 0007. Add optimistic
+  revisions, strict validation, account isolation, no-store responses, and browser
+  handling for unsaved edits, conflicts and logout.
+- Pass 513 unit/integration tests, Ruff, PostgreSQL upgrade/constraint/concurrency
+  checks and browser save/edit/reload checks. See
+  [verification](evidence/personalization-verification.md).
+- Update English setup/API/architecture documentation. Keep daily weight logging,
+  calorie aggregation and monthly trends for later; leave original branches,
+  the Week 7 submission snapshot and the public deployment unchanged.
+
 ## 2026-10-27 — Independent accounts on `test`
 
 - Add personal username/password registration, login, logout and an account page.

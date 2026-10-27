@@ -1,6 +1,6 @@
 # NutriChat API contract
 
-Current implementation: 2026-10-27 (`test` account increment). See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
+Current implementation: 2026-10-27 (`test` personal profile increment). See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
 ## Routes
 
@@ -12,6 +12,8 @@ Current implementation: 2026-10-27 (`test` account increment). See the generated
 | `GET /auth/me` | Current account | 200, `{id, username}` |
 | `POST /auth/logout` | Revoke current cookie session | 204, clears cookie |
 | `GET /login` | Login/registration page (public) | 200, HTML |
+| `GET /profile` | Current account profile and computed daily reference | 200, `{profile, reference}`; both null if absent |
+| `PUT /profile` | Complete profile inputs and latest revision (0 to create) | 200, `{profile, reference}`; 409 on conflict |
 | `GET /analyses?limit=20` | Own recent meals; limit 1–100 | 200, array of analyses |
 | `POST /analyses` | `{food_text, mode?}`; atomically create an analysis and pending job | 201, `{analysis, job}` |
 | `GET /analyses/{id}` | Read saved state, dialogue and result | 200, analysis |
@@ -24,6 +26,15 @@ Current implementation: 2026-10-27 (`test` account increment). See the generated
 | `GET /app` | Application page | 200 HTML when signed in; otherwise 303 to `/login` |
 
 Existing `/cases` routes and internal `/triage` are retained from the starter. The internal AI service receives `POST /analyze-nutrition`; it is not a public model endpoint.
+
+## Personal profiles
+
+Profile routes use the signed-in user only and never accept an owner identifier.
+PUT requires age, height, weight, formula sex, goal, activity level and revision.
+Unknown fields and invalid values return 422; concurrent/stale writes return 409.
+See [the profile contract and calculation policy](personalization.md) for bounds,
+rounding, blocked targets and JSON examples. Profiles do not create AI jobs or
+send body measurements to Qwen. They are optional for the meal workflow.
 
 ## Creation and saved fields
 

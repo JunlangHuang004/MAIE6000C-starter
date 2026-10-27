@@ -24,11 +24,20 @@ Browser -> [optional HTTPS proxy] -> FastAPI API + account sessions
 The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID per internal user ID for restoration.
 Account/session tokens are never stored in localStorage.
 
-- API: account sessions, authorization, validation, revision/state checks, saved records, catalogue and HTML UI.
+- API: account sessions, authorization, private profiles/daily references, validation, revision/state checks, saved records, catalogue and HTML UI.
 - Worker: asynchronous orchestration and job/error bookkeeping.
 - AI service: Qwen extraction or legacy demo parsing, followed by deterministic evaluation.
 - Shared meal engine: catalogue validation, questions, structured answers, assumptions and nutrient arithmetic.
 - PostgreSQL: users, hashed sessions, account-owned analyses/cases, conversations, drafts, questions, evidence and jobs.
+
+## Personal profile calculation
+
+The authenticated API stores one current profile per user. A synchronous Python
+calculator derives versioned energy and macro references without calling the worker,
+AI service or Qwen. Profile input never joins meal-extraction prompts. Conditional
+revision updates prevent stale tabs from overwriting newer data. Migration 0007
+adds `user_profiles` without changing meals, accounts or sessions. No daily weight
+log or trend aggregation is created; see [personalization](personalization.md).
 
 ## Qwen's role
 
@@ -60,7 +69,8 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 ## Current limitations
 
 The `test` branch has independent accounts; the older public deployment is unchanged.
-Password recovery, Google login, personal targets and monthly trends are not implemented.
+Personal profiles and approximate daily references are available on `test`.
+Password recovery, Google login, daily weight logs and monthly trends are not implemented.
 See [accounts](accounts.md) for session and ownership boundaries. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.

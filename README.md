@@ -1,6 +1,7 @@
 # NutriChat
 
-This `test` branch adds independent accounts as the first personalization increment.
+This `test` branch adds independent accounts, personal profiles and daily nutrition
+references. See [the calculation assumptions and profile workflow](docs/personalization.md).
 See [account setup and the isolated preview](docs/accounts.md). The Week 7 tag and
 existing public deployment remain separate snapshots.
 
@@ -56,6 +57,15 @@ Open the [application](http://localhost:8000/app) or [API documentation](http://
 - Sign in or create an account before saving meals. Local example settings enable
   registration and HTTP cookies; public settings require an exact HTTPS origin.
 
+## Personal daily reference
+
+After signing in, fill in age, height, current weight, the formula sex coefficient,
+activity level and a muscle-gain or fat-loss goal. Save to calculate an approximate
+daily energy and macronutrient reference. The backend uses a versioned formula
+without Qwen. Saved inputs are private to the account; editing them recalculates
+the reference. A profile is optional for meal estimation. See
+[inputs, assumptions, safeguards and limitations](docs/personalization.md).
+
 ## Meal workflow
 
 1. Sign in, select basic or advanced mode and describe the meal.
@@ -88,6 +98,9 @@ entry point. See the [Week 7 verification record](docs/evidence/week07-verificat
 for static checks, fresh PostgreSQL/worker evidence, smoke tests and separately
 reported provider results. Earlier checks remain in the [change log](docs/change-log.md).
 The public ECS deployment has not been updated to this 250-dish milestone.
+The `test` profile increment passed 513 unit/integration tests, isolated PostgreSQL
+migration/concurrency checks and browser workflow checks; see
+[personalization verification](docs/evidence/personalization-verification.md).
 
 ## Architecture and documentation
 
@@ -98,6 +111,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 | --- | --- |
 | [Week 7 milestone](submissions/week07/README.md) | Team, current status, demo sequence, evidence, risks and next priorities |
 | [Independent accounts](docs/accounts.md) | Registration, sessions, data isolation, preview and limits |
+| [Personalization](docs/personalization.md) | Saved profiles, formula references, assumptions and scope |
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
@@ -115,8 +129,9 @@ health checks and metrics. The original `/cases` workflow remains available.
 are archived for context and do not define the current feature scope.
 
 This is a learning prototype with independent accounts and per-user meal ownership.
-Password recovery, Google login, personal nutrition targets and monthly trends are
-not implemented. Idempotency keys, automatic retries and recovery of interrupted
+Personal profiles and daily energy/macronutrient references are available. Password
+recovery, Google login, daily weight logs and monthly trends are not implemented.
+Idempotency keys, automatic retries and recovery of interrupted
 claimed jobs remain future work.
 Never commit API keys, login passwords, certificates or database backups.
 

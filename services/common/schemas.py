@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Literal
+from datetime import datetime, timezone
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator, model_validator
 
@@ -44,6 +44,41 @@ class UserRead(BaseModel):
     username: str
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class ProfileFields(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
+
+    age_years: int = Field(ge=18, le=80)
+    height_cm: float = Field(ge=120, le=220)
+    weight_kg: float = Field(ge=30, le=250)
+    sex: Literal["male", "female"]
+    goal: Literal["gain_muscle", "lose_fat"]
+    activity_level: Literal["sedentary", "light", "moderate", "high"]
+
+
+class ProfileUpdate(ProfileFields):
+    revision: int = Field(ge=0, le=2_147_483_646)
+
+
+class ProfileRead(ProfileFields):
+    model_config = ConfigDict(from_attributes=True)
+
+    revision: int = Field(ge=1)
+    updated_at: datetime
+
+    @field_validator("updated_at")
+    @classmethod
+    def normalize_timestamp(cls, value: datetime) -> datetime:
+        # SQLite drops timezone metadata; persisted values are always written in UTC.
+        return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(
+            timezone.utc,
+        )
+
+
+class ProfileResponse(BaseModel):
+    profile: ProfileRead | None
+    reference: dict[str, Any] | None
 
 
 class CaseCreate(BaseModel):

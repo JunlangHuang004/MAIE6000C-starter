@@ -1,8 +1,9 @@
 # Independent accounts (experimental `test` branch)
 
 This increment adds username/password registration, login, logout, expiring sessions
-and account-owned meal histories. It is the foundation for later profiles, daily
-targets and monthly trends; those features and Google login are not implemented.
+and account-owned meal histories. The `test` branch now also includes
+[private profiles and daily references](personalization.md). Daily weight logs,
+monthly trends and Google login are not implemented.
 The original branches and the `w07-midterm` submission snapshot remain unchanged.
 No public ECS deployment is included in this increment.
 
