@@ -59,7 +59,7 @@ Use the [rehearsal guide](DEMO.md); slides are optional and cannot replace the l
 | --- | --- |
 | Implemented | Durable API/job/worker/AI service integration; revision checks; dialogue, correction and confirmation; source-backed arithmetic; two modes; versioned food data; health/logs/metrics; optional HTTPS login deployment |
 | Partially implemented | Chinese extraction depends on Qwen output quality; detailed inputs improve specificity but do not establish ground-truth accuracy; deployment exists but the public ECS has not been updated to this 250-dish milestone |
-| Not implemented | Automatic job retries, recovery after worker crash, idempotency, individual account ownership, image recognition, clinical validation and measured cooking losses |
+| Not implemented | Automatic job retries, recovery after worker crash, idempotency, individual account ownership, image recognition, monthly calorie-intake trends, personalized energy/macronutrient targets, clinical validation and measured cooking losses |
 
 ## 4. Architecture and change from the starter plan
 
@@ -118,6 +118,9 @@ all regional variants or unconstrained recipes. If time becomes tight, we will
 freeze catalogue growth and prioritize reliable correction, failure handling and
 clear evidence. The shared-account deployment is a teaching prototype.
 
+The team rejected image-based nutrition estimation and kept the current scope
+focused on meal descriptions and clarification questions.
+
 ## 8. Week 7–13 priorities
 
 | Period | Deliverable and acceptance condition | Responsible members |
@@ -130,6 +133,11 @@ clear evidence. The shared-account deployment is a teaching prototype.
 | Week 13 | Freeze release, rerun acceptance checks and prepare final demonstration/report with reproducible evidence | Whole team |
 
 These are proposed priorities, not claims of completed features.
+
+Possible future extensions include monthly calorie-intake trends and personalized
+estimates of energy and macronutrient needs based on user-provided basic
+information. These are exploratory ideas, not implemented features or committed
+milestone deliverables. We will consider them after stabilizing the core workflow.
 
 ## 9. Artifact index
 

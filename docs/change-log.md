@@ -1,5 +1,13 @@
 # NutriChat change log
 
+## 2026-10-27 — Midterm scope clarification
+
+- Keep the AI Use Statement brief and record the team's rejection of image-based
+  nutrition estimation in favor of the current meal-description workflow.
+- Record monthly calorie-intake trends and personalized energy/macronutrient
+  estimates as possible future extensions, not implemented or committed features.
+- Documentation-only update; existing test evidence retains its original scope.
+
 ## 2026-10-27 — Week 7 midterm checkpoint
 
 - Add the milestone README, confirmed team responsibilities, live demo guide,
