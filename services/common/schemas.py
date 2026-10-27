@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator, model_validator
 
 from services.common.nutrition import parse_meal
 from services.common.models import AnalysisStatus, CaseStatus, JobStatus, JobType
@@ -12,6 +12,38 @@ from services.common.models import AnalysisStatus, CaseStatus, JobStatus, JobTyp
 class HealthResponse(BaseModel):
     service: str
     status: str
+
+
+class AuthCredentials(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    username: str = Field(min_length=3, max_length=32, pattern=r"^[a-z0-9_]+$")
+    password: SecretStr = Field(min_length=10, max_length=128)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_encoding(cls, value):
+        try:
+            value.get_secret_value().encode("utf-8")
+        except UnicodeEncodeError as exc:
+            raise ValueError("Password must contain valid Unicode characters") from exc
+        return value
+
+    @field_validator("username", mode="before")
+    @classmethod
+    def normalize_username(cls, value):
+        if isinstance(value, str):
+            if not value.isascii():
+                raise ValueError("Username must use ASCII letters, digits or underscores")
+            return value.strip().lower()
+        return value
+
+
+class UserRead(BaseModel):
+    id: str
+    username: str
+
+    model_config = ConfigDict(from_attributes=True)
 
 
 class CaseCreate(BaseModel):

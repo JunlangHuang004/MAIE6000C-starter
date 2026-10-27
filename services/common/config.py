@@ -22,6 +22,10 @@ class Settings(BaseSettings):
     qwen_base_url: str = ""
     qwen_model: str = "qwen-plus"
     qwen_timeout_seconds: float = Field(default=12.0, gt=0)
+    auth_cookie_secure: bool = True
+    auth_public_origin: str = "http://localhost:8000"
+    auth_registration_enabled: bool = False
+    auth_session_ttl_seconds: int = Field(default=8 * 60 * 60, ge=300, le=7 * 24 * 60 * 60)
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 

@@ -1,5 +1,23 @@
 # NutriChat change log
 
+## 2026-10-27 — Independent accounts on `test`
+
+- Add personal username/password registration, login, logout and an account page.
+  Use scrypt password hashes and opaque, hashed, revocable database sessions.
+- Enforce ownership on analyses, cases, jobs, history and every meal mutation.
+  Migration 0006 preserves shared historical rows without assigning an owner.
+- Add personal recent meals, user-scoped restoration, cross-tab logout handling,
+  expired-session redirects, request-origin checks and authentication throttling.
+- Add a separate offline preview on port 8001; update public proxy templates for
+  API-managed sessions without deploying them. Existing public services are unchanged.
+- Authenticate workflow checks and require an explicit owner when seeding cases.
+- Pass 420 unit/integration tests, two authenticated PostgreSQL/worker smoke tests,
+  Ruff, JavaScript syntax checks, and fresh/populated migration checks. Browser
+  checks cover meal confirmation, logout across tabs, account separation and reload.
+  See [account verification](evidence/accounts-verification.md).
+- Keep personal profiles, nutrition targets, trends and Google login for later
+  increments. Original branches and the Week 7 submission tag are unchanged.
+
 ## 2026-10-27 — Midterm scope clarification
 
 - Keep the AI Use Statement brief and record the team's rejection of image-based

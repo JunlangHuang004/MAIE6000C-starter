@@ -1,15 +1,5 @@
 # Add to compose.cloud.yaml after preparing deploy/public runtime files.
 services:
-  gateway:
-    build: .
-    restart: unless-stopped
-    command: uvicorn services.gateway.main:from_environment --factory --host 0.0.0.0 --port 8200
-    env_file:
-      - ./deploy/public/auth.env
-    healthcheck:
-      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8200/health/live')"]
-      interval: 10s
-      retries: 10
   proxy:
     image: nginx:1.28-alpine
     restart: unless-stopped
@@ -21,8 +11,6 @@ services:
       - ./deploy/public/acme:/var/www/acme:ro
       - ./deploy/public/letsencrypt:/etc/letsencrypt:ro
     depends_on:
-      gateway:
-        condition: service_healthy
       api:
         condition: service_healthy
     logging:

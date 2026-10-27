@@ -2,9 +2,11 @@
 
 The cloud option uses a Linux VM with Docker Compose, PostgreSQL, API, worker and
 internal AI service. Qwen inference runs in Alibaba Cloud Model Studio; no GPU is
-needed on the VM. This is a single-user prototype, accessed privately by SSH tunnel
-by default. An optional HTTPS reverse proxy supports a password-protected public
-demo. Multi-user data isolation and managed database provisioning are not implemented.
+needed on the VM. The `test` branch uses independent accounts and per-user record
+ownership. Private access through an SSH tunnel is supported; an optional HTTPS
+proxy supports a public demo. Managed database provisioning is not implemented.
+This document describes configuration for a future deployment, not an ECS upgrade
+performed with this increment. See [account setup and limitations](accounts.md).
 
 ## Configure Qwen
 
@@ -48,6 +50,9 @@ match the 30/45-second settings explicitly supplied by `compose.cloud.yaml`.
 2. Create a private `.env` on the VM containing `DASHSCOPE_API_KEY`, `QWEN_BASE_URL`,
    optional `QWEN_MODEL`, and `POSTGRES_PASSWORD`. Use a long random alphanumeric
    database password (it is interpolated into a connection URL). Do not commit it.
+   For the localhost SSH tunnel below set `AUTH_PUBLIC_ORIGIN=http://localhost:8080`,
+   `AUTH_COOKIE_SECURE=false`, and `AUTH_REGISTRATION_ENABLED=true` while creating
+   intended demo accounts. Public HTTPS requires different settings below.
 3. Run from the repository root:
 
    ```sh
@@ -61,7 +66,7 @@ match the 30/45-second settings explicitly supplied by `compose.cloud.yaml`.
    ssh -L 8080:127.0.0.1:8000 user@your-vm
    ```
 
-5. Open `http://localhost:8080/app`. In basic mode submit `一份番茄炒蛋，两个水煮鸡蛋`.
+5. Open `http://localhost:8080/app`, create an account, and sign in. In basic mode submit `一份番茄炒蛋，两个水煮鸡蛋`.
    Review the reference assumptions, switch to advanced, answer the questions and
    edit/accept the batch recipe. Correct the meal if necessary, then confirm.
    Reload the page to verify persistence.
@@ -115,10 +120,13 @@ The cloud API container intentionally does not receive the Qwen API key. Run the
 end-to-end script there to exercise API → worker → internal AI → Qwen:
 
 ```sh
-docker compose -f compose.cloud.yaml exec -T api python scripts/check_dialogue.py --base-url http://api:8000
+docker compose -f compose.cloud.yaml exec -T -e NUTRICHAT_CHECK_USERNAME -e NUTRICHAT_CHECK_PASSWORD api python scripts/check_dialogue.py --base-url http://api:8000
 ```
 
-This consumes model quota and creates synthetic records. It checks basic estimates,
+Supply `NUTRICHAT_CHECK_USERNAME` and `NUTRICHAT_CHECK_PASSWORD` privately in the
+script environment for an existing test account. The script signs in, stores new
+records under that account, and logs out on completion. This consumes model quota
+and creates synthetic records. It checks basic estimates,
 advanced questions, recipe editing, natural-language correction, confirmation and
 persistence. For a direct credential check on an already-running cloud stack, run
 `python scripts/check_qwen.py --live` with `exec -T ai` instead of `exec -T api`.
@@ -131,14 +139,20 @@ database and AI service remain internal. Allow inbound TCP 80 and 443 in the
 VM security group. Do not publish database or AI ports.
 
 Runtime files live in the git-ignored `deploy/public/` directory: `nginx.conf`,
-`auth.env`, `acme/`, and `letsencrypt/`. Restrict this directory to the operator.
-Generate a unique strong password. The private `auth.env` supplies `DEMO_USERNAME`,
-`DEMO_PASSWORD_HASH` (hex salt plus colon plus scrypt digest, n=16384/r=8/p=1/dklen=32),
-`DEMO_SESSION_KEY` (a random signing secret of at least 32 characters), and
-`DEMO_PUBLIC_ORIGIN` (the exact HTTPS origin). Share
-the password only with intended demo users; this is one shared account, not
-separate user accounts or private per-user histories.
+`acme/`, and `letsencrypt/`. Restrict this directory to the operator. Set in the
+private cloud `.env`:
 
+```dotenv
+AUTH_PUBLIC_ORIGIN=https://YOUR_PUBLIC_IP
+AUTH_COOKIE_SECURE=true
+AUTH_REGISTRATION_ENABLED=false
+```
+
+Use the exact browser origin without a trailing slash. Temporarily enable
+registration when intentionally onboarding demo users, then close it if desired.
+The API stores independent password hashes and opaque session digests in PostgreSQL.
+There is no shared default login. The former gateway's `auth.env` and session key
+are not used by this branch; old credentials do not become user accounts.
 Start with an HTTP configuration that serves only `/.well-known/acme-challenge/`
 from `/var/www/acme` and returns 503 elsewhere. Request the certificate using:
 
@@ -155,12 +169,13 @@ docker run --rm \
 Review the certificate authority's subscriber agreement before registering.
 Replace `__PUBLIC_IP__` in `deploy/nginx-public.conf.template`, save it as the
 runtime `nginx.conf`, validate with `nginx -t`, then reload the proxy. It redirects
-HTTP to HTTPS and uses `/login` for a normal HTML login form. The gateway validates
-a signed, Secure/HttpOnly/SameSite=Strict cookie for application requests; sessions
-expire after 8 hours. The gateway is internal and has no published port. A
-POST to `/logout` clears the session cookie. Rotate `DEMO_SESSION_KEY` and recreate
-the gateway to invalidate every existing session. `/metrics` is
-blocked externally. Request size and per-IP request rate are bounded.
+HTTP to HTTPS and forwards `/login`, `/auth/*` and application routes to the API.
+The API validates the Secure/HttpOnly/SameSite=Strict session cookie and enforces
+account ownership. Sessions expire after eight hours by default; `POST /auth/logout`
+revokes the current session server-side. Mutation requests need the custom security
+header and a matching browser origin. `/metrics` is blocked externally. Request
+size and per-IP request rate are bounded. The API's additional in-process limiter
+may aggregate proxy clients and is not shared between API processes.
 
 IP certificates expire after approximately six days. Install
 `scripts/renew-public-certificate.sh` as a systemd oneshot service with a timer
@@ -180,22 +195,28 @@ then remove the website rules from the security group.
 
 ## Updating an existing public deployment
 
-Keep the private `.env`, `deploy/public/` runtime files and database volume. Back up
+Keep the private `.env`, certificates and database volume. Before deploying this
+account increment, add `AUTH_*` settings and regenerate runtime `nginx.conf` from
+the updated template: the old proxy routes `/login` to the shared gateway and is
+incompatible with the new account UI. Stop the legacy gateway container after
+switching the proxy. Migration 0006 retains old meals/cases with no owner; they are
+inaccessible through user APIs until a separately reviewed ownership import.
+The old shared login is not migrated. Back up
 PostgreSQL and retain the previous code/images before upgrading. Allow current
 jobs to finish before stopping the worker; interrupted claimed jobs are not
 recovered automatically. Run all public-stack commands with both Compose files:
 
 ```sh
-docker compose -f compose.cloud.yaml -f compose.public.yaml build api ai worker gateway
+docker compose -f compose.cloud.yaml -f compose.public.yaml build api ai worker
 docker compose -f compose.cloud.yaml -f compose.public.yaml stop worker
-docker compose -f compose.cloud.yaml -f compose.public.yaml up -d --no-build ai api worker gateway
+docker compose -f compose.cloud.yaml -f compose.public.yaml up -d --no-build ai api worker
 docker compose -f compose.cloud.yaml -f compose.public.yaml exec -T proxy nginx -t
 docker compose -f compose.cloud.yaml -f compose.public.yaml exec -T proxy nginx -s reload
 docker compose -f compose.cloud.yaml -f compose.public.yaml ps
 ```
 
 Reloading Nginx refreshes upstream resolution after container replacement. Validate
-health and the live dialogue flow, then verify HTTPS/login through the public URL.
+health and the live dialogue flow, then verify HTTPS/login and cross-account isolation through the public URL.
 If an upgrade fails, preserve logs and restore a compatible code/schema pair;
 restoring an old image alone does not undo database migrations. Backups contain
 meal data and must remain outside Git with restricted access.

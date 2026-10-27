@@ -1,0 +1,25 @@
+# Isolated account preview. Use with -p nutrichat-accounts and compose.yaml.
+# No model credentials; a separate PostgreSQL volume; API bound only to loopback.
+x-preview: &preview
+  env_file: !override
+    - .env.example
+  environment:
+    NUTRITION_PROVIDER: demo
+    DASHSCOPE_API_KEY: ''
+    QWEN_BASE_URL: ''
+    AUTH_COOKIE_SECURE: 'false'
+    AUTH_PUBLIC_ORIGIN: ${ACCOUNTS_PUBLIC_ORIGIN:-http://localhost:8001}
+    AUTH_REGISTRATION_ENABLED: 'true'
+
+services:
+  db:
+    ports: !reset []
+  ai:
+    <<: *preview
+    ports: !reset []
+  api:
+    <<: *preview
+    ports: !override
+      - '127.0.0.1:${ACCOUNTS_API_PORT:-8001}:8000'
+  worker:
+    <<: *preview

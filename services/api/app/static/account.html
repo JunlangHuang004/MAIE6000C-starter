@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="same-origin">
+<title>NutriChat · 登录个人账号</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#173c32;background:#f3f6ef}*{box-sizing:border-box}body{margin:0}main{max-width:1000px;margin:0 auto;min-height:100vh;padding:42px 24px;display:flex;flex-direction:column;justify-content:center}.brand{font-weight:700;margin-bottom:32px}.layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}h1{font-size:42px;line-height:1.2;letter-spacing:-1px;margin:16px 0}p{line-height:1.8}.muted,small{color:#587268}.eyebrow{font-size:13px;color:#246149;font-weight:700}.feature{display:flex;gap:12px;align-items:flex-start;margin:22px 0}.feature span{background:#e2eee8;border-radius:50%;padding:6px 10px;font-size:13px}.feature p{margin:2px 0}.card{background:#fff;border:1px solid #dbe5dc;border-radius:20px;padding:30px;box-shadow:0 12px 40px #173c3206}h2{font-size:24px;margin:0 0 8px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#f3f6ef;border-radius:10px;padding:4px;margin:22px 0}button,input{font:inherit}button{cursor:pointer;border:0;border-radius:8px;padding:12px;color:#173c32}button:disabled{cursor:default;opacity:.5}.tab{background:transparent}.tab[aria-selected=true]{background:#fff;box-shadow:0 1px 5px #173c3215;font-weight:700}label{display:block;font-weight:600;margin:18px 0 8px}input{width:100%;border:1px solid #b8cbbb;border-radius:9px;padding:12px;background:white;color:#173c32}input:focus,button:focus-visible,a:focus-visible{outline:3px solid #99bba3;outline-offset:2px}.password-row{display:flex;border:1px solid #b8cbbb;border-radius:9px}.password-row input{border:0;min-width:0}.password-row button{background:transparent;font-size:13px;white-space:nowrap}.submit{width:100%;background:#246149;color:#fff;font-weight:600;margin-top:24px}.hint{display:block;line-height:1.6;margin-top:7px}.notice{font-size:13px;line-height:1.7;margin-bottom:0}.message{white-space:pre-wrap;line-height:1.6;font-size:14px;margin:16px 0 0}.error{color:#a12c20}.success{color:#246149}.footer{font-size:12px;margin-top:26px;color:#587268}a{color:#246149}[hidden]{display:none!important}@media(max-width:720px){main{padding:24px 18px;justify-content:flex-start}.brand{margin-bottom:20px}.layout{grid-template-columns:1fr;gap:16px}h1{font-size:32px}.intro .feature{display:none}.intro p{margin-bottom:8px}.card{padding:24px}.footer{margin-top:18px}}
+</style>
+</head>
+<body><main>
+<div class="brand">◉ NutriChat</div>
+<div class="layout">
+<section class="intro" aria-label="NutriChat 简介">
+<span class="eyebrow">从了解每一餐开始</span>
+<h1>把餐食记录<br>留给自己。</h1>
+<p class="muted">用日常语言描述一餐，查看营养估算，核对后保存到你的个人账号。</p>
+<div class="feature"><span>1</span><p>说说吃了什么<br><small>基础版快速估算，进阶版补充细节。</small></p></div>
+<div class="feature"><span>2</span><p>核对，再确认<br><small>保留你的餐食记录和对话。</small></p></div>
+</section>
+<section class="card" aria-labelledby="account-title">
+<h2 id="account-title">登录个人账号</h2>
+<p class="muted" id="account-subtitle">继续查看和记录你的餐食。</p>
+<div class="tabs" role="tablist" aria-label="账号操作">
+<button id="login-tab" class="tab" type="button" role="tab" aria-selected="true" aria-controls="account-panel" disabled>登录</button>
+<button id="register-tab" class="tab" type="button" role="tab" aria-selected="false" aria-controls="account-panel" tabindex="-1" disabled>创建账号</button>
+</div>
+<div id="account-panel" role="tabpanel" aria-labelledby="login-tab">
+<form id="account-form" method="post" action="/auth/login" aria-busy="true" novalidate>
+<label for="username">用户名</label>
+<input id="username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_]{3,32}" aria-describedby="username-hint" disabled>
+<small class="hint" id="username-hint">3–32 个英文字母、数字或下划线。</small>
+<label for="password">密码</label>
+<div class="password-row"><input id="password" name="password" type="password" autocomplete="current-password" required minlength="10" maxlength="128" aria-describedby="password-hint" disabled><button id="show-password" type="button" aria-controls="password" aria-pressed="false" disabled>显示</button></div>
+<small class="hint" id="password-hint">10–128 个字符。密码中的空格会被保留。</small>
+<div id="confirmation" hidden><label for="confirm-password">再次输入密码</label><input id="confirm-password" name="confirm-password" type="password" autocomplete="new-password" minlength="10" maxlength="128" disabled></div>
+<button id="submit" class="submit" type="submit" disabled>正在检查登录状态…</button>
+</form>
+</div>
+<p id="message" class="message" role="status" aria-live="polite"></p>
+<p id="registration-note" class="notice muted" hidden>当前未开放新账号注册，请联系项目管理员获取账号。</p>
+<p class="notice muted">个人账号仅显示属于自己的餐食。此前共享演示账号的历史记录不会自动归入新账号。</p>
+</section>
+</div>
+<p class="footer">NutriChat 提供餐食营养参考估算；请核对实际食材、份量及做法。</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+let mode='login',ready=false,busy=false,registrationEnabled=false;
+function message(text,error=false){$('message').textContent=text;$('message').className='message '+(error?'error':'success')}
+function controls(){
+ const disabled=!ready||busy;
+ for(const id of ['username','password','show-password','submit','login-tab'])$(id).disabled=disabled;
+ $('register-tab').disabled=disabled||!registrationEnabled;
+ $('confirm-password').disabled=disabled||mode!=='register';
+ $('account-form').setAttribute('aria-busy',String(disabled));
+ $('submit').textContent=!ready?'正在检查登录状态…':busy?(mode==='register'?'正在创建账号…':'正在登录…'):(mode==='register'?'创建账号并登录':'登录');
+}
+function selectMode(next){
+ if(busy||!ready||(next==='register'&&!registrationEnabled))return;
+ mode=next;const registering=mode==='register';
+ $('account-title').textContent=registering?'创建个人账号':'登录个人账号';
+ $('account-subtitle').textContent=registering?'为自己的餐食建立独立记录。':'继续查看和记录你的餐食。';
+ for(const type of ['login','register']){const active=mode===type;$(type+'-tab').setAttribute('aria-selected',String(active));$(type+'-tab').tabIndex=active?0:-1}
+ $('account-panel').setAttribute('aria-labelledby',mode+'-tab');
+ $('password').autocomplete=registering?'new-password':'current-password';
+ $('password').value='';$('password').type='password';$('show-password').textContent='显示';$('show-password').setAttribute('aria-pressed','false');$('confirm-password').value='';$('confirmation').hidden=!registering;$('confirm-password').required=registering;
+ message('');controls();
+}
+function requestError(status,data){
+ if(status===401)return '用户名或密码不正确，请重试。';
+ if(status===409)return '这个用户名已被使用，请换一个用户名。';
+ if(status===429)return '尝试次数较多，请稍后再试。';
+ if(status===403)return mode==='register'?'当前无法创建账号，注册可能已关闭。请刷新页面或联系管理员。':'请求未能通过验证，请刷新页面后重试。';
+ if(status>=500)return '服务暂时不可用，请稍后重试。';
+ if(Array.isArray(data?.detail))return '请检查用户名和密码是否符合填写要求。';
+ return typeof data?.detail==='string'?data.detail:'请求失败，请稍后重试。';
+}
+async function api(path,method='GET',body){
+ const headers={};if(method!=='GET')headers['X-NutriChat-Request']='1';
+ if(body!==undefined)headers['Content-Type']='application/json';
+ let res;try{res=await fetch(path,{method,headers,credentials:'same-origin',cache:'no-store',...(body!==undefined?{body:JSON.stringify(body)}:{})})}catch{throw Error('无法连接服务，请检查网络后重试。')}
+ const data=(res.headers.get('content-type')||'').includes('application/json')?await res.json():null;
+ if(!res.ok)throw Object.assign(Error(requestError(res.status,data)),{status:res.status});
+ if(!data)throw Error('服务返回了无法识别的响应，请刷新页面重试。');return data;
+}
+$('login-tab').addEventListener('click',()=>selectMode('login'));
+$('register-tab').addEventListener('click',()=>selectMode('register'));
+for(const id of ['login-tab','register-tab'])$(id).addEventListener('keydown',event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)&&registrationEnabled&&!busy){event.preventDefault();const next=event.key==='Home'?'login':event.key==='End'?'register':mode==='login'?'register':'login';selectMode(next);$(next+'-tab').focus()}});
+$('show-password').addEventListener('click',()=>{const show=$('password').type==='password';$('password').type=show?'text':'password';$('show-password').textContent=show?'隐藏':'显示';$('show-password').setAttribute('aria-pressed',String(show))});
+$('account-form').addEventListener('submit',async event=>{
+ event.preventDefault();if(busy||!ready)return;
+ const username=$('username').value.trim(),password=$('password').value;
+ if(!/^[A-Za-z0-9_]{3,32}$/.test(username)){message('用户名需要 3–32 个英文字母、数字或下划线。',true);$('username').focus();return}
+ if(password.length<10||password.length>128){message('密码需要 10–128 个字符。',true);$('password').focus();return}
+ if(mode==='register'&&password!==$('confirm-password').value){message('两次输入的密码不一致，请重新检查。',true);$('confirm-password').focus();return}
+ busy=true;message('');controls();
+ try{
+  await api('/auth/'+mode,'POST',{username,password});
+  $('password').value='';$('confirm-password').value='';
+  try{localStorage.removeItem('nutrichat.analysis');localStorage.setItem('nutrichat.auth-change',JSON.stringify({type:'login',at:Date.now()}))}catch{}
+  message(mode==='register'?'账号已创建，正在进入你的餐食页面…':'登录成功，正在进入你的餐食页面…');
+  location.replace('/app');
+ }catch(error){message(error.message,true);busy=false;controls()}
+});
+async function init(){
+ const params=new URLSearchParams(location.search);
+ if(params.has('expired'))message('登录已过期，请重新登录。');else if(params.has('logged_out'))message('你已安全退出登录。');
+ const results=await Promise.allSettled([api('/auth/me'),api('/auth/config')]);
+ if(results[0].status==='fulfilled'){location.replace('/app');return}
+ if(results[1].status==='fulfilled'){registrationEnabled=results[1].value.registration_enabled===true;$('registration-note').hidden=registrationEnabled}
+ else{message('暂时无法获取注册状态。你可以先登录，或刷新页面后重试。',true)}
+ if(results[0].status==='rejected'&&results[0].reason.status!==401)message(results[0].reason.message,true);
+ ready=true;controls();
+}
+window.addEventListener('pageshow',event=>{if(event.persisted)location.reload()});
+init();
+</script>
+</body></html>

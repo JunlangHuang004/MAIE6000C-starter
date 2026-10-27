@@ -3,11 +3,11 @@ import argparse
 from copy import deepcopy
 import time
 
-import httpx
+from services.common.http_auth import CheckAuthenticationError, authenticated_client
 
 
 def check(base_url):
-    with httpx.Client(base_url=base_url, timeout=25) as client:
+    with authenticated_client(base_url, timeout=25) as client:
         def post(path, data):
             response = client.post(path, json=data)
             response.raise_for_status()
@@ -108,4 +108,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if not args.live:
         parser.error('--live is required to use model quota and create records')
-    check(args.base_url)
+    try:
+        check(args.base_url)
+    except CheckAuthenticationError as exc:
+        parser.exit(2, f"Check authentication failed: {exc}\n")

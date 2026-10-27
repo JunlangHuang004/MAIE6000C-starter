@@ -1,11 +1,18 @@
 # NutriChat API contract
 
-Current implementation: 2026-10-17. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
+Current implementation: 2026-10-27 (`test` account increment). See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
 ## Routes
 
 | Route | Request / purpose | Success |
 | --- | --- | --- |
+| `GET /auth/config` | Registration availability (public) | 200, `{registration_enabled}` |
+| `POST /auth/register` | `{username, password}`; create account and session | 201, `{id, username}` + cookie |
+| `POST /auth/login` | `{username, password}`; start a new session | 200, `{id, username}` + cookie |
+| `GET /auth/me` | Current account | 200, `{id, username}` |
+| `POST /auth/logout` | Revoke current cookie session | 204, clears cookie |
+| `GET /login` | Login/registration page (public) | 200, HTML |
+| `GET /analyses?limit=20` | Own recent meals; limit 1–100 | 200, array of analyses |
 | `POST /analyses` | `{food_text, mode?}`; atomically create an analysis and pending job | 201, `{analysis, job}` |
 | `GET /analyses/{id}` | Read saved state, dialogue and result | 200, analysis |
 | `PATCH /analyses/{id}` | `{food_text, revision}`; replace description and reset dialogue, preserving mode | 200, `{analysis, job}` |
@@ -14,7 +21,7 @@ Current implementation: 2026-10-17. See the generated `/docs` and `/openapi.json
 | `POST /analyses/{id}/confirm` | `{revision}`; confirm a completed result | 200, analysis |
 | `GET /foods` | Active provider, catalogue, legacy names and gram limit | 200, object |
 | `GET /jobs/{id}` | Background job status and operational error | 200, job |
-| `GET /app` | Application page | 200, HTML |
+| `GET /app` | Application page | 200 HTML when signed in; otherwise 303 to `/login` |
 
 Existing `/cases` routes and internal `/triage` are retained from the starter. The internal AI service receives `POST /analyze-nutrition`; it is not a public model endpoint.
 
@@ -80,6 +87,23 @@ User mutations compare both the current state and revision in a conditional data
 
 ## Access and evidence
 
-Local API has no built-in per-user authentication. The optional public deployment adds an HTTPS session gateway: unauthenticated application requests redirect to `/login`, wrong passwords return 401, and `/metrics` is blocked externally. This is a shared-account demo, not per-user authorization.
+Both local and public APIs use independent accounts. All analyses, cases and jobs
+require an unexpired database session. Ownership comes from that session, never a
+client-supplied user ID. Missing, foreign and ownerless legacy records return 404;
+anonymous access returns 401. `/foods`, health, login and registration configuration
+remain public. Private/auth responses use `Cache-Control: no-store`.
+
+All POST/PATCH/PUT/DELETE requests require `X-NutriChat-Request: 1`. If `Origin` is
+present it must exactly match `AUTH_PUBLIC_ORIGIN`; invalid/missing security headers
+return 403 before route handling. Browser cookies are HttpOnly and SameSite=Strict.
+Public deployments use Secure cookies. Login failures return a generic 401;
+registration may return 403 (closed), 409 (username unavailable) or 422 (invalid
+credentials). Authentication throttling returns 429 and `Retry-After`.
+
+Usernames normalize to lowercase ASCII letters/digits/underscores (3–32 characters).
+Passwords preserve whitespace (10–128 characters). Registration automatically signs
+in. Login rotates the current browser session; logout revokes it server-side.
+Sessions expire after eight hours by default. See [accounts](accounts.md) for the
+configuration, migration policy and current recovery limitations.
 
 Tests in `tests/integration/test_api_analysis_flow.py` and the other integration/unit modules cover persistence, validation, questions, correction, mode switching and confirmation conflicts. `scripts/check_dialogue.py` exercises the real-provider workflow with synthetic meals. See [operations](operations.md) and [change log](change-log.md) for commands and recorded validation.

@@ -9,7 +9,7 @@ weights or the database schema. The public deployment is older than this milesto
 ## Services and data flow
 
 ```text
-Browser -> [optional HTTPS proxy + session gateway] -> FastAPI API
+Browser -> [optional HTTPS proxy] -> FastAPI API + account sessions
                                                        | PostgreSQL
                                                        | analyses + jobs
                                                      Worker
@@ -21,13 +21,14 @@ Browser -> [optional HTTPS proxy + session gateway] -> FastAPI API
                                               extraction   catalogue arithmetic
 ```
 
-The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers only the last analysis ID for restoration.
+The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID per internal user ID for restoration.
+Account/session tokens are never stored in localStorage.
 
-- API: validation, revision/state checks, saved records, catalogue and HTML UI.
+- API: account sessions, authorization, validation, revision/state checks, saved records, catalogue and HTML UI.
 - Worker: asynchronous orchestration and job/error bookkeeping.
 - AI service: Qwen extraction or legacy demo parsing, followed by deterministic evaluation.
 - Shared meal engine: catalogue validation, questions, structured answers, assumptions and nutrient arithmetic.
-- PostgreSQL: analyses, conversations, drafts, questions, evidence and jobs; historical cases remain available.
+- PostgreSQL: users, hashed sessions, account-owned analyses/cases, conversations, drafts, questions, evidence and jobs.
 
 ## Qwen's role
 
@@ -47,17 +48,20 @@ Nutrients equal the sum of ingredient grams multiplied by their per-100g data. R
 
 Analysis states are `queued`, `needs_input`, `completed`, `failed`, `confirmed`. Jobs track `pending`, `claimed`, `completed`, `failed`. A question is a completed worker operation, not a failed job. User correction/reply/mode-switch requests check the current revision and state; confirmation locks completed records. The [API contract](api-contract.md) defines the payloads and transitions.
 
-Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. API startup runs migrations before the worker starts.
+Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. Migration 0006 adds users/sessions and nullable owners; old records remain ownerless
+and inaccessible to account endpoints. API startup runs migrations before the worker starts.
 
 ## Deployment boundaries
 
-Local Compose publishes development ports for API, AI and PostgreSQL. Cloud Compose exposes only API loopback access; AI and database remain internal. Optional public Compose adds Nginx on 80/443 and an internal session gateway. Secrets and certificates are external runtime files excluded from Git. See [cloud deployment](cloud-deployment.md).
+Local Compose publishes development ports for API, AI and PostgreSQL. Cloud Compose exposes only API loopback access; AI and database remain internal. Optional public Compose adds Nginx on 80/443; authentication and ownership are enforced by the API. Secrets and certificates are external runtime files excluded from Git. See [cloud deployment](cloud-deployment.md).
 
 The API readiness probe checks PostgreSQL. AI readiness reports service availability but does not call Qwen. Structured logging and Prometheus metrics support observation; they do not constitute end-to-end model validation.
 
 ## Current limitations
 
-The public account is shared and analyses have no per-user ownership. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
+The `test` branch has independent accounts; the older public deployment is unchanged.
+Password recovery, Google login, personal targets and monthly trends are not implemented.
+See [accounts](accounts.md) for session and ownership boundaries. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
 

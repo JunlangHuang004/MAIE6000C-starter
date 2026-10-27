@@ -10,7 +10,9 @@ docker compose up -d --build
 docker compose ps
 ```
 
-Open [the local application](http://localhost:8000/app). Demo provider accepts supported English food names and explicit grams. Configure Qwen for Chinese descriptions, recipes and the full two-mode workflow; see [cloud deployment](cloud-deployment.md). Keep the existing `.env` when upgrading.
+Open [the local application](http://localhost:8000/app). Demo provider accepts supported English food names and explicit grams. Configure Qwen for Chinese descriptions, recipes and the full two-mode workflow; see [cloud deployment](cloud-deployment.md). Keep the existing `.env` when upgrading. Add the explicit `AUTH_*` settings described
+in [accounts](accounts.md). For development alongside the original application, use
+the separate account preview on port 8001.
 
 `.env.example` uses Qwen timeout 12 seconds and worker HTTP timeout 20 seconds. For local multi-turn Qwen testing, 30 and 45 seconds respectively match the cloud configuration. The worker timeout must exceed the Qwen timeout. `compose.cloud.yaml` explicitly sets 30/45; changing `.env` alone does not override these cloud values.
 
@@ -47,13 +49,15 @@ records. With that stack running, they can reach the API from inside Compose:
 docker compose exec -T -e SMOKE_BASE_URL=http://api:8000 api pytest tests/smoke -q
 ```
 
+Supply `NUTRICHAT_CHECK_USERNAME` and `NUTRICHAT_CHECK_PASSWORD` privately to the
+dialogue scripts. Existing synthetic records now belong to the test account.
 Configuration and live-provider checks:
 
 ```sh
 docker compose run --rm --no-deps api python scripts/check_qwen.py
 docker compose run --rm --no-deps api python scripts/check_qwen.py --live
-docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
-docker compose exec -T api python scripts/check_expanded_dialogue.py --base-url http://api:8000 --live
+docker compose exec -T -e NUTRICHAT_CHECK_USERNAME -e NUTRICHAT_CHECK_PASSWORD api python scripts/check_dialogue.py --base-url http://api:8000
+docker compose exec -T -e NUTRICHAT_CHECK_USERNAME -e NUTRICHAT_CHECK_PASSWORD api python scripts/check_expanded_dialogue.py --base-url http://api:8000 --live
 ```
 
 The first command checks configuration only. Live checks consume model quota; the dialogue script creates synthetic saved records. Mocked tests cannot establish model account access. Recorded results are in the [change log](change-log.md).
@@ -64,7 +68,10 @@ The first command checks configuration only. Live checks consume model quota; th
 - `failed`: inspect the bounded operational `Job.error`, service logs and user-facing `Analysis.error_message`. Check endpoint region/workspace, model access, structured response and timeouts. Correct or resubmit the meal after resolving the cause.
 - Long-lived `queued`: check worker health, database access and whether the job is `pending` or `claimed`. Interrupted claimed jobs have no automatic recovery. Inspect before resubmitting as a new analysis; repeated submissions create separate records.
 - 409 on edit/confirm: reload the latest revision and state. Queued or confirmed records cannot be edited.
-- Login redirects: verify the HTTPS origin, signed session cookie and gateway configuration; sessions last eight hours. Local Compose does not use the public login gateway.
+- Login redirects/401: check the account cookie, session expiry and API auth settings.
+  Sessions last eight hours by default; logout revokes the current session.
+- 403 on mutation: check `X-NutriChat-Request: 1` and the exact `AUTH_PUBLIC_ORIGIN`.
+  Use Secure cookies publicly; HTTP development needs `AUTH_COOKIE_SECURE=false`.
 
 ## Updates, data and recovery
 
@@ -80,6 +87,9 @@ docker compose down
 
 ## Week 6 isolated worker lab
 
+Historical lab evidence describes the `w07-midterm` snapshot. Current smoke tests
+authenticate and should run against the disposable account preview.
+
 Use [the asynchronous workflow guide](async-workflow.md) for the stopped-worker
 observation, state ownership, reproduction commands and saved evidence. The
 `compose.week06.yaml` overlay is for a dedicated `nutrichat-week06` Compose project:
@@ -92,7 +102,8 @@ results and verification limits are in [the Week 6 verification record](evidence
 
 ## Week 7 milestone rehearsal
 
-Use the [demo guide](../submissions/week07/DEMO.md) and
+Use the frozen `w07-midterm` checkout for the historical rehearsal script and
+its recorded evidence. It predates independent accounts. Use the [demo guide](../submissions/week07/DEMO.md) and
 `scripts/rehearse_midterm.py` with the dedicated `nutrichat-week07` project. The
 existing Week 6 overlay is reusable; its project name determines isolation. The
 script creates synthetic records and stops/starts only that project's worker.

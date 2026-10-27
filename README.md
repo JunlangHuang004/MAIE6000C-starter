@@ -1,5 +1,9 @@
 # NutriChat
 
+This `test` branch adds independent accounts as the first personalization increment.
+See [account setup and the isolated preview](docs/accounts.md). The Week 7 tag and
+existing public deployment remain separate snapshots.
+
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions,
 including Chinese ingredients, dish names, cooking methods and follow-up details.
 Users review and correct the estimate before confirming it. Confirmed records are locked.
@@ -48,14 +52,17 @@ Open the [application](http://localhost:8000/app) or [API documentation](http://
   the startup command. The key, workspace and endpoint region must match. See
   [Qwen configuration and cloud deployment](docs/cloud-deployment.md).
 - Local Compose publishes API, AI and database development ports. Public deployment
-  uses the separate cloud configuration and HTTPS session gateway.
+  uses the separate cloud configuration, HTTPS proxy and API account sessions.
+- Sign in or create an account before saving meals. Local example settings enable
+  registration and HTTP cookies; public settings require an exact HTTPS origin.
 
 ## Meal workflow
 
-1. Select basic or advanced mode and describe the meal.
+1. Sign in, select basic or advanced mode and describe the meal.
 2. Wait for background processing. Answer questions or provide natural-language corrections.
 3. Review each food, portion, recipe, default assumption and nutrition source. Switch modes to recalculate if needed.
 4. Confirm the saved estimate. Start a new meal to revise an already-confirmed record.
+5. Open your recent meals from your account history; sign out on a shared device.
 
 ## Verification
 
@@ -66,12 +73,14 @@ docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'n
 docker compose run --rm --no-deps api ruff check .
 ```
 
-After configuring Qwen and starting the stack, run the live checks below. These
-consume model quota; the dialogue check creates synthetic saved meal records.
+After configuring Qwen and starting the stack, run the live checks below. Supply
+`NUTRICHAT_CHECK_USERNAME` and `NUTRICHAT_CHECK_PASSWORD` to the dialogue check
+through its private environment. These checks consume model quota; the dialogue
+check creates synthetic saved meal records.
 
 ```sh
 docker compose run --rm --no-deps api python scripts/check_qwen.py --live
-docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
+docker compose exec -T -e NUTRICHAT_CHECK_USERNAME -e NUTRICHAT_CHECK_PASSWORD api python scripts/check_dialogue.py --base-url http://api:8000
 ```
 
 The 2026-10-27 milestone passed 359 unit/integration tests using the CI pytest
@@ -88,6 +97,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 | Document | Contents |
 | --- | --- |
 | [Week 7 milestone](submissions/week07/README.md) | Team, current status, demo sequence, evidence, risks and next priorities |
+| [Independent accounts](docs/accounts.md) | Registration, sessions, data isolation, preview and limits |
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
@@ -104,11 +114,16 @@ health checks and metrics. The original `/cases` workflow remains available.
 [Starter notes](docs/history/starter-readme.md) and [early API course evidence](docs/history/week05-api-contract.md)
 are archived for context and do not define the current feature scope.
 
-This is a shared-account learning prototype without per-user data isolation,
-idempotency keys, automatic retries or recovery of interrupted claimed jobs.
+This is a learning prototype with independent accounts and per-user meal ownership.
+Password recovery, Google login, personal nutrition targets and monthly trends are
+not implemented. Idempotency keys, automatic retries and recovery of interrupted
+claimed jobs remain future work.
 Never commit API keys, login passwords, certificates or database backups.
 
 ## Week 6 lab verification
+
+Historical evidence and rehearsal commands describe the frozen `w07-midterm` tag.
+For current account-aware checks, use [the account guide](docs/accounts.md).
 
 See [the asynchronous workflow guide](docs/async-workflow.md) for the isolated
 Compose observation and the evidence map. Run the additional lifecycle tests with:

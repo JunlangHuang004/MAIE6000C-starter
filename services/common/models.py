@@ -41,6 +41,36 @@ class JobType(StrEnum):
     ANALYZE_NUTRITION = "analyze_nutrition"
 
 
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=lambda: str(uuid.uuid4()),
+    )
+    username: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
+    password_hash: Mapped[str] = mapped_column(String(256), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+
+
+class AuthSession(Base):
+    __tablename__ = "auth_sessions"
+
+    # Only a digest is persisted. The random bearer token exists in the cookie only.
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, index=True,
+    )
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
 class Case(Base):
     __tablename__ = "cases"
 
@@ -48,6 +78,9 @@ class Case(Base):
         String(36),
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
+    )
+    user_id: Mapped[str | None] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=True, index=True,
     )
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
@@ -86,6 +119,9 @@ class Analysis(Base):
         String(36),
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
+    )
+    user_id: Mapped[str | None] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=True, index=True,
     )
     mode: Mapped[str] = mapped_column(String(20), nullable=False, default="advanced")
     conversation: Mapped[list] = mapped_column(JSON, nullable=False, default=list)

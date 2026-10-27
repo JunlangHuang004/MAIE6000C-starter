@@ -1,21 +1,15 @@
 from __future__ import annotations
 
-import os
 import time
 
-import httpx
 import pytest
 
 pytestmark = pytest.mark.smoke
 
 
-def test_smoke_end_to_end_case_flow():
-    base_url = os.getenv("SMOKE_BASE_URL")
-    if not base_url:
-        pytest.skip("SMOKE_BASE_URL not set")
-
-    create_response = httpx.post(
-        f"{base_url}/cases",
+def test_smoke_end_to_end_case_flow(smoke_client):
+    create_response = smoke_client.post(
+        "/cases",
         json={
             "title": "Production outage alert",
             "description": "Several users report the service is down and requests are failing.",
@@ -30,7 +24,7 @@ def test_smoke_end_to_end_case_flow():
     last_payload = None
 
     while time.time() < deadline:
-        poll = httpx.get(f"{base_url}/cases/{case_id}", timeout=10)
+        poll = smoke_client.get(f"/cases/{case_id}", timeout=10)
         assert poll.status_code == 200
         last_payload = poll.json()
 
