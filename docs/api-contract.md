@@ -1,6 +1,6 @@
 # NutriChat API contract
 
-Current implementation: 2026-10-27 (`test` personal profile increment). See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
+Current implementation: 2026-10-27 (`test` daily tracking increment). See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
 ## Routes
 
@@ -14,13 +14,16 @@ Current implementation: 2026-10-27 (`test` personal profile increment). See the 
 | `GET /login` | Login/registration page (public) | 200, HTML |
 | `GET /profile` | Current account profile and computed daily reference | 200, `{profile, reference}`; both null if absent |
 | `PUT /profile` | Complete profile inputs and latest revision (0 to create) | 200, `{profile, reference}`; 409 on conflict |
+| `GET /daily-records/{date}` | Private daily weight/manual total plus automatic meal sum | 200, daily view; revision 0 if no manual row |
+| `PUT /daily-records/{date}` | `{revision, weight_kg, manual_calories}`; both values nullable | 200, daily view; 409 on conflict |
+| `GET /tracking?end=YYYY-MM-DD` | 30-day history ending on selected date (default HKtoday) | 200, dates, days and summary |
 | `GET /analyses?limit=20` | Own recent meals; limit 1–100 | 200, array of analyses |
 | `POST /analyses` | `{food_text, mode?}`; atomically create an analysis and pending job | 201, `{analysis, job}` |
 | `GET /analyses/{id}` | Read saved state, dialogue and result | 200, analysis |
 | `PATCH /analyses/{id}` | `{food_text, revision}`; replace description and reset dialogue, preserving mode | 200, `{analysis, job}` |
 | `POST /analyses/{id}/reply` | `{revision, message}` OR `{revision, answers}`; supplement or correct | 200, `{analysis, job}` |
 | `POST /analyses/{id}/mode` | `{revision, mode}`; switch mode on the same record | 200, `{analysis, job}` |
-| `POST /analyses/{id}/confirm` | `{revision}`; confirm a completed result | 200, analysis |
+| `POST /analyses/{id}/confirm` | `{revision, consumed_on?}`; confirm a completed result for an ISO meal date | 200, analysis |
 | `GET /foods` | Active provider, catalogue, legacy names and gram limit | 200, object |
 | `GET /jobs/{id}` | Background job status and operational error | 200, job |
 | `GET /app` | Application page | 200 HTML when signed in; otherwise 303 to `/login` |
@@ -36,6 +39,16 @@ See [the profile contract and calculation policy](personalization.md) for bounds
 rounding, blocked targets and JSON examples. Profiles do not create AI jobs or
 send body measurements to Qwen. They are optional for the meal workflow.
 
+## Daily records and trends
+
+Daily records belong to the current account. Manual calories replace that date's
+confirmed-meal sum; null restores automatic mode. Weight is independent of the
+profile. Missing observations remain null, including in the 30-day response.
+PUT uses optimistic revisions (0 to create), requires both nullable value fields,
+and rejects unknown/non-finite/coerced/out-of-range inputs. All dates use
+Asia/Hong_Kong. See [the tracking contract](tracking.md) for date limits, response
+fields, summary definitions and migration handling of older confirmed meals.
+
 ## Creation and saved fields
 
 ```json
@@ -46,7 +59,7 @@ send body measurements to Qwen. They are optional for the meal workflow.
 
 The response contains the new analysis (initial `revision: 1`, `status: queued`) and pending job. Poll `GET /analyses/{id}` for the saved result. Do not assume a particular final revision; use the latest returned value for every mutation.
 
-Analysis fields include `id`, `food_text`, `mode`, `status`, `revision`, timestamps, `confirmed_at`, `interpreted_food_text`, `error_message`, four nutrient totals (`calories`, `protein_g`, `carbs_g`, `fat_g`), and:
+Analysis fields include `id`, `food_text`, `mode`, `status`, `revision`, timestamps, `confirmed_at`, `consumed_on`, `interpreted_food_text`, `error_message`, four nutrient totals (`calories`, `protein_g`, `carbs_g`, `fat_g`), and:
 
 - `conversation`: saved user/assistant messages, with optional display text.
 - `draft`: extracted and user-supplied facts. Basic-mode defaults are not persisted as facts.
@@ -86,7 +99,7 @@ needs_input / completed / failed -> queued (reply, correction or mode switch)
 
 The worker owns processing transitions from `queued`. Clarification is a successful job outcome: the analysis becomes `needs_input` and all nutrient totals remain null. A valid complete result becomes `completed`, ready for user review. Upstream/API/parsing failures become `failed` with a user-facing error. Job states are `pending -> claimed -> completed/failed`.
 
-User mutations compare both the current state and revision in a conditional database update. Correction, reply and mode switch are permitted only from `needs_input`, `completed` or `failed`. They clear prior totals, evidence and errors and create a new job. Confirmation accepts only `completed`, increments revision and records `confirmed_at`. Queued records cannot be edited; confirmed records are locked.
+User mutations compare both the current state and revision in a conditional database update. Correction, reply and mode switch are permitted only from `needs_input`, `completed` or `failed`. They clear prior totals, evidence and errors and create a new job. Confirmation accepts only `completed`, increments revision and records `confirmed_at` and `consumed_on` (default: current Hong Kong date). Queued records cannot be edited; confirmed records are locked.
 
 ## Provider and error behavior
 

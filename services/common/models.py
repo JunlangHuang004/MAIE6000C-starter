@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from enum import StrEnum
 
-from sqlalchemy import JSON, CheckConstraint, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import (
+    JSON, CheckConstraint, Date, DateTime, Float, ForeignKey, Index, Integer, String, Text,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from services.common.db import Base
@@ -106,6 +108,32 @@ class UserProfile(Base):
     )
 
 
+class DailyRecord(Base):
+    __tablename__ = "daily_records"
+    __table_args__ = (
+        CheckConstraint("record_date >= '2000-01-01'", name="ck_daily_records_date"),
+        CheckConstraint("weight_kg BETWEEN 30 AND 250", name="ck_daily_records_weight"),
+        CheckConstraint(
+            "manual_calories BETWEEN 0 AND 20000", name="ck_daily_records_calories",
+        ),
+        CheckConstraint("revision >= 1", name="ck_daily_records_revision"),
+    )
+
+    user_id: Mapped[str] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True,
+    )
+    record_date: Mapped[date] = mapped_column(Date, primary_key=True)
+    weight_kg: Mapped[float | None] = mapped_column(Float, nullable=True)
+    manual_calories: Mapped[float | None] = mapped_column(Float, nullable=True)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+
+
 class Case(Base):
     __tablename__ = "cases"
 
@@ -149,6 +177,7 @@ class Case(Base):
 
 class Analysis(Base):
     __tablename__ = "analyses"
+    __table_args__ = (Index("ix_analyses_user_consumed", "user_id", "consumed_on"),)
 
     id: Mapped[str] = mapped_column(
         String(36),
@@ -167,6 +196,7 @@ class Analysis(Base):
     interpreted_food_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    consumed_on: Mapped[date | None] = mapped_column(Date, nullable=True)
     food_text: Mapped[str] = mapped_column(Text, nullable=False)
     status: Mapped[str] = mapped_column(
         String(20),

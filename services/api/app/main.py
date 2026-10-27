@@ -20,6 +20,8 @@ from sqlalchemy.orm import Session
 from services.common.config import configure_logging, get_settings
 from services.api.app.auth import get_current_user, get_optional_user, router as auth_router
 from services.api.app.profile import router as profile_router
+from services.api.app.tracking import router as tracking_router
+from services.common import tracking
 from services.common.db import get_db
 from services.common.models import (
     Analysis,
@@ -53,6 +55,7 @@ logger = logging.getLogger("services.api.main")
 app = FastAPI(title="NutriChat API", version="0.1.0")
 app.include_router(auth_router)
 app.include_router(profile_router)
+app.include_router(tracking_router)
 
 HTTP_REQUESTS = Counter(
     "api_http_requests_total",
@@ -159,7 +162,11 @@ async def safe_validation_errors(request: Request, exc: RequestValidationError):
             "detail": "Use a 3–32 character username (letters, digits or _) and a "
                       "10–128 character password.",
         })
-    if request.url.path == "/profile":
+    if (
+        request.url.path == "/profile"
+        or request.url.path.startswith(("/daily-records", "/tracking"))
+        or (request.url.path.startswith("/analyses/") and request.url.path.endswith("/confirm"))
+    ):
         # Do not reflect personal inputs (or non-JSON NaN/Infinity) in errors.
         return JSONResponse(status_code=422, content={
             "detail": [
@@ -185,7 +192,9 @@ async def observe_requests(request: Request, call_next):
             })
         else:
             response = await call_next(request)
-        if request.url.path.startswith(("/auth/", "/analyses", "/cases", "/jobs", "/profile")) or (
+        if request.url.path.startswith((
+            "/auth/", "/analyses", "/cases", "/jobs", "/profile", "/daily-records", "/tracking",
+        )) or (
             request.url.path in {"/app", "/login"}
         ):
             response.headers["Cache-Control"] = "no-store"
@@ -365,6 +374,7 @@ def correct_analysis(
 ):
     change_analysis(db, analysis_id, payload.revision, ["completed", "failed", "needs_input"], {
         "food_text": payload.food_text, "status": "queued", "confirmed_at": None,
+        "consumed_on": None,
         "conversation": [{"role":"user", "content":payload.food_text}],
         "draft": [], "questions": [], "details": [], "error_message": None,
         "interpreted_food_text": None, "calories": None, "protein_g": None,
@@ -388,6 +398,7 @@ def confirm_analysis(
 ):
     change_analysis(db, analysis_id, payload.revision, ["completed"], {
         "status": "confirmed", "confirmed_at": utcnow(),
+        "consumed_on": payload.consumed_on or tracking.hong_kong_today(),
     }, user_id=user.id)
     db.commit()
     db.expire_all()
@@ -435,7 +446,7 @@ def reply_analysis(
         raise HTTPException(status_code=422, detail="对话资料过长，请整理后开始新餐食。")
     change_analysis(db, analysis_id, payload.revision, ["needs_input", "completed", "failed"], {
         "conversation":conversation, "draft":draft, "questions":[], "details":[],
-        "status":"queued", "confirmed_at":None, "error_message":None,
+        "status":"queued", "confirmed_at":None, "consumed_on":None, "error_message":None,
         "interpreted_food_text":None, "calories":None, "protein_g":None,
         "carbs_g":None, "fat_g":None,
     }, user_id=user.id)
@@ -462,6 +473,7 @@ def switch_analysis_mode(
         "mode":payload.mode, "status":"queued", "questions":[], "details":[],
         "calories":None, "protein_g":None, "carbs_g":None, "fat_g":None,
         "interpreted_food_text":None, "error_message":None,
+        "confirmed_at":None, "consumed_on":None,
     }, user_id=user.id)
     job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
               status=JobStatus.PENDING.value)

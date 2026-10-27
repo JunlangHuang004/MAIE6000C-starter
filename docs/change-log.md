@@ -1,5 +1,22 @@
 # NutriChat change log
 
+## 2026-10-27 — Daily calorie/weight tracking on `test`
+
+- Save private daily weight measurements and optional total calorie intake, with
+  date selection, correction, clearing and optimistic revision conflicts.
+- Assign a consumed date when confirming meals and sum only confirmed estimates
+  for each account/date. Manual totals replace the meal sum to avoid double counting.
+- Add two SVG charts, summaries and an accessible detail table for a selected
+  rolling 30-day window. Preserve missing values and explicit zeros distinctly;
+  keep daily weights independent of the current profile and nutrition reference.
+- Add migration 0008 and document Hong Kong date boundaries, legacy meal-date
+  backfill, account privacy and incomplete-diary limitations.
+- Pass 594 unit/integration tests, two authenticated smoke tests, Ruff, PostgreSQL
+  migration/constraint/concurrency checks and browser workflows. See
+  [tracking verification](evidence/tracking-verification.md).
+- Update English README/API/architecture/operations documentation and only the
+  isolated local preview. Original branches, Week 7 artifacts and ECS are unchanged.
+
 ## 2026-10-27 — Personal profiles and daily references on `test`
 
 - Add private, editable age, height, weight, formula sex, activity level and

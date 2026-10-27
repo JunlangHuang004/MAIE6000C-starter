@@ -24,7 +24,7 @@ Browser -> [optional HTTPS proxy] -> FastAPI API + account sessions
 The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID per internal user ID for restoration.
 Account/session tokens are never stored in localStorage.
 
-- API: account sessions, authorization, private profiles/daily references, validation, revision/state checks, saved records, catalogue and HTML UI.
+- API: account sessions, authorization, private profiles/daily references and tracking, validation, revision/state checks, saved records, catalogue and HTML UI.
 - Worker: asynchronous orchestration and job/error bookkeeping.
 - AI service: Qwen extraction or legacy demo parsing, followed by deterministic evaluation.
 - Shared meal engine: catalogue validation, questions, structured answers, assumptions and nutrient arithmetic.
@@ -36,8 +36,22 @@ The authenticated API stores one current profile per user. A synchronous Python
 calculator derives versioned energy and macro references without calling the worker,
 AI service or Qwen. Profile input never joins meal-extraction prompts. Conditional
 revision updates prevent stale tabs from overwriting newer data. Migration 0007
-adds `user_profiles` without changing meals, accounts or sessions. No daily weight
-log or trend aggregation is created; see [personalization](personalization.md).
+adds `user_profiles` without changing meals, accounts or sessions. See
+[personalization](personalization.md).
+
+## Daily records and trends
+
+Migration 0008 adds one optional daily record per user/date and a consumed date on
+analyses. Daily records contain weight, a nullable manual calorie override and an
+optimistic revision. The API computes automatic calorie totals from that user's
+confirmed meals and combines them with the daily records for a 30-day window.
+Manual totals replace meal sums, and absent data remains null. Historical results
+use saved meal estimates, not a recalculation against today's catalogue.
+
+The browser draws two SVG charts and a corresponding data table. Tracking does not
+call the worker or Qwen, change the personal profile, or store measurements in
+localStorage. The current reference is not projected onto past dates. See the
+[tracking contract and migration policy](tracking.md).
 
 ## Qwen's role
 
@@ -70,7 +84,8 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 
 The `test` branch has independent accounts; the older public deployment is unchanged.
 Personal profiles and approximate daily references are available on `test`.
-Password recovery, Google login, daily weight logs and monthly trends are not implemented.
+Daily calorie/weight tracking is available; password recovery, Google login and
+historical nutrition targets are not implemented.
 See [accounts](accounts.md) for session and ownership boundaries. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.

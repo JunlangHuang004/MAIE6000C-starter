@@ -4,6 +4,8 @@
 <style>
 :root{font-family:system-ui,sans-serif;color:#173c32;background:#f3f6ef}*{box-sizing:border-box}body{margin:0}main{max-width:900px;margin:32px auto;padding:24px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:36px;margin-bottom:8px}h2{font-size:22px}p{line-height:1.7}.muted,small{color:#587268}.card{background:#fff;border:1px solid #dbe5dc;border-radius:18px;padding:24px;margin-top:20px}label{display:block;font-weight:600;margin:12px 0 8px}textarea,input,select{font:inherit;padding:12px;border:1px solid #b8cbbb;border-radius:9px;max-width:100%;background:white;color:#173c32}textarea{width:100%;min-height:100px;resize:vertical}select{width:100%}input[type=number]{width:150px}input[type=checkbox]{width:20px;height:20px;vertical-align:middle}button{background:#246149;color:white;border:0;padding:12px 18px;border-radius:9px;font:inherit;cursor:pointer;margin:8px 8px 0 0}button.secondary{background:#edf3eb;color:#245740}button:disabled{opacity:.45;cursor:default}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.metric{background:#f3f6ef;padding:16px;border-radius:12px}.metric b{display:block;font-size:26px}.metric span{font-size:13px}.question{border-top:1px solid #e0e7df;padding:12px 0}.ingredient{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0}.bubble{white-space:pre-wrap;padding:14px 18px;border-radius:12px;background:#f0f5ed;margin:12px 0;overflow-wrap:anywhere}.bubble.user{background:#e2eee8;margin-left:35px}.bubble strong{display:block;font-size:12px;margin-bottom:8px}.error{color:#a12c20!important}#message{white-space:pre-wrap}.tag{font-size:13px;color:#287257}.sources{font-size:12px;overflow-wrap:anywhere}a{color:#246149}details{margin:12px 0}summary{cursor:pointer;font-weight:600}[hidden]{display:none!important}@media(max-width:550px){main{margin:8px auto;padding:14px}.card{padding:18px}.metrics{grid-template-columns:1fr 1fr}h1{font-size:28px}.ingredient input{width:100px}}
 .profile-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.profile-heading h2{margin:0 0 6px}.profile-heading p{margin:0}.profile-badge{background:#e8f1e8;border-radius:20px;padding:6px 12px;white-space:nowrap;font-size:13px}.profile-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 16px}.profile-fields input{width:100%}.profile-hint{font-size:13px;line-height:1.6}.profile-reference{border-top:1px solid #e0e7df;margin-top:20px;padding-top:8px}.profile-reference h3{font-size:16px}.profile-notice{background:#f8f3e7;border:1px solid #e8dbb8;padding:14px 16px;border-radius:12px;line-height:1.7}.profile-assumptions{font-size:14px}.profile-assumptions p{margin:8px 0}.profile-actions{display:flex;flex-wrap:wrap;align-items:center;gap:4px}#profile-message{margin-bottom:0;white-space:pre-wrap}input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #83aa88;outline-offset:3px}@media(max-width:550px){.profile-fields{grid-template-columns:1fr 1fr}.profile-heading{display:block}.profile-badge{display:inline-block;margin-top:12px}.profile-fields .profile-wide{grid-column:1/-1}}
+
+.tracking-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.tracking-heading h2{margin:0 0 6px}.tracking-heading p{margin:0}.tracking-zone{font-size:12px;background:#edf3eb;padding:7px 10px;border-radius:8px;white-space:nowrap}.daily-editor{margin-top:22px;padding:20px;background:#f7f9f4;border-radius:14px}.daily-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.daily-fields label{margin-top:0}.daily-fields input{width:100%}.daily-fields small{display:block;margin-top:7px;line-height:1.5}.daily-actions{display:flex;align-items:center;flex-wrap:wrap;gap:2px}.daily-source{font-size:14px;line-height:1.7;margin-bottom:0}.daily-message{white-space:pre-wrap;margin-bottom:0}.trend-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin:24px 0 14px}.trend-heading h3{margin:0 0 5px}.trend-heading p{margin:0;font-size:13px}.trend-range{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap}.trend-range label{font-size:13px;margin-top:0}.trend-range button{margin:0}.trend-range input{padding:9px;min-width:145px}.tracking-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}.tracking-stat{padding:16px;border:1px solid #dbe5dc;border-radius:12px}.tracking-stat span{font-size:12px;color:#587268;display:block}.tracking-stat strong{font-size:23px;display:block;margin:6px 0}.trend-charts{display:grid;grid-template-columns:1fr 1fr;gap:14px}.trend-chart{border:1px solid #dbe5dc;border-radius:14px;padding:16px;min-width:0}.trend-chart h4{margin:0 0 3px;font-size:16px}.trend-chart p{margin:0;font-size:12px;color:#587268;line-height:1.6}.trend-chart svg{display:block;width:100%;height:auto;margin-top:10px}.chart-empty{display:flex;align-items:center;justify-content:center;text-align:center;min-height:150px;color:#587268;font-size:14px}.trend-note{font-size:13px;line-height:1.6}.trend-table-wrap{overflow-x:auto}.trend-table{width:100%;border-collapse:collapse;font-size:13px;text-align:right;white-space:nowrap}.trend-table caption{text-align:left;padding:10px 0;color:#587268;white-space:normal}.trend-table th,.trend-table td{border-bottom:1px solid #e3e9e1;padding:10px 8px}.trend-table th:first-child,.trend-table td:first-child{text-align:left}.trend-table tbody tr:hover{background:#f3f6ef}.meal-date{margin:16px 0}.meal-date small{display:block;margin-top:6px}.confirmed-date{font-weight:600}.tracking-card button{font-size:14px}@media(max-width:700px){.trend-charts{grid-template-columns:1fr}.trend-heading{align-items:flex-start;flex-direction:column}.trend-range{width:100%}.daily-fields{grid-template-columns:1fr 1fr}.daily-fields .daily-date-field{grid-column:1/-1}}@media(max-width:550px){.tracking-heading{display:block}.tracking-zone{display:inline-block;margin-top:10px}.daily-editor{padding:14px}.tracking-summary{gap:7px}.tracking-stat{padding:11px}.tracking-stat strong{font-size:20px}.daily-fields{gap:12px}.daily-fields label{font-size:14px}}
 </style></head><body><main>
 <header><strong>◉ NutriChat</strong><div><span id="account-name" class="muted" aria-live="polite">正在验证登录…</span> <button id="logout" type="button" class="secondary" disabled>退出登录</button></div></header>
 <h1>说说这餐吃了什么</h1><p class="muted">基础版快速了解大概热量；进阶版补充份量、做法和配方，细化营养估算。</p>
@@ -44,17 +46,41 @@
 <small id="catalogue-info"></small></form>
 <details><summary>查看支持的食材和菜谱</summary><input id="search" type="search" placeholder="搜索食物／菜名" aria-label="搜索食物"><div id="food-list"></div></details></section>
 <section class="card"><h2>我的餐食记录</h2><p class="muted">查看这个账号最近的 20 餐，继续补充或核对。</p><form id="recent-form"><label for="recent">选择一条记录</label><select id="recent" disabled><option value="">正在读取…</option></select><button id="recent-open" type="submit" disabled>打开记录</button><button id="recent-refresh" class="secondary" type="button" disabled>刷新列表</button></form><p id="recent-message" class="muted" role="status" aria-live="polite"></p></section>
+<section class="card tracking-card" id="tracking-card" aria-labelledby="tracking-title">
+<div class="tracking-heading"><div><h2 id="tracking-title">每日记录与 30 天趋势</h2><p class="muted">记下每天的摄入与体重，回看最近一个月的变化。</p></div><span class="tracking-zone">日期按香港时间</span></div>
+<div class="daily-editor">
+<form id="daily-form">
+<div class="daily-fields">
+<div class="daily-date-field"><label for="daily-date">记录日期</label><input id="daily-date" type="date" min="2000-01-01" required disabled><small>可补记过去的日期；切换日期会放弃未保存的修改。</small></div>
+<div><label for="daily-calories">当天总热量（kcal）</label><input id="daily-calories" type="number" min="0" max="20000" step="any" inputmode="decimal" autocomplete="off" placeholder="留空：汇总已确认餐食" disabled><small>填写后替代餐食汇总，不会叠加。留空并保存可恢复自动汇总。</small></div>
+<div><label for="daily-weight">当天体重（kg）</label><input id="daily-weight" type="number" min="30" max="250" step="any" inputmode="decimal" autocomplete="off" placeholder="可选，30–250 kg" disabled><small>独立保存，不会修改上方个人资料中的体重或每日参考。</small></div>
+</div>
+<div class="daily-actions"><button id="daily-save" type="submit" disabled>保存当天记录</button><button id="daily-reload" class="secondary" type="button" disabled>重新读取当天</button></div>
+</form>
+<p id="daily-source" class="daily-source muted"></p><p id="daily-message" class="daily-message muted" role="status" aria-live="polite">正在读取每日记录…</p>
+</div>
+<div class="trend-heading"><div><h3>回看 30 天</h3><p class="muted" id="trend-period">正在读取日期范围…</p></div><form id="trend-form" class="trend-range"><div><label for="trend-end">截止日期（含当天）</label><input id="trend-end" type="date" min="2000-01-30" required disabled></div><button id="trend-refresh" class="secondary" type="submit" disabled>查看趋势</button><button id="trend-today" class="secondary" type="button" disabled>回到今天</button></form></div>
+<p id="trend-message" class="muted" role="status" aria-live="polite"></p>
+<div id="trend-results" hidden>
+<div class="tracking-summary"><div class="tracking-stat"><span>有热量记录</span><strong id="trend-recorded">—</strong><span>仅统计有数据的日期</span></div><div class="tracking-stat"><span>记录日均热量</span><strong id="trend-average">—</strong><span>kcal / 记录日</span></div><div class="tracking-stat"><span>首末次体重变化</span><strong id="trend-weight-change">—</strong><span id="trend-weight-count">至少需要两次记录</span></div></div>
+<div class="trend-charts"><div class="trend-chart"><h4>热量摄入 · kcal</h4><p>已确认餐食汇总，或你填写的当天总量。</p><div id="calorie-chart"></div></div><div class="trend-chart"><h4>体重 · kg</h4><p>按实际填写的日期绘制，纵轴随记录范围调整。</p><div id="weight-chart"></div></div></div>
+<p class="muted trend-note">没有记录的日期留空，不作为 0 计算，也不会自动补齐。图中的断开表示日期之间缺少数据；数值仅反映已记录的内容。</p>
+<details><summary>查看每日明细</summary><div class="trend-table-wrap"><table class="trend-table"><caption id="trend-table-caption">30 天记录。— 表示没有数据。</caption><thead><tr><th scope="col">日期</th><th scope="col">热量（kcal）</th><th scope="col">来源</th><th scope="col">已确认餐食</th><th scope="col">体重（kg）</th></tr></thead><tbody id="trend-table-body"></tbody></table></div></details>
+</div>
+</section>
 <p id="message" role="status" aria-live="polite"></p>
 <section class="card" id="dialogue" hidden><h2 id="dialogue-title">餐食对话</h2><details id="history-panel"><summary>查看本餐对话记录</summary><div id="history"></div></details>
 <form id="answer-form" hidden><div id="questions"></div><button id="answer-submit">提交回答</button><small>可以先回答已知的问题。不知道用量时，请在下方说明。</small></form>
 <form id="reply-form" hidden><label for="reply">继续对话／补充或更正</label><textarea id="reply" maxlength="2000" required placeholder="例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。"></textarea><button id="reply-submit">发送补充说明</button></form></section>
 <section class="card" id="result" hidden><span class="tag" id="status"></span><h2>本餐营养估算</h2><p id="interpreted"></p>
 <div class="metrics"><div class="metric"><b id="calories">—</b><span>热量 · kcal</span></div><div class="metric"><b id="protein_g">—</b><span>蛋白质 · g</span></div><div class="metric"><b id="fat_g">—</b><span>脂肪 · g</span></div><div class="metric"><b id="carbs_g">—</b><span>碳水 · g</span></div></div>
-<div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、油糖用量及参考配方。需要更改时，在上方继续对话；更改后会重新估算。</p><button id="confirm">确认并保存</button><p><small id="record"></small></p></section>
+<div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、油糖用量及参考配方。需要更改时，在上方继续对话；更改后会重新估算。</p><div id="meal-date-editor" class="meal-date"><label for="meal-date">这餐的食用日期</label><input id="meal-date" type="date" min="2000-01-01" aria-describedby="meal-date-help"><small id="meal-date-help">确认后计入所选日期的热量。未选日期时记为今天（香港时间）。</small></div><p id="meal-confirmed-date" class="confirmed-date" hidden></p><button id="confirm">确认并保存</button><p><small id="record"></small></p></section>
 <p><small>参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。</small></p>
 </main><script>
 const $=id=>document.getElementById(id);let analysis=null,busy=false,timer=null,catalogue=[],currentUser=null,sessionVersion=0,loggingOut=false,recentVersion=0;
 let profile=null,profileReference=null,profileLoaded=false,profileLoading=false,profileSaving=false,profileDirty=false,profileConflict=false,profileRequest=0;
+let tracking=null,trackingToday=null,trackingLoading=false,trackingRequest=0;
+let dailyRecord=null,dailyLoaded=false,dailyLoading=false,dailySaving=false,dailyDirty=false,dailyConflict=false,dailyRequest=0,mealDateAnalysisId=null;
 const profileFields={age_years:'profile-age',height_cm:'profile-height',weight_kg:'profile-weight',sex:'profile-sex',goal:'profile-goal',activity_level:'profile-activity'};
 const authEventKey='nutrichat.auth-change';
 const stored={get(key){try{return localStorage.getItem(key)}catch{return null}},set(key,value){try{localStorage.setItem(key,value)}catch{}},remove(key){try{localStorage.removeItem(key)}catch{}}};
@@ -64,7 +90,7 @@ const labels={queued:'正在分析…',needs_input:'等待补充信息',complete
 const el=(tag,text)=>{const e=document.createElement(tag);if(text!==undefined)e.textContent=text;return e};
 function message(t,error=false){$('message').textContent=t;$('message').classList.toggle('error',error)}
 function clearSession(){sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
- clearProfile();
+ clearProfile();clearTracking();
  for(const id of ['meal','reply'])$(id).value='';
  for(const id of ['history','questions','evidence'])$(id).replaceChildren();
  for(const id of ['record','interpreted','status'])$(id).textContent='';
@@ -86,7 +112,7 @@ async function api(path,method='GET',body){
  if(!res.ok)throw Object.assign(Error(Array.isArray(data.detail)?data.detail.map(x=>x.msg).join('\n'):data.detail||'请求失败'),{status:res.status});return data;
 }
 function controls(){const locked=!currentUser||busy||analysis?.status==='queued';$('meal').disabled=locked||!!analysis;$('estimate').hidden=!!analysis;$('estimate').disabled=locked;$('new').hidden=!analysis;$('new').disabled=locked;for(const id of ['reply-submit','answer-submit'])$(id).disabled=locked;$('confirm').disabled=locked||analysis?.status!=='completed';$('reply').disabled=locked;
- profileControls();
+ profileControls();trackingControls();$('meal-date').disabled=locked||analysis?.status!=='completed';
  $('mode').disabled=!currentUser||!!analysis||busy;
  $('recent').disabled=locked;$('recent-open').disabled=locked||!$('recent').value;$('recent-refresh').disabled=!currentUser||busy;
  $('switch-mode').hidden=!analysis||analysis.status==='confirmed';
@@ -135,13 +161,127 @@ $('profile-form').addEventListener('submit',async event=>{event.preventDefault()
  catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){if(e.status===409){profileConflict=true;$('profile-badge').textContent='资料已在别处更新';profileMessage('资料已在其他页面更新。请先载入最新资料，再重新修改；重新载入会替换当前未保存的内容。',true);$('profile-reload').hidden=false;$('profile-reload').textContent='载入最新资料';}else profileMessage(e.message+' 当前修改还没有保存，请重试。',true);}}
  finally{if(version===sessionVersion&&request===profileRequest){profileSaving=false;profileControls();}}
 });
+function dailyMessage(text,error=false){$('daily-message').textContent=text;$('daily-message').classList.toggle('error',error)}
+function trendMessage(text,error=false){$('trend-message').textContent=text;$('trend-message').classList.toggle('error',error)}
+function trackingControls(){
+ const locked=!currentUser||!dailyLoaded||dailyLoading||dailySaving||dailyConflict;
+ for(const id of ['daily-calories','daily-weight'])$(id).disabled=locked;
+ $('daily-date').disabled=!currentUser||!trackingToday||dailySaving;
+ $('daily-save').disabled=locked||!dailyDirty;$('daily-save').textContent=dailySaving?'正在保存…':'保存当天记录';
+ $('daily-reload').disabled=!currentUser||dailyLoading||dailySaving;
+ $('daily-reload').textContent=dailyConflict?'载入最新记录':'重新读取当天';
+ $('daily-form').setAttribute('aria-busy',String(dailyLoading||dailySaving));
+ $('trend-end').disabled=!currentUser||!trackingToday||trackingLoading;
+ $('trend-refresh').disabled=!currentUser||trackingLoading;$('trend-today').disabled=!currentUser||!trackingToday||trackingLoading;
+ $('trend-refresh').textContent=trackingLoading?'正在读取…':'查看趋势';
+ $('trend-results').setAttribute('aria-busy',String(trackingLoading));
+}
+function clearTracking(){
+ trackingRequest++;dailyRequest++;tracking=null;trackingToday=null;trackingLoading=false;
+ dailyRecord=null;dailyLoaded=false;dailyLoading=false;dailySaving=false;dailyDirty=false;dailyConflict=false;mealDateAnalysisId=null;
+ $('daily-form').reset();$('trend-form').reset();$('meal-date').value='';$('meal-date-editor').hidden=true;$('meal-confirmed-date').hidden=true;$('meal-confirmed-date').textContent='';
+ for(const id of ['daily-source','trend-period','trend-table-caption','trend-weight-count'])$(id).textContent='';
+ for(const id of ['trend-recorded','trend-average','trend-weight-change'])$(id).textContent='—';
+ for(const id of ['calorie-chart','weight-chart','trend-table-body'])$(id).replaceChildren();
+ $('trend-results').hidden=true;dailyMessage('');trendMessage('');trackingControls();
+}
+function renderMealDate(){
+ const state=analysis?.status;$('meal-date-editor').hidden=state!=='completed';$('meal-confirmed-date').hidden=state!=='confirmed';
+ if(analysis&&mealDateAnalysisId!==analysis.id){mealDateAnalysisId=analysis.id;$('meal-date').value=analysis.consumed_on||trackingToday||'';}
+ $('meal-confirmed-date').textContent=state==='confirmed'?(analysis.consumed_on?'食用日期：'+analysis.consumed_on+'（香港时间）':'这条旧记录未提供食用日期。'):'';
+}
+function dateIsValid(value,min='2000-01-01'){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+ const d=new Date(value+'T00:00:00Z');return !Number.isNaN(d.valueOf())&&d.toISOString().slice(0,10)===value&&value>=min&&(!trackingToday||value<=trackingToday);
+}
+function renderDailySource(){
+ if(!dailyRecord){$('daily-source').textContent='';return;}
+ const count=dailyRecord.meal_count;const meals=count?count+' 餐已确认 · 合计 '+profileNumber(dailyRecord.meal_calories,1)+' kcal':'还没有已确认餐食';
+ $('daily-source').textContent=dailyRecord.calorie_source==='manual'
+  ?'已保存：手动总量 '+profileNumber(dailyRecord.calories,1)+' kcal。'+meals+'；餐食汇总不再叠加。'
+  :dailyRecord.calorie_source==='meals'?'已保存：自动汇总 '+profileNumber(dailyRecord.calories,1)+' kcal，来自 '+count+' 餐已确认记录。':'当天暂无热量记录。确认餐食或填写当天总量后，会显示在趋势中。';
+}
+function applyDaily(data){
+ dailyRecord=data;dailyLoaded=true;dailyDirty=false;dailyConflict=false;
+ $('daily-calories').value=data.manual_calories??'';$('daily-weight').value=data.weight_kg??'';renderDailySource();
+}
+async function loadDaily(date=$('daily-date').value){
+ if(!currentUser||dailySaving)return;
+ if(!dateIsValid(date)){dailyRequest++;dailyLoaded=false;dailyLoading=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;$('daily-calories').value='';$('daily-weight').value='';$('daily-source').textContent='';dailyMessage('请选择 2000-01-01 至今天之间的有效日期。',true);trackingControls();return;}
+ const version=sessionVersion,request=++dailyRequest;dailyLoading=true;dailyLoaded=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;
+ $('daily-calories').value='';$('daily-weight').value='';$('daily-source').textContent='';dailyMessage('正在读取 '+date+' 的记录…');trackingControls();
+ try{const data=await api('/daily-records/'+encodeURIComponent(date));if(version!==sessionVersion||request!==dailyRequest||$('daily-date').value!==date)return;
+  applyDaily(data);dailyMessage('已载入 '+date+'。填写需要记录的数值，然后保存；留空体重并保存可清除当天体重。');
+ }catch(e){if(!e.silent&&version===sessionVersion&&request===dailyRequest){dailyMessage(e.message+' 请点击「重新读取当天」重试。',true);}}
+ finally{if(version===sessionVersion&&request===dailyRequest){dailyLoading=false;trackingControls();}}
+}
+const svgNode=(tag,attrs={},text)=>{const node=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text!==undefined)node.textContent=text;return node;};
+function drawTrend(containerId,days,key,unit,color){
+ const container=$(containerId);container.replaceChildren();const points=days.map((day,index)=>({date:day.date,index,value:day[key]}));const recorded=points.filter(p=>Number.isFinite(p.value));
+ if(!recorded.length){const empty=el('div',unit==='kg'?'这 30 天还没有体重记录':'这 30 天还没有热量记录');empty.className='chart-empty';container.append(empty);return;}
+ const width=640,height=240,left=62,right=20,top=23,bottom=40,plotWidth=width-left-right,plotHeight=height-top-bottom;
+ const values=recorded.map(p=>p.value);let low=0,high=Math.max(100,Math.ceil(Math.max(...values)/500)*500);
+ if(unit==='kg'){low=Math.floor(Math.min(...values)-1);high=Math.ceil(Math.max(...values)+1);}
+ const x=index=>left+index/Math.max(1,days.length-1)*plotWidth,y=value=>top+(high-value)/(high-low)*plotHeight;
+ const titleId=containerId+'-title',descId=containerId+'-description';const svg=svgNode('svg',{viewBox:'0 0 '+width+' '+height,role:'img','aria-labelledby':titleId+' '+descId});
+ svg.append(svgNode('title',{id:titleId},unit==='kg'?'30 天体重记录':'30 天热量摄入记录'));
+ svg.append(svgNode('desc',{id:descId},'从 '+days[0].date+' 到 '+days[days.length-1].date+'，共 '+recorded.length+' 个有数据的日期。单位 '+unit+'。缺少记录的日期不连接；完整数值可在下方每日明细中查看。'));
+ for(let i=0;i<=4;i++){const value=low+(high-low)*i/4,py=y(value);svg.append(svgNode('line',{x1:left,y1:py,x2:width-right,y2:py,stroke:'#e3e9e1','stroke-width':1}));svg.append(svgNode('text',{x:left-9,y:py+4,'text-anchor':'end',fill:'#587268','font-size':12},profileNumber(value,unit==='kg'?1:0)));}
+ const ticks=[0,7,14,21,days.length-1];for(const index of ticks){const px=x(index);svg.append(svgNode('text',{x:px,y:height-12,'text-anchor':index===0?'start':index===days.length-1?'end':'middle',fill:'#587268','font-size':12},days[index].date.slice(5).replace('-','/')));}
+ let previous=null;for(const point of points){if(!Number.isFinite(point.value)){previous=null;continue;}if(previous)svg.append(svgNode('line',{x1:x(previous.index),y1:y(previous.value),x2:x(point.index),y2:y(point.value),stroke:color,'stroke-width':2.5}));
+  const circle=svgNode('circle',{cx:x(point.index),cy:y(point.value),r:4,fill:color,stroke:'#fff','stroke-width':1.5});circle.append(svgNode('title',{},point.date+' · '+profileNumber(point.value,1)+' '+unit));svg.append(circle);previous=point;}
+ container.append(svg);
+}
+function renderTracking(data){
+ const summary=data.summary;$('trend-period').textContent=data.start_date+' — '+data.end_date+' · 连续 30 天';
+ $('trend-recorded').textContent=summary.recorded_days+' / 30 天';$('trend-average').textContent=summary.average_calories==null?'—':profileNumber(summary.average_calories,1);
+ $('trend-weight-change').textContent=summary.weight_change_kg==null?'—':(summary.weight_change_kg>0?'+':'')+profileNumber(summary.weight_change_kg,2)+' kg';
+ $('trend-weight-count').textContent=summary.weight_entries>=2?summary.weight_entries+' 次 · '+profileNumber(summary.first_weight_kg,2)+' → '+profileNumber(summary.last_weight_kg,2)+' kg':summary.weight_entries+' 次记录 · 至少需要两次';
+ drawTrend('calorie-chart',data.days,'calories','kcal','#246149');drawTrend('weight-chart',data.days,'weight_kg','kg','#477f9b');
+ $('trend-table-body').replaceChildren();for(const day of data.days){const row=el('tr');const dateCell=el('th',day.date);dateCell.scope='row';row.append(dateCell);
+  for(const value of [day.calories==null?'—':profileNumber(day.calories,1),day.calorie_source==='manual'?'手动总量':day.calorie_source==='meals'?'餐食汇总':'—',day.meal_count+' 餐',day.weight_kg==null?'—':profileNumber(day.weight_kg,2)])row.append(el('td',value));$('trend-table-body').append(row);}
+ $('trend-table-caption').textContent=data.start_date+' 至 '+data.end_date+'。— 表示没有数据；手动总量替代当天餐食汇总。';$('trend-results').hidden=false;
+}
+async function loadTracking(end){
+ if(!currentUser)return false;const version=sessionVersion,request=++trackingRequest;trackingLoading=true;$('trend-results').hidden=true;trendMessage('正在读取 30 天记录…');trackingControls();
+ try{const data=await api('/tracking'+(end?'?end='+encodeURIComponent(end):''));if(version!==sessionVersion||request!==trackingRequest)return false;
+  tracking=data;trackingToday=data.today;for(const id of ['daily-date','trend-end','meal-date'])$(id).max=data.today;
+  $('trend-end').value=data.end_date;if(!$('daily-date').value)$('daily-date').value=data.today;if(!$('meal-date').value)$('meal-date').value=data.today;
+  renderTracking(data);trendMessage('统计仅包含当前账号已保存的记录。');return true;
+ }catch(e){if(!e.silent&&version===sessionVersion&&request===trackingRequest){trendMessage(e.message+' 请点击「查看趋势」重试。',true);}}finally{if(version===sessionVersion&&request===trackingRequest){trackingLoading=false;trackingControls();}}
+ return false;
+}
+async function initializeTracking(){if(await loadTracking())await loadDaily();else if(currentUser)dailyMessage('日期暂未读取，请点击「重新读取当天」重试。',true);}
+function refreshCurrentTracking(){const end=$('trend-end').value;if(!trackingToday)return loadTracking();if(!dateIsValid(end,'2000-01-30'))return Promise.resolve(false);return loadTracking(end);}
+async function refreshTrackingAfterMeal(){
+ const date=analysis?.consumed_on;await refreshCurrentTracking();
+ if(!currentUser||$('daily-date').value!==date||dailySaving)return;
+ if(dailyDirty){dailyMessage('餐食已确认。当前未保存的修改已保留；保存或重新读取当天后可查看最新汇总。');return;}await loadDaily();
+}
+$('daily-date').addEventListener('change',()=>{if(!dailySaving)void loadDaily();});
+for(const id of ['daily-calories','daily-weight'])$(id).addEventListener('input',()=>{if(!dailyLoaded||dailyLoading||dailySaving||dailyConflict)return;dailyDirty=true;dailyMessage('有未保存的修改。保存后更新当天记录和趋势。');trackingControls();});
+$('daily-reload').addEventListener('click',()=>trackingToday?loadDaily():initializeTracking());
+$('daily-form').addEventListener('submit',async event=>{
+ event.preventDefault();if(!currentUser||!dailyLoaded||dailyLoading||dailySaving||dailyConflict||!dailyDirty||!$('daily-form').reportValidity())return;
+ const date=$('daily-date').value;if(!dateIsValid(date)||dailyRecord?.date!==date)return;
+ const version=sessionVersion,request=++dailyRequest,body={revision:dailyRecord.revision,weight_kg:$('daily-weight').value===''?null:Number($('daily-weight').value),manual_calories:$('daily-calories').value===''?null:Number($('daily-calories').value)};
+ dailySaving=true;dailyMessage('正在保存 '+date+' 的记录…');trackingControls();
+ try{const data=await api('/daily-records/'+encodeURIComponent(date),'PUT',body);if(version!==sessionVersion||request!==dailyRequest||$('daily-date').value!==date)return;
+  applyDaily(data);dailyMessage('已保存 '+date+'。'+(data.calorie_source==='manual'?'当天热量使用你填写的总量。':'当天热量使用已确认餐食汇总。'));void refreshCurrentTracking();
+ }catch(e){if(!e.silent&&version===sessionVersion&&request===dailyRequest){if(e.status===409){dailyConflict=true;dailyMessage('这天的记录已在其他页面更新。请点击「载入最新记录」后重新修改；载入会替换当前未保存的内容。',true);}else dailyMessage(e.message+' 当前修改尚未保存，请重试。',true);}}
+ finally{if(version===sessionVersion&&request===dailyRequest){dailySaving=false;trackingControls();}}
+});
+$('trend-form').noValidate=true;
+$('trend-form').addEventListener('submit',event=>{event.preventDefault();if(!trackingToday){void initializeTracking();return;}if($('trend-form').reportValidity())void loadTracking($('trend-end').value);});
+$('trend-today').addEventListener('click',()=>loadTracking());
+
 function numberInput(value,min=0,max=10000){const e=el('input');e.type='number';e.step='any';e.min=min;e.max=max;if(value!=null)e.value=value;return e}
 function renderQuestions(){const box=$('questions');box.replaceChildren();for(const q of analysis.questions||[]){const row=el('div');row.className='question';row.dataset.key=q.key;row.dataset.kind=q.kind;const label=el('label',q.label);row.append(label);
  if(q.kind==='number'){const input=numberInput(null,q.min,q.max);input.dataset.answer='value';input.id='q-'+q.key;label.htmlFor=input.id;row.append(input,el('span',' 克'));}
  else if(q.kind==='choice'||q.kind==='food'){const input=el('select');input.id='q-'+q.key;label.htmlFor=input.id;input.dataset.answer='value';const empty=el('option','请选择');empty.value='';input.append(empty);for(const o of q.options){const opt=el('option',o.label);opt.value=o.value;input.append(opt)}row.append(input);}
  else if(q.kind==='confirm'){const input=el('input');input.type='checkbox';input.dataset.answer='value';input.id='q-'+q.key;label.htmlFor=input.id;row.append(input,el('span',' 我已核对并确认'));}
  else if(q.kind==='recipe'){row.append(el('p','参考做法：'+q.method));for(const ing of q.ingredients){const line=el('div');line.className='ingredient';const input=numberInput(ing.grams);input.dataset.ingredient=ing.id;input.id='q-'+q.key+'-'+ing.id;const lab=el('label',ing.name+'（克／整锅）');lab.htmlFor=input.id;line.append(lab,input);row.append(line)}const yieldInput=numberInput(q.recipe.yield_g,.1);yieldInput.dataset.yield='true';yieldInput.id='yield-'+q.key;const yl=el('label','整锅做熟后的成品总重（克）');yl.htmlFor=yieldInput.id;row.append(yl,yieldInput);const confirm=el('input');confirm.type='checkbox';confirm.dataset.accept='true';confirm.id='accept-'+q.key;const cl=el('label');cl.htmlFor=confirm.id;cl.append(confirm,document.createTextNode(' 我接受以上配方和成品重量作为本次估算依据'));row.append(cl)}box.append(row)}}
-function render(){const state=analysis?.status;$('dialogue').hidden=!analysis;$('result').hidden=!analysis||!['completed','confirmed'].includes(state);$('answer-form').hidden=state!=='needs_input';$('reply-form').hidden=!['needs_input','completed','failed'].includes(state);if(analysis){$('mode').value=analysis.mode;modeHelp();$('dialogue-title').textContent=analysis.mode==='basic'?'餐食记录与补充':'进阶版 · 补充餐食信息';$('history').replaceChildren();for(const m of analysis.conversation||[]){const bubble=el('div');bubble.className='bubble '+m.role;bubble.append(el('strong',m.role==='user'?'你':'NutriChat'),document.createTextNode(m.display||m.content));$('history').append(bubble)}if(state==='needs_input')renderQuestions();$('status').textContent=(analysis.mode==='basic'?'基础版 · ':'进阶版 · ')+labels[state];$('interpreted').textContent=analysis.interpreted_food_text||'';for(const k of ['calories','protein_g','carbs_g','fat_g'])$(k).textContent=analysis[k]??'—';$('record').textContent='记录 '+analysis.id+' · 第 '+analysis.revision+' 版';$('confirm').hidden=state==='confirmed';$('review-help').textContent=state==='confirmed'?'这份估算已确认保存。需要再次修改，请开始新的一餐。':'请核对食用重量、做法、用油及配方。需要修改时，在上方继续对话。';$('evidence').replaceChildren();for(const d of analysis.details||[]){const block=el('details');block.open=true;block.append(el('summary',d.name+' · '+d.grams+'g · '+d.nutrients.calories+' kcal'));for(const a of d.assumptions)block.append(el('p',a));const sources=el('p');sources.className='sources';sources.append(document.createTextNode('数据来源：'));const seen=new Set();for(const src of d.sources){if(seen.has(src.url))continue;seen.add(src.url);const a=el('a',src.name+' #'+src.id+'（'+src.license+'）');if(src.url?.startsWith('https://fdc.nal.usda.gov/')){a.href=src.url;a.target='_blank';a.rel='noopener noreferrer'}sources.append(a,document.createTextNode(' '))}block.append(sources);$('evidence').append(block)}}controls()}
+function render(){const state=analysis?.status;$('dialogue').hidden=!analysis;$('result').hidden=!analysis||!['completed','confirmed'].includes(state);$('answer-form').hidden=state!=='needs_input';$('reply-form').hidden=!['needs_input','completed','failed'].includes(state);if(analysis){$('mode').value=analysis.mode;modeHelp();$('dialogue-title').textContent=analysis.mode==='basic'?'餐食记录与补充':'进阶版 · 补充餐食信息';$('history').replaceChildren();for(const m of analysis.conversation||[]){const bubble=el('div');bubble.className='bubble '+m.role;bubble.append(el('strong',m.role==='user'?'你':'NutriChat'),document.createTextNode(m.display||m.content));$('history').append(bubble)}if(state==='needs_input')renderQuestions();$('status').textContent=(analysis.mode==='basic'?'基础版 · ':'进阶版 · ')+labels[state];$('interpreted').textContent=analysis.interpreted_food_text||'';for(const k of ['calories','protein_g','carbs_g','fat_g'])$(k).textContent=analysis[k]??'—';$('record').textContent='记录 '+analysis.id+' · 第 '+analysis.revision+' 版';$('confirm').hidden=state==='confirmed';renderMealDate();$('review-help').textContent=state==='confirmed'?'这份估算已确认保存。需要再次修改，请开始新的一餐。':'请核对食用重量、做法、用油及配方。需要修改时，在上方继续对话。';$('evidence').replaceChildren();for(const d of analysis.details||[]){const block=el('details');block.open=true;block.append(el('summary',d.name+' · '+d.grams+'g · '+d.nutrients.calories+' kcal'));for(const a of d.assumptions)block.append(el('p',a));const sources=el('p');sources.className='sources';sources.append(document.createTextNode('数据来源：'));const seen=new Set();for(const src of d.sources){if(seen.has(src.url))continue;seen.add(src.url);const a=el('a',src.name+' #'+src.id+'（'+src.license+'）');if(src.url?.startsWith('https://fdc.nal.usda.gov/')){a.href=src.url;a.target='_blank';a.rel='noopener noreferrer'}sources.append(a,document.createTextNode(' '))}block.append(sources);$('evidence').append(block)}}controls()}
 function saved(data){if(!currentUser)return;analysis=data.analysis||data;stored.set(analysisKey(),analysis.id);$('meal').value=analysis.food_text;render();clearTimeout(timer);if(analysis.status==='queued'){message('正在解析并检查缺失信息…');timer=setTimeout(poll,1200)}void refreshRecent(true)}
 async function poll(){if(!currentUser||!analysis)return;const id=analysis.id;try{const next=await api('/analyses/'+encodeURIComponent(id));if(!currentUser||analysis?.id!==id)return;analysis=next;render();if(next.status==='queued')timer=setTimeout(poll,1500);else{message(next.status==='needs_input'?'还需要这些信息，回答后会继续估算。':next.status==='failed'?(next.error_message||'估算暂未完成，请补充描述后重试。'):'估算已保存，请核对后确认。',next.status==='failed');void refreshRecent(true)}}catch(e){if(!e.silent)message(e.message+' 刷新页面可恢复记录。',true)}}
 async function submit(work){if(busy||!currentUser)return;const version=sessionVersion;busy=true;controls();try{await work()}catch(e){if(!e.silent&&version===sessionVersion)message(e.message,true)}finally{if(version===sessionVersion){busy=false;controls()}}}
@@ -190,10 +330,15 @@ $('answer-form').addEventListener('submit', e => {
   saved(await api('/analyses/'+analysis.id+'/reply','POST',{revision:analysis.revision,answers}));
  });
 });
-$('confirm').addEventListener('click',()=>submit(async()=>{
- saved(await api('/analyses/'+analysis.id+'/confirm','POST',{revision:analysis.revision}));
- message('这餐的估算已确认并保存。');
-}));
+$('confirm').addEventListener('click',()=>{
+ if(!$('meal-date').reportValidity())return;
+ const consumedOn=$('meal-date').value;
+ submit(async()=>{
+  saved(await api('/analyses/'+analysis.id+'/confirm','POST',{revision:analysis.revision,...(consumedOn?{consumed_on:consumedOn}:{})}));
+  message('这餐的估算已确认，并计入 '+(analysis.consumed_on||'所选日期')+' 的热量记录。');
+  void refreshTrackingAfterMeal();
+ });
+});
 $('new').addEventListener('click',()=>{
  clearTimeout(timer);analysis=null;stored.remove(analysisKey());
  $('meal').value='';$('reply').value='';message('');render();$('meal').focus();
@@ -237,7 +382,7 @@ window.addEventListener('pageshow',event=>{if(event.persisted){clearSession();lo
 async function init(){
  controls();stored.remove('nutrichat.analysis');
  try{
-  currentUser=await api('/auth/me');$('account-name').textContent=currentUser.username;$('logout').disabled=false;controls();void refreshRecent();void loadProfile();
+  currentUser=await api('/auth/me');$('account-name').textContent=currentUser.username;$('logout').disabled=false;controls();void refreshRecent();void loadProfile();void initializeTracking();
   const data=await api('/foods');catalogue=data.catalogue.foods;$('catalogue-info').textContent=' '+catalogue.filter(f=>f.kind==='ingredient').length+'种食材 · '+catalogue.filter(f=>f.kind==='recipe').length+'道参考菜谱';showFoods();
   if(data.provider==='demo')message('当前为演示模式，仅支持原有英文克数输入；中餐对话需配置千问。');
   const id=stored.get(analysisKey());if(id){try{const record=await api('/analyses/'+encodeURIComponent(id));saved(record)}catch(e){if(e.status===404){stored.remove(analysisKey());message('上次记录已不可用，可以开始新的一餐。')}else throw e}}

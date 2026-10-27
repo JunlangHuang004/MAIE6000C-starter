@@ -1,7 +1,7 @@
 # NutriChat
 
-This `test` branch adds independent accounts, personal profiles and daily nutrition
-references. See [the calculation assumptions and profile workflow](docs/personalization.md).
+This `test` branch adds independent accounts, personal profiles, daily nutrition
+references, daily calorie/weight records and 30-day trends. See [the calculation assumptions and profile workflow](docs/personalization.md).
 See [account setup and the isolated preview](docs/accounts.md). The Week 7 tag and
 existing public deployment remain separate snapshots.
 
@@ -66,12 +66,24 @@ without Qwen. Saved inputs are private to the account; editing them recalculates
 the reference. A profile is optional for meal estimation. See
 [inputs, assumptions, safeguards and limitations](docs/personalization.md).
 
+## Daily records and trends
+
+Choose a date to save a weight measurement and, optionally, a total calorie intake.
+Without a manual total, NutriChat sums that date's confirmed meals. A manual total
+**replaces** that sum; clearing it restores automatic aggregation. Select the meal
+date before confirming an estimate, including meals entered later for a past date.
+
+Two charts show calories and weight over a selected 30-day window. Unrecorded dates
+stay blank; the average uses recorded calorie days only. Dates use Hong Kong time.
+Daily weights do not change the current profile or its reference automatically.
+See [the tracking workflow, date policy and limitations](docs/tracking.md).
+
 ## Meal workflow
 
 1. Sign in, select basic or advanced mode and describe the meal.
 2. Wait for background processing. Answer questions or provide natural-language corrections.
 3. Review each food, portion, recipe, default assumption and nutrition source. Switch modes to recalculate if needed.
-4. Confirm the saved estimate. Start a new meal to revise an already-confirmed record.
+4. Choose the meal date and confirm the saved estimate. Start a new meal to revise an already-confirmed record.
 5. Open your recent meals from your account history; sign out on a shared device.
 
 ## Verification
@@ -101,6 +113,9 @@ The public ECS deployment has not been updated to this 250-dish milestone.
 The `test` profile increment passed 513 unit/integration tests, isolated PostgreSQL
 migration/concurrency checks and browser workflow checks; see
 [personalization verification](docs/evidence/personalization-verification.md).
+The daily tracking increment passed 594 unit/integration tests, two authenticated
+smoke tests, PostgreSQL migration/concurrency checks and browser diary/chart checks;
+see [tracking verification](docs/evidence/tracking-verification.md).
 
 ## Architecture and documentation
 
@@ -112,6 +127,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 | [Week 7 milestone](submissions/week07/README.md) | Team, current status, demo sequence, evidence, risks and next priorities |
 | [Independent accounts](docs/accounts.md) | Registration, sessions, data isolation, preview and limits |
 | [Personalization](docs/personalization.md) | Saved profiles, formula references, assumptions and scope |
+| [Daily tracking](docs/tracking.md) | Calorie and weight records, meal dates and 30-day trends |
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA import, recipes, clarification and calculation assumptions |
@@ -129,8 +145,9 @@ health checks and metrics. The original `/cases` workflow remains available.
 are archived for context and do not define the current feature scope.
 
 This is a learning prototype with independent accounts and per-user meal ownership.
-Personal profiles and daily energy/macronutrient references are available. Password
-recovery, Google login, daily weight logs and monthly trends are not implemented.
+Personal profiles, daily energy/macronutrient references and 30-day calorie/weight
+trends are available. Password recovery, Google login and historical target
+snapshots are not implemented.
 Idempotency keys, automatic retries and recovery of interrupted
 claimed jobs remain future work.
 Never commit API keys, login passwords, certificates or database backups.

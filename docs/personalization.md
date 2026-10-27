@@ -141,5 +141,7 @@ any real rollback.
 
 Only the latest input snapshot is stored; reference values are computed on read
 with the versioned calculator. Changing current weight does **not** create a daily
-weight log. Daily meal aggregation, target history, monthly calorie/weight trends,
-medical history, Google login and password recovery are separate future work.
+weight log. Use [daily tracking](tracking.md) to record measurements independently
+and view 30-day calorie/weight trends. Changing a daily weight does not update the
+profile or recalculate its reference. Target history, medical history, Google login
+and password recovery remain separate future work.

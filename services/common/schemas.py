@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator, model_validator
 
 from services.common.nutrition import parse_meal
 from services.common.models import AnalysisStatus, CaseStatus, JobStatus, JobType
+from services.common.tracking import parse_record_date
 
 
 class HealthResponse(BaseModel):
@@ -81,6 +82,43 @@ class ProfileResponse(BaseModel):
     reference: dict[str, Any] | None
 
 
+class DailyRecordUpdate(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
+
+    revision: int = Field(ge=0, le=2_147_483_646)
+    weight_kg: float | None = Field(ge=30, le=250)
+    manual_calories: float | None = Field(ge=0, le=20000)
+
+
+class DailyRecordRead(BaseModel):
+    date: date
+    revision: int
+    weight_kg: float | None
+    manual_calories: float | None
+    meal_calories: float | None
+    meal_count: int
+    calories: float | None
+    calorie_source: Literal["manual", "meals"] | None
+
+
+class TrackingSummary(BaseModel):
+    recorded_days: int
+    average_calories: float | None
+    weight_entries: int
+    first_weight_kg: float | None
+    last_weight_kg: float | None
+    weight_change_kg: float | None
+
+
+class TrackingResponse(BaseModel):
+    timezone: Literal["Asia/Hong_Kong"] = "Asia/Hong_Kong"
+    today: date
+    start_date: date
+    end_date: date
+    days: list[DailyRecordRead]
+    summary: TrackingSummary
+
+
 class CaseCreate(BaseModel):
     title: str = Field(min_length=3, max_length=200)
     description: str = Field(min_length=5, max_length=4000)
@@ -143,7 +181,15 @@ class AnalysisCorrection(AnalysisCreate):
 
 
 class AnalysisConfirm(BaseModel):
-    revision: int = Field(ge=1)
+    model_config = ConfigDict(extra="forbid")
+
+    revision: int = Field(ge=1, le=2_147_483_646, strict=True)
+    consumed_on: date | None = None
+
+    @field_validator("consumed_on", mode="before")
+    @classmethod
+    def validate_consumed_on(cls, value):
+        return None if value is None else parse_record_date(value)
 
 
 class AnalysisMode(BaseModel):
@@ -174,6 +220,7 @@ class AnalysisRead(BaseModel):
     interpreted_food_text: str | None = None
     revision: int
     confirmed_at: datetime | None = None
+    consumed_on: date | None = None
     id: str
     food_text: str
     status: AnalysisStatus
