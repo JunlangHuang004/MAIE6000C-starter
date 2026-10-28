@@ -2,6 +2,10 @@
 
 ## 2026-10-28 — Self-guided TA demo on the nutrichat branch
 
+- Synchronize operations and the Week 7 status document with the new demo entry
+  points, dated test results and observed failures. Distinguish the preserved
+  checkpoint tag from later branch-only materials and avoid attributing old CI
+  results to new commits.
 - Add a dedicated `demo/` entry point with English setup, a six-step screenshot
   guide, Chinese/English control labels and a detailed product/architecture
   walkthrough. Lead with the 138-ingredient/250-recipe Chinese workflow.

@@ -1,5 +1,37 @@
 # NutriChat operations
 
+## Self-guided TA demo on the nutrichat branch
+
+Use [the demo setup guide](../demo/README.md) and
+[six-step screenshot guide](../demo/SCREENSHOT_GUIDE.md) for the current Chinese
+workflow. The Qwen project uses port 8003 and a private server configuration:
+
+```sh
+docker compose -p nutrichat-qwen-demo --env-file .env -f compose.yaml -f demo/compose.qwen.yaml up -d --build --wait db ai api worker
+```
+
+Open `http://localhost:8003/app` directly; registration/login is not required.
+The separate `test` account/personalization preview on port 8001 is outside this
+branch. For an optional integration check without Qwen credentials:
+
+```sh
+python3 demo/run.py start
+python3 demo/run.py check
+python3 demo/run.py status
+python3 demo/run.py stop
+```
+
+The offline project uses port 8002, its own database and six English food keys.
+Its check briefly pauses only its worker; let it finish before submitting other
+meals there. Both demo projects bind only to loopback, keep their own database
+volumes and do not publish database/AI ports. Stopping retains data. Use the same
+project and overlays when resuming; see the setup guide for Qwen stop commands.
+
+[Current verification](../demo/VERIFICATION.md) records 408 passing automated
+tests, 14 of 17 passing live food/weight checks, three generic invalid-weight
+failures and a transient dialogue failure followed by a successful rerun. These
+are observations from 28 October 2026, not a claim of universal provider success.
+
 ## Local startup and configuration
 
 Run from the repository root with Docker and Docker Compose installed:
@@ -100,8 +132,11 @@ Build the checkout first and keep the regular Qwen stack separate. Recorded
 results and limits are in [Week 7 verification](evidence/week07-verification.md).
 
 CI runs Ruff, PostgreSQL migrations and `pytest -q tests/unit tests/integration`
-on `main` pushes and pull requests. The fork's `nutrichat` branch mirrors the same
-commit but does not trigger push CI. Pytest includes the repository root so
+on `main` pushes and pull requests. The `w07-midterm` checkpoint remains at
+`93ad2074226e8e7c7dcd3df058605f8a233dca35`; subsequent demo documentation and
+verification tools are on the fork's `nutrichat` branch. That branch does not
+trigger push CI, and the later commits are not covered by the original main's
+checkpoint CI result. Pytest includes the repository root so
 script imports work with both the console and module entry points. The public ECS
 is not updated by a Git push; deployment and rollback require the separate cloud
 workflow. Do not present the older public build as the Week 7 tag.
