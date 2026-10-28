@@ -1,4 +1,17 @@
-# Midterm live demo and rehearsal
+# Midterm runnable demo and rehearsal
+
+For the TA's self-guided review, begin with [the dedicated demo folder](../../demo/README.md).
+Its primary product demo shows Chinese meal estimation with 138 ingredients and
+250 reference recipes on port 8003. Once Qwen is configured on the server, users
+open `/app` directly without registration or login. The English walkthrough covers
+Basic/Advanced modes, clarification, correction, confirmation and reload.
+
+A separate no-key check on port 8002 provides repeatable HTTP/database/worker
+evidence. Its small English fixture catalogue is not the full product demo.
+A screen recording or in-person presentation is not required. The commands below
+retain the earlier terminal-only worker rehearsal for deeper inspection; that
+stack intentionally has no host ports. These instructions concern `nutrichat`,
+not the independent accounts or personalization features on `test`.
 
 ## Prepare the isolated worker demonstration
 

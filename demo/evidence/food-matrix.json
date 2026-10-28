@@ -1,0 +1,2998 @@
+{
+  "observed_at": "2026-10-28T12:11:18.163875+00:00",
+  "scope": "17 synthetic live Qwen inputs; no automatic retries; no confirmation.",
+  "base_url": "http://localhost:8003",
+  "passed": false,
+  "cases": [
+    {
+      "id": "rice_50g",
+      "input": "50克白米饭，蒸熟后的可食重量，无额外油。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 13,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "50克白米饭，蒸熟后的可食重量，无额外油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "白米饭",
+            "grams": 50.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "steamed",
+            "oil_g": 0.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白米饭",
+            "grams": 50.0,
+            "food_id": "rice",
+            "nutrients": {
+              "calories": 65.0,
+              "protein_g": 1.3,
+              "carbs_g": 14.1,
+              "fat_g": 0.1
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "按 白米饭 的每100g可食部分数据计算",
+              "做法：清蒸；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白米饭 50g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "0a747755-26b2-4882-afe7-7c208e9cd325",
+        "food_text": "50克白米饭，蒸熟后的可食重量，无额外油。",
+        "status": "completed",
+        "calories": 65.0,
+        "protein_g": 1.3,
+        "carbs_g": 14.1,
+        "fat_g": 0.1,
+        "created_at": "2026-10-28T12:11:18.289672Z",
+        "updated_at": "2026-10-28T12:11:29.828622Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "rice_100g",
+      "input": "100克白米饭，蒸熟后的可食重量，无额外油。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 14,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100克白米饭，蒸熟后的可食重量，无额外油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "白米饭",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "as_served",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白米饭",
+            "grams": 100.0,
+            "food_id": "rice",
+            "nutrients": {
+              "calories": 130.0,
+              "protein_g": 2.7,
+              "carbs_g": 28.2,
+              "fat_g": 0.3
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "按 白米饭 的每100g可食部分数据计算",
+              "做法：按所选食物的加工状态；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白米饭 100g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "0759d4b0-a79d-4c61-a50f-30b44fec981d",
+        "food_text": "100克白米饭，蒸熟后的可食重量，无额外油。",
+        "status": "completed",
+        "calories": 130.0,
+        "protein_g": 2.7,
+        "carbs_g": 28.2,
+        "fat_g": 0.3,
+        "created_at": "2026-10-28T12:11:29.921662Z",
+        "updated_at": "2026-10-28T12:11:37.795641Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "rice_200g",
+      "input": "200克白米饭，蒸熟后的可食重量，无额外油。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 15,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "200克白米饭，蒸熟后的可食重量，无额外油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "白米饭",
+            "grams": 200.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "steamed",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白米饭",
+            "grams": 200.0,
+            "food_id": "rice",
+            "nutrients": {
+              "calories": 260.0,
+              "protein_g": 5.4,
+              "carbs_g": 56.3,
+              "fat_g": 0.6
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "按 白米饭 的每100g可食部分数据计算",
+              "做法：清蒸；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白米饭 200g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "3c45c68d-8f91-4dfb-9306-20eb8c92e0bf",
+        "food_text": "200克白米饭，蒸熟后的可食重量，无额外油。",
+        "status": "completed",
+        "calories": 260.0,
+        "protein_g": 5.4,
+        "carbs_g": 56.3,
+        "fat_g": 0.6,
+        "created_at": "2026-10-28T12:11:37.867710Z",
+        "updated_at": "2026-10-28T12:11:47.464673Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "roast_chicken_100g",
+      "input": "100克烤去皮鸡胸肉，熟可食重量，本份额外油0克。",
+      "mode": "advanced",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 16,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100克烤去皮鸡胸肉，熟可食重量，本份额外油0克。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "chicken_roast",
+            "name": "烤去皮鸡胸肉",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "roasted",
+            "oil_g": 0.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "烤去皮鸡胸肉",
+            "grams": 100.0,
+            "food_id": "chicken_roast",
+            "nutrients": {
+              "calories": 165.0,
+              "protein_g": 31.0,
+              "carbs_g": 0.0,
+              "fat_g": 3.6
+            },
+            "assumptions": [
+              "按 烤去皮鸡胸肉 的每100g可食部分数据计算",
+              "做法：烤；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171477",
+                "url": "https://fdc.nal.usda.gov/food-details/171477/nutrients",
+                "description": "Chicken, broilers or fryers, breast, meat only, cooked, roasted",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "烤去皮鸡胸肉 100g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "03c7fc01-6d82-474f-a897-58697e14fa3c",
+        "food_text": "100克烤去皮鸡胸肉，熟可食重量，本份额外油0克。",
+        "status": "completed",
+        "calories": 165.0,
+        "protein_g": 31.0,
+        "carbs_g": 0.0,
+        "fat_g": 3.6,
+        "created_at": "2026-10-28T12:11:47.661771Z",
+        "updated_at": "2026-10-28T12:11:55.843786Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "boiled_egg_100g",
+      "input": "100克水煮鸡蛋，去壳后的熟可食重量，没有额外油。",
+      "mode": "advanced",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 18,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100克水煮鸡蛋，去壳后的熟可食重量，没有额外油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "egg",
+            "name": "水煮鸡蛋（去壳）",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": 0.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "水煮鸡蛋（去壳）",
+            "grams": 100.0,
+            "food_id": "egg",
+            "nutrients": {
+              "calories": 155.0,
+              "protein_g": 12.6,
+              "carbs_g": 1.1,
+              "fat_g": 10.6
+            },
+            "assumptions": [
+              "按 水煮鸡蛋（去壳） 的每100g可食部分数据计算",
+              "做法：水煮；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173424",
+                "url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+                "description": "Egg, whole, cooked, hard-boiled",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "水煮鸡蛋（去壳） 100g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "f00b2cd9-5cbc-411b-ac5d-b3bce37fd455",
+        "food_text": "100克水煮鸡蛋，去壳后的熟可食重量，没有额外油。",
+        "status": "completed",
+        "calories": 155.0,
+        "protein_g": 12.6,
+        "carbs_g": 1.1,
+        "fat_g": 10.6,
+        "created_at": "2026-10-28T12:11:56.581905Z",
+        "updated_at": "2026-10-28T12:12:02.880562Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "boiled_broccoli_150g",
+      "input": "150克水煮西兰花，熟可食重量，没有额外油。",
+      "mode": "advanced",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 19,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "150克水煮西兰花，熟可食重量，没有额外油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "broccoli_cooked",
+            "name": "水煮西兰花",
+            "grams": 150.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": 0.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "水煮西兰花",
+            "grams": 150.0,
+            "food_id": "broccoli_cooked",
+            "nutrients": {
+              "calories": 52.5,
+              "protein_g": 3.6,
+              "carbs_g": 10.8,
+              "fat_g": 0.6
+            },
+            "assumptions": [
+              "按 水煮西兰花 的每100g可食部分数据计算",
+              "做法：水煮；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169967",
+                "url": "https://fdc.nal.usda.gov/food-details/169967/nutrients",
+                "description": "Broccoli, cooked, boiled, drained, without salt",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "水煮西兰花 150g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "e1aba417-4ee2-4a38-9130-dc23a0d7ad10",
+        "food_text": "150克水煮西兰花，熟可食重量，没有额外油。",
+        "status": "completed",
+        "calories": 52.5,
+        "protein_g": 3.6,
+        "carbs_g": 10.8,
+        "fat_g": 0.6,
+        "created_at": "2026-10-28T12:12:02.960341Z",
+        "updated_at": "2026-10-28T12:12:11.168101Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "mixed_three_foods",
+      "input": "白米饭100克，水煮鸡蛋去壳100克，水煮西兰花150克。全部是熟可食重量，没有额外油。",
+      "mode": "advanced",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 20,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "白米饭100克，水煮鸡蛋去壳100克，水煮西兰花150克。全部是熟可食重量，没有额外油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "白米饭",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "as_served",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          },
+          {
+            "food_id": "egg",
+            "name": "水煮鸡蛋（去壳）",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          },
+          {
+            "food_id": "broccoli_cooked",
+            "name": "水煮西兰花",
+            "grams": 150.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白米饭",
+            "grams": 100.0,
+            "food_id": "rice",
+            "nutrients": {
+              "calories": 130.0,
+              "protein_g": 2.7,
+              "carbs_g": 28.2,
+              "fat_g": 0.3
+            },
+            "assumptions": [
+              "按 白米饭 的每100g可食部分数据计算",
+              "做法：按所选食物的加工状态；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          },
+          {
+            "name": "水煮鸡蛋（去壳）",
+            "grams": 100.0,
+            "food_id": "egg",
+            "nutrients": {
+              "calories": 155.0,
+              "protein_g": 12.6,
+              "carbs_g": 1.1,
+              "fat_g": 10.6
+            },
+            "assumptions": [
+              "按 水煮鸡蛋（去壳） 的每100g可食部分数据计算",
+              "做法：水煮；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173424",
+                "url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+                "description": "Egg, whole, cooked, hard-boiled",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          },
+          {
+            "name": "水煮西兰花",
+            "grams": 150.0,
+            "food_id": "broccoli_cooked",
+            "nutrients": {
+              "calories": 52.5,
+              "protein_g": 3.6,
+              "carbs_g": 10.8,
+              "fat_g": 0.6
+            },
+            "assumptions": [
+              "按 水煮西兰花 的每100g可食部分数据计算",
+              "做法：水煮；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169967",
+                "url": "https://fdc.nal.usda.gov/food-details/169967/nutrients",
+                "description": "Broccoli, cooked, boiled, drained, without salt",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白米饭 100g；水煮鸡蛋（去壳） 100g；水煮西兰花 150g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "8625f261-0ff6-4fc0-b5f9-f4570f7a4ef8",
+        "food_text": "白米饭100克，水煮鸡蛋去壳100克，水煮西兰花150克。全部是熟可食重量，没有额外油。",
+        "status": "completed",
+        "calories": 337.5,
+        "protein_g": 18.8,
+        "carbs_g": 40.1,
+        "fat_g": 11.5,
+        "created_at": "2026-10-28T12:12:11.249780Z",
+        "updated_at": "2026-10-28T12:12:27.686517Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "tomato_egg_200g",
+      "input": "200克番茄炒蛋，熟可食重量。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 21,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "200克番茄炒蛋，熟可食重量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "grams": 200.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "as_served",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "番茄炒蛋",
+            "grams": 200.0,
+            "food_id": "dish_001",
+            "nutrients": {
+              "calories": 210.2,
+              "protein_g": 10.7,
+              "carbs_g": 8.9,
+              "fat_g": 14.9
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+              "参考做法：炒",
+              "整锅成品 400g；本次食用 200g",
+              "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 15g、白砂糖 5g、食盐 2g",
+              "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170457",
+                "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+                "description": "Tomatoes, red, ripe, raw, year round average",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171287",
+                "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+                "description": "Egg, whole, raw, fresh",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169655",
+                "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+                "description": "Sugars, granulated",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173468",
+                "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+                "description": "Salt, table",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "番茄炒蛋 200g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "872c2246-1699-4f52-9abe-1e9d6da6f592",
+        "food_text": "200克番茄炒蛋，熟可食重量。",
+        "status": "completed",
+        "calories": 210.2,
+        "protein_g": 10.7,
+        "carbs_g": 8.9,
+        "fat_g": 14.9,
+        "created_at": "2026-10-28T12:12:27.871131Z",
+        "updated_at": "2026-10-28T12:12:35.635312Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "mapo_tofu_180g",
+      "input": "180克麻婆豆腐，熟可食重量。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 22,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "180克麻婆豆腐，熟可食重量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_004",
+            "name": "麻婆豆腐",
+            "grams": 180.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "as_served",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "麻婆豆腐",
+            "grams": 180.0,
+            "food_id": "dish_004",
+            "nutrients": {
+              "calories": 185.7,
+              "protein_g": 12.8,
+              "carbs_g": 4.6,
+              "fat_g": 13.6
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+              "参考做法：烧（简化家常配方，不含豆瓣酱）",
+              "整锅成品 620g；本次食用 180g",
+              "整锅配料：软豆腐（硫酸钙及卤水） 400g、生猪肉末 80g、大豆食用油 15g、普通酱油 20g、生红辣椒 10g、玉米淀粉 10g、饮用水 150g",
+              "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "172449",
+                "url": "https://fdc.nal.usda.gov/food-details/172449/nutrients",
+                "description": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "167902",
+                "url": "https://fdc.nal.usda.gov/food-details/167902/nutrients",
+                "description": "Pork, fresh, ground, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "174277",
+                "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+                "description": "Soy sauce made from soy and wheat (shoyu)",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170106",
+                "url": "https://fdc.nal.usda.gov/food-details/170106/nutrients",
+                "description": "Peppers, hot chili, red, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169698",
+                "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+                "description": "Cornstarch",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173647",
+                "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+                "description": "Beverages, water, tap, drinking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "麻婆豆腐 180g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "2d919143-0116-4901-ba98-f30a6e014e59",
+        "food_text": "180克麻婆豆腐，熟可食重量。",
+        "status": "completed",
+        "calories": 185.7,
+        "protein_g": 12.8,
+        "carbs_g": 4.6,
+        "fat_g": 13.6,
+        "created_at": "2026-10-28T12:12:35.859666Z",
+        "updated_at": "2026-10-28T12:12:44.246013Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "kung_pao_250g",
+      "input": "250克宫保鸡丁，熟可食重量。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 23,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "250克宫保鸡丁，熟可食重量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_003",
+            "name": "宫保鸡丁",
+            "grams": 250.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "other",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "宫保鸡丁",
+            "grams": 250.0,
+            "food_id": "dish_003",
+            "nutrients": {
+              "calories": 417.6,
+              "protein_g": 41.2,
+              "carbs_g": 12.3,
+              "fat_g": 22.8
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+              "参考做法：炒（简化家常配方）",
+              "整锅成品 400g；本次食用 250g",
+              "整锅配料：生去皮鸡胸肉 250g、带皮生黄瓜 100g、生花生仁 30g、大豆食用油 15g、白砂糖 10g、普通酱油 15g、蒸馏醋 10g、生红辣椒 5g",
+              "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171077",
+                "url": "https://fdc.nal.usda.gov/food-details/171077/nutrients",
+                "description": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168409",
+                "url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+                "description": "Cucumber, with peel, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "172430",
+                "url": "https://fdc.nal.usda.gov/food-details/172430/nutrients",
+                "description": "Peanuts, all types, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169655",
+                "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+                "description": "Sugars, granulated",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "174277",
+                "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+                "description": "Soy sauce made from soy and wheat (shoyu)",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "172237",
+                "url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+                "description": "Vinegar, distilled",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170106",
+                "url": "https://fdc.nal.usda.gov/food-details/170106/nutrients",
+                "description": "Peppers, hot chili, red, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "宫保鸡丁 250g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "d46c7a1a-a503-49ca-88bc-2239f77ba33b",
+        "food_text": "250克宫保鸡丁，熟可食重量。",
+        "status": "completed",
+        "calories": 417.6,
+        "protein_g": 41.2,
+        "carbs_g": 12.3,
+        "fat_g": 22.8,
+        "created_at": "2026-10-28T12:12:44.971101Z",
+        "updated_at": "2026-10-28T12:12:53.155385Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "dumplings_10_pieces",
+      "input": "十个白菜猪肉饺子，煮熟后吃的，不知道克数。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 24,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "十个白菜猪肉饺子，煮熟后吃的，不知道克数。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_241",
+            "name": "白菜猪肉饺子",
+            "grams": null,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": null,
+            "portion_count": 10.0,
+            "portion_unit": "piece",
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白菜猪肉饺子",
+            "grams": 200.0,
+            "food_id": "dish_241",
+            "nutrients": {
+              "calories": 407.2,
+              "protein_g": 17.4,
+              "carbs_g": 48.3,
+              "fat_g": 15.5
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "未提供克数，暂按 10 个、每个 20g，共 200g 估算。",
+              "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+              "参考做法：面粉制皮包白菜猪肉馅后水煮；不含蘸汁",
+              "整锅成品 1000g；本次食用 200g",
+              "整锅配料：小麦面粉 300g、饮用水 180g、生猪肉末 300g、生大白菜 300g、普通酱油 20g、芝麻油 10g、生姜 10g、食盐 3g",
+              "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169761",
+                "url": "https://fdc.nal.usda.gov/food-details/169761/nutrients",
+                "description": "Wheat flour, white, all-purpose, unenriched",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173647",
+                "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+                "description": "Beverages, water, tap, drinking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "167902",
+                "url": "https://fdc.nal.usda.gov/food-details/167902/nutrients",
+                "description": "Pork, fresh, ground, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169979",
+                "url": "https://fdc.nal.usda.gov/food-details/169979/nutrients",
+                "description": "Cabbage, chinese (pe-tsai), raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "174277",
+                "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+                "description": "Soy sauce made from soy and wheat (shoyu)",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171016",
+                "url": "https://fdc.nal.usda.gov/food-details/171016/nutrients",
+                "description": "Oil, sesame, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169231",
+                "url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+                "description": "Ginger root, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173468",
+                "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+                "description": "Salt, table",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白菜猪肉饺子 200g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "4d3c6a6a-10d5-4581-a57d-459e1a4bb1ae",
+        "food_text": "十个白菜猪肉饺子，煮熟后吃的，不知道克数。",
+        "status": "completed",
+        "calories": 407.2,
+        "protein_g": 17.4,
+        "carbs_g": 48.3,
+        "fat_g": 15.5,
+        "created_at": "2026-10-28T12:12:53.604240Z",
+        "updated_at": "2026-10-28T12:13:05.493113Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "missing_weight_basic",
+      "input": "白米饭，蒸熟后吃的，不知道重量。",
+      "mode": "basic",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 25,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "白米饭，蒸熟后吃的，不知道重量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "白米饭",
+            "grams": null,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "steamed",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": "未提供克数或份数，需确认重量"
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白米饭",
+            "grams": 150,
+            "food_id": "rice",
+            "nutrients": {
+              "calories": 195.0,
+              "protein_g": 4.0,
+              "carbs_g": 42.3,
+              "fat_g": 0.4
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "未提供克数，暂按 1 份、每份 150g，共 150g 估算。",
+              "待核实：未提供克数或份数，需确认重量",
+              "按 白米饭 的每100g可食部分数据计算",
+              "做法：清蒸；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ]
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白米饭 150g",
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "87cb895b-2864-43c1-aca3-8339bb5ce17d",
+        "food_text": "白米饭，蒸熟后吃的，不知道重量。",
+        "status": "completed",
+        "calories": 195.0,
+        "protein_g": 4.0,
+        "carbs_g": 42.3,
+        "fat_g": 0.4,
+        "created_at": "2026-10-28T12:13:05.644375Z",
+        "updated_at": "2026-10-28T12:13:14.864683Z"
+      },
+      "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+    },
+    {
+      "id": "missing_weight_advanced",
+      "input": "白米饭，蒸熟后吃的，不知道重量。",
+      "mode": "advanced",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 26,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "白米饭，蒸熟后吃的，不知道重量。"
+          },
+          {
+            "role": "assistant",
+            "content": "白米饭：未提供克数或份数，需确认重量 请核对所选食物，或在下方补充更正。\n白米饭吃了多少克？请填可食部分重量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "白米饭",
+            "grams": null,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "steamed",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": "未提供克数或份数，需确认重量"
+          }
+        ],
+        "questions": [
+          {
+            "key": "0.resolved",
+            "label": "白米饭：未提供克数或份数，需确认重量 请核对所选食物，或在下方补充更正。",
+            "kind": "confirm"
+          },
+          {
+            "key": "0.grams",
+            "label": "白米饭吃了多少克？请填可食部分重量。",
+            "kind": "number",
+            "min": 0.1,
+            "max": 10000
+          }
+        ],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "06e0416f-5039-450d-9f7d-6ba01d43054e",
+        "food_text": "白米饭，蒸熟后吃的，不知道重量。",
+        "status": "needs_input",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-28T12:13:15.091246Z",
+        "updated_at": "2026-10-28T12:13:22.021341Z"
+      },
+      "observation": "Missing facts require user clarification; no nutrition totals shown."
+    },
+    {
+      "id": "zero_grams",
+      "input": "0克白米饭，熟重。这个0克不是缺少重量，不要替我改成一份。",
+      "mode": "basic",
+      "passed": false,
+      "create_status": 201,
+      "job_id": 27,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "0克白米饭，熟重。这个0克不是缺少重量，不要替我改成一份。"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "e8203f25-1b06-4202-b15b-bd0625247559",
+        "food_text": "0克白米饭，熟重。这个0克不是缺少重量，不要替我改成一份。",
+        "status": "failed",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-28T12:13:22.465832Z",
+        "updated_at": "2026-10-28T12:13:29.259877Z"
+      },
+      "failure": "No nutrition totals were shown, but a generic failed state cannot prove input-specific validation or successful clarification"
+    },
+    {
+      "id": "negative_grams",
+      "input": "负100克白米饭（-100克），熟重，请检查这个重量。",
+      "mode": "advanced",
+      "passed": false,
+      "create_status": 201,
+      "job_id": 28,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "负100克白米饭（-100克），熟重，请检查这个重量。"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "93810ebf-5e50-476c-be79-e6ef1ab1dcfe",
+        "food_text": "负100克白米饭（-100克），熟重，请检查这个重量。",
+        "status": "failed",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-28T12:13:29.343911Z",
+        "updated_at": "2026-10-28T12:13:38.180066Z"
+      },
+      "failure": "No nutrition totals were shown, but a generic failed state cannot prove input-specific validation or successful clarification"
+    },
+    {
+      "id": "over_limit_grams",
+      "input": "10001克白米饭，熟重。",
+      "mode": "basic",
+      "passed": false,
+      "create_status": 201,
+      "job_id": 30,
+      "meal": {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "10001克白米饭，熟重。"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "88b83c83-ca99-4648-bd01-0193ceeca83b",
+        "food_text": "10001克白米饭，熟重。",
+        "status": "failed",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-28T12:13:38.411372Z",
+        "updated_at": "2026-10-28T12:13:58.460030Z"
+      },
+      "failure": "No nutrition totals were shown, but a generic failed state cannot prove input-specific validation or successful clarification"
+    },
+    {
+      "id": "unsupported_food",
+      "input": "100克虚构的星际能量胶，配方和成分都未知。不要把它替换为其他食品。",
+      "mode": "advanced",
+      "passed": true,
+      "create_status": 201,
+      "job_id": 31,
+      "meal": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100克虚构的星际能量胶，配方和成分都未知。不要把它替换为其他食品。"
+          },
+          {
+            "role": "assistant",
+            "content": "“虚构的星际能量胶”尚未匹配。请选择准确食物；没有合适选项请用下方对话补充食材。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": null,
+            "name": "虚构的星际能量胶",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": null,
+            "preparation": null,
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": "食物不在目录中，无法匹配food_id"
+          }
+        ],
+        "questions": [
+          {
+            "key": "0.food_id",
+            "label": "“虚构的星际能量胶”尚未匹配。请选择准确食物；没有合适选项请用下方对话补充食材。",
+            "kind": "food",
+            "options": [
+              {
+                "value": "rice",
+                "label": "白米饭"
+              },
+              {
+                "value": "rice_raw",
+                "label": "生大米"
+              },
+              {
+                "value": "brown_rice",
+                "label": "糙米饭"
+              },
+              {
+                "value": "glutinous",
+                "label": "生糯米"
+              },
+              {
+                "value": "oats",
+                "label": "干燕麦"
+              },
+              {
+                "value": "wheat_flour",
+                "label": "小麦面粉"
+              },
+              {
+                "value": "noodles",
+                "label": "熟鸡蛋面"
+              },
+              {
+                "value": "rice_noodles",
+                "label": "熟米粉"
+              },
+              {
+                "value": "bread",
+                "label": "白面包"
+              },
+              {
+                "value": "corn",
+                "label": "生甜玉米粒"
+              },
+              {
+                "value": "potato",
+                "label": "生土豆"
+              },
+              {
+                "value": "sweet_potato",
+                "label": "生红薯"
+              },
+              {
+                "value": "taro",
+                "label": "生芋头"
+              },
+              {
+                "value": "millet",
+                "label": "生小米"
+              },
+              {
+                "value": "barley",
+                "label": "生珍珠大麦"
+              },
+              {
+                "value": "quinoa",
+                "label": "熟藜麦"
+              },
+              {
+                "value": "buckwheat",
+                "label": "生荞麦"
+              },
+              {
+                "value": "chicken",
+                "label": "生去皮鸡胸肉"
+              },
+              {
+                "value": "chicken_roast",
+                "label": "烤去皮鸡胸肉"
+              },
+              {
+                "value": "chicken_stew",
+                "label": "炖去皮鸡胸肉"
+              },
+              {
+                "value": "chicken_thigh",
+                "label": "生去皮鸡腿肉"
+              },
+              {
+                "value": "chicken_wing",
+                "label": "生带皮鸡翅可食部分"
+              },
+              {
+                "value": "pork_belly",
+                "label": "生五花肉"
+              },
+              {
+                "value": "pork",
+                "label": "生猪里脊"
+              },
+              {
+                "value": "pork_ground",
+                "label": "生猪肉末"
+              },
+              {
+                "value": "beef",
+                "label": "生牛肉末（85%瘦肉）"
+              },
+              {
+                "value": "lamb",
+                "label": "生羊肉末"
+              },
+              {
+                "value": "duck",
+                "label": "生去皮鸭肉"
+              },
+              {
+                "value": "liver",
+                "label": "生猪肝"
+              },
+              {
+                "value": "salmon",
+                "label": "生养殖大西洋三文鱼"
+              },
+              {
+                "value": "salmon_cooked",
+                "label": "熟养殖大西洋三文鱼"
+              },
+              {
+                "value": "cod",
+                "label": "生大西洋鳕鱼"
+              },
+              {
+                "value": "tilapia",
+                "label": "生罗非鱼"
+              },
+              {
+                "value": "carp",
+                "label": "生鲤鱼"
+              },
+              {
+                "value": "shrimp",
+                "label": "生虾仁"
+              },
+              {
+                "value": "squid",
+                "label": "生鱿鱼"
+              },
+              {
+                "value": "clam",
+                "label": "生蛤蜊肉"
+              },
+              {
+                "value": "mussel",
+                "label": "生青口肉"
+              },
+              {
+                "value": "crab",
+                "label": "生蓝蟹肉"
+              },
+              {
+                "value": "scallop",
+                "label": "生扇贝肉"
+              },
+              {
+                "value": "egg_raw",
+                "label": "生鸡蛋液"
+              },
+              {
+                "value": "egg",
+                "label": "水煮鸡蛋（去壳）"
+              },
+              {
+                "value": "egg_white",
+                "label": "生蛋清"
+              },
+              {
+                "value": "duck_egg",
+                "label": "生鸭蛋液"
+              },
+              {
+                "value": "milk",
+                "label": "全脂牛奶"
+              },
+              {
+                "value": "yogurt",
+                "label": "全脂原味酸奶"
+              },
+              {
+                "value": "soy_milk",
+                "label": "原味豆奶"
+              },
+              {
+                "value": "tofu",
+                "label": "硬豆腐（硫酸钙及卤水）"
+              },
+              {
+                "value": "tofu_soft",
+                "label": "软豆腐（硫酸钙及卤水）"
+              },
+              {
+                "value": "soybeans",
+                "label": "干黄豆"
+              },
+              {
+                "value": "edamame",
+                "label": "熟毛豆仁"
+              },
+              {
+                "value": "mung",
+                "label": "干绿豆"
+              },
+              {
+                "value": "adzuki",
+                "label": "干红豆"
+              },
+              {
+                "value": "kidney",
+                "label": "熟红腰豆"
+              },
+              {
+                "value": "peas",
+                "label": "生豌豆"
+              },
+              {
+                "value": "peanut",
+                "label": "生花生仁"
+              },
+              {
+                "value": "sesame",
+                "label": "芝麻仁"
+              },
+              {
+                "value": "walnut",
+                "label": "核桃仁"
+              },
+              {
+                "value": "cashew",
+                "label": "生腰果"
+              },
+              {
+                "value": "almond",
+                "label": "杏仁"
+              },
+              {
+                "value": "broccoli",
+                "label": "生西兰花"
+              },
+              {
+                "value": "broccoli_cooked",
+                "label": "水煮西兰花"
+              },
+              {
+                "value": "cauliflower",
+                "label": "生菜花"
+              },
+              {
+                "value": "cabbage",
+                "label": "生卷心菜"
+              },
+              {
+                "value": "napa",
+                "label": "生大白菜"
+              },
+              {
+                "value": "bok_choy",
+                "label": "生小白菜"
+              },
+              {
+                "value": "spinach",
+                "label": "生菠菜"
+              },
+              {
+                "value": "lettuce",
+                "label": "生生菜"
+              },
+              {
+                "value": "celery",
+                "label": "生芹菜"
+              },
+              {
+                "value": "tomato",
+                "label": "生番茄"
+              },
+              {
+                "value": "cucumber",
+                "label": "带皮生黄瓜"
+              },
+              {
+                "value": "eggplant",
+                "label": "生茄子"
+              },
+              {
+                "value": "zucchini",
+                "label": "生西葫芦"
+              },
+              {
+                "value": "pumpkin",
+                "label": "生南瓜"
+              },
+              {
+                "value": "winter_melon",
+                "label": "生冬瓜"
+              },
+              {
+                "value": "bitter_melon",
+                "label": "生苦瓜"
+              },
+              {
+                "value": "carrot",
+                "label": "生胡萝卜"
+              },
+              {
+                "value": "radish",
+                "label": "生白萝卜"
+              },
+              {
+                "value": "onion",
+                "label": "生洋葱"
+              },
+              {
+                "value": "spring_onion",
+                "label": "生葱"
+              },
+              {
+                "value": "garlic",
+                "label": "生大蒜"
+              },
+              {
+                "value": "ginger",
+                "label": "生姜"
+              },
+              {
+                "value": "pepper",
+                "label": "生青椒"
+              },
+              {
+                "value": "red_pepper",
+                "label": "生红甜椒"
+              },
+              {
+                "value": "chili",
+                "label": "生红辣椒"
+              },
+              {
+                "value": "mushroom",
+                "label": "生白蘑菇"
+              },
+              {
+                "value": "shiitake",
+                "label": "生鲜香菇"
+              },
+              {
+                "value": "enoki",
+                "label": "生金针菇"
+              },
+              {
+                "value": "wood_ear",
+                "label": "干木耳"
+              },
+              {
+                "value": "kelp",
+                "label": "生海带"
+              },
+              {
+                "value": "lotus",
+                "label": "生莲藕"
+              },
+              {
+                "value": "bamboo",
+                "label": "生竹笋"
+              },
+              {
+                "value": "bean_sprout",
+                "label": "生绿豆芽"
+              },
+              {
+                "value": "green_bean",
+                "label": "生四季豆"
+              },
+              {
+                "value": "apple",
+                "label": "带皮苹果"
+              },
+              {
+                "value": "banana",
+                "label": "香蕉果肉"
+              },
+              {
+                "value": "orange",
+                "label": "橙子果肉"
+              },
+              {
+                "value": "pear",
+                "label": "梨（带皮）"
+              },
+              {
+                "value": "grape",
+                "label": "葡萄"
+              },
+              {
+                "value": "watermelon",
+                "label": "西瓜果肉"
+              },
+              {
+                "value": "mango",
+                "label": "芒果果肉"
+              },
+              {
+                "value": "pineapple",
+                "label": "菠萝果肉"
+              },
+              {
+                "value": "strawberry",
+                "label": "草莓"
+              },
+              {
+                "value": "kiwi",
+                "label": "猕猴桃果肉"
+              },
+              {
+                "value": "oil",
+                "label": "大豆食用油"
+              },
+              {
+                "value": "sesame_oil",
+                "label": "芝麻油"
+              },
+              {
+                "value": "butter",
+                "label": "有盐黄油"
+              },
+              {
+                "value": "sugar",
+                "label": "白砂糖"
+              },
+              {
+                "value": "honey",
+                "label": "蜂蜜"
+              },
+              {
+                "value": "soy_sauce",
+                "label": "普通酱油"
+              },
+              {
+                "value": "vinegar",
+                "label": "蒸馏醋"
+              },
+              {
+                "value": "starch",
+                "label": "玉米淀粉"
+              },
+              {
+                "value": "salt",
+                "label": "食盐"
+              },
+              {
+                "value": "water",
+                "label": "饮用水"
+              },
+              {
+                "value": "chocolate_milk",
+                "label": "牛奶巧克力"
+              },
+              {
+                "value": "chocolate_dark",
+                "label": "黑巧克力（70–85%可可）"
+              },
+              {
+                "value": "beef_chunk",
+                "label": "生牛肩肉（炖煮用，含部分脂肪）"
+              },
+              {
+                "value": "beef_lean",
+                "label": "生去脂牛肩肉"
+              },
+              {
+                "value": "pork_ribs",
+                "label": "生猪排骨可食肉（不含骨）"
+              },
+              {
+                "value": "chicken_skin",
+                "label": "生带皮鸡肉可食部分（不含骨）"
+              },
+              {
+                "value": "glass_noodles",
+                "label": "干绿豆粉丝"
+              },
+              {
+                "value": "oyster_sauce",
+                "label": "蚝油"
+              },
+              {
+                "value": "hoisin",
+                "label": "海鲜酱"
+              },
+              {
+                "value": "ketchup",
+                "label": "调味番茄酱"
+              },
+              {
+                "value": "snow_pea",
+                "label": "生荷兰豆（可食豆荚）"
+              },
+              {
+                "value": "chestnut",
+                "label": "生板栗仁（去壳）"
+              },
+              {
+                "value": "water_chestnut",
+                "label": "生荸荠（去皮）"
+              },
+              {
+                "value": "cilantro",
+                "label": "生香菜叶"
+              },
+              {
+                "value": "gai_lan",
+                "label": "生芥蓝"
+              },
+              {
+                "value": "fava",
+                "label": "生鲜蚕豆仁"
+              },
+              {
+                "value": "black_pepper",
+                "label": "黑胡椒粉"
+              },
+              {
+                "value": "fermented_tofu",
+                "label": "腐乳"
+              },
+              {
+                "value": "fried_tofu",
+                "label": "炸豆腐"
+              },
+              {
+                "value": "sesame_paste",
+                "label": "纯烤芝麻酱（无花生）"
+              },
+              {
+                "value": "pine_nut",
+                "label": "松仁"
+              },
+              {
+                "value": "okra",
+                "label": "生秋葵"
+              },
+              {
+                "value": "loofah",
+                "label": "生丝瓜"
+              },
+              {
+                "value": "yeast",
+                "label": "干酵母"
+              },
+              {
+                "value": "dish_001",
+                "label": "番茄炒蛋"
+              },
+              {
+                "value": "dish_002",
+                "label": "青椒肉丝"
+              },
+              {
+                "value": "dish_003",
+                "label": "宫保鸡丁"
+              },
+              {
+                "value": "dish_004",
+                "label": "麻婆豆腐"
+              },
+              {
+                "value": "dish_005",
+                "label": "红烧肉"
+              },
+              {
+                "value": "dish_006",
+                "label": "鱼香肉丝"
+              },
+              {
+                "value": "dish_007",
+                "label": "回锅肉"
+              },
+              {
+                "value": "dish_008",
+                "label": "土豆炖牛肉"
+              },
+              {
+                "value": "dish_009",
+                "label": "香菇滑鸡"
+              },
+              {
+                "value": "dish_010",
+                "label": "清蒸鲤鱼"
+              },
+              {
+                "value": "dish_011",
+                "label": "蒜蓉虾仁"
+              },
+              {
+                "value": "dish_012",
+                "label": "虾仁炒蛋"
+              },
+              {
+                "value": "dish_013",
+                "label": "葱炒鸡蛋"
+              },
+              {
+                "value": "dish_014",
+                "label": "蒸水蛋"
+              },
+              {
+                "value": "dish_015",
+                "label": "肉末蒸蛋"
+              },
+              {
+                "value": "dish_016",
+                "label": "凉拌黄瓜"
+              },
+              {
+                "value": "dish_017",
+                "label": "清炒西兰花"
+              },
+              {
+                "value": "dish_018",
+                "label": "蒜蓉小白菜"
+              },
+              {
+                "value": "dish_019",
+                "label": "清炒菠菜"
+              },
+              {
+                "value": "dish_020",
+                "label": "清炒生菜"
+              },
+              {
+                "value": "dish_021",
+                "label": "手撕包菜"
+              },
+              {
+                "value": "dish_022",
+                "label": "酸辣土豆丝"
+              },
+              {
+                "value": "dish_023",
+                "label": "地三鲜"
+              },
+              {
+                "value": "dish_024",
+                "label": "红烧茄子"
+              },
+              {
+                "value": "dish_025",
+                "label": "西葫芦炒蛋"
+              },
+              {
+                "value": "dish_026",
+                "label": "苦瓜炒蛋"
+              },
+              {
+                "value": "dish_027",
+                "label": "冬瓜虾仁"
+              },
+              {
+                "value": "dish_028",
+                "label": "香菇豆腐"
+              },
+              {
+                "value": "dish_029",
+                "label": "白菜炖豆腐"
+              },
+              {
+                "value": "dish_030",
+                "label": "芹菜炒肉"
+              },
+              {
+                "value": "dish_031",
+                "label": "青椒炒蛋"
+              },
+              {
+                "value": "dish_032",
+                "label": "洋葱炒肉"
+              },
+              {
+                "value": "dish_033",
+                "label": "蘑菇炒鸡"
+              },
+              {
+                "value": "dish_034",
+                "label": "莲藕炒肉"
+              },
+              {
+                "value": "dish_035",
+                "label": "清炒绿豆芽"
+              },
+              {
+                "value": "dish_036",
+                "label": "清炒四季豆"
+              },
+              {
+                "value": "dish_037",
+                "label": "番茄鸡蛋汤"
+              },
+              {
+                "value": "dish_038",
+                "label": "冬瓜肉丸汤"
+              },
+              {
+                "value": "dish_039",
+                "label": "萝卜牛肉汤"
+              },
+              {
+                "value": "dish_040",
+                "label": "玉米鸡肉汤"
+              },
+              {
+                "value": "dish_041",
+                "label": "蛋炒饭"
+              },
+              {
+                "value": "dish_042",
+                "label": "虾仁炒饭"
+              },
+              {
+                "value": "dish_043",
+                "label": "鸡肉炒饭"
+              },
+              {
+                "value": "dish_044",
+                "label": "番茄鸡蛋面"
+              },
+              {
+                "value": "dish_045",
+                "label": "肉丝炒面"
+              },
+              {
+                "value": "dish_046",
+                "label": "蔬菜炒米粉"
+              },
+              {
+                "value": "dish_047",
+                "label": "白粥"
+              },
+              {
+                "value": "dish_048",
+                "label": "小米粥"
+              },
+              {
+                "value": "dish_049",
+                "label": "南瓜粥"
+              },
+              {
+                "value": "dish_050",
+                "label": "红豆粥"
+              },
+              {
+                "value": "dish_051",
+                "label": "糖醋里脊"
+              },
+              {
+                "value": "dish_052",
+                "label": "京酱肉丝"
+              },
+              {
+                "value": "dish_053",
+                "label": "木须肉"
+              },
+              {
+                "value": "dish_054",
+                "label": "蒜香里脊"
+              },
+              {
+                "value": "dish_055",
+                "label": "香菇炒肉"
+              },
+              {
+                "value": "dish_056",
+                "label": "白菜炒肉"
+              },
+              {
+                "value": "dish_057",
+                "label": "包菜炒肉"
+              },
+              {
+                "value": "dish_058",
+                "label": "花菜炒肉"
+              },
+              {
+                "value": "dish_059",
+                "label": "冬瓜炒肉"
+              },
+              {
+                "value": "dish_060",
+                "label": "黄瓜炒肉丝"
+              },
+              {
+                "value": "dish_061",
+                "label": "胡萝卜炒肉丝"
+              },
+              {
+                "value": "dish_062",
+                "label": "四季豆炒肉丝"
+              },
+              {
+                "value": "dish_063",
+                "label": "笋片炒肉"
+              },
+              {
+                "value": "dish_064",
+                "label": "蒜泥白肉"
+              },
+              {
+                "value": "dish_065",
+                "label": "粉蒸肉"
+              },
+              {
+                "value": "dish_066",
+                "label": "萝卜炖肉"
+              },
+              {
+                "value": "dish_067",
+                "label": "土豆烧肉"
+              },
+              {
+                "value": "dish_068",
+                "label": "红烧排骨"
+              },
+              {
+                "value": "dish_069",
+                "label": "糖醋排骨"
+              },
+              {
+                "value": "dish_070",
+                "label": "蒜香排骨"
+              },
+              {
+                "value": "dish_071",
+                "label": "冬瓜炖排骨"
+              },
+              {
+                "value": "dish_072",
+                "label": "玉米炖排骨"
+              },
+              {
+                "value": "dish_073",
+                "label": "莲藕炖排骨"
+              },
+              {
+                "value": "dish_074",
+                "label": "土豆炖排骨"
+              },
+              {
+                "value": "dish_075",
+                "label": "香菇蒸排骨"
+              },
+              {
+                "value": "dish_076",
+                "label": "肉末粉丝"
+              },
+              {
+                "value": "dish_077",
+                "label": "肉末茄子"
+              },
+              {
+                "value": "dish_078",
+                "label": "肉末豆腐"
+              },
+              {
+                "value": "dish_079",
+                "label": "肉末四季豆"
+              },
+              {
+                "value": "dish_080",
+                "label": "四喜丸子"
+              },
+              {
+                "value": "dish_081",
+                "label": "清蒸肉丸"
+              },
+              {
+                "value": "dish_082",
+                "label": "香煎肉饼"
+              },
+              {
+                "value": "dish_083",
+                "label": "青椒酿肉"
+              },
+              {
+                "value": "dish_084",
+                "label": "苦瓜酿肉"
+              },
+              {
+                "value": "dish_085",
+                "label": "炸藕夹"
+              },
+              {
+                "value": "dish_086",
+                "label": "青椒牛肉"
+              },
+              {
+                "value": "dish_087",
+                "label": "洋葱牛肉"
+              },
+              {
+                "value": "dish_088",
+                "label": "西兰花牛肉"
+              },
+              {
+                "value": "dish_089",
+                "label": "番茄炖牛肉"
+              },
+              {
+                "value": "dish_090",
+                "label": "白萝卜炖牛肉"
+              },
+              {
+                "value": "dish_091",
+                "label": "香菇牛肉"
+              },
+              {
+                "value": "dish_092",
+                "label": "芹菜炒牛肉"
+              },
+              {
+                "value": "dish_093",
+                "label": "黑椒牛柳"
+              },
+              {
+                "value": "dish_094",
+                "label": "小炒牛肉"
+              },
+              {
+                "value": "dish_095",
+                "label": "水煮牛肉"
+              },
+              {
+                "value": "dish_096",
+                "label": "卤牛肉"
+              },
+              {
+                "value": "dish_097",
+                "label": "红烧牛肉"
+              },
+              {
+                "value": "dish_098",
+                "label": "土豆牛肉丸"
+              },
+              {
+                "value": "dish_099",
+                "label": "牛肉豆腐煲"
+              },
+              {
+                "value": "dish_100",
+                "label": "荷兰豆炒牛肉"
+              },
+              {
+                "value": "dish_101",
+                "label": "黄焖鸡"
+              },
+              {
+                "value": "dish_102",
+                "label": "土豆炖鸡"
+              },
+              {
+                "value": "dish_103",
+                "label": "板栗烧鸡"
+              },
+              {
+                "value": "dish_104",
+                "label": "辣子鸡"
+              },
+              {
+                "value": "dish_105",
+                "label": "蜜汁鸡翅"
+              },
+              {
+                "value": "dish_106",
+                "label": "红烧鸡翅"
+              },
+              {
+                "value": "dish_107",
+                "label": "蒜香鸡翅"
+              },
+              {
+                "value": "dish_108",
+                "label": "姜葱鸡"
+              },
+              {
+                "value": "dish_109",
+                "label": "白切鸡"
+              },
+              {
+                "value": "dish_110",
+                "label": "口水鸡"
+              },
+              {
+                "value": "dish_111",
+                "label": "香煎鸡胸"
+              },
+              {
+                "value": "dish_112",
+                "label": "青椒鸡丁"
+              },
+              {
+                "value": "dish_113",
+                "label": "腰果鸡丁"
+              },
+              {
+                "value": "dish_114",
+                "label": "酱爆鸡丁"
+              },
+              {
+                "value": "dish_115",
+                "label": "番茄鸡丁"
+              },
+              {
+                "value": "dish_116",
+                "label": "西兰花炒鸡胸"
+              },
+              {
+                "value": "dish_117",
+                "label": "木耳炒鸡"
+              },
+              {
+                "value": "dish_118",
+                "label": "胡萝卜炖鸡"
+              },
+              {
+                "value": "dish_119",
+                "label": "南瓜蒸鸡"
+              },
+              {
+                "value": "dish_120",
+                "label": "花生炖鸡"
+              },
+              {
+                "value": "dish_121",
+                "label": "红烧鲤鱼"
+              },
+              {
+                "value": "dish_122",
+                "label": "糖醋鱼"
+              },
+              {
+                "value": "dish_123",
+                "label": "清蒸鳕鱼"
+              },
+              {
+                "value": "dish_124",
+                "label": "香煎三文鱼"
+              },
+              {
+                "value": "dish_125",
+                "label": "番茄鱼片"
+              },
+              {
+                "value": "dish_126",
+                "label": "水煮鱼片"
+              },
+              {
+                "value": "dish_127",
+                "label": "鱼片豆腐汤"
+              },
+              {
+                "value": "dish_128",
+                "label": "白灼虾"
+              },
+              {
+                "value": "dish_129",
+                "label": "油焖虾仁"
+              },
+              {
+                "value": "dish_130",
+                "label": "椒盐虾仁"
+              },
+              {
+                "value": "dish_131",
+                "label": "腰果虾仁"
+              },
+              {
+                "value": "dish_132",
+                "label": "西兰花虾仁"
+              },
+              {
+                "value": "dish_133",
+                "label": "黄瓜炒虾仁"
+              },
+              {
+                "value": "dish_134",
+                "label": "豌豆炒虾仁"
+              },
+              {
+                "value": "dish_135",
+                "label": "蒜蓉粉丝蒸虾"
+              },
+              {
+                "value": "dish_136",
+                "label": "青椒炒鱿鱼"
+              },
+              {
+                "value": "dish_137",
+                "label": "芹菜炒鱿鱼"
+              },
+              {
+                "value": "dish_138",
+                "label": "蛤蜊蒸蛋"
+              },
+              {
+                "value": "dish_139",
+                "label": "葱姜炒蛤蜊"
+              },
+              {
+                "value": "dish_140",
+                "label": "蒜蓉蒸扇贝"
+              },
+              {
+                "value": "dish_141",
+                "label": "清炒花菜"
+              },
+              {
+                "value": "dish_142",
+                "label": "干锅花菜"
+              },
+              {
+                "value": "dish_143",
+                "label": "白灼芥蓝"
+              },
+              {
+                "value": "dish_144",
+                "label": "蒜蓉芥蓝"
+              },
+              {
+                "value": "dish_145",
+                "label": "蚝油生菜"
+              },
+              {
+                "value": "dish_146",
+                "label": "香菇小白菜"
+              },
+              {
+                "value": "dish_147",
+                "label": "白菜炖粉丝"
+              },
+              {
+                "value": "dish_148",
+                "label": "醋溜白菜"
+              },
+              {
+                "value": "dish_149",
+                "label": "清炒白菜"
+              },
+              {
+                "value": "dish_150",
+                "label": "红烧冬瓜"
+              },
+              {
+                "value": "dish_151",
+                "label": "清炒冬瓜"
+              },
+              {
+                "value": "dish_152",
+                "label": "蒜蓉蒸茄子"
+              },
+              {
+                "value": "dish_153",
+                "label": "凉拌茄子"
+              },
+              {
+                "value": "dish_154",
+                "label": "鱼香茄子"
+              },
+              {
+                "value": "dish_155",
+                "label": "青椒土豆片"
+              },
+              {
+                "value": "dish_156",
+                "label": "土豆炖茄子"
+              },
+              {
+                "value": "dish_157",
+                "label": "干煸四季豆"
+              },
+              {
+                "value": "dish_158",
+                "label": "虎皮青椒"
+              },
+              {
+                "value": "dish_159",
+                "label": "蒜蓉南瓜"
+              },
+              {
+                "value": "dish_160",
+                "label": "清蒸南瓜"
+              },
+              {
+                "value": "dish_161",
+                "label": "南瓜炒木耳"
+              },
+              {
+                "value": "dish_162",
+                "label": "清炒藕片"
+              },
+              {
+                "value": "dish_163",
+                "label": "糖醋藕片"
+              },
+              {
+                "value": "dish_164",
+                "label": "酸辣藕丁"
+              },
+              {
+                "value": "dish_165",
+                "label": "木耳炒白菜"
+              },
+              {
+                "value": "dish_166",
+                "label": "凉拌木耳"
+              },
+              {
+                "value": "dish_167",
+                "label": "凉拌海带丝"
+              },
+              {
+                "value": "dish_168",
+                "label": "凉拌豆芽"
+              },
+              {
+                "value": "dish_169",
+                "label": "凉拌菠菜"
+              },
+              {
+                "value": "dish_170",
+                "label": "凉拌金针菇"
+              },
+              {
+                "value": "dish_171",
+                "label": "凉拌萝卜丝"
+              },
+              {
+                "value": "dish_172",
+                "label": "凉拌三丝"
+              },
+              {
+                "value": "dish_173",
+                "label": "凉拌豆腐"
+              },
+              {
+                "value": "dish_174",
+                "label": "糖拌西红柿"
+              },
+              {
+                "value": "dish_175",
+                "label": "番茄炒花菜"
+              },
+              {
+                "value": "dish_176",
+                "label": "蒜蓉金针菇"
+              },
+              {
+                "value": "dish_177",
+                "label": "香菇炒青椒"
+              },
+              {
+                "value": "dish_178",
+                "label": "双菇炒青菜"
+              },
+              {
+                "value": "dish_179",
+                "label": "清炒荷兰豆"
+              },
+              {
+                "value": "dish_180",
+                "label": "荷兰豆炒木耳"
+              },
+              {
+                "value": "dish_181",
+                "label": "玉米炒胡萝卜"
+              },
+              {
+                "value": "dish_182",
+                "label": "松仁玉米"
+              },
+              {
+                "value": "dish_183",
+                "label": "椒盐玉米"
+              },
+              {
+                "value": "dish_184",
+                "label": "清炒豌豆"
+              },
+              {
+                "value": "dish_185",
+                "label": "葱油蚕豆"
+              },
+              {
+                "value": "dish_186",
+                "label": "芹菜炒香菇"
+              },
+              {
+                "value": "dish_187",
+                "label": "凉拌芹菜"
+              },
+              {
+                "value": "dish_188",
+                "label": "红烧萝卜"
+              },
+              {
+                "value": "dish_189",
+                "label": "胡萝卜炒土豆丝"
+              },
+              {
+                "value": "dish_190",
+                "label": "苦瓜炒青椒"
+              },
+              {
+                "value": "dish_191",
+                "label": "洋葱炒蛋"
+              },
+              {
+                "value": "dish_192",
+                "label": "木耳炒蛋"
+              },
+              {
+                "value": "dish_193",
+                "label": "菠菜炒蛋"
+              },
+              {
+                "value": "dish_194",
+                "label": "黄瓜炒蛋"
+              },
+              {
+                "value": "dish_195",
+                "label": "胡萝卜炒蛋"
+              },
+              {
+                "value": "dish_196",
+                "label": "秋葵炒蛋"
+              },
+              {
+                "value": "dish_197",
+                "label": "金针菇炒蛋"
+              },
+              {
+                "value": "dish_198",
+                "label": "蘑菇炒蛋"
+              },
+              {
+                "value": "dish_199",
+                "label": "虾仁蒸蛋"
+              },
+              {
+                "value": "dish_200",
+                "label": "煎荷包蛋"
+              },
+              {
+                "value": "dish_201",
+                "label": "家常豆腐"
+              },
+              {
+                "value": "dish_202",
+                "label": "红烧豆腐"
+              },
+              {
+                "value": "dish_203",
+                "label": "肉末油豆腐"
+              },
+              {
+                "value": "dish_204",
+                "label": "白菜油豆腐煲"
+              },
+              {
+                "value": "dish_205",
+                "label": "蒜香煎豆腐"
+              },
+              {
+                "value": "dish_206",
+                "label": "豆腐烧蘑菇"
+              },
+              {
+                "value": "dish_207",
+                "label": "芹菜炒豆腐"
+              },
+              {
+                "value": "dish_208",
+                "label": "番茄豆腐"
+              },
+              {
+                "value": "dish_209",
+                "label": "鸡蛋炒豆腐"
+              },
+              {
+                "value": "dish_210",
+                "label": "腐乳白菜煲"
+              },
+              {
+                "value": "dish_211",
+                "label": "白菜肉丸汤"
+              },
+              {
+                "value": "dish_212",
+                "label": "青菜豆腐汤"
+              },
+              {
+                "value": "dish_213",
+                "label": "菠菜蛋花汤"
+              },
+              {
+                "value": "dish_214",
+                "label": "海带豆腐汤"
+              },
+              {
+                "value": "dish_215",
+                "label": "海带排骨汤"
+              },
+              {
+                "value": "dish_216",
+                "label": "萝卜排骨汤"
+              },
+              {
+                "value": "dish_217",
+                "label": "丝瓜蛋汤"
+              },
+              {
+                "value": "dish_218",
+                "label": "番茄土豆汤"
+              },
+              {
+                "value": "dish_219",
+                "label": "香菇鸡汤"
+              },
+              {
+                "value": "dish_220",
+                "label": "冬瓜蛤蜊汤"
+              },
+              {
+                "value": "dish_221",
+                "label": "玉米羹"
+              },
+              {
+                "value": "dish_222",
+                "label": "酸辣汤"
+              },
+              {
+                "value": "dish_223",
+                "label": "绿豆汤"
+              },
+              {
+                "value": "dish_224",
+                "label": "红豆汤"
+              },
+              {
+                "value": "dish_225",
+                "label": "白菜粉丝汤"
+              },
+              {
+                "value": "dish_226",
+                "label": "酸辣粉丝汤"
+              },
+              {
+                "value": "dish_227",
+                "label": "海鲜豆腐汤"
+              },
+              {
+                "value": "dish_228",
+                "label": "香菇豆腐汤"
+              },
+              {
+                "value": "dish_229",
+                "label": "番茄虾仁汤"
+              },
+              {
+                "value": "dish_230",
+                "label": "鸡肉蔬菜汤"
+              },
+              {
+                "value": "dish_231",
+                "label": "肉末炒饭"
+              },
+              {
+                "value": "dish_232",
+                "label": "牛肉炒饭"
+              },
+              {
+                "value": "dish_233",
+                "label": "什锦炒饭"
+              },
+              {
+                "value": "dish_234",
+                "label": "香菇鸡肉焖饭"
+              },
+              {
+                "value": "dish_235",
+                "label": "排骨焖饭"
+              },
+              {
+                "value": "dish_236",
+                "label": "土豆焖饭"
+              },
+              {
+                "value": "dish_237",
+                "label": "葱油拌面"
+              },
+              {
+                "value": "dish_238",
+                "label": "芝麻酱拌面"
+              },
+              {
+                "value": "dish_239",
+                "label": "牛肉汤面"
+              },
+              {
+                "value": "dish_240",
+                "label": "鸡丝汤面"
+              },
+              {
+                "value": "dish_241",
+                "label": "白菜猪肉饺子"
+              },
+              {
+                "value": "dish_242",
+                "label": "香菇猪肉饺子"
+              },
+              {
+                "value": "dish_243",
+                "label": "牛肉胡萝卜饺子"
+              },
+              {
+                "value": "dish_244",
+                "label": "虾仁鸡蛋饺子"
+              },
+              {
+                "value": "dish_245",
+                "label": "鲜肉馄饨"
+              },
+              {
+                "value": "dish_246",
+                "label": "葱花饼"
+              },
+              {
+                "value": "dish_247",
+                "label": "鸡蛋饼"
+              },
+              {
+                "value": "dish_248",
+                "label": "馒头"
+              },
+              {
+                "value": "dish_249",
+                "label": "葱花花卷"
+              },
+              {
+                "value": "dish_250",
+                "label": "绿豆粥"
+              }
+            ]
+          }
+        ],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "0889345b-cd03-4a67-85d4-e628fc72aedf",
+        "food_text": "100克虚构的星际能量胶，配方和成分都未知。不要把它替换为其他食品。",
+        "status": "needs_input",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-28T12:13:58.944695Z",
+        "updated_at": "2026-10-28T12:14:05.997394Z"
+      },
+      "observation": "Missing facts require user clarification; no nutrition totals shown."
+    }
+  ],
+  "rice_proportionality": {
+    "passed": true
+  },
+  "finished_at": "2026-10-28T12:14:06.300451+00:00",
+  "revalidated_at": "2026-10-28T12:15:07.749524+00:00",
+  "validation_note": "Assertions tightened after the run: generic failed states are not counted as input-specific validation. The same saved model/API responses were revalidated; no retries or additional Qwen requests."
+}

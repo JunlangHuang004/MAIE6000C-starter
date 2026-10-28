@@ -1,5 +1,13 @@
 # NutriChat
 
+**TA demo (`nutrichat` branch):** start with [the self-guided demo folder](demo/README.md).
+The main demo shows Chinese meals, Basic/Advanced modes and follow-up correction.
+With Qwen configured on the server, users open `/app` directly without registration
+or login. The guide also includes a separate no-key integration check with exact
+HTTP/database/worker evidence. No recording or in-person presentation is needed
+to inspect it. This branch excludes the independent accounts and personalization
+work on `test`.
+
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions,
 including Chinese ingredients, dish names, cooking methods and follow-up details.
 Users review and correct the estimate before confirming it. Confirmed records are locked.
@@ -87,6 +95,7 @@ Python calculation → persisted result. Qwen runs in the cloud; the VM needs no
 
 | Document | Contents |
 | --- | --- |
+| [Self-guided TA demo](demo/README.md) | Run this branch, follow the UI, inspect fresh evidence and troubleshoot |
 | [Week 7 milestone](submissions/week07/README.md) | Team, current status, demo sequence, evidence, risks and next priorities |
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
 | [Architecture](docs/architecture.md) | Service responsibilities, data flow, persistence and boundaries |

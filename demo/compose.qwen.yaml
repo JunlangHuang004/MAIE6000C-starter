@@ -1,0 +1,22 @@
+# Main Chinese product demo: use base compose.yaml, a private .env and project
+# nutrichat-qwen-demo. The optional offline check runs as a separate project.
+x-qwen-demo: &qwen-demo
+  NUTRITION_PROVIDER: qwen
+  QWEN_TIMEOUT_SECONDS: '30'
+  WORKER_REQUEST_TIMEOUT_SECONDS: '45'
+
+services:
+  db:
+    ports: !reset []
+  ai:
+    environment:
+      <<: *qwen-demo
+    ports: !reset []
+  api:
+    environment:
+      <<: *qwen-demo
+    ports: !override
+      - '127.0.0.1:${NUTRICHAT_QWEN_DEMO_PORT:-8003}:8000'
+  worker:
+    environment:
+      <<: *qwen-demo

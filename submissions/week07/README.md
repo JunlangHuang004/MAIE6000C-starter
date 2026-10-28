@@ -40,7 +40,12 @@ legacy English foods with explicit grams and is used for the reproducible worker
 
 ## 2. Live demo sequence
 
-Use the [rehearsal guide](DEMO.md); slides are optional and cannot replace the live path.
+For self-guided assessment, use [the dedicated TA demo](../../demo/README.md),
+including its launcher, browser walkthrough and automated evidence check. The demo
+is a runnable system documented on GitHub; no screen recording or in-person
+presentation is required. The [earlier rehearsal guide](DEMO.md) remains available
+for terminal-based inspection. The original `w07-midterm` tag remains unchanged;
+the dedicated folder is a follow-up on `nutrichat`.
 
 1. With the isolated worker stopped, send `100g egg` to `POST /analyses`; show HTTP 201
    with analysis and job IDs.
@@ -141,6 +146,7 @@ milestone deliverables. We will consider them after stabilizing the core workflo
 
 ## 9. Artifact index
 
+- [Self-guided TA demo](../../demo/README.md): runnable setup, UI instructions and fresh evidence.
 - [Root README](../../README.md): quick start, modes and current verification.
 - [Architecture](../../docs/architecture.md): services, states and boundaries.
 - [Operations](../../docs/operations.md): startup, logs, tests and recovery limits.

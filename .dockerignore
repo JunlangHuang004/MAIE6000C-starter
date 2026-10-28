@@ -5,6 +5,7 @@ __pycache__
 .pytest_cache
 *.pyc
 .env
+demo/output/
 
 # Private public-deployment credentials and certificates
 deploy/public/

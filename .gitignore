@@ -222,3 +222,6 @@ deploy/public/
 
 # macOS Finder metadata
 .DS_Store
+
+# Fresh TA demo evidence (synthetic local runs)
+/demo/output/

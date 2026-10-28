@@ -1,0 +1,21 @@
+# Dedicated, key-free TA demo. Paths are relative to the first compose file.
+x-demo: &demo
+  env_file: !override
+    - .env.example
+  environment:
+    NUTRITION_PROVIDER: demo
+    DASHSCOPE_API_KEY: ''
+    QWEN_BASE_URL: ''
+
+services:
+  db:
+    ports: !reset []
+  ai:
+    <<: *demo
+    ports: !reset []
+  api:
+    <<: *demo
+    ports: !override
+      - '127.0.0.1:${NUTRICHAT_DEMO_PORT:-8002}:8000'
+  worker:
+    <<: *demo

@@ -1,5 +1,27 @@
 # NutriChat change log
 
+## 2026-10-28 — Self-guided TA demo on the nutrichat branch
+
+- Add a dedicated `demo/` entry point with English setup, a six-step screenshot
+  guide, Chinese/English control labels and a detailed product/architecture
+  walkthrough. Lead with the 138-ingredient/250-recipe Chinese workflow.
+- Document direct local access without registration or login. Keep independent
+  accounts, personalized targets and trends on the separate `test` branch.
+- Add isolated local Qwen and offline Compose overlays, plus a key-free launcher
+  that verifies HTTP, PostgreSQL, worker logs, correction and durable confirmation.
+- Add opt-in varied-food/gram-weight checks and synthetic evidence. No API keys
+  or private environment files are included.
+- Pass 408 unit/integration tests and Ruff. The 17-case live Qwen matrix passed
+  14 checks; 0 g, negative and over-limit weights returned generic failed states
+  without totals, leaving their user-facing validation incomplete.
+- Observe one failed initial expanded-dialogue attempt and one complete successful
+  rerun. Verify the browser's Basic → Advanced → correction → confirmation/reload
+  sequence and database retention after stopping/restarting the offline demo.
+- Keep application services, migrations, dependencies and base Compose unchanged;
+  add demo scripts to the image for their tests. Preserve existing main/test/tag
+  references and public deployment. See [verification](../demo/VERIFICATION.md)
+  for evidence and limits; no new CI or Canvas submission is claimed.
+
 ## 2026-10-27 — Midterm scope clarification
 
 - Keep the AI Use Statement brief and record the team's rejection of image-based
