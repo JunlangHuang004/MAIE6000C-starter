@@ -1,9 +1,7 @@
 # NutriChat: TA walkthrough
 
-This guide describes the **`nutrichat` branch**, not `test`. It covers the meal
-estimation application available at this checkpoint. Independent user accounts,
-personal nutrition targets, daily weight records and monthly trends are **not**
-part of this demo.
+This guide describes the meal estimation application on the **`nutrichat` branch**:
+meal input, clarification, source-backed estimates, correction and confirmation.
 
 Start with the [demo setup guide](README.md), then open the **Chinese product
 demo at http://localhost:8003/app**. Once Qwen is configured on the server, a user
@@ -15,12 +13,15 @@ remembered in the browser and can be changed during the workflow without losing
 unsent answers or recalculating the meal. The English interface includes food
 display names and reference recipes; user descriptions and free-form model notes
 keep their original wording. The bilingual control guide below also explains the
-Chinese screenshots.
+Chinese screenshots. See the [English interface screenshot](images/07-english-interface.png)
+and [verified language-switch behavior](../docs/evidence/ui-language-verification.md).
+Changing the display language does not change the model prompt or guarantee
+English food recognition; the [separate English-input check](../docs/evidence/qwen-english-verification.md)
+records both successful matches and failures.
 
 [See the six-step screenshot guide](SCREENSHOT_GUIDE.md), or
 [go to the detailed Chinese meal walkthrough](#4-main-product-demo-chinese-meal-dialogue).
-Port 8001 belongs to the separate `test` preview and is not used here. The
-`退出登录` (Log out) header button belongs to the optional public gateway
+The `退出登录` (Log out) header button belongs to the optional public gateway
 deployment; it has no role in this directly accessible local demo.
 
 ## 1. Idea and intended users
@@ -329,8 +330,8 @@ The [setup guide](README.md) gives the commands for status, logs and shutdown.
   mode improves specificity but does not establish measured nutritional accuracy.
 - Regional recipe variations, cooking losses, edible portions and consumed oil
   affect results. Raw and cooked weights are not automatically interchangeable.
-- Image-based nutrition recognition, personal nutrition targets and monthly
-  calorie/weight trends are outside this branch's demonstration scope.
+- The team rejected image-based nutrition recognition; meal descriptions and
+  clarification remain the input workflow.
 - The existing public ECS deployment may differ from this checkpoint. The local
   branch-specific setup is the reproducible reference for this guide.
 

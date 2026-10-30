@@ -1,5 +1,28 @@
 # NutriChat change log
 
+## 2026-10-31 — Chinese/English interface and current demo documentation
+
+- Add accessible Chinese/English header controls, a remembered language preference,
+  translated questions/status/evidence and English display names for 138 ingredients
+  and 250 reference recipes. Preserve current records and unsent form values when switching.
+- Serve three allowlisted JavaScript assets with correct MIME/cache behavior;
+  include the assets in the Python package. Nutrient data and model matching are unchanged.
+- Add 15 frontend regression tests and nine API asset checks. Pass 417 Python tests
+  (two smoke tests deselected), all 15 frontend tests and whole-repository Ruff.
+- Verify the running Qwen recipe flow: switch languages while queued and editing,
+  submit preserved oil/yield values, confirm and reload the same record and totals.
+- Enable the existing CI workflow for `nutrichat` pushes and add frontend checks.
+  Local success does not by itself establish a successful GitHub Actions run.
+- Refresh architecture, operations, TA instructions, scope/risks and concise AI
+  assistance disclosure. Separate historical checkpoint evidence from current checks.
+- Record 21 English-input Qwen probes: 19 passed, with one failed analysis and
+  one incorrect gai-lan/broccoli match. Translation does not fix these recognition limits.
+- Rebuild the isolated offline stack and pass its HTTP/PostgreSQL/worker check,
+  including correction, confirmation, reload, locked edits and correlated logs;
+  both live offline smoke tests also passed.
+- See [UI verification](evidence/ui-language-verification.md) and
+  [English-input evaluation](evidence/qwen-english-verification.md).
+
 ## 2026-10-28 — Self-guided TA demo on the nutrichat branch
 
 - Synchronize operations and the Week 7 status document with the new demo entry
@@ -10,7 +33,7 @@
   guide, Chinese/English control labels and a detailed product/architecture
   walkthrough. Lead with the 138-ingredient/250-recipe Chinese workflow.
 - Document direct local access without registration or login. Keep independent
-  accounts, personalized targets and trends on the separate `test` branch.
+  accounts, personalized targets and trends outside this milestone scope.
 - Add isolated local Qwen and offline Compose overlays, plus a key-free launcher
   that verifies HTTP, PostgreSQL, worker logs, correction and durable confirmation.
 - Add opt-in varied-food/gram-weight checks and synthetic evidence. No API keys
@@ -22,7 +45,7 @@
   rerun. Verify the browser's Basic → Advanced → correction → confirmation/reload
   sequence and database retention after stopping/restarting the offline demo.
 - Keep application services, migrations, dependencies and base Compose unchanged;
-  add demo scripts to the image for their tests. Preserve existing main/test/tag
+  add demo scripts to the image for their tests. Preserve existing branch/tag
   references and public deployment. See [verification](../demo/VERIFICATION.md)
   for evidence and limits; no new CI or Canvas submission is claimed.
 

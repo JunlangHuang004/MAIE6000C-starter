@@ -1,18 +1,23 @@
 # NutriChat operations
 
+Current instructions reviewed: 2026-10-31, `nutrichat` branch.
+
 ## Self-guided TA demo on the nutrichat branch
 
 Use [the demo setup guide](../demo/README.md) and
-[six-step screenshot guide](../demo/SCREENSHOT_GUIDE.md) for the current Chinese
-workflow. The Qwen project uses port 8003 and a private server configuration:
+[six-step screenshot guide](../demo/SCREENSHOT_GUIDE.md) for the Chinese workflow
+and English-interface example. The Qwen project uses port 8003 and a private
+server configuration:
 
 ```sh
 docker compose -p nutrichat-qwen-demo --env-file .env -f compose.yaml -f demo/compose.qwen.yaml up -d --build --wait db ai api worker
 ```
 
 Open `http://localhost:8003/app` directly; registration/login is not required.
-The separate `test` account/personalization preview on port 8001 is outside this
-branch. For an optional integration check without Qwen credentials:
+Choose **中文 / English** in the header. The browser remembers the selection;
+switching preserves unsent form values and does not call Qwen or alter nutrients.
+User descriptions and free-form model notes retain their original language.
+For an optional integration check without Qwen credentials:
 
 ```sh
 python3 demo/run.py start
@@ -27,10 +32,18 @@ meals there. Both demo projects bind only to loopback, keep their own database
 volumes and do not publish database/AI ports. Stopping retains data. Use the same
 project and overlays when resuming; see the setup guide for Qwen stop commands.
 
-[Current verification](../demo/VERIFICATION.md) records 408 passing automated
+[The 28 October verification](../demo/VERIFICATION.md) records 408 passing automated
 tests, 14 of 17 passing live food/weight checks, three generic invalid-weight
 failures and a transient dialogue failure followed by a successful rerun. These
 are observations from 28 October 2026, not a claim of universal provider success.
+
+[The 31 October language verification](evidence/ui-language-verification.md)
+records **417 passing Python tests, 15 passing frontend tests and Ruff**, plus a
+live Qwen browser flow that preserved edited recipe answers across both languages
+and restored the confirmed meal after reload. The Python total supersedes the
+older automated count; it is not added to it. A fresh offline Docker rebuild also
+passed the durable workflow check and both smoke tests. Neither run proves that every live
+model interpretation or reference-recipe estimate is correct.
 
 ## Local startup and configuration
 
@@ -71,6 +84,21 @@ docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'n
 docker compose run --rm --no-deps api ruff check .
 ```
 
+The interface tests need Node.js (CI uses version 22). From the repository root:
+
+```sh
+npm ci --prefix tests/frontend
+npm test --prefix tests/frontend
+```
+
+These are development-only dependencies; the running application serves plain
+JavaScript and does not need Node or an npm build. The tests check translations,
+catalogue coverage, safe rendering, draft preservation and absence of new requests
+when changing language. For a browser check, enter a synthetic meal, edit an
+issued recipe question, switch languages, and verify the entries remain before
+submitting. After confirmation/reload, verify the same record and totals return.
+This live path uses Qwen quota; the DOM tests do not.
+
 The legacy smoke tests assert demo-catalogue values. Run them only against a stack
 started with `NUTRITION_PROVIDER=demo` consistently for API and AI. They create saved
 records. With that stack running, they can reach the API from inside Compose:
@@ -97,6 +125,8 @@ The first command checks configuration only. Live checks consume model quota; th
 - Long-lived `queued`: check worker health, database access and whether the job is `pending` or `claimed`. Interrupted claimed jobs have no automatic recovery. Inspect before resubmitting as a new analysis; repeated submissions create separate records.
 - 409 on edit/confirm: reload the latest revision and state. Queued or confirmed records cannot be edited.
 - Login redirects: verify the HTTPS origin, signed session cookie and gateway configuration; sessions last eight hours. Local Compose does not use the public login gateway.
+- Missing language buttons or untranslated static controls after an update: rebuild/restart the API from the intended checkout and reload `/app`. Confirm `/app-assets/catalogue-en.js`, `/app-assets/i18n.js` and `/app-assets/app.js` return JavaScript successfully. These routes allow only the named assets; do not replace them with a general filesystem-serving route.
+- Language resets after reload: the preference uses browser localStorage. Blocked/unavailable storage permits switching for the current page only. A language selection is not an account preference and does not translate original meal text or free-form model notes.
 
 ## Updates, data and recovery
 
@@ -131,12 +161,20 @@ script creates synthetic records and stops/starts only that project's worker.
 Build the checkout first and keep the regular Qwen stack separate. Recorded
 results and limits are in [Week 7 verification](evidence/week07-verification.md).
 
-CI runs Ruff, PostgreSQL migrations and `pytest -q tests/unit tests/integration`
-on `main` pushes and pull requests. The `w07-midterm` checkpoint remains at
-`93ad2074226e8e7c7dcd3df058605f8a233dca35`; subsequent demo documentation and
-verification tools are on the fork's `nutrichat` branch. That branch does not
-trigger push CI, and the later commits are not covered by the original main's
-checkpoint CI result. Pytest includes the repository root so
-script imports work with both the console and module entry points. The public ECS
-is not updated by a Git push; deployment and rollback require the separate cloud
-workflow. Do not present the older public build as the Week 7 tag.
+CI runs on `main` and `nutrichat` pushes and on pull requests. Its Python job runs
+Ruff, PostgreSQL migrations and `pytest -q tests/unit tests/integration`; its
+separate Node job installs the locked frontend dependencies and runs the 15 DOM
+tests. Local passing checks do not imply a successful GitHub Actions run: inspect
+the run for the actual pushed commit. Pytest includes the repository root so
+script imports work with both the console and module entry points.
+
+The required submission tag is `w07-midterm`. Before reporting its SHA, resolve
+the tag's commit (`git rev-parse 'w07-midterm^{commit}'`) and compare it with the
+remote tag and the intended submission files. Branch HEAD and a published tag can
+refer to different versions; do not present later branch evidence as a check of
+an older tagged checkout. The [midterm artifact](../submissions/week07/README.md)
+identifies the submission scope and supporting evidence.
+
+The public ECS is not updated by a Git push; deployment and rollback require the
+separate cloud workflow. The current local Qwen demo uses port 8003. Do not present
+the older public build as the current branch or Week 7 tag.

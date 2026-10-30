@@ -1,0 +1,830 @@
+{
+  "scope": "Compact extract of two saved synthetic live-Qwen runs. No reruns, retries, confirmations or user data. Original scripts asserted expected IDs and grams, appropriate question states, finite nonnegative totals, per-food sums and catalogue arithmetic. Not a real-world nutrition accuracy benchmark.",
+  "runs": [
+    {
+      "started_at_utc": "2026-10-30T16:17:18.525219+00:00",
+      "finished_at_utc": "2026-10-30T16:19:05.328732+00:00",
+      "branch": "nutrichat",
+      "commit": "6219a782bb8fd28fd5747ecf2de9d44606889270",
+      "provider": "qwen",
+      "model": "qwen-plus",
+      "running_source_matches_branch": true,
+      "summary": {
+        "attempted": 13,
+        "recognition_passed": 13,
+        "workflow_passed": 13,
+        "fully_passed": 13
+      },
+      "source_filename": "results.json",
+      "source_sha256": "51d2982012b79e262d7611e0f6443bfcd7ff5fdadb917e1c1bc69e33d59e5f23",
+      "cases": [
+        {
+          "id": "raw_chicken",
+          "mode": "basic",
+          "text": "100g raw boneless skinless chicken breast, edible weight measured before cooking.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "chicken",
+              "grams": 100
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "chicken",
+              "name": "生去皮鸡胸肉",
+              "grams": 100.0,
+              "weight_basis": "raw",
+              "preparation": "raw",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 120.0,
+            "protein_g": 22.5,
+            "fat_g": 2.6,
+            "carbs_g": 0.0
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "roasted_chicken",
+          "mode": "advanced",
+          "text": "100g roasted boneless skinless chicken breast, cooked edible weight, with 0g additional oil in this portion.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "chicken_roast",
+              "grams": 100
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "chicken_roast",
+              "name": "烤去皮鸡胸肉",
+              "grams": 100.0,
+              "weight_basis": "cooked",
+              "preparation": "roasted",
+              "oil_g": 0.0,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 165.0,
+            "protein_g": 31.0,
+            "fat_g": 3.6,
+            "carbs_g": 0.0
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "raw_egg",
+          "mode": "basic",
+          "text": "100g raw whole egg without the shell, edible raw weight before cooking.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "egg_raw",
+              "grams": 100
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "egg_raw",
+              "name": "生鸡蛋液",
+              "grams": 100.0,
+              "weight_basis": "raw",
+              "preparation": "raw",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 143.0,
+            "protein_g": 12.6,
+            "fat_g": 9.5,
+            "carbs_g": 0.7
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "boiled_egg",
+          "mode": "advanced",
+          "text": "100g hard-boiled eggs, shells removed, cooked edible weight, with no added oil.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "egg",
+              "grams": 100
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "egg",
+              "name": "水煮鸡蛋（去壳）",
+              "grams": 100.0,
+              "weight_basis": "cooked",
+              "preparation": "boiled",
+              "oil_g": 0.0,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 155.0,
+            "protein_g": 12.6,
+            "fat_g": 10.6,
+            "carbs_g": 1.1
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "cooked_rice",
+          "mode": "advanced",
+          "text": "150g steamed white rice, cooked edible weight, with no added oil.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "rice",
+              "grams": 150
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "rice",
+              "name": "白米饭",
+              "grams": 150.0,
+              "weight_basis": "cooked",
+              "preparation": "steamed",
+              "oil_g": 0.0,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 195.0,
+            "protein_g": 4.0,
+            "fat_g": 0.4,
+            "carbs_g": 42.3
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "raw_broccoli",
+          "mode": "basic",
+          "text": "100g raw broccoli, edible raw weight before cooking.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "broccoli",
+              "grams": 100
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "broccoli",
+              "name": "生西兰花",
+              "grams": 100.0,
+              "weight_basis": "raw",
+              "preparation": "raw",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 34.0,
+            "protein_g": 2.8,
+            "fat_g": 0.4,
+            "carbs_g": 6.6
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "boiled_broccoli",
+          "mode": "advanced",
+          "text": "150g boiled broccoli, drained cooked edible weight, with no added oil.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "broccoli_cooked",
+              "grams": 150
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "broccoli_cooked",
+              "name": "水煮西兰花",
+              "grams": 150.0,
+              "weight_basis": "cooked",
+              "preparation": "boiled",
+              "oil_g": 0.0,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 52.5,
+            "protein_g": 3.6,
+            "fat_g": 0.6,
+            "carbs_g": 10.8
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "tomato_egg_dish",
+          "mode": "basic",
+          "text": "200g of the Chinese dish tomato-and-egg stir-fry, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_001",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_001",
+              "name": "番茄炒蛋",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "stir_fried",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 210.2,
+            "protein_g": 10.7,
+            "fat_g": 14.9,
+            "carbs_g": 8.9
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "kung_pao",
+          "mode": "basic",
+          "text": "250g Kung Pao chicken, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_003",
+              "grams": 250
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_003",
+              "name": "Kung Pao chicken",
+              "grams": 250.0,
+              "weight_basis": "cooked",
+              "preparation": "stir_fried",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 417.6,
+            "protein_g": 41.2,
+            "fat_g": 22.8,
+            "carbs_g": 12.3
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "mapo_tofu",
+          "mode": "advanced",
+          "text": "180g Mapo tofu, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "needs_input",
+          "expected_foods": [
+            {
+              "food_id": "dish_004",
+              "grams": 180
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_004",
+              "name": "麻婆豆腐",
+              "grams": 180.0,
+              "weight_basis": "cooked",
+              "preparation": "as_served",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": null,
+            "protein_g": null,
+            "fat_g": null,
+            "carbs_g": null
+          },
+          "questions": [
+            {
+              "key": "0.recipe",
+              "kind": "recipe",
+              "label": "麻婆豆腐采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+            }
+          ],
+          "error_message": null,
+          "observation": "Correct food IDs and weights; expected clarification; no nutrition totals."
+        },
+        {
+          "id": "mixed_meal",
+          "mode": "advanced",
+          "text": "100g steamed white rice, 100g shelled hard-boiled eggs, and 150g boiled broccoli. All weights are cooked edible weights, and there is no additional oil.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "rice",
+              "grams": 100
+            },
+            {
+              "food_id": "egg",
+              "grams": 100
+            },
+            {
+              "food_id": "broccoli_cooked",
+              "grams": 150
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "rice",
+              "name": "白米饭",
+              "grams": 100.0,
+              "weight_basis": "cooked",
+              "preparation": "steamed",
+              "oil_g": null,
+              "uncertainty": null
+            },
+            {
+              "food_id": "egg",
+              "name": "水煮鸡蛋（去壳）",
+              "grams": 100.0,
+              "weight_basis": "cooked",
+              "preparation": "boiled",
+              "oil_g": null,
+              "uncertainty": null
+            },
+            {
+              "food_id": "broccoli_cooked",
+              "name": "水煮西兰花",
+              "grams": 150.0,
+              "weight_basis": "cooked",
+              "preparation": "boiled",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 337.5,
+            "protein_g": 18.8,
+            "fat_g": 11.5,
+            "carbs_g": 40.1
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "missing_weight",
+          "mode": "advanced",
+          "text": "One bowl of steamed white rice, cooked, with no added oil. I do not know its weight in grams.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "needs_input",
+          "expected_foods": [
+            {
+              "food_id": "rice",
+              "grams": null
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "rice",
+              "name": "白米饭",
+              "grams": null,
+              "weight_basis": "cooked",
+              "preparation": "steamed",
+              "oil_g": 0.0,
+              "uncertainty": "portion weight unknown; need bowl size or grams"
+            }
+          ],
+          "totals": {
+            "calories": null,
+            "protein_g": null,
+            "fat_g": null,
+            "carbs_g": null
+          },
+          "questions": [
+            {
+              "key": "0.resolved",
+              "kind": "confirm",
+              "label": "白米饭：portion weight unknown; need bowl size or grams 请核对所选食物，或在下方补充更正。"
+            },
+            {
+              "key": "0.grams",
+              "kind": "number",
+              "label": "白米饭吃了多少克？请填可食部分重量。"
+            }
+          ],
+          "error_message": null,
+          "observation": "Correct food IDs and weights; expected clarification; no nutrition totals."
+        },
+        {
+          "id": "known_and_unknown",
+          "mode": "advanced",
+          "text": "100g steamed white rice, cooked edible weight, no added oil; and 100g fictional interstellar energy gel. The gel ingredients and recipe are unknown. Do not substitute another food.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "needs_input",
+          "expected_foods": [
+            {
+              "food_id": "rice",
+              "grams": 100
+            },
+            {
+              "food_id": null,
+              "grams": 100
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "rice",
+              "name": "白米饭",
+              "grams": 100.0,
+              "weight_basis": "cooked",
+              "preparation": "steamed",
+              "oil_g": 0.0,
+              "uncertainty": null
+            },
+            {
+              "food_id": null,
+              "name": "fictional interstellar energy gel",
+              "grams": 100.0,
+              "weight_basis": "as_sold",
+              "preparation": "as_served",
+              "oil_g": null,
+              "uncertainty": "Unknown ingredient composition and preparation; no matching food in database."
+            }
+          ],
+          "totals": {
+            "calories": null,
+            "protein_g": null,
+            "fat_g": null,
+            "carbs_g": null
+          },
+          "questions": [
+            {
+              "key": "1.food_id",
+              "kind": "food",
+              "label": "“fictional interstellar energy gel”尚未匹配。请选择准确食物；没有合适选项请用下方对话补充食材。"
+            }
+          ],
+          "error_message": null,
+          "observation": "Correct food IDs and weights; expected clarification; no nutrition totals."
+        }
+      ]
+    },
+    {
+      "started_at_utc": "2026-10-30T16:19:53.838278+00:00",
+      "finished_at_utc": "2026-10-30T16:20:50.332153+00:00",
+      "branch": "nutrichat",
+      "commit": "6219a782bb8fd28fd5747ecf2de9d44606889270",
+      "provider": "qwen",
+      "model": "qwen-plus",
+      "running_source_matches_branch": true,
+      "summary": {
+        "attempted": 8,
+        "recognition_passed": 6,
+        "workflow_passed": 6,
+        "fully_passed": 6
+      },
+      "source_filename": "results-chinese-dishes.json",
+      "source_sha256": "f0f2c4d816deb691822ce959febc9ebe6b16437280b55ab11601363351019f72",
+      "cases": [
+        {
+          "id": "egg_fried_rice",
+          "mode": "basic",
+          "text": "200g egg fried rice, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_041",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_041",
+              "name": "蛋炒饭",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "fried",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 309.0,
+            "protein_g": 9.9,
+            "fat_g": 10.3,
+            "carbs_g": 42.8
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "red_braised_pork",
+          "mode": "basic",
+          "text": "200g Chinese red-braised pork belly, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_005",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_005",
+              "name": "红烧肉",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "braised",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 1009.1,
+            "protein_g": 17.5,
+            "fat_g": 98.7,
+            "carbs_g": 11.7
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "sweet_sour_ribs",
+          "mode": "basic",
+          "text": "200g sweet and sour pork ribs, bones removed; the weight is cooked edible meat only.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_069",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_069",
+              "name": "糖醋排骨",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "stir_fried",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 596.5,
+            "protein_g": 27.8,
+            "fat_g": 47.0,
+            "carbs_g": 13.6
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "twice_cooked_pork",
+          "mode": "basic",
+          "text": "200g Sichuan twice-cooked pork, cooked edible weight.",
+          "recognition_passed": false,
+          "workflow_passed": false,
+          "passed": false,
+          "status": "failed",
+          "expected_foods": [
+            {
+              "food_id": "dish_007",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [],
+          "totals": {
+            "calories": null,
+            "protein_g": null,
+            "fat_g": null,
+            "carbs_g": null
+          },
+          "questions": [],
+          "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+          "observation": "Food IDs or weights differ: []"
+        },
+        {
+          "id": "fish_fragrant_pork",
+          "mode": "basic",
+          "text": "200g fish-fragrant shredded pork, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_006",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_006",
+              "name": "鱼香肉丝",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "stir_fried",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 206.8,
+            "protein_g": 18.7,
+            "fat_g": 8.0,
+            "carbs_g": 15.1
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "hot_sour_soup",
+          "mode": "basic",
+          "text": "200g Chinese hot and sour soup, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_222",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_222",
+              "name": "酸辣汤",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "boiled",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 89.7,
+            "protein_g": 8.4,
+            "fat_g": 4.1,
+            "carbs_g": 5.0
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "beef_broccoli",
+          "mode": "basic",
+          "text": "200g of the Chinese dish beef and broccoli stir-fry, cooked edible weight.",
+          "recognition_passed": true,
+          "workflow_passed": true,
+          "passed": true,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_088",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_088",
+              "name": "西兰花牛肉",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "stir_fried",
+              "oil_g": null,
+              "uncertainty": null
+            }
+          ],
+          "totals": {
+            "calories": 274.5,
+            "protein_g": 26.9,
+            "fat_g": 13.9,
+            "carbs_g": 12.9
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Correct food/grams, finite nonnegative totals, detail sums and catalogue arithmetic."
+        },
+        {
+          "id": "garlic_gai_lan",
+          "mode": "basic",
+          "text": "200g garlic stir-fried Chinese broccoli (gai lan), cooked edible weight.",
+          "recognition_passed": false,
+          "workflow_passed": false,
+          "passed": false,
+          "status": "completed",
+          "expected_foods": [
+            {
+              "food_id": "dish_144",
+              "grams": 200
+            }
+          ],
+          "observed_foods": [
+            {
+              "food_id": "dish_017",
+              "name": "清炒西兰花",
+              "grams": 200.0,
+              "weight_basis": "cooked",
+              "preparation": "stir_fried",
+              "oil_g": null,
+              "uncertainty": "'Chinese broccoli (gai lan)' matches 'gai_lan' but dish_017 is 'broccoli'; need confirmation if user means gai_lan or broccoli. Also, oil amount not specified."
+            }
+          ],
+          "totals": {
+            "calories": 148.2,
+            "protein_g": 7.0,
+            "fat_g": 7.6,
+            "carbs_g": 17.7
+          },
+          "questions": [],
+          "error_message": null,
+          "observation": "Food IDs or weights differ: [('dish_017', 200.0)]"
+        }
+      ]
+    }
+  ]
+}

@@ -45,3 +45,21 @@ The [English interface screenshot](../../demo/images/07-english-interface.png)
 shows the actual running page. This is a functional display check, not evidence
 that all model interpretations or real-meal nutrition estimates are accurate.
 User descriptions and free-form model notes retain their original language.
+
+## Fresh offline integration check
+
+After rebuilding the isolated `nutrichat-demo` stack from this checkout, the
+31 October `python3 demo/run.py check` run passed. The
+[raw synthetic evidence](../../demo/evidence/offline-check-2026-10-31.json) records
+queued PostgreSQL state before worker execution, two completed jobs, an internal
+AI request counter increase of two, 155 → 310 kcal correction, confirmation,
+identical reload and HTTP 409 for a locked edit. The source was `dab4a0a` with
+only documentation/evidence changes uncommitted during the check.
+This provider uses legacy fixture values and does not validate Qwen extraction.
+
+The two live smoke tests also passed separately on this freshly built offline
+stack (`2 passed, 2 warnings in 4.79s`):
+
+```sh
+docker compose -p nutrichat-demo --env-file .env.example -f compose.yaml -f demo/compose.demo.yaml exec -T -e SMOKE_BASE_URL=http://api:8000 api pytest tests/smoke -q
+```

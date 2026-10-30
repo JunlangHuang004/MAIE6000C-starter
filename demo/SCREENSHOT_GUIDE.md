@@ -4,7 +4,7 @@ This guide shows the **Chinese meal workflow on the `nutrichat` branch**. After
 the operator completes the [Qwen setup](README.md#2-main-product-demo-chinese-meals),
 open **http://localhost:8003/app** directly. **No account registration or login is
 required.** The model key is configured on the server, not entered by the user.
-The `test` branch and its account/personalization features are outside this guide.
+The scope of this guide is the meal-estimation workflow on `nutrichat`.
 
 The current interface also has **中文 / English** buttons in its header. Select
 **中文** to match these screenshots, or **English** to use translated controls and

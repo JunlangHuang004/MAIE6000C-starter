@@ -1,4 +1,35 @@
-# NutriChat demo verification — 28 October 2026
+# NutriChat demo verification
+
+## Latest follow-up — 31 October 2026
+
+The [language-switch verification](../docs/evidence/ui-language-verification.md)
+records 417 passing Python tests, 15 passing frontend DOM tests, a clean Ruff
+check and a real Qwen/browser flow that preserved edited recipe values while
+switching languages. The [English screenshot](images/07-english-interface.png)
+shows the running interface. These checks cover the current bilingual UI.
+
+A separate [English-input verification](../docs/evidence/qwen-english-verification.md)
+on the preceding `6219a78` source passed 19 of 21 sampled scenarios, including
+9 of 11 English names for Chinese dishes. One dish request failed; another
+confused gai lan with broccoli. Display translation does not fix those extraction
+limits. The original request results are summarized in the linked evidence.
+
+A fresh isolated offline build and `python3 demo/run.py check` also passed on
+31 October. The [dated evidence](evidence/offline-check-2026-10-31.json) records
+source `dab4a0a15032a7ce5d21ca72b88c62dc4b72e46e` with `dirty: true` because the
+documentation was being updated. It shows persisted pending input, two worker
+claims and internal AI requests, a 155 → 310 kcal correction, confirmation,
+identical reload and HTTP 409 for an edit after confirmation. This was a fresh
+service-integration check using the offline provider; it was not a new Qwen run.
+Both additional smoke tests passed (two dependency deprecation warnings).
+
+The sections below retain the **28 October 2026** rehearsal and its exact test
+counts. They are historical evidence, not a rerun of every scenario on the latest
+source. The original checkpoint was `93ad207`; these later demo and language
+materials are on the `nutrichat` branch. Check the Week 7 primary artifact and
+remote tag for the exact submission revision.
+
+## 28 October rehearsal
 
 The Chinese workflow is runnable, with the reliability limitations below. This
 record does **not** claim that every live request succeeds or that the estimates
@@ -12,12 +43,11 @@ are measured nutritional values.
   a clean checkout of the later documentation commit.
 - Application services, migrations, dependencies and base Compose configuration
   were unchanged. The demo adds isolated Compose overlays, launch/check scripts,
-  tests, documentation and screenshots. No `test` account or tracking features
-  were included.
+  tests, documentation and screenshots.
 - Docker application runtime: Python 3.11. Localhost port 8003 used the real
   configured Qwen provider; port 8002 used the separate offline fixture.
-- Both local apps opened directly without registration/login. The `test` app on
-  port 8001 and the public ECS deployment were not used as proof of this version.
+- Both local apps opened directly without registration/login. The public ECS
+  deployment was not used as proof of this version.
 - All test meals were synthetic. Model credentials are excluded from Git.
 
 ## Browser workflow
@@ -128,6 +158,8 @@ container with read-only source and no network. Existing catalogue tests exercis
 all 250 recipes through both calculation
 modes with controlled inputs; this differs from live model extraction.
 
-Screenshots and checked-in JSON are observations from this run. A TA should run
-the commands again for independent evidence. No new CI result is claimed for a
-`nutrichat` push, and no deployment or Canvas submission was performed.
+The original six screenshots and checked-in JSON are observations from the
+28 October run. A TA should run the commands again for independent evidence.
+No new CI result was claimed for that rehearsal, and no public deployment or
+Canvas submission was performed. Later local checks are linked at the top;
+GitHub CI results should be checked against the exact pushed commit.

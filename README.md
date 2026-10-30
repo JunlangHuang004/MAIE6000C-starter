@@ -5,8 +5,7 @@ The main demo shows Chinese meals, Basic/Advanced modes and follow-up correction
 With Qwen configured on the server, users open `/app` directly without registration
 or login. The guide also includes a separate no-key integration check with exact
 HTTP/database/worker evidence. No recording or in-person presentation is needed
-to inspect it. This branch excludes the independent accounts and personalization
-work on `test`.
+to inspect it. This guide covers the meal-estimation workflow on `nutrichat`.
 
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions,
 including Chinese ingredients, dish names, cooking methods and follow-up details.
@@ -95,7 +94,10 @@ on pull requests. npm packages are test-only; the application serves plain
 JavaScript with no runtime npm installation.
 
 See the [dated interface-language verification](docs/evidence/ui-language-verification.md)
-for automated results and the browser recipe-edit/confirmation check.
+for 417 passing Python tests, 15 passing frontend tests and the browser
+recipe-edit/confirmation check. The [English-input evaluation](docs/evidence/qwen-english-verification.md)
+separately records recognition successes and failures; changing display language
+does not improve model matching.
 
 After configuring Qwen and starting the stack, run the live checks below. These
 consume model quota; the dialogue check creates synthetic saved meal records.

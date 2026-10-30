@@ -15,9 +15,8 @@ workflow from input to confirmed reload.
 
 The working slice is meal description → queued analysis/job → background
 processing → saved estimate/questions → review/correction → confirmation and
-reload. Independent accounts, personal nutrition targets and calorie/weight trends
-from `test` are outside this branch. A recording or in-person presentation is not
-needed to follow these instructions.
+reload. A recording or in-person presentation is not needed to follow these
+instructions.
 
 ## 1. Get the correct branch
 
@@ -69,9 +68,9 @@ docker compose -p nutrichat-qwen-demo --env-file .env -f compose.yaml -f demo/co
    <http://localhost:8003/foods> shows `"provider": "qwen"`.
 
 This project has its own database volume, a loopback-only API port and no published
-PostgreSQL/AI ports. It does not change the `test` stack on port 8001 or the regular
-local stack on port 8000. The existing public ECS deployment is older and is not
-the reference for this branch-specific guide. Qwen requests consume the configured
+PostgreSQL/AI ports. It does not change other local application stacks. The
+existing public ECS deployment is older and is not the reference for this
+branch-specific guide. Qwen requests consume the configured
 account's quota; healthy containers alone do not prove model access.
 
 ### Follow the user workflow
@@ -83,6 +82,11 @@ questions, catalogue names and recipe explanations. Switching does not submit a
 meal or discard unsent form entries. User descriptions and free-form model notes
 remain in their original language. This display setting does not change Qwen's
 food-recognition behavior.
+
+See the [language-switch verification](../docs/evidence/ui-language-verification.md)
+and [English interface screenshot](images/07-english-interface.png). English meal
+recognition was checked separately: [19 of 21 sampled inputs passed](../docs/evidence/qwen-english-verification.md),
+with a service failure and a gai-lan/broccoli mismatch retained in the report.
 
 1. Keep **基础版 · 快速大概估算** (Basic) selected. If an old meal is displayed,
    first click **新的一餐** (New meal).
@@ -143,8 +147,8 @@ python3 demo/run.py check
 
 The launcher selects the small offline fixture provider, clears model credentials,
 uses project `nutrichat-demo` and keeps its own database volume. It publishes only
-the API on loopback port 8002. It does not modify the Qwen project or the `test`
-preview.
+the API on loopback port 8002. It does not modify the Qwen project or other local
+application stacks.
 
 The check performs actual HTTP, PostgreSQL and worker operations. It pauses only
 this dedicated worker to inspect queued state, resumes it, and creates a separate
@@ -215,7 +219,7 @@ individual account isolation.
 | `docker` unavailable / daemon connection fails | Install/start Docker and check `docker info` before startup |
 | YAML `!override` error | Update Docker Compose to 2.24.4 or later |
 | Chinese request fails | Check Qwen credentials, matching region/workspace, quota and AI/worker logs; do not replace the failure with a fixture result |
-| Page shows login, profiles or trends | Use the `nutrichat` app directly on port 8003 for Chinese or port 8002 for the offline check; port 8001 is the separate `test` preview |
+| Page asks for local account registration | Check you opened this `nutrichat` demo directly on port 8003 for Qwen or port 8002 for the offline check |
 | Port 8003 or 8002 is occupied | Set `NUTRICHAT_QWEN_DEMO_PORT` or `NUTRICHAT_DEMO_PORT` respectively to an unused port; retain the setting for subsequent commands and use the chosen browser port |
 | Chinese text is rejected on port 8002 | This is the offline fixture; use the configured Qwen product on port 8003 for Chinese meals |
 | `egg` is rejected in the offline fixture | Use `100g egg`; explicit grams are required |

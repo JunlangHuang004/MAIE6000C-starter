@@ -1,6 +1,6 @@
 # NutriChat architecture
 
-Current implementation reviewed: 2026-10-27.
+Current implementation reviewed: 2026-10-31, `nutrichat` branch.
 
 The Qwen catalogue contains 138 USDA ingredient records and 250 project-authored
 reference recipes. Expansion changes versioned data and validation, not model
@@ -21,7 +21,7 @@ Browser -> [optional HTTPS proxy + session gateway] -> FastAPI API
                                               extraction   catalogue arithmetic
 ```
 
-The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers only the last analysis ID for restoration.
+The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID for restoration and the browser's interface-language preference. It does not store the authoritative meal record or an account history.
 
 - API: validation, revision/state checks, saved records, catalogue and HTML UI.
 - Worker: asynchronous orchestration and job/error bookkeeping.
@@ -29,9 +29,31 @@ The API atomically saves an analysis and pending job. A separate worker claims t
 - Shared meal engine: catalogue validation, questions, structured answers, assumptions and nutrient arithmetic.
 - PostgreSQL: analyses, conversations, drafts, questions, evidence and jobs; historical cases remain available.
 
+## Chinese and English interface
+
+The header's **中文 / English** buttons change display language locally. The API
+serves `/app` and an explicit allowlist of three JavaScript files under
+`/app-assets/`: `catalogue-en.js`, `i18n.js` and `app.js`. These files are packaged
+with the Python application, loaded in that order and served with `no-cache` so
+the browser revalidates after an update. No frontend build service is required.
+
+`i18n.js` translates controls, status messages, structured questions and evidence.
+The English display catalogue provides names for all 138 ingredients and 250
+recipes, plus the recipes' reference methods. Catalogue search checks Chinese and
+English display names. User descriptions and free-form model notes retain their
+original language. English display names are not additional aliases in the Qwen
+extraction catalogue.
+
+A language change rerenders presentation while preserving unsent meal/reply text,
+selected mode, question answers, editable recipe quantities/yield and acceptance.
+It does not send a model request, create a job or modify the saved record's ID,
+revision, state or nutrient values. Language selection remains usable when browser
+storage is unavailable, but the preference then cannot persist across reloads.
+See [the language verification record](evidence/ui-language-verification.md).
+
 ## Qwen's role
 
-Qwen runs in Alibaba Cloud Model Studio, not on ECS. It interprets Chinese descriptions, names, preparation, quantities and corrections and maps them to supported catalogue IDs. The adapter requests structured JSON, with `enable_thinking=false`, temperature 0 and a configurable model (default `qwen-plus`). Disabling deep-thinking mode does not remove language inference or guarantee correctness.
+Qwen runs in Alibaba Cloud Model Studio, not on ECS. It interprets meal descriptions, names, preparation, quantities and corrections and maps them to supported catalogue IDs. Chinese meals are the primary product workflow; English descriptions also use this same extraction path. Interface language does not alter its prompt or improve food matching. The adapter requests structured JSON, with `enable_thinking=false`, temperature 0 and a configurable model (default `qwen-plus`). Disabling deep-thinking mode does not remove language inference or guarantee correctness.
 
 The model does not supply authoritative calorie/macronutrient values, approve recipes, or train on project updates. Python validates the extracted facts and calculates from the versioned catalogue. Structured question answers bypass another model call; natural-language replies use the bounded conversation as context. Updating aliases, food data or prompts changes application behavior without retraining model weights.
 
@@ -57,7 +79,14 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 
 ## Current limitations
 
-The public account is shared and analyses have no per-user ownership. There is no idempotency key, automatic retry, claimed-job recovery, image recognition, model training or measured cooking-loss model. Use one worker for this prototype. Reference recipes and portions are assumptions, and even detailed estimates depend on the quality of input and food mappings.
+Local users open `/app` directly, without registration/login. The optional public
+gateway uses a shared account; analyses have no per-user ownership. There is no
+idempotency key, automatic retry, claimed-job recovery, image recognition, model
+training or measured cooking-loss model. Use one worker for this prototype.
+Reference recipes and portions are assumptions, and even detailed estimates
+depend on the quality of input and food mappings. Model extraction can fail or
+select a similar but incorrect food; translating the interface does not remove
+that risk. Users must review interpreted foods and assumptions before confirming.
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
 
@@ -136,3 +165,9 @@ team responsibilities. A [fresh rehearsal](evidence/week07-verification.md) capt
 real PostgreSQL writes, worker processing, persisted output, confirmation and
 operational signals using the offline provider. Qwen observations are listed
 separately; health checks alone do not establish provider correctness.
+
+The 31 October language update passed 417 Python tests and 15 frontend DOM tests,
+plus Ruff and a live Qwen browser flow covering editable recipe answers, language
+switching, confirmation and reload. These later checks supplement the dated
+milestone rehearsal; they do not change the original rehearsal's source version
+or establish nutrition accuracy for real meals.
