@@ -45,7 +45,7 @@ Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
 							43 文本 Preparation: As described by the selected food; additional oil: 0g
 							44 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
 							45 container
-								46 文本 Sources: 
+								46 文本 Sources:
 								47 link USDA FoodData Central SR Legacy 2018 #168878 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/168878/nutrients
 						48 文本 Review the eaten weight, preparation, oil and recipe. Use the conversation above to make corrections.
 						49 按钮 Confirm and save

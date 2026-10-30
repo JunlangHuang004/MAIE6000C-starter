@@ -41,7 +41,7 @@ Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
 							39 文本 Preparation: As described by the selected food; additional oil: 0g
 							40 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
 							41 container
-								42 文本 Sources: 
+								42 文本 Sources:
 								43 link USDA FoodData Central SR Legacy 2018 #168878 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/168878/nutrients
 						44 container (expanded) Secondary Actions: Collapse
 							45 摘要 Value: on, User-defined ingredient recipe: QA chicken ingredients · Ingredient weight sum 165g (not finished cooked weight) · 229.5 kcal
@@ -55,7 +55,7 @@ Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
 							53 文本 Ingredient weights use the selected raw, cooked or net edible state. These states are not converted automatically.
 							54 文本 List oil, sugar and sauces separately. Unlisted ingredients and cooking losses are not estimated automatically.
 							55 container
-								56 文本 Sources: 
+								56 文本 Sources:
 								57 link USDA FoodData Central SR Legacy 2018 #171077 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171077/nutrients
 								58 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
 								59 link USDA FoodData Central SR Legacy 2018 #174277 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174277/nutrients

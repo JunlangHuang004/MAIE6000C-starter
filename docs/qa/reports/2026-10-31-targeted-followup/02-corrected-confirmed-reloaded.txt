@@ -40,7 +40,7 @@ Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
 							38 文本 Whole-batch ingredients: Raw tomato 300g, Raw whole egg (without shell) 150g, Soybean cooking oil 15g, Granulated white sugar 5g, Table salt 2g
 							39 文本 Basic reference recipe, not confirmed item by item. This is not measured nutrition for your dish.
 							40 container
-								41 文本 Sources: 
+								41 文本 Sources:
 								42 link USDA FoodData Central SR Legacy 2018 #170457 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/170457/nutrients
 								43 link USDA FoodData Central SR Legacy 2018 #171287 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171287/nutrients
 								44 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
@@ -54,7 +54,7 @@ Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
 							52 文本 Preparation: Boiled; additional oil: 0g
 							53 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
 							54 container
-								55 文本 Sources: 
+								55 文本 Sources:
 								56 link USDA FoodData Central SR Legacy 2018 #173424 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173424/nutrients
 						57 text This estimate is confirmed and saved. Start a new meal to make further changes. Record 06d099fc-2891-47aa-970a-8cf204609939 · Revision 3 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
 				58 滚动条 (settable, float) 0.6748655
