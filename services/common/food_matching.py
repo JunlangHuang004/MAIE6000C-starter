@@ -56,7 +56,8 @@ _PREFIX = re.compile(
 )
 _SUFFIX = re.compile(
     r'(?:\s|[.。:：()]|' + _MASS + r'|'
-    r'熟重|生重|可食部分|净重|淨重|去壳|去殼|去骨|共|总共|總共|的|少油|多油|不加油|'
+    r'熟重|生重|可食部分|净重|淨重|已去壳|已去殼|已去骨|'
+    r'去壳|去殼|去骨|共|总共|總共|的|少油|多油|不加油|'
     r'(?<![a-z])(?:cooked edible weight|raw edible weight|edible weight|'
     r'cooked weight|raw weight|bones removed|without shell)(?![a-z]))+', re.I,
 )

@@ -335,3 +335,28 @@ def test_new_soy_chicken_reference_never_uses_the_old_wrong_fish_id(monkeypatch,
     assert result.draft[0]['food_id'] == 'dish_251'
     assert result.details[0]['food_id'] == 'dish_251'
     assert any('参考配方' in note for note in result.details[0]['assumptions'])
+
+
+@pytest.mark.parametrize('name,food_id,detail', [
+    ('可乐鸡翅', 'dish_252', '（已去骨）'),
+    ('可乐鸡翅', 'dish_252', '(已去骨)'),
+    ('水煮鸡蛋', 'egg', '（已去壳）'),
+    ('水煮鸡蛋', 'egg', '(已去殼)'),
+])
+@pytest.mark.parametrize('include_wrapper', [False, True])
+def test_known_food_with_explicit_removed_bones_or_shells_is_still_grounded(
+        name, food_id, detail, include_wrapper):
+    text = name + '75克熟重' + detail
+    source = text if include_wrapper else name
+    items = ground_food_items([ExtractedItem(
+        name=name, source_text=source, food_id='dish_010', grams=75)], text)
+    assert len(items) == 1 and items[0].food_id == food_id
+    assert items[0].source_text == name
+
+
+@pytest.mark.parametrize('suffix', ['（已去骨月球紫晶兽肉）', '（已月球紫晶兽肉）'])
+def test_removed_bone_wrapper_does_not_discard_an_unknown_food(suffix):
+    items = ground_food_items([ExtractedItem(
+        name='可乐鸡翅', source_text='可乐鸡翅', food_id='dish_252', grams=75)],
+        '可乐鸡翅75克熟重' + suffix)
+    assert any(item.food_id is None for item in items)
