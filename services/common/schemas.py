@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from services.common.nutrition import parse_meal
+from services.common.ingredient_recipe import IngredientRecipe
 from services.common.models import AnalysisStatus, CaseStatus, JobStatus, JobType
 
 
@@ -95,6 +96,11 @@ class AnalysisReply(BaseModel):
         if bool(self.message and self.message.strip()) == bool(self.answers):
             raise ValueError("请填写补充说明或回答问题，两者选一种。")
         return self
+
+
+class AnalysisIngredientRecipe(IngredientRecipe):
+    revision: int = Field(strict=True, ge=1)
+    item_index: int = Field(strict=True, ge=0, le=29)
 
 
 class AnalysisRead(BaseModel):

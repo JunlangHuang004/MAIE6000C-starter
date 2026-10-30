@@ -343,3 +343,236 @@ test('Untrusted conversation, food labels and source links remain inert text', a
   assert.equal(document.querySelector('a[href^="javascript:"]'), null);
   assert.equal(window.__injected, undefined);
 });
+
+function unsupportedIngredientMeal() {
+  const meal = clone(fixtures.missing_weight);
+  meal.mode = 'basic'; meal.food_text = '100克熟米饭，200克豉油鸡';
+  meal.draft = [{food_id:'rice',name:'熟米饭',grams:100}, {food_id:null,name:'豉油鸡',grams:200}];
+  meal.questions = [{key:'1.food_id',kind:'unsupported',label:'数据库未找到“豉油鸡”的对应食物记录，暂不能估算。'}];
+  meal.details = [];
+  return meal;
+}
+function ingredientRecipeFixture(status = 'completed') {
+  const meal = clone(fixtures.tomato_egg_dish);
+  const recipe = {name:'我的鸡肉配方',basis:'batch',ingredients:[{food_id:'chicken',grams:500},{food_id:'oil',grams:20}],
+    batch_yield_g:400,consumed_g:100,accepted:true};
+  meal.status = status; meal.mode = 'basic'; meal.draft = [{name:recipe.name,food_id:null,custom_recipe:recipe}];
+  meal.details = [{kind:'custom_recipe',food_id:null,name:recipe.name,grams:100,
+    nutrients:{calories:194.2,protein_g:28.1,fat_g:8.3,carbs_g:0},sources:[],
+    quantity_provenance:{kind:'custom_recipe',basis:'batch',factor:0.25,batch_yield_g:400,consumed_g:100,
+      ingredients:[{food_id:'chicken',name:'生鸡胸肉',grams:500,state:'raw'},{food_id:'oil',name:'食用油',grams:20,state:'as_sold'}]}}];
+  return meal;
+}
+function setIngredientRow(document, index, food, grams) {
+  const row = document.querySelectorAll('#ingredient-rows .ingredient-row')[index];
+  row.querySelector('[data-ingredient-food]').value = food;
+  row.querySelector('[data-ingredient-grams]').value = grams;
+  return row;
+}
+async function submitIngredients(view) {
+  view.$('ingredient-form').dispatchEvent(new view.window.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+}
+
+test('Unknown item opens a separate ingredient form and searches without selecting a substitute', async t => {
+  const meal = unsupportedIngredientMeal();
+  const {window,document,$,requests} = await mount(t,{meal});
+  document.querySelector('[data-build-ingredients="1"]').click();
+  assert.equal($('ingredient-builder').hidden,false);
+  assert.equal($('ingredient-form').closest('#answer-form'),null,'Forms must not be nested');
+  assert.match($('ingredient-builder-target').textContent,/第 2 项.*豉油鸡/);
+  assert.equal($('ingredient-name').value,'豉油鸡');
+  const row = document.querySelector('.ingredient-row');
+  const search = row.querySelector('[data-ingredient-search]');
+  search.value = 'chicken'; search.dispatchEvent(new window.Event('input',{bubbles:true}));
+  const select = row.querySelector('[data-ingredient-food]');
+  assert.equal(select.value,'','Searching must not implicitly select any food');
+  assert.ok(select.options.length > 1);
+  const ids = Array.from(select.options).map(option => option.value).filter(Boolean);
+  assert.ok(ids.every(id => foods.find(food => food.id === id).kind === 'ingredient'));
+  assert.equal(requests.filter(request => request.method === 'POST').length,0);
+  assert.equal($('result').hidden,true);
+});
+
+test('Consumed ingredient payload targets only the unresolved item and keeps names as inert text', async t => {
+  const meal = unsupportedIngredientMeal();
+  const view = await mount(t,{meal,respond:request => request.method === 'POST'
+    ? {body:{analysis:{...clone(meal),status:'queued',revision:meal.revision+1}}} : undefined});
+  const {document,$,requests} = view;
+  document.querySelector('[data-build-ingredients="1"]').click();
+  $('ingredient-name').value = '<img src=x onerror=alert(1)>';
+  setIngredientRow(document,0,'chicken','150');
+  $('ingredient-add').click(); setIngredientRow(document,1,'oil','5');
+  $('ingredient-add').click(); setIngredientRow(document,2,'soy_sauce','10');
+  $('ingredient-accepted').checked = true;
+  await submitIngredients(view);
+  const sent = requests.find(request => request.method === 'POST');
+  assert.equal(sent.url,'/analyses/' + meal.id + '/ingredients');
+  assert.deepEqual(sent.body,{revision:meal.revision,item_index:1,name:'<img src=x onerror=alert(1)>',basis:'consumed',
+    ingredients:[{food_id:'chicken',grams:150},{food_id:'oil',grams:5},{food_id:'soy_sauce',grams:10}],
+    batch_yield_g:null,consumed_g:null,accepted:true});
+  assert.equal(sent.body.draft,undefined,'The client must not replace the rest of the meal');
+  assert.deepEqual(meal.draft[0],{food_id:'rice',name:'熟米饭',grams:100});
+  assert.equal(document.querySelector('#ingredient-builder img'),null);
+  assert.equal($('ingredient-builder').hidden,true);
+  assert.equal($('result').hidden,true,'Queued structured calculation must not show old totals');
+});
+
+test('Batch editor preserves selections, weights, searches and acceptance across both languages', async t => {
+  const meal = unsupportedIngredientMeal();
+  const view = await mount(t,{meal,respond:request => request.method === 'POST'
+    ? {body:{analysis:{...clone(meal),status:'queued',revision:meal.revision+1}}} : undefined});
+  const {window,document,$,requests,clickLanguage} = view;
+  document.querySelector('[data-build-ingredients="1"]').click();
+  const row = setIngredientRow(document,0,'chicken','500');
+  row.querySelector('[data-ingredient-search]').value = 'chicken';
+  $('ingredient-name').value = '原文名称 — my recipe';
+  $('ingredient-basis').value = 'batch';
+  $('ingredient-basis').dispatchEvent(new window.Event('change',{bubbles:true}));
+  $('ingredient-yield').value = '650'; $('ingredient-consumed').value = '162.5';
+  $('ingredient-accepted').checked = true;
+  const before = requests.length;
+  await clickLanguage('en');
+  assert.equal($('ingredient-batch-fields').hidden,false);
+  assert.equal(row.querySelector('[data-ingredient-food]').value,'chicken');
+  assert.equal(row.querySelector('[data-ingredient-search]').value,'chicken');
+  assert.equal(row.querySelector('[data-ingredient-grams]').value,'500');
+  assert.match(row.textContent,/raw edible weight before cooking/);
+  assert.match($('ingredient-basis-help').textContent,/even mixture/);
+  assert.equal($('ingredient-accepted').checked,true);
+  await clickLanguage('zh');
+  assert.equal($('ingredient-name').value,'原文名称 — my recipe');
+  assert.equal($('ingredient-yield').value,'650'); assert.equal($('ingredient-consumed').value,'162.5');
+  assert.equal($('ingredient-accepted').checked,true);
+  assert.equal(requests.length,before);
+  await submitIngredients(view);
+  const sent = requests.find(request => request.method === 'POST');
+  assert.equal(sent.body.basis,'batch');
+  assert.equal(sent.body.batch_yield_g,650); assert.equal(sent.body.consumed_g,162.5);
+  assert.equal(sent.body.ingredients[0].grams,500,'Do not convert whole-batch amounts into portion grams in the client');
+});
+
+test('Ingredient builder rejects unselected, blank, zero, excessive and duplicate amounts before any request', async t => {
+  const view = await mount(t,{meal:unsupportedIngredientMeal(),language:'en'});
+  const {document,$,requests} = view;
+  document.querySelector('[data-build-ingredients="1"]').click();
+  $('ingredient-accepted').checked = true;
+  await submitIngredients(view);
+  assert.match($('message').textContent,/Select an actual catalogue ingredient/);
+  for (const amount of ['', '0', '-10','10001']) {
+    setIngredientRow(document,0,'chicken',amount); $('ingredient-accepted').checked = true;
+    await submitIngredients(view);
+    assert.match($('message').textContent,/greater than 0/);
+  }
+  setIngredientRow(document,0,'chicken','100'); $('ingredient-add').click();
+  setIngredientRow(document,1,'chicken','20'); $('ingredient-accepted').checked = true;
+  await submitIngredients(view);
+  assert.match($('message').textContent,/duplicate ingredients/);
+  document.querySelectorAll('[data-remove-ingredient]')[1].click();
+  $('ingredient-accepted').checked = false; await submitIngredients(view);
+  assert.match($('message').textContent,/confirmation box/);
+  assert.equal(requests.filter(request => request.method === 'POST').length,0);
+});
+
+test('Whole-batch weights cannot be blank, zero or less than the eaten portion', async t => {
+  const view = await mount(t,{meal:unsupportedIngredientMeal(),language:'en'});
+  const {document,$,requests} = view;
+  document.querySelector('[data-build-ingredients="1"]').click();
+  setIngredientRow(document,0,'chicken','500'); $('ingredient-basis').value = 'batch';
+  for (const [yieldWeight,eaten] of [['','100'],['0','100'],['400','500'],['400','0']]) {
+    $('ingredient-yield').value = yieldWeight; $('ingredient-consumed').value = eaten;
+    $('ingredient-accepted').checked = true; await submitIngredients(view);
+    assert.match($('message').textContent,/finished batch and eaten weights/);
+  }
+  assert.equal(requests.filter(request => request.method === 'POST').length,0);
+});
+
+test('Stale ingredient revision retains unsent fields and clearly requires reloading', async t => {
+  const view = await mount(t,{meal:unsupportedIngredientMeal(),language:'en',respond:request => request.method === 'POST'
+    ? {status:409,body:{detail:'State or revision changed; reload the estimate.'}} : undefined});
+  const {document,$,requests,clickLanguage} = view;
+  document.querySelector('[data-build-ingredients="1"]').click();
+  setIngredientRow(document,0,'chicken','155'); $('ingredient-accepted').checked = true;
+  await submitIngredients(view);
+  assert.equal($('ingredient-builder').hidden,false);
+  assert.equal(document.querySelector('[data-ingredient-grams]').value,'155');
+  assert.equal($('ingredient-accepted').checked,true);
+  assert.equal($('ingredient-editor-warning').hidden,false);
+  assert.equal($('ingredient-submit').disabled,true);
+  assert.match($('message').textContent,/entries are preserved/);
+  await clickLanguage('zh');
+  assert.match($('ingredient-editor-warning').textContent,/填写内容已保留/);
+  await submitIngredients(view);
+  assert.equal(requests.filter(request => request.method === 'POST').length,1,'Stale draft must not be resubmitted');
+});
+
+test('Custom recipe displays explicit batch provenance, reopens for edit, and locks after confirmation', async t => {
+  const meal = ingredientRecipeFixture();
+  const view = await mount(t,{meal,language:'en',respond:request => request.url.endsWith('/confirm')
+    ? {body:{...clone(meal),status:'confirmed',revision:meal.revision+1}} : undefined});
+  const {window,document,$,clickLanguage} = view;
+  assert.equal($('reply-form').hidden,true);
+  assert.equal($('custom-recipe-guidance').hidden,false);
+  assert.match($('evidence').textContent,/User-defined ingredient recipe/);
+  assert.match($('evidence').textContent,/allocating 25%/);
+  assert.match($('evidence').textContent,/raw edible weight before cooking/);
+  document.querySelector('[data-edit-ingredients="0"]').click();
+  assert.equal($('ingredient-basis').value,'batch');
+  assert.equal($('ingredient-yield').value,'400'); assert.equal($('ingredient-consumed').value,'100');
+  assert.equal(document.querySelector('[data-ingredient-food]').value,'chicken');
+  assert.equal(document.querySelector('[data-ingredient-grams]').value,'500');
+  assert.equal($('ingredient-accepted').checked,false,'Editing requires renewed recipe review');
+  await clickLanguage('zh');
+  assert.match($('evidence').textContent,/自定义食材配方/);
+  assert.equal($('confirm').disabled,true,'Do not confirm an old estimate while editing ingredients');
+  $('ingredient-cancel').click();
+  $('confirm').click(); await flush();
+  assert.equal($('ingredient-builder').hidden,true);
+  assert.equal(document.querySelector('[data-edit-ingredients]'),null);
+  assert.equal($('reply-form').hidden,true);
+  assert.equal($('confirm').hidden,true);
+  $('ingredient-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+  assert.equal(view.requests.filter(request => request.url.endsWith('/ingredients')).length,0);
+});
+
+test('Consumed custom recipe labels ingredient sum and ordinary items expose quantity origins', async t => {
+  const meal = ingredientRecipeFixture();
+  meal.draft[0].custom_recipe.basis = 'consumed';
+  meal.details[0].grams = 520;
+  meal.details[0].quantity_provenance = {...meal.details[0].quantity_provenance,basis:'consumed',factor:1,batch_yield_g:null,consumed_g:null};
+  const detail = clone(fixtures.tomato_egg_dish.details[0]);
+  for (const kind of ['user_grams','portion_reference','default_portion','edible_fraction']) {
+    meal.details.push({...detail,quantity_provenance:{kind,input_grams:200,calculated_grams:120,portion_count:2,reference_grams:60}});
+  }
+  const {$,clickLanguage} = await mount(t,{meal,language:'en'});
+  assert.match($('evidence').textContent,/Ingredient weight sum 520g \(not finished cooked weight\)/);
+  assert.match($('evidence').textContent,/No default portion was used/);
+  assert.match($('evidence').textContent,/200g extracted from your description/);
+  assert.match($('evidence').textContent,/2 portions\/counts × reference 60g = 120g/);
+  assert.match($('evidence').textContent,/default reference portion of 120g/);
+  assert.match($('evidence').textContent,/gross 200g converted to 120g/);
+  await clickLanguage('zh');
+  assert.match($('evidence').textContent,/非成品熟重/);
+  assert.match($('evidence').textContent,/份量依据：未提供克数/);
+});
+
+test('Changing a search query clears the old selected ingredient and acceptance, unlike language switching', async t => {
+  const view = await mount(t,{meal:unsupportedIngredientMeal()});
+  const {window,document,$,clickLanguage,requests} = view;
+  document.querySelector('[data-build-ingredients="1"]').click();
+  const row = setIngredientRow(document,0,'chicken','150');
+  $('ingredient-accepted').checked = true;
+  await clickLanguage('en');
+  assert.equal(row.querySelector('[data-ingredient-food]').value,'chicken');
+  assert.equal($('ingredient-accepted').checked,true);
+  const search = row.querySelector('[data-ingredient-search]');
+  search.value = 'rice'; search.dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.equal(row.querySelector('[data-ingredient-food]').value,'');
+  assert.equal($('ingredient-accepted').checked,false);
+  assert.equal(row.querySelector('[data-ingredient-grams]').value,'150','Keep the quantity for review');
+  $('ingredient-accepted').checked = true;
+  await submitIngredients(view);
+  assert.equal(requests.filter(request => request.method === 'POST').length,0);
+  assert.match($('message').textContent,/Select an actual catalogue ingredient/);
+});

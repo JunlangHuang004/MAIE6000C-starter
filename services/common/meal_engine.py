@@ -7,6 +7,8 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from services.common.ingredient_recipe import recipe_detail
+
 DATA = Path(__file__).with_name('data')
 KEYS = ('calories', 'protein_g', 'carbs_g', 'fat_g')
 PREPARATIONS = {'raw':'生食', 'as_served':'按所选食物的加工状态', 'boiled':'水煮',
@@ -53,6 +55,13 @@ def evaluate(draft):
     totals = dict.fromkeys(KEYS, 0.0)
     for index, item in enumerate(draft):
         prefix = str(index) + '.'
+        if 'custom_recipe' in item:
+            nutrients, detail = recipe_detail(item['custom_recipe'], foods, KEYS)
+            detail['item_index'] = index
+            for key in KEYS:
+                totals[key] += nutrients[key]
+            details.append(detail)
+            continue
         food = foods.get(item.get('food_id'))
         name = item['name']
         if not food:
@@ -153,9 +162,14 @@ def evaluate(draft):
                 sources.append(foods['oil']['source'])
         for key in KEYS:
             totals[key] += nutrients[key]
-        details.append(dict(name=name, grams=grams, food_id=food['id'],
+        details.append(dict(name=name, grams=grams, food_id=food['id'], item_index=index,
                             nutrients={k:round(v,1) for k,v in nutrients.items()},
-                            assumptions=assumptions, sources=sources))
+                            assumptions=assumptions, sources=sources,
+                            quantity_provenance={
+                                'kind':'user_grams', 'input_grams':grams,
+                                'calculated_grams':grams, 'portion_count':None,
+                                'portion_unit':None, 'reference_grams':None,
+                            }))
     return dict(draft=draft, questions=questions, details=details if not questions else [],
                 **(dict.fromkeys(KEYS) if questions else {k:round(v,1) for k,v in totals.items()}),
                 interpreted_food_text='；'.join(f'{d["name"]} {d["grams"]:g}g' for d in details)
@@ -220,6 +234,9 @@ def evaluate_mode(draft, mode='advanced'):
     assumptions = []
     for item in assumed:
         notes = []
+        if 'custom_recipe' in item:
+            assumptions.append(notes)
+            continue
         food = foods.get(item.get('food_id'))
         if not food:
             assumptions.append(notes)
@@ -277,6 +294,22 @@ def evaluate_mode(draft, mode='advanced'):
     result = evaluate(assumed)
     result['draft'] = deepcopy(draft)
     if not result['questions']:
-        for detail, notes in zip(result['details'], assumptions):
+        for detail, original, notes in zip(result['details'], draft, assumptions):
+            if detail.get('kind') == 'custom_recipe':
+                continue
+            provenance = detail['quantity_provenance']
+            provenance['input_grams'] = original.get('grams')
+            if original.get('weight_includes_inedible') and original.get('grams') is not None:
+                provenance['kind'] = 'edible_fraction'
+                provenance['edible_fraction'] = 0.6
+            elif original.get('grams') is None:
+                portion_count = original.get('portion_count') or 1
+                provenance.update(
+                    kind=('portion_reference' if original.get('portion_count')
+                          else 'default_portion'),
+                    portion_count=portion_count,
+                    portion_unit=original.get('portion_unit') or 'serving',
+                    reference_grams=detail['grams'] / portion_count,
+                )
             detail['assumptions'] = ['基础版快速参考估算', *notes, *detail['assumptions']]
     return result

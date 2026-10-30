@@ -79,6 +79,64 @@ def test_reviewed_exact_chinese_and_english_mentions_remain_supported(text, sour
     assert [item.food_id for item in items] == [food_id]
 
 
+@pytest.mark.parametrize('text,expected_name,food_id', [
+    ('100克熟白米饭', '熟白米饭', 'rice'),
+    ('１００克熟白米飯', '熟白米飯', 'rice'),
+    ('200 g cooked white rice, no added oil', 'cooked white rice', 'rice'),
+    ('200 g COOKED WHITE RICE, no added oil', 'COOKED WHITE RICE', 'rice'),
+    ('100g Hard-boiled egg (without shell)', 'Hard-boiled egg (without shell)', 'egg'),
+    ('100克去壳水煮鸡蛋，熟重', '去壳水煮鸡蛋', 'egg'),
+    ('200克番茄炒蛋熟重，不加花生，整锅油5克，成品400克', '番茄炒蛋', 'dish_001'),
+])
+def test_source_with_only_one_food_and_bounded_wrappers_keeps_actual_name(
+        text, expected_name, food_id):
+    items = ground_food_items([
+        ExtractedItem(name=text, source_text=text, food_id=None)], text)
+    assert len(items) == 1
+    assert items[0].food_id == food_id
+    assert items[0].name == expected_name
+    assert items[0].source_text == expected_name
+    assert expected_name in text
+
+
+@pytest.mark.parametrize('text', [
+    '100克熟白米饭',
+    '100 g cooked white rice, no added oil',
+])
+def test_wrapped_rice_source_can_be_calculated_after_real_history_extraction(monkeypatch, text):
+    result = extract(monkeypatch, text, [
+        {'food_id':'rice','name':text,'source_text':text,'grams':100},
+    ], history=[{'role':'user','content':text}])
+    assert result.calories == 130
+    assert [item['food_id'] for item in result.draft] == ['rice']
+
+
+@pytest.mark.parametrize('text,wrong_id', [
+    ('200克豉油鸡', 'dish_010'),
+    ('200克酱油鸡', 'soy_sauce'),
+    ('100克米饭和200克豉油鸡', 'rice'),
+    ('100克熟白米饭和100克水煮鸡蛋', 'rice'),
+    ('100克米饭和200克米饭', 'rice'),
+    ('100克米饭，米饭200克', 'rice'),
+    ('100 g cooked white rice and 200 g cooked white rice', 'rice'),
+    ('100克米饭炖鸡', 'rice'),
+    ('200 g fried cooked white rice', 'rice'),
+    ('200 g cooked white rice, mystery sauce', 'rice'),
+])
+def test_wrapped_source_cannot_hide_unknowns_other_foods_or_repeated_portions(text, wrong_id):
+    items = ground_food_items([
+        ExtractedItem(name=text, source_text=text, food_id=wrong_id)], text)
+    assert items[0].food_id is None
+
+
+def test_wrapped_source_still_requires_verbatim_user_grounding():
+    source = '100 g cooked white rice, no added oil'
+    items = ground_food_items([
+        ExtractedItem(name=source, source_text=source, food_id='rice')], '100克豉油鸡')
+    assert items[0].food_id is None
+    assert '豉油鸡' in items[0].name
+
+
 def test_mixed_unknown_is_not_lost_or_allowed_partial_total(monkeypatch):
     result = extract(monkeypatch, '100克米饭和200克豉油鸡', [
         {'food_id':'rice', 'name':'米饭','source_text':'米饭','grams':100},

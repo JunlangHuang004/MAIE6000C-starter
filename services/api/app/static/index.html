@@ -6,6 +6,9 @@
 
 header{gap:16px;flex-wrap:wrap}.header-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.header-actions form{margin:0}.header-actions button{margin:0}.language-switch{display:inline-flex;border:1px solid #b8cbbb;border-radius:10px;padding:3px;gap:3px;background:#fff}.language-switch button{background:transparent;color:#245740;padding:8px 12px;font-size:14px;border-radius:7px}.language-switch button[aria-pressed="true"]{background:#246149;color:#fff}.language-switch button:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #4c9473;outline-offset:3px}.history-note{font-size:13px}.ingredient label{overflow-wrap:anywhere}.ingredient input{flex-shrink:0}#catalogue-info{display:inline-block;line-height:1.6}@media(max-width:550px){header{align-items:flex-start}.header-actions{gap:8px}.header-actions form button{padding:9px 12px;font-size:14px}.language-switch button{padding:8px 10px}.ingredient{align-items:flex-start}.metrics .metric{padding:13px}.metric b{font-size:24px}}
 </style>
+<style>
+.ingredient-builder{border:1px solid #b8cbbb;border-radius:12px;padding:18px;background:#f7faf5;margin:16px 0}.ingredient-row{border-top:1px solid #dbe5dc;padding:12px 0}.ingredient-row-fields{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:12px}.ingredient-row input[type=search]{width:100%}.ingredient-row p{margin:6px 0}.ingredient-builder h3{margin-top:0}.ingredient-builder fieldset{border:0;padding:0;margin:0}.ingredient-builder legend{font-weight:600;margin-top:16px}.ingredient-builder input[type=text]{width:100%}.quantity-origin{font-size:14px;background:#edf3eb;padding:10px;border-radius:8px}.ingredient-editor-actions:empty{display:none}@media(max-width:550px){.ingredient-row-fields{grid-template-columns:1fr}.ingredient-builder{padding:12px}}
+</style>
 <script defer src="/app-assets/catalogue-en.js"></script>
 <script defer src="/app-assets/i18n.js"></script>
 <script defer src="/app-assets/app.js"></script>
@@ -32,6 +35,23 @@ header{gap:16px;flex-wrap:wrap}.header-actions{display:flex;align-items:center;g
 <section class="card" id="dialogue" hidden><h2 id="dialogue-title">餐食对话</h2>
 <details id="history-panel"><summary data-i18n="history">查看本餐对话记录</summary><p class="muted history-note" data-i18n="originalHistory">你输入的描述及模型自由文本保留原文。</p><div id="history"></div></details>
 <form id="answer-form" hidden><div id="questions"></div><button id="answer-submit" data-i18n="answerSubmit">提交回答</button><small data-i18n="answerHelp">可以先回答已知的问题。不知道用量时，请在下方说明。</small></form>
+<div id="ingredient-editor-actions" class="ingredient-editor-actions"></div>
+<section id="ingredient-builder" class="ingredient-builder" aria-labelledby="ingredient-builder-title" hidden>
+<h3 id="ingredient-builder-title" data-i18n="ingredientBuilderTitle">按实际食材填写配方</h3>
+<p id="ingredient-builder-target" class="muted"></p>
+<p id="ingredient-editor-warning" class="error" data-i18n="ingredientStale" role="status" hidden>记录版本已变化，填写内容已保留。请先记下这些用量，再刷新页面重新读取记录。</p>
+<p data-i18n="ingredientBuilderHelp">逐项选择实际食材及其生熟状态，填写克数。油、糖和酱料也要单独填写；没有对应记录的食材不能用相近食物替代。</p>
+<form id="ingredient-form" novalidate>
+<label for="ingredient-name" data-i18n="ingredientRecipeName">本次配方名称</label><input id="ingredient-name" type="text" maxlength="120" required>
+<label for="ingredient-basis" data-i18n="ingredientBasis">这些用量代表什么？</label>
+<select id="ingredient-basis"><option value="consumed" data-i18n="ingredientConsumed">本次实际吃下的食材用量</option><option value="batch" data-i18n="ingredientBatchBasis">整锅配料，再填写本次吃下多少</option></select>
+<p id="ingredient-basis-help" class="muted"></p>
+<fieldset><legend data-i18n="ingredientRows">食材及克数</legend><div id="ingredient-rows"></div><button id="ingredient-add" class="secondary" type="button" data-i18n="ingredientAdd">添加食材</button></fieldset>
+<div id="ingredient-batch-fields" hidden><label for="ingredient-yield" data-i18n="batchYield">整锅做熟后的成品总重（克）</label><input id="ingredient-yield" type="number" min="0.1" max="10000" step="any"><label for="ingredient-consumed" data-i18n="ingredientEatenWeight">本次吃下的熟制可食重量（克）</label><input id="ingredient-consumed" type="number" min="0.1" max="10000" step="any"></div>
+<label><input id="ingredient-accepted" type="checkbox"><span data-i18n="ingredientAccept"> 我已核对食材、生熟状态及用量，并确认这些食材完整描述这一项食物。</span></label>
+<button id="ingredient-submit" type="submit" data-i18n="ingredientCalculate">按这些食材计算</button><button id="ingredient-cancel" class="secondary" type="button" data-i18n="cancel">取消</button>
+</form></section>
+<p id="custom-recipe-guidance" class="muted" data-i18n="customRecipeGuidance" hidden>本餐含自定义食材配方。请使用“编辑食材配方”更改用量，或开始新的一餐；其他待回答的问题仍可逐项填写。</p>
 <form id="reply-form" hidden><label for="reply" data-i18n="replyLabel">继续对话／补充或更正</label><textarea id="reply" maxlength="2000" required data-i18n-placeholder="replyPlaceholder" placeholder="例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。"></textarea><button id="reply-submit" data-i18n="replySubmit">发送补充说明</button></form></section>
 <section class="card" id="result" hidden><span class="tag" id="status"></span><h2 data-i18n="resultHeading">本餐营养估算</h2><p id="interpreted"></p>
 <div class="metrics"><div class="metric"><b id="calories">—</b><span data-i18n="calories">热量 · kcal</span></div><div class="metric"><b id="protein_g">—</b><span data-i18n="protein">蛋白质 · g</span></div><div class="metric"><b id="fat_g">—</b><span data-i18n="fat">脂肪 · g</span></div><div class="metric"><b id="carbs_g">—</b><span data-i18n="carbs">碳水 · g</span></div></div>

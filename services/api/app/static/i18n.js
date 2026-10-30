@@ -66,7 +66,51 @@
     connection: ['连接暂时不可用，请稍后重试', 'The connection is unavailable. Please try again.'],
     fillRecipe: ['请填完整配方数值，零用量请填 0', 'Fill in all recipe quantities. Enter 0 for an ingredient you do not use.'],
     fillYield: ['请填成品总重', 'Enter the finished batch weight.'],
-    answerOne: ['请至少回答一个问题，或使用下方对话补充。', 'Answer at least one question, or add details in the conversation below.']
+    answerOne: ['请至少回答一个问题，或使用下方对话补充。', 'Answer at least one question, or add details in the conversation below.'],
+    ingredientBuild: ['按实际食材估算', 'Build from actual ingredients'],
+    ingredientEdit: ['编辑食材配方：{name}', 'Edit ingredient recipe: {name}'],
+    ingredientRecipeRecorded: ['已确认自定义食材配方：{name}', 'Custom ingredient recipe reviewed: {name}'],
+    ingredientBuilderTitle: ['按实际食材填写配方', 'Build an ingredient recipe'],
+    ingredientBuilderTarget: ['仅替换第 {index} 项“{name}”；其他餐食条目会保留。', 'Replace only item {index}, “{name}”. The other meal items remain unchanged.'],
+    ingredientBuilderHelp: ['逐项选择实际食材及其生熟状态，填写克数。油、糖和酱料也要单独填写；没有对应记录的食材不能用相近食物替代。', 'Select each actual ingredient and its raw/cooked state, then enter grams. Include oil, sugar and sauces as separate rows. Do not substitute a similar food for an ingredient with no matching record.'],
+    ingredientRecipeName: ['本次配方名称', 'Recipe name for this meal'],
+    ingredientBasis: ['这些用量代表什么？', 'What do these amounts describe?'],
+    ingredientConsumed: ['本次实际吃下的食材用量', 'Ingredient amounts actually consumed'],
+    ingredientBatchBasis: ['整锅配料，再填写本次吃下多少', 'Whole-batch ingredients, then my eaten portion'],
+    ingredientConsumedHelp: ['填写本次吃下的各食材用量，重量须符合所选条目的生熟状态。食材重量之和不代表菜肴做熟后的总重。', 'Enter ingredient amounts actually consumed, using each selected record’s raw/cooked weight basis. Their sum is not the finished cooked dish weight.'],
+    ingredientBatchHelp: ['填写整锅全部配料、做熟后的成品总重，以及本次吃下的熟重。按食用比例分摊，假设食材在整锅中分布均匀；不自动扣除弃掉的油或汤汁。', 'Enter all batch ingredients, finished cooked batch weight and cooked portion eaten. Nutrition scales by that fraction, assuming an even mixture. Discarded oil or broth is not deducted automatically.'],
+    ingredientRows: ['食材及克数', 'Ingredients and gram weights'],
+    ingredientAdd: ['添加食材', 'Add ingredient'],
+    ingredientSearch: ['搜索第 {index} 项食材', 'Search ingredient {index}'],
+    ingredientSelect: ['选择第 {index} 项食材及状态', 'Select ingredient {index} and state'],
+    ingredientGrams: ['第 {index} 项食材重量（克）', 'Ingredient {index} weight (g)'],
+    ingredientRemove: ['移除第 {index} 项食材', 'Remove ingredient {index}'],
+    ingredientState: ['重量依据：{state}', 'Weight basis: {state}'],
+    stateRaw: ['烹调前生可食重量', 'raw edible weight before cooking'],
+    stateCooked: ['熟制可食重量', 'cooked edible weight'],
+    stateAsSold: ['可食部分净重', 'net edible weight as sold'],
+    ingredientEatenWeight: ['本次吃下的熟制可食重量（克）', 'Cooked edible portion eaten (g)'],
+    ingredientAccept: [' 我已核对食材、生熟状态及用量，并确认这些食材完整描述这一项食物。', ' I reviewed the ingredients, their raw/cooked states and amounts, and confirm they completely describe this meal item.'],
+    ingredientCalculate: ['按这些食材计算', 'Calculate from these ingredients'],
+    cancel: ['取消', 'Cancel'],
+    ingredientNameRequired: ['请填写本次配方名称。', 'Enter a name for this ingredient recipe.'],
+    ingredientChooseRequired: ['请逐项选择数据库中的实际食材。搜索文字不代表已选中食材。', 'Select an actual catalogue ingredient for every row. Search text alone does not select a food.'],
+    ingredientWeightRequired: ['每项食材重量须大于 0 且不超过 10000 克。', 'Each ingredient weight must be greater than 0 and no more than 10000 g.'],
+    ingredientDuplicate: ['同一种食材请合并为一项，避免重复计算。', 'Combine duplicate ingredients into one row to avoid double counting.'],
+    ingredientBatchInvalid: ['请填写有效的成品总重和食用克数（均大于 0，不超过 10000）；食用量不能超过整锅总重。', 'Enter valid finished batch and eaten weights (greater than 0, up to 10000 g). The eaten portion cannot exceed the batch.'],
+    ingredientAcceptRequired: ['请先核对并勾选食材及用量确认。', 'Review the ingredients and amounts, then check the confirmation box.'],
+    ingredientStale: ['记录版本已变化，填写内容已保留。请先记下这些用量，再刷新页面重新读取记录。', 'This record changed. Your entries are preserved here. Note these amounts before reloading the current record.'],
+    customRecipeGuidance: ['本餐含自定义食材配方。请使用“编辑食材配方”更改用量，或开始新的一餐；其他待回答的问题仍可逐项填写。', 'This meal includes a custom ingredient recipe. Use “Edit ingredient recipe” to change it, or start a new meal. You can still answer other pending questions individually.'],
+    customRecipeTitle: ['自定义食材配方：{name}', 'User-defined ingredient recipe: {name}'],
+    customIngredientSum: ['食材重量合计 {grams}g（非成品熟重）', 'Ingredient weight sum {grams}g (not finished cooked weight)'],
+    customConsumedWeight: ['本次熟制食用量 {grams}g', 'Cooked portion eaten: {grams}g'],
+    customBatchEvidence: ['用户填写：整锅成品 {yield}g，本次吃下 {consumed}g；按 {percent}% 分摊营养。', 'User supplied: finished batch {yield}g, portion eaten {consumed}g; allocating {percent}% of batch nutrition.'],
+    customConsumedEvidence: ['用量依据：用户逐项填写本次实际摄入的食材克数。未采用默认份量。', 'Quantity basis: user-entered ingredient grams actually consumed. No default portion was used.'],
+    customIngredientEvidence: ['{name}：{grams}g · {state}', '{name}: {grams}g · {state}'],
+    quantityUser: ['份量依据：从餐食描述提取的克数为 {grams}g；请核对提取结果、可食部分及生熟状态。', 'Quantity basis: {grams}g extracted from your description. Review the extracted amount, edible portion and raw/cooked state.'],
+    quantityPortion: ['份量依据：按 {count} 份／个数及每份 {reference}g 的参考换算，共 {grams}g；不是实测重量。', 'Quantity basis: {count} portions/counts × reference {reference}g = {grams}g; not a measured weight.'],
+    quantityDefault: ['份量依据：未提供克数，使用默认参考份量 {grams}g。', 'Quantity basis: grams were not supplied; using a default reference portion of {grams}g.'],
+    quantityEdible: ['份量依据：总重 {input}g 按参考可食比例换算为 {grams}g；请核对实际净重。', 'Quantity basis: gross {input}g converted to {grams}g using an assumed edible fraction. Review the actual edible weight.']
   };
   const storageGet = key => { try { return localStorage.getItem(key); } catch (_) { return null; } };
   const storageSet = (key, value) => { try { localStorage.setItem(key, value); } catch (_) { /* Memory-only preference is still usable. */ } };
@@ -146,6 +190,17 @@
     return systemText(option.label);
   }
   const exactEnglish = {
+    '用户填写并确认的食材配方；不是数据库中的实测菜肴记录。': 'An ingredient recipe supplied and reviewed by the user, not a measured dish record in the database.',
+    '食材按所选记录的生重、熟重或可食净重计算，不自动互换。': 'Ingredient weights use the selected raw, cooked or net edible state. These states are not converted automatically.',
+    '油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。': 'List oil, sugar and sauces separately. Unlisted ingredients and cooking losses are not estimated automatically.',
+    '本餐包含自定义食材配方，请使用配方编辑器修改，或开始新的一餐。': 'This meal contains a custom ingredient recipe. Edit it in the recipe form, or start a new meal.',
+    '找不到要修改的食物，请刷新后重试。': 'The food item to edit was not found. Reload and try again.',
+    '请先核对食材、重量状态及用量，并确认配方。': 'Review the ingredients, their weight states and amounts, then confirm the recipe.',
+    '同一食材只能添加一次，请合并其克数。': 'Add each ingredient only once; combine its gram weights.',
+    '整锅配方需要成品总重和本次食用重量。': 'A whole-batch recipe needs the finished batch weight and the portion eaten.',
+    '本次食用重量不能超过整锅成品总重。': 'The portion eaten cannot exceed the finished batch weight.',
+    '本次食材用量模式不接受整锅重量；请选择整锅配方模式。': 'Consumed-ingredient mode does not accept batch weights. Select whole-batch mode instead.',
+    '请选择目录中已有的食材记录；不能使用未知食物或整道参考菜谱。': 'Select existing ingredient records. Unknown foods and whole reference dishes cannot be used as ingredients.',
     '基础版快速参考估算': 'Basic-mode reference estimate',
     '基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。': 'Basic mode uses a reference recipe and finished batch weight that have not been checked item by item. Switch to Advanced to review them.',
     '基础版参考配方，未经逐项确认；不是实测菜肴营养。': 'Basic reference recipe, not confirmed item by item. This is not measured nutrition for your dish.',
@@ -221,6 +276,7 @@
   }
   function systemText(text) {
     const value = String(text ?? '');
+    if (value.startsWith('Value error, ')) return systemText(value.slice('Value error, '.length));
     if (!english()) return exactChinese[value] || value;
     if (exactEnglish[value]) return exactEnglish[value];
     if (value.includes('\n')) return value.split('\n').map(systemText).join('\n');

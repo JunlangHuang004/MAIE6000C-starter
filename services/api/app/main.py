@@ -29,6 +29,7 @@ from services.common.models import (
 )
 from services.common.schemas import (
     AnalysisMode,
+    AnalysisIngredientRecipe,
     AnalysisReply,
     AnalysisConfirm,
     AnalysisCorrection,
@@ -322,6 +323,9 @@ def reply_analysis(analysis_id: str, payload: AnalysisReply, db: Session = Depen
     if (analysis.revision != payload.revision
             or analysis.status not in ("needs_input", "completed", "failed")):
         raise HTTPException(status_code=409, detail="记录已更新，请刷新后回答。")
+    if payload.message and any('custom_recipe' in item for item in analysis.draft):
+        raise HTTPException(status_code=422,
+                            detail="本餐包含自定义食材配方，请使用配方编辑器修改，或开始新的一餐。")
     if len(analysis.conversation) >= 36:
         raise HTTPException(status_code=422, detail="本次对话较长，请整理餐食描述后重新估算。")
     try:
@@ -362,6 +366,61 @@ def reply_analysis(analysis_id: str, payload: AnalysisReply, db: Session = Depen
     return AnalysisCreateResponse(
         analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
                                   job=JobRead.model_validate(job))
+
+
+@app.post("/analyses/{analysis_id}/ingredients", response_model=AnalysisCreateResponse)
+def replace_with_ingredient_recipe(
+    analysis_id: str, payload: AnalysisIngredientRecipe, db: Session = Depends(get_db),
+):
+    from copy import deepcopy
+    from services.common.ingredient_recipe import validate_ingredient_recipe
+    from services.common.meal_engine import catalogue
+
+    analysis = db.get(Analysis, analysis_id)
+    if analysis is None:
+        raise HTTPException(status_code=404, detail="Analysis not found")
+    if (analysis.revision != payload.revision
+            or analysis.status not in ("needs_input", "completed", "failed")):
+        raise HTTPException(status_code=409, detail="记录已更新，请刷新后回答。")
+    if payload.item_index >= len(analysis.draft):
+        raise HTTPException(status_code=422, detail="找不到要修改的食物，请刷新后重试。")
+    if len(analysis.conversation or []) >= 36:
+        raise HTTPException(status_code=422, detail="本次对话较长，请整理餐食描述后重新估算。")
+    recipe_data = payload.model_dump(exclude={'revision', 'item_index'})
+    try:
+        recipe = validate_ingredient_recipe(
+            recipe_data, {food['id']:food for food in catalogue()['foods']})
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    draft = deepcopy(analysis.draft)
+    original = draft[payload.item_index]
+    original_name = original.get('original_name') or original['name']
+    draft[payload.item_index] = {
+        'food_id': None, 'name': recipe.name,
+        'source_text': original.get('source_text') or original_name,
+        'original_name': original_name, 'custom_recipe': recipe.model_dump(),
+    }
+    # The durable draft is the source of truth. Keep history concise and do not ask
+    # a model to reinterpret the accepted ingredient quantities on this path.
+    conversation = [*(analysis.conversation or []), {
+        'role':'user', 'content':f'已确认自定义食材配方：{recipe.name}',
+        'kind':'ingredient_recipe', 'item_index':payload.item_index,
+    }]
+    change_analysis(db, analysis_id, payload.revision, ["needs_input", "completed", "failed"], {
+        "conversation":conversation, "draft":draft, "questions":[], "details":[],
+        "status":"queued", "confirmed_at":None, "error_message":None,
+        "interpreted_food_text":None, "calories":None, "protein_g":None,
+        "carbs_g":None, "fat_g":None,
+    })
+    job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
+              status=JobStatus.PENDING.value)
+    db.add(job)
+    db.commit()
+    db.expire_all()
+    return AnalysisCreateResponse(
+        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        job=JobRead.model_validate(job),
+    )
 
 
 @app.post("/analyses/{analysis_id}/mode", response_model=AnalysisCreateResponse)

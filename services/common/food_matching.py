@@ -130,6 +130,52 @@ def is_user_mention(mention, texts):
     return False
 
 
+def _single_wrapped_name(mention, texts):
+    """Accept one exact reviewed name surrounded only by bounded meal details."""
+    normalized, offsets = [], []
+    for index, character in enumerate(mention):
+        part = normalize_name(character)
+        normalized.extend(part)
+        offsets.extend([index] * len(part))
+    normalized = ''.join(normalized)
+    if normalized != normalize_name(mention):
+        # Do not invent source offsets for combining-character normalization.
+        return None
+    matches = set()
+    for alias, food_ids in name_index().items():
+        if len(food_ids) != 1:
+            continue
+        position = normalized.find(alias)
+        while position >= 0:
+            start = offsets[position]
+            end = offsets[position + len(alias) - 1] + 1
+            # Keep closing parentheses that belong to a reviewed food name.
+            for opening, closing in (('(', ')'), ('（', '）')):
+                span = mention[start:end]
+                if span.count(opening) > span.count(closing):
+                    closing_at = end
+                    while closing_at < len(mention) and mention[closing_at].isspace():
+                        closing_at += 1
+                    if mention[closing_at:closing_at + 1] == closing:
+                        end = closing_at + 1
+            span = mention[start:end]
+            if (normalize_name(span) == alias and is_user_mention(span, [mention])
+                    and is_user_mention(span, texts)):
+                matches.add((start, end, next(iter(food_ids))))
+            position = normalized.find(alias, position + 1)
+    # Nested aliases for the same occurrence are one name, not a second food.
+    maximal = [match for match in matches if not any(
+        other[0] <= match[0] and match[1] <= other[1] and other[:2] != match[:2]
+        for other in matches)]
+    if len(maximal) != 1:
+        return None
+    start, end, food_id = maximal[0]
+    remaining = unicodedata.normalize('NFKC', mention[:start] + mention[end:])
+    if not all(_detail_clause(clause) for clause in _SPLIT.split(remaining)):
+        return None
+    return mention[start:end], food_id
+
+
 def _current_identity_texts(texts):
     """Keep the last explicit replacement and every subsequent user utterance."""
     for index in range(len(texts) - 1, -1, -1):
@@ -170,6 +216,11 @@ def ground_food_items(items, food_text, history=None):
         mention = item.source_text or item.name
         grounded = is_user_mention(mention, texts)
         candidates = name_index().get(normalize_name(mention), set()) if grounded else set()
+        if grounded and not candidates:
+            wrapped = _single_wrapped_name(mention, texts)
+            if wrapped is not None:
+                mention, food_id = wrapped
+                candidates = {food_id}
         if len(candidates) == 1:
             item.food_id = next(iter(candidates))
             item.name = mention

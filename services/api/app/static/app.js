@@ -5,6 +5,7 @@
   const I = window.NutriI18n;
   let analysis = null, busy = false, timer = null, catalogue = [];
   let questionVersion = '', notice = {raw:'', error:false};
+  let ingredientEditor = null;
   const el = (tag, text) => {
     const element = document.createElement(tag);
     if (text !== undefined) element.textContent = text;
@@ -36,6 +37,7 @@
     I.setLanguage(language);
     applyStaticLanguage();
     render();
+    translateIngredientEditor();
     showFoods();
   }
   async function api(path, method = 'GET', body) {
@@ -51,8 +53,12 @@
       throw Error('连接暂时不可用，请稍后重试');
     }
     const data = await response.json();
-    if (!response.ok) throw Error(Array.isArray(data.detail)
-      ? data.detail.map(item => item.msg).join('\n') : data.detail || '请求失败');
+    if (!response.ok) {
+      const error = Error(Array.isArray(data.detail)
+        ? data.detail.map(item => item.msg).join('\n') : data.detail || '请求失败');
+      error.status = response.status;
+      throw error;
+    }
     return data;
   }
   function controls() {
@@ -67,12 +73,23 @@
     $('answer-submit').hidden = !answerable;
     $('answer-submit').disabled = locked || !answerable;
     document.querySelector('[data-i18n="answerHelp"]').hidden = !answerable;
-    $('confirm').disabled = locked || analysis?.status !== 'completed';
+    $('confirm').disabled = locked || analysis?.status !== 'completed' || !!ingredientEditor;
     $('reply').disabled = locked;
     $('mode').disabled = !!analysis || busy;
     $('switch-mode').hidden = !analysis || analysis.status === 'confirmed';
     $('switch-mode').disabled = locked;
     $('switch-mode').textContent = I.t(analysis?.mode === 'basic' ? 'switchAdvanced' : 'switchBasic');
+    const recipeLocked = locked || !analysis || analysis.status === 'confirmed';
+    document.querySelectorAll('[data-build-ingredients],[data-edit-ingredients]').forEach(button => {
+      button.disabled = recipeLocked;
+      button.setAttribute('aria-expanded', String(ingredientEditor?.itemIndex === Number(button.dataset.buildIngredients ?? button.dataset.editIngredients)));
+    });
+    $('ingredient-form').querySelectorAll('input,select,button').forEach(input => { input.disabled = recipeLocked; });
+    $('ingredient-add').disabled = recipeLocked || $('ingredient-rows').children.length >= 30;
+    $('ingredient-submit').disabled = recipeLocked || !!ingredientEditor?.stale;
+    $('ingredient-rows').querySelectorAll('[data-remove-ingredient]').forEach(button => {
+      button.disabled = recipeLocked || $('ingredient-rows').children.length <= 1;
+    });
     // Language controls remain usable while a model job is pending.
   }
   function numberInput(value, min = 0, max = 10000) {
@@ -114,6 +131,8 @@
       if (yieldLabel) yieldLabel.textContent = I.t('batchYield');
       const acceptLabel = row.querySelector('[data-accept-label]');
       if (acceptLabel) acceptLabel.textContent = I.t('acceptRecipe');
+      const builder = row.querySelector('[data-build-ingredients]');
+      if (builder) builder.textContent = I.t('ingredientBuild');
     }
   }
   function renderQuestions() {
@@ -131,7 +150,13 @@
       const label = el(q.kind === 'unsupported' ? 'p' : 'label'); label.dataset.questionLabel = q.key;
       if (q.kind === 'unsupported') row.classList.add('error');
       row.append(label);
-      if (q.kind === 'number') {
+      if (q.kind === 'unsupported') {
+        const button = el('button'); button.type = 'button'; button.className = 'secondary';
+        button.dataset.buildIngredients = q.key.split('.')[0];
+        button.setAttribute('aria-controls','ingredient-builder');
+        button.addEventListener('click',() => openIngredientEditor(Number(button.dataset.buildIngredients)));
+        row.append(button);
+      } else if (q.kind === 'number') {
         const input = numberInput(null,q.min,q.max);
         input.dataset.answer = 'value'; input.id = 'q-' + q.key;
         label.htmlFor = input.id;
@@ -175,12 +200,171 @@
     }
     translateQuestions();
   }
+  function ingredientState(state) {
+    return I.t({raw:'stateRaw',cooked:'stateCooked',as_sold:'stateAsSold'}[state] || 'stateAsSold');
+  }
+  function editorRows() {
+    return Array.from($('ingredient-rows').children).map(row => ({
+      food_id:row.querySelector('[data-ingredient-food]').value,
+      grams:row.querySelector('[data-ingredient-grams]').value,
+      search:row.querySelector('[data-ingredient-search]').value
+    }));
+  }
+  function populateIngredientSelect(row) {
+    const select = row.querySelector('[data-ingredient-food]');
+    const selected = select.value || row.dataset.initialFood || '';
+    delete row.dataset.initialFood;
+    const search = row.querySelector('[data-ingredient-search]').value.trim().toLowerCase();
+    const choices = catalogue.filter(food => food.kind === 'ingredient' && (food.id === selected ||
+      [food.name,...(food.aliases || []),I.foodName(food.id,food.name),
+        window.NUTRICHAT_EN_CATALOGUE?.[food.id]?.name || ''].join(' ').toLowerCase().includes(search)));
+    select.replaceChildren();
+    const empty = el('option',I.t('select')); empty.value = ''; select.append(empty);
+    for (const food of choices) {
+      const option = el('option',I.foodName(food.id,food.name) + ' · ' + ingredientState(food.state));
+      option.value = food.id; select.append(option);
+    }
+    select.value = choices.some(food => food.id === selected) ? selected : '';
+    const food = catalogue.find(entry => entry.id === select.value && entry.kind === 'ingredient');
+    row.querySelector('[data-ingredient-state]').textContent = food
+      ? I.t('ingredientState',{state:ingredientState(food.state)})
+      : (choices.length ? I.t('ingredientChooseRequired') : I.t('noFoods'));
+  }
+  function renderIngredientRows(values) {
+    $('ingredient-rows').replaceChildren();
+    for (const [index,value] of values.entries()) {
+      const row = el('div'); row.className = 'ingredient-row'; row.dataset.initialFood = value.food_id || '';
+      const search = el('input'); search.type = 'search'; search.dataset.ingredientSearch = 'true';
+      search.value = value.search || ''; search.id = 'ingredient-search-' + index;
+      const searchLabel = el('label'); searchLabel.htmlFor = search.id; searchLabel.dataset.ingredientSearchLabel = 'true';
+      const select = el('select'); select.dataset.ingredientFood = 'true'; select.id = 'ingredient-food-' + index;
+      const selectLabel = el('label'); selectLabel.htmlFor = select.id; selectLabel.dataset.ingredientSelectLabel = 'true';
+      const grams = numberInput(value.grams === '' ? null : value.grams,0.1); grams.required = true;
+      grams.dataset.ingredientGrams = 'true'; grams.id = 'ingredient-grams-' + index;
+      const gramsLabel = el('label'); gramsLabel.htmlFor = grams.id; gramsLabel.dataset.ingredientGramsLabel = 'true';
+      const columns = el('div'); columns.className = 'ingredient-row-fields';
+      const foodColumn = el('div'), gramsColumn = el('div');
+      foodColumn.append(selectLabel,select); gramsColumn.append(gramsLabel,grams); columns.append(foodColumn,gramsColumn);
+      const state = el('p'); state.className = 'muted'; state.dataset.ingredientState = 'true';
+      const remove = el('button'); remove.type = 'button'; remove.className = 'secondary';
+      remove.dataset.removeIngredient = 'true';
+      remove.addEventListener('click',() => {
+        const rows = editorRows(); if (rows.length <= 1) return;
+        rows.splice(index,1); renderIngredientRows(rows); $('ingredient-accepted').checked = false;
+      });
+      search.addEventListener('input',() => {
+        // A changed query is not a new selection, nor permission to retain an old one.
+        select.value = ''; $('ingredient-accepted').checked = false;
+        populateIngredientSelect(row);
+      });
+      select.addEventListener('change',() => populateIngredientSelect(row));
+      row.append(searchLabel,search,columns,state,remove); $('ingredient-rows').append(row);
+    }
+    translateIngredientEditor(); controls();
+  }
+  function translateIngredientEditor() {
+    if (!ingredientEditor) return;
+    $('ingredient-builder-target').textContent = I.t('ingredientBuilderTarget',{
+      index:ingredientEditor.itemIndex + 1,name:ingredientEditor.originalName
+    });
+    const batch = $('ingredient-basis').value === 'batch';
+    $('ingredient-batch-fields').hidden = !batch;
+    $('ingredient-basis-help').textContent = I.t(batch ? 'ingredientBatchHelp' : 'ingredientConsumedHelp');
+    for (const [index,row] of Array.from($('ingredient-rows').children).entries()) {
+      row.querySelector('[data-ingredient-search-label]').textContent = I.t('ingredientSearch',{index:index+1});
+      row.querySelector('[data-ingredient-select-label]').textContent = I.t('ingredientSelect',{index:index+1});
+      row.querySelector('[data-ingredient-grams-label]').textContent = I.t('ingredientGrams',{index:index+1});
+      row.querySelector('[data-remove-ingredient]').textContent = I.t('ingredientRemove',{index:index+1});
+      populateIngredientSelect(row);
+    }
+  }
+  function openIngredientEditor(index) {
+    if (busy || !analysis || !['needs_input','completed','failed'].includes(analysis.status)) return;
+    const item = analysis.draft?.[index]; if (!item) return;
+    const recipe = item.custom_recipe;
+    ingredientEditor = {analysisId:analysis.id,revision:analysis.revision,itemIndex:index,originalName:item.name,stale:false};
+    $('ingredient-name').value = recipe?.name || item.name;
+    $('ingredient-basis').value = recipe?.basis || 'consumed';
+    $('ingredient-yield').value = recipe?.batch_yield_g ?? '';
+    $('ingredient-consumed').value = recipe?.consumed_g ?? '';
+    $('ingredient-accepted').checked = false;
+    $('ingredient-editor-warning').hidden = true;
+    $('ingredient-builder').hidden = false;
+    renderIngredientRows(recipe?.ingredients?.length ? recipe.ingredients : [{food_id:'',grams:''}]);
+    $('ingredient-builder').scrollIntoView?.({block:'nearest',behavior:'smooth'});
+    $('ingredient-name').focus();
+  }
+  function closeIngredientEditor() {
+    ingredientEditor = null; $('ingredient-builder').hidden = true; controls();
+  }
+  function renderIngredientActions() {
+    $('ingredient-editor-actions').replaceChildren();
+    if (!analysis || !['needs_input','completed','failed'].includes(analysis.status)) return;
+    (analysis.draft || []).forEach((item,index) => {
+      if (!item.custom_recipe) return;
+      const button = el('button',I.t('ingredientEdit',{name:item.custom_recipe.name || item.name}));
+      button.type = 'button'; button.className = 'secondary'; button.dataset.editIngredients = index;
+      button.setAttribute('aria-controls','ingredient-builder');
+      button.addEventListener('click',() => openIngredientEditor(index));
+      $('ingredient-editor-actions').append(button);
+    });
+  }
+  function ingredientPayload() {
+    const name = $('ingredient-name').value.trim();
+    if (!name || name.length > 120) throw Error(I.t('ingredientNameRequired'));
+    const ingredients = editorRows().map(row => ({food_id:row.food_id,grams:row.grams === '' ? NaN : Number(row.grams)}));
+    if (!ingredients.length || ingredients.some(row => !catalogue.some(food => food.id === row.food_id && food.kind === 'ingredient'))) {
+      throw Error(I.t('ingredientChooseRequired'));
+    }
+    if (ingredients.some(row => !Number.isFinite(row.grams) || row.grams <= 0 || row.grams > 10000)) throw Error(I.t('ingredientWeightRequired'));
+    if (new Set(ingredients.map(row => row.food_id)).size !== ingredients.length) throw Error(I.t('ingredientDuplicate'));
+    const basis = $('ingredient-basis').value;
+    const batch_yield_g = basis === 'batch' ? Number($('ingredient-yield').value) : null;
+    const consumed_g = basis === 'batch' ? Number($('ingredient-consumed').value) : null;
+    if (basis === 'batch' && (![batch_yield_g,consumed_g].every(value => Number.isFinite(value) && value > 0 && value <= 10000) || consumed_g > batch_yield_g)) {
+      throw Error(I.t('ingredientBatchInvalid'));
+    }
+    if (!$('ingredient-accepted').checked) throw Error(I.t('ingredientAcceptRequired'));
+    return {revision:ingredientEditor.revision,item_index:ingredientEditor.itemIndex,name,basis,
+      ingredients,batch_yield_g,consumed_g,accepted:true};
+  }
+  function quantityEvidence(detail,block) {
+    const provenance = detail.quantity_provenance;
+    if (!provenance) return;
+    let text;
+    if (detail.kind === 'custom_recipe' || provenance.kind === 'custom_recipe') {
+      text = provenance.basis === 'batch' ? I.t('customBatchEvidence',{
+        yield:provenance.batch_yield_g,consumed:provenance.consumed_g,
+        percent:Math.round(provenance.factor * 10000) / 100
+      }) : I.t('customConsumedEvidence');
+      const origin = el('p',text); origin.className = 'quantity-origin'; block.append(origin);
+      for (const ingredient of provenance.ingredients || []) block.append(el('p',I.t('customIngredientEvidence',{
+        name:I.foodName(ingredient.food_id,ingredient.name),grams:ingredient.grams,state:ingredientState(ingredient.state)
+      })));
+      block.append(el('p',I.t(provenance.basis === 'batch' ? 'ingredientBatchHelp' : 'ingredientConsumedHelp')));
+      return;
+    }
+    const grams = provenance.calculated_grams ?? detail.grams;
+    if (provenance.kind === 'user_grams') text = I.t('quantityUser',{grams:provenance.input_grams ?? grams});
+    if (provenance.kind === 'portion_reference') text = I.t('quantityPortion',{count:provenance.portion_count,reference:provenance.reference_grams,grams});
+    if (provenance.kind === 'default_portion') text = I.t('quantityDefault',{grams});
+    if (provenance.kind === 'edible_fraction') text = I.t('quantityEdible',{input:provenance.input_grams,grams});
+    if (text) { const origin = el('p',text); origin.className = 'quantity-origin'; block.append(origin); }
+  }
+  function detailLabel(detail) {
+    if (detail.kind !== 'custom_recipe') return `${I.foodName(detail.food_id,detail.name)} · ${detail.grams}g`;
+    const weight = I.t(detail.quantity_provenance?.basis === 'batch' ? 'customConsumedWeight' : 'customIngredientSum',{grams:detail.grams});
+    return `${I.t('customRecipeTitle',{name:detail.name})} · ${weight}`;
+  }
   function renderHistory() {
     $('history').replaceChildren();
     for (const entry of analysis.conversation || []) {
       const bubble = el('div'); bubble.className = 'bubble ' + entry.role;
       let text = entry.display || entry.content;
       if (entry.role === 'assistant') text = I.systemText(text);
+      else if (entry.kind === 'ingredient_recipe') text = I.t('ingredientRecipeRecorded',{
+        name:String(entry.content || '').replace(/^已确认自定义食材配方：/,'')
+      });
       else if (entry.display && entry.display !== entry.content
         && entry.content?.startsWith('已回答：')
         && entry.content.includes('\n当前餐食资料：')) text = I.structuredReply(entry);
@@ -194,7 +378,8 @@
     for (const [index,detail] of (analysis.details || []).entries()) {
       const block = el('details'); block.dataset.item = detail.food_id + ':' + index;
       block.open = open.get(block.dataset.item) ?? true;
-      block.append(el('summary',`${I.foodName(detail.food_id,detail.name)} · ${detail.grams}g · ${detail.nutrients.calories} kcal`));
+      block.append(el('summary',`${detailLabel(detail)} · ${detail.nutrients.calories} kcal`));
+      quantityEvidence(detail,block);
       for (const assumption of detail.assumptions || []) block.append(el('p',I.assumption(assumption,detail.food_id)));
       const sources = el('p'); sources.className = 'sources';
       sources.append(document.createTextNode(I.t('sources')));
@@ -216,7 +401,14 @@
     $('dialogue').hidden = !analysis;
     $('result').hidden = !analysis || !['completed','confirmed'].includes(state);
     $('answer-form').hidden = state !== 'needs_input';
-    $('reply-form').hidden = !['needs_input','completed','failed'].includes(state);
+    const custom = analysis?.draft?.some(item => item.custom_recipe);
+    $('reply-form').hidden = !['needs_input','completed','failed'].includes(state) || !!custom;
+    $('custom-recipe-guidance').hidden = !custom || !['needs_input','completed','failed'].includes(state);
+    if (ingredientEditor && (analysis?.id !== ingredientEditor.analysisId || state === 'confirmed')) closeIngredientEditor();
+    if (ingredientEditor && analysis?.revision !== ingredientEditor.revision) {
+      ingredientEditor.stale = true; $('ingredient-editor-warning').hidden = false;
+    }
+    renderIngredientActions();
     if (analysis) {
       $('mode').value = analysis.mode; modeHelp();
       $('dialogue-title').textContent = I.t(analysis.mode === 'basic' ? 'basicDialogue' : 'advancedDialogue');
@@ -224,7 +416,7 @@
       if (state === 'needs_input') renderQuestions();
       $('status').textContent = I.t(analysis.mode) + ' · ' + I.t(state);
       $('interpreted').textContent = (analysis.details || []).length
-        ? analysis.details.map(detail => I.foodName(detail.food_id,detail.name) + ' ' + detail.grams + 'g').join(' · ')
+        ? analysis.details.map(detailLabel).join(' · ')
         : analysis.interpreted_food_text || '';
       for (const key of ['calories','protein_g','carbs_g','fat_g']) $(key).textContent = analysis[key] ?? '—';
       $('record').textContent = I.t('record',{id:analysis.id,revision:analysis.revision});
@@ -297,6 +489,35 @@
       }
       if (!Object.keys(answers).length) throw Error('请至少回答一个问题，或使用下方对话补充。');
       saved(await api('/analyses/' + analysis.id + '/reply','POST',{revision:analysis.revision,answers}));
+    });
+  });
+  $('ingredient-add').addEventListener('click',() => {
+    if (busy || !ingredientEditor || $('ingredient-rows').children.length >= 30) return;
+    renderIngredientRows([...editorRows(),{food_id:'',grams:''}]); $('ingredient-accepted').checked = false;
+  });
+  $('ingredient-cancel').addEventListener('click',closeIngredientEditor);
+  $('ingredient-basis').addEventListener('change',translateIngredientEditor);
+  $('ingredient-form').addEventListener('input',event => {
+    if (event.target.id !== 'ingredient-accepted' && !event.target.matches('[data-ingredient-search]')) $('ingredient-accepted').checked = false;
+  });
+  $('ingredient-form').addEventListener('change',event => {
+    if (event.target.id !== 'ingredient-accepted') $('ingredient-accepted').checked = false;
+  });
+  $('ingredient-form').addEventListener('submit',event => {
+    event.preventDefault();
+    if (busy || !ingredientEditor || ingredientEditor.stale || !analysis || !['needs_input','completed','failed'].includes(analysis.status)) return;
+    submit(async () => {
+      const payload = ingredientPayload();
+      try {
+        const result = await api('/analyses/' + ingredientEditor.analysisId + '/ingredients','POST',payload);
+        closeIngredientEditor(); saved(result);
+      } catch (error) {
+        if (error.status === 409) {
+          ingredientEditor.stale = true; $('ingredient-editor-warning').hidden = false;
+          throw Error(I.t('ingredientStale'));
+        }
+        throw error;
+      }
     });
   });
   $('confirm').addEventListener('click',() => submit(async () => {
