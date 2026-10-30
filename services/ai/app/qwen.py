@@ -6,6 +6,7 @@ import unicodedata
 import httpx
 
 from services.common.config import Settings
+from services.common.catalogue_search import catalogue_candidates
 from services.common.food_matching import ground_food_items, matching_aliases
 from services.common.meal_engine import ExtractedMeal, catalogue, evaluate_mode
 from services.common.schemas import NutritionAnalysisResponse
@@ -17,8 +18,11 @@ food_id 必须来自下方目录；无法精确匹配则 null，name 保留原�
 source_text 必须逐字复制用户原文中完整的食物名称（保留菜名的食材和做法，不含克数）。
 不得把 source_text 翻译成目录名称，不得截取其他菜名里的一个食材充当匹配。
 匹配只允许目录名称或给出的 aliases/matching_aliases；未列出的名称填 food_id=null。
-食物身份在基础版也不能猜测。豉油鸡/酱油鸡没有记录，必须为null，绝不能映射为清蒸鲤鱼、
-白切鸡或酱油。蒜蓉芥蓝不是清炒西兰花。未知菜也不能拆成模型猜出的配料。
+食物身份在基础版也不能猜测。不存在的“月球紫晶兽肉”必须为null，绝不能映射为鸡肉或鱼肉。
+蒜蓉芥蓝不是清炒西兰花。未知菜也不能拆成模型猜出的配料。
+下方是按用户原文检索出的候选记录，不是整份数据库；出现候选不代表用户吃了它。
+候选包含配方相关食材供理解用量；用户未提到的食材不能新增到餐食。
+菜名与候选不对应时保留原文并填null，不得从候选中强行选一个。
 重量只取用户明确的克数；碗/个/份不能自行换算，grams 填 null。
 明确的碗/个/杯/份数量记录 portion_count，单位对应 bowl/piece/cup/serving。
 没说数量则 portion_count 和 portion_unit 为 null。若给出每份克数及数量，grams 为总克数。
@@ -112,7 +116,7 @@ def analyze_with_qwen(food_text: str, settings: Settings, history=None, mode='ad
         raise RuntimeError('Qwen requires DASHSCOPE_API_KEY and QWEN_BASE_URL')
     compact = [{k:f[k] for k in ('id','name','kind','state','aliases','method','preparations')
                 if k in f}
-               for f in catalogue()['foods']]
+               for f in catalogue_candidates(food_text, history)]
     for food in compact:
         food['matching_aliases'] = matching_aliases().get(food['id'], [])
     prompt = SYSTEM_PROMPT

@@ -9,7 +9,7 @@ import zipfile
 
 DATA = Path(__file__).resolve().parents[1] / 'services/common/data'
 SOURCE = 'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip'
-VERSION = '2026-10-19.1'
+VERSION = '2026-10-31.1'
 
 
 def validate_catalogue(foods):

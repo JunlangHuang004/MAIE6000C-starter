@@ -26,7 +26,7 @@ def test_unsupported_meal_stays_blocked_until_explicit_correction(
     monkeypatch.setattr(worker, 'get_session_factory',
                         lambda: make_session_factory(db_session.get_bind()))
     unknown = [
-        ExtractedItem(name='豉油鸡', source_text='豉油鸡', grams=200).model_dump(),
+        ExtractedItem(name='火星豉油鸡', source_text='火星豉油鸡', grams=200).model_dump(),
         ExtractedItem(name='米饭', source_text='米饭', food_id='rice', grams=100,
                       weight_basis='cooked', preparation='boiled').model_dump(),
     ]
@@ -58,7 +58,7 @@ def test_unsupported_meal_stays_blocked_until_explicit_correction(
         return client.get('/analyses/' + data['analysis']['id']).json()
 
     meal = run_job(client.post('/analyses', json={
-        'food_text':'200克豉油鸡和100克米饭熟重', 'mode':mode}))
+        'food_text':'200克火星豉油鸡和100克米饭熟重', 'mode':mode}))
     path = '/analyses/' + meal['id']
 
     def assert_blocked(state):
@@ -66,14 +66,14 @@ def test_unsupported_meal_stays_blocked_until_explicit_correction(
         assert all(state[key] is None for key in NUTRIENTS)
         assert state['details'] == []
         assert state['interpreted_food_text'] is None
-        assert state['draft'][0]['name'] == '豉油鸡'
+        assert state['draft'][0]['name'] == '火星豉油鸡'
         assert state['draft'][0]['food_id'] is None
         assert state['draft'][1]['food_id'] == 'rice'
         question = next(q for q in state['questions'] if q['key'] == '0.food_id')
         assert question['kind'] == 'unsupported'
         assert '数据库未找到' in question['label']
         assert 'options' not in question
-        assert '豉油鸡' in state['conversation'][-1]['content']
+        assert '火星豉油鸡' in state['conversation'][-1]['content']
         assert client.get(path).json() == state
         stored = db_session.get(Analysis, state['id'])
         assert stored.status == 'needs_input'

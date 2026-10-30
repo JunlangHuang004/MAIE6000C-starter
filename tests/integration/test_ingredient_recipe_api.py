@@ -50,15 +50,15 @@ def workflow(client, db_session, monkeypatch):
 
     def seed(mode='basic', extra_unknown=False, rice_grams=100):
         draft = [
-            ExtractedItem(name='豉油鸡', source_text='豉油鸡', grams=200).model_dump(),
+            ExtractedItem(name='火星豉油鸡', source_text='火星豉油鸡', grams=200).model_dump(),
             ExtractedItem(name='米饭', source_text='米饭', food_id='rice', grams=rice_grams,
                           weight_basis='cooked', preparation='as_served').model_dump(),
         ]
         if extra_unknown:
             draft.append(ExtractedItem(name='Another unknown dish').model_dump())
         state = evaluate_mode(draft, mode)
-        row = Analysis(food_text='豉油鸡配米饭', mode=mode, status='needs_input',
-                       conversation=[{'role': 'user', 'content': '豉油鸡配米饭'}], **state)
+        row = Analysis(food_text='火星豉油鸡配米饭', mode=mode, status='needs_input',
+                       conversation=[{'role': 'user', 'content': '火星豉油鸡配米饭'}], **state)
         db_session.add(row)
         db_session.commit()
         return '/analyses/' + row.id, deepcopy(draft)
@@ -87,7 +87,7 @@ def test_structured_recipe_completes_preserves_other_food_and_locks_after_confir
     assert meal['calories'] == expected
     assert meal['draft'][1] == original[1]
     assert meal['draft'][0]['food_id'] is None
-    assert meal['draft'][0]['original_name'] == '豉油鸡'
+    assert meal['draft'][0]['original_name'] == '火星豉油鸡'
     assert meal['draft'][0]['custom_recipe']['accepted'] is True
     assert meal['details'][0]['kind'] == 'custom_recipe'
     assert meal['details'][1]['food_id'] == 'rice'
@@ -153,7 +153,7 @@ def test_mode_edit_and_other_food_answers_preserve_recipe_facts(client, workflow
     edit['consumed_g'] = 300
     state = run(client.post(path + '/ingredients', json=edit))
     assert state['calories'] == 359.5
-    assert state['draft'][0]['original_name'] == '豉油鸡'
+    assert state['draft'][0]['original_name'] == '火星豉油鸡'
 
 
 @pytest.mark.parametrize('patch', [

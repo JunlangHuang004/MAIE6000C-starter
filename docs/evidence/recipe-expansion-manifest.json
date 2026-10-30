@@ -1,0 +1,2309 @@
+{
+  "date": "2026-10-31",
+  "previous_recipe_count": 250,
+  "new_recipe_count": 350,
+  "unchanged_existing_records": 250,
+  "previous_records_sha256": "7c338ba3523c303ddbe7d534b25560541b225421496cabc4e2e74a507706f78e",
+  "basis": "Project-authored editable illustrative ingredient amounts and finished yields; not measured dish nutrition, authentic standardized recipes or imported recipe data.",
+  "ingredient_provenance": "Existing and newly verified USDA SR Legacy ingredient records; no nutrient values are authored in recipes.",
+  "names_added": [
+    {
+      "id": "dish_251",
+      "name": "豉油鸡",
+      "aliases": [
+        "豉油鸡",
+        "酱油鸡",
+        "豉油雞",
+        "醬油雞"
+      ],
+      "ingredients": [
+        "chicken_skin",
+        "soy_sauce",
+        "sugar",
+        "ginger",
+        "spring_onion",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_252",
+      "name": "可乐鸡翅",
+      "aliases": [
+        "可乐鸡翅",
+        "可樂雞翅"
+      ],
+      "ingredients": [
+        "chicken_wing",
+        "cola",
+        "soy_sauce",
+        "ginger",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_253",
+      "name": "照烧鸡腿",
+      "aliases": [
+        "照烧鸡腿",
+        "照烧鸡腿肉",
+        "照燒雞腿"
+      ],
+      "ingredients": [
+        "chicken_thigh",
+        "soy_sauce",
+        "honey",
+        "sugar",
+        "ginger",
+        "oil",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_254",
+      "name": "葱油鸡",
+      "aliases": [
+        "葱油鸡",
+        "蔥油雞"
+      ],
+      "ingredients": [
+        "chicken_skin",
+        "spring_onion",
+        "ginger",
+        "oil",
+        "salt",
+        "soy_sauce"
+      ]
+    },
+    {
+      "id": "dish_255",
+      "name": "凉拌鸡丝",
+      "aliases": [
+        "凉拌鸡丝",
+        "手撕鸡",
+        "手撕雞",
+        "涼拌雞絲"
+      ],
+      "ingredients": [
+        "chicken",
+        "cucumber",
+        "soy_sauce",
+        "vinegar",
+        "sesame_oil",
+        "chili",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_256",
+      "name": "咖喱鸡",
+      "aliases": [
+        "咖喱鸡",
+        "咖喱雞"
+      ],
+      "ingredients": [
+        "chicken_thigh",
+        "potato",
+        "carrot",
+        "onion",
+        "curry_powder",
+        "oil",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_257",
+      "name": "炸鸡柳",
+      "aliases": [
+        "炸鸡柳",
+        "炸雞柳"
+      ],
+      "ingredients": [
+        "chicken",
+        "wheat_flour",
+        "starch",
+        "egg_raw",
+        "oil",
+        "salt",
+        "black_pepper"
+      ]
+    },
+    {
+      "id": "dish_258",
+      "name": "椒盐鸡块",
+      "aliases": [
+        "椒盐鸡块",
+        "椒鹽雞塊"
+      ],
+      "ingredients": [
+        "chicken_skin",
+        "starch",
+        "egg_raw",
+        "oil",
+        "salt",
+        "black_pepper",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_259",
+      "name": "香辣鸡胗",
+      "aliases": [
+        "香辣鸡胗",
+        "香辣鸡肫",
+        "爆炒鸡胗",
+        "香辣雞胗"
+      ],
+      "ingredients": [
+        "chicken_gizzard",
+        "pepper",
+        "chili",
+        "onion",
+        "oil",
+        "soy_sauce",
+        "ginger",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_260",
+      "name": "青椒鸡心",
+      "aliases": [
+        "青椒鸡心",
+        "青椒炒鸡心",
+        "青椒雞心"
+      ],
+      "ingredients": [
+        "chicken_heart",
+        "pepper",
+        "onion",
+        "oil",
+        "soy_sauce",
+        "ginger",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_261",
+      "name": "卤鸭肉",
+      "aliases": [
+        "卤鸭肉",
+        "滷鴨肉"
+      ],
+      "ingredients": [
+        "duck",
+        "soy_sauce",
+        "sugar",
+        "ginger",
+        "spring_onion",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_262",
+      "name": "莲藕炖鸭",
+      "aliases": [
+        "莲藕炖鸭",
+        "蓮藕燉鴨"
+      ],
+      "ingredients": [
+        "duck",
+        "lotus",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_263",
+      "name": "土豆烧鸭",
+      "aliases": [
+        "土豆烧鸭",
+        "土豆燒鴨"
+      ],
+      "ingredients": [
+        "duck",
+        "potato",
+        "onion",
+        "ginger",
+        "soy_sauce",
+        "oil",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_264",
+      "name": "红烧兔肉",
+      "aliases": [
+        "红烧兔肉",
+        "紅燒兔肉"
+      ],
+      "ingredients": [
+        "rabbit",
+        "carrot",
+        "ginger",
+        "garlic",
+        "soy_sauce",
+        "sugar",
+        "oil",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_265",
+      "name": "葱姜兔丁",
+      "aliases": [
+        "葱姜兔丁",
+        "蔥薑兔丁"
+      ],
+      "ingredients": [
+        "rabbit",
+        "spring_onion",
+        "ginger",
+        "pepper",
+        "soy_sauce",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_266",
+      "name": "菠萝咕咾肉",
+      "aliases": [
+        "菠萝咕咾肉",
+        "菠萝咕噜肉",
+        "咕咾肉",
+        "咕噜肉",
+        "菠蘿咕咾肉"
+      ],
+      "ingredients": [
+        "pork",
+        "pineapple",
+        "pepper",
+        "starch",
+        "egg_raw",
+        "ketchup",
+        "sugar",
+        "vinegar",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_267",
+      "name": "叉烧肉",
+      "aliases": [
+        "叉烧肉",
+        "蜜汁叉烧",
+        "叉烧",
+        "叉燒肉",
+        "叉燒"
+      ],
+      "ingredients": [
+        "pork",
+        "hoisin",
+        "soy_sauce",
+        "honey",
+        "sugar",
+        "garlic",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_268",
+      "name": "干炸里脊",
+      "aliases": [
+        "干炸里脊",
+        "乾炸里脊"
+      ],
+      "ingredients": [
+        "pork",
+        "wheat_flour",
+        "starch",
+        "egg_raw",
+        "oil",
+        "salt",
+        "black_pepper"
+      ]
+    },
+    {
+      "id": "dish_269",
+      "name": "椒盐排骨",
+      "aliases": [
+        "椒盐排骨",
+        "椒鹽排骨"
+      ],
+      "ingredients": [
+        "pork_ribs",
+        "starch",
+        "oil",
+        "salt",
+        "black_pepper",
+        "garlic",
+        "chili"
+      ]
+    },
+    {
+      "id": "dish_270",
+      "name": "香菇蒸肉饼",
+      "aliases": [
+        "香菇蒸肉饼",
+        "香菇蒸肉餅"
+      ],
+      "ingredients": [
+        "pork_ground",
+        "shiitake",
+        "starch",
+        "soy_sauce",
+        "sesame_oil",
+        "ginger",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_271",
+      "name": "爆炒猪肝",
+      "aliases": [
+        "爆炒猪肝",
+        "青椒猪肝",
+        "青椒炒猪肝",
+        "爆炒豬肝"
+      ],
+      "ingredients": [
+        "liver",
+        "pepper",
+        "onion",
+        "oil",
+        "soy_sauce",
+        "starch",
+        "ginger"
+      ]
+    },
+    {
+      "id": "dish_272",
+      "name": "溜肝尖",
+      "aliases": [
+        "溜肝尖",
+        "熘肝尖"
+      ],
+      "ingredients": [
+        "liver",
+        "cucumber",
+        "carrot",
+        "wood_ear",
+        "starch",
+        "soy_sauce",
+        "oil",
+        "water",
+        "ginger"
+      ]
+    },
+    {
+      "id": "dish_273",
+      "name": "红烧猪蹄",
+      "aliases": [
+        "红烧猪蹄",
+        "紅燒豬蹄"
+      ],
+      "ingredients": [
+        "pork_feet",
+        "soy_sauce",
+        "sugar",
+        "ginger",
+        "oil",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_274",
+      "name": "黄豆炖猪蹄",
+      "aliases": [
+        "黄豆炖猪蹄",
+        "黄豆猪蹄汤",
+        "黃豆燉豬蹄"
+      ],
+      "ingredients": [
+        "pork_feet",
+        "soybeans",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_275",
+      "name": "爆炒腰花",
+      "aliases": [
+        "爆炒腰花",
+        "炒腰花"
+      ],
+      "ingredients": [
+        "pork_kidney",
+        "pepper",
+        "onion",
+        "wood_ear",
+        "oil",
+        "soy_sauce",
+        "vinegar",
+        "starch",
+        "ginger"
+      ]
+    },
+    {
+      "id": "dish_276",
+      "name": "爆炒肥肠",
+      "aliases": [
+        "爆炒肥肠",
+        "青椒肥肠",
+        "青椒炒肥肠",
+        "爆炒肥腸"
+      ],
+      "ingredients": [
+        "pork_intestine",
+        "pepper",
+        "onion",
+        "oil",
+        "soy_sauce",
+        "ginger",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_277",
+      "name": "凉拌猪耳",
+      "aliases": [
+        "凉拌猪耳",
+        "涼拌豬耳"
+      ],
+      "ingredients": [
+        "pork_ear",
+        "cucumber",
+        "soy_sauce",
+        "vinegar",
+        "sesame_oil",
+        "garlic",
+        "chili"
+      ]
+    },
+    {
+      "id": "dish_278",
+      "name": "胡椒猪肚汤",
+      "aliases": [
+        "胡椒猪肚汤",
+        "胡椒豬肚湯"
+      ],
+      "ingredients": [
+        "pork_stomach",
+        "white_pepper",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_279",
+      "name": "卤猪心",
+      "aliases": [
+        "卤猪心",
+        "滷豬心"
+      ],
+      "ingredients": [
+        "pork_heart",
+        "soy_sauce",
+        "sugar",
+        "ginger",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_280",
+      "name": "孜然牛肉",
+      "aliases": [
+        "孜然牛肉",
+        "孜然炒牛肉"
+      ],
+      "ingredients": [
+        "beef_lean",
+        "onion",
+        "cumin",
+        "chili_powder",
+        "soy_sauce",
+        "oil",
+        "cilantro"
+      ]
+    },
+    {
+      "id": "dish_281",
+      "name": "香菜拌牛肉",
+      "aliases": [
+        "香菜拌牛肉",
+        "香菜牛肉",
+        "涼拌牛肉",
+        "凉拌牛肉"
+      ],
+      "ingredients": [
+        "beef_lean",
+        "cilantro",
+        "soy_sauce",
+        "vinegar",
+        "sesame_oil",
+        "garlic",
+        "chili"
+      ]
+    },
+    {
+      "id": "dish_282",
+      "name": "咖喱牛肉",
+      "aliases": [
+        "咖喱牛肉"
+      ],
+      "ingredients": [
+        "beef_chunk",
+        "potato",
+        "carrot",
+        "onion",
+        "curry_powder",
+        "oil",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_283",
+      "name": "葱爆羊肉",
+      "aliases": [
+        "葱爆羊肉",
+        "蔥爆羊肉"
+      ],
+      "ingredients": [
+        "lamb_leg",
+        "spring_onion",
+        "soy_sauce",
+        "oil",
+        "ginger"
+      ]
+    },
+    {
+      "id": "dish_284",
+      "name": "孜然羊肉",
+      "aliases": [
+        "孜然羊肉"
+      ],
+      "ingredients": [
+        "lamb_leg",
+        "onion",
+        "cumin",
+        "chili_powder",
+        "oil",
+        "soy_sauce",
+        "cilantro"
+      ]
+    },
+    {
+      "id": "dish_285",
+      "name": "红焖羊肉",
+      "aliases": [
+        "红焖羊肉",
+        "紅燜羊肉"
+      ],
+      "ingredients": [
+        "lamb_leg",
+        "carrot",
+        "onion",
+        "soy_sauce",
+        "ginger",
+        "oil",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_286",
+      "name": "萝卜炖羊肉",
+      "aliases": [
+        "萝卜炖羊肉",
+        "蘿蔔燉羊肉",
+        "白萝卜炖羊肉"
+      ],
+      "ingredients": [
+        "lamb_leg",
+        "radish",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_287",
+      "name": "冬瓜羊肉汤",
+      "aliases": [
+        "冬瓜羊肉汤",
+        "冬瓜羊肉湯"
+      ],
+      "ingredients": [
+        "lamb_leg",
+        "winter_melon",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_288",
+      "name": "椒盐鱿鱼",
+      "aliases": [
+        "椒盐鱿鱼",
+        "椒鹽魷魚"
+      ],
+      "ingredients": [
+        "squid",
+        "wheat_flour",
+        "starch",
+        "egg_raw",
+        "oil",
+        "salt",
+        "black_pepper"
+      ]
+    },
+    {
+      "id": "dish_289",
+      "name": "铁板鱿鱼",
+      "aliases": [
+        "铁板鱿鱼",
+        "鐵板魷魚"
+      ],
+      "ingredients": [
+        "squid",
+        "onion",
+        "chili",
+        "soy_sauce",
+        "oil",
+        "cumin"
+      ]
+    },
+    {
+      "id": "dish_290",
+      "name": "葱油鱼",
+      "aliases": [
+        "葱油鱼",
+        "蔥油魚"
+      ],
+      "ingredients": [
+        "carp",
+        "spring_onion",
+        "ginger",
+        "soy_sauce",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_291",
+      "name": "香酥鱼块",
+      "aliases": [
+        "香酥鱼块",
+        "炸鱼块",
+        "香酥魚塊"
+      ],
+      "ingredients": [
+        "carp",
+        "wheat_flour",
+        "starch",
+        "egg_raw",
+        "oil",
+        "salt",
+        "ginger"
+      ]
+    },
+    {
+      "id": "dish_292",
+      "name": "茄汁虾仁",
+      "aliases": [
+        "茄汁虾仁",
+        "茄汁蝦仁"
+      ],
+      "ingredients": [
+        "shrimp",
+        "tomato",
+        "ketchup",
+        "sugar",
+        "starch",
+        "oil",
+        "garlic",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_293",
+      "name": "避风塘虾",
+      "aliases": [
+        "避风塘虾",
+        "避風塘蝦"
+      ],
+      "ingredients": [
+        "shrimp",
+        "bread",
+        "garlic",
+        "chili",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_294",
+      "name": "辣炒花甲",
+      "aliases": [
+        "辣炒花甲",
+        "辣炒蛤蜊"
+      ],
+      "ingredients": [
+        "clam",
+        "chili",
+        "pepper",
+        "garlic",
+        "ginger",
+        "soy_sauce",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_295",
+      "name": "清蒸螃蟹",
+      "aliases": [
+        "清蒸螃蟹",
+        "清蒸蟹"
+      ],
+      "ingredients": [
+        "crab",
+        "ginger"
+      ]
+    },
+    {
+      "id": "dish_296",
+      "name": "蟹肉炒蛋",
+      "aliases": [
+        "蟹肉炒蛋",
+        "蟹肉炒雞蛋"
+      ],
+      "ingredients": [
+        "crab",
+        "egg_raw",
+        "spring_onion",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_297",
+      "name": "芦笋炒虾仁",
+      "aliases": [
+        "芦笋炒虾仁",
+        "蘆筍炒蝦仁"
+      ],
+      "ingredients": [
+        "asparagus",
+        "shrimp",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_298",
+      "name": "蒜蓉空心菜",
+      "aliases": [
+        "蒜蓉空心菜",
+        "清炒空心菜",
+        "蒜蓉通菜",
+        "清炒通菜"
+      ],
+      "ingredients": [
+        "water_spinach",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_299",
+      "name": "清炒苋菜",
+      "aliases": [
+        "清炒苋菜",
+        "清炒莧菜"
+      ],
+      "ingredients": [
+        "amaranth",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_300",
+      "name": "蒜蓉西洋菜",
+      "aliases": [
+        "蒜蓉西洋菜",
+        "清炒西洋菜"
+      ],
+      "ingredients": [
+        "watercress",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_301",
+      "name": "清炒莴笋",
+      "aliases": [
+        "清炒莴笋",
+        "清炒莴苣笋",
+        "清炒萵筍"
+      ],
+      "ingredients": [
+        "celtuce",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_302",
+      "name": "莴笋炒肉",
+      "aliases": [
+        "莴笋炒肉",
+        "莴笋炒肉片",
+        "萵筍炒肉"
+      ],
+      "ingredients": [
+        "celtuce",
+        "pork",
+        "garlic",
+        "oil",
+        "soy_sauce",
+        "starch"
+      ]
+    },
+    {
+      "id": "dish_303",
+      "name": "凉拌莴笋",
+      "aliases": [
+        "凉拌莴笋",
+        "凉拌莴笋丝",
+        "涼拌萵筍"
+      ],
+      "ingredients": [
+        "celtuce",
+        "vinegar",
+        "sesame_oil",
+        "sugar",
+        "salt",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_304",
+      "name": "清炒芦笋",
+      "aliases": [
+        "清炒芦笋",
+        "清炒蘆筍"
+      ],
+      "ingredients": [
+        "asparagus",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_305",
+      "name": "芦笋炒鸡蛋",
+      "aliases": [
+        "芦笋炒鸡蛋",
+        "芦笋炒蛋",
+        "蘆筍炒雞蛋"
+      ],
+      "ingredients": [
+        "asparagus",
+        "egg_raw",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_306",
+      "name": "清炒佛手瓜",
+      "aliases": [
+        "清炒佛手瓜"
+      ],
+      "ingredients": [
+        "chayote",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_307",
+      "name": "佛手瓜炒肉",
+      "aliases": [
+        "佛手瓜炒肉",
+        "佛手瓜炒肉片"
+      ],
+      "ingredients": [
+        "chayote",
+        "pork",
+        "oil",
+        "soy_sauce",
+        "starch",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_308",
+      "name": "清炒豇豆",
+      "aliases": [
+        "清炒豇豆",
+        "清炒长豆角",
+        "清炒長豇豆"
+      ],
+      "ingredients": [
+        "yardlong_bean",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_309",
+      "name": "肉末豇豆",
+      "aliases": [
+        "肉末豇豆",
+        "肉末长豆角",
+        "肉末長豇豆"
+      ],
+      "ingredients": [
+        "yardlong_bean",
+        "pork_ground",
+        "garlic",
+        "oil",
+        "soy_sauce"
+      ]
+    },
+    {
+      "id": "dish_310",
+      "name": "咖喱土豆",
+      "aliases": [
+        "咖喱土豆"
+      ],
+      "ingredients": [
+        "potato",
+        "carrot",
+        "onion",
+        "curry_powder",
+        "oil",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_311",
+      "name": "香煎土豆饼",
+      "aliases": [
+        "香煎土豆饼",
+        "土豆饼",
+        "土豆餅"
+      ],
+      "ingredients": [
+        "potato",
+        "wheat_flour",
+        "egg_raw",
+        "spring_onion",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_312",
+      "name": "蒜香烤土豆",
+      "aliases": [
+        "蒜香烤土豆",
+        "蒜香烤土豆块"
+      ],
+      "ingredients": [
+        "potato",
+        "oil",
+        "garlic",
+        "black_pepper",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_313",
+      "name": "丝瓜炒鸡蛋",
+      "aliases": [
+        "丝瓜炒鸡蛋",
+        "丝瓜炒蛋",
+        "絲瓜炒雞蛋"
+      ],
+      "ingredients": [
+        "loofah",
+        "egg_raw",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_314",
+      "name": "丝瓜炒虾仁",
+      "aliases": [
+        "丝瓜炒虾仁",
+        "絲瓜炒蝦仁"
+      ],
+      "ingredients": [
+        "loofah",
+        "shrimp",
+        "garlic",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_315",
+      "name": "酿豆腐",
+      "aliases": [
+        "酿豆腐",
+        "客家酿豆腐",
+        "釀豆腐"
+      ],
+      "ingredients": [
+        "tofu",
+        "pork_ground",
+        "shiitake",
+        "soy_sauce",
+        "oil",
+        "starch",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_316",
+      "name": "虾仁豆腐煲",
+      "aliases": [
+        "虾仁豆腐煲",
+        "蝦仁豆腐煲"
+      ],
+      "ingredients": [
+        "tofu_soft",
+        "shrimp",
+        "tomato",
+        "oil",
+        "starch",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_317",
+      "name": "香煎茄盒",
+      "aliases": [
+        "香煎茄盒",
+        "煎茄盒"
+      ],
+      "ingredients": [
+        "eggplant",
+        "pork_ground",
+        "wheat_flour",
+        "starch",
+        "egg_raw",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_318",
+      "name": "蒜蓉烤茄子",
+      "aliases": [
+        "蒜蓉烤茄子",
+        "蒜香烤茄子"
+      ],
+      "ingredients": [
+        "eggplant",
+        "garlic",
+        "oil",
+        "soy_sauce",
+        "chili",
+        "spring_onion"
+      ]
+    },
+    {
+      "id": "dish_319",
+      "name": "菠菜猪肝汤",
+      "aliases": [
+        "菠菜猪肝汤",
+        "菠菜豬肝湯"
+      ],
+      "ingredients": [
+        "liver",
+        "spinach",
+        "ginger",
+        "water",
+        "salt",
+        "sesame_oil"
+      ]
+    },
+    {
+      "id": "dish_320",
+      "name": "猪肝瘦肉汤",
+      "aliases": [
+        "猪肝瘦肉汤",
+        "豬肝瘦肉湯"
+      ],
+      "ingredients": [
+        "liver",
+        "pork",
+        "ginger",
+        "spring_onion",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_321",
+      "name": "西洋菜排骨汤",
+      "aliases": [
+        "西洋菜排骨汤",
+        "西洋菜猪骨汤",
+        "西洋菜排骨湯"
+      ],
+      "ingredients": [
+        "watercress",
+        "pork_ribs",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_322",
+      "name": "莲藕花生汤",
+      "aliases": [
+        "莲藕花生汤",
+        "蓮藕花生湯"
+      ],
+      "ingredients": [
+        "lotus",
+        "peanut",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_323",
+      "name": "海带绿豆汤",
+      "aliases": [
+        "海带绿豆汤",
+        "海帶綠豆湯"
+      ],
+      "ingredients": [
+        "kelp",
+        "mung",
+        "water",
+        "sugar"
+      ]
+    },
+    {
+      "id": "dish_324",
+      "name": "白萝卜鸭汤",
+      "aliases": [
+        "白萝卜鸭汤",
+        "萝卜鸭汤",
+        "白蘿蔔鴨湯"
+      ],
+      "ingredients": [
+        "duck",
+        "radish",
+        "ginger",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_325",
+      "name": "莲子红豆汤",
+      "aliases": [
+        "莲子红豆汤",
+        "红豆莲子糖水",
+        "蓮子紅豆湯"
+      ],
+      "ingredients": [
+        "lotus_seed_dried",
+        "adzuki",
+        "sugar",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_326",
+      "name": "莲子花生汤",
+      "aliases": [
+        "莲子花生汤",
+        "莲子花生糖水",
+        "蓮子花生湯"
+      ],
+      "ingredients": [
+        "lotus_seed_dried",
+        "peanut",
+        "sugar",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_327",
+      "name": "八宝粥",
+      "aliases": [
+        "八宝粥",
+        "八寶粥"
+      ],
+      "ingredients": [
+        "rice_raw",
+        "glutinous",
+        "adzuki",
+        "mung",
+        "peanut",
+        "walnut",
+        "chestnut",
+        "millet",
+        "water",
+        "sugar"
+      ]
+    },
+    {
+      "id": "dish_328",
+      "name": "南瓜小米粥",
+      "aliases": [
+        "南瓜小米粥"
+      ],
+      "ingredients": [
+        "millet",
+        "pumpkin",
+        "water"
+      ]
+    },
+    {
+      "id": "dish_329",
+      "name": "鸡肉粥",
+      "aliases": [
+        "鸡肉粥",
+        "鸡丝粥",
+        "雞肉粥"
+      ],
+      "ingredients": [
+        "rice_raw",
+        "chicken",
+        "ginger",
+        "spring_onion",
+        "water",
+        "salt",
+        "sesame_oil"
+      ]
+    },
+    {
+      "id": "dish_330",
+      "name": "鱼片粥",
+      "aliases": [
+        "鱼片粥",
+        "魚片粥"
+      ],
+      "ingredients": [
+        "rice_raw",
+        "tilapia",
+        "ginger",
+        "spring_onion",
+        "water",
+        "salt",
+        "sesame_oil"
+      ]
+    },
+    {
+      "id": "dish_331",
+      "name": "虾仁粥",
+      "aliases": [
+        "虾仁粥",
+        "蝦仁粥"
+      ],
+      "ingredients": [
+        "rice_raw",
+        "shrimp",
+        "ginger",
+        "spring_onion",
+        "water",
+        "salt",
+        "sesame_oil"
+      ]
+    },
+    {
+      "id": "dish_332",
+      "name": "猪肝粥",
+      "aliases": [
+        "猪肝粥",
+        "豬肝粥"
+      ],
+      "ingredients": [
+        "rice_raw",
+        "liver",
+        "ginger",
+        "spring_onion",
+        "water",
+        "salt",
+        "sesame_oil"
+      ]
+    },
+    {
+      "id": "dish_333",
+      "name": "瘦肉粥",
+      "aliases": [
+        "瘦肉粥"
+      ],
+      "ingredients": [
+        "rice_raw",
+        "pork",
+        "ginger",
+        "spring_onion",
+        "water",
+        "salt",
+        "sesame_oil"
+      ]
+    },
+    {
+      "id": "dish_334",
+      "name": "酱油炒饭",
+      "aliases": [
+        "酱油炒饭",
+        "醬油炒飯"
+      ],
+      "ingredients": [
+        "rice",
+        "egg_raw",
+        "spring_onion",
+        "soy_sauce",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_335",
+      "name": "火腿炒饭",
+      "aliases": [
+        "火腿炒饭",
+        "火腿蛋炒饭",
+        "火腿炒飯"
+      ],
+      "ingredients": [
+        "rice",
+        "ham",
+        "egg_raw",
+        "peas",
+        "carrot",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_336",
+      "name": "菠萝炒饭",
+      "aliases": [
+        "菠萝炒饭",
+        "菠蘿炒飯"
+      ],
+      "ingredients": [
+        "rice",
+        "pineapple",
+        "shrimp",
+        "egg_raw",
+        "peas",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_337",
+      "name": "蛋包饭",
+      "aliases": [
+        "蛋包饭",
+        "蛋包飯"
+      ],
+      "ingredients": [
+        "rice",
+        "egg_raw",
+        "carrot",
+        "peas",
+        "ketchup",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_338",
+      "name": "咖喱鸡饭",
+      "aliases": [
+        "咖喱鸡饭",
+        "咖喱雞飯"
+      ],
+      "ingredients": [
+        "rice",
+        "chicken_thigh",
+        "potato",
+        "carrot",
+        "onion",
+        "curry_powder",
+        "oil",
+        "water",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_339",
+      "name": "干炒牛河",
+      "aliases": [
+        "干炒牛河",
+        "乾炒牛河"
+      ],
+      "ingredients": [
+        "rice_noodles",
+        "beef_lean",
+        "bean_sprout",
+        "onion",
+        "spring_onion",
+        "soy_sauce",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_340",
+      "name": "星洲炒米粉",
+      "aliases": [
+        "星洲炒米粉"
+      ],
+      "ingredients": [
+        "rice_noodles",
+        "shrimp",
+        "ham",
+        "egg_raw",
+        "bean_sprout",
+        "pepper",
+        "curry_powder",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_341",
+      "name": "鸡丝凉面",
+      "aliases": [
+        "鸡丝凉面",
+        "雞絲涼麵"
+      ],
+      "ingredients": [
+        "noodles",
+        "chicken",
+        "cucumber",
+        "sesame_paste",
+        "soy_sauce",
+        "vinegar",
+        "sesame_oil",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_342",
+      "name": "担担面",
+      "aliases": [
+        "担担面",
+        "擔擔麵"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "pork_ground",
+        "sesame_paste",
+        "soy_sauce",
+        "chili_powder",
+        "oil",
+        "garlic",
+        "spring_onion"
+      ]
+    },
+    {
+      "id": "dish_343",
+      "name": "油泼面",
+      "aliases": [
+        "油泼面",
+        "油潑麵"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "bok_choy",
+        "garlic",
+        "chili_powder",
+        "oil",
+        "soy_sauce",
+        "vinegar"
+      ]
+    },
+    {
+      "id": "dish_344",
+      "name": "豆角焖面",
+      "aliases": [
+        "豆角焖面",
+        "豆角燜麵"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "green_bean",
+        "pork",
+        "soy_sauce",
+        "oil",
+        "garlic"
+      ]
+    },
+    {
+      "id": "dish_345",
+      "name": "鲜肉包",
+      "aliases": [
+        "鲜肉包",
+        "猪肉包子",
+        "鲜肉包子",
+        "肉包子",
+        "鮮肉包"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "yeast",
+        "pork_ground",
+        "spring_onion",
+        "ginger",
+        "soy_sauce",
+        "sesame_oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_346",
+      "name": "香菇青菜包",
+      "aliases": [
+        "香菇青菜包",
+        "香菇菜包",
+        "香菇青菜包子"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "yeast",
+        "bok_choy",
+        "shiitake",
+        "oil",
+        "soy_sauce",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_347",
+      "name": "豆沙包",
+      "aliases": [
+        "豆沙包",
+        "红豆沙包",
+        "豆沙包子"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "yeast",
+        "adzuki",
+        "sugar",
+        "oil"
+      ]
+    },
+    {
+      "id": "dish_348",
+      "name": "生煎包",
+      "aliases": [
+        "生煎包",
+        "生煎",
+        "生煎馒头"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "yeast",
+        "pork_ground",
+        "spring_onion",
+        "ginger",
+        "soy_sauce",
+        "sesame",
+        "oil",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_349",
+      "name": "锅贴",
+      "aliases": [
+        "锅贴",
+        "鍋貼"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "pork_ground",
+        "napa",
+        "soy_sauce",
+        "sesame_oil",
+        "oil",
+        "ginger",
+        "salt"
+      ]
+    },
+    {
+      "id": "dish_350",
+      "name": "糯米烧卖",
+      "aliases": [
+        "糯米烧卖",
+        "糯米烧麦",
+        "糯米燒賣"
+      ],
+      "ingredients": [
+        "wheat_flour",
+        "water",
+        "glutinous",
+        "pork_ground",
+        "shiitake",
+        "soy_sauce",
+        "oil",
+        "sugar"
+      ]
+    }
+  ],
+  "deferred_missing_ingredients": [
+    "韭菜",
+    "蒜薹",
+    "皮蛋",
+    "豆干",
+    "中式酸菜",
+    "干百合"
+  ],
+  "constraints": [
+    "One mainstream reference per dish; no regional duplicate editions.",
+    "All weights are edible portions; raw ingredients and dry cereals/beans retain their source states.",
+    "Oil in fried recipes is an explicitly assumed amount retained in food, not frying-vat oil.",
+    "Batch yields and portion defaults are editable assumptions; cooking loss and ingredient distribution are not measured."
+  ],
+  "validation": {
+    "old_records_unchanged": true,
+    "unique_food_ids_and_normalized_aliases": true,
+    "known_ingredient_references": true,
+    "checked_ingredient_count": 200,
+    "new_recipes_both_modes_passed": 100,
+    "source": "Actual official SR Legacy ZIP nutrients loaded in memory in offline Docker; catalogue.json was not regenerated by this review."
+  },
+  "reference_portion_checks": [
+    {
+      "id": "dish_251",
+      "name": "豉油鸡",
+      "reference_portion_g": 200,
+      "reference_calories": 468.9
+    },
+    {
+      "id": "dish_252",
+      "name": "可乐鸡翅",
+      "reference_portion_g": 200,
+      "reference_calories": 436.5
+    },
+    {
+      "id": "dish_253",
+      "name": "照烧鸡腿",
+      "reference_portion_g": 200,
+      "reference_calories": 363.0
+    },
+    {
+      "id": "dish_254",
+      "name": "葱油鸡",
+      "reference_portion_g": 200,
+      "reference_calories": 544.2
+    },
+    {
+      "id": "dish_255",
+      "name": "凉拌鸡丝",
+      "reference_portion_g": 200,
+      "reference_calories": 235.0
+    },
+    {
+      "id": "dish_256",
+      "name": "咖喱鸡",
+      "reference_portion_g": 200,
+      "reference_calories": 220.0
+    },
+    {
+      "id": "dish_257",
+      "name": "炸鸡柳",
+      "reference_portion_g": 200,
+      "reference_calories": 484.9
+    },
+    {
+      "id": "dish_258",
+      "name": "椒盐鸡块",
+      "reference_portion_g": 200,
+      "reference_calories": 619.4
+    },
+    {
+      "id": "dish_259",
+      "name": "香辣鸡胗",
+      "reference_portion_g": 200,
+      "reference_calories": 303.1
+    },
+    {
+      "id": "dish_260",
+      "name": "青椒鸡心",
+      "reference_portion_g": 200,
+      "reference_calories": 347.6
+    },
+    {
+      "id": "dish_261",
+      "name": "卤鸭肉",
+      "reference_portion_g": 200,
+      "reference_calories": 320.9
+    },
+    {
+      "id": "dish_262",
+      "name": "莲藕炖鸭",
+      "reference_portion_g": 300,
+      "reference_calories": 252.1
+    },
+    {
+      "id": "dish_263",
+      "name": "土豆烧鸭",
+      "reference_portion_g": 200,
+      "reference_calories": 257.1
+    },
+    {
+      "id": "dish_264",
+      "name": "红烧兔肉",
+      "reference_portion_g": 200,
+      "reference_calories": 325.8
+    },
+    {
+      "id": "dish_265",
+      "name": "葱姜兔丁",
+      "reference_portion_g": 200,
+      "reference_calories": 331.8
+    },
+    {
+      "id": "dish_266",
+      "name": "菠萝咕咾肉",
+      "reference_portion_g": 200,
+      "reference_calories": 348.4
+    },
+    {
+      "id": "dish_267",
+      "name": "叉烧肉",
+      "reference_portion_g": 200,
+      "reference_calories": 371.5
+    },
+    {
+      "id": "dish_268",
+      "name": "干炸里脊",
+      "reference_portion_g": 200,
+      "reference_calories": 456.5
+    },
+    {
+      "id": "dish_269",
+      "name": "椒盐排骨",
+      "reference_portion_g": 200,
+      "reference_calories": 694.9
+    },
+    {
+      "id": "dish_270",
+      "name": "香菇蒸肉饼",
+      "reference_portion_g": 200,
+      "reference_calories": 446.2
+    },
+    {
+      "id": "dish_271",
+      "name": "爆炒猪肝",
+      "reference_portion_g": 200,
+      "reference_calories": 325.1
+    },
+    {
+      "id": "dish_272",
+      "name": "溜肝尖",
+      "reference_portion_g": 200,
+      "reference_calories": 312.8
+    },
+    {
+      "id": "dish_273",
+      "name": "红烧猪蹄",
+      "reference_portion_g": 180,
+      "reference_calories": 444.3
+    },
+    {
+      "id": "dish_274",
+      "name": "黄豆炖猪蹄",
+      "reference_portion_g": 300,
+      "reference_calories": 433.5
+    },
+    {
+      "id": "dish_275",
+      "name": "爆炒腰花",
+      "reference_portion_g": 200,
+      "reference_calories": 296.3
+    },
+    {
+      "id": "dish_276",
+      "name": "爆炒肥肠",
+      "reference_portion_g": 200,
+      "reference_calories": 419.1
+    },
+    {
+      "id": "dish_277",
+      "name": "凉拌猪耳",
+      "reference_portion_g": 200,
+      "reference_calories": 468.2
+    },
+    {
+      "id": "dish_278",
+      "name": "胡椒猪肚汤",
+      "reference_portion_g": 300,
+      "reference_calories": 204.6
+    },
+    {
+      "id": "dish_279",
+      "name": "卤猪心",
+      "reference_portion_g": 200,
+      "reference_calories": 289.0
+    },
+    {
+      "id": "dish_280",
+      "name": "孜然牛肉",
+      "reference_portion_g": 200,
+      "reference_calories": 349.8
+    },
+    {
+      "id": "dish_281",
+      "name": "香菜拌牛肉",
+      "reference_portion_g": 200,
+      "reference_calories": 334.1
+    },
+    {
+      "id": "dish_282",
+      "name": "咖喱牛肉",
+      "reference_portion_g": 200,
+      "reference_calories": 223.6
+    },
+    {
+      "id": "dish_283",
+      "name": "葱爆羊肉",
+      "reference_portion_g": 200,
+      "reference_calories": 509.1
+    },
+    {
+      "id": "dish_284",
+      "name": "孜然羊肉",
+      "reference_portion_g": 200,
+      "reference_calories": 528.6
+    },
+    {
+      "id": "dish_285",
+      "name": "红焖羊肉",
+      "reference_portion_g": 200,
+      "reference_calories": 333.6
+    },
+    {
+      "id": "dish_286",
+      "name": "萝卜炖羊肉",
+      "reference_portion_g": 300,
+      "reference_calories": 306.3
+    },
+    {
+      "id": "dish_287",
+      "name": "冬瓜羊肉汤",
+      "reference_portion_g": 300,
+      "reference_calories": 208.5
+    },
+    {
+      "id": "dish_288",
+      "name": "椒盐鱿鱼",
+      "reference_portion_g": 200,
+      "reference_calories": 400.6
+    },
+    {
+      "id": "dish_289",
+      "name": "铁板鱿鱼",
+      "reference_portion_g": 200,
+      "reference_calories": 269.5
+    },
+    {
+      "id": "dish_290",
+      "name": "葱油鱼",
+      "reference_portion_g": 200,
+      "reference_calories": 353.4
+    },
+    {
+      "id": "dish_291",
+      "name": "香酥鱼块",
+      "reference_portion_g": 200,
+      "reference_calories": 479.1
+    },
+    {
+      "id": "dish_292",
+      "name": "茄汁虾仁",
+      "reference_portion_g": 200,
+      "reference_calories": 254.2
+    },
+    {
+      "id": "dish_293",
+      "name": "避风塘虾",
+      "reference_portion_g": 200,
+      "reference_calories": 320.8
+    },
+    {
+      "id": "dish_294",
+      "name": "辣炒花甲",
+      "reference_portion_g": 200,
+      "reference_calories": 257.5
+    },
+    {
+      "id": "dish_295",
+      "name": "清蒸螃蟹",
+      "reference_portion_g": 150,
+      "reference_calories": 152.8
+    },
+    {
+      "id": "dish_296",
+      "name": "蟹肉炒蛋",
+      "reference_portion_g": 200,
+      "reference_calories": 305.7
+    },
+    {
+      "id": "dish_297",
+      "name": "芦笋炒虾仁",
+      "reference_portion_g": 200,
+      "reference_calories": 159.1
+    },
+    {
+      "id": "dish_298",
+      "name": "蒜蓉空心菜",
+      "reference_portion_g": 200,
+      "reference_calories": 148.3
+    },
+    {
+      "id": "dish_299",
+      "name": "清炒苋菜",
+      "reference_portion_g": 200,
+      "reference_calories": 158.3
+    },
+    {
+      "id": "dish_300",
+      "name": "蒜蓉西洋菜",
+      "reference_portion_g": 200,
+      "reference_calories": 132.5
+    },
+    {
+      "id": "dish_301",
+      "name": "清炒莴笋",
+      "reference_portion_g": 200,
+      "reference_calories": 124.2
+    },
+    {
+      "id": "dish_302",
+      "name": "莴笋炒肉",
+      "reference_portion_g": 200,
+      "reference_calories": 198.5
+    },
+    {
+      "id": "dish_303",
+      "name": "凉拌莴笋",
+      "reference_portion_g": 200,
+      "reference_calories": 101.3
+    },
+    {
+      "id": "dish_304",
+      "name": "清炒芦笋",
+      "reference_portion_g": 200,
+      "reference_calories": 146.7
+    },
+    {
+      "id": "dish_305",
+      "name": "芦笋炒鸡蛋",
+      "reference_portion_g": 200,
+      "reference_calories": 237.7
+    },
+    {
+      "id": "dish_306",
+      "name": "清炒佛手瓜",
+      "reference_portion_g": 200,
+      "reference_calories": 125.7
+    },
+    {
+      "id": "dish_307",
+      "name": "佛手瓜炒肉",
+      "reference_portion_g": 200,
+      "reference_calories": 200.7
+    },
+    {
+      "id": "dish_308",
+      "name": "清炒豇豆",
+      "reference_portion_g": 200,
+      "reference_calories": 209.1
+    },
+    {
+      "id": "dish_309",
+      "name": "肉末豇豆",
+      "reference_portion_g": 200,
+      "reference_calories": 316.8
+    },
+    {
+      "id": "dish_310",
+      "name": "咖喱土豆",
+      "reference_portion_g": 200,
+      "reference_calories": 207.8
+    },
+    {
+      "id": "dish_311",
+      "name": "香煎土豆饼",
+      "reference_portion_g": 100,
+      "reference_calories": 175.7
+    },
+    {
+      "id": "dish_312",
+      "name": "蒜香烤土豆",
+      "reference_portion_g": 200,
+      "reference_calories": 284.8
+    },
+    {
+      "id": "dish_313",
+      "name": "丝瓜炒鸡蛋",
+      "reference_portion_g": 200,
+      "reference_calories": 223.4
+    },
+    {
+      "id": "dish_314",
+      "name": "丝瓜炒虾仁",
+      "reference_portion_g": 200,
+      "reference_calories": 157.6
+    },
+    {
+      "id": "dish_315",
+      "name": "酿豆腐",
+      "reference_portion_g": 200,
+      "reference_calories": 327.7
+    },
+    {
+      "id": "dish_316",
+      "name": "虾仁豆腐煲",
+      "reference_portion_g": 200,
+      "reference_calories": 171.8
+    },
+    {
+      "id": "dish_317",
+      "name": "香煎茄盒",
+      "reference_portion_g": 200,
+      "reference_calories": 402.8
+    },
+    {
+      "id": "dish_318",
+      "name": "蒜蓉烤茄子",
+      "reference_portion_g": 200,
+      "reference_calories": 202.1
+    },
+    {
+      "id": "dish_319",
+      "name": "菠菜猪肝汤",
+      "reference_portion_g": 300,
+      "reference_calories": 128.2
+    },
+    {
+      "id": "dish_320",
+      "name": "猪肝瘦肉汤",
+      "reference_portion_g": 300,
+      "reference_calories": 140.0
+    },
+    {
+      "id": "dish_321",
+      "name": "西洋菜排骨汤",
+      "reference_portion_g": 300,
+      "reference_calories": 256.0
+    },
+    {
+      "id": "dish_322",
+      "name": "莲藕花生汤",
+      "reference_portion_g": 300,
+      "reference_calories": 214.5
+    },
+    {
+      "id": "dish_323",
+      "name": "海带绿豆汤",
+      "reference_portion_g": 300,
+      "reference_calories": 143.9
+    },
+    {
+      "id": "dish_324",
+      "name": "白萝卜鸭汤",
+      "reference_portion_g": 300,
+      "reference_calories": 159.2
+    },
+    {
+      "id": "dish_325",
+      "name": "莲子红豆汤",
+      "reference_portion_g": 250,
+      "reference_calories": 162.8
+    },
+    {
+      "id": "dish_326",
+      "name": "莲子花生汤",
+      "reference_portion_g": 250,
+      "reference_calories": 200.5
+    },
+    {
+      "id": "dish_327",
+      "name": "八宝粥",
+      "reference_portion_g": 300,
+      "reference_calories": 234.0
+    },
+    {
+      "id": "dish_328",
+      "name": "南瓜小米粥",
+      "reference_portion_g": 300,
+      "reference_calories": 136.8
+    },
+    {
+      "id": "dish_329",
+      "name": "鸡肉粥",
+      "reference_portion_g": 300,
+      "reference_calories": 200.3
+    },
+    {
+      "id": "dish_330",
+      "name": "鱼片粥",
+      "reference_portion_g": 300,
+      "reference_calories": 183.7
+    },
+    {
+      "id": "dish_331",
+      "name": "虾仁粥",
+      "reference_portion_g": 300,
+      "reference_calories": 166.8
+    },
+    {
+      "id": "dish_332",
+      "name": "猪肝粥",
+      "reference_portion_g": 300,
+      "reference_calories": 207.5
+    },
+    {
+      "id": "dish_333",
+      "name": "瘦肉粥",
+      "reference_portion_g": 300,
+      "reference_calories": 193.7
+    },
+    {
+      "id": "dish_334",
+      "name": "酱油炒饭",
+      "reference_portion_g": 250,
+      "reference_calories": 421.7
+    },
+    {
+      "id": "dish_335",
+      "name": "火腿炒饭",
+      "reference_portion_g": 250,
+      "reference_calories": 439.2
+    },
+    {
+      "id": "dish_336",
+      "name": "菠萝炒饭",
+      "reference_portion_g": 250,
+      "reference_calories": 395.1
+    },
+    {
+      "id": "dish_337",
+      "name": "蛋包饭",
+      "reference_portion_g": 300,
+      "reference_calories": 514.1
+    },
+    {
+      "id": "dish_338",
+      "name": "咖喱鸡饭",
+      "reference_portion_g": 350,
+      "reference_calories": 413.0
+    },
+    {
+      "id": "dish_339",
+      "name": "干炒牛河",
+      "reference_portion_g": 300,
+      "reference_calories": 443.9
+    },
+    {
+      "id": "dish_340",
+      "name": "星洲炒米粉",
+      "reference_portion_g": 300,
+      "reference_calories": 426.9
+    },
+    {
+      "id": "dish_341",
+      "name": "鸡丝凉面",
+      "reference_portion_g": 300,
+      "reference_calories": 444.4
+    },
+    {
+      "id": "dish_342",
+      "name": "担担面",
+      "reference_portion_g": 300,
+      "reference_calories": 684.3
+    },
+    {
+      "id": "dish_343",
+      "name": "油泼面",
+      "reference_portion_g": 300,
+      "reference_calories": 597.2
+    },
+    {
+      "id": "dish_344",
+      "name": "豆角焖面",
+      "reference_portion_g": 300,
+      "reference_calories": 483.4
+    },
+    {
+      "id": "dish_345",
+      "name": "鲜肉包",
+      "reference_portion_g": 100,
+      "reference_calories": 235.2
+    },
+    {
+      "id": "dish_346",
+      "name": "香菇青菜包",
+      "reference_portion_g": 100,
+      "reference_calories": 155.2
+    },
+    {
+      "id": "dish_347",
+      "name": "豆沙包",
+      "reference_portion_g": 90,
+      "reference_calories": 195.2
+    },
+    {
+      "id": "dish_348",
+      "name": "生煎包",
+      "reference_portion_g": 180,
+      "reference_calories": 472.2
+    },
+    {
+      "id": "dish_349",
+      "name": "锅贴",
+      "reference_portion_g": 200,
+      "reference_calories": 451.7
+    },
+    {
+      "id": "dish_350",
+      "name": "糯米烧卖",
+      "reference_portion_g": 180,
+      "reference_calories": 422.5
+    }
+  ]
+}

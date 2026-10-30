@@ -542,6 +542,10 @@
       ingredients:catalogue.filter(food => food.kind === 'ingredient').length,
       recipes:catalogue.filter(food => food.kind === 'recipe').length
     });
+    if (catalogue.some(food => !window.NUTRICHAT_EN_CATALOGUE?.[food.id])) {
+      const note = I.t('catalogueChineseAdditions');
+      if (note) $('catalogue-info').textContent += ' · ' + note;
+    }
   }
   function showFoods() {
     const search = $('search').value.trim().toLowerCase();

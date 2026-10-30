@@ -1,0 +1,885 @@
+{
+  "date": "2026-10-31",
+  "archive_source": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip",
+  "archive_sha256": "b80817294b8850530aaedf2e515c02593b1824f763a0ff356e5c2081643e6fd0",
+  "license": "CC0-1.0",
+  "previous_count": 138,
+  "added_count": 62,
+  "total_count": 200,
+  "nutrient_basis": "per 100 g edible portion in source state",
+  "preserved_existing_records": true,
+  "gaps_not_substituted": [
+    "Chinese garlic chives (韭菜) are not ordinary chives",
+    "No verified garlic shoots (蒜苔), preserved egg (皮蛋), dried lily flowers (黄花菜), pressed dried tofu (豆干), or Chinese fermented cabbage (酸菜) record selected; no unrelated substitutes were imported."
+  ],
+  "records": [
+    {
+      "id": "pork_heart",
+      "name": "生猪心",
+      "state": "raw",
+      "fdc_id": 168267,
+      "source_description": "Pork, fresh, variety meats and by-products, heart, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168267/nutrients",
+      "nutrients": {
+        "protein_g": 17.27,
+        "fat_g": 4.36,
+        "carbs_g": 1.33,
+        "calories": 118.0
+      }
+    },
+    {
+      "id": "pork_kidney",
+      "name": "生猪腰",
+      "state": "raw",
+      "fdc_id": 168270,
+      "source_description": "Pork, fresh, variety meats and by-products, kidneys, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168270/nutrients",
+      "nutrients": {
+        "fat_g": 3.25,
+        "carbs_g": 0.0,
+        "calories": 100.0,
+        "protein_g": 16.46
+      }
+    },
+    {
+      "id": "pork_intestine",
+      "name": "生猪大肠",
+      "state": "raw",
+      "fdc_id": 168266,
+      "source_description": "Pork, fresh, variety meats and by-products, chitterlings, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168266/nutrients",
+      "nutrients": {
+        "fat_g": 16.61,
+        "carbs_g": 0.0,
+        "protein_g": 7.64,
+        "calories": 182.0
+      }
+    },
+    {
+      "id": "pork_stomach",
+      "name": "生猪肚",
+      "state": "raw",
+      "fdc_id": 167867,
+      "source_description": "Pork, fresh, variety meats and by-products, stomach, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/167867/nutrients",
+      "nutrients": {
+        "protein_g": 16.85,
+        "fat_g": 10.14,
+        "calories": 159.0,
+        "carbs_g": 0.0
+      }
+    },
+    {
+      "id": "pork_ear",
+      "name": "冷冻生猪耳",
+      "state": "raw",
+      "fdc_id": 167857,
+      "source_description": "Pork, fresh, variety meats and by-products, ears, frozen, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/167857/nutrients",
+      "nutrients": {
+        "fat_g": 15.1,
+        "carbs_g": 0.6,
+        "calories": 234.0,
+        "protein_g": 22.45
+      }
+    },
+    {
+      "id": "pork_feet",
+      "name": "生猪蹄可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 167859,
+      "source_description": "Pork, fresh, variety meats and by-products, feet, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/167859/nutrients",
+      "nutrients": {
+        "fat_g": 12.59,
+        "protein_g": 23.16,
+        "calories": 212.0,
+        "carbs_g": 0.0
+      }
+    },
+    {
+      "id": "pork_feet_cooked",
+      "name": "炖熟猪蹄可食部分（不含骨）",
+      "state": "cooked",
+      "fdc_id": 168290,
+      "source_description": "Pork, fresh, variety meats and by-products, feet, cooked, simmered",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168290/nutrients",
+      "nutrients": {
+        "protein_g": 21.94,
+        "fat_g": 16.05,
+        "calories": 238.0,
+        "carbs_g": 0.0
+      }
+    },
+    {
+      "id": "pork_liver_cooked",
+      "name": "炖熟猪肝",
+      "state": "cooked",
+      "fdc_id": 167863,
+      "source_description": "Pork, fresh, variety meats and by-products, liver, cooked, braised",
+      "source_url": "https://fdc.nal.usda.gov/food-details/167863/nutrients",
+      "nutrients": {
+        "fat_g": 4.4,
+        "carbs_g": 3.76,
+        "calories": 165.0,
+        "protein_g": 26.02
+      }
+    },
+    {
+      "id": "chicken_gizzard",
+      "name": "生鸡胗",
+      "state": "raw",
+      "fdc_id": 171456,
+      "source_description": "Chicken, gizzard, all classes, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171456/nutrients",
+      "nutrients": {
+        "protein_g": 17.66,
+        "fat_g": 2.06,
+        "carbs_g": 0.0,
+        "calories": 94.0
+      }
+    },
+    {
+      "id": "chicken_heart",
+      "name": "生鸡心",
+      "state": "raw",
+      "fdc_id": 171458,
+      "source_description": "Chicken, heart, all classes, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171458/nutrients",
+      "nutrients": {
+        "protein_g": 15.55,
+        "fat_g": 9.33,
+        "carbs_g": 0.71,
+        "calories": 153.0
+      }
+    },
+    {
+      "id": "chicken_liver",
+      "name": "生鸡肝",
+      "state": "raw",
+      "fdc_id": 171060,
+      "source_description": "Chicken, liver, all classes, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171060/nutrients",
+      "nutrients": {
+        "protein_g": 16.92,
+        "fat_g": 4.83,
+        "carbs_g": 0.73,
+        "calories": 119.0
+      }
+    },
+    {
+      "id": "duck_skin",
+      "name": "生带皮鸭肉可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 172408,
+      "source_description": "Duck, domesticated, meat and skin, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172408/nutrients",
+      "nutrients": {
+        "protein_g": 11.49,
+        "fat_g": 39.34,
+        "carbs_g": 0.0,
+        "calories": 404.0
+      }
+    },
+    {
+      "id": "duck_roast",
+      "name": "烤带皮鸭肉可食部分（不含骨）",
+      "state": "cooked",
+      "fdc_id": 172409,
+      "source_description": "Duck, domesticated, meat and skin, cooked, roasted",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172409/nutrients",
+      "nutrients": {
+        "fat_g": 28.35,
+        "carbs_g": 0.0,
+        "calories": 337.0,
+        "protein_g": 18.99
+      }
+    },
+    {
+      "id": "goose",
+      "name": "生带皮鹅肉可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 174470,
+      "source_description": "Goose, domesticated, meat and skin, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174470/nutrients",
+      "nutrients": {
+        "fat_g": 33.62,
+        "carbs_g": 0.0,
+        "calories": 371.0,
+        "protein_g": 15.86
+      }
+    },
+    {
+      "id": "rabbit",
+      "name": "生家兔肉可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 172521,
+      "source_description": "Game meat, rabbit, domesticated, composite of cuts, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172521/nutrients",
+      "nutrients": {
+        "fat_g": 5.55,
+        "carbs_g": 0.0,
+        "calories": 136.0,
+        "protein_g": 20.05
+      }
+    },
+    {
+      "id": "lamb_leg",
+      "name": "生羊腿肉（含部分脂肪，不含骨）",
+      "state": "raw",
+      "fdc_id": 174311,
+      "source_description": "Lamb, leg, whole (shank and sirloin), separable lean and fat, trimmed to 1/4\" fat, choice, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174311/nutrients",
+      "nutrients": {
+        "protein_g": 17.91,
+        "fat_g": 17.07,
+        "carbs_g": 0.0,
+        "calories": 230.0
+      }
+    },
+    {
+      "id": "shrimp_cooked",
+      "name": "熟虾仁（混合品种，可能含保水剂）",
+      "state": "cooked",
+      "fdc_id": 171971,
+      "source_description": "Crustaceans, shrimp, mixed species, cooked, moist heat (may contain additives to retain moisture)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171971/nutrients",
+      "nutrients": {
+        "protein_g": 22.78,
+        "fat_g": 1.7,
+        "carbs_g": 1.52,
+        "calories": 119.0
+      }
+    },
+    {
+      "id": "octopus",
+      "name": "生普通章鱼可食部分",
+      "state": "raw",
+      "fdc_id": 174218,
+      "source_description": "Mollusks, octopus, common, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174218/nutrients",
+      "nutrients": {
+        "fat_g": 1.04,
+        "carbs_g": 2.2,
+        "calories": 82.0,
+        "protein_g": 14.91
+      }
+    },
+    {
+      "id": "octopus_cooked",
+      "name": "水煮普通章鱼可食部分",
+      "state": "cooked",
+      "fdc_id": 174249,
+      "source_description": "Mollusks, octopus, common, cooked, moist heat",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174249/nutrients",
+      "nutrients": {
+        "fat_g": 2.08,
+        "carbs_g": 4.4,
+        "calories": 164.0,
+        "protein_g": 29.82
+      }
+    },
+    {
+      "id": "quail_egg",
+      "name": "生鹌鹑蛋液",
+      "state": "raw",
+      "fdc_id": 172191,
+      "source_description": "Egg, quail, whole, fresh, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172191/nutrients",
+      "nutrients": {
+        "protein_g": 13.05,
+        "fat_g": 11.09,
+        "carbs_g": 0.41,
+        "calories": 158.0
+      }
+    },
+    {
+      "id": "amaranth",
+      "name": "生苋菜叶",
+      "state": "raw",
+      "fdc_id": 168385,
+      "source_description": "Amaranth leaves, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168385/nutrients",
+      "nutrients": {
+        "carbs_g": 4.02,
+        "calories": 23.0,
+        "fat_g": 0.33,
+        "protein_g": 2.46
+      }
+    },
+    {
+      "id": "mustard_greens",
+      "name": "生芥菜叶",
+      "state": "raw",
+      "fdc_id": 169256,
+      "source_description": "Mustard greens, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169256/nutrients",
+      "nutrients": {
+        "protein_g": 2.86,
+        "fat_g": 0.42,
+        "carbs_g": 4.67,
+        "calories": 27.0
+      }
+    },
+    {
+      "id": "water_spinach",
+      "name": "生空心菜",
+      "state": "raw",
+      "fdc_id": 169301,
+      "source_description": "Water convolvulus,raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169301/nutrients",
+      "nutrients": {
+        "carbs_g": 3.13,
+        "protein_g": 2.6,
+        "fat_g": 0.2,
+        "calories": 19.0
+      }
+    },
+    {
+      "id": "celtuce",
+      "name": "生莴笋",
+      "state": "raw",
+      "fdc_id": 169990,
+      "source_description": "Celtuce, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169990/nutrients",
+      "nutrients": {
+        "calories": 18.0,
+        "fat_g": 0.3,
+        "carbs_g": 3.65,
+        "protein_g": 0.85
+      }
+    },
+    {
+      "id": "watercress",
+      "name": "生西洋菜",
+      "state": "raw",
+      "fdc_id": 170068,
+      "source_description": "Watercress, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170068/nutrients",
+      "nutrients": {
+        "carbs_g": 1.29,
+        "calories": 11.0,
+        "protein_g": 2.3,
+        "fat_g": 0.1
+      }
+    },
+    {
+      "id": "yardlong_bean",
+      "name": "生长豇豆（可食豆荚）",
+      "state": "raw",
+      "fdc_id": 169222,
+      "source_description": "Yardlong bean, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169222/nutrients",
+      "nutrients": {
+        "protein_g": 2.8,
+        "fat_g": 0.4,
+        "carbs_g": 8.35,
+        "calories": 47.0
+      }
+    },
+    {
+      "id": "asparagus",
+      "name": "生芦笋",
+      "state": "raw",
+      "fdc_id": 168389,
+      "source_description": "Asparagus, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168389/nutrients",
+      "nutrients": {
+        "protein_g": 2.2,
+        "carbs_g": 3.88,
+        "calories": 20.0,
+        "fat_g": 0.12
+      }
+    },
+    {
+      "id": "chayote",
+      "name": "生佛手瓜",
+      "state": "raw",
+      "fdc_id": 170402,
+      "source_description": "Chayote, fruit, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170402/nutrients",
+      "nutrients": {
+        "carbs_g": 4.51,
+        "calories": 19.0,
+        "fat_g": 0.13,
+        "protein_g": 0.82
+      }
+    },
+    {
+      "id": "jicama",
+      "name": "生豆薯（去皮可食部分）",
+      "state": "raw",
+      "fdc_id": 170073,
+      "source_description": "Yambean (jicama), raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170073/nutrients",
+      "nutrients": {
+        "carbs_g": 8.82,
+        "calories": 38.0,
+        "fat_g": 0.09,
+        "protein_g": 0.72
+      }
+    },
+    {
+      "id": "bamboo_cooked",
+      "name": "水煮竹笋（沥水，无盐）",
+      "state": "cooked",
+      "fdc_id": 169211,
+      "source_description": "Bamboo shoots, cooked, boiled, drained, without salt",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169211/nutrients",
+      "nutrients": {
+        "fat_g": 0.22,
+        "carbs_g": 1.92,
+        "calories": 12.0,
+        "protein_g": 1.53
+      }
+    },
+    {
+      "id": "rice_flour",
+      "name": "白米粉（干粉，未强化）",
+      "state": "raw",
+      "fdc_id": 169714,
+      "source_description": "Rice flour, white, unenriched",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169714/nutrients",
+      "nutrients": {
+        "fat_g": 1.42,
+        "carbs_g": 80.13,
+        "calories": 366.0,
+        "protein_g": 5.95
+      }
+    },
+    {
+      "id": "glutinous_cooked",
+      "name": "熟白糯米饭",
+      "state": "cooked",
+      "fdc_id": 169711,
+      "source_description": "Rice, white, glutinous, unenriched, cooked",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169711/nutrients",
+      "nutrients": {
+        "fat_g": 0.19,
+        "carbs_g": 21.09,
+        "calories": 97.0,
+        "protein_g": 2.02
+      }
+    },
+    {
+      "id": "lotus_seed_dried",
+      "name": "干莲子",
+      "state": "raw",
+      "fdc_id": 170149,
+      "source_description": "Seeds, lotus seeds, dried",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170149/nutrients",
+      "nutrients": {
+        "fat_g": 1.97,
+        "carbs_g": 64.47,
+        "calories": 332.0,
+        "protein_g": 15.41
+      }
+    },
+    {
+      "id": "potato_cooked",
+      "name": "去皮水煮土豆（无盐）",
+      "state": "cooked",
+      "fdc_id": 170440,
+      "source_description": "Potatoes, boiled, cooked without skin, flesh, without salt",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170440/nutrients",
+      "nutrients": {
+        "carbs_g": 20.01,
+        "calories": 86.0,
+        "fat_g": 0.1,
+        "protein_g": 1.71
+      }
+    },
+    {
+      "id": "corn_cooked",
+      "name": "水煮甜玉米粒（沥水，无盐）",
+      "state": "cooked",
+      "fdc_id": 169999,
+      "source_description": "Corn, sweet, yellow, cooked, boiled, drained, without salt",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169999/nutrients",
+      "nutrients": {
+        "fat_g": 1.5,
+        "carbs_g": 20.98,
+        "calories": 96.0,
+        "protein_g": 3.41
+      }
+    },
+    {
+      "id": "taro_cooked",
+      "name": "熟芋头（无盐）",
+      "state": "cooked",
+      "fdc_id": 168486,
+      "source_description": "Taro, cooked, without salt",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168486/nutrients",
+      "nutrients": {
+        "calories": 142.0,
+        "fat_g": 0.11,
+        "protein_g": 0.52,
+        "carbs_g": 34.6
+      }
+    },
+    {
+      "id": "lotus_cooked",
+      "name": "水煮莲藕（沥水，无盐）",
+      "state": "cooked",
+      "fdc_id": 168430,
+      "source_description": "Lotus root, cooked, boiled, drained, without salt",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168430/nutrients",
+      "nutrients": {
+        "carbs_g": 16.02,
+        "calories": 66.0,
+        "protein_g": 1.58,
+        "fat_g": 0.07
+      }
+    },
+    {
+      "id": "oats_cooked",
+      "name": "水煮燕麦（无盐、未强化）",
+      "state": "cooked",
+      "fdc_id": 173905,
+      "source_description": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173905/nutrients",
+      "nutrients": {
+        "protein_g": 2.54,
+        "fat_g": 1.52,
+        "carbs_g": 12.0,
+        "calories": 71.0
+      }
+    },
+    {
+      "id": "curry_powder",
+      "name": "咖喱粉",
+      "state": "as_sold",
+      "fdc_id": 170924,
+      "source_description": "Spices, curry powder",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170924/nutrients",
+      "nutrients": {
+        "calories": 325.0,
+        "protein_g": 14.29,
+        "fat_g": 14.01,
+        "carbs_g": 55.83
+      }
+    },
+    {
+      "id": "cumin",
+      "name": "孜然籽",
+      "state": "as_sold",
+      "fdc_id": 170923,
+      "source_description": "Spices, cumin seed",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170923/nutrients",
+      "nutrients": {
+        "protein_g": 17.81,
+        "fat_g": 22.27,
+        "carbs_g": 44.24,
+        "calories": 375.0
+      }
+    },
+    {
+      "id": "chili_powder",
+      "name": "红辣椒粉（红椒或卡宴椒）",
+      "state": "as_sold",
+      "fdc_id": 170932,
+      "source_description": "Spices, pepper, red or cayenne",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170932/nutrients",
+      "nutrients": {
+        "fat_g": 17.27,
+        "carbs_g": 56.63,
+        "calories": 318.0,
+        "protein_g": 12.01
+      }
+    },
+    {
+      "id": "white_pepper",
+      "name": "白胡椒粉",
+      "state": "as_sold",
+      "fdc_id": 170933,
+      "source_description": "Spices, pepper, white",
+      "source_url": "https://fdc.nal.usda.gov/food-details/170933/nutrients",
+      "nutrients": {
+        "protein_g": 10.4,
+        "fat_g": 2.12,
+        "carbs_g": 68.61,
+        "calories": 296.0
+      }
+    },
+    {
+      "id": "fish_sauce",
+      "name": "鱼露",
+      "state": "as_sold",
+      "fdc_id": 174531,
+      "source_description": "Sauce, fish, ready-to-serve",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174531/nutrients",
+      "nutrients": {
+        "fat_g": 0.01,
+        "carbs_g": 3.64,
+        "calories": 35.0,
+        "protein_g": 5.06
+      }
+    },
+    {
+      "id": "peanut_butter",
+      "name": "含盐细滑花生酱",
+      "state": "as_sold",
+      "fdc_id": 174266,
+      "source_description": "Peanut butter, smooth style, with salt (Includes foods for USDA's Food Distribution Program)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174266/nutrients",
+      "nutrients": {
+        "protein_g": 22.21,
+        "fat_g": 51.36,
+        "carbs_g": 22.31,
+        "calories": 598.0
+      }
+    },
+    {
+      "id": "peanut_oil",
+      "name": "花生油",
+      "state": "as_sold",
+      "fdc_id": 171410,
+      "source_description": "Oil, peanut, salad or cooking",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171410/nutrients",
+      "nutrients": {
+        "fat_g": 100.0,
+        "carbs_g": 0.0,
+        "calories": 884.0,
+        "protein_g": 0.0
+      }
+    },
+    {
+      "id": "canola_oil",
+      "name": "低芥酸菜籽油（芥花籽油）",
+      "state": "as_sold",
+      "fdc_id": 172336,
+      "source_description": "Oil, canola",
+      "source_url": "https://fdc.nal.usda.gov/food-details/172336/nutrients",
+      "nutrients": {
+        "fat_g": 100.0,
+        "protein_g": 0.0,
+        "carbs_g": 0.0,
+        "calories": 884.0
+      }
+    },
+    {
+      "id": "olive_oil",
+      "name": "橄榄油",
+      "state": "as_sold",
+      "fdc_id": 171413,
+      "source_description": "Oil, olive, salad or cooking",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171413/nutrients",
+      "nutrients": {
+        "fat_g": 100.0,
+        "carbs_g": 0.0,
+        "calories": 884.0,
+        "protein_g": 0.0
+      }
+    },
+    {
+      "id": "cola",
+      "name": "含糖可乐",
+      "state": "as_sold",
+      "fdc_id": 174852,
+      "source_description": "Beverages, carbonated, cola, regular",
+      "source_url": "https://fdc.nal.usda.gov/food-details/174852/nutrients",
+      "nutrients": {
+        "fat_g": 0.25,
+        "carbs_g": 10.36,
+        "calories": 42.0,
+        "protein_g": 0.0
+      }
+    },
+    {
+      "id": "peach",
+      "name": "鲜黄桃果肉",
+      "state": "raw",
+      "fdc_id": 169928,
+      "source_description": "Peaches, yellow, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169928/nutrients",
+      "nutrients": {
+        "carbs_g": 9.54,
+        "calories": 39.0,
+        "protein_g": 0.91,
+        "fat_g": 0.25
+      }
+    },
+    {
+      "id": "lychee",
+      "name": "鲜荔枝果肉",
+      "state": "raw",
+      "fdc_id": 169086,
+      "source_description": "Litchis, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169086/nutrients",
+      "nutrients": {
+        "fat_g": 0.44,
+        "carbs_g": 16.53,
+        "calories": 66.0,
+        "protein_g": 0.83
+      }
+    },
+    {
+      "id": "longan",
+      "name": "鲜龙眼果肉",
+      "state": "raw",
+      "fdc_id": 169089,
+      "source_description": "Longans, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169089/nutrients",
+      "nutrients": {
+        "protein_g": 1.31,
+        "fat_g": 0.1,
+        "carbs_g": 15.14,
+        "calories": 60.0
+      }
+    },
+    {
+      "id": "papaya",
+      "name": "鲜木瓜果肉",
+      "state": "raw",
+      "fdc_id": 169926,
+      "source_description": "Papayas, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169926/nutrients",
+      "nutrients": {
+        "protein_g": 0.47,
+        "fat_g": 0.26,
+        "carbs_g": 10.82,
+        "calories": 43.0
+      }
+    },
+    {
+      "id": "pomelo",
+      "name": "柚子果肉",
+      "state": "raw",
+      "fdc_id": 167754,
+      "source_description": "Pummelo, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/167754/nutrients",
+      "nutrients": {
+        "fat_g": 0.04,
+        "carbs_g": 9.62,
+        "calories": 38.0,
+        "protein_g": 0.76
+      }
+    },
+    {
+      "id": "mandarin",
+      "name": "橘子果肉",
+      "state": "raw",
+      "fdc_id": 169105,
+      "source_description": "Tangerines, (mandarin oranges), raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/169105/nutrients",
+      "nutrients": {
+        "fat_g": 0.31,
+        "carbs_g": 13.34,
+        "calories": 53.0,
+        "protein_g": 0.81
+      }
+    },
+    {
+      "id": "grapefruit",
+      "name": "葡萄柚果肉",
+      "state": "raw",
+      "fdc_id": 173033,
+      "source_description": "Grapefruit, raw, pink and red and white, all areas",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173033/nutrients",
+      "nutrients": {
+        "fat_g": 0.1,
+        "carbs_g": 8.08,
+        "calories": 32.0,
+        "protein_g": 0.63
+      }
+    },
+    {
+      "id": "blueberry",
+      "name": "鲜蓝莓",
+      "state": "raw",
+      "fdc_id": 171711,
+      "source_description": "Blueberries, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/171711/nutrients",
+      "nutrients": {
+        "carbs_g": 14.49,
+        "calories": 57.0,
+        "fat_g": 0.33,
+        "protein_g": 0.74
+      }
+    },
+    {
+      "id": "skim_milk",
+      "name": "脱脂牛奶（未强化维生素A、D）",
+      "state": "as_sold",
+      "fdc_id": 173432,
+      "source_description": "Milk, nonfat, fluid, without added vitamin A and vitamin D (fat free or skim)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173432/nutrients",
+      "nutrients": {
+        "fat_g": 0.18,
+        "carbs_g": 4.86,
+        "calories": 35.0,
+        "protein_g": 3.37
+      }
+    },
+    {
+      "id": "millet_cooked",
+      "name": "熟小米饭",
+      "state": "cooked",
+      "fdc_id": 168871,
+      "source_description": "Millet, cooked",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168871/nutrients",
+      "nutrients": {
+        "protein_g": 3.51,
+        "fat_g": 1.0,
+        "carbs_g": 23.67,
+        "calories": 119.0
+      }
+    },
+    {
+      "id": "sweet_potato_cooked",
+      "name": "去皮水煮红薯",
+      "state": "cooked",
+      "fdc_id": 168484,
+      "source_description": "Sweet potato, cooked, boiled, without skin",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168484/nutrients",
+      "nutrients": {
+        "carbs_g": 17.72,
+        "calories": 76.0,
+        "protein_g": 1.37,
+        "fat_g": 0.14
+      }
+    },
+    {
+      "id": "lotus_seed_fresh",
+      "name": "生鲜莲子",
+      "state": "raw",
+      "fdc_id": 168591,
+      "source_description": "Seeds, lotus seeds, raw",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168591/nutrients",
+      "nutrients": {
+        "fat_g": 0.53,
+        "carbs_g": 17.28,
+        "calories": 89.0,
+        "protein_g": 4.13
+      }
+    },
+    {
+      "id": "shiitake_dried",
+      "name": "干香菇",
+      "state": "raw",
+      "fdc_id": 168436,
+      "source_description": "Mushrooms, shiitake, dried",
+      "source_url": "https://fdc.nal.usda.gov/food-details/168436/nutrients",
+      "nutrients": {
+        "carbs_g": 75.37,
+        "calories": 296.0,
+        "protein_g": 9.58,
+        "fat_g": 0.99
+      }
+    },
+    {
+      "id": "ham",
+      "name": "西式普通切片火腿（午餐肉类）",
+      "state": "as_sold",
+      "fdc_id": 173864,
+      "source_description": "Ham, sliced, regular (approximately 11% fat)",
+      "source_url": "https://fdc.nal.usda.gov/food-details/173864/nutrients",
+      "nutrients": {
+        "fat_g": 8.8,
+        "carbs_g": 3.63,
+        "calories": 164.0,
+        "protein_g": 16.6
+      }
+    }
+  ]
+}

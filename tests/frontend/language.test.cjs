@@ -118,11 +118,17 @@ test('Switch preserves meal, reply and search text and selected estimation mode'
   assert.equal(requests.length, before);
 });
 
-test('English display names cover every food, and every recipe retains an English method', async t => {
+test('Existing English display names remain intact; Chinese additions use their original names', async t => {
   const {window} = await mount(t);
   const entries = window.NUTRICHAT_EN_CATALOGUE;
-  assert.deepEqual(Object.keys(entries).sort(), foods.map(food => food.id).sort());
+  assert.equal(Object.keys(entries).length,388,'Keep the previously translated catalogue');
+  assert.ok(Object.keys(entries).every(id => foods.some(food => food.id === id)));
+  window.NutriI18n.setLanguage('en');
   for (const food of foods) {
+    if (!entries[food.id]) {
+      assert.equal(window.NutriI18n.foodName(food.id,food.name),food.name);
+      continue;
+    }
     assert.ok(entries[food.id].name.trim(), food.id + ' needs an English name');
     assert.doesNotMatch(entries[food.id].name, /[\u3400-\u9fff]/u, food.id);
     if (food.kind === 'recipe') {
@@ -223,15 +229,15 @@ for (const mode of ['basic', 'advanced']) {
   test(`Unsupported food in ${mode} stays blocked, translated and correctable by text`, async t => {
     const meal = clone(fixtures.missing_weight);
     meal.mode = mode;
-    meal.food_text = '200克豉油鸡';
-    meal.draft = [{food_id:null,name:'豉油鸡',source_text:'豉油鸡',grams:200}];
-    const label = '数据库未找到“豉油鸡”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。';
+    meal.food_text = '200克火星豉油鸡';
+    meal.draft = [{food_id:null,name:'火星豉油鸡',source_text:'火星豉油鸡',grams:200}];
+    const label = '数据库未找到“火星豉油鸡”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。';
     meal.questions = [{key:'0.food_id',kind:'unsupported',label}];
     meal.conversation = [{role:'user',content:meal.food_text},{role:'assistant',content:label}];
     const corrected = {...clone(fixtures.tomato_egg_dish),id:meal.id,mode,revision:meal.revision+1};
     const {window, document, $, requests, clickLanguage} = await mount(t, {meal,
       respond:request => request.method === 'POST' ? {body:{analysis:corrected}} : undefined});
-    assert.match($('questions').textContent, /数据库未找到.*豉油鸡.*对应食物记录/);
+    assert.match($('questions').textContent, /数据库未找到.*火星豉油鸡.*对应食物记录/);
     assert.equal(document.querySelector('#questions select'), null);
     assert.equal($('answer-submit').hidden, true);
     assert.equal($('answer-submit').disabled, true);
@@ -241,7 +247,7 @@ for (const mode of ['basic', 'advanced']) {
     const before = requests.length;
     $('reply').value = '更正：200克番茄炒蛋';
     await clickLanguage('en');
-    assert.match($('questions').textContent, /豉油鸡: no corresponding food record/);
+    assert.match($('questions').textContent, /火星豉油鸡: no corresponding food record/);
     assert.match($('questions').textContent, /will not be substituted/);
     assert.match($('history').textContent, /no corresponding food record/);
     assert.match($('message').textContent, /no nutrition estimate/);
@@ -263,9 +269,9 @@ for (const mode of ['basic', 'advanced']) {
 
 test('Mixed unsupported food and known recipe keep recipe answers usable without substitution', async t => {
   const meal = clone(fixtures.mapo_tofu);
-  meal.draft.push({food_id:null,name:'豉油鸡',grams:200});
+  meal.draft.push({food_id:null,name:'火星豉油鸡',grams:200});
   meal.questions.push({key:'1.food_id',kind:'unsupported',
-    label:'数据库未找到“豉油鸡”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。'});
+    label:'数据库未找到“火星豉油鸡”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。'});
   const {window, document, $, requests, clickLanguage} = await mount(t, {meal,
     respond:request => request.method === 'POST' ? {body:{analysis:meal}} : undefined});
   assert.equal($('result').hidden, true);
@@ -346,9 +352,9 @@ test('Untrusted conversation, food labels and source links remain inert text', a
 
 function unsupportedIngredientMeal() {
   const meal = clone(fixtures.missing_weight);
-  meal.mode = 'basic'; meal.food_text = '100克熟米饭，200克豉油鸡';
-  meal.draft = [{food_id:'rice',name:'熟米饭',grams:100}, {food_id:null,name:'豉油鸡',grams:200}];
-  meal.questions = [{key:'1.food_id',kind:'unsupported',label:'数据库未找到“豉油鸡”的对应食物记录，暂不能估算。'}];
+  meal.mode = 'basic'; meal.food_text = '100克熟米饭，200克火星豉油鸡';
+  meal.draft = [{food_id:'rice',name:'熟米饭',grams:100}, {food_id:null,name:'火星豉油鸡',grams:200}];
+  meal.questions = [{key:'1.food_id',kind:'unsupported',label:'数据库未找到“火星豉油鸡”的对应食物记录，暂不能估算。'}];
   meal.details = [];
   return meal;
 }
@@ -380,8 +386,8 @@ test('Unknown item opens a separate ingredient form and searches without selecti
   document.querySelector('[data-build-ingredients="1"]').click();
   assert.equal($('ingredient-builder').hidden,false);
   assert.equal($('ingredient-form').closest('#answer-form'),null,'Forms must not be nested');
-  assert.match($('ingredient-builder-target').textContent,/第 2 项.*豉油鸡/);
-  assert.equal($('ingredient-name').value,'豉油鸡');
+  assert.match($('ingredient-builder-target').textContent,/第 2 项.*火星豉油鸡/);
+  assert.equal($('ingredient-name').value,'火星豉油鸡');
   const row = document.querySelector('.ingredient-row');
   const search = row.querySelector('[data-ingredient-search]');
   search.value = 'chicken'; search.dispatchEvent(new window.Event('input',{bubbles:true}));

@@ -43,7 +43,7 @@ def test_missing_method_then_oil_never_produces_partial_totals():
 def test_unknown_food_does_not_discard_it_or_return_partial_meal(mode):
     from services.common.meal_engine import evaluate_mode
     draft = [item(food_id='rice', grams=100, weight_basis='cooked', preparation='boiled'),
-             ExtractedItem(name='豉油鸡', source_text='豉油鸡', grams=200).model_dump()]
+             ExtractedItem(name='火星豉油鸡', source_text='火星豉油鸡', grams=200).model_dump()]
     result = evaluate_mode(draft, mode)
     assert all(result[key] is None for key in ('calories', 'protein_g', 'fat_g', 'carbs_g'))
     assert result['details'] == []
@@ -51,7 +51,7 @@ def test_unknown_food_does_not_discard_it_or_return_partial_meal(mode):
     assert result['draft'] == draft
     unsupported = next(q for q in result['questions'] if q['kind'] == 'unsupported')
     assert unsupported['key'] == '1.food_id'
-    assert '豉油鸡' in unsupported['label'] and '数据库未找到' in unsupported['label']
+    assert '火星豉油鸡' in unsupported['label'] and '数据库未找到' in unsupported['label']
     assert 'options' not in unsupported
     with pytest.raises(ValueError, match='没有对应的食物记录'):
         apply_answers(draft, {'1.food_id':'dish_010'}, mode)

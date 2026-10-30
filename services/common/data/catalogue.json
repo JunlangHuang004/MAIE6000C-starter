@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-19.1",
+  "version": "2026-10-31.1",
   "foods": [
     {
       "id": "rice",
@@ -3707,6 +3707,1874 @@
         "id": "175043",
         "url": "https://fdc.nal.usda.gov/food-details/175043/nutrients",
         "description": "Leavening agents, yeast, baker's, active dry",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_heart",
+      "name": "生猪心",
+      "state": "raw",
+      "fdc_id": 168267,
+      "aliases": [
+        "生猪心",
+        "猪心",
+        "生豬心"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 17.27,
+        "fat_g": 4.36,
+        "carbs_g": 1.33,
+        "calories": 118.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168267",
+        "url": "https://fdc.nal.usda.gov/food-details/168267/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, heart, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_kidney",
+      "name": "生猪腰",
+      "state": "raw",
+      "fdc_id": 168270,
+      "aliases": [
+        "生猪腰",
+        "猪腰",
+        "猪肾",
+        "生豬腰",
+        "豬腎"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 3.25,
+        "carbs_g": 0.0,
+        "calories": 100.0,
+        "protein_g": 16.46
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168270",
+        "url": "https://fdc.nal.usda.gov/food-details/168270/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, kidneys, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_intestine",
+      "name": "生猪大肠",
+      "state": "raw",
+      "fdc_id": 168266,
+      "aliases": [
+        "生猪大肠",
+        "生豬大腸",
+        "生肥肠",
+        "生肥腸"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 16.61,
+        "carbs_g": 0.0,
+        "protein_g": 7.64,
+        "calories": 182.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168266",
+        "url": "https://fdc.nal.usda.gov/food-details/168266/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, chitterlings, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_stomach",
+      "name": "生猪肚",
+      "state": "raw",
+      "fdc_id": 167867,
+      "aliases": [
+        "生猪肚",
+        "猪肚",
+        "生豬肚"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 16.85,
+        "fat_g": 10.14,
+        "calories": 159.0,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167867",
+        "url": "https://fdc.nal.usda.gov/food-details/167867/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, stomach, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_ear",
+      "name": "冷冻生猪耳",
+      "state": "raw",
+      "fdc_id": 167857,
+      "aliases": [
+        "冷冻生猪耳",
+        "生猪耳",
+        "生猪耳朵",
+        "冷凍生豬耳",
+        "生豬耳"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 15.1,
+        "carbs_g": 0.6,
+        "calories": 234.0,
+        "protein_g": 22.45
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167857",
+        "url": "https://fdc.nal.usda.gov/food-details/167857/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, ears, frozen, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_feet",
+      "name": "生猪蹄可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 167859,
+      "aliases": [
+        "生猪蹄可食部分（不含骨）",
+        "生猪蹄肉",
+        "生猪脚肉",
+        "生豬蹄肉",
+        "生豬腳肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 12.59,
+        "protein_g": 23.16,
+        "calories": 212.0,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167859",
+        "url": "https://fdc.nal.usda.gov/food-details/167859/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, feet, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_feet_cooked",
+      "name": "炖熟猪蹄可食部分（不含骨）",
+      "state": "cooked",
+      "fdc_id": 168290,
+      "aliases": [
+        "炖熟猪蹄可食部分（不含骨）",
+        "熟猪蹄肉",
+        "熟猪脚肉",
+        "燉熟豬蹄肉"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled",
+        "braised"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 21.94,
+        "fat_g": 16.05,
+        "calories": 238.0,
+        "carbs_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168290",
+        "url": "https://fdc.nal.usda.gov/food-details/168290/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, feet, cooked, simmered",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pork_liver_cooked",
+      "name": "炖熟猪肝",
+      "state": "cooked",
+      "fdc_id": 167863,
+      "aliases": [
+        "炖熟猪肝",
+        "熟猪肝",
+        "燉熟豬肝"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "braised"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 4.4,
+        "carbs_g": 3.76,
+        "calories": 165.0,
+        "protein_g": 26.02
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167863",
+        "url": "https://fdc.nal.usda.gov/food-details/167863/nutrients",
+        "description": "Pork, fresh, variety meats and by-products, liver, cooked, braised",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_gizzard",
+      "name": "生鸡胗",
+      "state": "raw",
+      "fdc_id": 171456,
+      "aliases": [
+        "生鸡胗",
+        "鸡胗",
+        "鸡肫",
+        "生雞胗",
+        "雞肫"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 17.66,
+        "fat_g": 2.06,
+        "carbs_g": 0.0,
+        "calories": 94.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171456",
+        "url": "https://fdc.nal.usda.gov/food-details/171456/nutrients",
+        "description": "Chicken, gizzard, all classes, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_heart",
+      "name": "生鸡心",
+      "state": "raw",
+      "fdc_id": 171458,
+      "aliases": [
+        "生鸡心",
+        "鸡心",
+        "生雞心"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 15.55,
+        "fat_g": 9.33,
+        "carbs_g": 0.71,
+        "calories": 153.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171458",
+        "url": "https://fdc.nal.usda.gov/food-details/171458/nutrients",
+        "description": "Chicken, heart, all classes, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_liver",
+      "name": "生鸡肝",
+      "state": "raw",
+      "fdc_id": 171060,
+      "aliases": [
+        "生鸡肝",
+        "鸡肝",
+        "生雞肝"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 16.92,
+        "fat_g": 4.83,
+        "carbs_g": 0.73,
+        "calories": 119.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171060",
+        "url": "https://fdc.nal.usda.gov/food-details/171060/nutrients",
+        "description": "Chicken, liver, all classes, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "duck_skin",
+      "name": "生带皮鸭肉可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 172408,
+      "aliases": [
+        "生带皮鸭肉可食部分（不含骨）",
+        "生带皮鸭肉",
+        "生帶皮鴨肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 11.49,
+        "fat_g": 39.34,
+        "carbs_g": 0.0,
+        "calories": 404.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172408",
+        "url": "https://fdc.nal.usda.gov/food-details/172408/nutrients",
+        "description": "Duck, domesticated, meat and skin, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "duck_roast",
+      "name": "烤带皮鸭肉可食部分（不含骨）",
+      "state": "cooked",
+      "fdc_id": 172409,
+      "aliases": [
+        "烤带皮鸭肉可食部分（不含骨）",
+        "烤熟带皮鸭肉",
+        "烤帶皮鴨肉"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "roasted"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 28.35,
+        "carbs_g": 0.0,
+        "calories": 337.0,
+        "protein_g": 18.99
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172409",
+        "url": "https://fdc.nal.usda.gov/food-details/172409/nutrients",
+        "description": "Duck, domesticated, meat and skin, cooked, roasted",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "goose",
+      "name": "生带皮鹅肉可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 174470,
+      "aliases": [
+        "生带皮鹅肉可食部分（不含骨）",
+        "生带皮鹅肉",
+        "生帶皮鵝肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 33.62,
+        "carbs_g": 0.0,
+        "calories": 371.0,
+        "protein_g": 15.86
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174470",
+        "url": "https://fdc.nal.usda.gov/food-details/174470/nutrients",
+        "description": "Goose, domesticated, meat and skin, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "rabbit",
+      "name": "生家兔肉可食部分（不含骨）",
+      "state": "raw",
+      "fdc_id": 172521,
+      "aliases": [
+        "生家兔肉可食部分（不含骨）",
+        "生兔肉",
+        "生家兔肉",
+        "生兔肉可食部分"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 5.55,
+        "carbs_g": 0.0,
+        "calories": 136.0,
+        "protein_g": 20.05
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172521",
+        "url": "https://fdc.nal.usda.gov/food-details/172521/nutrients",
+        "description": "Game meat, rabbit, domesticated, composite of cuts, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lamb_leg",
+      "name": "生羊腿肉（含部分脂肪，不含骨）",
+      "state": "raw",
+      "fdc_id": 174311,
+      "aliases": [
+        "生羊腿肉（含部分脂肪，不含骨）",
+        "生羊腿肉",
+        "生羊腿肉可食部分"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 17.91,
+        "fat_g": 17.07,
+        "carbs_g": 0.0,
+        "calories": 230.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174311",
+        "url": "https://fdc.nal.usda.gov/food-details/174311/nutrients",
+        "description": "Lamb, leg, whole (shank and sirloin), separable lean and fat, trimmed to 1/4\" fat, choice, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "shrimp_cooked",
+      "name": "熟虾仁（混合品种，可能含保水剂）",
+      "state": "cooked",
+      "fdc_id": 171971,
+      "aliases": [
+        "熟虾仁（混合品种，可能含保水剂）",
+        "熟虾仁",
+        "水煮虾仁",
+        "熟蝦仁",
+        "水煮蝦仁"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 22.78,
+        "fat_g": 1.7,
+        "carbs_g": 1.52,
+        "calories": 119.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171971",
+        "url": "https://fdc.nal.usda.gov/food-details/171971/nutrients",
+        "description": "Crustaceans, shrimp, mixed species, cooked, moist heat (may contain additives to retain moisture)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "octopus",
+      "name": "生普通章鱼可食部分",
+      "state": "raw",
+      "fdc_id": 174218,
+      "aliases": [
+        "生普通章鱼可食部分",
+        "生章鱼",
+        "生八爪鱼",
+        "生章魚",
+        "生八爪魚"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.04,
+        "carbs_g": 2.2,
+        "calories": 82.0,
+        "protein_g": 14.91
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174218",
+        "url": "https://fdc.nal.usda.gov/food-details/174218/nutrients",
+        "description": "Mollusks, octopus, common, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "octopus_cooked",
+      "name": "水煮普通章鱼可食部分",
+      "state": "cooked",
+      "fdc_id": 174249,
+      "aliases": [
+        "水煮普通章鱼可食部分",
+        "水煮章鱼",
+        "熟章鱼",
+        "水煮章魚",
+        "熟章魚"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 2.08,
+        "carbs_g": 4.4,
+        "calories": 164.0,
+        "protein_g": 29.82
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174249",
+        "url": "https://fdc.nal.usda.gov/food-details/174249/nutrients",
+        "description": "Mollusks, octopus, common, cooked, moist heat",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "quail_egg",
+      "name": "生鹌鹑蛋液",
+      "state": "raw",
+      "fdc_id": 172191,
+      "aliases": [
+        "生鹌鹑蛋液",
+        "生鹌鹑蛋可食部分",
+        "生鵪鶉蛋液"
+      ],
+      "default_portion_g": 45,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 13.05,
+        "fat_g": 11.09,
+        "carbs_g": 0.41,
+        "calories": 158.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172191",
+        "url": "https://fdc.nal.usda.gov/food-details/172191/nutrients",
+        "description": "Egg, quail, whole, fresh, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "amaranth",
+      "name": "生苋菜叶",
+      "state": "raw",
+      "fdc_id": 168385,
+      "aliases": [
+        "生苋菜叶",
+        "苋菜",
+        "生苋菜",
+        "莧菜",
+        "生莧菜葉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 4.02,
+        "calories": 23.0,
+        "fat_g": 0.33,
+        "protein_g": 2.46
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168385",
+        "url": "https://fdc.nal.usda.gov/food-details/168385/nutrients",
+        "description": "Amaranth leaves, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "mustard_greens",
+      "name": "生芥菜叶",
+      "state": "raw",
+      "fdc_id": 169256,
+      "aliases": [
+        "生芥菜叶",
+        "芥菜叶",
+        "生芥菜",
+        "生芥菜葉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.86,
+        "fat_g": 0.42,
+        "carbs_g": 4.67,
+        "calories": 27.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169256",
+        "url": "https://fdc.nal.usda.gov/food-details/169256/nutrients",
+        "description": "Mustard greens, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "water_spinach",
+      "name": "生空心菜",
+      "state": "raw",
+      "fdc_id": 169301,
+      "aliases": [
+        "生空心菜",
+        "空心菜",
+        "蕹菜",
+        "通菜",
+        "生通菜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 3.13,
+        "protein_g": 2.6,
+        "fat_g": 0.2,
+        "calories": 19.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169301",
+        "url": "https://fdc.nal.usda.gov/food-details/169301/nutrients",
+        "description": "Water convolvulus,raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "celtuce",
+      "name": "生莴笋",
+      "state": "raw",
+      "fdc_id": 169990,
+      "aliases": [
+        "生莴笋",
+        "莴笋",
+        "莴苣笋",
+        "青笋",
+        "萵筍",
+        "萵苣筍",
+        "青筍"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 18.0,
+        "fat_g": 0.3,
+        "carbs_g": 3.65,
+        "protein_g": 0.85
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169990",
+        "url": "https://fdc.nal.usda.gov/food-details/169990/nutrients",
+        "description": "Celtuce, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "watercress",
+      "name": "生西洋菜",
+      "state": "raw",
+      "fdc_id": 170068,
+      "aliases": [
+        "生西洋菜",
+        "西洋菜",
+        "豆瓣菜",
+        "水田芥"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 1.29,
+        "calories": 11.0,
+        "protein_g": 2.3,
+        "fat_g": 0.1
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170068",
+        "url": "https://fdc.nal.usda.gov/food-details/170068/nutrients",
+        "description": "Watercress, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "yardlong_bean",
+      "name": "生长豇豆（可食豆荚）",
+      "state": "raw",
+      "fdc_id": 169222,
+      "aliases": [
+        "生长豇豆（可食豆荚）",
+        "长豇豆",
+        "长豆角",
+        "豇豆角",
+        "長豇豆",
+        "長豆角",
+        "生长豆角"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.8,
+        "fat_g": 0.4,
+        "carbs_g": 8.35,
+        "calories": 47.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169222",
+        "url": "https://fdc.nal.usda.gov/food-details/169222/nutrients",
+        "description": "Yardlong bean, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "asparagus",
+      "name": "生芦笋",
+      "state": "raw",
+      "fdc_id": 168389,
+      "aliases": [
+        "生芦笋",
+        "芦笋",
+        "生蘆筍",
+        "蘆筍"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.2,
+        "carbs_g": 3.88,
+        "calories": 20.0,
+        "fat_g": 0.12
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168389",
+        "url": "https://fdc.nal.usda.gov/food-details/168389/nutrients",
+        "description": "Asparagus, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chayote",
+      "name": "生佛手瓜",
+      "state": "raw",
+      "fdc_id": 170402,
+      "aliases": [
+        "生佛手瓜",
+        "佛手瓜",
+        "合掌瓜",
+        "生合掌瓜"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 4.51,
+        "calories": 19.0,
+        "fat_g": 0.13,
+        "protein_g": 0.82
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170402",
+        "url": "https://fdc.nal.usda.gov/food-details/170402/nutrients",
+        "description": "Chayote, fruit, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "jicama",
+      "name": "生豆薯（去皮可食部分）",
+      "state": "raw",
+      "fdc_id": 170073,
+      "aliases": [
+        "生豆薯（去皮可食部分）",
+        "豆薯",
+        "凉薯",
+        "沙葛",
+        "涼薯",
+        "生凉薯"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 8.82,
+        "calories": 38.0,
+        "fat_g": 0.09,
+        "protein_g": 0.72
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170073",
+        "url": "https://fdc.nal.usda.gov/food-details/170073/nutrients",
+        "description": "Yambean (jicama), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "bamboo_cooked",
+      "name": "水煮竹笋（沥水，无盐）",
+      "state": "cooked",
+      "fdc_id": 169211,
+      "aliases": [
+        "水煮竹笋（沥水，无盐）",
+        "水煮竹笋",
+        "熟竹笋",
+        "水煮竹筍",
+        "熟竹筍"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.22,
+        "carbs_g": 1.92,
+        "calories": 12.0,
+        "protein_g": 1.53
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169211",
+        "url": "https://fdc.nal.usda.gov/food-details/169211/nutrients",
+        "description": "Bamboo shoots, cooked, boiled, drained, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "rice_flour",
+      "name": "白米粉（干粉，未强化）",
+      "state": "raw",
+      "fdc_id": 169714,
+      "aliases": [
+        "白米粉（干粉，未强化）",
+        "粘米粉",
+        "黏米粉",
+        "干白米粉",
+        "乾白米粉"
+      ],
+      "default_portion_g": 50,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.42,
+        "carbs_g": 80.13,
+        "calories": 366.0,
+        "protein_g": 5.95
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169714",
+        "url": "https://fdc.nal.usda.gov/food-details/169714/nutrients",
+        "description": "Rice flour, white, unenriched",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "glutinous_cooked",
+      "name": "熟白糯米饭",
+      "state": "cooked",
+      "fdc_id": 169711,
+      "aliases": [
+        "熟白糯米饭",
+        "糯米饭",
+        "熟糯米",
+        "糯米飯",
+        "熟白糯米飯"
+      ],
+      "default_portion_g": 150,
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.19,
+        "carbs_g": 21.09,
+        "calories": 97.0,
+        "protein_g": 2.02
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169711",
+        "url": "https://fdc.nal.usda.gov/food-details/169711/nutrients",
+        "description": "Rice, white, glutinous, unenriched, cooked",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lotus_seed_dried",
+      "name": "干莲子",
+      "state": "raw",
+      "fdc_id": 170149,
+      "aliases": [
+        "干莲子",
+        "干莲子仁",
+        "乾蓮子",
+        "乾蓮子仁"
+      ],
+      "default_portion_g": 30,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.97,
+        "carbs_g": 64.47,
+        "calories": 332.0,
+        "protein_g": 15.41
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170149",
+        "url": "https://fdc.nal.usda.gov/food-details/170149/nutrients",
+        "description": "Seeds, lotus seeds, dried",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "potato_cooked",
+      "name": "去皮水煮土豆（无盐）",
+      "state": "cooked",
+      "fdc_id": 170440,
+      "aliases": [
+        "去皮水煮土豆（无盐）",
+        "去皮水煮土豆",
+        "水煮土豆",
+        "去皮水煮马铃薯",
+        "水煮馬鈴薯"
+      ],
+      "default_portion_g": 150,
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 20.01,
+        "calories": 86.0,
+        "fat_g": 0.1,
+        "protein_g": 1.71
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170440",
+        "url": "https://fdc.nal.usda.gov/food-details/170440/nutrients",
+        "description": "Potatoes, boiled, cooked without skin, flesh, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "corn_cooked",
+      "name": "水煮甜玉米粒（沥水，无盐）",
+      "state": "cooked",
+      "fdc_id": 169999,
+      "aliases": [
+        "水煮甜玉米粒（沥水，无盐）",
+        "熟甜玉米粒",
+        "水煮玉米粒",
+        "熟甜玉米粒可食部分"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 1.5,
+        "carbs_g": 20.98,
+        "calories": 96.0,
+        "protein_g": 3.41
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169999",
+        "url": "https://fdc.nal.usda.gov/food-details/169999/nutrients",
+        "description": "Corn, sweet, yellow, cooked, boiled, drained, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "taro_cooked",
+      "name": "熟芋头（无盐）",
+      "state": "cooked",
+      "fdc_id": 168486,
+      "aliases": [
+        "熟芋头（无盐）",
+        "熟芋头",
+        "熟芋頭",
+        "熟芋头可食部分"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 142.0,
+        "fat_g": 0.11,
+        "protein_g": 0.52,
+        "carbs_g": 34.6
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168486",
+        "url": "https://fdc.nal.usda.gov/food-details/168486/nutrients",
+        "description": "Taro, cooked, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lotus_cooked",
+      "name": "水煮莲藕（沥水，无盐）",
+      "state": "cooked",
+      "fdc_id": 168430,
+      "aliases": [
+        "水煮莲藕（沥水，无盐）",
+        "水煮莲藕",
+        "熟莲藕",
+        "水煮蓮藕",
+        "熟蓮藕"
+      ],
+      "default_portion_g": 100,
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 16.02,
+        "calories": 66.0,
+        "protein_g": 1.58,
+        "fat_g": 0.07
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168430",
+        "url": "https://fdc.nal.usda.gov/food-details/168430/nutrients",
+        "description": "Lotus root, cooked, boiled, drained, without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "oats_cooked",
+      "name": "水煮燕麦（无盐、未强化）",
+      "state": "cooked",
+      "fdc_id": 173905,
+      "aliases": [
+        "水煮燕麦（无盐、未强化）",
+        "水煮燕麦",
+        "熟燕麦",
+        "水煮燕麥",
+        "熟燕麥"
+      ],
+      "default_portion_g": 200,
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 2.54,
+        "fat_g": 1.52,
+        "carbs_g": 12.0,
+        "calories": 71.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173905",
+        "url": "https://fdc.nal.usda.gov/food-details/173905/nutrients",
+        "description": "Cereals, oats, regular and quick, unenriched, cooked with water (includes boiling and microwaving), without salt",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "curry_powder",
+      "name": "咖喱粉",
+      "state": "as_sold",
+      "fdc_id": 170924,
+      "aliases": [
+        "咖喱粉",
+        "咖哩粉"
+      ],
+      "default_portion_g": 5,
+      "kind": "ingredient",
+      "nutrients": {
+        "calories": 325.0,
+        "protein_g": 14.29,
+        "fat_g": 14.01,
+        "carbs_g": 55.83
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170924",
+        "url": "https://fdc.nal.usda.gov/food-details/170924/nutrients",
+        "description": "Spices, curry powder",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cumin",
+      "name": "孜然籽",
+      "state": "as_sold",
+      "fdc_id": 170923,
+      "aliases": [
+        "孜然籽",
+        "孜然粒"
+      ],
+      "default_portion_g": 3,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 17.81,
+        "fat_g": 22.27,
+        "carbs_g": 44.24,
+        "calories": 375.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170923",
+        "url": "https://fdc.nal.usda.gov/food-details/170923/nutrients",
+        "description": "Spices, cumin seed",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chili_powder",
+      "name": "红辣椒粉（红椒或卡宴椒）",
+      "state": "as_sold",
+      "fdc_id": 170932,
+      "aliases": [
+        "红辣椒粉（红椒或卡宴椒）",
+        "纯红辣椒粉",
+        "红辣椒粉",
+        "紅辣椒粉",
+        "卡宴辣椒粉"
+      ],
+      "default_portion_g": 3,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 17.27,
+        "carbs_g": 56.63,
+        "calories": 318.0,
+        "protein_g": 12.01
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170932",
+        "url": "https://fdc.nal.usda.gov/food-details/170932/nutrients",
+        "description": "Spices, pepper, red or cayenne",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "white_pepper",
+      "name": "白胡椒粉",
+      "state": "as_sold",
+      "fdc_id": 170933,
+      "aliases": [
+        "白胡椒粉",
+        "白胡椒",
+        "白胡椒末"
+      ],
+      "default_portion_g": 2,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 10.4,
+        "fat_g": 2.12,
+        "carbs_g": 68.61,
+        "calories": 296.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "170933",
+        "url": "https://fdc.nal.usda.gov/food-details/170933/nutrients",
+        "description": "Spices, pepper, white",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "fish_sauce",
+      "name": "鱼露",
+      "state": "as_sold",
+      "fdc_id": 174531,
+      "aliases": [
+        "鱼露",
+        "魚露"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.01,
+        "carbs_g": 3.64,
+        "calories": 35.0,
+        "protein_g": 5.06
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174531",
+        "url": "https://fdc.nal.usda.gov/food-details/174531/nutrients",
+        "description": "Sauce, fish, ready-to-serve",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "peanut_butter",
+      "name": "含盐细滑花生酱",
+      "state": "as_sold",
+      "fdc_id": 174266,
+      "aliases": [
+        "含盐细滑花生酱",
+        "含盐花生酱",
+        "含鹽細滑花生醬",
+        "含鹽花生醬"
+      ],
+      "default_portion_g": 15,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 22.21,
+        "fat_g": 51.36,
+        "carbs_g": 22.31,
+        "calories": 598.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174266",
+        "url": "https://fdc.nal.usda.gov/food-details/174266/nutrients",
+        "description": "Peanut butter, smooth style, with salt (Includes foods for USDA's Food Distribution Program)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "peanut_oil",
+      "name": "花生油",
+      "state": "as_sold",
+      "fdc_id": 171410,
+      "aliases": [
+        "花生油",
+        "食用花生油"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 100.0,
+        "carbs_g": 0.0,
+        "calories": 884.0,
+        "protein_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171410",
+        "url": "https://fdc.nal.usda.gov/food-details/171410/nutrients",
+        "description": "Oil, peanut, salad or cooking",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "canola_oil",
+      "name": "低芥酸菜籽油（芥花籽油）",
+      "state": "as_sold",
+      "fdc_id": 172336,
+      "aliases": [
+        "低芥酸菜籽油（芥花籽油）",
+        "低芥酸菜籽油",
+        "芥花籽油",
+        "卡诺拉油",
+        "卡諾拉油"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 100.0,
+        "protein_g": 0.0,
+        "carbs_g": 0.0,
+        "calories": 884.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "172336",
+        "url": "https://fdc.nal.usda.gov/food-details/172336/nutrients",
+        "description": "Oil, canola",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "olive_oil",
+      "name": "橄榄油",
+      "state": "as_sold",
+      "fdc_id": 171413,
+      "aliases": [
+        "橄榄油",
+        "食用橄榄油",
+        "橄欖油"
+      ],
+      "default_portion_g": 10,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 100.0,
+        "carbs_g": 0.0,
+        "calories": 884.0,
+        "protein_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171413",
+        "url": "https://fdc.nal.usda.gov/food-details/171413/nutrients",
+        "description": "Oil, olive, salad or cooking",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "cola",
+      "name": "含糖可乐",
+      "state": "as_sold",
+      "fdc_id": 174852,
+      "aliases": [
+        "含糖可乐",
+        "普通含糖可乐",
+        "含糖可樂",
+        "普通含糖可樂"
+      ],
+      "default_portion_g": 250,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.25,
+        "carbs_g": 10.36,
+        "calories": 42.0,
+        "protein_g": 0.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "174852",
+        "url": "https://fdc.nal.usda.gov/food-details/174852/nutrients",
+        "description": "Beverages, carbonated, cola, regular",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "peach",
+      "name": "鲜黄桃果肉",
+      "state": "raw",
+      "fdc_id": 169928,
+      "aliases": [
+        "鲜黄桃果肉",
+        "黄桃果肉",
+        "鲜黄桃",
+        "鮮黃桃果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 9.54,
+        "calories": 39.0,
+        "protein_g": 0.91,
+        "fat_g": 0.25
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169928",
+        "url": "https://fdc.nal.usda.gov/food-details/169928/nutrients",
+        "description": "Peaches, yellow, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lychee",
+      "name": "鲜荔枝果肉",
+      "state": "raw",
+      "fdc_id": 169086,
+      "aliases": [
+        "鲜荔枝果肉",
+        "荔枝果肉",
+        "鲜荔枝",
+        "鮮荔枝果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.44,
+        "carbs_g": 16.53,
+        "calories": 66.0,
+        "protein_g": 0.83
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169086",
+        "url": "https://fdc.nal.usda.gov/food-details/169086/nutrients",
+        "description": "Litchis, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "longan",
+      "name": "鲜龙眼果肉",
+      "state": "raw",
+      "fdc_id": 169089,
+      "aliases": [
+        "鲜龙眼果肉",
+        "龙眼果肉",
+        "鲜龙眼",
+        "鲜桂圆",
+        "鮮龍眼果肉",
+        "鮮桂圓"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 1.31,
+        "fat_g": 0.1,
+        "carbs_g": 15.14,
+        "calories": 60.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169089",
+        "url": "https://fdc.nal.usda.gov/food-details/169089/nutrients",
+        "description": "Longans, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "papaya",
+      "name": "鲜木瓜果肉",
+      "state": "raw",
+      "fdc_id": 169926,
+      "aliases": [
+        "鲜木瓜果肉",
+        "木瓜果肉",
+        "鲜木瓜",
+        "鮮木瓜果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 0.47,
+        "fat_g": 0.26,
+        "carbs_g": 10.82,
+        "calories": 43.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169926",
+        "url": "https://fdc.nal.usda.gov/food-details/169926/nutrients",
+        "description": "Papayas, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "pomelo",
+      "name": "柚子果肉",
+      "state": "raw",
+      "fdc_id": 167754,
+      "aliases": [
+        "柚子果肉",
+        "柚子肉",
+        "鲜柚子果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.04,
+        "carbs_g": 9.62,
+        "calories": 38.0,
+        "protein_g": 0.76
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "167754",
+        "url": "https://fdc.nal.usda.gov/food-details/167754/nutrients",
+        "description": "Pummelo, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "mandarin",
+      "name": "橘子果肉",
+      "state": "raw",
+      "fdc_id": 169105,
+      "aliases": [
+        "橘子果肉",
+        "橘子肉",
+        "桔子果肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.31,
+        "carbs_g": 13.34,
+        "calories": 53.0,
+        "protein_g": 0.81
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "169105",
+        "url": "https://fdc.nal.usda.gov/food-details/169105/nutrients",
+        "description": "Tangerines, (mandarin oranges), raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "grapefruit",
+      "name": "葡萄柚果肉",
+      "state": "raw",
+      "fdc_id": 173033,
+      "aliases": [
+        "葡萄柚果肉",
+        "西柚果肉",
+        "西柚肉",
+        "葡萄柚肉"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.1,
+        "carbs_g": 8.08,
+        "calories": 32.0,
+        "protein_g": 0.63
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173033",
+        "url": "https://fdc.nal.usda.gov/food-details/173033/nutrients",
+        "description": "Grapefruit, raw, pink and red and white, all areas",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "blueberry",
+      "name": "鲜蓝莓",
+      "state": "raw",
+      "fdc_id": 171711,
+      "aliases": [
+        "鲜蓝莓",
+        "蓝莓",
+        "鮮藍莓",
+        "藍莓"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 14.49,
+        "calories": 57.0,
+        "fat_g": 0.33,
+        "protein_g": 0.74
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171711",
+        "url": "https://fdc.nal.usda.gov/food-details/171711/nutrients",
+        "description": "Blueberries, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "skim_milk",
+      "name": "脱脂牛奶（未强化维生素A、D）",
+      "state": "as_sold",
+      "fdc_id": 173432,
+      "aliases": [
+        "脱脂牛奶（未强化维生素A、D）",
+        "脱脂牛奶",
+        "脫脂牛奶"
+      ],
+      "default_portion_g": 250,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.18,
+        "carbs_g": 4.86,
+        "calories": 35.0,
+        "protein_g": 3.37
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173432",
+        "url": "https://fdc.nal.usda.gov/food-details/173432/nutrients",
+        "description": "Milk, nonfat, fluid, without added vitamin A and vitamin D (fat free or skim)",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "millet_cooked",
+      "name": "熟小米饭",
+      "state": "cooked",
+      "fdc_id": 168871,
+      "aliases": [
+        "熟小米饭",
+        "小米饭",
+        "熟小米",
+        "熟小米飯",
+        "小米飯"
+      ],
+      "default_portion_g": 150,
+      "preparations": [
+        "as_served",
+        "boiled",
+        "steamed"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 3.51,
+        "fat_g": 1.0,
+        "carbs_g": 23.67,
+        "calories": 119.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168871",
+        "url": "https://fdc.nal.usda.gov/food-details/168871/nutrients",
+        "description": "Millet, cooked",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "sweet_potato_cooked",
+      "name": "去皮水煮红薯",
+      "state": "cooked",
+      "fdc_id": 168484,
+      "aliases": [
+        "去皮水煮红薯",
+        "水煮红薯",
+        "水煮番薯",
+        "去皮水煮紅薯",
+        "水煮番薯可食部分"
+      ],
+      "default_portion_g": 150,
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 17.72,
+        "calories": 76.0,
+        "protein_g": 1.37,
+        "fat_g": 0.14
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168484",
+        "url": "https://fdc.nal.usda.gov/food-details/168484/nutrients",
+        "description": "Sweet potato, cooked, boiled, without skin",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "lotus_seed_fresh",
+      "name": "生鲜莲子",
+      "state": "raw",
+      "fdc_id": 168591,
+      "aliases": [
+        "生鲜莲子",
+        "鲜莲子",
+        "生鲜莲子仁",
+        "生鮮蓮子",
+        "鮮蓮子"
+      ],
+      "default_portion_g": 50,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 0.53,
+        "carbs_g": 17.28,
+        "calories": 89.0,
+        "protein_g": 4.13
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168591",
+        "url": "https://fdc.nal.usda.gov/food-details/168591/nutrients",
+        "description": "Seeds, lotus seeds, raw",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "shiitake_dried",
+      "name": "干香菇",
+      "state": "raw",
+      "fdc_id": 168436,
+      "aliases": [
+        "干香菇",
+        "干香菇干重",
+        "乾香菇",
+        "乾香菇乾重"
+      ],
+      "default_portion_g": 15,
+      "kind": "ingredient",
+      "nutrients": {
+        "carbs_g": 75.37,
+        "calories": 296.0,
+        "protein_g": 9.58,
+        "fat_g": 0.99
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "168436",
+        "url": "https://fdc.nal.usda.gov/food-details/168436/nutrients",
+        "description": "Mushrooms, shiitake, dried",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "ham",
+      "name": "西式普通切片火腿（午餐肉类）",
+      "state": "as_sold",
+      "fdc_id": 173864,
+      "aliases": [
+        "西式普通切片火腿（午餐肉类）",
+        "西式普通切片火腿",
+        "西式切片火腿",
+        "西式火腿片",
+        "西式普通切片火腿（午餐肉類）"
+      ],
+      "default_portion_g": 50,
+      "kind": "ingredient",
+      "nutrients": {
+        "fat_g": 8.8,
+        "carbs_g": 3.63,
+        "calories": 164.0,
+        "protein_g": 16.6
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "173864",
+        "url": "https://fdc.nal.usda.gov/food-details/173864/nutrients",
+        "description": "Ham, sliced, regular (approximately 11% fat)",
         "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
       }
     },
@@ -11141,6 +13009,3208 @@
       },
       "nutrition_basis": "recipe_batch_then_cooked_weight",
       "default_portion_g": 250
+    },
+    {
+      "id": "dish_251",
+      "name": "豉油鸡",
+      "aliases": [
+        "豉油鸡",
+        "酱油鸡",
+        "豉油雞",
+        "醬油雞"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "带皮鸡肉用酱油、糖、姜葱焖熟；配料按留在食用成品中的量估算，重量不含骨头及弃掉的卤汁",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "chicken_skin": 650.0,
+          "soy_sauce": 50.0,
+          "sugar": 20.0,
+          "ginger": 20.0,
+          "spring_onion": 20.0,
+          "water": 120.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_252",
+      "name": "可乐鸡翅",
+      "aliases": [
+        "可乐鸡翅",
+        "可樂雞翅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡翅可食肉加普通含糖可乐焖煮收汁；油按成品摄入量估算，不含骨头",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "chicken_wing": 500.0,
+          "cola": 200.0,
+          "soy_sauce": 25.0,
+          "ginger": 15.0,
+          "oil": 8.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_253",
+      "name": "照烧鸡腿",
+      "aliases": [
+        "照烧鸡腿",
+        "照烧鸡腿肉",
+        "照燒雞腿"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮鸡腿肉煎熟后用酱油、蜂蜜和糖调汁收浓；不含骨头",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "chicken_thigh": 500.0,
+          "soy_sauce": 30.0,
+          "honey": 20.0,
+          "sugar": 10.0,
+          "ginger": 10.0,
+          "oil": 10.0,
+          "water": 50.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_254",
+      "name": "葱油鸡",
+      "aliases": [
+        "葱油鸡",
+        "蔥油雞"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "带皮鸡肉蒸熟后淋姜葱热油；按去骨可食部分及实际淋入的油计量",
+      "recipe": {
+        "yield_g": 570.0,
+        "ingredients": {
+          "chicken_skin": 600.0,
+          "spring_onion": 50.0,
+          "ginger": 20.0,
+          "oil": 25.0,
+          "salt": 3.0,
+          "soy_sauce": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_255",
+      "name": "凉拌鸡丝",
+      "aliases": [
+        "凉拌鸡丝",
+        "手撕鸡",
+        "手撕雞",
+        "涼拌雞絲"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡胸煮熟撕丝，与黄瓜、蒜、酱油、醋及芝麻油拌匀；不含额外花生酱",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "chicken": 400.0,
+          "cucumber": 180.0,
+          "soy_sauce": 20.0,
+          "vinegar": 20.0,
+          "sesame_oil": 12.0,
+          "chili": 10.0,
+          "garlic": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_256",
+      "name": "咖喱鸡",
+      "aliases": [
+        "咖喱鸡",
+        "咖喱雞"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮鸡腿肉与土豆胡萝卜炖煮，咖喱粉调味；本参考配方不含椰奶或奶油",
+      "recipe": {
+        "yield_g": 850.0,
+        "ingredients": {
+          "chicken_thigh": 400.0,
+          "potato": 200.0,
+          "carrot": 100.0,
+          "onion": 100.0,
+          "curry_powder": 12.0,
+          "oil": 20.0,
+          "water": 180.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_257",
+      "name": "炸鸡柳",
+      "aliases": [
+        "炸鸡柳",
+        "炸雞柳"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡胸切条挂面粉淀粉蛋糊炸熟；油量是估计留在成品中的油，不是炸锅总用油",
+      "recipe": {
+        "yield_g": 420.0,
+        "ingredients": {
+          "chicken": 350.0,
+          "wheat_flour": 45.0,
+          "starch": 25.0,
+          "egg_raw": 50.0,
+          "oil": 30.0,
+          "salt": 3.0,
+          "black_pepper": 1.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_258",
+      "name": "椒盐鸡块",
+      "aliases": [
+        "椒盐鸡块",
+        "椒鹽雞塊"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "带皮去骨鸡肉裹薄糊炸熟后拌椒盐蒜末；油量按成品留油估算",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "chicken_skin": 500.0,
+          "starch": 45.0,
+          "egg_raw": 50.0,
+          "oil": 30.0,
+          "salt": 3.0,
+          "black_pepper": 2.0,
+          "garlic": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_259",
+      "name": "香辣鸡胗",
+      "aliases": [
+        "香辣鸡胗",
+        "香辣鸡肫",
+        "爆炒鸡胗",
+        "香辣雞胗"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "生鸡胗切片，与青椒洋葱及辣椒急炒；所列鸡胗为可食生重",
+      "recipe": {
+        "yield_g": 430.0,
+        "ingredients": {
+          "chicken_gizzard": 400.0,
+          "pepper": 100.0,
+          "chili": 25.0,
+          "onion": 60.0,
+          "oil": 20.0,
+          "soy_sauce": 20.0,
+          "ginger": 15.0,
+          "garlic": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_260",
+      "name": "青椒鸡心",
+      "aliases": [
+        "青椒鸡心",
+        "青椒炒鸡心",
+        "青椒雞心"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡心处理后切开，与青椒洋葱炒熟；所有用量为可食部分",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "chicken_heart": 350.0,
+          "pepper": 150.0,
+          "onion": 60.0,
+          "oil": 18.0,
+          "soy_sauce": 20.0,
+          "ginger": 10.0,
+          "garlic": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_261",
+      "name": "卤鸭肉",
+      "aliases": [
+        "卤鸭肉",
+        "滷鴨肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮鸭肉加酱油糖姜葱焖卤；成品重量和酱汁量按实际食用部分估算",
+      "recipe": {
+        "yield_g": 570.0,
+        "ingredients": {
+          "duck": 600.0,
+          "soy_sauce": 35.0,
+          "sugar": 15.0,
+          "ginger": 25.0,
+          "spring_onion": 25.0,
+          "water": 150.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_262",
+      "name": "莲藕炖鸭",
+      "aliases": [
+        "莲藕炖鸭",
+        "蓮藕燉鴨"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮鸭肉与莲藕炖汤；成品含食用汤量，骨头不计重",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "duck": 450.0,
+          "lotus": 350.0,
+          "ginger": 20.0,
+          "water": 500.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_263",
+      "name": "土豆烧鸭",
+      "aliases": [
+        "土豆烧鸭",
+        "土豆燒鴨"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮鸭肉与土豆焖烧；成品含收浓后的食用汤汁",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "duck": 450.0,
+          "potato": 300.0,
+          "onion": 80.0,
+          "ginger": 15.0,
+          "soy_sauce": 25.0,
+          "oil": 15.0,
+          "water": 200.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_264",
+      "name": "红烧兔肉",
+      "aliases": [
+        "红烧兔肉",
+        "紅燒兔肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "other_meat",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "兔肉可食部分与胡萝卜焖烧；不含骨头，按成品留汁量估算",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "rabbit": 550.0,
+          "carrot": 150.0,
+          "ginger": 20.0,
+          "garlic": 15.0,
+          "soy_sauce": 25.0,
+          "sugar": 10.0,
+          "oil": 18.0,
+          "water": 180.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_265",
+      "name": "葱姜兔丁",
+      "aliases": [
+        "葱姜兔丁",
+        "蔥薑兔丁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "other_meat",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "兔肉切丁，与姜葱青椒炒熟；兔肉用量为去骨可食生重",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "rabbit": 450.0,
+          "spring_onion": 60.0,
+          "ginger": 30.0,
+          "pepper": 100.0,
+          "soy_sauce": 20.0,
+          "oil": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_266",
+      "name": "菠萝咕咾肉",
+      "aliases": [
+        "菠萝咕咾肉",
+        "菠萝咕噜肉",
+        "咕咾肉",
+        "咕噜肉",
+        "菠蘿咕咾肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "里脊裹糊炸熟，与菠萝青椒和糖醋番茄汁炒匀；油为估计成品留油",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "pork": 350.0,
+          "pineapple": 180.0,
+          "pepper": 100.0,
+          "starch": 40.0,
+          "egg_raw": 50.0,
+          "ketchup": 50.0,
+          "sugar": 25.0,
+          "vinegar": 25.0,
+          "oil": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_267",
+      "name": "叉烧肉",
+      "aliases": [
+        "叉烧肉",
+        "蜜汁叉烧",
+        "叉烧",
+        "叉燒肉",
+        "叉燒"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "以猪里脊配海鲜酱、酱油和蜜糖烤制的简化参考配方；实际部位和酱料需核对",
+      "recipe": {
+        "yield_g": 470.0,
+        "ingredients": {
+          "pork": 500.0,
+          "hoisin": 35.0,
+          "soy_sauce": 25.0,
+          "honey": 30.0,
+          "sugar": 15.0,
+          "garlic": 12.0,
+          "oil": 8.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_268",
+      "name": "干炸里脊",
+      "aliases": [
+        "干炸里脊",
+        "乾炸里脊"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "里脊裹蛋面糊炸熟，不含另蘸的糖醋汁；油为估计成品留油",
+      "recipe": {
+        "yield_g": 430.0,
+        "ingredients": {
+          "pork": 350.0,
+          "wheat_flour": 35.0,
+          "starch": 35.0,
+          "egg_raw": 50.0,
+          "oil": 30.0,
+          "salt": 3.0,
+          "black_pepper": 1.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_269",
+      "name": "椒盐排骨",
+      "aliases": [
+        "椒盐排骨",
+        "椒鹽排骨"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "排骨可食肉裹薄淀粉炸熟后拌椒盐；重量不含骨，油为估计成品留油",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "pork_ribs": 500.0,
+          "starch": 35.0,
+          "oil": 28.0,
+          "salt": 4.0,
+          "black_pepper": 2.0,
+          "garlic": 20.0,
+          "chili": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_270",
+      "name": "香菇蒸肉饼",
+      "aliases": [
+        "香菇蒸肉饼",
+        "香菇蒸肉餅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪肉末拌鲜香菇剁粒蒸熟；成品包含食用肉汁",
+      "recipe": {
+        "yield_g": 560.0,
+        "ingredients": {
+          "pork_ground": 400.0,
+          "shiitake": 150.0,
+          "starch": 15.0,
+          "soy_sauce": 20.0,
+          "sesame_oil": 8.0,
+          "ginger": 10.0,
+          "water": 50.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_271",
+      "name": "爆炒猪肝",
+      "aliases": [
+        "爆炒猪肝",
+        "青椒猪肝",
+        "青椒炒猪肝",
+        "爆炒豬肝"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪肝薄片与青椒洋葱炒熟，薄淀粉勾汁；所列为可食生重",
+      "recipe": {
+        "yield_g": 480.0,
+        "ingredients": {
+          "liver": 350.0,
+          "pepper": 120.0,
+          "onion": 80.0,
+          "oil": 22.0,
+          "soy_sauce": 20.0,
+          "starch": 10.0,
+          "ginger": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_272",
+      "name": "溜肝尖",
+      "aliases": [
+        "溜肝尖",
+        "熘肝尖"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪肝与黄瓜胡萝卜、泡发木耳炒熟勾汁；木耳用量为泡发前干重",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "liver": 350.0,
+          "cucumber": 120.0,
+          "carrot": 80.0,
+          "wood_ear": 8.0,
+          "starch": 18.0,
+          "soy_sauce": 25.0,
+          "oil": 20.0,
+          "water": 80.0,
+          "ginger": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_273",
+      "name": "红烧猪蹄",
+      "aliases": [
+        "红烧猪蹄",
+        "紅燒豬蹄"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪蹄可食皮肉慢炖收汁；不含骨头，成品含实际吃下的浓汁",
+      "recipe": {
+        "yield_g": 660.0,
+        "ingredients": {
+          "pork_feet": 650.0,
+          "soy_sauce": 40.0,
+          "sugar": 20.0,
+          "ginger": 25.0,
+          "oil": 15.0,
+          "water": 200.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 180
+    },
+    {
+      "id": "dish_274",
+      "name": "黄豆炖猪蹄",
+      "aliases": [
+        "黄豆炖猪蹄",
+        "黄豆猪蹄汤",
+        "黃豆燉豬蹄"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪蹄可食皮肉与泡发黄豆炖煮；黄豆按干重，成品含食用汤量，不含骨头",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "pork_feet": 600.0,
+          "soybeans": 100.0,
+          "ginger": 20.0,
+          "water": 900.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_275",
+      "name": "爆炒腰花",
+      "aliases": [
+        "爆炒腰花",
+        "炒腰花"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪腰去不可食部分切花，与青椒洋葱及泡发木耳炒熟；木耳为干重",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "pork_kidney": 400.0,
+          "pepper": 100.0,
+          "onion": 80.0,
+          "wood_ear": 6.0,
+          "oil": 22.0,
+          "soy_sauce": 25.0,
+          "vinegar": 12.0,
+          "starch": 12.0,
+          "ginger": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_276",
+      "name": "爆炒肥肠",
+      "aliases": [
+        "爆炒肥肠",
+        "青椒肥肠",
+        "青椒炒肥肠",
+        "爆炒肥腸"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "处理干净的猪大肠先煮后炒；按可食生重和成品留油估算，实际去脂程度需核对",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "pork_intestine": 450.0,
+          "pepper": 140.0,
+          "onion": 80.0,
+          "oil": 18.0,
+          "soy_sauce": 25.0,
+          "ginger": 20.0,
+          "garlic": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_277",
+      "name": "凉拌猪耳",
+      "aliases": [
+        "凉拌猪耳",
+        "涼拌豬耳"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪耳煮熟切丝，拌黄瓜蒜及酱醋芝麻油；用量为可食部分",
+      "recipe": {
+        "yield_g": 470.0,
+        "ingredients": {
+          "pork_ear": 400.0,
+          "cucumber": 100.0,
+          "soy_sauce": 25.0,
+          "vinegar": 20.0,
+          "sesame_oil": 12.0,
+          "garlic": 15.0,
+          "chili": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_278",
+      "name": "胡椒猪肚汤",
+      "aliases": [
+        "胡椒猪肚汤",
+        "胡椒豬肚湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "清洗后的猪肚与白胡椒、姜炖汤；成品含猪肚与本次食用汤量",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "pork_stomach": 450.0,
+          "white_pepper": 5.0,
+          "ginger": 25.0,
+          "water": 900.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_279",
+      "name": "卤猪心",
+      "aliases": [
+        "卤猪心",
+        "滷豬心"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪心去不可食部分后用姜和酱油焖卤；成品不包含弃掉的卤汁",
+      "recipe": {
+        "yield_g": 460.0,
+        "ingredients": {
+          "pork_heart": 500.0,
+          "soy_sauce": 30.0,
+          "sugar": 10.0,
+          "ginger": 25.0,
+          "water": 150.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_280",
+      "name": "孜然牛肉",
+      "aliases": [
+        "孜然牛肉",
+        "孜然炒牛肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "beef",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去脂牛肩肉切薄片与洋葱炒熟，加入孜然及辣椒粉；不是牛肉末",
+      "recipe": {
+        "yield_g": 480.0,
+        "ingredients": {
+          "beef_lean": 400.0,
+          "onion": 100.0,
+          "cumin": 6.0,
+          "chili_powder": 3.0,
+          "soy_sauce": 18.0,
+          "oil": 22.0,
+          "cilantro": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_281",
+      "name": "香菜拌牛肉",
+      "aliases": [
+        "香菜拌牛肉",
+        "香菜牛肉",
+        "涼拌牛肉",
+        "凉拌牛肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "beef",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去脂牛肩肉煮熟切片后拌香菜、蒜和酱醋芝麻油；按去骨可食部分",
+      "recipe": {
+        "yield_g": 470.0,
+        "ingredients": {
+          "beef_lean": 450.0,
+          "cilantro": 60.0,
+          "soy_sauce": 20.0,
+          "vinegar": 15.0,
+          "sesame_oil": 12.0,
+          "garlic": 12.0,
+          "chili": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_282",
+      "name": "咖喱牛肉",
+      "aliases": [
+        "咖喱牛肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "beef",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "牛肩肉与土豆胡萝卜炖煮，用咖喱粉调味；本配方不含椰奶或奶油",
+      "recipe": {
+        "yield_g": 950.0,
+        "ingredients": {
+          "beef_chunk": 450.0,
+          "potato": 250.0,
+          "carrot": 120.0,
+          "onion": 100.0,
+          "curry_powder": 14.0,
+          "oil": 18.0,
+          "water": 250.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_283",
+      "name": "葱爆羊肉",
+      "aliases": [
+        "葱爆羊肉",
+        "蔥爆羊肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "lamb",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "羊腿可食肉切片与葱段急炒；所列为带部分脂肪的生羊腿肉，不用羊肉末代替",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "lamb_leg": 450.0,
+          "spring_onion": 120.0,
+          "soy_sauce": 20.0,
+          "oil": 20.0,
+          "ginger": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_284",
+      "name": "孜然羊肉",
+      "aliases": [
+        "孜然羊肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "lamb",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "羊腿肉片与洋葱炒熟后加孜然和辣椒粉；实际肥瘦和用油可修改",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "lamb_leg": 450.0,
+          "onion": 100.0,
+          "cumin": 7.0,
+          "chili_powder": 4.0,
+          "oil": 22.0,
+          "soy_sauce": 18.0,
+          "cilantro": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_285",
+      "name": "红焖羊肉",
+      "aliases": [
+        "红焖羊肉",
+        "紅燜羊肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "lamb",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "羊腿可食肉与胡萝卜洋葱焖熟；成品包括收浓食用汤汁",
+      "recipe": {
+        "yield_g": 850.0,
+        "ingredients": {
+          "lamb_leg": 500.0,
+          "carrot": 180.0,
+          "onion": 80.0,
+          "soy_sauce": 25.0,
+          "ginger": 20.0,
+          "oil": 15.0,
+          "water": 350.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_286",
+      "name": "萝卜炖羊肉",
+      "aliases": [
+        "萝卜炖羊肉",
+        "蘿蔔燉羊肉",
+        "白萝卜炖羊肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "lamb",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "羊腿可食肉与白萝卜炖煮；成品包含本次食用汤量，不含骨头",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "lamb_leg": 450.0,
+          "radish": 400.0,
+          "ginger": 20.0,
+          "water": 650.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_287",
+      "name": "冬瓜羊肉汤",
+      "aliases": [
+        "冬瓜羊肉汤",
+        "冬瓜羊肉湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "lamb",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "羊腿肉切薄片，与冬瓜煮汤；成品含可食肉、冬瓜及食用汤量",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "lamb_leg": 300.0,
+          "winter_melon": 450.0,
+          "ginger": 20.0,
+          "water": 650.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_288",
+      "name": "椒盐鱿鱼",
+      "aliases": [
+        "椒盐鱿鱼",
+        "椒鹽魷魚"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鱿鱼可食部分裹薄糊炸熟拌椒盐；油为估计留在成品中的量",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "squid": 400.0,
+          "wheat_flour": 30.0,
+          "starch": 30.0,
+          "egg_raw": 40.0,
+          "oil": 28.0,
+          "salt": 3.0,
+          "black_pepper": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_289",
+      "name": "铁板鱿鱼",
+      "aliases": [
+        "铁板鱿鱼",
+        "鐵板魷魚"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鱿鱼与洋葱煎炒，配辣椒孜然及酱油；不含另加甜辣酱",
+      "recipe": {
+        "yield_g": 480.0,
+        "ingredients": {
+          "squid": 400.0,
+          "onion": 120.0,
+          "chili": 20.0,
+          "soy_sauce": 25.0,
+          "oil": 22.0,
+          "cumin": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_290",
+      "name": "葱油鱼",
+      "aliases": [
+        "葱油鱼",
+        "蔥油魚"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "以鲤鱼可食肉作参考，蒸熟后淋葱姜热油；实际鱼种需核对，重量不含鱼骨",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "carp": 550.0,
+          "spring_onion": 60.0,
+          "ginger": 25.0,
+          "soy_sauce": 25.0,
+          "oil": 25.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_291",
+      "name": "香酥鱼块",
+      "aliases": [
+        "香酥鱼块",
+        "炸鱼块",
+        "香酥魚塊"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "以鲤鱼可食肉裹糊炸制；不含鱼骨，油为估计成品留油，实际鱼种需核对",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "carp": 450.0,
+          "wheat_flour": 40.0,
+          "starch": 30.0,
+          "egg_raw": 50.0,
+          "oil": 32.0,
+          "salt": 3.0,
+          "ginger": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_292",
+      "name": "茄汁虾仁",
+      "aliases": [
+        "茄汁虾仁",
+        "茄汁蝦仁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去壳虾仁与番茄、番茄酱炒熟勾薄汁；不含虾壳",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "shrimp": 350.0,
+          "tomato": 120.0,
+          "ketchup": 40.0,
+          "sugar": 10.0,
+          "starch": 12.0,
+          "oil": 18.0,
+          "garlic": 12.0,
+          "water": 40.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_293",
+      "name": "避风塘虾",
+      "aliases": [
+        "避风塘虾",
+        "避風塘蝦"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去壳虾仁配烘碎白面包和蒜粒炒制的参考配方；油为成品留油，不含虾壳",
+      "recipe": {
+        "yield_g": 470.0,
+        "ingredients": {
+          "shrimp": 350.0,
+          "bread": 60.0,
+          "garlic": 50.0,
+          "chili": 15.0,
+          "oil": 30.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_294",
+      "name": "辣炒花甲",
+      "aliases": [
+        "辣炒花甲",
+        "辣炒蛤蜊"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "蛤蜊可食肉与辣椒姜蒜急炒；所列重量不含贝壳",
+      "recipe": {
+        "yield_g": 470.0,
+        "ingredients": {
+          "clam": 400.0,
+          "chili": 30.0,
+          "pepper": 80.0,
+          "garlic": 20.0,
+          "ginger": 20.0,
+          "soy_sauce": 20.0,
+          "oil": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_295",
+      "name": "清蒸螃蟹",
+      "aliases": [
+        "清蒸螃蟹",
+        "清蒸蟹"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "按蓝蟹可食肉作参考蒸熟；不含蟹壳及另蘸的酱醋，实际蟹种需核对",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "crab": 450.0,
+          "ginger": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 150
+    },
+    {
+      "id": "dish_296",
+      "name": "蟹肉炒蛋",
+      "aliases": [
+        "蟹肉炒蛋",
+        "蟹肉炒雞蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "蓝蟹可食肉与蛋液炒熟；不含蟹壳，实际蟹种需核对",
+      "recipe": {
+        "yield_g": 480.0,
+        "ingredients": {
+          "crab": 220.0,
+          "egg_raw": 250.0,
+          "spring_onion": 25.0,
+          "oil": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_297",
+      "name": "芦笋炒虾仁",
+      "aliases": [
+        "芦笋炒虾仁",
+        "蘆筍炒蝦仁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "芦笋切段与去壳虾仁炒熟；按可食生重计量",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "asparagus": 300.0,
+          "shrimp": 220.0,
+          "garlic": 15.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_298",
+      "name": "蒜蓉空心菜",
+      "aliases": [
+        "蒜蓉空心菜",
+        "清炒空心菜",
+        "蒜蓉通菜",
+        "清炒通菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "空心菜摘去不可食老梗后与蒜蓉炒熟；所列为可食生重",
+      "recipe": {
+        "yield_g": 370.0,
+        "ingredients": {
+          "water_spinach": 450.0,
+          "garlic": 20.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_299",
+      "name": "清炒苋菜",
+      "aliases": [
+        "清炒苋菜",
+        "清炒莧菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "苋菜可食茎叶与蒜炒熟；按生可食重量计量",
+      "recipe": {
+        "yield_g": 360.0,
+        "ingredients": {
+          "amaranth": 450.0,
+          "garlic": 15.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_300",
+      "name": "蒜蓉西洋菜",
+      "aliases": [
+        "蒜蓉西洋菜",
+        "清炒西洋菜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "西洋菜去老梗后与蒜蓉炒熟；按生可食重量计量",
+      "recipe": {
+        "yield_g": 360.0,
+        "ingredients": {
+          "watercress": 450.0,
+          "garlic": 20.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_301",
+      "name": "清炒莴笋",
+      "aliases": [
+        "清炒莴笋",
+        "清炒莴苣笋",
+        "清炒萵筍"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "莴笋去皮切片清炒；所列为去皮可食生重",
+      "recipe": {
+        "yield_g": 430.0,
+        "ingredients": {
+          "celtuce": 500.0,
+          "garlic": 12.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_302",
+      "name": "莴笋炒肉",
+      "aliases": [
+        "莴笋炒肉",
+        "莴笋炒肉片",
+        "萵筍炒肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮莴笋片与猪里脊炒熟，少量淀粉挂汁",
+      "recipe": {
+        "yield_g": 540.0,
+        "ingredients": {
+          "celtuce": 350.0,
+          "pork": 220.0,
+          "garlic": 12.0,
+          "oil": 20.0,
+          "soy_sauce": 15.0,
+          "starch": 8.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_303",
+      "name": "凉拌莴笋",
+      "aliases": [
+        "凉拌莴笋",
+        "凉拌莴笋丝",
+        "涼拌萵筍"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮莴笋切丝后拌醋、芝麻油及蒜；所列莴笋为可食生重",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "celtuce": 450.0,
+          "vinegar": 20.0,
+          "sesame_oil": 12.0,
+          "sugar": 5.0,
+          "salt": 3.0,
+          "garlic": 12.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_304",
+      "name": "清炒芦笋",
+      "aliases": [
+        "清炒芦笋",
+        "清炒蘆筍"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "芦笋去老根切段清炒；按可食生重计量",
+      "recipe": {
+        "yield_g": 370.0,
+        "ingredients": {
+          "asparagus": 450.0,
+          "garlic": 15.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_305",
+      "name": "芦笋炒鸡蛋",
+      "aliases": [
+        "芦笋炒鸡蛋",
+        "芦笋炒蛋",
+        "蘆筍炒雞蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "芦笋与蛋液分别炒熟后合炒；所列为可食部分",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "asparagus": 300.0,
+          "egg_raw": 250.0,
+          "oil": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_306",
+      "name": "清炒佛手瓜",
+      "aliases": [
+        "清炒佛手瓜"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "佛手瓜去不可食部分切片清炒；所列为可食生重",
+      "recipe": {
+        "yield_g": 440.0,
+        "ingredients": {
+          "chayote": 500.0,
+          "garlic": 15.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_307",
+      "name": "佛手瓜炒肉",
+      "aliases": [
+        "佛手瓜炒肉",
+        "佛手瓜炒肉片"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "佛手瓜片与猪里脊炒熟；少量淀粉挂汁",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "chayote": 350.0,
+          "pork": 230.0,
+          "oil": 20.0,
+          "soy_sauce": 18.0,
+          "starch": 8.0,
+          "garlic": 12.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_308",
+      "name": "清炒豇豆",
+      "aliases": [
+        "清炒豇豆",
+        "清炒长豆角",
+        "清炒長豇豆"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "长豇豆去蒂切段炒熟；所列为可食生重，不用四季豆别名替换",
+      "recipe": {
+        "yield_g": 400.0,
+        "ingredients": {
+          "yardlong_bean": 450.0,
+          "garlic": 20.0,
+          "oil": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_309",
+      "name": "肉末豇豆",
+      "aliases": [
+        "肉末豇豆",
+        "肉末长豆角",
+        "肉末長豇豆"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "长豇豆切段与猪肉末炒熟；不是酸豆角配方",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "yardlong_bean": 400.0,
+          "pork_ground": 180.0,
+          "garlic": 15.0,
+          "oil": 20.0,
+          "soy_sauce": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_310",
+      "name": "咖喱土豆",
+      "aliases": [
+        "咖喱土豆"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "土豆胡萝卜洋葱炖熟，以咖喱粉调味；不含椰奶或奶油",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "potato": 500.0,
+          "carrot": 100.0,
+          "onion": 100.0,
+          "curry_powder": 10.0,
+          "oil": 20.0,
+          "water": 150.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_311",
+      "name": "香煎土豆饼",
+      "aliases": [
+        "香煎土豆饼",
+        "土豆饼",
+        "土豆餅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "土豆擦丝拌面粉蛋液后煎饼；油为估计成品留油",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "potato": 400.0,
+          "wheat_flour": 50.0,
+          "egg_raw": 50.0,
+          "spring_onion": 25.0,
+          "oil": 25.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 100,
+      "portion_weights_g": {
+        "piece": 100,
+        "serving": 100
+      }
+    },
+    {
+      "id": "dish_312",
+      "name": "蒜香烤土豆",
+      "aliases": [
+        "蒜香烤土豆",
+        "蒜香烤土豆块"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "土豆切块拌蒜与油烤熟；按烤后成品重量分配",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "potato": 500.0,
+          "oil": 25.0,
+          "garlic": 20.0,
+          "black_pepper": 2.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_313",
+      "name": "丝瓜炒鸡蛋",
+      "aliases": [
+        "丝瓜炒鸡蛋",
+        "丝瓜炒蛋",
+        "絲瓜炒雞蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "丝瓜去皮切块与鸡蛋炒熟；成品含食用菜汁",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "loofah": 400.0,
+          "egg_raw": 250.0,
+          "oil": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_314",
+      "name": "丝瓜炒虾仁",
+      "aliases": [
+        "丝瓜炒虾仁",
+        "絲瓜炒蝦仁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "丝瓜去皮后与虾仁炒熟；虾仁重量不含壳",
+      "recipe": {
+        "yield_g": 530.0,
+        "ingredients": {
+          "loofah": 400.0,
+          "shrimp": 220.0,
+          "garlic": 15.0,
+          "oil": 18.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_315",
+      "name": "酿豆腐",
+      "aliases": [
+        "酿豆腐",
+        "客家酿豆腐",
+        "釀豆腐"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "硬豆腐酿入猪肉香菇馅，煎后焖熟；采用完整豆腐和馅料可食用量",
+      "recipe": {
+        "yield_g": 750.0,
+        "ingredients": {
+          "tofu": 500.0,
+          "pork_ground": 220.0,
+          "shiitake": 80.0,
+          "soy_sauce": 20.0,
+          "oil": 20.0,
+          "starch": 12.0,
+          "water": 80.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_316",
+      "name": "虾仁豆腐煲",
+      "aliases": [
+        "虾仁豆腐煲",
+        "蝦仁豆腐煲"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "软豆腐与去壳虾仁、番茄煮熟并勾薄芡；成品含食用汤汁",
+      "recipe": {
+        "yield_g": 750.0,
+        "ingredients": {
+          "tofu_soft": 450.0,
+          "shrimp": 250.0,
+          "tomato": 120.0,
+          "oil": 15.0,
+          "starch": 10.0,
+          "water": 150.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_317",
+      "name": "香煎茄盒",
+      "aliases": [
+        "香煎茄盒",
+        "煎茄盒"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "茄片夹猪肉馅裹薄糊煎熟；油量按估计成品留油计算",
+      "recipe": {
+        "yield_g": 600.0,
+        "ingredients": {
+          "eggplant": 350.0,
+          "pork_ground": 200.0,
+          "wheat_flour": 50.0,
+          "starch": 20.0,
+          "egg_raw": 50.0,
+          "oil": 30.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_318",
+      "name": "蒜蓉烤茄子",
+      "aliases": [
+        "蒜蓉烤茄子",
+        "蒜香烤茄子"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "茄子烤软后加蒜蓉酱油与油继续烤制；按烤后成品计量",
+      "recipe": {
+        "yield_g": 430.0,
+        "ingredients": {
+          "eggplant": 500.0,
+          "garlic": 45.0,
+          "oil": 25.0,
+          "soy_sauce": 20.0,
+          "chili": 15.0,
+          "spring_onion": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_319",
+      "name": "菠菜猪肝汤",
+      "aliases": [
+        "菠菜猪肝汤",
+        "菠菜豬肝湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪肝薄片与菠菜煮汤；成品含本次食用的肝、菜和汤量",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "liver": 250.0,
+          "spinach": 250.0,
+          "ginger": 15.0,
+          "water": 750.0,
+          "salt": 3.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_320",
+      "name": "猪肝瘦肉汤",
+      "aliases": [
+        "猪肝瘦肉汤",
+        "豬肝瘦肉湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪肝与里脊薄片煮汤；所列为可食生重，成品包括食用汤量",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "liver": 220.0,
+          "pork": 180.0,
+          "ginger": 20.0,
+          "spring_onion": 20.0,
+          "water": 800.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_321",
+      "name": "西洋菜排骨汤",
+      "aliases": [
+        "西洋菜排骨汤",
+        "西洋菜猪骨汤",
+        "西洋菜排骨湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "排骨可食肉与西洋菜炖汤；骨头不计营养或重量，成品包括食用汤量",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "watercress": 350.0,
+          "pork_ribs": 350.0,
+          "ginger": 20.0,
+          "water": 900.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_322",
+      "name": "莲藕花生汤",
+      "aliases": [
+        "莲藕花生汤",
+        "蓮藕花生湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "莲藕与花生加水炖煮；花生为生仁重量，成品含食用汤量",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "lotus": 450.0,
+          "peanut": 80.0,
+          "water": 800.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_323",
+      "name": "海带绿豆汤",
+      "aliases": [
+        "海带绿豆汤",
+        "海帶綠豆湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "生海带与干绿豆加水煮汤，糖量可编辑；海带按原料生重而非干海带重量",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "kelp": 150.0,
+          "mung": 100.0,
+          "water": 1000.0,
+          "sugar": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_324",
+      "name": "白萝卜鸭汤",
+      "aliases": [
+        "白萝卜鸭汤",
+        "萝卜鸭汤",
+        "白蘿蔔鴨湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去皮鸭肉与白萝卜炖煮；成品包含食用汤量，不含鸭骨",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "duck": 400.0,
+          "radish": 450.0,
+          "ginger": 20.0,
+          "water": 850.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_325",
+      "name": "莲子红豆汤",
+      "aliases": [
+        "莲子红豆汤",
+        "红豆莲子糖水",
+        "蓮子紅豆湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "干莲子与干红豆泡发后煮甜汤；糖量可编辑，所列种子豆类为干重",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "lotus_seed_dried": 70.0,
+          "adzuki": 100.0,
+          "sugar": 40.0,
+          "water": 1100.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 250
+    },
+    {
+      "id": "dish_326",
+      "name": "莲子花生汤",
+      "aliases": [
+        "莲子花生汤",
+        "莲子花生糖水",
+        "蓮子花生湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "干莲子与生花生仁泡发煮甜汤；所列莲子为干重，糖量可编辑",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "lotus_seed_dried": 70.0,
+          "peanut": 80.0,
+          "sugar": 30.0,
+          "water": 1000.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 250
+    },
+    {
+      "id": "dish_327",
+      "name": "八宝粥",
+      "aliases": [
+        "八宝粥",
+        "八寶粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "大米糯米红豆绿豆花生核桃板栗小米八种原料煮粥；谷豆为干重，糖量可编辑",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "rice_raw": 50.0,
+          "glutinous": 30.0,
+          "adzuki": 25.0,
+          "mung": 25.0,
+          "peanut": 20.0,
+          "walnut": 15.0,
+          "chestnut": 40.0,
+          "millet": 20.0,
+          "water": 1200.0,
+          "sugar": 25.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_328",
+      "name": "南瓜小米粥",
+      "aliases": [
+        "南瓜小米粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "生小米与南瓜煮粥，不额外加糖；所列小米为干重",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "millet": 100.0,
+          "pumpkin": 300.0,
+          "water": 850.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_329",
+      "name": "鸡肉粥",
+      "aliases": [
+        "鸡肉粥",
+        "鸡丝粥",
+        "雞肉粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "大米煮粥后加入鸡胸肉丝煮熟；生米及鸡肉均按原料重量计量",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "rice_raw": 100.0,
+          "chicken": 200.0,
+          "ginger": 15.0,
+          "spring_onion": 20.0,
+          "water": 1000.0,
+          "salt": 3.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_330",
+      "name": "鱼片粥",
+      "aliases": [
+        "鱼片粥",
+        "魚片粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "以罗非鱼可食片作参考，大米煮粥后加入鱼片煮熟；实际鱼种需核对，不含鱼骨",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "rice_raw": 100.0,
+          "tilapia": 220.0,
+          "ginger": 20.0,
+          "spring_onion": 20.0,
+          "water": 1000.0,
+          "salt": 3.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_331",
+      "name": "虾仁粥",
+      "aliases": [
+        "虾仁粥",
+        "蝦仁粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "生米煮粥后加入去壳虾仁煮熟；所列为可食原料重",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "rice_raw": 100.0,
+          "shrimp": 220.0,
+          "ginger": 15.0,
+          "spring_onion": 20.0,
+          "water": 1000.0,
+          "salt": 3.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_332",
+      "name": "猪肝粥",
+      "aliases": [
+        "猪肝粥",
+        "豬肝粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "大米煮粥后加入猪肝薄片煮熟；生米和猪肝均按原料重",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "rice_raw": 100.0,
+          "liver": 220.0,
+          "ginger": 20.0,
+          "spring_onion": 20.0,
+          "water": 1000.0,
+          "salt": 3.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_333",
+      "name": "瘦肉粥",
+      "aliases": [
+        "瘦肉粥"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "大米煮粥后加入里脊肉丝煮熟；不含皮蛋等另加配料",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "rice_raw": 100.0,
+          "pork": 200.0,
+          "ginger": 15.0,
+          "spring_onion": 20.0,
+          "water": 1000.0,
+          "salt": 3.0,
+          "sesame_oil": 5.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_334",
+      "name": "酱油炒饭",
+      "aliases": [
+        "酱油炒饭",
+        "醬油炒飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "熟白米饭配鸡蛋葱花炒散，以酱油调味；所列米饭是熟重",
+      "recipe": {
+        "yield_g": 550.0,
+        "ingredients": {
+          "rice": 450.0,
+          "egg_raw": 100.0,
+          "spring_onion": 30.0,
+          "soy_sauce": 25.0,
+          "oil": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 250
+    },
+    {
+      "id": "dish_335",
+      "name": "火腿炒饭",
+      "aliases": [
+        "火腿炒饭",
+        "火腿蛋炒饭",
+        "火腿炒飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "熟白米饭配普通切片火腿、鸡蛋和蔬菜炒制；火腿不是金华火腿或腊肠",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "rice": 450.0,
+          "ham": 100.0,
+          "egg_raw": 100.0,
+          "peas": 60.0,
+          "carrot": 60.0,
+          "oil": 20.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 250
+    },
+    {
+      "id": "dish_336",
+      "name": "菠萝炒饭",
+      "aliases": [
+        "菠萝炒饭",
+        "菠蘿炒飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "熟米饭与菠萝、虾仁、鸡蛋炒制；不含额外坚果或肉松",
+      "recipe": {
+        "yield_g": 700.0,
+        "ingredients": {
+          "rice": 450.0,
+          "pineapple": 180.0,
+          "shrimp": 100.0,
+          "egg_raw": 100.0,
+          "peas": 50.0,
+          "oil": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 250
+    },
+    {
+      "id": "dish_337",
+      "name": "蛋包饭",
+      "aliases": [
+        "蛋包饭",
+        "蛋包飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "熟米饭与蔬菜炒熟后用蛋皮包裹，配所列番茄酱；米饭按熟重",
+      "recipe": {
+        "yield_g": 620.0,
+        "ingredients": {
+          "rice": 350.0,
+          "egg_raw": 200.0,
+          "carrot": 60.0,
+          "peas": 50.0,
+          "ketchup": 35.0,
+          "oil": 25.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_338",
+      "name": "咖喱鸡饭",
+      "aliases": [
+        "咖喱鸡饭",
+        "咖喱雞飯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "咖喱鸡土豆配熟白米饭，成品包含米饭和咖喱；本参考配方不含椰奶",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "rice": 500.0,
+          "chicken_thigh": 250.0,
+          "potato": 150.0,
+          "carrot": 80.0,
+          "onion": 80.0,
+          "curry_powder": 10.0,
+          "oil": 15.0,
+          "water": 150.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 350
+    },
+    {
+      "id": "dish_339",
+      "name": "干炒牛河",
+      "aliases": [
+        "干炒牛河",
+        "乾炒牛河"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "熟米制面条配牛肉、豆芽和葱炒制的河粉参考；实际面条含水量需核对",
+      "recipe": {
+        "yield_g": 700.0,
+        "ingredients": {
+          "rice_noodles": 450.0,
+          "beef_lean": 180.0,
+          "bean_sprout": 100.0,
+          "onion": 60.0,
+          "spring_onion": 30.0,
+          "soy_sauce": 25.0,
+          "oil": 25.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_340",
+      "name": "星洲炒米粉",
+      "aliases": [
+        "星洲炒米粉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "熟米粉与虾仁、普通切片火腿、蛋和蔬菜炒制，咖喱粉调味",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "rice_noodles": 450.0,
+          "shrimp": 120.0,
+          "ham": 80.0,
+          "egg_raw": 100.0,
+          "bean_sprout": 100.0,
+          "pepper": 80.0,
+          "curry_powder": 8.0,
+          "oil": 25.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_341",
+      "name": "鸡丝凉面",
+      "aliases": [
+        "鸡丝凉面",
+        "雞絲涼麵"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡胸煮熟撕丝，与熟鸡蛋面、黄瓜及芝麻酱拌匀；面条按熟重",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "noodles": 450.0,
+          "chicken": 200.0,
+          "cucumber": 150.0,
+          "sesame_paste": 30.0,
+          "soy_sauce": 25.0,
+          "vinegar": 20.0,
+          "sesame_oil": 10.0,
+          "garlic": 12.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_342",
+      "name": "担担面",
+      "aliases": [
+        "担担面",
+        "擔擔麵"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面粉制面煮熟，配猪肉末和芝麻辣椒酱的简化参考；不含未列出的芽菜或其他配料",
+      "recipe": {
+        "yield_g": 900.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "water": 450.0,
+          "pork_ground": 180.0,
+          "sesame_paste": 35.0,
+          "soy_sauce": 25.0,
+          "chili_powder": 6.0,
+          "oil": 25.0,
+          "garlic": 12.0,
+          "spring_onion": 25.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_343",
+      "name": "油泼面",
+      "aliases": [
+        "油泼面",
+        "油潑麵"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面粉制面煮熟，配小白菜、蒜和辣椒粉，淋所列热油酱醋",
+      "recipe": {
+        "yield_g": 750.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "water": 400.0,
+          "bok_choy": 150.0,
+          "garlic": 20.0,
+          "chili_powder": 8.0,
+          "oil": 35.0,
+          "soy_sauce": 25.0,
+          "vinegar": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_344",
+      "name": "豆角焖面",
+      "aliases": [
+        "豆角焖面",
+        "豆角燜麵"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面粉制面与猪里脊、四季豆焖熟；所列豆角指四季豆，生面原料为面粉和水",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "water": 450.0,
+          "green_bean": 300.0,
+          "pork": 180.0,
+          "soy_sauce": 25.0,
+          "oil": 22.0,
+          "garlic": 15.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_345",
+      "name": "鲜肉包",
+      "aliases": [
+        "鲜肉包",
+        "猪肉包子",
+        "鲜肉包子",
+        "肉包子",
+        "鮮肉包"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "发酵面皮包猪肉葱姜馅蒸熟；不含另蘸酱汁",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "wheat_flour": 350.0,
+          "water": 220.0,
+          "yeast": 4.0,
+          "pork_ground": 350.0,
+          "spring_onion": 40.0,
+          "ginger": 15.0,
+          "soy_sauce": 25.0,
+          "sesame_oil": 12.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 100,
+      "portion_weights_g": {
+        "piece": 100,
+        "serving": 100
+      }
+    },
+    {
+      "id": "dish_346",
+      "name": "香菇青菜包",
+      "aliases": [
+        "香菇青菜包",
+        "香菇菜包",
+        "香菇青菜包子"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "发酵面皮包小白菜香菇馅蒸熟；本参考配方不含豆干或粉丝",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "wheat_flour": 350.0,
+          "water": 220.0,
+          "yeast": 4.0,
+          "bok_choy": 400.0,
+          "shiitake": 180.0,
+          "oil": 25.0,
+          "soy_sauce": 15.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 100,
+      "portion_weights_g": {
+        "piece": 100,
+        "serving": 100
+      }
+    },
+    {
+      "id": "dish_347",
+      "name": "豆沙包",
+      "aliases": [
+        "豆沙包",
+        "红豆沙包",
+        "豆沙包子"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "红豆煮熟制甜豆沙后包入发酵面皮蒸熟；红豆按干重，水含和面及煮豆吸收水",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "wheat_flour": 350.0,
+          "water": 600.0,
+          "yeast": 4.0,
+          "adzuki": 180.0,
+          "sugar": 80.0,
+          "oil": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 90,
+      "portion_weights_g": {
+        "piece": 90,
+        "serving": 90
+      }
+    },
+    {
+      "id": "dish_348",
+      "name": "生煎包",
+      "aliases": [
+        "生煎包",
+        "生煎",
+        "生煎馒头"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "发酵面皮包猪肉馅，加水煎熟；油为估计成品留油，不含未列出的皮冻",
+      "recipe": {
+        "yield_g": 950.0,
+        "ingredients": {
+          "wheat_flour": 350.0,
+          "water": 300.0,
+          "yeast": 4.0,
+          "pork_ground": 300.0,
+          "spring_onion": 40.0,
+          "ginger": 15.0,
+          "soy_sauce": 25.0,
+          "sesame": 12.0,
+          "oil": 35.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 180,
+      "portion_weights_g": {
+        "piece": 45,
+        "serving": 180
+      }
+    },
+    {
+      "id": "dish_349",
+      "name": "锅贴",
+      "aliases": [
+        "锅贴",
+        "鍋貼"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面皮包猪肉白菜馅加水煎熟；成品不含蘸汁，食用油按留在成品中的量",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "water": 250.0,
+          "pork_ground": 300.0,
+          "napa": 300.0,
+          "soy_sauce": 20.0,
+          "sesame_oil": 10.0,
+          "oil": 25.0,
+          "ginger": 12.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200,
+      "portion_weights_g": {
+        "piece": 25,
+        "serving": 200
+      }
+    },
+    {
+      "id": "dish_350",
+      "name": "糯米烧卖",
+      "aliases": [
+        "糯米烧卖",
+        "糯米烧麦",
+        "糯米燒賣"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面粉制皮包糯米猪肉香菇馅蒸熟；糯米为干重，水含制皮及蒸米吸收水",
+      "recipe": {
+        "yield_g": 1050.0,
+        "ingredients": {
+          "wheat_flour": 220.0,
+          "water": 450.0,
+          "glutinous": 250.0,
+          "pork_ground": 180.0,
+          "shiitake": 100.0,
+          "soy_sauce": 30.0,
+          "oil": 20.0,
+          "sugar": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v3（项目自建假设，非标准菜谱）",
+        "license": "Project-authored",
+        "url": null
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 180,
+      "portion_weights_g": {
+        "piece": 45,
+        "serving": 180
+      }
     }
   ]
 }

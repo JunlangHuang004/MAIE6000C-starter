@@ -19,6 +19,7 @@
     mealPlaceholder: ['例如：番茄炒蛋200克，少油，配150克熟米饭。', 'For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.'],
     estimate: ['开始估算', 'Estimate meal'], newMeal: ['新的一餐', 'New meal'],
     catalogueCount: ['{ingredients}种食材 · {recipes}道参考菜谱', '{ingredients} ingredients · {recipes} reference recipes'],
+    catalogueChineseAdditions: ['', 'New catalogue entries currently use Chinese names.'],
     supportedFoods: ['查看支持的食材和菜谱', 'Browse supported foods and recipes'],
     searchPlaceholder: ['搜索食物／菜名', 'Search foods or dishes'], searchLabel: ['搜索食物', 'Search foods'],
     noFoods: ['没有找到匹配的食物。试试其他名称。', 'No matching foods. Try another name.'],

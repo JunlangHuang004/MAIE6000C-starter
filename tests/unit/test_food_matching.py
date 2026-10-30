@@ -27,8 +27,8 @@ def extract(monkeypatch, text, items, mode='basic', history=None):
 
 @pytest.mark.parametrize('mode', ['basic', 'advanced'])
 @pytest.mark.parametrize('source,name,food_id', [
-    ('豉油鸡', '豉油鸡', 'dish_010'),
-    ('豉油鸡', '清蒸鲤鱼', 'dish_010'),
+    ('火星豉油鸡', '火星豉油鸡', 'dish_010'),
+    ('火星豉油鸡', '清蒸鲤鱼', 'dish_010'),
     ('清蒸鲤鱼', '清蒸鲤鱼', 'dish_010'),
     (None, '清蒸鲤鱼', 'dish_010'),
 ])
@@ -37,16 +37,16 @@ def test_existing_but_wrong_dish_id_never_produces_estimate(
     item = {'food_id': food_id, 'name': name, 'grams': 200, 'weight_basis': 'cooked'}
     if source:
         item['source_text'] = source
-    result = extract(monkeypatch, '200克豉油鸡', [item], mode)
+    result = extract(monkeypatch, '200克火星豉油鸡', [item], mode)
     assert result.details == []
     assert all(getattr(result, k) is None for k in ('calories','protein_g','fat_g','carbs_g'))
     assert result.draft[0]['food_id'] is None
-    assert '豉油鸡' in result.questions[0]['label']
+    assert '火星豉油鸡' in result.questions[0]['label']
     assert result.questions[0]['kind'] == 'unsupported'
 
 
 @pytest.mark.parametrize('text,source,food_id', [
-    ('200克酱油鸡', '酱油', 'soy_sauce'),
+    ('200克火星酱油鸡', '酱油', 'soy_sauce'),
     ('200克番茄炒蛋', '番茄', 'tomato'),
     ('200克蒜蓉芥蓝', '芥蓝', 'gai_lan'),
 ])
@@ -112,9 +112,9 @@ def test_wrapped_rice_source_can_be_calculated_after_real_history_extraction(mon
 
 
 @pytest.mark.parametrize('text,wrong_id', [
-    ('200克豉油鸡', 'dish_010'),
-    ('200克酱油鸡', 'soy_sauce'),
-    ('100克米饭和200克豉油鸡', 'rice'),
+    ('200克火星豉油鸡', 'dish_010'),
+    ('200克火星酱油鸡', 'soy_sauce'),
+    ('100克米饭和200克火星豉油鸡', 'rice'),
     ('100克熟白米饭和100克水煮鸡蛋', 'rice'),
     ('100克米饭和200克米饭', 'rice'),
     ('100克米饭，米饭200克', 'rice'),
@@ -132,41 +132,42 @@ def test_wrapped_source_cannot_hide_unknowns_other_foods_or_repeated_portions(te
 def test_wrapped_source_still_requires_verbatim_user_grounding():
     source = '100 g cooked white rice, no added oil'
     items = ground_food_items([
-        ExtractedItem(name=source, source_text=source, food_id='rice')], '100克豉油鸡')
+        ExtractedItem(name=source, source_text=source, food_id='rice')], '100克火星豉油鸡')
     assert items[0].food_id is None
-    assert '豉油鸡' in items[0].name
+    assert '火星豉油鸡' in items[0].name
 
 
 def test_mixed_unknown_is_not_lost_or_allowed_partial_total(monkeypatch):
-    result = extract(monkeypatch, '100克米饭和200克豉油鸡', [
+    result = extract(monkeypatch, '100克米饭和200克火星豉油鸡', [
         {'food_id':'rice', 'name':'米饭','source_text':'米饭','grams':100},
-        {'food_id':'dish_010','name':'豉油鸡','source_text':'豉油鸡','grams':200},
+        {'food_id':'dish_010','name':'火星豉油鸡','source_text':'火星豉油鸡','grams':200},
     ])
     assert [item['food_id'] for item in result.draft] == ['rice', None]
     assert result.calories is None and result.details == []
 
 
 def test_invented_catalogue_id_has_the_same_no_record_result(monkeypatch):
-    result = extract(monkeypatch, '200克豉油鸡', [{
-        'food_id':'invented_soy_chicken', 'name':'豉油鸡','source_text':'豉油鸡','grams':200,
+    result = extract(monkeypatch, '200克火星豉油鸡', [{
+        'food_id':'invented_soy_chicken', 'name':'火星豉油鸡',
+        'source_text':'火星豉油鸡','grams':200,
     }])
     assert result.calories is None
     assert result.questions[0]['kind'] == 'unsupported'
 
 
 def test_omitted_unknown_clause_cannot_turn_into_partial_meal(monkeypatch):
-    result = extract(monkeypatch, '100克米饭和200克豉油鸡', [
+    result = extract(monkeypatch, '100克米饭和200克火星豉油鸡', [
         {'food_id':'rice','name':'米饭','source_text':'米饭','grams':100},
     ])
     assert [item['food_id'] for item in result.draft] == ['rice', None]
-    assert '豉油鸡' in result.questions[0]['label']
+    assert '火星豉油鸡' in result.questions[0]['label']
     assert result.calories is None
 
 
 @pytest.mark.parametrize('text,history', [
-    ('100克米饭', [{'role':'user', 'content':'另外200克豉油鸡'}]),
-    ('100克米饭，整锅豉油鸡200克', None),
-    ('100克米饭，不加油的豉油鸡200克', None),
+    ('100克米饭', [{'role':'user', 'content':'另外200克火星豉油鸡'}]),
+    ('100克米饭，整锅火星豉油鸡200克', None),
+    ('100克米饭，不加油的火星豉油鸡200克', None),
 ])
 def test_unknown_additions_and_detail_like_food_names_cannot_be_dropped(
         monkeypatch, text, history):
@@ -174,7 +175,7 @@ def test_unknown_additions_and_detail_like_food_names_cannot_be_dropped(
         {'food_id':'rice','name':'米饭','source_text':'米饭','grams':100},
     ], history=history)
     assert result.calories is None
-    assert any('豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
+    assert any('火星豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
 
 
 @pytest.mark.parametrize('text,source,food_id', [
@@ -199,7 +200,7 @@ def test_assistant_and_copied_draft_cannot_supply_matching_evidence():
         {'role':'user','content':'已回答：{}\n当前餐食资料：[{"catalogue_name":"清蒸鲤鱼"}]'},
     ]
     item = ExtractedItem(name='清蒸鲤鱼', source_text='清蒸鲤鱼', food_id='dish_010')
-    assert ground_food_items([item], '豉油鸡', history)[0].food_id is None
+    assert ground_food_items([item], '火星豉油鸡', history)[0].food_id is None
 
 
 def test_quantity_correction_retains_source_but_identity_replacement_does_not():
@@ -209,7 +210,7 @@ def test_quantity_correction_retains_source_but_identity_replacement_does_not():
         {'role':'user','content':'改成150克，少油'},
     ])[0].food_id == 'dish_001'
     assert ground_food_items(meal(), '200克番茄炒蛋', [
-        {'role':'user','content':'改成200克豉油鸡'},
+        {'role':'user','content':'改成200克火星豉油鸡'},
     ])[0].food_id is None
 
 
@@ -232,7 +233,7 @@ def test_common_cooked_white_rice_name_is_a_reviewed_alias(monkeypatch):
 
 def test_unknown_dish_can_be_replaced_by_explicit_consumed_ingredients(monkeypatch):
     reply = '改成这次实际吃下的食材：生鸡胸肉150克、食用油5克、酱油10克'
-    result = extract(monkeypatch, '豉油鸡200克', [
+    result = extract(monkeypatch, '火星豉油鸡200克', [
         {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':150},
         {'food_id':'oil','name':'食用油','source_text':'食用油','grams':5},
         {'food_id':'soy_sauce','name':'酱油','source_text':'酱油','grams':10},
@@ -249,11 +250,11 @@ def test_unknown_dish_can_be_replaced_by_explicit_consumed_ingredients(monkeypat
     'Replace the meal with 生鸡胸肉150克',
 ])
 def test_multiline_replacement_keeps_unsupported_trailing_food(monkeypatch, replacement):
-    result = extract(monkeypatch, '豉油鸡200克', [
+    result = extract(monkeypatch, '火星豉油鸡200克', [
         {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':150},
-    ], history=[{'role':'user','content':replacement + '\n另外200克豉油鸡'}])
+    ], history=[{'role':'user','content':replacement + '\n另外200克火星豉油鸡'}])
     assert result.calories is None and result.details == []
-    assert any('豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
+    assert any('火星豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
 
 
 @pytest.mark.parametrize('replacement', [
@@ -261,7 +262,7 @@ def test_multiline_replacement_keeps_unsupported_trailing_food(monkeypatch, repl
     '改成生鸡胸肉150克',
 ])
 def test_replacement_stays_current_after_later_portion_correction(monkeypatch, replacement):
-    result = extract(monkeypatch, '豉油鸡200克', [
+    result = extract(monkeypatch, '火星豉油鸡200克', [
         {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':120},
     ], history=[
         {'role':'user','content':replacement},
@@ -277,24 +278,24 @@ def test_replacement_stays_current_after_later_portion_correction(monkeypatch, r
     '改成生鸡胸肉150克',
 ])
 def test_replacement_keeps_later_unknown_additions_and_portion_reply(monkeypatch, replacement):
-    result = extract(monkeypatch, '豉油鸡200克', [
+    result = extract(monkeypatch, '火星豉油鸡200克', [
         {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':120},
     ], history=[
         {'role':'user','content':replacement},
-        {'role':'user','content':'另外200克豉油鸡'},
+        {'role':'user','content':'另外200克火星豉油鸡'},
         {'role':'user','content':'改成120克'},
     ])
     assert result.calories is None and result.details == []
-    assert any('豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
+    assert any('火星豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
 
 
 @pytest.mark.parametrize('reply', [
-    '另外200克豉油鸡，改成这次实际吃下的食材：生鸡胸肉150克',
+    '另外200克火星豉油鸡，改成这次实际吃下的食材：生鸡胸肉150克',
     '不要改成这次实际吃下的食材：生鸡胸肉150克',
-    '另外200克豉油鸡，改成生鸡胸肉150克',
+    '另外200克火星豉油鸡，改成生鸡胸肉150克',
 ])
 def test_embedded_or_negated_replacement_does_not_discard_other_foods(monkeypatch, reply):
-    result = extract(monkeypatch, '豉油鸡200克', [
+    result = extract(monkeypatch, '火星豉油鸡200克', [
         {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':150},
     ], history=[{'role':'user','content':reply}])
     assert result.calories is None and result.details == []
@@ -303,7 +304,7 @@ def test_embedded_or_negated_replacement_does_not_discard_other_foods(monkeypatc
 
 def test_whole_pot_ingredient_list_does_not_resolve_unknown_dish_as_personal_intake():
     items = [ExtractedItem(name='生鸡胸肉', source_text='生鸡胸肉', food_id='chicken', grams=500)]
-    result = ground_food_items(items, '豉油鸡200克', [
+    result = ground_food_items(items, '火星豉油鸡200克', [
         {'role':'user','content':'整锅食材是生鸡胸肉500克，成品800克，我吃了200克'}])
     assert any(item.food_id is None for item in result)
 
@@ -322,4 +323,15 @@ def test_aliases_are_explicit_unique_and_keep_catalogue_identity():
     assert set(matching_aliases()) == foods
     assert all(len(ids) == 1 for ids in name_index().values())
     assert name_index()['蒜蓉芥蓝'] == {'dish_144'}
-    assert '豉油鸡' not in name_index() and '酱油鸡' not in name_index()
+    assert '火星豉油鸡' not in name_index() and '火星酱油鸡' not in name_index()
+
+
+@pytest.mark.parametrize('name', ['豉油鸡', '酱油鸡', '豉油雞', '醬油雞'])
+def test_new_soy_chicken_reference_never_uses_the_old_wrong_fish_id(monkeypatch, name):
+    result = extract(monkeypatch, '200克' + name, [{
+        'food_id':'dish_010', 'name':'清蒸鲤鱼', 'source_text':name, 'grams':200,
+    }])
+    assert result.calories is not None
+    assert result.draft[0]['food_id'] == 'dish_251'
+    assert result.details[0]['food_id'] == 'dish_251'
+    assert any('参考配方' in note for note in result.details[0]['assumptions'])
