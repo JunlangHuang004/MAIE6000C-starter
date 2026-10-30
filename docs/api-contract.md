@@ -1,6 +1,6 @@
 # NutriChat API contract
 
-Current implementation: 2026-10-17. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
+Current implementation: 2026-10-31. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
 ## Routes
 
@@ -11,6 +11,7 @@ Current implementation: 2026-10-17. See the generated `/docs` and `/openapi.json
 | `PATCH /analyses/{id}` | `{food_text, revision}`; replace description and reset dialogue, preserving mode | 200, `{analysis, job}` |
 | `POST /analyses/{id}/reply` | `{revision, message}` OR `{revision, answers}`; supplement or correct | 200, `{analysis, job}` |
 | `POST /analyses/{id}/mode` | `{revision, mode}`; switch mode on the same record | 200, `{analysis, job}` |
+| `POST /analyses/{id}/ingredients` | Reviewed ingredient recipe replacing one draft item | 200, `{analysis, job}` |
 | `POST /analyses/{id}/confirm` | `{revision}`; confirm a completed result | 200, analysis |
 | `GET /foods` | Active provider, catalogue, legacy names and gram limit | 200, object |
 | `GET /jobs/{id}` | Background job status and operational error | 200, job |
@@ -56,6 +57,48 @@ A recipe answer has the shape `{ingredients: {ingredient_id: grams}, yield_g: fi
 Replies reject an existing conversation of 36 or more messages or a resulting serialized conversation above 45,000 characters. Extraction permits up to 30 items. Food grams must be positive and at most 10,000; recipe ingredient grams may be zero and at most 10,000; batch yield must be positive and at most 10,000; consumed extra oil is 0–1000g.
 
 `PATCH` replaces the description and clears the old conversation/draft. `/reply` continues the conversation. `/mode` retains explicit draft facts and conversation, but clears results and requeues calculation. Use `/mode` to change modes; `PATCH` does not change mode.
+
+## Explicit ingredient recipe
+
+`POST /analyses/{id}/ingredients` uses this body, with the latest revision and the
+zero-based index of the item the user is explicitly replacing:
+
+```json
+{
+  "revision": 1,
+  "item_index": 0,
+  "name": "My chicken recipe",
+  "basis": "batch",
+  "ingredients": [
+    {"food_id": "chicken", "grams": 300},
+    {"food_id": "oil", "grams": 10},
+    {"food_id": "soy_sauce", "grams": 20}
+  ],
+  "batch_yield_g": 600,
+  "consumed_g": 150,
+  "accepted": true
+}
+```
+
+Use `basis: "consumed"` with null batch/consumed fields when every ingredient
+amount already represents the eaten portion. There must be 1–30 distinct existing
+ingredient IDs; reference-dish IDs, unknown IDs and client nutrient values are
+rejected. Gram values must be finite numbers greater than zero and at most 10,000;
+numeric strings and booleans are rejected. Batch mode requires both weights and
+`consumed_g <= batch_yield_g`. Acceptance must be explicitly true.
+
+The endpoint preserves all other items, records a server-created `custom_recipe`
+draft entry and queues the existing worker. It does not send the form to Qwen or
+add a global catalogue entry. Another unresolved item still suppresses all meal
+totals. Custom details have `kind: "custom_recipe"` and `quantity_provenance` with
+ingredient states, input grams, consumed-equivalent grams and batch fraction.
+Consumed-basis detail grams are the ingredient sum, not a finished cooked weight.
+
+Custom recipes follow the same revision and confirmation locks. A free-text
+`/reply` while any custom recipe exists returns 422 with guidance to use the
+structured editor or start a new meal. Structured answers for other items and
+mode changes preserve custom recipes. `PATCH` remains an explicit reset of the
+whole description/draft. See [the user guide](ingredient-recipes.md).
 
 ## State and revision rules
 

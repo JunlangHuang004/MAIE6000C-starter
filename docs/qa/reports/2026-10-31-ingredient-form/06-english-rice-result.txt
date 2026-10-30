@@ -1,0 +1,53 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Basic · Quick estimate
+						15 文本 Estimate from the information available. Missing portions and recipes use clearly labelled reference values.
+						16 按钮 Switch to Advanced and add details
+						17 文本 Meal description
+						18 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							19 文本 200 g cooked white rice, no added oil
+						20 按钮 New meal
+						21 文本 138 ingredients · 250 reference recipes
+						22 摘要 Browse supported foods and recipes, Value: off
+							23 文本 Browse supported foods and recipes
+						24 文本 The estimate is saved. Review it before confirming.
+						25 标题 Meal record and corrections, Value: 2
+							26 文本 Meal record and corrections
+						27 摘要 View this meal’s conversation, Value: off
+							28 文本 View this meal’s conversation
+						29 文本 Continue · Add or correct details
+						30 文本输入区 (settable) Continue · Add or correct details, Value: [文本输入区], Placeholder: For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+							31 文本 For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+						32 按钮 Send details
+						33 文本 Basic · Ready for review
+						34 标题 Nutrition estimate, Value: 2
+							35 文本 Nutrition estimate
+						36 text Cooked white rice · 200g 260 Energy · kcal 5.4 Protein · g 0.6 Fat · g 56.3 Carbohydrates · g
+						37 container (expanded) Secondary Actions: Collapse
+							38 摘要 Cooked white rice · 200g · 260 kcal, Value: on
+								39 文本 Cooked white rice · 200g · 260 kcal
+							40 文本 Quantity basis: 200g extracted from your description. Review the extracted amount, edible portion and raw/cooked state.
+							41 文本 Basic-mode reference estimate
+							42 文本 Calculated from the edible-portion data per 100g of Cooked white rice.
+							43 文本 Preparation: As described by the selected food; additional oil: 0g
+							44 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
+							45 container
+								46 文本 Sources: 
+								47 link USDA FoodData Central SR Legacy 2018 #168878 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/168878/nutrients
+						48 文本 Review the eaten weight, preparation, oil and recipe. Use the conversation above to make corrections.
+						49 按钮 Confirm and save
+						50 text Record 99d16800-d663-41e3-bf19-8b24ad575b86 · Revision 1 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				51 滚动条 (settable, float) 0.9629921

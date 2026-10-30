@@ -11,7 +11,9 @@ The user does not enter an API key into the application.
 Choose **中文 / English** in the page header for the interface language. It is
 remembered in the browser and can be changed during the workflow without losing
 unsent answers or recalculating the meal. The English interface includes food
-display names and reference recipes; user descriptions and free-form model notes
+display names and reference recipes where translations are available. The original
+388 catalogue entries retain English mappings; the 162 new Chinese-first entries
+fall back to Chinese names and methods. User descriptions and free-form model notes
 keep their original wording. The bilingual control guide below also explains the
 Chinese screenshots. See the [English interface screenshot](images/07-english-interface.png)
 and [verified language-switch behavior](../docs/evidence/ui-language-verification.md).
@@ -41,7 +43,7 @@ visible and editable before the user accepts the estimate.
 
 | Route | What is needed | What it demonstrates |
 | --- | --- | --- |
-| **Main product demo: Chinese meals, port 8003** | Server configured for Qwen with an authorized key, matching region/workspace endpoint and available quota; users open `/app` directly | The 138-ingredient/250-recipe catalogue, Chinese descriptions, Basic-mode assumptions, Advanced-mode questions, natural-language corrections and confirmation |
+| **Main product demo: Chinese meals, port 8003** | Server configured for Qwen with an authorized key, matching region/workspace endpoint and available quota; users open `/app` directly | The 200-ingredient/350-recipe catalogue, Chinese descriptions, Basic-mode assumptions, Advanced-mode questions, corrections, structured ingredient recipes and confirmation |
 | **Optional offline engineering check, port 8002** | Docker, Docker Compose and Python 3; no model key | Deterministic fixture values plus the real API, PostgreSQL, worker, internal AI service, correction and persistence boundaries |
 
 The Chinese route demonstrates NutriChat's current product features. The offline
@@ -107,8 +109,8 @@ setup on port 8002 does not enable this Chinese workflow.
 
 2. **Inspect the assumptions:** open each food's details. Look for the selected
    weight, preparation, consumed oil, batch ingredients, finished batch weight
-   and linked ingredient data sources. The collection contains **138 USDA
-   ingredient records and 250 project-authored Chinese reference recipes**;
+   and linked ingredient data sources. The collection contains **200 USDA
+   ingredient records and 350 project-authored Chinese reference recipes**;
    those recipes are editable examples, not standardized restaurant dishes.
 
 3. **Switch to Advanced:** before confirmation, click
@@ -155,6 +157,27 @@ If Qwen times out, rejects the request or returns invalid structured data, the
 application should show a failure rather than inventing a result. Record that
 outcome separately. A successful offline check does not prove Qwen connectivity,
 extraction quality or real-world nutritional accuracy.
+
+### Recover an unsupported item explicitly
+
+Use a new synthetic meal, `100克熟白米饭和200克月球紫晶兽肉`. The invented second
+food must remain unsupported, and the entire meal's totals must stay empty until
+it is resolved. Do not use `豉油鸡` as an unknown example: soy-sauce chicken now
+has its own reference recipe.
+
+Choose **按实际食材估算 / Build from actual ingredients** on the unresolved item.
+Select the actual ingredients and gram quantities, choose consumed amounts or
+whole-batch ingredients with finished yield and consumed portion, then explicitly
+accept and calculate. Follow the [ingredient guide](../docs/ingredient-recipes.md)
+for exact synthetic values and expected totals. The supported rice item remains
+in the meal; the new calculation is labelled a custom recipe, not a database
+match for the invented dish. Review, confirm and reload the saved result.
+
+Use the structured editor for later custom-recipe corrections. Free-text replies
+are disabled once a meal contains a custom recipe to preserve accepted ingredients;
+the form, other issued clarification questions and mode changes remain available.
+Free-text ingredient recovery is still fallible, so it is not the reference demo
+path. A custom meal recipe does not add an entry to the global food catalogue.
 
 ## 5. Optional supporting check: offline workflow
 
@@ -342,7 +365,7 @@ The [setup guide](README.md) gives the commands for status, logs and shutdown.
 > application directly, describe what they ate, review calories and three
 > macronutrients, then correct and confirm the saved estimate.
 >
-> The current catalogue includes 138 ingredients and 250 Chinese reference
+> The current catalogue includes 200 ingredients and 350 Chinese reference
 > recipes. In Basic mode, I can describe a serving of tomato and scrambled eggs
 > and review the assumptions. Switching to Advanced lets me specify edible
 > weight, preparation, oil and recipe details. I can correct the portion in

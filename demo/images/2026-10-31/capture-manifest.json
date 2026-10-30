@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-31",
+  "target": "http://localhost:8003/app",
+  "capture": "Native Safari screenshots via CUA; page-only pixel crops using sips; no reconstructed content. Some views scrolled or zoomed to fit controls.",
+  "ui_and_catalogue_unchanged_between_sources": true,
+  "images": [
+    {
+      "file": "01-enter-meal.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "78f4f5c9e26083d1e8bd4aace305e15af9d2391b9086abe9962c183b07d365ac"
+    },
+    {
+      "file": "02-basic-estimate.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "28e0f7e328c8245204ed4e1f789e17397581781e4826733bd8434d24cd6e1941"
+    },
+    {
+      "file": "03-advanced-questions.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "3a3184288222103a13a18fdd23f23e1af4a959ed6e1ddc18f25a9a78f0d3f4aa"
+    },
+    {
+      "file": "04-weight-correction.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "e8d51c917c2f67acf223b5dddcab3db7b255237757d5539cdfd9b7bb469378c4"
+    },
+    {
+      "file": "05-corrected-estimate.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "56741ef2397ea3b8606dbfa37015bd63a8f71bd75d04bce461c079a314230dcc"
+    },
+    {
+      "file": "06-confirmed-after-reload.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "bf18f8a53ffd39a2a6e2c9ba98cbcb1a3e0da3feb3e2749569cc526b6efb58e1"
+    },
+    {
+      "file": "07-english-interface.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "d790beba246d1dc768a0b06c9291520ddd26ce7ca9416675ca33749fae360fbe"
+    },
+    {
+      "file": "08-unsupported-food.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "de0b34f5890dedd2d60d36dd716a13b6df57fa1e6499d94f3257a9f2536e655a"
+    },
+    {
+      "file": "09-ingredient-builder.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "cac51d316410875a0db6d0f692235e85c07d4fac558e9c9eb9a54be2ed57e989"
+    },
+    {
+      "file": "10-batch-portion.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "ba8cce061c0bfb764f73b89c0b5b5bf0af3347196188fe3c227b4d6ad3a76c54"
+    },
+    {
+      "file": "11-custom-result.png",
+      "runtime_source": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+      "sha256": "188e44c9fadfbae05dc0492f7458e5ba7f671abb25d48c3b207ca5499b8961ad"
+    },
+    {
+      "file": "12-new-dishes-final.png",
+      "runtime_source": "dae0b946e286736020becf018c49b4e81eb46ec6",
+      "sha256": "327f2bf0dcdf3d1b0540adf566827e87c75b85c3a9fb09c02cc22efca5ab882b"
+    },
+    {
+      "file": "13-final-confirmed-custom.png",
+      "runtime_source": "dae0b946e286736020becf018c49b4e81eb46ec6",
+      "sha256": "92e7d39deb0cfad74f6e0d688d1ab4655fc3447ec61301abf8a830eaf9b2b0db"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "source": "7c841b15231cc3372bed571efb3b9335751db3f1",
+  "method": "Real HTTP API -> worker -> calculation service -> PostgreSQL; reused prior synthetic unresolved rice record, no new model extraction",
+  "prior_revision": 1,
+  "request": {
+    "revision": 1,
+    "item_index": 0,
+    "name": "Synthetic batch verification",
+    "basis": "batch",
+    "ingredients": [
+      {
+        "food_id": "chicken",
+        "grams": 300
+      },
+      {
+        "food_id": "oil",
+        "grams": 10
+      },
+      {
+        "food_id": "soy_sauce",
+        "grams": 20
+      }
+    ],
+    "batch_yield_g": 600,
+    "consumed_g": 150,
+    "accepted": true
+  },
+  "job": {
+    "id": 86,
+    "case_id": null,
+    "analysis_id": "7c10cb82-9fd8-4172-8959-fe6986462891",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-10-30T17:38:36.913546Z",
+    "claimed_at": "2026-10-30T17:38:41.066370Z",
+    "completed_at": "2026-10-30T17:38:41.078892Z"
+  },
+  "confirmed_analysis": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "100克熟白米饭"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“100克熟白米饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      },
+      {
+        "role": "user",
+        "content": "已确认自定义食材配方：Synthetic batch verification",
+        "kind": "ingredient_recipe",
+        "item_index": 0
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "Synthetic batch verification",
+        "source_text": "100克熟白米饭",
+        "original_name": "100克熟白米饭",
+        "custom_recipe": {
+          "name": "Synthetic batch verification",
+          "basis": "batch",
+          "ingredients": [
+            {
+              "food_id": "chicken",
+              "grams": 300.0
+            },
+            {
+              "food_id": "oil",
+              "grams": 10.0
+            },
+            {
+              "food_id": "soy_sauce",
+              "grams": 20.0
+            }
+          ],
+          "batch_yield_g": 600.0,
+          "consumed_g": 150.0,
+          "accepted": true
+        }
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "kind": "custom_recipe",
+        "food_id": null,
+        "name": "Synthetic batch verification",
+        "grams": 150.0,
+        "nutrients": {
+          "calories": 114.8,
+          "protein_g": 17.3,
+          "carbs_g": 0.2,
+          "fat_g": 4.5
+        },
+        "assumptions": [
+          "用户填写并确认的食材配方；不是数据库中的实测菜肴记录。",
+          "食材按所选记录的生重、熟重或可食净重计算，不自动互换。",
+          "油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171077",
+            "url": "https://fdc.nal.usda.gov/food-details/171077/nutrients",
+            "description": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "custom_recipe",
+          "basis": "batch",
+          "ingredients": [
+            {
+              "food_id": "chicken",
+              "name": "生去皮鸡胸肉",
+              "grams": 300.0,
+              "state": "raw",
+              "consumed_grams": 75.0
+            },
+            {
+              "food_id": "oil",
+              "name": "大豆食用油",
+              "grams": 10.0,
+              "state": "as_sold",
+              "consumed_grams": 2.5
+            },
+            {
+              "food_id": "soy_sauce",
+              "name": "普通酱油",
+              "grams": 20.0,
+              "state": "as_sold",
+              "consumed_grams": 5.0
+            }
+          ],
+          "batch_yield_g": 600.0,
+          "consumed_g": 150.0,
+          "factor": 0.25
+        },
+        "item_index": 0
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "Synthetic batch verification 150g",
+    "revision": 3,
+    "confirmed_at": "2026-10-30T17:38:42.033199Z",
+    "id": "7c10cb82-9fd8-4172-8959-fe6986462891",
+    "food_text": "100克熟白米饭",
+    "status": "confirmed",
+    "calories": 114.8,
+    "protein_g": 17.3,
+    "carbs_g": 0.2,
+    "fat_g": 4.5,
+    "created_at": "2026-10-30T17:28:06.712197Z",
+    "updated_at": "2026-10-30T17:38:42.037783Z"
+  },
+  "confirmed_edit_http_status": 409
+}

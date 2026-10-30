@@ -1,0 +1,17 @@
+{
+  "runtime_commit": "7c841b15231cc3372bed571efb3b9335751db3f1",
+  "model_action_cap": 3,
+  "model_actions_used": 3,
+  "model_actions": [
+    {"sequence": 1, "kind": "initial_basic_estimate", "input": "100克米饭和200克豉油鸡", "record_id": "28493775-f12d-42c0-a62e-faad4cd4c894"},
+    {"sequence": 2, "kind": "initial_basic_estimate", "input": "100克熟白米饭", "record_id": "59e482e6-85e1-44b9-b7c9-0e890018acc8"},
+    {"sequence": 3, "kind": "initial_basic_estimate", "input": "200 g cooked white rice, no added oil", "record_id": "99d16800-d663-41e3-bf19-8b24ad575b86"}
+  ],
+  "valid_structured_calculations": 2,
+  "invalid_form_attempts": ["missing explicit acceptance", "eaten 601g exceeds finished batch 600g"],
+  "confirmations": 1,
+  "mode_changes": 0,
+  "natural_language_replies": 0,
+  "automatic_or_deliberate_retries": 0,
+  "evidence_note": "Counts are observed UI actions. Structured operations are non-Qwen according to the feature contract; no network instrumentation was used."
+}

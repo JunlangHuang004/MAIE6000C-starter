@@ -1,0 +1,60 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Basic · Quick estimate
+						15 text Estimate from the information available. Missing portions and recipes use clearly labelled reference values. Meal description
+						16 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							17 文本 一份番茄炒蛋，两个水煮鸡蛋
+						18 按钮 New meal
+						19 文本 138 ingredients · 250 reference recipes
+						20 摘要 Browse supported foods and recipes, Value: off
+							21 文本 Browse supported foods and recipes
+						22 标题 Meal record and corrections, Value: 2
+							23 文本 Meal record and corrections
+						24 摘要 View this meal’s conversation, Value: off
+							25 文本 View this meal’s conversation
+						26 文本 Basic · Confirmed and saved
+						27 标题 Nutrition estimate, Value: 2
+							28 文本 Nutrition estimate
+						29 text Tomato-and-egg stir-fry 150g · Hard-boiled egg (without shell) 100g 312.7 Energy · kcal 20.6 Protein · g 21.8 Fat · g 7.8 Carbohydrates · g
+						30 container (expanded) Secondary Actions: Collapse
+							31 摘要 Tomato-and-egg stir-fry · 150g · 157.7 kcal, Value: on
+								32 文本 Tomato-and-egg stir-fry · 150g · 157.7 kcal
+							33 文本 Basic-mode reference estimate
+							34 文本 Model note (original): 番茄炒蛋油量未说明，需确认
+							35 文本 Basic mode uses a reference recipe and finished batch weight that have not been checked item by item. Switch to Advanced to review them.
+							36 文本 Reference preparation: Stir-fry.
+							37 文本 Finished batch: 400g; portion eaten: 150g
+							38 文本 Whole-batch ingredients: Raw tomato 300g, Raw whole egg (without shell) 150g, Soybean cooking oil 15g, Granulated white sugar 5g, Table salt 2g
+							39 文本 Basic reference recipe, not confirmed item by item. This is not measured nutrition for your dish.
+							40 container
+								41 文本 Sources: 
+								42 link USDA FoodData Central SR Legacy 2018 #170457 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/170457/nutrients
+								43 link USDA FoodData Central SR Legacy 2018 #171287 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171287/nutrients
+								44 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+								45 link USDA FoodData Central SR Legacy 2018 #169655 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169655/nutrients
+								46 link USDA FoodData Central SR Legacy 2018 #173468 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173468/nutrients
+						47 container (expanded) Secondary Actions: Collapse
+							48 摘要 Hard-boiled egg (without shell) · 100g · 155 kcal, Value: on
+								49 文本 Hard-boiled egg (without shell) · 100g · 155 kcal
+							50 文本 Basic-mode reference estimate
+							51 文本 Calculated from the edible-portion data per 100g of Hard-boiled egg (without shell).
+							52 文本 Preparation: Boiled; additional oil: 0g
+							53 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
+							54 container
+								55 文本 Sources: 
+								56 link USDA FoodData Central SR Legacy 2018 #173424 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173424/nutrients
+						57 text This estimate is confirmed and saved. Start a new meal to make further changes. Record 06d099fc-2891-47aa-970a-8cf204609939 · Revision 3 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				58 滚动条 (settable, float) 0.6748655

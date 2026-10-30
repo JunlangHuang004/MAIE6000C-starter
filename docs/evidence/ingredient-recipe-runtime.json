@@ -1,0 +1,37 @@
+{
+  "commit": "7c841b15231cc3372bed571efb3b9335751db3f1",
+  "algorithm": "SHA-256 of sorted relative paths, NUL, file bytes, NUL; service .py/.json/.html/.js files",
+  "local": {
+    "sha256": "d5f20d72d70f1ebc4811f09f8d3c3ac6711a869e31948c59290cc8957f1b0b01",
+    "files": 30
+  },
+  "containers": {
+    "api": {
+      "source": {
+        "sha256": "d5f20d72d70f1ebc4811f09f8d3c3ac6711a869e31948c59290cc8957f1b0b01",
+        "files": 30
+      },
+      "image": "sha256:3e81c98ccb6afabbfc5defabe7e6ffc2906baca6f04254653705c59de4555993"
+    },
+    "ai": {
+      "source": {
+        "sha256": "d5f20d72d70f1ebc4811f09f8d3c3ac6711a869e31948c59290cc8957f1b0b01",
+        "files": 30
+      },
+      "image": "sha256:cb7cb971ba230cfecd0f645df626de0ac2510778669bb4598ca6461467248fae"
+    },
+    "worker": {
+      "source": {
+        "sha256": "d5f20d72d70f1ebc4811f09f8d3c3ac6711a869e31948c59290cc8957f1b0b01",
+        "files": 30
+      },
+      "image": "sha256:100da3580328116723c4119e2cca7b8b4653377218481c0e1eb2394d1b5050ea"
+    }
+  },
+  "health": {
+    "service": "api",
+    "status": "ok"
+  },
+  "provider": "qwen",
+  "food_count": 388
+}

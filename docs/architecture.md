@@ -2,7 +2,7 @@
 
 Current implementation reviewed: 2026-10-31, `nutrichat` branch.
 
-The Qwen catalogue contains 138 USDA ingredient records and 250 project-authored
+The Qwen catalogue contains 200 USDA ingredient records and 350 project-authored
 reference recipes. Expansion changes versioned data and validation, not model
 weights or the database schema. The public deployment is older than this milestone.
 
@@ -38,11 +38,14 @@ with the Python application, loaded in that order and served with `no-cache` so
 the browser revalidates after an update. No frontend build service is required.
 
 `i18n.js` translates controls, status messages, structured questions and evidence.
-The English display catalogue provides names for all 138 ingredients and 250
-recipes, plus the recipes' reference methods. Catalogue search checks Chinese and
-English display names. User descriptions and free-form model notes retain their
-original language. English display names are not additional aliases in the Qwen
-extraction catalogue.
+The English display catalogue retains names for the original 138 ingredients and
+250 recipes, plus those recipes' reference methods. The 62 new ingredients and
+100 new recipes prioritize Chinese; missing English mappings fall back to Chinese
+names and methods. Catalogue search checks Chinese and available English display
+names. User descriptions and free-form model notes retain their
+original language. Display language is separate from matching: recognition is
+restricted to recorded names and explicitly reviewed aliases, regardless of the
+selected interface language.
 
 A language change rerenders presentation while preserving unsent meal/reply text,
 selected mode, question answers, editable recipe quantities/yield and acceptance.
@@ -57,6 +60,41 @@ Qwen runs in Alibaba Cloud Model Studio, not on ECS. It interprets meal descript
 
 The model does not supply authoritative calorie/macronutrient values, approve recipes, or train on project updates. Python validates the extracted facts and calculates from the versioned catalogue. Structured question answers bypass another model call; natural-language replies use the bounded conversation as context. Updating aliases, food data or prompts changes application behavior without retraining model weights.
 
+The prompt receives a bounded shortlist instead of the entire growing catalogue.
+`catalogue_candidates` selects up to 60 records using recorded name/alias spans
+from the user's text and adds recipe ingredient context, with at most 120 records
+in total. Retrieval only supplies interpretation context: substring candidates do
+not authorize a match, and the separate identity guard below still decides whether
+an extracted food corresponds to a complete supported user mention. Missing names
+are not filled by a fuzzy nearest-dish search.
+
+## Food identity boundary
+
+The matching follow-up adds a deterministic identity check between model extraction
+and nutrient calculation. The backend resolves each complete user-provided food
+mention to a unique recorded name or reviewed alias. This exact lookup determines
+the ID even if the model proposes a different one; it never selects the nearest
+food. An existing catalogue ID alone is not evidence of a correct match.
+Names copied from assistant suggestions or generated catalogue labels are not
+independent user evidence. Similar-looking names or ingredient substrings must
+not authorize a different dish.
+
+Known-name matching accepts reviewed adjacent edible-state annotations such as
+`已去骨` and `已去壳`. This narrow boundary rule does not authorize unknown dish
+names, substitute another food or infer a gram quantity.
+
+An unsupported or unverified match is retained as an unresolved item. The user
+sees that no corresponding food record was found; no substitute dish, per-item
+estimate or partial meal total is returned. The user can correct the name or use
+the structured ingredient builder to select actual supported ingredients and
+weights. Free-text ingredient recovery remains fallible and is not the reference
+recovery route. Basic mode
+may assume portions for a supported identity; it must not assume an identity for
+an unsupported food. This stricter boundary can reject unlisted synonyms and is
+not a guarantee that all remaining model facts are correct. Follow-up verification
+is recorded separately from the earlier language-switch checks in
+[the matching verification](evidence/food-matching-verification.md).
+
 ## Two modes and uncertainty
 
 Basic mode applies labelled defaults to a calculation copy: reference portions, reference recipes and applicable extra-oil assumptions. The stored draft retains missing fields, so switching to advanced mode asks for details that were never supplied.
@@ -64,6 +102,18 @@ Basic mode applies labelled defaults to a calculation copy: reference portions, 
 Advanced mode asks for grams, weight state, preparation and consumed oil as needed. Recipe calculations require explicit acceptance of editable ingredient quantities and finished batch yield. Unmatched foods or contradictory raw/cooked/preparation facts can require questions in either mode. Pending questions leave every nutrient total null.
 
 Nutrients equal the sum of ingredient grams multiplied by their per-100g data. Recipe portions scale the whole-batch nutrients by consumed cooked weight divided by finished batch weight. Data provenance, limits and exceptions are detailed in [nutrition data](nutrition-data.md).
+
+The [explicit ingredient builder](ingredient-recipes.md) can replace one unresolved
+draft item with a user-accepted recipe. `POST /analyses/{id}/ingredients` validates
+existing ingredient IDs, states shown for review, gram bounds and consumed/batch
+basis. It preserves every other draft item and queues the normal worker with the
+validated draft, so the calculation service does not call Qwen again. Model output
+cannot supply `custom_recipe`; that field is created by the structured API path.
+An unresolved item elsewhere still suppresses all totals. Custom calculations
+retain their ingredient/portion provenance and are labelled separately from a
+catalogue dish. Free-text replies are blocked for a meal containing custom recipes
+to prevent re-extraction from discarding those facts; structured edits, clarification
+answers, mode changes and final confirmation retain the ordinary revision rules.
 
 ## Persistence and concurrency
 
@@ -79,14 +129,24 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 
 ## Current limitations
 
-Local users open `/app` directly, without registration/login. The optional public
-gateway uses a shared account; analyses have no per-user ownership. There is no
-idempotency key, automatic retry, claimed-job recovery, image recognition, model
-training or measured cooking-loss model. Use one worker for this prototype.
-Reference recipes and portions are assumptions, and even detailed estimates
-depend on the quality of input and food mappings. Model extraction can fail or
-select a similar but incorrect food; translating the interface does not remove
-that risk. Users must review interpreted foods and assumptions before confirming.
+Food coverage is limited to 200 ingredient records and 350 reference recipes;
+this is not a general food database. Unlisted foods, names and variants need
+clarification or catalogue additions instead of a substitute estimate.
+
+Local users open `/app` directly. Individual registration/login and per-user
+record ownership are not implemented; the local **Log out** control has no
+working authentication route. The optional public gateway is implemented in
+`services/gateway/main.py`: it checks a shared username/password and signed
+session cookies before Nginx proxies application requests. This is access control
+for a shared demo, not an individual account system.
+
+There is no idempotency key, automatic retry, claimed-job recovery, image
+recognition, model training or measured cooking-loss model. Use one worker for
+this prototype. Reference recipes and portions are assumptions, and even detailed
+estimates depend on the quality of input and food mappings. Model extraction can
+fail or propose a similar but incorrect food. The identity guard rejects
+unverified food matches, but it does not prove that all quantities or cooking facts
+are correct. Users must review interpreted foods and assumptions before confirming.
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
 
@@ -170,4 +230,9 @@ The 31 October language update passed 417 Python tests and 15 frontend DOM tests
 plus Ruff and a live Qwen browser flow covering editable recipe answers, language
 switching, confirmation and reload. These later checks supplement the dated
 milestone rehearsal; they do not change the original rehearsal's source version
-or establish nutrition accuracy for real meals.
+or establish nutrition accuracy for real meals. The
+[ingredient-builder verification](evidence/ingredient-recipe-verification.md)
+records the subsequent `7c841b1` checks; the
+[Chinese expansion verification](evidence/chinese-expansion-verification.md)
+records the final expanded-catalogue checks. Historical results do not imply that
+every newer commit or provider interpretation has passed the same live checks.

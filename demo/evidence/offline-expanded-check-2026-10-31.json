@@ -1,0 +1,326 @@
+{
+  "observed_at": "2026-10-30T18:00:33.360497+00:00",
+  "project": "nutrichat-demo",
+  "passed": true,
+  "source": {
+    "commit": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+    "branch": "nutrichat",
+    "dirty": true
+  },
+  "scope": "Synthetic API -> PostgreSQL -> worker -> internal HTTP; offline demo provider. Not a browser automation or live Qwen test.",
+  "stack": {
+    "health": {
+      "status": 200,
+      "body": {
+        "service": "api",
+        "status": "ok"
+      }
+    },
+    "provider": "demo",
+    "supported_demo_foods": [
+      "chicken breast",
+      "white rice",
+      "rice",
+      "egg",
+      "salmon",
+      "broccoli"
+    ],
+    "app_http_status": 200
+  },
+  "ai_requests_before": 0.0,
+  "created": {
+    "status": 201,
+    "body": {
+      "analysis": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100g egg"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+        "food_text": "100g egg",
+        "status": "queued",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-30T18:00:39.696337Z",
+        "updated_at": "2026-10-30T18:00:39.696344Z"
+      },
+      "job": {
+        "id": 8,
+        "case_id": null,
+        "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+        "job_type": "analyze_nutrition",
+        "status": "pending",
+        "attempts": 0,
+        "error": null,
+        "created_at": "2026-10-30T18:00:39.700941Z",
+        "claimed_at": null,
+        "completed_at": null
+      }
+    }
+  },
+  "before_worker": {
+    "job_id": 8,
+    "job_status": "pending",
+    "attempts": 0,
+    "claimed_at": null,
+    "completed_at": null,
+    "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+    "analysis_status": "queued",
+    "revision": 1,
+    "calories": null,
+    "protein_g": null,
+    "fat_g": null,
+    "carbs_g": null,
+    "confirmed_at": null
+  },
+  "initial_result": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "100g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "100g egg",
+      "revision": 1,
+      "confirmed_at": null,
+      "id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+      "food_text": "100g egg",
+      "status": "completed",
+      "calories": 155.0,
+      "protein_g": 13.0,
+      "carbs_g": 1.1,
+      "fat_g": 11.0,
+      "created_at": "2026-10-30T18:00:39.696337Z",
+      "updated_at": "2026-10-30T18:00:41.878268Z"
+    }
+  },
+  "initial_job": {
+    "job_id": 8,
+    "job_status": "completed",
+    "attempts": 1,
+    "claimed_at": "2026-10-30T18:00:41.837023+00:00",
+    "completed_at": "2026-10-30T18:00:41.877538+00:00",
+    "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+    "analysis_status": "completed",
+    "revision": 1,
+    "calories": 155,
+    "protein_g": 13,
+    "fat_g": 11,
+    "carbs_g": 1.1,
+    "confirmed_at": null
+  },
+  "correction": {
+    "status": 200,
+    "body": {
+      "analysis": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "200g egg"
+          }
+        ],
+        "draft": [],
+        "questions": [],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 2,
+        "confirmed_at": null,
+        "id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+        "food_text": "200g egg",
+        "status": "queued",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-10-30T18:00:39.696337Z",
+        "updated_at": "2026-10-30T18:00:42.826005Z"
+      },
+      "job": {
+        "id": 9,
+        "case_id": null,
+        "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+        "job_type": "analyze_nutrition",
+        "status": "pending",
+        "attempts": 0,
+        "error": null,
+        "created_at": "2026-10-30T18:00:42.831239Z",
+        "claimed_at": null,
+        "completed_at": null
+      }
+    }
+  },
+  "corrected_result": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "200g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "200g egg",
+      "revision": 2,
+      "confirmed_at": null,
+      "id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+      "food_text": "200g egg",
+      "status": "completed",
+      "calories": 310.0,
+      "protein_g": 26.0,
+      "carbs_g": 2.2,
+      "fat_g": 22.0,
+      "created_at": "2026-10-30T18:00:39.696337Z",
+      "updated_at": "2026-10-30T18:00:43.932243Z"
+    }
+  },
+  "correction_job": {
+    "job_id": 9,
+    "job_status": "completed",
+    "attempts": 1,
+    "claimed_at": "2026-10-30T18:00:43.905322+00:00",
+    "completed_at": "2026-10-30T18:00:43.931858+00:00",
+    "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+    "analysis_status": "completed",
+    "revision": 2,
+    "calories": 310,
+    "protein_g": 26,
+    "fat_g": 22,
+    "carbs_g": 2.2,
+    "confirmed_at": null
+  },
+  "confirmed": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "200g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "200g egg",
+      "revision": 3,
+      "confirmed_at": "2026-10-30T18:00:45.185314Z",
+      "id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+      "food_text": "200g egg",
+      "status": "confirmed",
+      "calories": 310.0,
+      "protein_g": 26.0,
+      "carbs_g": 2.2,
+      "fat_g": 22.0,
+      "created_at": "2026-10-30T18:00:39.696337Z",
+      "updated_at": "2026-10-30T18:00:45.240219Z"
+    }
+  },
+  "reloaded": {
+    "status": 200,
+    "body": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "200g egg"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": "200g egg",
+      "revision": 3,
+      "confirmed_at": "2026-10-30T18:00:45.185314Z",
+      "id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+      "food_text": "200g egg",
+      "status": "confirmed",
+      "calories": 310.0,
+      "protein_g": 26.0,
+      "carbs_g": 2.2,
+      "fat_g": 22.0,
+      "created_at": "2026-10-30T18:00:39.696337Z",
+      "updated_at": "2026-10-30T18:00:45.240219Z"
+    }
+  },
+  "after_confirmation": {
+    "job_id": 9,
+    "job_status": "completed",
+    "attempts": 1,
+    "claimed_at": "2026-10-30T18:00:43.905322+00:00",
+    "completed_at": "2026-10-30T18:00:43.931858+00:00",
+    "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a",
+    "analysis_status": "confirmed",
+    "revision": 3,
+    "calories": 310,
+    "protein_g": 26,
+    "fat_g": 22,
+    "carbs_g": 2.2,
+    "confirmed_at": "2026-10-30T18:00:45.185314+00:00"
+  },
+  "locked_edit": {
+    "status": 409,
+    "body": {
+      "detail": "State or revision changed; reload the estimate."
+    }
+  },
+  "worker_events": [
+    {
+      "asctime": "2026-10-30 18:00:41,841",
+      "service": null,
+      "message": "job_claimed",
+      "job_id": 8,
+      "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a"
+    },
+    {
+      "asctime": "2026-10-30 18:00:41,880",
+      "service": null,
+      "message": "job_completed",
+      "job_id": 8,
+      "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a"
+    },
+    {
+      "asctime": "2026-10-30 18:00:43,913",
+      "service": null,
+      "message": "job_claimed",
+      "job_id": 9,
+      "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a"
+    },
+    {
+      "asctime": "2026-10-30 18:00:43,933",
+      "service": null,
+      "message": "job_completed",
+      "job_id": 9,
+      "analysis_id": "69fb469f-d0a0-4139-9164-0a1f4606dd5a"
+    }
+  ],
+  "ai_requests_after": 2.0,
+  "ai_requests_delta": 2.0,
+  "finished_at": "2026-10-30T18:00:46.504007+00:00"
+}

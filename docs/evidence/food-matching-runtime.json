@@ -1,0 +1,36 @@
+{
+  "commit": "224502091bdf1b60635f13c854db93863501b153",
+  "local": {
+    "sha256": "7d7938a6a96a315febe237121bc518d7e5cc9ff72232cd43973be636fc0c8a18",
+    "files": 29
+  },
+  "containers": {
+    "api": {
+      "source": {
+        "sha256": "7d7938a6a96a315febe237121bc518d7e5cc9ff72232cd43973be636fc0c8a18",
+        "files": 29
+      },
+      "image": "sha256:d6260cc210e2d698afa53d04e3337703bc873868950d13d7c97b825b98264ad9"
+    },
+    "ai": {
+      "source": {
+        "sha256": "7d7938a6a96a315febe237121bc518d7e5cc9ff72232cd43973be636fc0c8a18",
+        "files": 29
+      },
+      "image": "sha256:ebcbb1fd4819602de1d7183f3458ad08c5c452db04c609fbc2353f6c52f4b17d"
+    },
+    "worker": {
+      "source": {
+        "sha256": "7d7938a6a96a315febe237121bc518d7e5cc9ff72232cd43973be636fc0c8a18",
+        "files": 29
+      },
+      "image": "sha256:cec04d8cd1e041436aa67197cba06ba7da237590cb0b94c75a20c14e80dd044e"
+    }
+  },
+  "provider": "qwen",
+  "food_count": 388,
+  "health": {
+    "service": "api",
+    "status": "ok"
+  }
+}

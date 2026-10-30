@@ -5,7 +5,8 @@
 **Updated:** 2026-10-31
 
 OpenAI Codex assisted development and provided suggestions, including debugging,
-tests and documentation. Alibaba Qwen interprets meal descriptions at runtime;
+tests, documentation and reference-recipe drafting. Alibaba Qwen interprets meal
+descriptions at runtime;
 nutrient values are calculated from catalogue data.
 
 The team chose the scope and rejected image-based estimation. Automated tests and

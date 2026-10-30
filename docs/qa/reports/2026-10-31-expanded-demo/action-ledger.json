@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-31",
+  "timezone": "Asia/Hong_Kong",
+  "initial_runtime": "71a0ecd56f2de09460ce899b1b183f723ab45b0e",
+  "initial_model_cap": 8,
+  "initial_estimates": 4,
+  "initial_text_replies": 1,
+  "conservatively_counted_mode_switches": 1,
+  "structured_answer_submissions": 2,
+  "custom_recipe_submissions": 1,
+  "initial_confirmations": 1,
+  "followup_runtime": "dae0b946e286736020becf018c49b4e81eb46ec6",
+  "followup_model_cap": 2,
+  "followup_estimates": 1,
+  "followup_confirmations": 1,
+  "automatic_retries": 0,
+  "network_tracing": false,
+  "note": "Counts are reviewer UI-action ledger, not independently traced provider HTTP counts. F02 was an explicitly authorized exact post-fix regression retest."
+}

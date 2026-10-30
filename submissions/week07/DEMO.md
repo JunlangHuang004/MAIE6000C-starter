@@ -1,12 +1,20 @@
 # Midterm runnable demo and rehearsal
 
 For the TA's self-guided review, begin with [the dedicated demo folder](../../demo/README.md).
-Its primary product demo shows Chinese meal estimation with 138 ingredients and
-250 reference recipes on port 8003. Once Qwen is configured on the server, users
+Its primary product demo shows Chinese meal estimation with 200 ingredients and
+350 reference recipes on port 8003. Use the setup guide's `w07-midterm` checkout
+for the submitted version. Once Qwen is configured on the server, users
 open `/app` directly without registration or login. The English walkthrough covers
 Basic/Advanced modes, clarification, correction, confirmation and reload. The
 header’s **中文 / English** buttons switch interface language while preserving
 entered values and the current record.
+
+Unsupported foods must remain unresolved rather than receive a different dish's
+estimate. The structured ingredient builder accepts explicitly reviewed food
+records and quantities for a custom meal item; see the
+[ingredient guide](../../docs/ingredient-recipes.md). The 162 newly added catalogue
+entries prioritize Chinese, with Chinese fallback where English translations are
+absent.
 
 A separate no-key check on port 8002 provides repeatable HTTP/database/worker
 evidence. Its small English fixture catalogue is not the full product demo.
@@ -90,7 +98,7 @@ docker compose exec -T api python scripts/check_expanded_dialogue.py --base-url 
 If the provider fails, show the error state and explain the dependency. Use the
 isolated worker demonstration to show the engineering contract, clearly labelled
 as the offline provider. Do not claim it proves Chinese extraction. The public ECS
-is an older deployment and should not be used to represent the tagged 250-dish build.
+is an older deployment and should not be used to represent this tagged release.
 
 ## Finish
 

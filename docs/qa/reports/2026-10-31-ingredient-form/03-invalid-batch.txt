@@ -1,0 +1,126 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Basic · Quick estimate
+						15 文本 Estimate from the information available. Missing portions and recipes use clearly labelled reference values.
+						16 按钮 Switch to Advanced and add details
+						17 文本 Meal description
+						18 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							19 文本 100克米饭和200克豉油鸡
+						20 按钮 New meal
+						21 文本 138 ingredients · 250 reference recipes
+						22 摘要 Browse supported foods and recipes, Value: off
+							23 文本 Browse supported foods and recipes
+						24 文本 Enter valid finished batch and eaten weights (greater than 0, up to 10000 g). The eaten portion cannot exceed the batch.
+						25 标题 Meal record and corrections, Value: 2
+							26 文本 Meal record and corrections
+						27 摘要 View this meal’s conversation, Value: off
+							28 文本 View this meal’s conversation
+						29 按钮 (expanded) Edit ingredient recipe: QA chicken ingredients, Secondary Actions: Collapse
+						30 container Build an ingredient recipe
+							31 标题 Build an ingredient recipe, Value: 3
+								32 文本 Build an ingredient recipe
+							33 文本 Replace only item 2, “QA chicken ingredients”. The other meal items remain unchanged.
+							34 文本 Select each actual ingredient and its raw/cooked state, then enter grams. Include oil, sugar and sauces as separate rows. Do not substitute a similar food for an ingredient with no matching record.
+							35 container
+								36 文本 Recipe name for this meal
+								37 文本栏 (settable) Recipe name for this meal, Value: QA chicken ingredients
+								38 文本 What do these amounts describe?
+								39 弹出式按钮 What do these amounts describe?, Value: Whole-batch ingredients, then my eaten portion
+								40 文本 Enter all batch ingredients, finished cooked batch weight and cooked portion eaten. Nutrition scales by that fraction, assuming an even mixture. Discarded oil or broth is not deducted automatically.
+								41 container Ingredients and gram weights
+									42 text Ingredients and gram weights Search ingredient 1
+									43 搜索文本栏 (settable) Search ingredient 1
+									44 文本 Select ingredient 1 and state
+									45 弹出式按钮 Select ingredient 1 and state, Value: Raw skinless chicken breast · raw edible weight before cooking
+									46 文本 Ingredient 1 weight (g)
+									47 数字栏 (settable) Ingredient 1 weight (g), Value: 300
+										48 步进器 0
+											49 未知
+											50 未知
+									51 文本 Weight basis: raw edible weight before cooking
+									52 按钮 Remove ingredient 1
+									53 文本 Search ingredient 2
+									54 搜索文本栏 (settable) Search ingredient 2
+									55 文本 Select ingredient 2 and state
+									56 弹出式按钮 Select ingredient 2 and state, Value: Soybean cooking oil · net edible weight as sold
+									57 文本 Ingredient 2 weight (g)
+									58 数字栏 (settable) Ingredient 2 weight (g), Value: 10
+										59 步进器 0
+											60 未知
+											61 未知
+									62 文本 Weight basis: net edible weight as sold
+									63 按钮 Remove ingredient 2
+									64 文本 Search ingredient 3
+									65 搜索文本栏 (settable) Search ingredient 3
+									66 文本 Select ingredient 3 and state
+									67 弹出式按钮 Select ingredient 3 and state, Value: Regular soy sauce · net edible weight as sold
+									68 文本 Ingredient 3 weight (g)
+									69 数字栏 (settable) Ingredient 3 weight (g), Value: 20
+										70 步进器 0
+											71 未知
+											72 未知
+									73 文本 Weight basis: net edible weight as sold
+									74 按钮 Remove ingredient 3
+									75 按钮 Add ingredient
+								76 文本 Total finished cooked batch weight (g)
+								77 数字栏 (settable) Total finished cooked batch weight (g), Value: 600
+									78 步进器 0
+										79 未知
+										80 未知
+								81 文本 Cooked edible portion eaten (g)
+								82 数字栏 (settable) Cooked edible portion eaten (g), Value: 601
+									83 步进器 0
+										84 未知
+										85 未知
+								86 复选框 Value: 1, I reviewed the ingredients, their raw/cooked states and amounts, and confirm they completely describe this meal item.
+								87 文本  I reviewed the ingredients, their raw/cooked states and amounts, and confirm they completely describe this meal item.
+								88 按钮 Calculate from these ingredients
+								89 按钮 Cancel
+						90 text This meal includes a custom ingredient recipe. Use “Edit ingredient recipe” to change it, or start a new meal. You can still answer other pending questions individually. Basic · Ready for review
+						91 标题 Nutrition estimate, Value: 2
+							92 文本 Nutrition estimate
+						93 text Cooked white rice · 100g · User-defined ingredient recipe: QA chicken ingredients · Ingredient weight sum 165g (not finished cooked weight) 359.5 Energy · kcal 37.3 Protein · g 9.3 Fat · g 28.7 Carbohydrates · g
+						94 container (expanded) Secondary Actions: Collapse
+							95 摘要 Cooked white rice · 100g · 130 kcal, Value: on
+								96 文本 Cooked white rice · 100g · 130 kcal
+							97 文本 Quantity basis: 100g extracted from your description. Review the extracted amount, edible portion and raw/cooked state.
+							98 文本 Basic-mode reference estimate
+							99 文本 Calculated from the edible-portion data per 100g of Cooked white rice.
+							100 文本 Preparation: As described by the selected food; additional oil: 0g
+							101 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
+							102 container
+								103 文本 Sources: 
+								104 link USDA FoodData Central SR Legacy 2018 #168878 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/168878/nutrients
+						105 container (expanded) Secondary Actions: Collapse
+							106 摘要 Value: on, User-defined ingredient recipe: QA chicken ingredients · Ingredient weight sum 165g (not finished cooked weight) · 229.5 kcal
+								107 文本 User-defined ingredient recipe: QA chicken ingredients · Ingredient weight sum 165g (not finished cooked weight) · 229.5 kcal
+							108 文本 Quantity basis: user-entered ingredient grams actually consumed. No default portion was used.
+							109 文本 Raw skinless chicken breast: 150g · raw edible weight before cooking
+							110 文本 Soybean cooking oil: 5g · net edible weight as sold
+							111 文本 Regular soy sauce: 10g · net edible weight as sold
+							112 文本 Enter ingredient amounts actually consumed, using each selected record’s raw/cooked weight basis. Their sum is not the finished cooked dish weight.
+							113 文本 An ingredient recipe supplied and reviewed by the user, not a measured dish record in the database.
+							114 文本 Ingredient weights use the selected raw, cooked or net edible state. These states are not converted automatically.
+							115 文本 List oil, sugar and sauces separately. Unlisted ingredients and cooking losses are not estimated automatically.
+							116 container
+								117 文本 Sources: 
+								118 link USDA FoodData Central SR Legacy 2018 #171077 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171077/nutrients
+								119 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+								120 link USDA FoodData Central SR Legacy 2018 #174277 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174277/nutrients
+						121 文本 Review the eaten weight, preparation, oil and recipe. Use the conversation above to make corrections.
+						122 按钮 (disabled) Confirm and save
+						123 text Record 28493775-f12d-42c0-a62e-faad4cd4c894 · Revision 2 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				124 滚动条 (settable, float) 0.5597327

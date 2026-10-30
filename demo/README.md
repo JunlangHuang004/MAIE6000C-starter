@@ -1,14 +1,23 @@
 # NutriChat — self-guided TA demo
 
 This folder makes the **`nutrichat` branch** runnable and inspectable. The main
-product demo supports Chinese meal descriptions with **138 USDA ingredient records
-and 250 editable Chinese reference recipes**. Users open `/app` directly; this
+product demo supports Chinese meal descriptions with **200 USDA ingredient records
+and 350 editable Chinese reference recipes**. Users open `/app` directly; this
 branch's local application needs **no account registration or login**.
 
 Follow the Chinese workflow first when the server is configured for Qwen. A
 separate, optional offline check reproduces the engineering boundaries without a
 model key. Its six English fixture names are not the product's full food catalogue.
 All example meals are synthetic.
+
+Coverage is limited to those 200 ingredient records and 350 reference recipes.
+Foods or aliases absent from the catalogue are not estimated using similar dishes.
+A no-corresponding-record message means the user should check the food name or
+describe the actual supported ingredients and gram weights. No meal totals should
+appear while a food is unresolved, including in Basic mode. The application
+provides a structured **Build from actual ingredients** action:
+[follow the ingredient-recipe guide](../docs/ingredient-recipes.md). It preserves
+other meal items and distinguishes consumed ingredient amounts from a whole batch.
 
 [Follow the six-step screenshot guide](SCREENSHOT_GUIDE.md) to see the Chinese
 workflow from input to confirmed reload.
@@ -18,7 +27,7 @@ processing → saved estimate/questions → review/correction → confirmation a
 reload. A recording or in-person presentation is not needed to follow these
 instructions.
 
-## 1. Get the correct branch
+## 1. Get the submitted version
 
 Requirements for setting up a fresh machine: Git, Docker running, Docker Compose
 **2.24.4+** (the overlays use `!override`), and host Python **3.10+** for the offline
@@ -26,14 +35,17 @@ launcher/check. The initial build needs internet access for images and Python
 packages. Application dependencies run in Docker; no host `pip install` is needed.
 
 ```sh
-git clone --branch nutrichat --single-branch https://github.com/JunlangHuang004/MAIE6000C-starter.git nutrichat-ta-demo
+git clone --branch w07-midterm --single-branch https://github.com/JunlangHuang004/MAIE6000C-starter.git nutrichat-ta-demo
 cd nutrichat-ta-demo
-git branch --show-current
 git rev-parse HEAD
+git rev-parse 'w07-midterm^{commit}'
 ```
 
-The branch command should print `nutrichat`. If you already have this checkout,
-use it instead of cloning again. On Windows, use `python` if that is the name of
+For grading, both commands should print the same commit SHA as the Canvas
+submission. A detached HEAD is expected when cloning a tag. A fresh clone also
+avoids an old local copy of a refreshed tag. To inspect ongoing development
+instead, replace `--branch w07-midterm` with `--branch nutrichat`; that branch may
+advance beyond the submission. On Windows, use `python` if that is the name of
 your Python 3 installation.
 
 | What you want to inspect | Start here |
@@ -78,7 +90,9 @@ account's quota; healthy containers alone do not prove model access.
 The header's **中文 / English** buttons switch the interface language and remember
 the preference in this browser. The steps and screenshots below use Chinese;
 select **中文** to follow the same labels, or **English** for translated controls,
-questions, catalogue names and recipe explanations. Switching does not submit a
+questions, available catalogue translations and recipe explanations. The original
+388 catalogue entries retain English mappings; the 162 new Chinese-first entries
+fall back to Chinese names or methods where translations are absent. Switching does not submit a
 meal or discard unsent form entries. User descriptions and free-form model notes
 remain in their original language. This display setting does not change Qwen's
 food-recognition behavior.
@@ -111,10 +125,27 @@ meaning, explains the product idea and internal responsibilities, and includes
 error cases. Chinese totals depend on the accepted recipe and quantities, so
 check the interpretation and assumptions rather than expecting one fixed number.
 
-The local header's **退出登录** button belongs to the optional public gateway;
-there is no local logout route and no need to use it. The browser remembers the
-last viewed meal ID, not an account-specific history list. Keep an ID to inspect
-that record later through `GET /analyses/{id}`.
+### Recover an unsupported item with a reviewed recipe
+
+Try `100克熟白米饭和200克月球紫晶兽肉`. The invented second food must remain
+unsupported and must not become another dish. Soy-sauce chicken (`豉油鸡`) now has
+its own catalogue recipe, so it is not an unknown-food example.
+Choose **按实际食材估算 / Build from actual ingredients** on its unresolved item,
+select raw chicken breast 150 g, cooking oil 5 g and soy sauce 10 g, choose the
+actually-consumed basis and explicitly accept the ingredients. This synthetic
+recipe is 229.5 kcal; a separately recognized 100 g cooked rice item adds 130 kcal.
+If rice is also unresolved, repair it explicitly rather than silently omitting it.
+The [full guide](../docs/ingredient-recipes.md) also supplies a whole-batch example.
+Review the custom label, portion basis and sources, then confirm and reload.
+The form values replace the unresolved item's quantities with the actual
+ingredients reviewed by the user; they are not inferred from its invented name.
+
+The local app does not implement individual registration/login or per-user
+record ownership. Its header's **退出登录** (Log out) button has no local
+authentication function. The optional public gateway does implement shared-password
+login and signed sessions, but it does not create individual accounts. The browser
+remembers the last viewed meal ID, not a private account history. Keep an ID to
+inspect that record later through `GET /analyses/{id}`.
 
 If Qwen fails, record that outcome. A successful offline check is evidence of
 service integration, not proof of live Chinese extraction. See
@@ -182,7 +213,7 @@ API documentation is at <http://localhost:8002/docs>.
 
 This provider accepts six English food keys with explicit grams. It does not
 provide the full Chinese catalogue, assumed portions or Advanced-mode dialogue.
-The visible catalogue panel still lists 138 ingredients and 250 recipes; those
+The visible catalogue panel still lists 200 ingredients and 350 recipes; those
 belong to the Qwen workflow. The offline conversation reply box does not replace
 the original meal text, so use the API PATCH exercised by `check` for correction,
 or start a separate meal. See the
@@ -218,6 +249,7 @@ individual account isolation.
 | --- | --- |
 | `docker` unavailable / daemon connection fails | Install/start Docker and check `docker info` before startup |
 | YAML `!override` error | Update Docker Compose to 2.24.4 or later |
+| No corresponding food record | The finite catalogue cannot provide a verified match. Check its names/aliases or describe the actual supported ingredients and weights; do not substitute a similar dish |
 | Chinese request fails | Check Qwen credentials, matching region/workspace, quota and AI/worker logs; do not replace the failure with a fixture result |
 | Page asks for local account registration | Check you opened this `nutrichat` demo directly on port 8003 for Qwen or port 8002 for the offline check |
 | Port 8003 or 8002 is occupied | Set `NUTRICHAT_QWEN_DEMO_PORT` or `NUTRICHAT_DEMO_PORT` respectively to an unused port; retain the setting for subsequent commands and use the chosen browser port |

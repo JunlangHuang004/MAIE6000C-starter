@@ -1,7 +1,8 @@
 # Chinese food catalogue and clarification dialogue
 
-Version 2026-10-19.1 contains 138 ingredient records and 250 editable Chinese recipe
-reference templates. No model training is required. Qwen extracts explicit facts
+Version **2026-10-31.1** contains **200 ingredient records and 350 editable Chinese
+recipe reference templates**, 550 records in total. No model training is required.
+Qwen extracts explicit facts
 and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
 facts; basic mode uses visible reference assumptions where supported. Unresolved
 questions create `needs_input`, not a failed job or a partial calorie total.
@@ -21,14 +22,15 @@ Chinese labels and aliases are project-maintained mappings and may be refined.
 - Reproduce: `python scripts/import_usda.py /path/to/official-sr-legacy.zip`
 - Runtime snapshot: `services/common/data/catalogue.json` (included in Python package)
 
-The 250 recipe templates in `recipes.json` are **project-authored illustrative
+The 350 recipe templates in `recipes.json` are **project-authored illustrative
 formulations**, not measurements, authentic standardized recipes, or imports of
 HowToCook/Figshare. Some use simplified ingredients, clearly described by `method`.
 Their nutrient numbers are computed from USDA ingredients; every assumed ingredient
 amount and finished batch weight must be explicitly reviewed/accepted in advanced
 mode. Basic mode uses these reference values as labelled, unconfirmed assumptions.
-The user can change every amount, set omitted ingredients to zero, or describe
-additional ingredients in conversation. Recipe weights refer to the whole batch;
+The user can change every existing ingredient amount or set omitted ingredients
+to zero. A custom ingredient recipe provides explicit selection and quantities
+when the reference dish does not describe the meal. Recipe weights refer to the whole batch;
 the meal weight refers to the cooked edible portion consumed.
 
 Recipe total = sum(ingredient grams × nutrient per 100g / 100).
@@ -45,20 +47,63 @@ Figshare Chinese dish datasets remain research candidates: their serving/whole-
 recipe bases and source ingredient details need further normalization before import.
 Open Food Facts has not been mixed into this CC0 ingredient snapshot.
 
+The latest expansion adds 62 ingredient records and 100 recipes while preserving
+the original 138 ingredient records and 250 recipes. The
+[ingredient source map](evidence/ingredient-expansion-source-map.json) records the
+new USDA selections; the [recipe expansion manifest](evidence/recipe-expansion-manifest.json)
+records the new templates. Codex assisted with drafting mappings, illustrative
+recipes and validation code. Ingredient nutrients come from the identified USDA
+records; generated recipe quantities, yields, names and methods remain project
+assumptions requiring user review. Independent team review and rehearsal remain
+pending. See the [expansion verification](evidence/chinese-expansion-verification.md)
+for checks and unresolved limits rather than treating a larger catalogue as
+measured nutrition or validated model recognition.
+
 ## Dish coverage policy
+
+Coverage is finite: **200 ingredient records and 350 reference recipes**. The
+catalogue does not include every common Chinese dish, regional name, restaurant
+recipe or branded ingredient. Soy-sauce chicken (`豉油鸡` / `酱油鸡`) is now
+recorded as `dish_251`; it must resolve to its own reviewed reference recipe,
+never steamed carp. Synthetic unknown names such as `月球紫晶兽肉` remain
+unsupported rather than being mapped to a familiar dish.
+
+Reviewed matching names are stored in `services/common/data/matching_aliases.json`,
+separately from nutrient data. They include the original 388 English display
+names and narrowly reviewed additional aliases. The new entries prioritize
+Chinese coverage; absent English display translations fall back to Chinese.
+Matching aliases do not train model weights or change ingredient nutrient values.
+
+Food identity must be grounded in the user's complete food mention and an exact
+normalized recorded name or reviewed alias. A model-selected ID being present
+in the catalogue is insufficient. Short ingredient substrings inside a dish name
+must not authorize a match; for example, the soy sauce inside a soy-sauce-chicken
+name does not identify the whole meal as soy sauce. Unknown names, unsupported
+foods and unverified matches are retained and reported with no meal totals in
+both modes. Users can correct the name or explicitly select supported actual
+ingredients and their weights in the ingredient builder. Unlisted synonyms or spelling variants may need
+rephrasing; this restriction does not establish perfect extraction accuracy.
+
+For a replacement ingredient list, explicitly identify whether the quantities
+describe the consumed ingredients or a whole batch. A whole-pot list for an
+unsupported dish must not silently become personal intake. The structured
+[ingredient recipe form](ingredient-recipes.md) is the reference recovery path:
+explicitly select ingredient records, review grams and specify
+consumed amounts or whole-batch yield plus consumed cooked weight. It saves a
+user-defined recipe in the meal without adding a catalogue dish. A reusable
+personal recipe library is not provided. Existing supported recipe templates also
+scale whole-batch nutrition by consumed cooked weight.
+Live language extraction can still fail; see [QA memory](qa/MEMORY.md).
 
 Maintain one home-style reference formulation per dish. Alternative names share
 one ID, rather than adding regional editions of the same dish. Distinct preparations
 such as steamed versus braised fish can remain separate dishes. This is a curated
 coverage list, not a measured ranking of the most popular Chinese dishes. See the
-[dish index](recipe-catalogue.md) for all 250 names and their reference methods.
+[dish index](recipe-catalogue.md) for all 350 names and their reference methods.
 
-The expansion adds 200 recipes and 22 USDA ingredients. New records include whole
-beef cuts, boneless edible pork rib meat, skin-on edible chicken, dry glass noodles,
-oyster sauce and selected vegetables. The original 116 ingredient records are
-unchanged. The existing potato/beef stew and radish/beef soup now use whole beef
-instead of the ground-beef record. Existing dish IDs remain stable; historical saved
-totals and evidence are not recalculated by a catalogue update.
+Existing ingredient and dish IDs remain stable; historical saved totals and
+evidence are not recalculated by a catalogue update. Earlier expansion decisions
+are recorded separately in the [change log](change-log.md).
 
 Weights for ribs, fish, shellfish and bone-in chicken dishes refer to edible flesh,
 excluding bones, shells and other discarded parts. If the user explicitly supplies
@@ -87,11 +132,16 @@ servings where defined. For example, a reference dumpling is 20g, whereas a serv
 is 200g. Explicit user grams always take precedence. These weights remain assumptions
 on the calculation copy; switching to advanced still asks for actual weights.
 
-Qwen receives the supported catalogue and maps aliases to existing IDs. A regional
-adjective alone does not create a new recipe. Explicit differences in preparation,
-ingredients or quantities must remain available for clarification and editing. The
-catalogue is still sent in full; candidate retrieval and production latency tuning
-are not part of this data expansion.
+Qwen receives a bounded shortlist of catalogue candidates and proposes existing
+IDs. Retrieval uses recorded name/alias spans in user input, with up to 60 primary
+records and recipe ingredient context up to a total of 120 records. The matching
+follow-up validates each identity against its original user food mention and
+recorded names/reviewed aliases before calculation; it does not use similarity
+or a nearest-food fallback. A recognized alias shares the recorded recipe ID.
+Explicit differences in preparation, ingredients or quantities must remain
+available for clarification and editing. A shortlist candidate is not permission
+to substitute that food for an unsupported complete dish name. Retrieval bounds
+prompt size; it does not establish perfect extraction or a measured latency target.
 
 Explicit changes such as no peanuts or 5g oil for the whole batch must populate
 `recipe_ingredients`, not only an uncertainty message. Batch oil is distinct from
@@ -109,7 +159,9 @@ error; it is not a complete proof that every model-extracted quantity is correct
 
 - POST `/analyses`: enqueue description. Demo mode retains the original strict parser;
   set `NUTRITION_PROVIDER=qwen` for the Chinese dialogue workflow.
-- Worker calls internal AI service; extracted IDs are validated against the catalogue.
+- Worker calls the internal AI service. Food identity must be grounded in a
+  supported name/alias as well as a valid catalogue ID; unsupported food returns
+  an explicit no-record message rather than a substitute estimate.
 - `needs_input` persists `draft`, `questions`, `conversation`; all totals are null.
 - POST `/analyses/{id}/reply`: `{revision, answers}` for server-issued slots OR
   `{revision, message}` for natural language. Structured answers are validated and

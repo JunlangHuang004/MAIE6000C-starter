@@ -1,0 +1,52 @@
+{
+  "cap": 5,
+  "actions": [
+    {
+      "n": 1,
+      "type": "natural-language correction",
+      "mode": "basic",
+      "input": "改成这次实际吃下的食材：生鸡胸肉150克、食用油5克、酱油10克",
+      "starting_record": "Reviewer-created English-rice rejected record from baseline B12",
+      "outcome": "Failed: ingredient list remains one unsupported food; no totals"
+    },
+    {
+      "n": 2,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "一份番茄炒蛋，两个水煮鸡蛋",
+      "record_id": "06d099fc-2891-47aa-970a-8cf204609939",
+      "outcome": "Passed: dish200g + eggs100g; 365.2 kcal, labelled defaults"
+    },
+    {
+      "n": 3,
+      "type": "natural-language correction",
+      "mode": "basic",
+      "input": "番茄炒蛋实际吃了150克熟重，水煮鸡蛋可食部分还是100克。",
+      "record_id": "06d099fc-2891-47aa-970a-8cf204609939",
+      "outcome": "Passed: dish150g + eggs100g; 312.7 kcal,20.6g protein,21.8g fat,7.8g carbs; confirmed revision3 and reload identical; edit/mode controls absent"
+    },
+    {
+      "n": 4,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "200 g cooked white rice, no added oil",
+      "outcome": "Failed: entire English rice input reported unsupported; no totals"
+    },
+    {
+      "n": 5,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "100克熟白米饭",
+      "outcome": "Failed: entire weighted Chinese rice mention reported unsupported; no totals"
+    }
+  ],
+  "model_retries": 0,
+  "mode_switches": 0,
+  "structured_answers": 0,
+  "confirmations": 1,
+  "confirmed_reloads": 1,
+  "runtime_commit": "a9843debc3bd25244145d8fdcb0f78b696307e5d",
+  "total_actions": 5,
+  "passes": 2,
+  "failures": 3
+}

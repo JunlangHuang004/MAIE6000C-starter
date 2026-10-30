@@ -1,0 +1,93 @@
+Window: "NutriChat · 中餐营养估算", App: Safari浏览器.
+0 标准窗口 NutriChat · 中餐营养估算, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · 中餐营养估算, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container 界面语言
+							8 开关按钮 中文, Value: on
+							9 开关按钮 English, Value: off
+						10 按钮 退出登录
+						11 标题 说说这餐吃了什么, Value: 1
+							12 文本 说说这餐吃了什么
+						13 text 基础版快速了解大概热量；进阶版补充份量、做法和配方，细化营养估算。 选择估算模式
+						14 弹出式按钮 (disabled) 选择估算模式, Value: 基础版 · 快速大概估算
+						15 文本 按已有信息估算；缺少份量和配方时使用明确标注的参考值。
+						16 按钮 切换到进阶版补充细节
+						17 文本 餐食描述
+						18 文本输入区 (disabled, settable) 餐食描述, Value: [文本输入区], Placeholder: 例如：番茄炒蛋200克，少油，配150克熟米饭。
+							19 文本 150克豉油鸡，85克可乐鸡翅，125克蒜蓉空心菜。
+						20 按钮 新的一餐
+						21 文本 200种食材 · 350道参考菜谱
+						22 摘要 查看支持的食材和菜谱, Value: off
+							23 文本 查看支持的食材和菜谱
+						24 文本 估算已保存，请核对后确认。
+						25 标题 餐食记录与补充, Value: 2
+							26 文本 餐食记录与补充
+						27 摘要 查看本餐对话记录, Value: off
+							28 文本 查看本餐对话记录
+						29 文本 继续对话／补充或更正
+						30 文本输入区 (settable) 继续对话／补充或更正, Value: [文本输入区], Placeholder: 例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。
+							31 文本 例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。
+						32 按钮 发送补充说明
+						33 文本 基础版 · 待核对确认
+						34 标题 本餐营养估算, Value: 2
+							35 文本 本餐营养估算
+						36 text 豉油鸡 · 150g · 可乐鸡翅 · 85g · 蒜蓉空心菜 · 125g 629.9 热量 · kcal 48.1 蛋白质 · g 41.1 脂肪 · g 17.4 碳水 · g
+						37 container (expanded) Secondary Actions: Collapse
+							38 摘要 豉油鸡 · 150g · 351.6 kcal, Value: on
+								39 文本 豉油鸡 · 150g · 351.6 kcal
+							40 文本 份量依据：从餐食描述提取的克数为 150g；请核对提取结果、可食部分及生熟状态。
+							41 文本 基础版快速参考估算
+							42 文本 基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。
+							43 文本 参考做法：带皮鸡肉用酱油、糖、姜葱焖熟；配料按留在食用成品中的量估算，重量不含骨头及弃掉的卤汁
+							44 文本 整锅成品 650g；本次食用 150g
+							45 文本 整锅配料：生带皮鸡肉可食部分（不含骨） 650g、普通酱油 50g、白砂糖 20g、生姜 20g、生葱 20g、饮用水 120g
+							46 文本 基础版参考配方，未经逐项确认；不是实测菜肴营养。
+							47 container
+								48 文本 数据来源：
+								49 link USDA FoodData Central SR Legacy 2018 #171447 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171447/nutrients
+								50 link USDA FoodData Central SR Legacy 2018 #174277 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174277/nutrients
+								51 link USDA FoodData Central SR Legacy 2018 #169655 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169655/nutrients
+								52 link USDA FoodData Central SR Legacy 2018 #169231 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169231/nutrients
+								53 link USDA FoodData Central SR Legacy 2018 #170005 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/170005/nutrients
+								54 link USDA FoodData Central SR Legacy 2018 #173647 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173647/nutrients
+						55 container (expanded) Secondary Actions: Collapse
+							56 摘要 可乐鸡翅 · 85g · 185.5 kcal, Value: on
+								57 文本 可乐鸡翅 · 85g · 185.5 kcal
+							58 文本 份量依据：从餐食描述提取的克数为 85g；请核对提取结果、可食部分及生熟状态。
+							59 文本 基础版快速参考估算
+							60 文本 基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。
+							61 文本 参考做法：鸡翅可食肉加普通含糖可乐焖煮收汁；油按成品摄入量估算，不含骨头
+							62 文本 整锅成品 520g；本次食用 85g
+							63 文本 整锅配料：生带皮鸡翅可食部分 500g、含糖可乐 200g、普通酱油 25g、生姜 15g、大豆食用油 8g
+							64 文本 基础版参考配方，未经逐项确认；不是实测菜肴营养。
+							65 container
+								66 文本 数据来源：
+								67 link USDA FoodData Central SR Legacy 2018 #172390 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/172390/nutrients
+								68 link USDA FoodData Central SR Legacy 2018 #174852 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174852/nutrients
+								69 link USDA FoodData Central SR Legacy 2018 #174277 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174277/nutrients
+								70 link USDA FoodData Central SR Legacy 2018 #169231 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169231/nutrients
+								71 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+						72 container (expanded) Secondary Actions: Collapse
+							73 摘要 蒜蓉空心菜 · 125g · 92.7 kcal, Value: on
+								74 文本 蒜蓉空心菜 · 125g · 92.7 kcal
+							75 文本 份量依据：从餐食描述提取的克数为 125g；请核对提取结果、可食部分及生熟状态。
+							76 文本 基础版快速参考估算
+							77 文本 基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。
+							78 文本 参考做法：空心菜摘去不可食老梗后与蒜蓉炒熟；所列为可食生重
+							79 文本 整锅成品 370g；本次食用 125g
+							80 文本 整锅配料：生空心菜 450g、生大蒜 20g、大豆食用油 18g、食盐 3g
+							81 文本 基础版参考配方，未经逐项确认；不是实测菜肴营养。
+							82 container
+								83 文本 数据来源：
+								84 link USDA FoodData Central SR Legacy 2018 #169301 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169301/nutrients
+								85 link USDA FoodData Central SR Legacy 2018 #169230 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169230/nutrients
+								86 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+								87 link USDA FoodData Central SR Legacy 2018 #173468 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173468/nutrients
+						88 文本 请核对食用重量、做法、用油及配方。需要修改时，在上方继续对话。
+						89 按钮 确认并保存
+						90 text 记录 8a3fc38a-502e-422c-9fa4-b15d07c1dc1a · 第 1 版 参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。
+				91 滚动条 (settable, float) 0

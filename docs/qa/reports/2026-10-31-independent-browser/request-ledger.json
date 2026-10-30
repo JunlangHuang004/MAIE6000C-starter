@@ -1,0 +1,99 @@
+{
+  "cap": 12,
+  "counting": "Conservative initial estimates + mode changes + natural-language corrections. Structured answers recorded separately; no model retries.",
+  "structured_answer_submissions": 1,
+  "actions": [
+    {
+      "n": 1,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "豉油鸡，200克熟重",
+      "outcome": "explicit no corresponding record; no totals"
+    },
+    {
+      "n": 2,
+      "type": "mode switch",
+      "mode": "advanced",
+      "input": "same synthetic soy-sauce-chicken record",
+      "outcome": "explicit no corresponding record; no totals"
+    },
+    {
+      "n": 3,
+      "type": "initial estimate",
+      "mode": "advanced",
+      "input": "酱油鸡，200克熟重",
+      "outcome": "explicit no corresponding record; no totals"
+    },
+    {
+      "n": 4,
+      "type": "mode switch",
+      "mode": "basic",
+      "input": "same synthetic alias record",
+      "outcome": "explicit no corresponding record; no totals"
+    },
+    {
+      "n": 5,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "100克熟白米饭，200克豉油鸡",
+      "outcome": "no totals; both mentions falsely/reasonably flagged unsupported, including known rice"
+    },
+    {
+      "n": 6,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "一份番茄炒蛋，两个水煮鸡蛋",
+      "outcome": "correct foods; visible defaults; 365.2 kcal",
+      "record_id": "3aed4959-68ad-4c86-8d57-c1ddaaedc5a2"
+    },
+    {
+      "n": 7,
+      "type": "mode switch",
+      "mode": "advanced",
+      "input": "same Chinese recipe/eggs record",
+      "outcome": "required clarification; no totals; structured answer submission then 343.1 kcal with batch oil 10g"
+    },
+    {
+      "n": 8,
+      "type": "natural-language correction",
+      "mode": "advanced",
+      "input": "番茄炒蛋实际吃了150克熟重，水煮鸡蛋可食部分还是100克。",
+      "outcome": "failed: correction suffixes interpreted as unsupported foods; no totals"
+    },
+    {
+      "n": 9,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "Garlic stir-fried Chinese broccoli (gai lan), 200 g",
+      "outcome": "Explicit no-record rejection; no broccoli substitution or totals; recognition unavailable"
+    },
+    {
+      "n": 10,
+      "type": "natural-language correction",
+      "mode": "basic",
+      "input": "改成这次实际吃下的食材：生鸡胸肉150克、食用油5克、酱油10克",
+      "outcome": "Failed recovery: entire ingredient-list phrase treated as one unsupported food; no totals"
+    },
+    {
+      "n": 11,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "0克熟白米饭",
+      "outcome": "Failed usability: generic service-unavailable message, no totals; no input-specific weight validation"
+    },
+    {
+      "n": 12,
+      "type": "initial estimate",
+      "mode": "basic",
+      "input": "200 g cooked white rice, no added oil",
+      "outcome": "False unsupported classification of entire input; no totals; same input, English locale and unsupported state persisted on browser reload"
+    }
+  ],
+  "total_counted_actions": 12,
+  "initial_estimates": 7,
+  "mode_switches_counted_conservatively": 3,
+  "natural_language_corrections": 2,
+  "automatic_or_manual_model_retries": 0,
+  "confirmed_records": 0,
+  "browser_reloads": 1
+}

@@ -1,0 +1,65 @@
+Window: "NutriChat · 中餐营养估算", App: Safari浏览器.
+0 标准窗口 NutriChat · 中餐营养估算, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · 中餐营养估算, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container 界面语言
+							8 开关按钮 中文, Value: on
+							9 开关按钮 English, Value: off
+						10 按钮 退出登录
+						11 标题 说说这餐吃了什么, Value: 1
+							12 文本 说说这餐吃了什么
+						13 text 基础版快速了解大概热量；进阶版补充份量、做法和配方，细化营养估算。 选择估算模式
+						14 弹出式按钮 (disabled) 选择估算模式, Value: 基础版 · 快速大概估算
+						15 文本 按已有信息估算；缺少份量和配方时使用明确标注的参考值。
+						16 按钮 切换到进阶版补充细节
+						17 文本 餐食描述
+						18 文本输入区 (disabled, settable) 餐食描述, Value: [文本输入区], Placeholder: 例如：番茄炒蛋200克，少油，配150克熟米饭。
+							19 文本 100克熟白米饭，200克月球紫晶兽肉。
+						20 按钮 新的一餐
+						21 文本 200种食材 · 350道参考菜谱
+						22 摘要 查看支持的食材和菜谱, Value: off
+							23 文本 查看支持的食材和菜谱
+						24 标题 餐食记录与补充, Value: 2
+							25 文本 餐食记录与补充
+						26 摘要 查看本餐对话记录, Value: off
+							27 文本 查看本餐对话记录
+						28 按钮 (collapsed) 编辑食材配方：自定义鸡肉配方, Secondary Actions: Expand
+						29 text 本餐含自定义食材配方。请使用“编辑食材配方”更改用量，或开始新的一餐；其他待回答的问题仍可逐项填写。 基础版 · 待核对确认
+						30 标题 本餐营养估算, Value: 2
+							31 文本 本餐营养估算
+						32 text 白米饭 · 100g · 自定义食材配方：自定义鸡肉配方 · 本次熟制食用量 150g 244.8 热量 · kcal 20 蛋白质 · g 4.8 脂肪 · g 28.4 碳水 · g
+						33 container (expanded) Secondary Actions: Collapse
+							34 摘要 白米饭 · 100g · 130 kcal, Value: on
+								35 文本 白米饭 · 100g · 130 kcal
+							36 文本 份量依据：从餐食描述提取的克数为 100g；请核对提取结果、可食部分及生熟状态。
+							37 文本 基础版快速参考估算
+							38 文本 按 白米饭 的每100g可食部分数据计算
+							39 文本 做法：按所选食物的加工状态；另计食用油 0g
+							40 文本 烹调失水不自动换算；额外糖、酱料需作为食材补充。
+							41 container
+								42 文本 数据来源：
+								43 link USDA FoodData Central SR Legacy 2018 #168878 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/168878/nutrients
+						44 container (expanded) Secondary Actions: Collapse
+							45 摘要 自定义食材配方：自定义鸡肉配方 · 本次熟制食用量 150g · 114.8 kcal, Value: on
+								46 文本 自定义食材配方：自定义鸡肉配方 · 本次熟制食用量 150g · 114.8 kcal
+							47 文本 用户填写：整锅成品 600g，本次吃下 150g；按 25% 分摊营养。
+							48 文本 生去皮鸡胸肉：300g · 烹调前生可食重量
+							49 文本 大豆食用油：10g · 可食部分净重
+							50 文本 普通酱油：20g · 可食部分净重
+							51 文本 填写整锅全部配料、做熟后的成品总重，以及本次吃下的熟重。按食用比例分摊，假设食材在整锅中分布均匀；不自动扣除弃掉的油或汤汁。
+							52 文本 用户填写并确认的食材配方；不是数据库中的实测菜肴记录。
+							53 文本 食材按所选记录的生重、熟重或可食净重计算，不自动互换。
+							54 文本 油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。
+							55 container
+								56 文本 数据来源：
+								57 link USDA FoodData Central SR Legacy 2018 #171077 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171077/nutrients
+								58 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+								59 link USDA FoodData Central SR Legacy 2018 #174277 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174277/nutrients
+						60 文本 请核对食用重量、做法、用油及配方。需要修改时，在上方继续对话。
+						61 按钮 确认并保存
+						62 text 记录 9bd7cba2-886b-46f1-a014-a7e3876e14c7 · 第 2 版 参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。
+				63 滚动条 (settable, float) 0

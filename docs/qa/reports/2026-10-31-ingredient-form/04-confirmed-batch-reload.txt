@@ -1,0 +1,60 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Basic · Quick estimate
+						15 text Estimate from the information available. Missing portions and recipes use clearly labelled reference values. Meal description
+						16 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							17 文本 100克米饭和200克豉油鸡
+						18 按钮 New meal
+						19 文本 138 ingredients · 250 reference recipes
+						20 摘要 Browse supported foods and recipes, Value: off
+							21 文本 Browse supported foods and recipes
+						22 标题 Meal record and corrections, Value: 2
+							23 文本 Meal record and corrections
+						24 摘要 View this meal’s conversation, Value: off
+							25 文本 View this meal’s conversation
+						26 文本 Basic · Confirmed and saved
+						27 标题 Nutrition estimate, Value: 2
+							28 文本 Nutrition estimate
+						29 text Cooked white rice · 100g · User-defined ingredient recipe: QA chicken ingredients · Cooked portion eaten: 150g 244.8 Energy · kcal 20 Protein · g 4.8 Fat · g 28.4 Carbohydrates · g
+						30 container (expanded) Secondary Actions: Collapse
+							31 摘要 Cooked white rice · 100g · 130 kcal, Value: on
+								32 文本 Cooked white rice · 100g · 130 kcal
+							33 文本 Quantity basis: 100g extracted from your description. Review the extracted amount, edible portion and raw/cooked state.
+							34 文本 Basic-mode reference estimate
+							35 文本 Calculated from the edible-portion data per 100g of Cooked white rice.
+							36 文本 Preparation: As described by the selected food; additional oil: 0g
+							37 文本 Cooking losses are not converted automatically. Add extra sugar and sauces as separate ingredients.
+							38 container
+								39 文本 Sources: 
+								40 link USDA FoodData Central SR Legacy 2018 #168878 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/168878/nutrients
+						41 container (expanded) Secondary Actions: Collapse
+							42 摘要 User-defined ingredient recipe: QA chicken ingredients · Cooked portion eaten: 150g · 114.8 kcal, Value: on
+								43 文本 User-defined ingredient recipe: QA chicken ingredients · Cooked portion eaten: 150g · 114.8 kcal
+							44 文本 User supplied: finished batch 600g, portion eaten 150g; allocating 25% of batch nutrition.
+							45 文本 Raw skinless chicken breast: 300g · raw edible weight before cooking
+							46 文本 Soybean cooking oil: 10g · net edible weight as sold
+							47 文本 Regular soy sauce: 20g · net edible weight as sold
+							48 文本 Enter all batch ingredients, finished cooked batch weight and cooked portion eaten. Nutrition scales by that fraction, assuming an even mixture. Discarded oil or broth is not deducted automatically.
+							49 文本 An ingredient recipe supplied and reviewed by the user, not a measured dish record in the database.
+							50 文本 Ingredient weights use the selected raw, cooked or net edible state. These states are not converted automatically.
+							51 文本 List oil, sugar and sauces separately. Unlisted ingredients and cooking losses are not estimated automatically.
+							52 container
+								53 文本 Sources: 
+								54 link USDA FoodData Central SR Legacy 2018 #171077 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171077/nutrients
+								55 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+								56 link USDA FoodData Central SR Legacy 2018 #174277 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/174277/nutrients
+						57 text This estimate is confirmed and saved. Start a new meal to make further changes. Record 28493775-f12d-42c0-a62e-faad4cd4c894 · Revision 4 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				58 滚动条 (settable, float) 0.5787739

@@ -1,5 +1,101 @@
 # NutriChat change log
 
+## 2026-10-31 — Edible-state annotation matching follow-up
+
+- Retain browser case NC-QA-008 as an observed failure on `71a0ecd`: the known dish
+  `可乐鸡翅75克熟重（已去骨）` was incorrectly reported as unsupported.
+- Commit `dae0b946e286736020becf018c49b4e81eb46ec6` narrowly extends the food-name
+  boundary check for reviewed adjacent `已去骨` / `已去壳` annotations. It changes
+  only `food_matching.py` and ten regression tests; UI assets and catalogue data
+  remain the same. Unknown dishes must still be rejected without substitution.
+- Pass the full **664 Python tests** and Ruff. The unchanged frontend suite
+  previously passed all **26 DOM tests** on the initial expanded source.
+- The exact NC-QA-008 input passed a separate live retest on `dae0b94`: all three
+  intended dishes and 200 / 75 / 150 g quantities were retained. The original
+  failure remains in the evidence; this is one sampled phrase. Consult the
+  [expanded-runtime QA report](qa/reports/2026-10-31-expanded-demo.md) and
+  [expansion verification](evidence/chinese-expansion-verification.md) for the
+  later runtime fingerprint and actual retest outcome. The initial `71a0ecd`
+  runtime, screenshots and offline evidence retain their original attribution.
+
+## 2026-10-31 — Chinese catalogue expansion and milestone refresh
+
+- Expand the catalogue to 200 USDA ingredients and 350 project-authored reference
+  recipes (550 records), version `2026-10-31.1`. Preserve the original 138
+  ingredients and 250 recipes, IDs and saved historical meal results.
+- Add Chinese names and aliases first. Retain the original 388 English display
+  mappings; new records use Chinese fallback where translations are absent.
+- Add soy-sauce chicken as `dish_251`. Keep genuinely unsupported inputs unresolved
+  with no substitute estimate; use synthetic unknown names in negative checks.
+- Bound Qwen prompt context to at most 60 primary catalogue candidates plus recipe
+  ingredients, at most 120 records overall. Retrieval does not replace the exact
+  user-mention identity guard or introduce a nearest-food fallback.
+- Keep USDA nutrient provenance separate from Codex-assisted recipe formulations
+  and reference portions. Record source selections and new recipe assumptions in
+  the expansion manifests; independent team review remains pending.
+- Initially pass 654 Python tests, 26 frontend DOM tests and Ruff on product source
+  `71a0ecd56f2de09460ce899b1b183f723ab45b0e`. The rebuilt API, AI and worker share
+  that source fingerprint. See [expansion verification](evidence/chinese-expansion-verification.md)
+  for runtime outcomes and remaining limits; automated checks do not prove every
+  live language interpretation or real-meal nutrient estimate.
+- Refresh current architecture, operations, data notes and TA instructions; add
+  an exact-tag grading checkout and retain older evidence with its source version.
+  The required submission tag is `w07-midterm`; resolve its commit after the final
+  documentation/evidence update rather than copying a previous checkpoint SHA.
+  Git updates do not deploy ECS or submit Canvas.
+
+## 2026-10-31 — Explicit ingredients and portion provenance
+
+- Apply the reviewed OpenNutriTracker design principles to the existing service
+  architecture: user-selected food records, validated quantities and deterministic
+  arithmetic. No third-party source code was copied.
+- Add a bilingual ingredient builder for one unsupported item, preserving the
+  remaining meal. Require explicit ingredient selection, positive grams, matching
+  raw/cooked states and user acceptance; reject duplicate or unknown records.
+- Support consumed ingredient quantities or full-batch quantities with finished
+  yield and consumed cooked weight. Label the result as a user-defined ingredient
+  recipe; never claim the unsupported dish was found in the catalogue.
+- Save through the normal API/job/worker path without another Qwen call. Preserve
+  facts through mode changes, edit/review and confirmed reload. Use the structured
+  editor for custom-recipe corrections to prevent free text discarding ingredients.
+- Display quantity provenance for explicit grams, portion conversions, default
+  portions and the Basic edible-weight assumption. Preserve unsent ingredient
+  entries while switching interface language.
+- Retain earlier live failures and checkpoint tags. See the
+  [ingredient guide](ingredient-recipes.md) and [QA memory](qa/MEMORY.md) for scope
+  and dated acceptance; a custom recipe library is not included.
+- Pass 545 Python tests, 26 frontend DOM tests and Ruff. Verify the real
+  HTTP/worker/PostgreSQL quarter-batch calculation, confirmation, reload and edit
+  lock; keep browser acceptance separate in
+  [ingredient verification](evidence/ingredient-recipe-verification.md).
+
+## 2026-10-31 — Unsupported-food matching and explicit limitations
+
+- Record finite coverage: 138 ingredient records and 250 reference recipes do not
+  cover every dish, synonym, brand or cooking variant.
+- Fix user-reported soy-sauce chicken mapped to steamed carp: resolve the original
+  complete user food mention with a unique exact recorded name/alias; do not trust
+  a model-selected ID as identity evidence. Unsupported matches must show an
+  explicit no-record message and withhold totals instead of using a substitute.
+- Clarify that the local app has no individual registration/login or per-user
+  ownership, and its Log out control has no local authentication function. The
+  optional public shared-password/session gateway is implemented separately.
+- Keep earlier English recognition failures and test counts dated. Matching-fix
+  verification is separate from the previously passing language-switch checks.
+- Pass 454 Python tests and 17 frontend DOM tests for the initial correction;
+  then 469 Python tests after fixing baseline-discovered rice aliases, natural
+  portion corrections and durable explicit-ingredient replacements. Record live acceptance separately
+  in [matching verification](evidence/food-matching-verification.md).
+- Add an on-demand independent QA agent with a persistent issue ledger and dated
+  reports under `docs/qa`; file-based memory is read on later reviews.
+- At the time of this matching-only change, preserve the then-current
+  `w07-midterm` checkpoint. The later milestone refresh above includes these fixes
+  and archives earlier checkpoint versions.
+- Review OpenNutriTracker's parsing, search and recipe design in
+  [a source-linked comparison](research/opennutritracker-comparison.md); proposed
+  custom-recipe/recovery extensions were proposals at that stage. The explicit
+  ingredient implementation is recorded separately above.
+
 ## 2026-10-31 — Chinese/English interface and current demo documentation
 
 - Add accessible Chinese/English header controls, a remembered language preference,

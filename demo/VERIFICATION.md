@@ -1,12 +1,37 @@
 # NutriChat demo verification
 
-## Latest follow-up — 31 October 2026
+## Final expanded source — 31 October 2026
+
+Initial expansion source: `71a0ecd56f2de09460ce899b1b183f723ab45b0e`; final
+wrapper correction: `dae0b946e286736020becf018c49b4e81eb46ec6`. The catalogue has
+**200 ingredients and 350 reference recipes**. Controlled checks passed **654
+Python tests and 26 frontend DOM tests**, with Ruff clean. The final wrapper correction passed **664 Python tests** and
+Ruff, with the interface assets unchanged. All 31 service source
+files matched the committed source and the running API, AI and worker containers.
+See the [expansion verification](../docs/evidence/chinese-expansion-verification.md)
+and [final runtime fingerprint](../docs/evidence/chinese-expansion-final-runtime.json).
+
+The [fresh screenshot guide](SCREENSHOT_GUIDE.md) and
+[independent expanded-runtime report](../docs/qa/reports/2026-10-31-expanded-demo.md)
+record the actual final browser workflow, exact sample inputs and any remaining
+failures. These checks do not turn historical failures into passes, and do not
+prove that every natural-language input or all 350 dishes work through Qwen.
+
+The initial `71a0ecd` expanded source also passed a new isolated
+[offline vertical-slice check](evidence/offline-expanded-check-2026-10-31.json)
+and two separate HTTP smoke tests. The report records a dirty worktree because
+documentation and screenshots were being prepared; the offline service file
+fingerprints match that initial committed expansion source.
+
+All following sections are historical observations at their stated versions.
+
+## Earlier language follow-up — 31 October 2026
 
 The [language-switch verification](../docs/evidence/ui-language-verification.md)
 records 417 passing Python tests, 15 passing frontend DOM tests, a clean Ruff
 check and a real Qwen/browser flow that preserved edited recipe values while
 switching languages. The [English screenshot](images/07-english-interface.png)
-shows the running interface. These checks cover the current bilingual UI.
+shows the running interface. These checks covered the bilingual UI at that dated checkpoint.
 
 A separate [English-input verification](../docs/evidence/qwen-english-verification.md)
 on the preceding `6219a78` source passed 19 of 21 sampled scenarios, including
@@ -52,8 +77,10 @@ are measured nutritional values.
 
 ## Browser workflow
 
-The [illustrated guide](SCREENSHOT_GUIDE.md) shows the actual Chinese UI. The
-workflow was exercised twice with the same kind of meal:
+The original screenshots remain in `demo/images/01-*.jpg` through `06-*.jpg`.
+The [illustrated guide](SCREENSHOT_GUIDE.md) now uses freshly captured screenshots
+from the expanded source. In the 28 October run, the workflow was exercised twice
+with the same kind of meal:
 
 1. Basic input: `一份番茄炒蛋，两个水煮鸡蛋`.
 2. Reference portions: 200 g tomato and scrambled eggs plus 100 g edible boiled

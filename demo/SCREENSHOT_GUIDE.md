@@ -8,10 +8,15 @@ The scope of this guide is the meal-estimation workflow on `nutrichat`.
 
 The current interface also has **中文 / English** buttons in its header. Select
 **中文** to match these screenshots, or **English** to use translated controls and
-clarification forms. Switching preserves the meal and unsent form values. The
-screenshots below were captured before the language buttons were added.
+clarification forms. Switching preserves the meal and unsent form values. All screenshots below were freshly captured on **31 October 2026** from the
+expanded **200-ingredient / 350-recipe** runtime. Images 01–11 were captured
+on source `71a0ecd`; images 12–13 verify the final correction on `dae0b94`.
+The UI and catalogue files are identical between these builds. The
+[independent run report](../docs/qa/reports/2026-10-31-expanded-demo.md) records
+exact build provenance, actions and limitations. Browser chrome was cropped;
+the page content was not reconstructed or edited.
 
-The screenshots follow one synthetic meal record through the workflow. In your
+The first six screenshots follow one synthetic meal record through the workflow. In your
 own run, compare the record ID immediately before and after reload; it must remain
 the same. Your new record will have its own ID. The figures depend on the selected
 foods, recipe, edible weights and accepted
@@ -19,8 +24,28 @@ assumptions. They are not guaranteed outputs for every Qwen response or measured
 nutrition for an actual meal. Use the [verification record](VERIFICATION.md) for
 the separately recorded checks and their limits.
 
-**Workflow:** describe → review Basic estimate → add Advanced details → correct
-the portion → review the recalculated estimate → confirm and reload.
+**Main workflow:** describe → review Basic estimate → add Advanced details →
+correct the portion → review the recalculated estimate → confirm and reload.
+
+```mermaid
+flowchart TD
+    A[Describe a meal] --> B[Extract names and quantities; verify catalogue matches]
+    B --> C{Every item resolved?}
+    C -- Yes --> D{Mode}
+    D -- Basic --> E[Estimate with visible reference assumptions]
+    D -- Advanced --> F[Answer questions and review recipe / batch weight]
+    F --> E
+    C -- No --> G[Explain missing record; withhold ALL meal totals]
+    G --> H[Correct the name or build the item from actual supported ingredients]
+    H --> C
+    E --> I[Review and correct]
+    I --> J[Confirm and save]
+    J --> K[Reload: same ID and totals; editing locked]
+```
+
+The six main screenshots use one record,
+`80afe1a8-a493-44b7-a096-4234d78547f0`. It progressed from revision 1 in Basic
+to revision 6 after confirmation. Your record ID will differ.
 
 ## 1. Describe a Chinese meal in Basic mode
 
@@ -35,9 +60,9 @@ Meaning: “One serving of tomato and scrambled eggs, and two boiled eggs.” Cl
 **开始估算** (Estimate). If a previous record is displayed, first click
 **新的一餐** (New meal).
 
-![Basic mode with the Chinese meal description entered](images/01-enter-meal.jpg)
+![Basic mode with the Chinese meal description entered](images/2026-10-31/01-enter-meal.png)
 
-**Check:** the page shows **138 ingredients and 250 reference recipes**. This is
+**Check:** the page shows **200 ingredients and 350 reference recipes**. This is
 the Qwen product workflow, not the separate six-food offline engineering fixture.
 The header's **退出登录** (Log out) button belongs to the optional public gateway;
 there is no need to use it in this directly accessible local application.
@@ -55,7 +80,7 @@ weights. The result was:
 | ---: | ---: | ---: | ---: |
 | 365.2 kcal | 23.3 g | 25.5 g | 10 g |
 
-![Basic estimate with reference portions, recipe assumptions and nutrition sources](images/02-basic-estimate.jpg)
+![Basic estimate with reference portions, recipe assumptions and nutrition sources](images/2026-10-31/02-basic-estimate.png)
 
 **Check:** the assumed weights and recipe are visible, not presented as quantities
 the user measured. The dish details identify the whole-batch recipe and data
@@ -92,7 +117,7 @@ Tick **我接受以上配方和成品重量作为本次估算依据** (Accept th
 batch weight as the basis of this estimate), then click **提交回答** (Submit
 answers). Submit any remaining requested answers until the result is ready.
 
-![Advanced clarification form for weights, preparation and the editable batch recipe](images/03-advanced-questions.jpg)
+![Advanced clarification form for weights, preparation and the editable batch recipe](images/2026-10-31/03-advanced-questions.png)
 
 **Check:** unresolved required questions leave nutrient totals empty. The app
 must not silently treat Basic defaults as facts supplied by the user. The exact
@@ -111,7 +136,7 @@ Meaning: “I actually ate 150 g cooked tomato and scrambled eggs; the edible
 boiled-egg portion is still 100 g.” Click **发送补充说明** (Send the additional
 information).
 
-![Conversation correction changing the cooked dish portion to 150 grams](images/04-weight-correction.jpg)
+![Conversation correction changing the cooked dish portion to 150 grams](images/2026-10-31/04-weight-correction.png)
 
 **Check:** the correction changes the dish portion while keeping the boiled eggs
 at 100 g. Qwen reinterprets the conversation, so the app can ask for recipe
@@ -128,7 +153,7 @@ run, the corrected interpretation was **150 g of cooked tomato-and-egg dish plus
 | ---: | ---: | ---: | ---: |
 | 312.7 kcal | 20.6 g | 21.8 g | 7.8 g |
 
-![Recalculated estimate after correcting the portion and approving the recipe](images/05-corrected-estimate.jpg)
+![Recalculated estimate after correcting the portion and approving the recipe](images/2026-10-31/05-corrected-estimate.png)
 
 **Check:** the interpreted dish portion is now 150 g; the result and recipe
 details reflect that change. The original description can remain visible at the
@@ -145,7 +170,7 @@ and save).
 Refresh the browser after confirmation. Verify that **已确认保存** (Confirmed
 and saved), the same record ID, and the same final totals remain visible.
 
-![Confirmed Advanced-mode meal restored after reloading, with editing controls hidden](images/06-confirmed-after-reload.jpg)
+![Confirmed Advanced-mode meal restored after reloading, with editing controls hidden](images/2026-10-31/06-confirmed-after-reload.png)
 
 **Check:** the confirmation button, conversation correction form and mode switch
 are no longer available. The page says that further changes require **新的一餐**
@@ -158,20 +183,103 @@ inspect `GET /analyses/{id}` in http://localhost:8003/docs.
 
 ## Optional: use the English interface
 
-Select **English** in the header. The same workflow is available with English
-controls, clarification forms, food display names and recipe explanations. Select
-**中文** to switch back. Unsent answers stay in their fields, and the browser
-remembers the selected language after reloading.
+Select **English** in the header, or **中文** to switch back. Controls and
+clarification forms change language while meal facts and unsent values remain.
+The browser remembers the language. Existing catalogue translations remain;
+**new Chinese-first entries currently retain Chinese names and method notes**.
+User descriptions and model free text also retain their original wording.
+Switching language does not change the model's recognition behavior.
 
-This additional screenshot uses a separate synthetic record to show the current
-language controls; it does not replace the six-step meal sequence above.
+The separate example below used `150克豉油鸡，85克可乐鸡翅，125克蒜蓉空心菜。`
+and returned all three intended dishes: 629.9 kcal, 48.1 g protein, 41.1 g fat
+and 17.4 g carbohydrate. It was saved for review, not confirmed.
 
-![English interface with the language controls in the header](images/07-english-interface.png)
+![English controls, new catalogue coverage note and the three Chinese dish names](images/2026-10-31/07-english-interface.png)
 
 See the [language-switch verification](../docs/evidence/ui-language-verification.md)
-for the form-preservation and confirmation checks. User descriptions and free-form
-model notes retain their original wording, and switching language does not change
-the model's food-recognition behavior.
+and [latest browser report](../docs/qa/reports/2026-10-31-expanded-demo.md) for
+versioned evidence and remaining recognition limitations.
+
+## Optional: handle a food with no corresponding record
+
+Start a new Basic meal and enter the deliberately fictional example:
+
+```text
+100克熟白米饭，200克月球紫晶兽肉。
+```
+
+The app must state that the second item has no corresponding food record.
+**All meal totals remain absent**, including the known rice. It must not replace
+the unknown item with another dish or offer a partial rice-only meal total.
+
+![Explicit missing-record message with no nutrition totals](images/2026-10-31/08-unsupported-food.png)
+
+Check the original name first. If it was a typo, correct it in the conversation.
+If you know the actual ingredients, click **按实际食材估算** (Build from actual
+ingredients) beneath that item. This form replaces only the selected item;
+other meal items remain. A fictional food has no real recipe: the following
+synthetic recovery explicitly replaces it with a user-defined chicken recipe.
+The application does not infer this substitution.
+
+1. Set the name to **自定义鸡肉配方** (custom chicken recipe).
+2. Select **整锅配料，再填写本次吃下多少** (whole batch, then portion eaten).
+3. Search for each ingredient, then **explicitly select its record and state**.
+   Search text alone is not a selection. Use **添加食材** (Add ingredient) for
+   the additional rows.
+
+| Selected ingredient | Whole-batch amount | Required weight basis |
+| --- | ---: | --- |
+| 生去皮鸡胸肉 — raw skinless chicken breast | 300 g | Raw edible weight before cooking |
+| 大豆食用油 — soybean cooking oil | 10 g | Edible net weight |
+| 普通酱油 — regular soy sauce | 20 g | Edible net weight |
+
+![Explicit ingredient selections, raw or net weight bases and gram amounts](images/2026-10-31/09-ingredient-builder.png)
+
+4. Enter **600 g** finished whole-batch weight and **150 g** eaten cooked weight.
+   These illustrative values are separate from the ingredient weight sum. Include
+   all actual ingredients, oil and sauces for your own meal.
+5. Review the quantities and states, tick the acceptance checkbox, and click
+   **按这些食材计算** (Calculate from these ingredients).
+
+![Finished batch, eaten portion and explicit recipe acceptance](images/2026-10-31/10-batch-portion.png)
+
+The illustrated calculation allocates **150 / 600 = 25%** of the recipe's
+nutrients. The chicken recipe contributes **114.8 kcal**; the retained 100 g rice
+contributes **130 kcal**. The whole meal is **244.8 kcal**, 20 g protein,
+4.8 g fat and 28.4 g carbohydrate. The result labels it a **user-defined
+ingredient recipe**, not measured nutrition for a database dish.
+
+![Custom recipe result with 25% batch allocation and retained rice](images/2026-10-31/11-custom-result.png)
+
+Before confirming, use **编辑食材配方** (Edit ingredient recipe) to change this
+recipe. Free-text correction is replaced by structured-editor guidance while a
+custom recipe exists, to preserve its selected ingredients. Review, confirm and
+reload as in step 6. The app assumes the batch is evenly mixed and does not
+remove discarded oil, broth or cooking losses automatically. If an ingredient
+itself has no record, do not select a different ingredient as a substitute.
+
+The custom record was then confirmed and reloaded on the final build. The same
+record `9bd7cba2-886b-46f1-a014-a7e3876e14c7` remained at **244.8 kcal**, revision
+3, with editing controls removed.
+
+![Custom recipe confirmed and reloaded on the final build](images/2026-10-31/13-final-confirmed-custom.png)
+
+## Additional catalogue check on the final build
+
+This exact Basic input was checked after fixing a false rejection of the
+parenthetical phrase `（已去骨）` (bones already removed):
+
+```text
+豉油鸡200克熟重、可乐鸡翅75克熟重（已去骨）、蒜蓉空心菜150克熟重。
+```
+
+The final run recognized all three intended dishes and weights, returning
+743.8 kcal, 56.9 g protein, 48.5 g fat and 20.4 g carbohydrate. The reference
+recipes remain assumptions; expand each dish row to inspect them. This record
+was saved for review, not confirmed. The earlier failed run is preserved in the
+[QA report](../docs/qa/reports/2026-10-31-expanded-demo.md).
+
+![Final-build supported dishes with cooked edible weights](images/2026-10-31/12-new-dishes-final.png)
 
 ## What to inspect beyond the pictures
 

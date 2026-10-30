@@ -1,0 +1,36 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Basic · Quick estimate
+						15 文本 Estimate from the information available. Missing portions and recipes use clearly labelled reference values.
+						16 按钮 Switch to Advanced and add details
+						17 文本 Meal description
+						18 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							19 文本 0克熟白米饭
+						20 按钮 New meal
+						21 文本 138 ingredients · 250 reference recipes
+						22 摘要 Browse supported foods and recipes, Value: off
+							23 文本 Browse supported foods and recipes
+						24 文本 The estimation service is temporarily unavailable. Try again or provide a clearer meal description.
+						25 标题 Meal record and corrections, Value: 2
+							26 文本 Meal record and corrections
+						27 摘要 View this meal’s conversation, Value: off
+							28 文本 View this meal’s conversation
+						29 文本 Continue · Add or correct details
+						30 文本输入区 (settable) Continue · Add or correct details, Value: [文本输入区], Placeholder: For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+							31 文本 For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+						32 按钮 Send details
+						33 文本 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				34 滚动条 (settable, float) 1

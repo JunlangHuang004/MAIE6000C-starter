@@ -1,0 +1,74 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Advanced · Add details
+						15 文本 Answer questions about weight, raw or cooked state, preparation and oil. Review and edit the recipe.
+						16 按钮 Switch to Basic for a quick estimate
+						17 文本 Meal description
+						18 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							19 文本 一份番茄炒蛋，两个水煮鸡蛋
+						20 按钮 New meal
+						21 文本 138 ingredients · 250 reference recipes
+						22 摘要 Browse supported foods and recipes, Value: off
+							23 文本 Browse supported foods and recipes
+						24 文本 Some foods below have no corresponding records, so this meal has no nutrition estimate. Check their names or describe the actual ingredients.
+						25 标题 Advanced · Add meal details, Value: 2
+							26 文本 Advanced · Add meal details
+						27 摘要 View this meal’s conversation, Value: off
+							28 文本 View this meal’s conversation
+						29 文本 Tomato-and-egg stir-fry: review the reference preparation and whole-batch recipe. You can change ingredient quantities and finished batch weight. These are estimates, not measured amounts for your meal.
+						30 文本 Reference preparation: Stir-fry.
+						31 文本 Raw tomato (g / whole batch)
+						32 数字栏 (settable) Raw tomato (g / whole batch), Value: 300
+							33 步进器 0
+								34 未知
+								35 未知
+						36 文本 Raw whole egg (without shell) (g / whole batch)
+						37 数字栏 (settable) Raw whole egg (without shell) (g / whole batch), Value: 150
+							38 步进器 0
+								39 未知
+								40 未知
+						41 文本 Soybean cooking oil (g / whole batch)
+						42 数字栏 (settable) Soybean cooking oil (g / whole batch), Value: 10
+							43 步进器 0
+								44 未知
+								45 未知
+						46 文本 Granulated white sugar (g / whole batch)
+						47 数字栏 (settable) Granulated white sugar (g / whole batch), Value: 5
+							48 步进器 0
+								49 未知
+								50 未知
+						51 文本 Table salt (g / whole batch)
+						52 数字栏 (settable) Table salt (g / whole batch), Value: 2
+							53 步进器 0
+								54 未知
+								55 未知
+						56 文本 Total finished cooked batch weight (g)
+						57 数字栏 (settable) Total finished cooked batch weight (g), Value: 400
+							58 步进器 0
+								59 未知
+								60 未知
+						61 container
+							62 复选框 I accept this recipe and finished batch weight as the basis of this estimate, Value: 0
+							63 文本  I accept this recipe and finished batch weight as the basis of this estimate
+						64 文本 实际吃了150克熟重: no corresponding food record was found, so it cannot be estimated. Check the name or provide the actual ingredients and their gram weights below. Other foods will not be substituted.
+						65 文本 可食部分还是100克: no corresponding food record was found, so it cannot be estimated. Check the name or provide the actual ingredients and their gram weights below. Other foods will not be substituted.
+						66 按钮 Submit answers
+						67 text Answer what you know first. If a quantity is unknown, explain it below. Continue · Add or correct details
+						68 文本输入区 (settable) Continue · Add or correct details, Value: [文本输入区], Placeholder: For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+							69 文本 For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+						70 按钮 Send details
+						71 文本 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				72 滚动条 (settable, float) 0.9896449

@@ -1,0 +1,58 @@
+Window: "NutriChat · 中餐营养估算", App: Safari浏览器.
+0 标准窗口 NutriChat · 中餐营养估算, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · 中餐营养估算, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container 界面语言
+							8 开关按钮 中文, Value: on
+							9 开关按钮 English, Value: off
+						10 按钮 退出登录
+						11 标题 说说这餐吃了什么, Value: 1
+							12 文本 说说这餐吃了什么
+						13 text 基础版快速了解大概热量；进阶版补充份量、做法和配方，细化营养估算。 选择估算模式
+						14 弹出式按钮 (disabled) 选择估算模式, Value: 进阶版 · 补充细节精算
+						15 text 逐项追问不明确的重量、生熟状态、做法和用油；配方可自行填写和调整。 餐食描述
+						16 文本输入区 (disabled, settable) 餐食描述, Value: [文本输入区], Placeholder: 例如：番茄炒蛋200克，少油，配150克熟米饭。
+							17 文本 一份番茄炒蛋，两个水煮鸡蛋
+						18 按钮 新的一餐
+						19 文本 200种食材 · 350道参考菜谱
+						20 摘要 查看支持的食材和菜谱, Value: off
+							21 文本 查看支持的食材和菜谱
+						22 标题 进阶版 · 补充餐食信息, Value: 2
+							23 文本 进阶版 · 补充餐食信息
+						24 摘要 查看本餐对话记录, Value: off
+							25 文本 查看本餐对话记录
+						26 文本 进阶版 · 已确认保存
+						27 标题 本餐营养估算, Value: 2
+							28 文本 本餐营养估算
+						29 text 番茄炒蛋 · 150g · 水煮鸡蛋（去壳） · 100g 312.7 热量 · kcal 20.6 蛋白质 · g 21.8 脂肪 · g 7.8 碳水 · g
+						30 container (expanded) Secondary Actions: Collapse
+							31 摘要 番茄炒蛋 · 150g · 157.7 kcal, Value: on
+								32 文本 番茄炒蛋 · 150g · 157.7 kcal
+							33 文本 份量依据：从餐食描述提取的克数为 150g；请核对提取结果、可食部分及生熟状态。
+							34 文本 参考做法：炒
+							35 文本 整锅成品 400g；本次食用 150g
+							36 文本 整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 15g、白砂糖 5g、食盐 2g
+							37 文本 参考配方已由用户确认；不是实测菜肴营养。
+							38 container
+								39 文本 数据来源：
+								40 link USDA FoodData Central SR Legacy 2018 #170457 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/170457/nutrients
+								41 link USDA FoodData Central SR Legacy 2018 #171287 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171287/nutrients
+								42 link USDA FoodData Central SR Legacy 2018 #171411 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/171411/nutrients
+								43 link USDA FoodData Central SR Legacy 2018 #169655 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/169655/nutrients
+								44 link USDA FoodData Central SR Legacy 2018 #173468 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173468/nutrients
+						45 container (expanded) Secondary Actions: Collapse
+							46 摘要 水煮鸡蛋（去壳） · 100g · 155 kcal, Value: on
+								47 文本 水煮鸡蛋（去壳） · 100g · 155 kcal
+							48 文本 份量依据：从餐食描述提取的克数为 100g；请核对提取结果、可食部分及生熟状态。
+							49 文本 按 水煮鸡蛋（去壳） 的每100g可食部分数据计算
+							50 文本 做法：水煮；另计食用油 0g
+							51 文本 烹调失水不自动换算；额外糖、酱料需作为食材补充。
+							52 container
+								53 文本 数据来源：
+								54 link USDA FoodData Central SR Legacy 2018 #173424 (CC0-1.0), Value: fdc.nal.usda.gov/food-details/173424/nutrients
+						55 text 这份估算已确认保存。需要再次修改，请开始新的一餐。 记录 80afe1a8-a493-44b7-a096-4234d78547f0 · 第 6 版 参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。
+				56 滚动条 (settable, float) 0

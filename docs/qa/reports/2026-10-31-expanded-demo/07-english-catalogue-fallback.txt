@@ -1,0 +1,48 @@
+Window: "NutriChat · Meal nutrition estimates", App: Safari浏览器.
+0 标准窗口 NutriChat · Meal nutrition estimates, ID: SafariWindow?IsSecure=false&UUID=CBADA626-5FF4-450D-BA8F-CE671BBCC982, Secondary Actions: Raise
+	1 分离组
+		2 标签组
+			3 滚动区
+				4 HTML内容 Description: NutriChat · Meal nutrition estimates, URL: localhost:8003/app
+					5 container
+						6 文本 ◉ NutriChat
+						7 container Interface language
+							8 开关按钮 中文, Value: off
+							9 开关按钮 English, Value: on
+						10 按钮 Log out
+						11 标题 What did you eat?, Value: 1
+							12 文本 What did you eat?
+						13 text Use Basic for a quick estimate, or add portions, cooking details and recipes in Advanced. Estimation mode
+						14 弹出式按钮 (disabled) Estimation mode, Value: Basic · Quick estimate
+						15 文本 Estimate from the information available. Missing portions and recipes use clearly labelled reference values.
+						16 按钮 Switch to Advanced and add details
+						17 文本 Meal description
+						18 文本输入区 (disabled, settable) Meal description, Value: [文本输入区], Placeholder: For example: 200g tomato-and-egg stir-fry with 150g cooked white rice.
+							19 文本 150克豉油鸡，85克可乐鸡翅，125克蒜蓉空心菜。
+						20 按钮 New meal
+						21 文本 200 ingredients · 350 reference recipes · New catalogue entries currently use Chinese names.
+						22 摘要 Browse supported foods and recipes, Value: off
+							23 文本 Browse supported foods and recipes
+						24 文本 The estimate is saved. Review it before confirming.
+						25 标题 Meal record and corrections, Value: 2
+							26 文本 Meal record and corrections
+						27 摘要 View this meal’s conversation, Value: off
+							28 文本 View this meal’s conversation
+						29 文本 Continue · Add or correct details
+						30 文本输入区 (settable) Continue · Add or correct details, Value: [文本输入区], Placeholder: For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+							31 文本 For example: the eggs were fried; 150g is the cooked weight, and this portion had 5g extra oil.
+						32 按钮 Send details
+						33 文本 Basic · Ready for review
+						34 标题 Nutrition estimate, Value: 2
+							35 文本 Nutrition estimate
+						36 text 豉油鸡 · 150g · 可乐鸡翅 · 85g · 蒜蓉空心菜 · 125g 629.9 Energy · kcal 48.1 Protein · g 41.1 Fat · g 17.4 Carbohydrates · g
+						37 摘要 豉油鸡 · 150g · 351.6 kcal, Value: off
+							38 文本 豉油鸡 · 150g · 351.6 kcal
+						39 摘要 可乐鸡翅 · 85g · 185.5 kcal, Value: off
+							40 文本 可乐鸡翅 · 85g · 185.5 kcal
+						41 摘要 蒜蓉空心菜 · 125g · 92.7 kcal, Value: off
+							42 文本 蒜蓉空心菜 · 125g · 92.7 kcal
+						43 文本 Review the eaten weight, preparation, oil and recipe. Use the conversation above to make corrections.
+						44 按钮 Confirm and save
+						45 text Record 8a3fc38a-502e-422c-9fa4-b15d07c1dc1a · Revision 1 Estimates vary with ingredients, cooking losses and oil actually consumed. Raw and cooked weights are not converted automatically. Review reference recipe quantities. All weights refer to edible portions.
+				46 滚动条 (settable, float) 0
