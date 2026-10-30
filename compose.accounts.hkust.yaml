@@ -1,0 +1,22 @@
+# Add after compose.yaml and compose.accounts.yaml. Keep the same project name
+# to retain existing accounts, profiles, meals and daily records on port 8001.
+# Only the AI container receives the private HKUST key.
+x-hkust: &hkust
+  image: nutrichat-accounts-hkust:latest
+  environment:
+    LLM_PROVIDER: hkust
+    WORKER_REQUEST_TIMEOUT_SECONDS: 210
+
+services:
+  ai:
+    <<: *hkust
+    env_file: !override
+      - ${HKUST_ENV_FILE:-.env}
+    environment:
+      LLM_PROVIDER: hkust
+      LLM_TIMEOUT_SECONDS: 180
+      WORKER_REQUEST_TIMEOUT_SECONDS: 210
+  api:
+    <<: *hkust
+  worker:
+    <<: *hkust

@@ -1,14 +1,17 @@
 # Local model verification — 2026-10-30
 
 Scope: the experimental `test` branch's HKUST GenAI and Ollama adapters, using the
-isolated model lab on local port 8004. Existing Qwen settings, the `nutrichat`
+isolated model lab on local port 8004 and the subsequent HKUST switch of the
+account preview on port 8001. Existing Qwen settings, the `nutrichat`
 branch and the public deployment are outside this verification scope. All meal
 inputs used synthetic examples; this document excludes keys and account IDs.
 
-**Outcome: HKUST GenAI passed all nine final live checks. The local Ollama models
-did not pass application acceptance and cannot reliably replace it.** The active
-lab provider was verified as `hkust`, using `gemini-2.5-flash-lite`. Ollama and
-both downloaded local models remain available for classroom use and experiments.
+**Outcome: HKUST GenAI passed nine core and seven extended live checkpoints
+(16/16). The local Ollama models did not pass application acceptance and cannot
+reliably replace it.** These checkpoints include consecutive states of the same
+meals; they are not 16 independent meals or model calls. The active lab provider
+was verified as `hkust`, using `gemini-2.5-flash-lite`. Ollama and both downloaded
+local models remain available for classroom use and experiments.
 
 ## Automated checks
 
@@ -17,6 +20,34 @@ strict Ollama output schema, compact Chinese prompt and additional fact checks,
 **97 targeted tests** passed, and `ruff check services tests` passed. The earlier
 full-suite result predates those changes; a new complete run is not yet recorded
 here. The recorded Ruff scope is the services and tests directories.
+
+The subsequent account/profile/tracking regression run passed **235 tests** with
+two dependency deprecation warnings in 461.36 seconds. It selected
+`LLM_PROVIDER=hkust` while leaving all model keys empty, disabled container
+networking, and used temporary SQLite databases. The test process exited with
+code 0 and its temporary container was removed. Its scope covered:
+
+- Accounts, sessions, ownership and privacy boundaries.
+- Muscle-gain/fat-loss profile references, validation and persistence.
+- Daily calorie and weight records, confirmed-meal aggregation, manual overrides
+  and revision handling.
+- Thirty-day windows, gaps and summary semantics, with assertions that profile
+  and tracking operations do not invoke the AI service.
+
+This is a feature regression subset, not a new full-suite total; its count must
+not be added to the earlier test counts as if every test were distinct. It checks
+trend API semantics, not the chart's visual rendering. The command ran from the
+`test` checkout with an already-built local image:
+
+```sh
+docker run --rm --network none --entrypoint pytest \
+  -e PYTHONDONTWRITEBYTECODE=1 -e NUTRITION_PROVIDER=demo -e LLM_PROVIDER=hkust \
+  -e DASHSCOPE_API_KEY= -e QWEN_BASE_URL= -e LLM_API_KEY= \
+  --mount type=bind,source="$PWD",target=/app,readonly \
+  nutrichat-local-models:latest -q -p no:cacheprovider \
+  tests/integration/test_accounts.py tests/integration/test_profile.py \
+  tests/integration/test_daily_tracking.py tests/unit/test_personalization.py
+```
 
 Model-boundary tests use synthetic responses and do not need a real API key.
 These checks cover provider selection, request and response validation, failure
@@ -65,6 +96,57 @@ The numbers are the application's catalogue-based estimates. The tomato-and-egg
 result uses a reference recipe; these tests do not measure the nutrient content
 of a real prepared dish. The recorded cases establish this limited live flow,
 not accuracy across the full food catalogue or every possible correction.
+
+## HKUST GenAI: seven extended live checkpoints passed
+
+The same `gemini-2.5-flash-lite` provider was checked with multiple foods,
+follow-up additions, editable recipes and inedible-weight clarification. All
+seven checkpoints passed their expected statuses and specified semantic checks.
+
+| Check | Synthetic meal or action | Observed status | Energy (kcal) |
+| --- | --- | --- | ---: |
+| `four-food-meal` | Cooked rice 150 g, peeled boiled egg 50 g, boiled broccoli 100 g and whole milk 200 g | `completed`; all four foods and weights retained | 429.5 |
+| `follow-up-add-sugar` | Add 10 g sugar while keeping those four foods unchanged | `completed`; original items retained and sugar added | 468.2 |
+| `recipe-ingredient-edits` | 宫保鸡丁 cooked portion 200 g; no peanuts; whole-pot oil 5 g and cooked yield 400 g | `completed`; peanut 0 g, oil 5 g and yield 400 g retained | 204.8 |
+| `advanced-recipe-question` | 番茄炒蛋 cooked portion 200 g in Advanced mode | `needs_input`; issued the editable `0.recipe` question | — |
+| `advanced-edited-recipe-calculation` | Confirm the reference recipe after changing whole-pot oil to 5 g and yield to 400 g | `completed`; edited recipe saved and used for calculation | 166.0 |
+| `recipe-preserved-in-free-text-correction` | Change that portion to 150 g in free text, explicitly retaining the confirmed recipe and 400 g yield | `needs_input`; retained the recipe facts and requested recipe reconfirmation | — |
+| `inedible-weight-clarification` | 糖醋排骨 200 g cooked gross weight including bones; edible weight unknown | `needs_input`; retained the bone flag and requested edible grams | — |
+
+The recipe reconfirmation is expected after the free-text correction; no new total
+was returned until the user reviews that recipe again. In the bone-weight case,
+all four nutrient totals remained null rather than treating the gross weight as
+edible weight. The multiple-food addition and the recipe-edit sequence each reuse
+an existing meal, so these seven checkpoints are not seven separate model calls.
+
+Together with the core checks, this exercises the application's main meal
+features through HKUST: Basic and Advanced modes, natural-language follow-ups,
+ingredient changes, batch/portion distinctions, missing-weight questions,
+unsupported-food handling and confirmation/reload. It does not establish that
+every food description or recipe variation is interpreted correctly.
+
+## Port-8001 preview switch: configuration and smoke checks passed
+
+The three-file account-preview configuration was checked before switching the
+running application: API, AI service and worker all select `hkust`; only the AI
+service receives the private key; the API retains its loopback port 8001 binding;
+and the existing database volume is retained. A private backup was made before
+the switch.
+
+After the switch, the account preview reported `health=ready`, provider `hkust`
+and model `gemini-2.5-flash-lite`. Its post-switch smoke check passed:
+
+- A synthetic personal profile was saved.
+- Basic-mode `番茄炒蛋200克，熟重` completed at **210.2 kcal**, with 10.7 g protein,
+  14.9 g fat and 8.9 g carbohydrates. The reference recipe and 200 g portion were
+  retained; the meal was confirmed and reloaded successfully.
+- The confirmed meal appeared in the day's automatic meal aggregation.
+- A synthetic weight record was saved, and the trend response contained 30 days.
+
+All account-preview services were healthy. This is a separate application smoke
+check after the runtime switch; the 16 checkpoints above were run in the isolated
+lab. It checks the connection between meal estimation and the profile/tracking
+application, not every account, profile value or trend-history edge case.
 
 ## Ollama: final application acceptance failed
 
@@ -134,7 +216,7 @@ end-to-end verification of every other local application.
 - Structurally invalid model output and provider errors fail the request instead
   of producing fallback nutrients. Structurally valid but wrong facts can still
   reach the engine and produce misleading totals, as the local tests demonstrate.
-- Automated checks and the nine HKUST checks are not evidence that all Chinese
+- Automated checks and the 16 HKUST checkpoints are not evidence that all Chinese
   recipes, long conversations, concurrent requests or low-memory environments
   work reliably. The final Ollama application run failed acceptance; no additional
   tuning or successful retest is claimed here.

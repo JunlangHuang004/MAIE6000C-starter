@@ -1,8 +1,11 @@
 # NutriChat
 
-The experimental `test` branch also supports HKUST GenAI and local Ollama alongside
-Qwen. See [the isolated model lab](docs/models-local-lab.md) for private configuration,
-provider switching and verification. The lab runs separately on localhost port 8004.
+The experimental `test` branch uses **HKUST GenAI for the recommended local
+application on port 8001**. See [local HKUST setup](docs/local-hkust.md) to keep
+existing preview accounts and records while enabling Chinese meal extraction.
+The original Qwen deployment remains separate. The [model lab](docs/models-local-lab.md)
+on port 8004 is for provider experiments; the tested Ollama models failed full
+application acceptance and are not a reliable replacement for the cloud model.
 
 This `test` branch adds independent accounts, personal profiles, daily nutrition
 references, daily calorie/weight records and 30-day trends. See [the calculation assumptions and profile workflow](docs/personalization.md).
@@ -13,9 +16,10 @@ NutriChat estimates calories, protein, fat and carbohydrates from meal descripti
 including Chinese ingredients, dish names, cooking methods and follow-up details.
 Users review and correct the estimate before confirming it. Confirmed records are locked.
 
-The Qwen workflow includes **138 USDA ingredient records and 250 editable Chinese
-reference recipes**. Qwen interprets descriptions; Python calculates nutrients from
-source-backed data. This project does not train or fine-tune a model.
+The cloud-model workflow includes **138 USDA ingredient records and 250 editable
+Chinese reference recipes**. HKUST GenAI or Qwen interprets descriptions; Python
+calculates nutrients from source-backed data. This project does not train or
+fine-tune a model.
 
 Each dish has one home-style reference recipe. Alternative names share an entry;
 regional variants are not separate catalogue items. See the [250-dish index](docs/recipe-catalogue.md).
@@ -39,34 +43,54 @@ limitations](docs/nutrition-data.md).
 
 ## Run locally
 
-Install Docker and Docker Compose, then run from the repository root:
+Use the `test` checkout with Docker and a recent Docker Compose. Create the private
+configuration only if it does not exist:
 
 ```sh
 # Create .env only on first setup; preserve existing settings and secrets.
 test -f .env || cp .env.example .env
-docker compose up -d --build
 ```
 
-Open the [application](http://localhost:8000/app) or [API documentation](http://localhost:8000/docs).
+Add or update these five values in the private `.env`, preserving its other
+settings. Use your own HKUST key, and never commit it:
 
-- The default `NUTRITION_PROVIDER=demo` needs no API key. It supports only the legacy
-  six English catalogue names and explicit gram weights, for example
-  `200g chicken breast and 230g cooked white rice`. It does not provide the full Chinese dialogue workflow.
-- For Chinese descriptions and both estimation modes, configure `NUTRITION_PROVIDER=qwen`,
-  `DASHSCOPE_API_KEY`, `QWEN_BASE_URL` and `QWEN_MODEL` in the private `.env`, then rerun
-  the startup command. The key, workspace and endpoint region must match. See
-  [Qwen configuration and cloud deployment](docs/cloud-deployment.md).
-- Local Compose publishes API, AI and database development ports. Public deployment
-  uses the separate cloud configuration, HTTPS proxy and API account sessions.
-- Sign in or create an account before saving meals. Local example settings enable
-  registration and HTTP cookies; public settings require an exact HTTPS origin.
+```dotenv
+LLM_PROVIDER=hkust
+LLM_BASE_URL=https://hkust.azure-api.net/hkust-genai/v1
+LLM_MODEL=gemini-2.5-flash-lite
+LLM_API_KEY=replace_with_your_own_hkust_key
+LLM_API_KEY_HEADER=api-key
+```
+
+Start the existing account-preview project with the HKUST override last:
+
+```sh
+docker compose -p nutrichat-accounts --env-file .env.example \
+  -f compose.yaml -f compose.accounts.yaml -f compose.accounts.hkust.yaml \
+  up -d --build
+```
+
+Open the [application](http://localhost:8001/app) or
+[API documentation](http://localhost:8001/docs). Sign in with an existing local
+preview account or register a new one. Keeping the same project name preserves
+the preview database, including accounts, profiles, meals and daily records.
+Only the AI service receives the private model key; the API binds to loopback,
+and the AI/database ports are not published.
+
+The no-key offline preview remains available by omitting the HKUST override, as
+shown in [the local setup guide](docs/local-hkust.md). It accepts six legacy
+English food names and explicit grams, such as `100g egg`; it does not provide
+the full Chinese dialogue workflow. The older Qwen application on port 8000 and
+public ECS deployment are not changed by this startup command. See
+[Qwen configuration and cloud deployment](docs/cloud-deployment.md) for their
+separate configuration.
 
 ## Personal daily reference
 
 After signing in, fill in age, height, current weight, the formula sex coefficient,
 activity level and a muscle-gain or fat-loss goal. Save to calculate an approximate
 daily energy and macronutrient reference. The backend uses a versioned formula
-without Qwen. Saved inputs are private to the account; editing them recalculates
+without model calls. Saved inputs are private to the account; editing them recalculates
 the reference. A profile is optional for meal estimation. See
 [inputs, assumptions, safeguards and limitations](docs/personalization.md).
 
@@ -92,22 +116,33 @@ See [the tracking workflow, date policy and limitations](docs/tracking.md).
 
 ## Verification
 
-Build the current images first. Unit/integration tests do not require Qwen credentials:
+Build the current local images first. Unit/integration tests do not require a
+real model key; force the offline selector for this test process:
 
 ```sh
-docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
-docker compose run --rm --no-deps api ruff check .
+docker compose -p nutrichat-accounts --env-file .env.example \
+  -f compose.yaml -f compose.accounts.yaml -f compose.accounts.hkust.yaml \
+  run --rm --no-deps -e LLM_PROVIDER=heuristic -e NUTRITION_PROVIDER=demo \
+  api pytest -q -m 'not smoke'
+docker compose -p nutrichat-accounts --env-file .env.example \
+  -f compose.yaml -f compose.accounts.yaml -f compose.accounts.hkust.yaml \
+  run --rm --no-deps api ruff check services tests
 ```
 
-After configuring Qwen and starting the stack, run the live checks below. Supply
-`NUTRICHAT_CHECK_USERNAME` and `NUTRICHAT_CHECK_PASSWORD` to the dialogue check
-through its private environment. These checks consume model quota; the dialogue
-check creates synthetic saved meal records.
+Use synthetic or public descriptions for live model checks. They consume the
+selected provider's quota and create saved records. See [local HKUST checks](docs/local-hkust.md)
+and [recorded provider results](docs/evidence/local-model-verification.md).
+The existing Qwen-only live scripts remain documented in
+[operations](docs/operations.md); run those against the separately configured Qwen stack.
 
-```sh
-docker compose run --rm --no-deps api python scripts/check_qwen.py --live
-docker compose exec -T -e NUTRICHAT_CHECK_USERNAME -e NUTRICHAT_CHECK_PASSWORD api python scripts/check_dialogue.py --base-url http://api:8000
-```
+On 2026-10-30, HKUST passed 16 isolated-lab workflow checkpoints, followed by a
+successful port-8001 smoke check covering profile save, a 210.2-kcal Chinese meal,
+confirmation/reload, daily aggregation, a weight record and a 30-day trend response.
+Separately, 235 account/profile/tracking regression tests passed with HKUST selected,
+empty model keys and networking disabled.
+The checkpoints are not independent model calls or a general accuracy score. See
+[provider and runtime verification](docs/evidence/local-model-verification.md),
+which also records the unsuccessful local Ollama acceptance checks.
 
 The 2026-10-27 milestone passed 359 unit/integration tests using the CI pytest
 entry point. See the [Week 7 verification record](docs/evidence/week07-verification.md)
@@ -123,13 +158,17 @@ see [tracking verification](docs/evidence/tracking-verification.md).
 
 ## Architecture and documentation
 
-FastAPI API → PostgreSQL job queue → worker → internal AI service → Qwen extraction /
-Python calculation → persisted result. Qwen runs in the cloud; the VM needs no GPU.
+FastAPI API → PostgreSQL job queue → worker → internal AI service → configured
+model extraction / Python calculation → persisted result. HKUST GenAI and Qwen
+run in the cloud; those providers do not require a local GPU. Ollama is a separate
+experimental local provider with the limitations recorded above.
 
 | Document | Contents |
 | --- | --- |
 | [Week 7 milestone](submissions/week07/README.md) | Team, current status, demo sequence, evidence, risks and next priorities |
 | [Independent accounts](docs/accounts.md) | Registration, sessions, data isolation, preview and limits |
+| [Local HKUST setup](docs/local-hkust.md) | Recommended port-8001 configuration, private key handling and offline rollback |
+| [Model lab](docs/models-local-lab.md) | Isolated port-8004 experiments and provider limitations |
 | [Personalization](docs/personalization.md) | Saved profiles, formula references, assumptions and scope |
 | [Daily tracking](docs/tracking.md) | Calorie and weight records, meal dates and 30-day trends |
 | [API contract](docs/api-contract.md) | Routes, payloads, states, revision conflicts and errors |
@@ -165,7 +204,10 @@ See [the asynchronous workflow guide](docs/async-workflow.md) for the isolated
 Compose observation and the evidence map. Run the additional lifecycle tests with:
 
 ```sh
-docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest tests/integration/test_worker_lifecycle.py -q
+docker compose -p nutrichat-accounts --env-file .env.example \
+  -f compose.yaml -f compose.accounts.yaml -f compose.accounts.hkust.yaml \
+  run --rm --no-deps -e LLM_PROVIDER=heuristic -e NUTRITION_PROVIDER=demo \
+  api pytest tests/integration/test_worker_lifecycle.py -q
 ```
 
 Build the current image first. Tests cover claim metadata, terminal processor
