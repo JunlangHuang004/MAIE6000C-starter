@@ -8,7 +8,7 @@ from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_
 
 from services.common.nutrition import estimate_meal
 from services.common.meal_engine import evaluate_mode
-from services.ai.app.qwen import analyze_with_qwen
+from services.ai.app.qwen import analyze_with_provider, analyze_with_qwen
 from services.common.config import configure_logging, get_settings
 from services.common.schemas import (
     HealthResponse,
@@ -118,8 +118,11 @@ def analyze_nutrition(payload: NutritionAnalysisRequest) -> NutritionAnalysisRes
         settings = get_settings()
         if payload.draft:
             result = NutritionAnalysisResponse(**evaluate_mode(payload.draft, payload.mode))
-        elif settings.nutrition_provider == "qwen":
+        elif settings.effective_nutrition_provider == "qwen":
             result = analyze_with_qwen(
+                payload.food_text, settings, payload.conversation, payload.mode)
+        elif settings.effective_nutrition_provider in {"hkust", "ollama"}:
+            result = analyze_with_provider(
                 payload.food_text, settings, payload.conversation, payload.mode)
         else:
             result = analyze_nutrition_text(payload.food_text)

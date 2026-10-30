@@ -339,7 +339,7 @@ def account_app():
 def supported_foods():
     from services.common.nutrition import NUTRITION_PER_100G
     from services.common.meal_engine import catalogue
-    return {"provider": get_settings().nutrition_provider,
+    return {"provider": get_settings().effective_nutrition_provider,
             "catalogue": catalogue(), "foods": list(NUTRITION_PER_100G),
             "unit": "grams", "max_grams": 10000,
             "source": "USDA SR Legacy CC0 + user-reviewed project reference recipes."}

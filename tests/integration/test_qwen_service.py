@@ -8,7 +8,7 @@ from services.common.schemas import NutritionAnalysisResponse
 
 def test_qwen_route_dispatches_and_preserves_interpretation(monkeypatch):
     monkeypatch.setattr(ai_main, 'get_settings', lambda: Settings(
-        _env_file=None, nutrition_provider='qwen',
+        _env_file=None, nutrition_provider='qwen', llm_provider='qwen',
     ))
 
     def extract(text, settings, history=None, mode='advanced'):
@@ -35,7 +35,7 @@ def test_qwen_route_dispatches_and_preserves_interpretation(monkeypatch):
 ])
 def test_qwen_route_does_not_return_estimate_on_failure(monkeypatch, error, status):
     monkeypatch.setattr(ai_main, 'get_settings', lambda: Settings(
-        _env_file=None, nutrition_provider='qwen',
+        _env_file=None, nutrition_provider='qwen', llm_provider='qwen',
     ))
 
     def fail(*args):
@@ -52,7 +52,7 @@ def test_qwen_route_does_not_return_estimate_on_failure(monkeypatch, error, stat
 
 def test_qwen_mode_queues_chinese_input(client, monkeypatch):
     monkeypatch.setattr('services.common.config.get_settings', lambda: Settings(
-        _env_file=None, nutrition_provider='qwen',
+        _env_file=None, nutrition_provider='qwen', llm_provider='qwen',
     ))
     response = client.post('/analyses', json={'food_text': '100克鸡蛋'})
     assert response.status_code == 201

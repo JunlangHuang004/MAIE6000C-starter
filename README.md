@@ -1,5 +1,9 @@
 # NutriChat
 
+The experimental `test` branch also supports HKUST GenAI and local Ollama alongside
+Qwen. See [the isolated model lab](docs/models-local-lab.md) for private configuration,
+provider switching and verification. The lab runs separately on localhost port 8004.
+
 This `test` branch adds independent accounts, personal profiles, daily nutrition
 references, daily calorie/weight records and 30-day trends. See [the calculation assumptions and profile workflow](docs/personalization.md).
 See [account setup and the isolated preview](docs/accounts.md). The Week 7 tag and

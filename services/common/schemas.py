@@ -171,7 +171,7 @@ class AnalysisCreate(BaseModel):
     @classmethod
     def validate_supported_meal(cls, value):
         from services.common.config import get_settings
-        if get_settings().nutrition_provider == "demo":
+        if get_settings().effective_nutrition_provider == "demo":
             parse_meal(value)
         return value
 
