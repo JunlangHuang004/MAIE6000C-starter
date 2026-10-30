@@ -39,13 +39,23 @@ def test_missing_method_then_oil_never_produces_partial_totals():
     assert result['fat_g'] > 5
 
 
-def test_unknown_food_does_not_discard_it_or_return_partial_meal():
+@pytest.mark.parametrize('mode', ['basic', 'advanced'])
+def test_unknown_food_does_not_discard_it_or_return_partial_meal(mode):
+    from services.common.meal_engine import evaluate_mode
     draft = [item(food_id='rice', grams=100, weight_basis='cooked', preparation='boiled'),
-             item(food_id=None, grams=100)]
-    assert evaluate(draft)['calories'] is None
-    assert evaluate(draft)['details']==[]
-    draft = apply_answers(draft, {'1.food_id':'chocolate_milk'})
-    assert draft[1]['weight_basis'] is None
+             ExtractedItem(name='豉油鸡', source_text='豉油鸡', grams=200).model_dump()]
+    result = evaluate_mode(draft, mode)
+    assert all(result[key] is None for key in ('calories', 'protein_g', 'fat_g', 'carbs_g'))
+    assert result['details'] == []
+    assert result['interpreted_food_text'] is None
+    assert result['draft'] == draft
+    unsupported = next(q for q in result['questions'] if q['kind'] == 'unsupported')
+    assert unsupported['key'] == '1.food_id'
+    assert '豉油鸡' in unsupported['label'] and '数据库未找到' in unsupported['label']
+    assert 'options' not in unsupported
+    with pytest.raises(ValueError, match='没有对应的食物记录'):
+        apply_answers(draft, {'1.food_id':'dish_010'}, mode)
+    assert draft[1]['food_id'] is None
 
 
 def test_raw_cooked_weight_is_not_implicitly_converted():
@@ -138,7 +148,7 @@ def test_basic_explicit_grams_preserved_unknown_foods_not_invented():
     assert result['details'][0]['grams']==200
     unknown=evaluate_mode([item(food_id=None)],'basic')
     assert unknown['calories'] is None
-    assert unknown['questions'][0]['kind']=='food'
+    assert unknown['questions'][0]['kind']=='unsupported'
 
 
 def test_basic_respects_explicit_piece_count_and_labels_weight_assumption():

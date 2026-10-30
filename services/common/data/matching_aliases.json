@@ -1,0 +1,1212 @@
+{
+  "version": "2026-10-31.1",
+  "aliases": {
+    "rice": [
+      "Cooked white rice",
+      "steamed white rice",
+      "boiled white rice"
+    ],
+    "rice_raw": [
+      "Raw white rice"
+    ],
+    "brown_rice": [
+      "Cooked brown rice"
+    ],
+    "glutinous": [
+      "Raw glutinous rice"
+    ],
+    "oats": [
+      "Dry oats"
+    ],
+    "wheat_flour": [
+      "Wheat flour"
+    ],
+    "noodles": [
+      "Cooked egg noodles"
+    ],
+    "rice_noodles": [
+      "Cooked rice noodles"
+    ],
+    "bread": [
+      "White bread"
+    ],
+    "corn": [
+      "Raw sweetcorn kernels"
+    ],
+    "potato": [
+      "Raw potato"
+    ],
+    "sweet_potato": [
+      "Raw sweet potato"
+    ],
+    "taro": [
+      "Raw taro"
+    ],
+    "millet": [
+      "Raw millet"
+    ],
+    "barley": [
+      "Raw pearl barley"
+    ],
+    "quinoa": [
+      "Cooked quinoa"
+    ],
+    "buckwheat": [
+      "Raw buckwheat"
+    ],
+    "chicken": [
+      "Raw skinless chicken breast",
+      "raw boneless skinless chicken breast",
+      "raw chicken breast",
+      "生鸡胸肉",
+      "生去皮鸡胸",
+      "生去骨去皮鸡胸肉"
+    ],
+    "chicken_roast": [
+      "Roasted skinless chicken breast",
+      "roasted boneless skinless chicken breast",
+      "roasted chicken breast",
+      "烤鸡胸肉",
+      "烤去皮鸡胸",
+      "烤去骨去皮鸡胸肉"
+    ],
+    "chicken_stew": [
+      "Stewed skinless chicken breast",
+      "炖鸡胸肉",
+      "炖去皮鸡胸"
+    ],
+    "chicken_thigh": [
+      "Raw skinless chicken thigh"
+    ],
+    "chicken_wing": [
+      "Raw chicken wing meat and skin (edible portion)"
+    ],
+    "pork_belly": [
+      "Raw pork belly"
+    ],
+    "pork": [
+      "Raw pork tenderloin"
+    ],
+    "pork_ground": [
+      "Raw ground pork"
+    ],
+    "beef": [
+      "Raw ground beef (85% lean)"
+    ],
+    "lamb": [
+      "Raw ground lamb"
+    ],
+    "duck": [
+      "Raw skinless duck meat"
+    ],
+    "liver": [
+      "Raw pork liver"
+    ],
+    "salmon": [
+      "Raw farmed Atlantic salmon"
+    ],
+    "salmon_cooked": [
+      "Cooked farmed Atlantic salmon"
+    ],
+    "cod": [
+      "Raw Atlantic cod"
+    ],
+    "tilapia": [
+      "Raw tilapia"
+    ],
+    "carp": [
+      "Raw carp"
+    ],
+    "shrimp": [
+      "Raw peeled shrimp"
+    ],
+    "squid": [
+      "Raw squid"
+    ],
+    "clam": [
+      "Raw clam meat"
+    ],
+    "mussel": [
+      "Raw mussel meat"
+    ],
+    "crab": [
+      "Raw blue crab meat"
+    ],
+    "scallop": [
+      "Raw scallop meat"
+    ],
+    "egg_raw": [
+      "Raw whole egg (without shell)",
+      "raw whole egg without the shell",
+      "raw whole egg",
+      "raw whole eggs",
+      "raw shelled egg",
+      "raw shelled eggs",
+      "生去壳鸡蛋",
+      "生去殼雞蛋"
+    ],
+    "egg": [
+      "Hard-boiled egg (without shell)",
+      "hard-boiled egg",
+      "hard-boiled eggs",
+      "shelled hard-boiled egg",
+      "shelled hard-boiled eggs",
+      "hard-boiled eggs without shells",
+      "水煮鸡蛋",
+      "去壳水煮鸡蛋",
+      "去殼水煮雞蛋",
+      "水煮鸡蛋去壳"
+    ],
+    "egg_white": [
+      "Raw egg white"
+    ],
+    "duck_egg": [
+      "Raw whole duck egg (without shell)"
+    ],
+    "milk": [
+      "Whole milk"
+    ],
+    "yogurt": [
+      "Plain whole-milk yogurt"
+    ],
+    "soy_milk": [
+      "Plain soy milk"
+    ],
+    "tofu": [
+      "Firm tofu (calcium sulfate and nigari)"
+    ],
+    "tofu_soft": [
+      "Soft tofu (calcium sulfate and nigari)"
+    ],
+    "soybeans": [
+      "Dry soybeans"
+    ],
+    "edamame": [
+      "Cooked shelled edamame"
+    ],
+    "mung": [
+      "Dry mung beans"
+    ],
+    "adzuki": [
+      "Dry adzuki beans"
+    ],
+    "kidney": [
+      "Cooked red kidney beans"
+    ],
+    "peas": [
+      "Raw green peas"
+    ],
+    "peanut": [
+      "Raw shelled peanuts"
+    ],
+    "sesame": [
+      "Shelled sesame seeds"
+    ],
+    "walnut": [
+      "Shelled walnuts"
+    ],
+    "cashew": [
+      "Raw cashews"
+    ],
+    "almond": [
+      "Almonds"
+    ],
+    "broccoli": [
+      "Raw broccoli"
+    ],
+    "broccoli_cooked": [
+      "Boiled broccoli",
+      "煮西兰花",
+      "水煮西蘭花"
+    ],
+    "cauliflower": [
+      "Raw cauliflower"
+    ],
+    "cabbage": [
+      "Raw cabbage"
+    ],
+    "napa": [
+      "Raw napa cabbage"
+    ],
+    "bok_choy": [
+      "Raw bok choy"
+    ],
+    "spinach": [
+      "Raw spinach"
+    ],
+    "lettuce": [
+      "Raw lettuce"
+    ],
+    "celery": [
+      "Raw celery"
+    ],
+    "tomato": [
+      "Raw tomato"
+    ],
+    "cucumber": [
+      "Raw cucumber with skin"
+    ],
+    "eggplant": [
+      "Raw eggplant"
+    ],
+    "zucchini": [
+      "Raw zucchini"
+    ],
+    "pumpkin": [
+      "Raw pumpkin"
+    ],
+    "winter_melon": [
+      "Raw winter melon"
+    ],
+    "bitter_melon": [
+      "Raw bitter melon"
+    ],
+    "carrot": [
+      "Raw carrot"
+    ],
+    "radish": [
+      "Raw white radish"
+    ],
+    "onion": [
+      "Raw onion"
+    ],
+    "spring_onion": [
+      "Raw spring onion"
+    ],
+    "garlic": [
+      "Raw garlic"
+    ],
+    "ginger": [
+      "Raw ginger"
+    ],
+    "pepper": [
+      "Raw green pepper"
+    ],
+    "red_pepper": [
+      "Raw red sweet pepper"
+    ],
+    "chili": [
+      "Raw red chili pepper"
+    ],
+    "mushroom": [
+      "Raw white mushrooms"
+    ],
+    "shiitake": [
+      "Raw fresh shiitake mushrooms"
+    ],
+    "enoki": [
+      "Raw enoki mushrooms"
+    ],
+    "wood_ear": [
+      "Dried wood ear mushrooms"
+    ],
+    "kelp": [
+      "Raw kelp"
+    ],
+    "lotus": [
+      "Raw lotus root"
+    ],
+    "bamboo": [
+      "Raw bamboo shoots"
+    ],
+    "bean_sprout": [
+      "Raw mung bean sprouts"
+    ],
+    "green_bean": [
+      "Raw green beans"
+    ],
+    "apple": [
+      "Apple with skin"
+    ],
+    "banana": [
+      "Banana flesh"
+    ],
+    "orange": [
+      "Orange flesh"
+    ],
+    "pear": [
+      "Pear with skin"
+    ],
+    "grape": [
+      "Grapes"
+    ],
+    "watermelon": [
+      "Watermelon flesh"
+    ],
+    "mango": [
+      "Mango flesh"
+    ],
+    "pineapple": [
+      "Pineapple flesh"
+    ],
+    "strawberry": [
+      "Strawberries"
+    ],
+    "kiwi": [
+      "Kiwi flesh"
+    ],
+    "oil": [
+      "Soybean cooking oil"
+    ],
+    "sesame_oil": [
+      "Sesame oil"
+    ],
+    "butter": [
+      "Salted butter"
+    ],
+    "sugar": [
+      "Granulated white sugar"
+    ],
+    "honey": [
+      "Honey"
+    ],
+    "soy_sauce": [
+      "Regular soy sauce"
+    ],
+    "vinegar": [
+      "Distilled vinegar"
+    ],
+    "starch": [
+      "Cornstarch"
+    ],
+    "salt": [
+      "Table salt"
+    ],
+    "water": [
+      "Drinking water"
+    ],
+    "chocolate_milk": [
+      "Milk chocolate"
+    ],
+    "chocolate_dark": [
+      "Dark chocolate (70-85% cocoa)"
+    ],
+    "beef_chunk": [
+      "Raw beef chuck for stewing (with some fat)"
+    ],
+    "beef_lean": [
+      "Raw trimmed lean beef chuck"
+    ],
+    "pork_ribs": [
+      "Raw pork rib meat (bones removed)"
+    ],
+    "chicken_skin": [
+      "Raw chicken meat and skin (bones removed)"
+    ],
+    "glass_noodles": [
+      "Dry mung bean glass noodles"
+    ],
+    "oyster_sauce": [
+      "Oyster sauce"
+    ],
+    "hoisin": [
+      "Hoisin sauce"
+    ],
+    "ketchup": [
+      "Tomato ketchup"
+    ],
+    "snow_pea": [
+      "Raw snow peas (edible pods)"
+    ],
+    "chestnut": [
+      "Raw shelled chestnuts"
+    ],
+    "water_chestnut": [
+      "Raw peeled water chestnuts"
+    ],
+    "cilantro": [
+      "Raw cilantro leaves"
+    ],
+    "gai_lan": [
+      "Raw gai lan (Chinese broccoli)"
+    ],
+    "fava": [
+      "Raw fresh shelled fava beans"
+    ],
+    "black_pepper": [
+      "Ground black pepper"
+    ],
+    "fermented_tofu": [
+      "Fermented tofu"
+    ],
+    "fried_tofu": [
+      "Fried tofu"
+    ],
+    "sesame_paste": [
+      "Pure roasted sesame paste (no peanuts)"
+    ],
+    "pine_nut": [
+      "Pine nuts"
+    ],
+    "okra": [
+      "Raw okra"
+    ],
+    "loofah": [
+      "Raw loofah gourd"
+    ],
+    "yeast": [
+      "Dry yeast"
+    ],
+    "dish_001": [
+      "Tomato-and-egg stir-fry",
+      "stir-fried tomatoes and eggs",
+      "西红柿炒蛋",
+      "西紅柿炒蛋"
+    ],
+    "dish_002": [
+      "Shredded pork with green peppers"
+    ],
+    "dish_003": [
+      "Kung Pao chicken"
+    ],
+    "dish_004": [
+      "Mapo tofu"
+    ],
+    "dish_005": [
+      "Red-braised pork belly",
+      "Chinese red-braised pork belly"
+    ],
+    "dish_006": [
+      "Fish-fragrant shredded pork"
+    ],
+    "dish_007": [
+      "Twice-cooked pork",
+      "Sichuan twice-cooked pork"
+    ],
+    "dish_008": [
+      "Beef and potato stew"
+    ],
+    "dish_009": [
+      "Steamed chicken with shiitake mushrooms"
+    ],
+    "dish_010": [
+      "Steamed carp"
+    ],
+    "dish_011": [
+      "Steamed garlic shrimp"
+    ],
+    "dish_012": [
+      "Shrimp and scrambled eggs"
+    ],
+    "dish_013": [
+      "Spring onion and scrambled eggs"
+    ],
+    "dish_014": [
+      "Steamed egg custard"
+    ],
+    "dish_015": [
+      "Steamed egg custard with ground pork"
+    ],
+    "dish_016": [
+      "Cucumber salad"
+    ],
+    "dish_017": [
+      "Stir-fried broccoli"
+    ],
+    "dish_018": [
+      "Garlic bok choy"
+    ],
+    "dish_019": [
+      "Stir-fried spinach"
+    ],
+    "dish_020": [
+      "Stir-fried lettuce"
+    ],
+    "dish_021": [
+      "Hand-torn cabbage stir-fry"
+    ],
+    "dish_022": [
+      "Hot and sour shredded potatoes"
+    ],
+    "dish_023": [
+      "Di San Xian (potato, eggplant and pepper stir-fry)"
+    ],
+    "dish_024": [
+      "Braised eggplant"
+    ],
+    "dish_025": [
+      "Zucchini and scrambled eggs"
+    ],
+    "dish_026": [
+      "Bitter melon and scrambled eggs"
+    ],
+    "dish_027": [
+      "Winter melon with shrimp"
+    ],
+    "dish_028": [
+      "Tofu with shiitake mushrooms"
+    ],
+    "dish_029": [
+      "Napa cabbage and tofu stew"
+    ],
+    "dish_030": [
+      "Celery and pork stir-fry"
+    ],
+    "dish_031": [
+      "Green pepper and scrambled eggs"
+    ],
+    "dish_032": [
+      "Onion and pork stir-fry"
+    ],
+    "dish_033": [
+      "Mushroom and chicken stir-fry"
+    ],
+    "dish_034": [
+      "Lotus root and pork stir-fry"
+    ],
+    "dish_035": [
+      "Stir-fried mung bean sprouts"
+    ],
+    "dish_036": [
+      "Stir-fried green beans"
+    ],
+    "dish_037": [
+      "Tomato and egg soup"
+    ],
+    "dish_038": [
+      "Winter melon and pork meatball soup"
+    ],
+    "dish_039": [
+      "White radish and beef soup"
+    ],
+    "dish_040": [
+      "Sweetcorn and chicken soup"
+    ],
+    "dish_041": [
+      "Egg fried rice"
+    ],
+    "dish_042": [
+      "Shrimp fried rice"
+    ],
+    "dish_043": [
+      "Chicken fried rice"
+    ],
+    "dish_044": [
+      "Tomato and egg noodle soup"
+    ],
+    "dish_045": [
+      "Stir-fried noodles with shredded pork"
+    ],
+    "dish_046": [
+      "Vegetable stir-fried rice noodles"
+    ],
+    "dish_047": [
+      "Plain rice congee"
+    ],
+    "dish_048": [
+      "Millet porridge"
+    ],
+    "dish_049": [
+      "Pumpkin congee"
+    ],
+    "dish_050": [
+      "Adzuki bean congee"
+    ],
+    "dish_051": [
+      "Sweet and sour pork tenderloin"
+    ],
+    "dish_052": [
+      "Beijing-style shredded pork in sauce"
+    ],
+    "dish_053": [
+      "Moo shu pork"
+    ],
+    "dish_054": [
+      "Garlic pork tenderloin"
+    ],
+    "dish_055": [
+      "Pork and shiitake stir-fry"
+    ],
+    "dish_056": [
+      "Napa cabbage and pork stir-fry"
+    ],
+    "dish_057": [
+      "Cabbage and pork stir-fry"
+    ],
+    "dish_058": [
+      "Cauliflower and pork stir-fry"
+    ],
+    "dish_059": [
+      "Winter melon and pork stir-fry"
+    ],
+    "dish_060": [
+      "Cucumber and shredded pork stir-fry"
+    ],
+    "dish_061": [
+      "Carrot and shredded pork stir-fry"
+    ],
+    "dish_062": [
+      "Green beans and shredded pork"
+    ],
+    "dish_063": [
+      "Bamboo shoots and pork stir-fry"
+    ],
+    "dish_064": [
+      "Pork belly with garlic sauce"
+    ],
+    "dish_065": [
+      "Steamed pork belly with rice powder"
+    ],
+    "dish_066": [
+      "White radish and pork belly stew"
+    ],
+    "dish_067": [
+      "Red-braised pork belly with potatoes"
+    ],
+    "dish_068": [
+      "Red-braised pork ribs"
+    ],
+    "dish_069": [
+      "Sweet and sour pork ribs"
+    ],
+    "dish_070": [
+      "Garlic pork ribs"
+    ],
+    "dish_071": [
+      "Winter melon and pork rib soup"
+    ],
+    "dish_072": [
+      "Sweetcorn and pork rib soup"
+    ],
+    "dish_073": [
+      "Lotus root and pork rib soup"
+    ],
+    "dish_074": [
+      "Potato and pork rib stew"
+    ],
+    "dish_075": [
+      "Steamed pork ribs with shiitake mushrooms"
+    ],
+    "dish_076": [
+      "Glass noodles with ground pork"
+    ],
+    "dish_077": [
+      "Eggplant with ground pork"
+    ],
+    "dish_078": [
+      "Soft tofu with ground pork"
+    ],
+    "dish_079": [
+      "Green beans with ground pork"
+    ],
+    "dish_080": [
+      "Four-joy pork meatballs"
+    ],
+    "dish_081": [
+      "Steamed pork meatballs"
+    ],
+    "dish_082": [
+      "Pan-fried pork patties"
+    ],
+    "dish_083": [
+      "Pork-stuffed green peppers"
+    ],
+    "dish_084": [
+      "Pork-stuffed bitter melon"
+    ],
+    "dish_085": [
+      "Fried stuffed lotus root"
+    ],
+    "dish_086": [
+      "Beef and green pepper stir-fry"
+    ],
+    "dish_087": [
+      "Beef and onion stir-fry"
+    ],
+    "dish_088": [
+      "Beef and broccoli stir-fry"
+    ],
+    "dish_089": [
+      "Beef and tomato stew"
+    ],
+    "dish_090": [
+      "Beef and white radish stew"
+    ],
+    "dish_091": [
+      "Beef and shiitake stir-fry"
+    ],
+    "dish_092": [
+      "Beef and celery stir-fry"
+    ],
+    "dish_093": [
+      "Black pepper beef strips"
+    ],
+    "dish_094": [
+      "Spicy beef stir-fry"
+    ],
+    "dish_095": [
+      "Sichuan boiled beef in chili broth"
+    ],
+    "dish_096": [
+      "Soy-braised beef"
+    ],
+    "dish_097": [
+      "Red-braised beef"
+    ],
+    "dish_098": [
+      "Beef meatballs with potatoes"
+    ],
+    "dish_099": [
+      "Beef and tofu casserole"
+    ],
+    "dish_100": [
+      "Beef and snow pea stir-fry"
+    ],
+    "dish_101": [
+      "Yellow-braised chicken"
+    ],
+    "dish_102": [
+      "Chicken and potato stew"
+    ],
+    "dish_103": [
+      "Braised chicken with chestnuts"
+    ],
+    "dish_104": [
+      "Chili chicken"
+    ],
+    "dish_105": [
+      "Honey-glazed chicken wings"
+    ],
+    "dish_106": [
+      "Red-braised chicken wings"
+    ],
+    "dish_107": [
+      "Garlic chicken wings"
+    ],
+    "dish_108": [
+      "Ginger and spring onion chicken"
+    ],
+    "dish_109": [
+      "White-cut poached chicken"
+    ],
+    "dish_110": [
+      "Sichuan chicken in chili sauce"
+    ],
+    "dish_111": [
+      "Pan-fried chicken breast"
+    ],
+    "dish_112": [
+      "Chicken and green pepper stir-fry"
+    ],
+    "dish_113": [
+      "Cashew chicken"
+    ],
+    "dish_114": [
+      "Chicken in hoisin sauce"
+    ],
+    "dish_115": [
+      "Chicken and tomato stir-fry"
+    ],
+    "dish_116": [
+      "Chicken breast and broccoli stir-fry"
+    ],
+    "dish_117": [
+      "Chicken and wood ear mushroom stir-fry"
+    ],
+    "dish_118": [
+      "Chicken and carrot stew"
+    ],
+    "dish_119": [
+      "Steamed chicken with pumpkin"
+    ],
+    "dish_120": [
+      "Chicken and peanut stew"
+    ],
+    "dish_121": [
+      "Red-braised carp"
+    ],
+    "dish_122": [
+      "Sweet and sour fish"
+    ],
+    "dish_123": [
+      "Steamed cod"
+    ],
+    "dish_124": [
+      "Pan-fried salmon"
+    ],
+    "dish_125": [
+      "Fish slices in tomato broth"
+    ],
+    "dish_126": [
+      "Sichuan fish slices in chili broth"
+    ],
+    "dish_127": [
+      "Fish and tofu soup"
+    ],
+    "dish_128": [
+      "Poached shrimp"
+    ],
+    "dish_129": [
+      "Oil-braised peeled shrimp"
+    ],
+    "dish_130": [
+      "Salt and pepper shrimp"
+    ],
+    "dish_131": [
+      "Cashew shrimp"
+    ],
+    "dish_132": [
+      "Shrimp and broccoli stir-fry"
+    ],
+    "dish_133": [
+      "Shrimp and cucumber stir-fry"
+    ],
+    "dish_134": [
+      "Shrimp and pea stir-fry"
+    ],
+    "dish_135": [
+      "Steamed garlic shrimp with glass noodles"
+    ],
+    "dish_136": [
+      "Squid and green pepper stir-fry"
+    ],
+    "dish_137": [
+      "Squid and celery stir-fry"
+    ],
+    "dish_138": [
+      "Steamed egg custard with clams"
+    ],
+    "dish_139": [
+      "Clams with ginger and spring onion"
+    ],
+    "dish_140": [
+      "Steamed garlic scallops"
+    ],
+    "dish_141": [
+      "Stir-fried cauliflower"
+    ],
+    "dish_142": [
+      "Dry-pot cauliflower"
+    ],
+    "dish_143": [
+      "Blanched gai lan (Chinese broccoli)"
+    ],
+    "dish_144": [
+      "Garlic gai lan (Chinese broccoli)",
+      "garlic stir-fried Chinese broccoli (gai lan)",
+      "garlic stir-fried Chinese broccoli",
+      "garlic stir-fried gai lan",
+      "garlic gai lan",
+      "蒜蓉芥蘭"
+    ],
+    "dish_145": [
+      "Lettuce with oyster sauce"
+    ],
+    "dish_146": [
+      "Bok choy and shiitake stir-fry"
+    ],
+    "dish_147": [
+      "Napa cabbage and glass noodle stew"
+    ],
+    "dish_148": [
+      "Vinegar napa cabbage stir-fry"
+    ],
+    "dish_149": [
+      "Stir-fried napa cabbage"
+    ],
+    "dish_150": [
+      "Red-braised winter melon"
+    ],
+    "dish_151": [
+      "Stir-fried winter melon"
+    ],
+    "dish_152": [
+      "Steamed garlic eggplant"
+    ],
+    "dish_153": [
+      "Cold dressed eggplant"
+    ],
+    "dish_154": [
+      "Fish-fragrant eggplant"
+    ],
+    "dish_155": [
+      "Stir-fried potato slices with green peppers"
+    ],
+    "dish_156": [
+      "Potato and eggplant stew"
+    ],
+    "dish_157": [
+      "Dry-fried green beans"
+    ],
+    "dish_158": [
+      "Tiger-skin green peppers"
+    ],
+    "dish_159": [
+      "Garlic pumpkin"
+    ],
+    "dish_160": [
+      "Steamed pumpkin"
+    ],
+    "dish_161": [
+      "Pumpkin and wood ear mushroom stir-fry"
+    ],
+    "dish_162": [
+      "Stir-fried lotus root slices"
+    ],
+    "dish_163": [
+      "Sweet and sour lotus root slices"
+    ],
+    "dish_164": [
+      "Hot and sour diced lotus root"
+    ],
+    "dish_165": [
+      "Napa cabbage and wood ear mushroom stir-fry"
+    ],
+    "dish_166": [
+      "Wood ear mushroom salad"
+    ],
+    "dish_167": [
+      "Shredded kelp salad"
+    ],
+    "dish_168": [
+      "Bean sprout salad"
+    ],
+    "dish_169": [
+      "Spinach salad"
+    ],
+    "dish_170": [
+      "Enoki mushroom salad"
+    ],
+    "dish_171": [
+      "Shredded white radish salad"
+    ],
+    "dish_172": [
+      "Three-shred salad"
+    ],
+    "dish_173": [
+      "Cold dressed tofu"
+    ],
+    "dish_174": [
+      "Tomatoes with sugar"
+    ],
+    "dish_175": [
+      "Cauliflower and tomato stir-fry"
+    ],
+    "dish_176": [
+      "Garlic enoki mushrooms"
+    ],
+    "dish_177": [
+      "Shiitake and green pepper stir-fry"
+    ],
+    "dish_178": [
+      "Bok choy with two mushrooms"
+    ],
+    "dish_179": [
+      "Stir-fried snow peas"
+    ],
+    "dish_180": [
+      "Snow pea and wood ear mushroom stir-fry"
+    ],
+    "dish_181": [
+      "Sweetcorn and carrot stir-fry"
+    ],
+    "dish_182": [
+      "Sweetcorn with pine nuts"
+    ],
+    "dish_183": [
+      "Salt and pepper sweetcorn"
+    ],
+    "dish_184": [
+      "Stir-fried green peas"
+    ],
+    "dish_185": [
+      "Fava beans with spring onion oil"
+    ],
+    "dish_186": [
+      "Celery and shiitake stir-fry"
+    ],
+    "dish_187": [
+      "Celery salad"
+    ],
+    "dish_188": [
+      "Red-braised white radish"
+    ],
+    "dish_189": [
+      "Shredded carrot and potato stir-fry"
+    ],
+    "dish_190": [
+      "Bitter melon and green pepper stir-fry"
+    ],
+    "dish_191": [
+      "Onion and scrambled eggs"
+    ],
+    "dish_192": [
+      "Wood ear mushrooms and scrambled eggs"
+    ],
+    "dish_193": [
+      "Spinach and scrambled eggs"
+    ],
+    "dish_194": [
+      "Cucumber and scrambled eggs"
+    ],
+    "dish_195": [
+      "Carrot and scrambled eggs"
+    ],
+    "dish_196": [
+      "Okra and scrambled eggs"
+    ],
+    "dish_197": [
+      "Enoki mushrooms and scrambled eggs"
+    ],
+    "dish_198": [
+      "White mushrooms and scrambled eggs"
+    ],
+    "dish_199": [
+      "Steamed egg custard with shrimp"
+    ],
+    "dish_200": [
+      "Pan-fried egg"
+    ],
+    "dish_201": [
+      "Home-style tofu"
+    ],
+    "dish_202": [
+      "Red-braised tofu"
+    ],
+    "dish_203": [
+      "Fried tofu with ground pork"
+    ],
+    "dish_204": [
+      "Napa cabbage and fried tofu casserole"
+    ],
+    "dish_205": [
+      "Garlic pan-fried tofu"
+    ],
+    "dish_206": [
+      "Braised tofu with white mushrooms"
+    ],
+    "dish_207": [
+      "Celery and tofu stir-fry"
+    ],
+    "dish_208": [
+      "Tomato tofu"
+    ],
+    "dish_209": [
+      "Scrambled eggs with tofu"
+    ],
+    "dish_210": [
+      "Napa cabbage casserole with fermented tofu"
+    ],
+    "dish_211": [
+      "Napa cabbage and pork meatball soup"
+    ],
+    "dish_212": [
+      "Bok choy and tofu soup"
+    ],
+    "dish_213": [
+      "Spinach egg-drop soup"
+    ],
+    "dish_214": [
+      "Kelp and tofu soup"
+    ],
+    "dish_215": [
+      "Kelp and pork rib soup"
+    ],
+    "dish_216": [
+      "White radish and pork rib soup"
+    ],
+    "dish_217": [
+      "Loofah and egg soup"
+    ],
+    "dish_218": [
+      "Tomato and potato soup"
+    ],
+    "dish_219": [
+      "Chicken and shiitake soup"
+    ],
+    "dish_220": [
+      "Winter melon and clam soup"
+    ],
+    "dish_221": [
+      "Sweetcorn egg-drop soup"
+    ],
+    "dish_222": [
+      "Hot and sour soup",
+      "Chinese hot and sour soup"
+    ],
+    "dish_223": [
+      "Sweet mung bean soup"
+    ],
+    "dish_224": [
+      "Sweet adzuki bean soup"
+    ],
+    "dish_225": [
+      "Napa cabbage and glass noodle soup"
+    ],
+    "dish_226": [
+      "Hot and sour glass noodle soup"
+    ],
+    "dish_227": [
+      "Seafood and tofu soup"
+    ],
+    "dish_228": [
+      "Shiitake and tofu soup"
+    ],
+    "dish_229": [
+      "Tomato and shrimp soup"
+    ],
+    "dish_230": [
+      "Chicken and vegetable soup"
+    ],
+    "dish_231": [
+      "Ground pork fried rice"
+    ],
+    "dish_232": [
+      "Beef fried rice"
+    ],
+    "dish_233": [
+      "Mixed fried rice (Yangzhou-style reference)"
+    ],
+    "dish_234": [
+      "Chicken and shiitake one-pot rice"
+    ],
+    "dish_235": [
+      "Pork rib one-pot rice"
+    ],
+    "dish_236": [
+      "Potato one-pot rice"
+    ],
+    "dish_237": [
+      "Spring onion oil noodles"
+    ],
+    "dish_238": [
+      "Sesame paste noodles"
+    ],
+    "dish_239": [
+      "Beef noodle soup"
+    ],
+    "dish_240": [
+      "Shredded chicken noodle soup"
+    ],
+    "dish_241": [
+      "Pork and napa cabbage dumplings"
+    ],
+    "dish_242": [
+      "Pork and shiitake dumplings"
+    ],
+    "dish_243": [
+      "Beef and carrot dumplings"
+    ],
+    "dish_244": [
+      "Shrimp and egg dumplings"
+    ],
+    "dish_245": [
+      "Pork wontons"
+    ],
+    "dish_246": [
+      "Spring onion pancakes"
+    ],
+    "dish_247": [
+      "Egg pancakes"
+    ],
+    "dish_248": [
+      "Steamed plain buns (mantou)"
+    ],
+    "dish_249": [
+      "Steamed spring onion rolls (huajuan)"
+    ],
+    "dish_250": [
+      "Mung bean congee"
+    ]
+  }
+}

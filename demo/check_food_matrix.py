@@ -122,8 +122,8 @@ def validate(case, meal, foods):
             require(any(q["key"].endswith(".grams") for q in meal["questions"]),
                     "The app did not ask for the missing or invalid gram weight")
         elif expected == "clarify_food":
-            require(any(q["kind"] == "food" for q in meal["questions"]),
-                    "Unsupported food was not left for user matching")
+            require(any(q["kind"] == "unsupported" for q in meal["questions"]),
+                    "Unsupported food did not produce an explicit no-record message")
         return "Missing facts require user clarification; no nutrition totals shown."
 
     require(meal["status"] == "completed", f"Expected completed, received {meal['status']}")

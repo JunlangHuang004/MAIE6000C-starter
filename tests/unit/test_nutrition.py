@@ -58,7 +58,7 @@ def test_qwen_asks_for_unsupported_meal(monkeypatch):
     mock_qwen(monkeypatch, '{"items":[{"food_id":null,"name":"未知披萨","grams":100}]}')
     result = analyze_with_qwen('100g pizza', config())
     assert result.calories is None
-    assert result.questions[0]['kind'] == 'food'
+    assert result.questions[0]['kind'] == 'unsupported'
 
 
 def test_qwen_timeout_does_not_fabricate_result(monkeypatch):

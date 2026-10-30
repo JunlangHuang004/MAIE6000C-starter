@@ -219,21 +219,68 @@ test('Number and uncertainty answers remain filled and checked after switching',
   assert.equal(requests.length, before);
 });
 
-test('Unknown-food selection is translated and preserves its original catalogue ID', async t => {
-  const meal = clone(fixtures.missing_weight);
-  meal.draft[0].food_id = null;
-  meal.draft[0].name = 'mysterious pastry';
-  meal.questions = [{key:'0.food_id',kind:'food',
-    label:'“mysterious pastry”尚未匹配。请选择准确食物；没有合适选项请用下方对话补充食材。',
-    options:foods.map(food => ({value:food.id,label:food.name}))}];
-  const {document, $, clickLanguage} = await mount(t, {meal});
-  document.querySelector('#questions select').value = 'dish_004';
+for (const mode of ['basic', 'advanced']) {
+  test(`Unsupported food in ${mode} stays blocked, translated and correctable by text`, async t => {
+    const meal = clone(fixtures.missing_weight);
+    meal.mode = mode;
+    meal.food_text = '200克豉油鸡';
+    meal.draft = [{food_id:null,name:'豉油鸡',source_text:'豉油鸡',grams:200}];
+    const label = '数据库未找到“豉油鸡”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。';
+    meal.questions = [{key:'0.food_id',kind:'unsupported',label}];
+    meal.conversation = [{role:'user',content:meal.food_text},{role:'assistant',content:label}];
+    const corrected = {...clone(fixtures.tomato_egg_dish),id:meal.id,mode,revision:meal.revision+1};
+    const {window, document, $, requests, clickLanguage} = await mount(t, {meal,
+      respond:request => request.method === 'POST' ? {body:{analysis:corrected}} : undefined});
+    assert.match($('questions').textContent, /数据库未找到.*豉油鸡.*对应食物记录/);
+    assert.equal(document.querySelector('#questions select'), null);
+    assert.equal($('answer-submit').hidden, true);
+    assert.equal($('answer-submit').disabled, true);
+    assert.equal($('reply-form').hidden, false);
+    assert.equal($('result').hidden, true);
+    assert.equal($('confirm').disabled, true);
+    const before = requests.length;
+    $('reply').value = '更正：200克番茄炒蛋';
+    await clickLanguage('en');
+    assert.match($('questions').textContent, /豉油鸡: no corresponding food record/);
+    assert.match($('questions').textContent, /will not be substituted/);
+    assert.match($('history').textContent, /no corresponding food record/);
+    assert.match($('message').textContent, /no nutrition estimate/);
+    assert.equal($('reply').value, '更正：200克番茄炒蛋');
+    assert.equal(requests.length, before);
+    await clickLanguage('zh');
+    assert.match($('questions').textContent, /数据库未找到/);
+    $('answer-form').dispatchEvent(new window.Event('submit', {bubbles:true,cancelable:true}));
+    await flush();
+    assert.equal(requests.length, before, 'Unsupported rows must not submit an empty or substituted answer');
+    $('reply-form').dispatchEvent(new window.Event('submit', {bubbles:true,cancelable:true}));
+    await flush();
+    const sent = requests.find(request => request.method === 'POST');
+    assert.equal(sent.body.message, '更正：200克番茄炒蛋');
+    assert.equal(sent.body.answers, undefined);
+    assert.equal($('result').hidden, false);
+  });
+}
+
+test('Mixed unsupported food and known recipe keep recipe answers usable without substitution', async t => {
+  const meal = clone(fixtures.mapo_tofu);
+  meal.draft.push({food_id:null,name:'豉油鸡',grams:200});
+  meal.questions.push({key:'1.food_id',kind:'unsupported',
+    label:'数据库未找到“豉油鸡”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。'});
+  const {window, document, $, requests, clickLanguage} = await mount(t, {meal,
+    respond:request => request.method === 'POST' ? {body:{analysis:meal}} : undefined});
+  assert.equal($('result').hidden, true);
+  assert.equal($('answer-submit').hidden, false);
+  document.querySelector('[data-ingredient="oil"]').value = '5';
+  document.querySelector('[data-accept]').checked = true;
   await clickLanguage('en');
-  const select = document.querySelector('#questions select');
-  assert.equal(select.value, 'dish_004');
-  assert.match(select.selectedOptions[0].textContent, /Mapo/i);
-  assert.match($('questions').textContent, /mysterious pastry/);
-  assert.doesNotMatch($('questions').textContent, /尚未匹配|请选择准确食物/);
+  assert.match($('questions').textContent, /no corresponding food record/);
+  assert.equal(document.querySelector('[data-ingredient="oil"]').value, '5');
+  $('answer-form').dispatchEvent(new window.Event('submit', {bubbles:true,cancelable:true}));
+  await flush();
+  const sent = requests.find(request => request.method === 'POST');
+  assert.equal(sent.body.answers['0.recipe'].ingredients.oil, 5);
+  assert.equal(sent.body.answers['1.food_id'], undefined);
+  assert.equal($('result').hidden, true, 'A known recipe must not cause a partial meal estimate');
 });
 
 test('Bone-inclusive weight question remains an edible-weight clarification in English', async t => {

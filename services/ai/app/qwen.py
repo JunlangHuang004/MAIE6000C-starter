@@ -6,13 +6,19 @@ import unicodedata
 import httpx
 
 from services.common.config import Settings
+from services.common.food_matching import ground_food_items, matching_aliases
 from services.common.meal_engine import ExtractedMeal, catalogue, evaluate_mode
 from services.common.schemas import NutritionAnalysisResponse
 
 SYSTEM_PROMPT = '''你是餐食信息提取器。只返回 JSON {"items":[...]}，不要计算营养。
-每项字段：food_id, name, grams, weight_basis, preparation, oil_g, uncertainty,
+每项字段：food_id, name, source_text, grams, weight_basis, preparation, oil_g, uncertainty,
 recipe_ingredients, recipe_yield_g, portion_count, portion_unit, weight_includes_inedible。
 food_id 必须来自下方目录；无法精确匹配则 null，name 保留原食物描述。
+source_text 必须逐字复制用户原文中完整的食物名称（保留菜名的食材和做法，不含克数）。
+不得把 source_text 翻译成目录名称，不得截取其他菜名里的一个食材充当匹配。
+匹配只允许目录名称或给出的 aliases/matching_aliases；未列出的名称填 food_id=null。
+食物身份在基础版也不能猜测。豉油鸡/酱油鸡没有记录，必须为null，绝不能映射为清蒸鲤鱼、
+白切鸡或酱油。蒜蓉芥蓝不是清炒西兰花。未知菜也不能拆成模型猜出的配料。
 重量只取用户明确的克数；碗/个/份不能自行换算，grams 填 null。
 明确的碗/个/杯/份数量记录 portion_count，单位对应 bowl/piece/cup/serving。
 没说数量则 portion_count 和 portion_unit 为 null。若给出每份克数及数量，grams 为总克数。
@@ -107,10 +113,12 @@ def analyze_with_qwen(food_text: str, settings: Settings, history=None, mode='ad
     compact = [{k:f[k] for k in ('id','name','kind','state','aliases','method','preparations')
                 if k in f}
                for f in catalogue()['foods']]
+    for food in compact:
+        food['matching_aliases'] = matching_aliases().get(food['id'], [])
     prompt = SYSTEM_PROMPT
     if mode == 'basic':
-        prompt += ('\n当前基础版：若名称泛指常见种类，可选择常见目录条目，但必须在 uncertainty '
-                   '说明种类假设。例如未指明种类的巧克力可选牛奶巧克力。'
+        prompt += ('\n当前基础版：仅在食物名称准确匹配后由程序估算份量和配方。'
+                   '目录没有对应名称或类型不明确时 food_id=null，不得用其他条目代替。'
                    '不要猜克数、油量、生熟或配方，缺失值仍填 null；程序会标注默认值。')
     content = json.dumps(history, ensure_ascii=False) if history else food_text
     try:
@@ -135,8 +143,9 @@ def analyze_with_qwen(food_text: str, settings: Settings, history=None, mode='ad
         ingredients = {f['id'] for f in catalogue()['foods'] if f['kind'] == 'ingredient'}
         if any(set(item.recipe_ingredients or {}) - ingredients for item in meal.items):
             raise ValueError('Invalid recipe ingredients')
-        if any(item.food_id is not None and item.food_id not in allowed for item in meal.items):
-            raise ValueError('Unknown catalogue ID')
+        for item in meal.items:
+            if item.food_id is not None and item.food_id not in allowed:
+                item.food_id = None
         explicit_weights = _explicit_weights(food_text, history)
         for item in meal.items:
             if (item.portion_unit and item.portion_count is not None
@@ -146,5 +155,6 @@ def analyze_with_qwen(food_text: str, settings: Settings, history=None, mode='ad
                 item.grams = None
     except (ValueError, KeyError, IndexError, TypeError):
         raise RuntimeError('千问返回的数据格式不正确，请重试或简化餐食描述。') from None
+    ground_food_items(meal.items, food_text, history)
     return NutritionAnalysisResponse(
         **evaluate_mode([item.model_dump() for item in meal.items], mode))

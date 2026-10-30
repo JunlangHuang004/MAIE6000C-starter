@@ -63,6 +63,10 @@
     $('new').hidden = !analysis;
     $('new').disabled = locked;
     for (const id of ['reply-submit','answer-submit']) $(id).disabled = locked;
+    const answerable = (analysis?.questions || []).some(q => ['number','choice','food','confirm','recipe'].includes(q.kind));
+    $('answer-submit').hidden = !answerable;
+    $('answer-submit').disabled = locked || !answerable;
+    document.querySelector('[data-i18n="answerHelp"]').hidden = !answerable;
     $('confirm').disabled = locked || analysis?.status !== 'completed';
     $('reply').disabled = locked;
     $('mode').disabled = !!analysis || busy;
@@ -124,7 +128,8 @@
     for (const q of analysis.questions || []) {
       const row = el('div'); row.className = 'question';
       row.dataset.key = q.key; row.dataset.kind = q.kind;
-      const label = el('label'); label.dataset.questionLabel = q.key;
+      const label = el(q.kind === 'unsupported' ? 'p' : 'label'); label.dataset.questionLabel = q.key;
+      if (q.kind === 'unsupported') row.classList.add('error');
       row.append(label);
       if (q.kind === 'number') {
         const input = numberInput(null,q.min,q.max);
@@ -243,7 +248,7 @@
       const next = await api('/analyses/' + analysis.id);
       analysis = next; render();
       if (next.status === 'queued') timer = setTimeout(poll,1500);
-      else if (next.status === 'needs_input') message({key:'needsInputMessage'});
+      else if (next.status === 'needs_input') message({key:next.questions?.some(q => q.kind === 'unsupported') ? 'unsupportedMessage' : 'needsInputMessage'});
       else if (next.status === 'failed') message(next.error_message || {key:'failedMessage'},true);
       else message({key:'savedMessage'});
     } catch (error) { message({raw:error.message,recovery:true},true); }
@@ -271,6 +276,7 @@
       const answers = {};
       for (const row of $('questions').children) {
         const kind = row.dataset.kind;
+        if (kind === 'unsupported') continue;
         let value;
         if (kind === 'recipe') {
           if (!row.querySelector('[data-accept]').checked) continue;
@@ -348,6 +354,7 @@
         $('meal').value = analysis.food_text; render();
         if (analysis.status === 'queued') { message({key:'parsing'}); timer = setTimeout(poll,500); }
         else if (analysis.status === 'failed') message(analysis.error_message || {key:'failedMessage'},true);
+        else if (analysis.status === 'needs_input' && analysis.questions?.some(q => q.kind === 'unsupported')) message({key:'unsupportedMessage'});
       }
     } catch (error) { message(error.message,true); }
   }

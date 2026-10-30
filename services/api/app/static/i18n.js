@@ -47,6 +47,8 @@
     confirmed: ['已确认保存', 'Confirmed and saved'],
     parsing: ['正在解析并检查缺失信息…', 'Reading the meal and checking for missing details…'],
     needsInputMessage: ['还需要这些信息，回答后会继续估算。', 'Please answer these questions to continue the estimate.'],
+    unsupportedMessage: ['以下食物没有对应记录，本餐暂不提供营养估算。请核对名称或补充实际食材。', 'Some foods below have no corresponding records, so this meal has no nutrition estimate. Check their names or describe the actual ingredients.'],
+    unsupportedFood: ['数据库未找到“{name}”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。', '{name}: no corresponding food record was found, so it cannot be estimated. Check the name or provide the actual ingredients and their gram weights below. Other foods will not be substituted.'],
     failedMessage: ['估算暂未完成，请补充描述后重试。', 'The estimate could not be completed. Add details and try again.'],
     savedMessage: ['估算已保存，请核对后确认。', 'The estimate is saved. Review it before confirming.'],
     confirmedMessage: ['这餐的估算已确认并保存。', 'This meal estimate is confirmed and saved.'],
@@ -115,6 +117,7 @@
     const [index, field] = q.key.split('.');
     const item = draft[Number(index)] || {};
     const name = foodName(item.food_id, item.name || 'This food');
+    if (q.kind === 'unsupported') return t('unsupportedFood', {name:item.name || 'This food'});
     if (q.kind === 'recipe') return `${name}: review the reference preparation and whole-batch recipe. You can change ingredient quantities and finished batch weight. These are estimates, not measured amounts for your meal.`;
     if (q.kind === 'food') {
       if (q.label.includes('参考做法')) return `${name}: the reference preparation does not match your description. Select a matching food or explain the raw ingredients and actual preparation below; do not substitute a different cooked food.`;
@@ -156,6 +159,7 @@
     '对话资料过长，请整理后开始新餐食。': 'The conversation is too long. Summarise it and start a new meal.',
     '回答已过期或字段不正确，请刷新后重试。': 'These answers are out of date or invalid. Reload and try again.',
     '请选择提供的选项。': 'Choose one of the supplied options.',
+    '没有对应的食物记录，请通过下方对话更正菜名或提供实际食材。': 'No corresponding food record was found. Use the conversation below to correct the name or provide the actual ingredients.',
     '重量必须是数字。': 'Weight must be a number.',
     '重量超出允许范围。': 'Weight is outside the allowed range.',
     '请确认或补充说明。': 'Please confirm or provide more details.',
@@ -201,6 +205,8 @@
   }
   function generatedQuestion(text) {
     let m;
+    if ((m = text.match(/^数据库未找到“(.+)”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。$/))) return t('unsupportedFood', {name:m[1]});
+    if ((m = text.match(/^“(.+)”没有对应的食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。$/))) return t('unsupportedFood', {name:m[1]});
     if ((m = text.match(/^(.+)吃了多少克？请填可食部分重量。$/))) return `${translatedNames(m[1])}: how many grams did you eat? Enter the edible portion weight.`;
     if ((m = text.match(/^(.+)是什么做法？$/))) return `${translatedNames(m[1])}: how was it prepared?`;
     if ((m = text.match(/^(.+)的食用克数是做熟后的成品重量吗？$/))) return `${translatedNames(m[1])}: is the portion weight the finished cooked edible weight?`;

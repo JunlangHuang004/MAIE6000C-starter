@@ -23,6 +23,7 @@ class ExtractedItem(BaseModel):
     model_config = ConfigDict(extra='forbid', allow_inf_nan=False)
     food_id: str | None = Field(default=None, max_length=100)
     name: str = Field(min_length=1, max_length=120)
+    source_text: str | None = Field(default=None, min_length=1, max_length=120)
     grams: float | None = Field(default=None, gt=0, le=10000)
     weight_includes_inedible: bool | None = None
     weight_basis: Literal['raw', 'cooked', 'as_sold'] | None = None
@@ -56,8 +57,8 @@ def evaluate(draft):
         name = item['name']
         if not food:
             questions.append(question(prefix+'food_id',
-                f'“{name}”尚未匹配。请选择准确食物；没有合适选项请用下方对话补充食材。',
-                'food', options=[{'value': f['id'], 'label': f['name']} for f in foods.values()]))
+                f'数据库未找到“{name}”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材'
+                '及各自克数；不会使用其他食物代替。', 'unsupported'))
             continue
         name = food['name']
         if item.get('weight_includes_inedible'):
@@ -169,6 +170,8 @@ def apply_answers(draft, answers, mode='advanced'):
         raise ValueError('回答已过期或字段不正确，请刷新后重试。')
     for key,value in answers.items():
         q = pending[key]
+        if q['kind'] not in ('choice', 'food', 'number', 'confirm', 'recipe'):
+            raise ValueError('没有对应的食物记录，请通过下方对话更正菜名或提供实际食材。')
         i, field = key.split('.',1)
         item = draft[int(i)]
         if q['kind'] in ('choice','food'):
