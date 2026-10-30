@@ -83,6 +83,10 @@ def _detail_clause(value):
     if without_mass != value and (
             _wrapper(without_mass, _PREFIX) or _wrapper(without_mass, _SUFFIX)):
         return True
+    if without_mass != value and re.fullmatch(
+            r'(?:实际|實際|吃了|吃下|可食部分|还是|還是|仍是|是|为|為|共|总共|'
+            r'熟重|生重|\s)+', without_mass):
+        return True
     if re.fullmatch(r'(?:改成|改为|改為|换成|換成)?\s*' + _MASS + r'(?:熟重|生重|少油)?',
                     value, re.I):
         return True
@@ -127,18 +131,30 @@ def is_user_mention(mention, texts):
 
 
 def _current_identity_texts(texts):
-    """Do not resurrect an earlier dish after an explicit name replacement."""
-    latest = texts[-1]
-    replacement = re.search(
-        r'(?:改成|改为|改為|换成|換成|更正为|更正為|其实是|其實是|'
-        r'\bchange\b.+?\bto\b|\breplace\b.+?\bwith\b)\s*(.+)', latest, re.I,
-    )
-    if replacement:
-        remaining = re.sub(_MASS, '', replacement.group(1), flags=re.I)
-        remaining = re.sub(r'[\s,，。.;；]|熟重|生重|少油|多油|不加油|去骨|去壳', '', remaining)
-        if remaining:
-            # Retain the replacement phrase itself so its grammar is not a food name.
-            return [replacement.group(1)]
+    """Keep the last explicit replacement and every subsequent user utterance."""
+    for index in range(len(texts) - 1, -1, -1):
+        text = texts[index]
+        consumed_ingredients = re.fullmatch(
+            r'\s*(?:(?:改成|改为|改為|换成|換成|更正为|更正為)\s*)?'
+            r'(?:这次实际吃下的食材|這次實際吃下的食材|实际吃下的食材|實際吃下的食材)'
+            r'\s*(?:是|为|為)?\s*[:：]\s*(.+)', text, re.S,
+        )
+        if consumed_ingredients:
+            # Capture the whole multiline list, including any unsupported additions.
+            # A whole-pot ingredient list alone must not silently become intake.
+            return [consumed_ingredients.group(1), *texts[index + 1:]]
+        replacement = re.fullmatch(
+            r'\s*(?:改成|改为|改為|换成|換成|更正为|更正為|其实是|其實是|'
+            r'\bchange\b[^\n]+?\bto\b|\breplace\b[^\n]+?\bwith\b)\s*(.+)',
+            text, re.I | re.S,
+        )
+        if replacement:
+            remaining = re.sub(_MASS, '', replacement.group(1), flags=re.I)
+            remaining = re.sub(
+                r'[\s,，。.;；]|熟重|生重|少油|多油|不加油|去骨|去壳', '', remaining)
+            if remaining:
+                # Quantity-only replies do not reset an earlier identity replacement.
+                return [replacement.group(1), *texts[index + 1:]]
     return texts
 
 

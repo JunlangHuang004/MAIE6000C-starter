@@ -155,6 +155,101 @@ def test_quantity_correction_retains_source_but_identity_replacement_does_not():
     ])[0].food_id is None
 
 
+def test_natural_portion_correction_does_not_turn_weight_details_into_foods(monkeypatch):
+    result = extract(monkeypatch, '一份番茄炒蛋，两个水煮鸡蛋', [
+        {'food_id':'dish_001','name':'番茄炒蛋','source_text':'番茄炒蛋','grams':150},
+        {'food_id':'egg','name':'水煮鸡蛋','source_text':'水煮鸡蛋','grams':100},
+    ], history=[{'role':'user',
+                'content':'番茄炒蛋实际吃了150克熟重，水煮鸡蛋可食部分还是100克。'}])
+    assert result.calories is not None
+    assert [i['food_id'] for i in result.draft] == ['dish_001', 'egg']
+    assert [i['grams'] for i in result.draft] == [150, 100]
+
+
+def test_common_cooked_white_rice_name_is_a_reviewed_alias(monkeypatch):
+    result = extract(monkeypatch, '100克熟白米饭', [
+        {'food_id':'rice','name':'熟白米饭','source_text':'熟白米饭','grams':100}])
+    assert result.calories == 130
+
+
+def test_unknown_dish_can_be_replaced_by_explicit_consumed_ingredients(monkeypatch):
+    reply = '改成这次实际吃下的食材：生鸡胸肉150克、食用油5克、酱油10克'
+    result = extract(monkeypatch, '豉油鸡200克', [
+        {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':150},
+        {'food_id':'oil','name':'食用油','source_text':'食用油','grams':5},
+        {'food_id':'soy_sauce','name':'酱油','source_text':'酱油','grams':10},
+    ], history=[{'role':'user','content':reply}])
+    assert result.calories is not None
+    assert [i['food_id'] for i in result.draft] == ['chicken', 'oil', 'soy_sauce']
+    assert [i['grams'] for i in result.draft] == [150, 5, 10]
+
+
+@pytest.mark.parametrize('replacement', [
+    '改成这次实际吃下的食材：生鸡胸肉150克',
+    '这次实际吃下的食材：生鸡胸肉150克',
+    '改成生鸡胸肉150克',
+    'Replace the meal with 生鸡胸肉150克',
+])
+def test_multiline_replacement_keeps_unsupported_trailing_food(monkeypatch, replacement):
+    result = extract(monkeypatch, '豉油鸡200克', [
+        {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':150},
+    ], history=[{'role':'user','content':replacement + '\n另外200克豉油鸡'}])
+    assert result.calories is None and result.details == []
+    assert any('豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
+
+
+@pytest.mark.parametrize('replacement', [
+    '改成这次实际吃下的食材：生鸡胸肉150克',
+    '改成生鸡胸肉150克',
+])
+def test_replacement_stays_current_after_later_portion_correction(monkeypatch, replacement):
+    result = extract(monkeypatch, '豉油鸡200克', [
+        {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':120},
+    ], history=[
+        {'role':'user','content':replacement},
+        {'role':'user','content':'改成120克'},
+        {'role':'user','content':'生鸡胸肉实际吃了120克生重'},
+    ])
+    assert result.calories == 144
+    assert [item['food_id'] for item in result.draft] == ['chicken']
+
+
+@pytest.mark.parametrize('replacement', [
+    '改成这次实际吃下的食材：生鸡胸肉150克',
+    '改成生鸡胸肉150克',
+])
+def test_replacement_keeps_later_unknown_additions_and_portion_reply(monkeypatch, replacement):
+    result = extract(monkeypatch, '豉油鸡200克', [
+        {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':120},
+    ], history=[
+        {'role':'user','content':replacement},
+        {'role':'user','content':'另外200克豉油鸡'},
+        {'role':'user','content':'改成120克'},
+    ])
+    assert result.calories is None and result.details == []
+    assert any('豉油鸡' in q['label'] and q['kind'] == 'unsupported' for q in result.questions)
+
+
+@pytest.mark.parametrize('reply', [
+    '另外200克豉油鸡，改成这次实际吃下的食材：生鸡胸肉150克',
+    '不要改成这次实际吃下的食材：生鸡胸肉150克',
+    '另外200克豉油鸡，改成生鸡胸肉150克',
+])
+def test_embedded_or_negated_replacement_does_not_discard_other_foods(monkeypatch, reply):
+    result = extract(monkeypatch, '豉油鸡200克', [
+        {'food_id':'chicken','name':'生鸡胸肉','source_text':'生鸡胸肉','grams':150},
+    ], history=[{'role':'user','content':reply}])
+    assert result.calories is None and result.details == []
+    assert any(q['kind'] == 'unsupported' for q in result.questions)
+
+
+def test_whole_pot_ingredient_list_does_not_resolve_unknown_dish_as_personal_intake():
+    items = [ExtractedItem(name='生鸡胸肉', source_text='生鸡胸肉', food_id='chicken', grams=500)]
+    result = ground_food_items(items, '豉油鸡200克', [
+        {'role':'user','content':'整锅食材是生鸡胸肉500克，成品800克，我吃了200克'}])
+    assert any(item.food_id is None for item in result)
+
+
 def test_recipe_corrections_are_not_unsupported_extra_foods(monkeypatch):
     result = extract(monkeypatch, '200克宫保鸡丁熟重，不加花生，整锅油5克，成品400克', [{
         'food_id':'dish_003','name':'宫保鸡丁','source_text':'宫保鸡丁','grams':200,
