@@ -6,6 +6,11 @@ open **http://localhost:8003/app** directly. **No account registration or login 
 required.** The model key is configured on the server, not entered by the user.
 The `test` branch and its account/personalization features are outside this guide.
 
+The current interface also has **中文 / English** buttons in its header. Select
+**中文** to match these screenshots, or **English** to use translated controls and
+clarification forms. Switching preserves the meal and unsent form values. The
+screenshots below were captured before the language buttons were added.
+
 The screenshots follow one synthetic meal record through the workflow. In your
 own run, compare the record ID immediately before and after reload; it must remain
 the same. Your new record will have its own ID. The figures depend on the selected
@@ -150,6 +155,23 @@ result rather than creating another estimate.
 The browser remembers the last viewed meal ID. This branch has no independent
 accounts or personal history list. A reviewer can copy the displayed ID and
 inspect `GET /analyses/{id}` in http://localhost:8003/docs.
+
+## Optional: use the English interface
+
+Select **English** in the header. The same workflow is available with English
+controls, clarification forms, food display names and recipe explanations. Select
+**中文** to switch back. Unsent answers stay in their fields, and the browser
+remembers the selected language after reloading.
+
+This additional screenshot uses a separate synthetic record to show the current
+language controls; it does not replace the six-step meal sequence above.
+
+![English interface with the language controls in the header](images/07-english-interface.png)
+
+See the [language-switch verification](../docs/evidence/ui-language-verification.md)
+for the form-preservation and confirmation checks. User descriptions and free-form
+model notes retain their original wording, and switching language does not change
+the model's food-recognition behavior.
 
 ## What to inspect beyond the pictures
 

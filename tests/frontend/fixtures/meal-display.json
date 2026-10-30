@@ -1,0 +1,261 @@
+{
+  "tomato_egg_dish": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "200g of the Chinese dish tomato-and-egg stir-fry, cooked edible weight."
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_001",
+        "name": "番茄炒蛋",
+        "grams": 200.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "番茄炒蛋",
+        "grams": 200.0,
+        "food_id": "dish_001",
+        "nutrients": {
+          "calories": 210.2,
+          "protein_g": 10.7,
+          "carbs_g": 8.9,
+          "fat_g": 14.9
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：炒",
+          "整锅成品 400g；本次食用 200g",
+          "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 15g、白砂糖 5g、食盐 2g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "170457",
+            "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+            "description": "Tomatoes, red, ripe, raw, year round average",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171287",
+            "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+            "description": "Egg, whole, raw, fresh",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169655",
+            "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+            "description": "Sugars, granulated",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "173468",
+            "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+            "description": "Salt, table",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ]
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "番茄炒蛋 200g",
+    "revision": 1,
+    "confirmed_at": null,
+    "id": "ui-fixture-tomato_egg_dish",
+    "food_text": "200g of the Chinese dish tomato-and-egg stir-fry, cooked edible weight.",
+    "status": "completed",
+    "calories": 210.2,
+    "protein_g": 10.7,
+    "carbs_g": 8.9,
+    "fat_g": 14.9,
+    "created_at": "2026-10-30T16:18:13.296382Z",
+    "updated_at": "2026-10-30T16:18:22.519000Z"
+  },
+  "mapo_tofu": {
+    "mode": "advanced",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "180g Mapo tofu, cooked edible weight."
+      },
+      {
+        "role": "assistant",
+        "content": "麻婆豆腐采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_004",
+        "name": "麻婆豆腐",
+        "grams": 180.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "as_served",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.recipe",
+        "label": "麻婆豆腐采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+        "kind": "recipe",
+        "recipe": {
+          "yield_g": 620.0,
+          "ingredients": {
+            "tofu_soft": 400.0,
+            "pork_ground": 80.0,
+            "oil": 15.0,
+            "soy_sauce": 20.0,
+            "chili": 10.0,
+            "starch": 10.0,
+            "water": 150.0
+          }
+        },
+        "method": "烧（简化家常配方，不含豆瓣酱）",
+        "ingredients": [
+          {
+            "id": "tofu_soft",
+            "name": "软豆腐（硫酸钙及卤水）",
+            "grams": 400.0
+          },
+          {
+            "id": "pork_ground",
+            "name": "生猪肉末",
+            "grams": 80.0
+          },
+          {
+            "id": "oil",
+            "name": "大豆食用油",
+            "grams": 15.0
+          },
+          {
+            "id": "soy_sauce",
+            "name": "普通酱油",
+            "grams": 20.0
+          },
+          {
+            "id": "chili",
+            "name": "生红辣椒",
+            "grams": 10.0
+          },
+          {
+            "id": "starch",
+            "name": "玉米淀粉",
+            "grams": 10.0
+          },
+          {
+            "id": "water",
+            "name": "饮用水",
+            "grams": 150.0
+          }
+        ]
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "id": "ui-fixture-mapo_tofu",
+    "food_text": "180g Mapo tofu, cooked edible weight.",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-10-30T16:18:29.426832Z",
+    "updated_at": "2026-10-30T16:18:37.124878Z"
+  },
+  "missing_weight": {
+    "mode": "advanced",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "One bowl of steamed white rice, cooked, with no added oil. I do not know its weight in grams."
+      },
+      {
+        "role": "assistant",
+        "content": "白米饭：portion weight unknown; need bowl size or grams 请核对所选食物，或在下方补充更正。\n白米饭吃了多少克？请填可食部分重量。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "rice",
+        "name": "白米饭",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "steamed",
+        "oil_g": 0.0,
+        "portion_count": 1.0,
+        "portion_unit": "bowl",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "portion weight unknown; need bowl size or grams"
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.resolved",
+        "label": "白米饭：portion weight unknown; need bowl size or grams 请核对所选食物，或在下方补充更正。",
+        "kind": "confirm"
+      },
+      {
+        "key": "0.grams",
+        "label": "白米饭吃了多少克？请填可食部分重量。",
+        "kind": "number",
+        "min": 0.1,
+        "max": 10000
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "id": "ui-fixture-missing_weight",
+    "food_text": "One bowl of steamed white rice, cooked, with no added oil. I do not know its weight in grams.",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-10-30T16:18:47.604734Z",
+    "updated_at": "2026-10-30T16:18:55.646691Z"
+  }
+}

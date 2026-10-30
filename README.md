@@ -21,6 +21,14 @@ regional variants are not separate catalogue items. See the [250-dish index](doc
 
 ## Estimation modes
 
+Use **中文 / English** in the page header to switch the interface language. The
+browser remembers the selection. Controls, clarification forms, nutrition labels,
+catalogue display names and reference-method descriptions are available in both
+languages. Switching preserves the current meal and unsent form values; it does
+not submit a request to Qwen or change saved nutrition values. User-entered text
+and free-form model notes retain their original wording. English display names
+do not guarantee that Qwen will correctly recognize every English meal name.
+
 | Mode | Use case | Handling missing information |
 | --- | --- | --- |
 | Basic | Quickly estimate a description such as “一份番茄炒蛋，两个水煮鸡蛋” | Apply and display reference portions, recipes and oil assumptions; ask about unmatched foods or contradictory facts |
@@ -73,6 +81,21 @@ Build the current images first. Unit/integration tests do not require Qwen crede
 docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
 docker compose run --rm --no-deps api ruff check .
 ```
+
+The language-switch regression tests run separately with Node.js 22 and jsdom.
+They use synthetic responses and never contact a model or the running database:
+
+```sh
+npm ci --prefix tests/frontend
+npm test --prefix tests/frontend
+```
+
+The same UI checks run in GitHub Actions on pushes to `nutrichat` and `main`, and
+on pull requests. npm packages are test-only; the application serves plain
+JavaScript with no runtime npm installation.
+
+See the [dated interface-language verification](docs/evidence/ui-language-verification.md)
+for automated results and the browser recipe-edit/confirmation check.
 
 After configuring Qwen and starting the stack, run the live checks below. These
 consume model quota; the dialogue check creates synthetic saved meal records.

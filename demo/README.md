@@ -76,6 +76,14 @@ account's quota; healthy containers alone do not prove model access.
 
 ### Follow the user workflow
 
+The header's **中文 / English** buttons switch the interface language and remember
+the preference in this browser. The steps and screenshots below use Chinese;
+select **中文** to follow the same labels, or **English** for translated controls,
+questions, catalogue names and recipe explanations. Switching does not submit a
+meal or discard unsent form entries. User descriptions and free-form model notes
+remain in their original language. This display setting does not change Qwen's
+food-recognition behavior.
+
 1. Keep **基础版 · 快速大概估算** (Basic) selected. If an old meal is displayed,
    first click **新的一餐** (New meal).
 2. In **餐食描述** (Meal description), enter `一份番茄炒蛋，两个水煮鸡蛋` —

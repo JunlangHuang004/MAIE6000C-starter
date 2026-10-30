@@ -234,7 +234,21 @@ def read_analysis(
 
 @app.get("/app", include_in_schema=False)
 def meal_app():
-    return FileResponse(Path(__file__).parent / "static" / "index.html")
+    return FileResponse(
+        Path(__file__).parent / "static" / "index.html",
+        headers={"Cache-Control": "no-cache"},
+    )
+
+
+@app.get("/app-assets/{filename}", include_in_schema=False)
+def meal_app_asset(filename: str):
+    if filename not in {"app.js", "i18n.js", "catalogue-en.js"}:
+        raise HTTPException(status_code=404, detail="Asset not found")
+    return FileResponse(
+        Path(__file__).parent / "static" / filename,
+        media_type="application/javascript",
+        headers={"Cache-Control": "no-cache"},
+    )
 
 
 @app.get("/foods")

@@ -10,6 +10,13 @@ demo at http://localhost:8003/app**. Once Qwen is configured on the server, a us
 opens the application directly: **no account registration or login is required**.
 The user does not enter an API key into the application.
 
+Choose **中文 / English** in the page header for the interface language. It is
+remembered in the browser and can be changed during the workflow without losing
+unsent answers or recalculating the meal. The English interface includes food
+display names and reference recipes; user descriptions and free-form model notes
+keep their original wording. The bilingual control guide below also explains the
+Chinese screenshots.
+
 [See the six-step screenshot guide](SCREENSHOT_GUIDE.md), or
 [go to the detailed Chinese meal walkthrough](#4-main-product-demo-chinese-meal-dialogue).
 Port 8001 belongs to the separate `test` preview and is not used here. The

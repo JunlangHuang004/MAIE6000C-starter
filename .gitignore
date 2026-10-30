@@ -225,3 +225,6 @@ deploy/public/
 
 # Fresh TA demo evidence (synthetic local runs)
 /demo/output/
+
+# Browser-test dependencies (the production interface has no npm dependency)
+node_modules/

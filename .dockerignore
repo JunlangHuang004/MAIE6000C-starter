@@ -9,3 +9,4 @@ demo/output/
 
 # Private public-deployment credentials and certificates
 deploy/public/
+node_modules/
