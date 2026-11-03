@@ -1,0 +1,29 @@
+{
+  "scope": "Real HKUST + HTTP/API + PostgreSQL/worker integrated acceptance; synthetic accounts only.",
+  "passed": false,
+  "checks": [
+    {
+      "name": "registration/session and protected routes",
+      "passed": true,
+      "provider": "hkust",
+      "catalogue_count": 550
+    },
+    {
+      "name": "personal references: gain-muscle and fat-loss goals",
+      "passed": true,
+      "gain_calories": 2720,
+      "fat_loss_calories": 2330
+    },
+    {
+      "name": "Basic Chinese meal with reference portions",
+      "passed": true,
+      "analysis_id": "679d2bfa-115b-4243-b5e6-2efc4d8bcd98",
+      "calories": 365.2
+    }
+  ],
+  "model_submissions": 1,
+  "service_source_sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+  "catalogue_sha256": "d9230087a5bd493afbc6d76a5c09e9b549df7746817f55e5ac43d1956a4e9db2",
+  "failure": "('Unexpected question', {'key': '0.resolved', 'label': '番茄炒蛋：Please specify the weight of the tomato and egg stir-fry. 请核对所选食物，或在下方补充更正。', 'kind': 'confirm'})",
+  "recorded_at": "2026-11-03T06:23:57.039541+00:00"
+}

@@ -1,5 +1,13 @@
 # NutriChat: TA walkthrough
 
+> Historical meal-only release: this document describes the original `nutrichat`
+> / `w07-midterm` snapshot and its dated evidence. For this merged checkout use
+> [current setup](README.md), [integrated walkthrough](INTEGRATED_GUIDE.md), and
+> [integration verification](../docs/evidence/integration-verification.md).
+> This checkout requires a personal account; the original ports and no-login
+> instructions below apply only to the older release.
+
+
 This guide describes the meal estimation application on the **`nutrichat` branch**:
 meal input, clarification, source-backed estimates, correction and confirmation.
 

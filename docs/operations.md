@@ -1,27 +1,40 @@
 # NutriChat operations
 
-Current instructions reviewed: 2026-10-31, `nutrichat` branch.
+Current instructions: 2026-11-03, `integrate/nutrichat-test`. This is the merged
+application; original branches, the `w07-midterm` tag and existing deployments
+remain separate snapshots. See [integration setup and verification](integration.md).
 
-## Self-guided TA demo on the nutrichat branch
+## Startup and isolation
 
-Use [the demo setup guide](../demo/README.md) and
-[six-step screenshot guide](../demo/SCREENSHOT_GUIDE.md) for the Chinese workflow
-and English-interface example. The Qwen project uses port 8003 and a private
-server configuration:
+Use Docker and a recent Docker Compose. From this checkout:
 
 ```sh
-docker compose -p nutrichat-qwen-demo --env-file .env -f compose.yaml -f demo/compose.qwen.yaml up -d --build --wait db ai api worker
+test -f .env || cp .env.example .env
+docker compose -p nutrichat-integrated --env-file .env \
+  -f compose.yaml -f compose.integrated.yaml up -d --build
+docker compose -p nutrichat-integrated --env-file .env \
+  -f compose.yaml -f compose.integrated.yaml ps
 ```
 
-Open `http://localhost:8003/app` directly. Individual registration/login and
-per-user record isolation are not implemented in this local application. Its
-visible **Log out** button has no local authentication function. The optional
-public shared-password gateway is implemented separately and is not started by
-this demo command.
-Choose **中文 / English** in the header. The browser remembers the selection;
-switching preserves unsent form values and does not call Qwen or alter nutrients.
-User descriptions and free-form model notes retain their original language.
-For an optional integration check without Qwen credentials:
+Open <http://localhost:8005/app>. Register/sign in to use private meals, profiles and
+tracking. Use `localhost` consistently; browser origins must match
+`AUTH_PUBLIC_ORIGIN`. The preview enables registration and HTTP cookies only for
+loopback development. Public deployments require HTTPS, Secure cookies and an
+explicit public origin.
+
+The merged preview has its own project/volume, hides AI/PostgreSQL ports and gives
+private provider configuration only to AI. Preserve `.env`; configure Qwen or HKUST
+as described in [integration](integration.md). `LLM_PROVIDER`, when nonempty,
+overrides `NUTRITION_PROVIDER`. Provider selection must agree across API/AI/worker.
+The worker HTTP timeout must exceed the model timeout. The integrated overlay
+defaults to 210 seconds for the worker; a model timeout of 180 seconds fits inside it.
+
+Do not reuse an existing Docker project name from a different checkout. A port
+change alone does not isolate services or database volumes. Stop/resume with the
+same project and Compose files. This merge does not change the older applications
+on ports 8001–8004 or deploy ECS.
+
+## Key-free verification
 
 ```sh
 python3 demo/run.py start
@@ -30,183 +43,148 @@ python3 demo/run.py status
 python3 demo/run.py stop
 ```
 
-The offline project uses port 8002, its own database and six English food keys.
-Its check briefly pauses only its worker; let it finish before submitting other
-meals there. Both demo projects bind only to loopback, keep their own database
-volumes and do not publish database/AI ports. Stopping retains data. Use the same
-project and overlays when resuming; see the setup guide for Qwen stop commands.
+This defaults to project `nutrichat-integrated-demo`, port 8006 and a separate
+PostgreSQL volume. The check authenticates a synthetic account, briefly pauses only
+that project's worker, and verifies persisted input, processing, correction,
+confirmation and operational signals. Let it finish before submitting other meals
+there. For concurrent checkouts set both `NUTRICHAT_DEMO_PROJECT` and
+`NUTRICHAT_DEMO_PORT` consistently for all four commands. See [demo setup](../demo/README.md).
 
-[The 28 October verification](../demo/VERIFICATION.md) records 408 passing automated
-tests, 14 of 17 passing live food/weight checks, three generic invalid-weight
-failures and a transient dialogue failure followed by a successful rerun. These
-are observations from 28 October 2026, not a claim of universal provider success.
-
-[The 31 October language verification](evidence/ui-language-verification.md)
-records **417 passing Python tests, 15 passing frontend tests and Ruff**, plus a
-live Qwen browser flow that preserved edited recipe answers across both languages
-and restored the confirmed meal after reload. These counts belong to that
-language-update checkpoint, not the current expanded catalogue. A fresh offline
-Docker rebuild at that point also
-passed the durable workflow check and both smoke tests. Neither run proves that every live
-model interpretation or reference-recipe estimate is correct.
-
-The subsequent [ingredient-builder verification](evidence/ingredient-recipe-verification.md)
-records 545 Python tests and 26 DOM tests on `7c841b1`, plus an HTTP/worker/database
-calculation check. For the 200-ingredient/350-recipe release, use the
-[expansion verification](evidence/chinese-expansion-verification.md) and inspect
-the GitHub Actions run for the exact pushed commit. Test totals from successive
-versions are not added together. The public ECS deployment remains separate.
-
-The edible-state matching follow-up `dae0b94` passes 664 Python tests and Ruff;
-it changes no frontend assets or catalogue data. The 26 DOM checks and rebuilt
-offline workflow were executed on the initial expanded source `71a0ecd`. Keep
-those source attributions when reviewing a later live matching retest; readiness
-alone does not establish that the previously rejected input now works.
-
-## Local startup and configuration
-
-Run from the repository root with Docker and Docker Compose installed:
-
-```sh
-test -f .env || cp .env.example .env
-docker compose up -d --build
-docker compose ps
-```
-
-Open [the local application](http://localhost:8000/app). Demo provider accepts supported English food names and explicit grams. Configure Qwen for Chinese descriptions, recipes and the full two-mode workflow; see [cloud deployment](cloud-deployment.md). Keep the existing `.env` when upgrading.
-
-`.env.example` uses Qwen timeout 12 seconds and worker HTTP timeout 20 seconds. For local multi-turn Qwen testing, 30 and 45 seconds respectively match the cloud configuration. The worker timeout must exceed the Qwen timeout. `compose.cloud.yaml` explicitly sets 30/45; changing `.env` alone does not override these cloud values.
+The offline provider accepts six legacy English food names with explicit grams.
+It does not interpret Chinese or conversational corrections. In the UI use
+**Replace full description**; API free-text `/reply` returns 422 without changing
+the estimate. `PATCH /analyses/{id}` with a complete supported description enqueues
+recalculation. This path demonstrates engineering integration, not model accuracy.
 
 ## Health, logs and metrics
 
-| Check | What it establishes |
+| Check | Meaning |
 | --- | --- |
 | API `/health/live` | API process responds |
-| API `/health/ready` | API can execute a PostgreSQL query |
-| AI `/health/live`, `/health/ready` | AI process responds; neither verifies Qwen credentials |
-| API / AI `/metrics` | Internal service metrics; public proxy blocks `/metrics` |
+| API `/health/ready` | API can query PostgreSQL |
+| AI `/health/live`, `/health/ready` | AI process responds; no provider authentication/quota test |
+| API/AI `/metrics` | Request/job operational signals; public proxy blocks metrics |
 
 ```sh
-docker compose logs --tail=100 api worker ai
-docker compose --profile observability up -d prometheus
+docker compose -p nutrichat-integrated --env-file .env \
+  -f compose.yaml -f compose.integrated.yaml logs --tail=100 api worker ai
 ```
 
-Inspect logs locally; redact secrets and private meal descriptions before sharing. Prometheus is available on development port 9090 when its profile is enabled.
+Inspect logs locally and redact private data before sharing. A healthy container
+can still have invalid model credentials. `/jobs/{id}` is restricted to the owning
+account and contains bounded operational errors; it is not a substitute for
+reviewing sanitized logs.
 
-## Verification
+## Automated and live checks
 
-After building the current source:
-
-```sh
-docker compose run --rm --no-deps -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
-docker compose run --rm --no-deps api ruff check .
-```
-
-The interface tests need Node.js (CI uses version 22). From the repository root:
+Build the current source first. Unit/integration tests use isolated test databases
+and controlled model responses, with no private model credentials required:
 
 ```sh
+docker compose -p nutrichat-integrated --env-file .env \
+  -f compose.yaml -f compose.integrated.yaml run --rm --no-deps \
+  -e LLM_PROVIDER=heuristic -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
+docker compose -p nutrichat-integrated --env-file .env \
+  -f compose.yaml -f compose.integrated.yaml run --rm --no-deps api ruff check .
 npm ci --prefix tests/frontend
 npm test --prefix tests/frontend
 ```
 
-These are development-only dependencies; the running application serves plain
-JavaScript and does not need Node or an npm build. The tests check translations,
-catalogue coverage, safe rendering, draft preservation and absence of new requests
-when changing language. For a browser check, enter a synthetic meal, edit an
-issued recipe question, switch languages, and verify the entries remain before
-submitting. After confirmation/reload, verify the same record and totals return.
-This live path uses Qwen quota; the DOM tests do not.
+Frontend tests use Node.js 22 in CI and synthetic responses. They check bilingual
+UI behavior, form preservation and account/diary integration; the application
+requires no npm runtime/build step. Validate browser workflows separately.
 
-The legacy smoke tests assert demo-catalogue values. Run them only against a stack
-started with `NUTRITION_PROVIDER=demo` consistently for API and AI. They create saved
-records. With that stack running, they can reach the API from inside Compose:
+The smoke tests expect the offline provider's six-food arithmetic and require an
+authenticated session. Use the isolated offline project, not a live-model stack:
 
 ```sh
-docker compose exec -T -e SMOKE_BASE_URL=http://api:8000 api pytest tests/smoke -q
+docker compose -p nutrichat-integrated-demo --env-file .env.example \
+  -f compose.yaml -f demo/compose.demo.yaml exec -T \
+  -e SMOKE_BASE_URL=http://api:8000 api pytest tests/smoke -q
 ```
 
-Configuration and live-provider checks:
+Smoke tests create synthetic accounts and records when registration is enabled.
+For closed registration, provide dedicated smoke-account credentials through the
+supported environment variables; never put credentials in tracked files.
+
+Provider checks require the selected provider's valid endpoint, model access and
+quota. For Qwen, run `python scripts/check_qwen.py` in the AI container (configuration
+only), adding `--live` for a provider request. API and worker containers deliberately
+do not receive the private key in the merged preview.
+
+Run `scripts/check_dialogue.py` or `scripts/check_expanded_dialogue.py` against the
+API only with Qwen configured and a dedicated registered check account. Set
+`NUTRICHAT_CHECK_USERNAME`; the tool prompts securely for the password in a terminal,
+or accepts `NUTRICHAT_CHECK_PASSWORD` from the environment for noninteractive use.
+The checks authenticate and revoke their session afterwards. They consume quota
+and create saved synthetic meals. Do not assume Qwen-specific scripts validate
+HKUST or Ollama; use the merged workflow checks described in [integration](integration.md).
+
+## Diagnose problems
+
+- **Login loops / 401:** sign in again after expiry; keep the same host/port and
+  check cookie/origin settings. HTTP localhost requires `AUTH_COOKIE_SECURE=false`.
+  An old shared public password is not an automatically migrated personal account.
+- **403 on writes:** check `X-NutriChat-Request: 1` and exact `Origin` matching.
+  Do not remove these checks to make a cross-origin client work.
+- **No corresponding food record:** coverage is limited to 200 ingredients and
+  350 reference recipes with reviewed names/aliases. Correct the name or select
+  actual supported ingredients. Keep all totals empty while any item is unresolved.
+- **`needs_input`:** normal clarification, with a successfully completed job.
+  Answer the issued questions or use the ingredient builder for an unknown item.
+- **`failed`:** inspect the owned job and logs; check provider region/model/key,
+  quota, output format and timeouts. Correct or submit anew after resolving the cause.
+- **Long-lived `queued`:** inspect whether its job is pending or claimed. A stopped
+  worker can process pending work after restart; interrupted claimed jobs have no
+  automatic recovery. Duplicate submissions create additional records/jobs.
+- **409 on an edit:** reload the current revision/state. Confirmed meals and meal
+  dates are locked. Profile/daily edits also use revisions to prevent lost updates.
+- **Unexpected diary total:** only confirmed meals for the selected Hong Kong date
+  count. A manual total replaces the meal sum; clear it to restore aggregation.
+  Unrecorded days remain blank, not zero. Daily weight does not update the profile.
+- **Missing UI updates:** rebuild the API and reload. Public asset routes allow only
+  `catalogue-en.js`, `i18n.js`, `account-i18n.js` and `app.js`; private HTML uses
+  `no-store`, JavaScript uses `no-cache`. Do not expose a general filesystem route.
+
+## Data, migrations and recovery
+
+The food catalogue is versioned JSON and is retained unchanged from `nutrichat`.
+The application database is PostgreSQL. The merged preview starts a separate volume;
+it does not automatically combine records from existing deployments.
+
+API startup runs `alembic upgrade head` before the worker starts. Migrations 0006–0008
+add users/sessions/ownership, profiles, daily records and meal dates. Old ownerless
+meals/cases are preserved but inaccessible through account APIs; they are not
+assigned to the first registrant. Existing confirmed meals receive a Hong Kong date
+from their confirmation timestamp, with creation time as fallback. Saved meal
+nutrients are not recalculated against newer catalogue data.
+
+Before a real database upgrade, back up data, retain compatible images/code, stop
+accepting new work and let active jobs finish. Backups now contain password hashes
+and private records; restrict access and keep them outside Git. A code rollback
+does not reverse schema migrations. Use a tested backup/compatible code path.
+
+Stop while retaining the preview database:
 
 ```sh
-docker compose run --rm --no-deps api python scripts/check_qwen.py
-docker compose run --rm --no-deps api python scripts/check_qwen.py --live
-docker compose exec -T api python scripts/check_dialogue.py --base-url http://api:8000
-docker compose exec -T api python scripts/check_expanded_dialogue.py --base-url http://api:8000 --live
+docker compose -p nutrichat-integrated --env-file .env \
+  -f compose.yaml -f compose.integrated.yaml down
 ```
 
-The first command checks configuration only. Live checks consume model quota; the dialogue script creates synthetic saved records. Mocked tests cannot establish model account access. Recorded results are in the [change log](change-log.md).
+Do not add `-v` during ordinary updates: it deletes the database volume. No public
+cloud deployment is performed by a Git push or this local merge. Follow the separate
+[cloud procedure](cloud-deployment.md) for any later deployment.
 
-## Diagnose processing
+## Evidence and submission snapshots
 
-- “No corresponding food record”: this is an unsupported or unverified identity,
-  not permission to use the nearest dish. Coverage is limited to 200 ingredients,
-  350 reference recipes and recorded names/aliases. Check the catalogue, correct
-  the food name, or use the structured form to select actual supported ingredients
-  and gram weights. Keep
-  nutrient totals empty while any food is unresolved; do not describe this as a
-  provider outage unless there is separate failure evidence.
+Current merged checks are recorded in [integration verification](integration.md).
+The [Week 6 workflow](async-workflow.md), [Week 7 artifact](../submissions/week07/README.md),
+[original screenshot guide](../demo/SCREENSHOT_GUIDE.md) and dated reports describe
+their labelled versions. Reproduce historical course scripts from their original
+commit/tag; do not silently reinterpret them as authenticated merged workflows.
 
-- `needs_input`: normal clarification. Answer the issued questions; the worker job has completed successfully.
-- `failed`: inspect the bounded operational `Job.error`, service logs and user-facing `Analysis.error_message`. Check endpoint region/workspace, model access, structured response and timeouts. Correct or resubmit the meal after resolving the cause.
-- The **Build from actual ingredients** form is an explicit repair path for one
-  unresolved food. It requires catalogue ingredient selections and reviewed grams;
-  it does not infer a recipe or use Qwen. Check consumed versus whole-batch basis
-  and follow the [ingredient guide](ingredient-recipes.md). If a meal contains a
-  custom recipe, edit that form rather than using free-text replies. A 409 keeps
-  unsent values visible but requires reloading the latest record before resubmission.
-- Long-lived `queued`: check worker health, database access and whether the job is `pending` or `claimed`. Interrupted claimed jobs have no automatic recovery. Inspect before resubmitting as a new analysis; repeated submissions create separate records.
-- 409 on edit/confirm: reload the latest revision and state. Queued or confirmed records cannot be edited.
-- Public login redirects: verify the HTTPS origin, signed session cookie and gateway configuration; sessions last eight hours. The implemented gateway uses a shared credential, not individual accounts. Local Compose does not use this gateway and has no working `/login` or `/logout` authentication routes.
-- Missing language buttons or untranslated static controls after an update: rebuild/restart the API from the intended checkout and reload `/app`. Confirm `/app-assets/catalogue-en.js`, `/app-assets/i18n.js` and `/app-assets/app.js` return JavaScript successfully. These routes allow only the named assets; do not replace them with a general filesystem-serving route.
-- Language resets after reload: the preference uses browser localStorage. Blocked/unavailable storage permits switching for the current page only. A language selection is not an account preference and does not translate original meal text or free-form model notes.
-
-## Updates, data and recovery
-
-API startup runs `alembic upgrade head`. Before upgrading, back up the database and preserve previous code/images. Stop accepting new work and allow active jobs to finish before stopping the worker. Do not delete volumes as part of routine deployment. For cloud upgrades use the matching standalone Compose files throughout, as described in [cloud deployment](cloud-deployment.md).
-
-Stop the local stack while retaining data:
-
-```sh
-docker compose down
-```
-
-`docker compose down -v` deletes the local database volume and is only for an intentional data reset. Cloud and local Compose use different database volumes. Restoring an older image alone does not revert a migration; recovery requires compatible code/schema or a tested database backup.
-
-## Week 6 isolated worker lab
-
-Use [the asynchronous workflow guide](async-workflow.md) for the stopped-worker
-observation, state ownership, reproduction commands and saved evidence. The
-`compose.week06.yaml` overlay is for a dedicated `nutrichat-week06` Compose project:
-it uses the demo provider, `.env.example`, no model credentials and no published
-host ports. It does not replace the running local or public configuration.
-
-Run the lab smoke tests only against this demo stack. Shut it down with the same
-project name and both Compose files; omit `-v` to keep the lab database. Current
-results and verification limits are in [the Week 6 verification record](evidence/week06-verification.md).
-
-## Week 7 milestone rehearsal
-
-Use the [demo guide](../submissions/week07/DEMO.md) and
-`scripts/rehearse_midterm.py` with the dedicated `nutrichat-week07` project. The
-existing Week 6 overlay is reusable; its project name determines isolation. The
-script creates synthetic records and stops/starts only that project's worker.
-Build the checkout first and keep the regular Qwen stack separate. Recorded
-results and limits are in [Week 7 verification](evidence/week07-verification.md).
-
-CI runs on `main` and `nutrichat` pushes and on pull requests. Its Python job runs
-Ruff, PostgreSQL migrations and `pytest -q tests/unit tests/integration`; its
-separate Node job installs the locked frontend dependencies and runs the frontend
-DOM suite. Local passing checks do not imply a successful GitHub Actions run: inspect
-the run for the actual pushed commit. Pytest includes the repository root so
-script imports work with both the console and module entry points.
-
-The required submission tag is `w07-midterm`. Before reporting its SHA, resolve
-the tag's commit (`git rev-parse 'w07-midterm^{commit}'`) and compare it with the
-remote tag and the intended submission files. Branch HEAD and a published tag can
-refer to different versions; do not present later branch evidence as a check of
-an older tagged checkout. The [midterm artifact](../submissions/week07/README.md)
-identifies the submission scope and supporting evidence.
-
-The public ECS is not updated by a Git push; deployment and rollback require the
-separate cloud workflow. The current local Qwen demo uses port 8003. Do not present
-the older public build as the current branch or Week 7 tag.
+CI includes `main`, `nutrichat`, `test` and `integrate/**` pushes plus pull requests.
+It checks Python/Ruff, PostgreSQL migrations and frontend tests. Inspect the run for
+the actual pushed SHA; local results do not establish remote CI success.
+`w07-midterm` remains the existing submission snapshot. This merge does not move it
+or submit Canvas. Test counts from separate versions must not be added together.

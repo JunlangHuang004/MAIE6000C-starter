@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from enum import StrEnum
 
-from sqlalchemy import JSON, DateTime, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import (
+    JSON, CheckConstraint, Date, DateTime, Float, ForeignKey, Index, Integer, String, Text,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from services.common.db import Base
@@ -41,6 +43,97 @@ class JobType(StrEnum):
     ANALYZE_NUTRITION = "analyze_nutrition"
 
 
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[str] = mapped_column(
+        String(36), primary_key=True, default=lambda: str(uuid.uuid4()),
+    )
+    username: Mapped[str] = mapped_column(String(32), nullable=False, unique=True)
+    password_hash: Mapped[str] = mapped_column(String(256), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+
+
+class AuthSession(Base):
+    __tablename__ = "auth_sessions"
+
+    # Only a digest is persisted. The random bearer token exists in the cookie only.
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True,
+    )
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+    expires_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), nullable=False, index=True,
+    )
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+
+
+class UserProfile(Base):
+    __tablename__ = "user_profiles"
+    __table_args__ = (
+        CheckConstraint("age_years BETWEEN 18 AND 80", name="ck_user_profiles_age"),
+        CheckConstraint("height_cm BETWEEN 120 AND 220", name="ck_user_profiles_height"),
+        CheckConstraint("weight_kg BETWEEN 30 AND 250", name="ck_user_profiles_weight"),
+        CheckConstraint("sex IN ('male', 'female')", name="ck_user_profiles_sex"),
+        CheckConstraint(
+            "goal IN ('gain_muscle', 'lose_fat')", name="ck_user_profiles_goal",
+        ),
+        CheckConstraint(
+            "activity_level IN ('sedentary', 'light', 'moderate', 'high')",
+            name="ck_user_profiles_activity",
+        ),
+        CheckConstraint("revision >= 1", name="ck_user_profiles_revision"),
+    )
+
+    user_id: Mapped[str] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True,
+    )
+    age_years: Mapped[int] = mapped_column(Integer, nullable=False)
+    height_cm: Mapped[float] = mapped_column(Float, nullable=False)
+    weight_kg: Mapped[float] = mapped_column(Float, nullable=False)
+    sex: Mapped[str] = mapped_column(String(10), nullable=False)
+    goal: Mapped[str] = mapped_column(String(20), nullable=False)
+    activity_level: Mapped[str] = mapped_column(String(20), nullable=False)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+
+
+class DailyRecord(Base):
+    __tablename__ = "daily_records"
+    __table_args__ = (
+        CheckConstraint("record_date >= '2000-01-01'", name="ck_daily_records_date"),
+        CheckConstraint("weight_kg BETWEEN 30 AND 250", name="ck_daily_records_weight"),
+        CheckConstraint(
+            "manual_calories BETWEEN 0 AND 20000", name="ck_daily_records_calories",
+        ),
+        CheckConstraint("revision >= 1", name="ck_daily_records_revision"),
+    )
+
+    user_id: Mapped[str] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"), primary_key=True,
+    )
+    record_date: Mapped[date] = mapped_column(Date, primary_key=True)
+    weight_kg: Mapped[float | None] = mapped_column(Float, nullable=True)
+    manual_calories: Mapped[float | None] = mapped_column(Float, nullable=True)
+    revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), default=utcnow, nullable=False,
+    )
+
+
 class Case(Base):
     __tablename__ = "cases"
 
@@ -48,6 +141,9 @@ class Case(Base):
         String(36),
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
+    )
+    user_id: Mapped[str | None] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=True, index=True,
     )
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
@@ -81,11 +177,15 @@ class Case(Base):
 
 class Analysis(Base):
     __tablename__ = "analyses"
+    __table_args__ = (Index("ix_analyses_user_consumed", "user_id", "consumed_on"),)
 
     id: Mapped[str] = mapped_column(
         String(36),
         primary_key=True,
         default=lambda: str(uuid.uuid4()),
+    )
+    user_id: Mapped[str | None] = mapped_column(
+        ForeignKey("users.id", ondelete="RESTRICT"), nullable=True, index=True,
     )
     mode: Mapped[str] = mapped_column(String(20), nullable=False, default="advanced")
     conversation: Mapped[list] = mapped_column(JSON, nullable=False, default=list)
@@ -96,6 +196,7 @@ class Analysis(Base):
     interpreted_food_text: Mapped[str | None] = mapped_column(Text, nullable=True)
     revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    consumed_on: Mapped[date | None] = mapped_column(Date, nullable=True)
     food_text: Mapped[str] = mapped_column(Text, nullable=False)
     status: Mapped[str] = mapped_column(
         String(20),

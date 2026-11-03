@@ -1,41 +1,65 @@
 # NutriChat architecture
 
-Current implementation reviewed: 2026-10-31, `nutrichat` branch.
+Current implementation reviewed: 2026-11-03, `integrate/nutrichat-test`.
 
-The Qwen catalogue contains 200 USDA ingredient records and 350 project-authored
+The merged application retains the exact `nutrichat` catalogue: 200 USDA ingredient records and 350 project-authored
 reference recipes. Expansion changes versioned data and validation, not model
-weights or the database schema. The public deployment is older than this milestone.
+weights. Account/profile/tracking migrations extend the application schema separately.
+The original branches, Week 7 tag and public deployment are unchanged by this merge.
 
 ## Services and data flow
 
 ```text
-Browser -> [optional HTTPS proxy + session gateway] -> FastAPI API
+Browser -> [optional HTTPS proxy] -> FastAPI API + account sessions
                                                        | PostgreSQL
                                                        | analyses + jobs
                                                      Worker
                                                        | HTTP
                                                 Internal AI service
                                                   |           |
-                                             Qwen API    Python meal engine
+                                             Qwen/HKUST  Python meal engine
                                                   |           |
                                               extraction   catalogue arithmetic
 ```
 
-The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID for restoration and the browser's interface-language preference. It does not store the authoritative meal record or an account history.
+The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID per internal user ID and the browser’s interface-language preference. It does not store authoritative records, profile measurements or session tokens.
 
-- API: validation, revision/state checks, saved records, catalogue and HTML UI.
+- API: accounts, authorization, profiles/references, diary/trends, validation, revision/state checks, saved records, catalogue and HTML UI.
 - Worker: asynchronous orchestration and job/error bookkeeping.
-- AI service: Qwen extraction or legacy demo parsing, followed by deterministic evaluation.
+- AI service: Qwen/HKUST extraction, experimental Ollama, or legacy demo parsing, followed by deterministic evaluation.
 - Shared meal engine: catalogue validation, questions, structured answers, assumptions and nutrient arithmetic.
-- PostgreSQL: analyses, conversations, drafts, questions, evidence and jobs; historical cases remain available.
+- PostgreSQL: users, password hashes, hashed sessions, private profiles/daily records, account-owned analyses/cases, conversations, drafts, questions, evidence and jobs.
+
+## Personal profile calculation
+
+The authenticated API stores one current profile per user. A synchronous Python
+calculator derives versioned energy and macro references without calling the worker,
+AI service or Qwen. Profile input never joins meal-extraction prompts. Conditional
+revision updates prevent stale tabs from overwriting newer data. Migration 0007
+adds `user_profiles` without changing meals, accounts or sessions. See
+[personalization](personalization.md).
+
+## Daily records and trends
+
+Migration 0008 adds one optional daily record per user/date and a consumed date on
+analyses. Daily records contain weight, a nullable manual calorie override and an
+optimistic revision. The API computes automatic calorie totals from that user's
+confirmed meals and combines them with the daily records for a 30-day window.
+Manual totals replace meal sums, and absent data remains null. Historical results
+use saved meal estimates, not a recalculation against today's catalogue.
+
+The browser draws two SVG charts and a corresponding data table. Tracking does not
+call the worker or Qwen, change the personal profile, or store measurements in
+localStorage. The current reference is not projected onto past dates. See the
+[tracking contract and migration policy](tracking.md).
 
 ## Chinese and English interface
 
 The header's **中文 / English** buttons change display language locally. The API
-serves `/app` and an explicit allowlist of three JavaScript files under
-`/app-assets/`: `catalogue-en.js`, `i18n.js` and `app.js`. These files are packaged
+serves `/app` and an explicit allowlist of four JavaScript files under
+`/app-assets/`: `catalogue-en.js`, `i18n.js`, `account-i18n.js` and `app.js`. These files are packaged
 with the Python application, loaded in that order and served with `no-cache` so
-the browser revalidates after an update. No frontend build service is required.
+the browser revalidates after an update. Authenticated HTML and private API responses use `no-store`. No frontend build service is required.
 
 `i18n.js` translates controls, status messages, structured questions and evidence.
 The English display catalogue retains names for the original 138 ingredients and
@@ -54,9 +78,17 @@ revision, state or nutrient values. Language selection remains usable when brows
 storage is unavailable, but the preference then cannot persist across reloads.
 See [the language verification record](evidence/ui-language-verification.md).
 
-## Qwen's role
+## Model providers and their role
 
 Qwen runs in Alibaba Cloud Model Studio, not on ECS. It interprets meal descriptions, names, preparation, quantities and corrections and maps them to supported catalogue IDs. Chinese meals are the primary product workflow; English descriptions also use this same extraction path. Interface language does not alter its prompt or improve food matching. The adapter requests structured JSON, with `enable_thinking=false`, temperature 0 and a configurable model (default `qwen-plus`). Disabling deep-thinking mode does not remove language inference or guarantee correctness.
+
+HKUST GenAI uses the same bounded extraction and deterministic identity checks with
+an OpenAI-compatible adapter. `LLM_PROVIDER` overrides `NUTRITION_PROVIDER` when
+set; `heuristic` maps to the offline `demo` provider. The Ollama adapter is retained
+for experiments, but earlier tested models did not meet full workflow acceptance.
+Provider-specific credentials are server-side and are not exposed to the browser.
+Offline mode accepts six English gram-based foods; free-text corrections return
+422 and require an explicit full-description PATCH instead.
 
 The model does not supply authoritative calorie/macronutrient values, approve recipes, or train on project updates. Python validates the extracted facts and calculates from the versioned catalogue. Structured question answers bypass another model call; natural-language replies use the bounded conversation as context. Updating aliases, food data or prompts changes application behavior without retraining model weights.
 
@@ -67,6 +99,12 @@ in total. Retrieval only supplies interpretation context: substring candidates d
 not authorize a match, and the separate identity guard below still decides whether
 an extracted food corresponds to a complete supported user mention. Missing names
 are not filled by a fuzzy nearest-dish search.
+
+HKUST uses the gateway's supported JSON-object format with the extraction schema
+included in the prompt; native `json_schema` requests were rejected by the tested
+gateway. The adapter can normalize exact Chinese preparation labels to their
+existing enum equivalents, but does not infer weight states, food identities or
+nutrients from invalid fields. Strict response validation still fails closed.
 
 ## Food identity boundary
 
@@ -104,10 +142,10 @@ Advanced mode asks for grams, weight state, preparation and consumed oil as need
 Nutrients equal the sum of ingredient grams multiplied by their per-100g data. Recipe portions scale the whole-batch nutrients by consumed cooked weight divided by finished batch weight. Data provenance, limits and exceptions are detailed in [nutrition data](nutrition-data.md).
 
 The [explicit ingredient builder](ingredient-recipes.md) can replace one unresolved
-draft item with a user-accepted recipe. `POST /analyses/{id}/ingredients` validates
+draft item with a user-accepted recipe. `POST /analyses/{id}/ingredients` enforces authenticated ownership and validates
 existing ingredient IDs, states shown for review, gram bounds and consumed/batch
 basis. It preserves every other draft item and queues the normal worker with the
-validated draft, so the calculation service does not call Qwen again. Model output
+validated draft, so the calculation service does not call the model again. Model output
 cannot supply `custom_recipe`; that field is created by the structured API path.
 An unresolved item elsewhere still suppresses all totals. Custom calculations
 retain their ingredient/portion provenance and are labelled separately from a
@@ -119,11 +157,25 @@ answers, mode changes and final confirmation retain the ordinary revision rules.
 
 Analysis states are `queued`, `needs_input`, `completed`, `failed`, `confirmed`. Jobs track `pending`, `claimed`, `completed`, `failed`. A question is a completed worker operation, not a failed job. User correction/reply/mode-switch requests check the current revision and state; confirmation locks completed records. The [API contract](api-contract.md) defines the payloads and transitions.
 
-Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. API startup runs migrations before the worker starts.
+Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. Migration 0006 adds users/sessions and nullable owners; ownerless historical
+records remain preserved but inaccessible to new accounts. Migration 0007 adds
+profiles; 0008 adds daily records and backfills older confirmed meal dates using
+Hong Kong confirmation dates. These migrations do not overwrite saved nutrient
+results or food catalogue files. API startup runs migrations before the worker starts.
 
 ## Deployment boundaries
 
-Local Compose publishes development ports for API, AI and PostgreSQL. Cloud Compose exposes only API loopback access; AI and database remain internal. Optional public Compose adds Nginx on 80/443 and an internal session gateway. Secrets and certificates are external runtime files excluded from Git. See [cloud deployment](cloud-deployment.md).
+The recommended merged preview uses `compose.integrated.yaml`, project
+`nutrichat-integrated`, and API loopback port 8005. It keeps AI/PostgreSQL internal
+and uses a separate database volume; only AI receives private provider settings.
+The separate offline demo defaults to project `nutrichat-integrated-demo` and port
+8006. Project names isolate Docker resources; port changes alone do not.
+
+Cloud Compose remains a separate deployment procedure. Optional public Compose
+adds Nginx on 80/443; authentication and ownership are enforced by the API, not the
+old shared-password gateway. Existing ECS has not been redeployed. Secrets,
+certificates and backups remain external files excluded from Git. See
+[the integration guide](integration.md) and [cloud deployment](cloud-deployment.md).
 
 The API readiness probe checks PostgreSQL. AI readiness reports service availability but does not call Qwen. Structured logging and Prometheus metrics support observation; they do not constitute end-to-end model validation.
 
@@ -133,12 +185,12 @@ Food coverage is limited to 200 ingredient records and 350 reference recipes;
 this is not a general food database. Unlisted foods, names and variants need
 clarification or catalogue additions instead of a substitute estimate.
 
-Local users open `/app` directly. Individual registration/login and per-user
-record ownership are not implemented; the local **Log out** control has no
-working authentication route. The optional public gateway is implemented in
-`services/gateway/main.py`: it checks a shared username/password and signed
-session cookies before Nginx proxies application requests. This is access control
-for a shared demo, not an individual account system.
+Independent accounts, profile references and private diary/trends are implemented.
+Password reset, Google login, account deletion and historical target snapshots are
+not. Sessions use opaque tokens, stored only as hashes server-side, with an
+in-process authentication rate limiter; production multi-replica operation needs
+additional shared controls. Profile calculations are simplified adult references,
+not measured needs or clinical prescriptions. See [accounts](accounts.md).
 
 There is no idempotency key, automatic retry, claimed-job recovery, image
 recognition, model training or measured cooking-loss model. Use one worker for
@@ -150,7 +202,7 @@ are correct. Users must review interpreted foods and assumptions before confirmi
 
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
 
-## Week 6: worker contract and state ownership
+## Worker contract and state ownership
 
 The selected asynchronous step is meal interpretation and nutrition evaluation.
 An external Qwen request has variable latency; the API validates/enqueues and returns
@@ -193,8 +245,10 @@ rows or confirm user records. There is no scheduler in this implementation.
 
 ### Timeout, failure, retry and idempotency decisions
 
-- Cloud Qwen timeout: 30 seconds; worker-to-AI timeout: 45 seconds. Local example
+- Historical cloud Qwen timeout: 30 seconds; worker-to-AI timeout: 45 seconds. Local example
   defaults are 12/20 seconds; configurable values must preserve this ordering.
+  The merged preview defaults to a 210-second worker timeout; a configured HKUST
+  model timeout of 180 seconds fits inside it. Use provider-specific timeout values.
 - Each job is attempted once. Timeout, HTTP error and malformed output are terminal
   failures; there is no `retry_wait`, retry delay or automatic retry budget.
 - A user correction or reply creates a new job; it does not replay the failed job.
@@ -206,7 +260,7 @@ rows or confirm user records. There is no scheduler in this implementation.
   exists yet. `/jobs/{id}` exposes bounded operational error text, so it must not be
   described as a fully sanitized error interface or multi-tenant production API.
 
-### Week 7 demo and test plan
+### Historical Week 7 demo and test plan
 
 Demonstrate stopped-worker submission, saved queued/pending state, worker start,
 claimed/completed job evidence, persisted nutrition and GET retrieval. Then show
@@ -218,9 +272,12 @@ The [workflow guide](async-workflow.md) maps the four minimum test categories to
 actual test names, records evidence, and lists remaining gaps. The lab uses an
 isolated Compose project so existing local and public demos keep running.
 
-## Week 7 evidence
+## Historical Week 7 evidence
 
-The [midterm artifact](../submissions/week07/README.md) records the current scope and
+The following reports describe their labelled source snapshots. Current merged-build
+validation is recorded separately in [integration verification](integration.md).
+
+The [midterm artifact](../submissions/week07/README.md) records the submitted historical scope and
 team responsibilities. A [fresh rehearsal](evidence/week07-verification.md) captures
 real PostgreSQL writes, worker processing, persisted output, confirmation and
 operational signals using the offline provider. Qwen observations are listed

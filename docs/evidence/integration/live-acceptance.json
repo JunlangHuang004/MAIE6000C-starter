@@ -1,0 +1,82 @@
+{
+  "scope": "Real HKUST + HTTP/API + PostgreSQL/worker integrated acceptance; synthetic accounts only.",
+  "passed": true,
+  "checks": [
+    {
+      "name": "registration/session and protected routes",
+      "passed": true,
+      "provider": "hkust",
+      "catalogue_count": 550
+    },
+    {
+      "name": "personal references: gain-muscle and fat-loss goals",
+      "passed": true,
+      "gain_calories": 2720,
+      "fat_loss_calories": 2330
+    },
+    {
+      "name": "Basic Chinese meal with reference portions",
+      "passed": true,
+      "analysis_id": "ef0ff9f0-efac-41e0-80c4-cffd58219779",
+      "calories": 365.2
+    },
+    {
+      "name": "Basic to Advanced switch and reviewed structured recipe",
+      "passed": true,
+      "analysis_id": "ef0ff9f0-efac-41e0-80c4-cffd58219779",
+      "calories": 365.2
+    },
+    {
+      "name": "Natural-language meal replacement",
+      "passed": true,
+      "analysis_id": "ef0ff9f0-efac-41e0-80c4-cffd58219779",
+      "calories": 319.0
+    },
+    {
+      "name": "Expanded Chinese dishes and deboned-weight annotation",
+      "passed": true,
+      "analysis_id": "93a71b51-9d9e-41d7-80f9-45e7ab311371",
+      "calories": 743.8
+    },
+    {
+      "name": "Unknown food blocks whole meal without substitution",
+      "passed": true,
+      "analysis_id": "7d31f9d2-43bb-487e-a279-53987e1753a5"
+    },
+    {
+      "name": "Explicit ingredient recovery retains rice and calculates without model",
+      "passed": true,
+      "analysis_id": "7d31f9d2-43bb-487e-a279-53987e1753a5",
+      "calories": 244.8
+    },
+    {
+      "name": "Dated confirmation, private calorie aggregation, manual override/clear and 30-day trends",
+      "passed": true,
+      "consumed_on": "2026-11-02",
+      "summary": {
+        "recorded_days": 2,
+        "average_calories": 1122.4,
+        "weight_entries": 2,
+        "first_weight_kg": 70.2,
+        "last_weight_kg": 69.8,
+        "weight_change_kg": -0.4
+      }
+    },
+    {
+      "name": "Second account cannot read another account meals/jobs/profile/trends",
+      "passed": true
+    },
+    {
+      "name": "Logout revocation, fresh login and persisted profile/meal/trends",
+      "passed": true
+    },
+    {
+      "name": "Full isolated stack stop/start preserves account session, meal, profile and trends",
+      "passed": true
+    }
+  ],
+  "model_submissions": 4,
+  "service_source_sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+  "catalogue_sha256": "d9230087a5bd493afbc6d76a5c09e9b549df7746817f55e5ac43d1956a4e9db2",
+  "recorded_at": "2026-11-03T06:27:34.805601+00:00"
+}

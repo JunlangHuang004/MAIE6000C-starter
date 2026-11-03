@@ -1,0 +1,52 @@
+{
+  "scope": "Real HKUST + HTTP/API + PostgreSQL/worker integrated acceptance; synthetic accounts only.",
+  "passed": false,
+  "checks": [
+    {
+      "name": "registration/session and protected routes",
+      "passed": true,
+      "provider": "hkust",
+      "catalogue_count": 550
+    },
+    {
+      "name": "personal references: gain-muscle and fat-loss goals",
+      "passed": true,
+      "gain_calories": 2720,
+      "fat_loss_calories": 2330
+    },
+    {
+      "name": "Basic Chinese meal with reference portions",
+      "passed": true,
+      "analysis_id": "832775c0-0639-417a-8cdd-3ce79182185b",
+      "calories": 365.2
+    },
+    {
+      "name": "Basic to Advanced switch and reviewed structured recipe",
+      "passed": true,
+      "analysis_id": "832775c0-0639-417a-8cdd-3ce79182185b",
+      "calories": 365.2
+    },
+    {
+      "name": "Natural-language meal replacement",
+      "passed": true,
+      "analysis_id": "832775c0-0639-417a-8cdd-3ce79182185b",
+      "calories": 319.0
+    },
+    {
+      "name": "Expanded Chinese dishes and deboned-weight annotation",
+      "passed": true,
+      "analysis_id": "fa74437f-06db-4ee4-99ba-e4e74b5a3d2a",
+      "calories": 743.8
+    },
+    {
+      "name": "Unknown food blocks whole meal without substitution",
+      "passed": true,
+      "analysis_id": "7c84ca03-ee45-4b8e-9969-78c6d89f1fc4"
+    }
+  ],
+  "model_submissions": 4,
+  "service_source_sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+  "catalogue_sha256": "d9230087a5bd493afbc6d76a5c09e9b549df7746817f55e5ac43d1956a4e9db2",
+  "failure": "'kind'",
+  "recorded_at": "2026-11-03T06:25:12.499352+00:00"
+}

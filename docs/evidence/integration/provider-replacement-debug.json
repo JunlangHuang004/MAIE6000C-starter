@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-03",
+  "provider": "hkust",
+  "model": "gemini-2.5-flash-lite",
+  "mode": "advanced",
+  "synthetic_analysis_context_id": "10acf59f-c92a-49e1-b791-02dbe639c53f",
+  "replacement": "改成白米饭150克熟重，水煮鸡蛋80克熟重。",
+  "initial_failure": {
+    "source": "persisted synthetic draft from root HTTP acceptance",
+    "food_ids": [
+      null,
+      "rice",
+      "egg"
+    ],
+    "cause": "Model retained old tomato-and-egg item after explicit whole-meal replacement. Identity guard correctly rejected it and blocked all totals; the two replacement foods were correct."
+  },
+  "fix": "Pass the same explicit replacement scope used by final identity grounding into the extraction prompt, retain unknown new foods, and distinguish whole-meal replacements from quantity corrections/additions. No post-hoc food removal or substitutions.",
+  "direct_adapter_retest": {
+    "requests": 1,
+    "http_status": 200,
+    "finish_reason": "stop",
+    "food_ids": [
+      "rice",
+      "egg"
+    ],
+    "grams": [
+      150,
+      80
+    ],
+    "questions": [],
+    "calories": 319,
+    "protein_g": 14.1,
+    "fat_g": 8.9,
+    "carbs_g": 43.2
+  },
+  "code_sha256": {
+    "services/ai/app/qwen.py": "fcb0e294a72bbc332fc252ad66b28a5cfe875ac3aed532b1dc91d4e74226eed5",
+    "services/common/food_matching.py": "8e32c3c8da98ecb264f7d447bcf4d3b3ed0f68c9d800fe69d373c36805a57db8"
+  },
+  "validation": "212 focused provider/food matching tests passed; Ruff passed. Root still needs final rebuilt HTTP acceptance.",
+  "scope": "New Python process using synthetic saved context and existing runtime credentials. No running container files, service processes, or database records changed."
+}

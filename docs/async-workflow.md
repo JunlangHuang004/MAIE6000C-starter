@@ -1,5 +1,11 @@
 # Week 6: asynchronous workflow evidence and Week 7 plan
 
+> This is the historical Week 6 workflow and rehearsal record. Its no-account
+> commands describe that release. For the merged account-enabled checkout, use
+> [current operations](operations.md) and [the integrated demo](../demo/README.md).
+> The core persisted API → queue → worker → AI → saved-result path is retained.
+
+
 Course reference: Week 6 Lab, Activities A–G (slides 11–21). This document separates
 implemented behavior, executed evidence and future work. The chosen project path
 is `POST /analyses -> Analysis + Job -> Worker -> AI -> saved result -> GET`.

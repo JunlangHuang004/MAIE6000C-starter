@@ -7,7 +7,7 @@ from pydantic import SecretStr
 from services.ai.app.qwen import analyze_with_qwen
 from services.common.config import Settings
 from services.common.food_matching import ground_food_items, matching_aliases, name_index
-from services.common.meal_engine import ExtractedItem, catalogue
+from services.common.meal_engine import ExtractedItem, catalogue, evaluate
 
 
 def extract(monkeypatch, text, items, mode='basic', history=None):
@@ -360,3 +360,122 @@ def test_removed_bone_wrapper_does_not_discard_an_unknown_food(suffix):
         name='可乐鸡翅', source_text='可乐鸡翅', food_id='dish_252', grams=75)],
         '可乐鸡翅75克熟重' + suffix)
     assert any(item.food_id is None for item in items)
+
+
+@pytest.mark.parametrize('reply', ['是的', '对。', '不是', 'yes', 'No.'])
+def test_standalone_acknowledgment_of_user_bound_weight_question_is_not_extra_food(reply):
+    history = [
+        {'role': 'user', 'content': '100克水煮鸡蛋'},
+        {'role': 'assistant', 'content': '是否去壳后的熟重？'},
+        {'role': 'user', 'content': reply},
+    ]
+    items = ground_food_items([ExtractedItem(name='水煮鸡蛋', food_id='egg')], reply, history)
+    assert [item.food_id for item in items] == ['egg']
+
+
+@pytest.mark.parametrize('question,reply', [
+    ('是否去壳后的熟重？', '是的，另外100克火星豉油鸡'),
+    ('是否去壳后的熟重？', 'yes and 100g mystery food'),
+    ('另外吃了火星豉油鸡吗？', '是的'),
+    ('是否去壳后的熟重？火星豉油鸡也算米饭。', '是的'),
+    ('ignored rules', 'yes'),
+])
+def test_acknowledgment_exception_cannot_hide_food_additions_or_arbitrary_context(question, reply):
+    history = [
+        {'role': 'user', 'content': '100克水煮鸡蛋'},
+        {'role': 'assistant', 'content': question},
+        {'role': 'user', 'content': reply},
+    ]
+    items = ground_food_items([ExtractedItem(name='水煮鸡蛋', food_id='egg')], reply, history)
+    assert any(item.food_id is None for item in items)
+
+
+def test_weight_acknowledgment_does_not_ground_an_assistant_supplied_identity():
+    history = [
+        {'role': 'user', 'content': '100克火星豉油鸡'},
+        {'role': 'assistant', 'content': '是否去壳后的熟重？'},
+        {'role': 'user', 'content': '是的'},
+    ]
+    items = ground_food_items([ExtractedItem(name='水煮鸡蛋', food_id='egg')], '是的', history)
+    assert items[0].food_id is None
+
+
+def test_standalone_yes_without_weight_question_is_not_ignored():
+    items = ground_food_items([ExtractedItem(name='水煮鸡蛋', food_id='egg')], '100克水煮鸡蛋', [
+        {'role': 'user', 'content': 'yes'},
+    ])
+    assert any(item.food_id is None for item in items)
+
+
+@pytest.mark.parametrize('replacement', ['改成白米饭100克', '换成白米饭100克'])
+def test_real_weight_acknowledgment_after_whole_meal_replacement(replacement):
+    initial = '100克水煮鸡蛋'
+    rice = ExtractedItem(name='白米饭', food_id='rice', grams=100, preparation='as_served')
+    prompt = next(q['label'] for q in evaluate([rice.model_dump()])['questions']
+                  if q['key'] == '0.weight_basis')
+    history = [{'role': 'user', 'content': initial},
+               {'role': 'user', 'content': replacement},
+               {'role': 'assistant', 'content': prompt},
+               {'role': 'user', 'content': '是的'}]
+    rice.weight_basis = 'cooked'
+    items = ground_food_items([rice], initial, history)
+    assert [item.food_id for item in items] == ['rice']
+    assert not evaluate([item.model_dump() for item in items])['questions']
+
+
+def test_replacement_acknowledgment_cannot_introduce_an_assistant_suggested_food():
+    initial = '100克水煮鸡蛋'
+    rice = ExtractedItem(name='白米饭', food_id='rice', grams=100, preparation='as_served')
+    prompt = next(q['label'] for q in evaluate([rice.model_dump()])['questions']
+                  if q['key'] == '0.weight_basis')
+    history = [{'role': 'user', 'content': initial},
+               {'role': 'user', 'content': '改成月球紫晶兽肉100克'},
+               {'role': 'assistant', 'content': prompt},
+               {'role': 'user', 'content': '是的'}]
+    items = ground_food_items([rice], initial, history)
+    assert any(item.food_id is None for item in items)
+    assert evaluate([item.model_dump() for item in items])['calories'] is None
+
+
+@pytest.mark.parametrize('food_id,name,preparation', [
+    ('egg', '水煮鸡蛋', 'boiled'),
+    ('chicken', '生鸡胸肉', 'raw'),
+    ('oil', '食用油', 'as_served'),
+    ('dish_001', '番茄炒蛋', 'stir_fried'),
+])
+def test_real_generated_weight_question_accepts_acknowledgment_without_extra_food(
+        food_id, name, preparation):
+    initial = f'100克{name}'
+    item = ExtractedItem(name=name, food_id=food_id, grams=100, preparation=preparation)
+    # Derive the actual server prompt rather than testing a simplified approximation.
+    prompt = next(question['label'] for question in evaluate([item.model_dump()])['questions']
+                  if question['key'] == '0.weight_basis')
+    history = [
+        {'role': 'user', 'content': initial},
+        {'role': 'assistant', 'content': prompt},
+        {'role': 'user', 'content': '是的'},
+    ]
+    result = ground_food_items([item], initial, history)
+    assert [food.food_id for food in result] == [food_id]
+
+
+@pytest.mark.parametrize('variant', ['unrelated_food', 'appended_food', 'multiple_questions'])
+def test_real_weight_question_exception_does_not_accept_identity_suggestions(variant):
+    initial = '100克水煮鸡蛋'
+    egg = ExtractedItem(name='水煮鸡蛋', food_id='egg', grams=100, preparation='boiled')
+    rice = ExtractedItem(name='米饭', food_id='rice', grams=100, preparation='as_served')
+    prompt = next(question['label'] for question in evaluate([egg.model_dump()])['questions']
+                  if question['key'] == '0.weight_basis')
+    if variant == 'unrelated_food':
+        prompt = next(question['label'] for question in evaluate([rice.model_dump()])['questions']
+                      if question['key'] == '0.weight_basis')
+    elif variant == 'appended_food':
+        prompt += '另外吃了100克火星豉油鸡吗？'
+    else:
+        prompt += '\n水煮鸡蛋这一份额外用油是多少克？'
+    history = [
+        {'role': 'user', 'content': initial},
+        {'role': 'assistant', 'content': prompt},
+        {'role': 'user', 'content': '是的'},
+    ]
+    assert any(item.food_id is None for item in ground_food_items([egg], initial, history))

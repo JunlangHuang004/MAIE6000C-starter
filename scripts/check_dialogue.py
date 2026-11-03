@@ -3,11 +3,11 @@ import argparse
 import time
 from copy import deepcopy
 
-import httpx
+from services.common.http_auth import CheckAuthenticationError, authenticated_client
 
 
 def check(base_url):
-    with httpx.Client(base_url=base_url,timeout=20) as client:
+    with authenticated_client(base_url, timeout=20) as client:
         def request(path, payload=None):
             response = client.post(path,json=payload) if payload is not None else client.get(path)
             response.raise_for_status()
@@ -79,4 +79,8 @@ def check(base_url):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--base-url',default='http://localhost:8000')
-    check(parser.parse_args().base_url)
+    args = parser.parse_args()
+    try:
+        check(args.base_url)
+    except CheckAuthenticationError as exc:
+        parser.exit(2, f"Check authentication failed: {exc}\n")

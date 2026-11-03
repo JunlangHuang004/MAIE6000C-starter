@@ -1,0 +1,66 @@
+# Isolated local model lab. Supply --env-file and MODEL_ENV_FILE with a private
+# provider .env outside the repository. Only the AI service receives its API key.
+x-runtime: &runtime
+  image: nutrichat-local-models:latest
+  build: .
+  environment: &environment
+    DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/maie6000c
+    AI_SERVICE_URL: http://ai:8100
+    NUTRITION_PROVIDER: demo
+    LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+    WORKER_REQUEST_TIMEOUT_SECONDS: ${WORKER_REQUEST_TIMEOUT_SECONDS:-210}
+    AUTH_COOKIE_SECURE: 'false'
+    AUTH_PUBLIC_ORIGIN: http://localhost:${MODEL_LAB_PORT:-8004}
+    AUTH_REGISTRATION_ENABLED: 'true'
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: maie6000c
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - model_lab_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U postgres -d maie6000c']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  ai:
+    <<: *runtime
+    command: uvicorn services.ai.app.main:app --host 0.0.0.0 --port 8100
+    env_file:
+      - ${MODEL_ENV_FILE:?Set MODEL_ENV_FILE to the private provider .env file}
+    healthcheck:
+      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8100/health/live')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  api:
+    <<: *runtime
+    command: /bin/sh -c 'alembic upgrade head && uvicorn services.api.app.main:app --host 0.0.0.0 --port 8000'
+    ports:
+      - '127.0.0.1:${MODEL_LAB_PORT:-8004}:8000'
+    depends_on:
+      db:
+        condition: service_healthy
+      ai:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, '-c', "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  worker:
+    <<: *runtime
+    command: python -m services.worker.app.main
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  model_lab_data:

@@ -1,0 +1,21 @@
+{
+  "scope": "Two direct Qwen adapter requests using synthetic input on final merged runtime; not a full Qwen HTTP workflow. Prior overlapping probe produced no report during scheduled stack restart and is excluded.",
+  "adapter_sha256": "fcb0e294a72bbc332fc252ad66b28a5cfe875ac3aed532b1dc91d4e74226eed5",
+  "cases": [
+    {
+      "case": "soy_chicken",
+      "passed": true,
+      "calories": 468.9,
+      "foods": [
+        "dish_251"
+      ]
+    },
+    {
+      "case": "unknown",
+      "passed": true,
+      "calories": null,
+      "foods": []
+    }
+  ],
+  "passed": true
+}

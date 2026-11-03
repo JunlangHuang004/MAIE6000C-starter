@@ -1,5 +1,26 @@
 # NutriChat change log
 
+## 2026-11-03 — Merge meal estimation, accounts and personal tracking
+
+- Combine `nutrichat` and `test` on `integrate/nutrichat-test`, preserving both
+  original branches, the `w07-midterm` submission tag and existing deployments.
+- Keep the exact `nutrichat` catalogue: 200 USDA ingredients and 350 reference
+  recipes. Retain strict unsupported-food handling, ingredient recipes, edible-state
+  matching, bounded model context and the Chinese/English interface.
+- Integrate independent accounts, private meal histories, optional profiles and
+  daily references, confirmed meal dates, daily calorie/weight records and 30-day
+  trends. Preserve the Qwen/HKUST adapters and experimental Ollama adapter.
+- Apply account ownership and revision guards to the newer ingredient-recipe
+  endpoint; reject non-finite quantities safely without mutating records.
+- Reject offline free-text corrections explicitly and provide a full-description
+  correction path, preventing the old estimate from silently surviving a chat reply.
+- Add a separate merged preview and configurable offline demo project/port so
+  multiple checkouts do not accidentally share or replace Docker resources.
+- Refresh current setup/API/architecture/operations documents and retain historical
+  reports with their original source/date. See [integration verification](evidence/integration-verification.md)
+  for the merged runtime checks and their limits; prior test counts are not totals
+  for this merge.
+
 ## 2026-10-31 — Edible-state annotation matching follow-up
 
 - Retain browser case NC-QA-008 as an observed failure on `71a0ecd`: the known dish
@@ -247,3 +268,60 @@
 - Local browser checks covered recipe editing, mode switching, result display and restoration after reload.
 - The real-Qwen flow passed on the Hong Kong ECS deployment: basic estimate → advanced clarification → recipe editing → natural-language correction → confirmation and persistence. The synthetic meal changed from a reference 365.2 kcal to 264.7 kcal after supplied details.
 - Database backups and previous images were retained before updating the public service; existing login credentials and API keys were preserved.
+
+## Historical feature work merged from `test`
+
+The following entries retain their original branch, scope and validation date.
+
+## 2026-10-27 — Daily calorie/weight tracking on `test`
+
+- Save private daily weight measurements and optional total calorie intake, with
+  date selection, correction, clearing and optimistic revision conflicts.
+- Assign a consumed date when confirming meals and sum only confirmed estimates
+  for each account/date. Manual totals replace the meal sum to avoid double counting.
+- Add two SVG charts, summaries and an accessible detail table for a selected
+  rolling 30-day window. Preserve missing values and explicit zeros distinctly;
+  keep daily weights independent of the current profile and nutrition reference.
+- Add migration 0008 and document Hong Kong date boundaries, legacy meal-date
+  backfill, account privacy and incomplete-diary limitations.
+- Pass 594 unit/integration tests, two authenticated smoke tests, Ruff, PostgreSQL
+  migration/constraint/concurrency checks and browser workflows. See
+  [tracking verification](evidence/tracking-verification.md).
+- Update English README/API/architecture/operations documentation and only the
+  isolated local preview. Original branches, Week 7 artifacts and ECS are unchanged.
+
+## 2026-10-27 — Personal profiles and daily references on `test`
+
+- Add private, editable age, height, weight, formula sex, activity level and
+  muscle-gain/fat-loss goal. A profile remains optional for meal estimation.
+- Calculate approximate daily energy and macro references using a versioned Python
+  formula, with visible activity/goal/macro assumptions and source links. No profile
+  inputs are sent to Qwen. Unsupported target cases retain the saved inputs and
+  withhold all four target values.
+- Persist one current profile per account using migration 0007. Add optimistic
+  revisions, strict validation, account isolation, no-store responses, and browser
+  handling for unsaved edits, conflicts and logout.
+- Pass 513 unit/integration tests, Ruff, PostgreSQL upgrade/constraint/concurrency
+  checks and browser save/edit/reload checks. See
+  [verification](evidence/personalization-verification.md).
+- Update English setup/API/architecture documentation. Keep daily weight logging,
+  calorie aggregation and monthly trends for later; leave original branches,
+  the Week 7 submission snapshot and the public deployment unchanged.
+
+## 2026-10-27 — Independent accounts on `test`
+
+- Add personal username/password registration, login, logout and an account page.
+  Use scrypt password hashes and opaque, hashed, revocable database sessions.
+- Enforce ownership on analyses, cases, jobs, history and every meal mutation.
+  Migration 0006 preserves shared historical rows without assigning an owner.
+- Add personal recent meals, user-scoped restoration, cross-tab logout handling,
+  expired-session redirects, request-origin checks and authentication throttling.
+- Add a separate offline preview on port 8001; update public proxy templates for
+  API-managed sessions without deploying them. Existing public services are unchanged.
+- Authenticate workflow checks and require an explicit owner when seeding cases.
+- Pass 420 unit/integration tests, two authenticated PostgreSQL/worker smoke tests,
+  Ruff, JavaScript syntax checks, and fresh/populated migration checks. Browser
+  checks cover meal confirmation, logout across tabs, account separation and reload.
+  See [account verification](evidence/accounts-verification.md).
+- Keep personal profiles, nutrition targets, trends and Google login for later
+  increments. Original branches and the Week 7 submission tag are unchanged.

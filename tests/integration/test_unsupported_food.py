@@ -21,8 +21,9 @@ CORRECTION = '改成200克番茄炒蛋熟重'
 @pytest.mark.parametrize('mode', ['basic', 'advanced'])
 def test_unsupported_meal_stays_blocked_until_explicit_correction(
         client, db_session, monkeypatch, mode):
-    monkeypatch.setattr('services.common.config.get_settings', lambda: Settings(
-        _env_file=None, nutrition_provider='qwen'))
+    settings = Settings(_env_file=None, nutrition_provider='qwen', llm_provider='qwen')
+    monkeypatch.setattr('services.common.config.get_settings', lambda: settings)
+    monkeypatch.setattr('services.api.app.main.get_settings', lambda: settings)
     monkeypatch.setattr(worker, 'get_session_factory',
                         lambda: make_session_factory(db_session.get_bind()))
     unknown = [

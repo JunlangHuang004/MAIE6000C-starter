@@ -25,19 +25,22 @@ def test_invalid_port_rejected(runner, monkeypatch, port):
 
 def test_port_default_and_override(runner, monkeypatch):
     monkeypatch.delenv("NUTRICHAT_DEMO_PORT", raising=False)
-    assert runner.demo_port() == 8002
+    assert runner.demo_port() == 8006
     monkeypatch.setenv("NUTRICHAT_DEMO_PORT", "8003")
     assert runner.demo_port() == 8003
 
 
-@pytest.mark.parametrize("branch", ["test", "main", "other"])
-def test_wrong_branch_rejected(runner, branch):
-    with pytest.raises(runner.DemoError, match="nutrichat branch"):
-        runner.guard_source({"branch": branch})
+@pytest.mark.parametrize("project", ["", "UPPER", "x;echo", "../unsafe", "a" * 64,
+                                     "nutrichat-demo", "nutrichat-qwen-demo", "nutrichat-accounts"])
+def test_unsafe_or_existing_project_rejected(runner, monkeypatch, project):
+    monkeypatch.setattr(runner, "PROJECT", project)
+    with pytest.raises(runner.DemoError):
+        runner.guard_source({"branch": "integrate/nutrichat-test"})
 
 
-@pytest.mark.parametrize("branch", ["nutrichat", "detached", None])
-def test_reproducible_checkout_or_zip_allowed(runner, branch):
+@pytest.mark.parametrize("branch", ["nutrichat", "test", "integrate/nutrichat-test",
+                                    "detached", None])
+def test_branch_name_does_not_restrict_valid_isolated_check(runner, branch):
     runner.guard_source({"branch": branch})
 
 
@@ -72,6 +75,7 @@ def test_failed_check_restores_worker_and_writes_evidence(runner, monkeypatch, t
     monkeypatch.setattr(runner, "source_metadata", lambda: {"branch": "nutrichat"})
     monkeypatch.setattr(runner, "verify_stack", lambda: {"provider": "demo"})
     monkeypatch.setattr(runner, "ai_requests", lambda: 0)
+    monkeypatch.setattr(runner, "authenticate_check", lambda: {"registered": True})
     monkeypatch.setattr(runner, "run", lambda args: calls.append(args))
 
     def fail_create(*args, **kwargs):
@@ -92,6 +96,7 @@ def test_preflight_failure_does_not_touch_worker(runner, monkeypatch, tmp_path):
     output = tmp_path / "check.json"
     monkeypatch.setattr(runner, "OUTPUT", output)
     monkeypatch.setattr(runner, "source_metadata", lambda: {"branch": "test"})
+    monkeypatch.setattr(runner, "PROJECT", "nutrichat-accounts")
 
     def unexpected_command(*args, **kwargs):
         pytest.fail("Wrong-branch preflight must not run Docker commands")
@@ -108,7 +113,7 @@ def test_stop_preserves_volume_and_only_targets_demo(runner, monkeypatch):
     monkeypatch.setattr(runner, "run", lambda args, **kwargs: calls.append(args))
     assert runner.main(["stop"]) == 0
     assert calls == [runner.COMPOSE + ["stop", "db", "ai", "api", "worker"]]
-    assert runner.COMPOSE[runner.COMPOSE.index("-p") + 1] == "nutrichat-demo"
+    assert runner.COMPOSE[runner.COMPOSE.index("-p") + 1] == "nutrichat-integrated-demo"
     assert "--env-file" in runner.COMPOSE and ".env.example" in runner.COMPOSE
 
 
@@ -134,17 +139,17 @@ def test_expected_totals_cover_all_four_nutrients(runner):
         }}, 2)
 
 
-def test_unexpected_account_stack_is_rejected_before_writes(runner, monkeypatch):
+def test_legacy_stack_is_rejected_before_writes(runner, monkeypatch):
     monkeypatch.setattr(runner, "run", lambda args: "True")
     responses = {
         "/health/ready": {"service": "api", "status": "ok"},
         "/foods": {"provider": "demo"},
         "/openapi.json": {"paths": {
-            "/analyses/{analysis_id}/confirm": {}, "/auth/me": {},
+            "/analyses/{analysis_id}/confirm": {},
         }},
     }
     monkeypatch.setattr(runner, "request", lambda method, path: {"body": responses[path]})
-    with pytest.raises(runner.DemoError, match="Unexpected account/personalization"):
+    with pytest.raises(runner.DemoError, match="Missing integrated"):
         runner.verify_stack()
 
 

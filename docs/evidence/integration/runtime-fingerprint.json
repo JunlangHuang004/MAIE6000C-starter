@@ -1,0 +1,30 @@
+{
+  "working_tree": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+  "containers": {
+    "nutrichat-integrated-api-1": {
+      "sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+      "match": true
+    },
+    "nutrichat-integrated-ai-1": {
+      "sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+      "match": true
+    },
+    "nutrichat-integrated-worker-1": {
+      "sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+      "match": true
+    },
+    "nutrichat-integrated-demo-api-1": {
+      "sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+      "match": true
+    },
+    "nutrichat-integrated-demo-ai-1": {
+      "sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+      "match": true
+    },
+    "nutrichat-integrated-demo-worker-1": {
+      "sha256": "ef910460f08f8a6dfb0a688632493f42348d54a32a6087ef76c282c3cc17b0fb",
+      "match": true
+    }
+  },
+  "algorithm": "SHA-256 of sorted service .py/.json/.html/.js relative paths + NUL + bytes + NUL"
+}

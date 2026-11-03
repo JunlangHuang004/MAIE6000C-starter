@@ -1,10 +1,20 @@
 # NutriChat: screenshot guide for the TA
 
-This guide shows the **Chinese meal workflow on the `nutrichat` branch**. After
-the operator completes the [Qwen setup](README.md#2-main-product-demo-chinese-meals),
-open **http://localhost:8003/app** directly. **No account registration or login is
-required.** The model key is configured on the server, not entered by the user.
-The scope of this guide is the meal-estimation workflow on `nutrichat`.
+> Integration note (2026-11-03): the images below were captured on the original
+> `nutrichat` meal-estimation release. In the merged application, register/sign in
+> first, then follow the same meal steps; select a consumption date before
+> confirming. Accounts, profile references and daily/trend panels are additional
+> features. Use [the current integrated walkthrough](../docs/integration.md) and
+> [current verification](../docs/evidence/integration-verification.md) for those
+> features. The frozen `w07-midterm` tag retains the original no-login behavior.
+
+
+The screenshots below show the **historical Chinese meal workflow** on
+`nutrichat`. They remain useful for the estimation steps. For the merged checkout,
+use [current setup](README.md), register/sign in, and follow the
+[integrated account/profile/trend guide](INTEGRATED_GUIDE.md). Only the frozen
+`w07-midterm` release opened directly without local authentication. Model keys
+remain server configuration and are never entered by app users.
 
 The current interface also has **中文 / English** buttons in its header. Select
 **中文** to match these screenshots, or **English** to use translated controls and
@@ -285,7 +295,7 @@ was saved for review, not confirmed. The earlier failed run is preserved in the
 
 - Follow the [full walkthrough](WALKTHROUGH.md) for the English control guide,
   internal responsibilities, state transitions and limitations.
-- Run the [separate offline integration check](README.md#3-optional-offline-engineering-check)
+- Run the [separate offline integration check](README.md#key-free-engineering-check)
   to inspect actual API responses, PostgreSQL rows, worker logs, correction,
   confirmation and locked edits without a Qwen key.
 - Treat screenshots as illustrations of an observed run. They do not replace

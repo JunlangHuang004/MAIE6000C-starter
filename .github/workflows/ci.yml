@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [main, nutrichat]
+    branches: [main, nutrichat, test, 'integrate/**']
   pull_request:
 
 jobs:

@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-03",
+  "base_url": "http://localhost:8006",
+  "provider": "demo",
+  "browser": "Chrome Guest native CUA",
+  "mobile_viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "assets": {
+    "app.js": {
+      "runtime_sha256": "3dcb7af2f42300f6d085885d8176740f8971339736bf9ded7b4a7cb7b41e7fee",
+      "working_sha256": "3dcb7af2f42300f6d085885d8176740f8971339736bf9ded7b4a7cb7b41e7fee",
+      "match": true
+    },
+    "i18n.js": {
+      "runtime_sha256": "91754abb47e6ae3f848885648eb7533231a6c45c428d237e153d872187f5c6c5",
+      "working_sha256": "91754abb47e6ae3f848885648eb7533231a6c45c428d237e153d872187f5c6c5",
+      "match": true
+    },
+    "account-i18n.js": {
+      "runtime_sha256": "01be9f4b22025386454699bf2e44dcdb3efed60561f0d63f29616d71fe00142e",
+      "working_sha256": "01be9f4b22025386454699bf2e44dcdb3efed60561f0d63f29616d71fe00142e",
+      "match": true
+    },
+    "catalogue-en.js": {
+      "runtime_sha256": "ec3cb904eca32bef9fa2fdab64a3ff48da819fa6904eb11bc8c0bf08282ce0f6",
+      "working_sha256": "ec3cb904eca32bef9fa2fdab64a3ff48da819fa6904eb11bc8c0bf08282ce0f6",
+      "match": true
+    }
+  },
+  "screenshots": [
+    {
+      "file": "01-profile-reference-en.png",
+      "sha256": "5d95fc4b4d0d15c81dbf2f17982ef4bd1a63a9a029600f5218f81811aa5e368c"
+    },
+    {
+      "file": "02-daily-trends-en.png",
+      "sha256": "7e9cb98aa259a4470b37372deac60a13d68cd31d1ccccf124f1caa5e0b14a1d1"
+    },
+    {
+      "file": "03-mobile-profile-zh.png",
+      "sha256": "43fd28eaa1a5e0f8f945b8a7e825f7ff2ca6ac3ba9d1953c6e72452fda9ae700"
+    },
+    {
+      "file": "07-confirmed-reloaded-en.png",
+      "sha256": "a81d45d17ca769b9e4a6e9ff3e2a5abc4010170a23bf9fede8ff3e9f84204a6f"
+    },
+    {
+      "file": "08-final-rebuild-persistence.png",
+      "sha256": "669bae43380c9eca31f9bc252fb3bbd99068a192339cae78efd3fdda502a27ce"
+    }
+  ],
+  "initial_assets": {
+    "app.js": {
+      "runtime_sha256": "f71e77702b557bb3dd248346b494c37294139c9b79456fbcff24db4b57e73fcb",
+      "working_sha256": "3dcb7af2f42300f6d085885d8176740f8971339736bf9ded7b4a7cb7b41e7fee",
+      "match": false
+    },
+    "i18n.js": {
+      "runtime_sha256": "91754abb47e6ae3f848885648eb7533231a6c45c428d237e153d872187f5c6c5",
+      "working_sha256": "91754abb47e6ae3f848885648eb7533231a6c45c428d237e153d872187f5c6c5",
+      "match": true
+    },
+    "account-i18n.js": {
+      "runtime_sha256": "01be9f4b22025386454699bf2e44dcdb3efed60561f0d63f29616d71fe00142e",
+      "working_sha256": "01be9f4b22025386454699bf2e44dcdb3efed60561f0d63f29616d71fe00142e",
+      "match": true
+    },
+    "catalogue-en.js": {
+      "runtime_sha256": "ec3cb904eca32bef9fa2fdab64a3ff48da819fa6904eb11bc8c0bf08282ce0f6",
+      "working_sha256": "ec3cb904eca32bef9fa2fdab64a3ff48da819fa6904eb11bc8c0bf08282ce0f6",
+      "match": true
+    }
+  },
+  "final_rebuild_verified_on": "2026-11-03",
+  "final_reload": {
+    "profile_calories": 2720,
+    "profile_protein_g": 170,
+    "profile_fat_g": 90.7,
+    "profile_carbs_g": 306,
+    "meal_id": "3eb87d21-fcd5-402a-8e2f-dbd00a372373",
+    "meal_status": "confirmed",
+    "meal_revision": 3,
+    "meal_calories": 310,
+    "weight_kg": 69.8,
+    "trend_recorded_days": 2,
+    "trend_average_calories": 1055,
+    "trend_weight_change_kg": -0.2,
+    "logged_out_after_check": true
+  }
+}

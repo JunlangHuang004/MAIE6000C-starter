@@ -57,7 +57,8 @@ def workflow(client, db_session, monkeypatch):
         if extra_unknown:
             draft.append(ExtractedItem(name='Another unknown dish').model_dump())
         state = evaluate_mode(draft, mode)
-        row = Analysis(food_text='火星豉油鸡配米饭', mode=mode, status='needs_input',
+        row = Analysis(user_id=client.get('/auth/me').json()['id'],
+                       food_text='火星豉油鸡配米饭', mode=mode, status='needs_input',
                        conversation=[{'role': 'user', 'content': '火星豉油鸡配米饭'}], **state)
         db_session.add(row)
         db_session.commit()

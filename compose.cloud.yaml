@@ -44,6 +44,11 @@ services:
   api:
     <<: *app
     command: /bin/sh -c 'alembic upgrade head && uvicorn services.api.app.main:app --host 0.0.0.0 --port 8000'
+    environment:
+      <<: *environment
+      AUTH_COOKIE_SECURE: ${AUTH_COOKIE_SECURE:-true}
+      AUTH_PUBLIC_ORIGIN: ${AUTH_PUBLIC_ORIGIN:?Set AUTH_PUBLIC_ORIGIN to the browser origin}
+      AUTH_REGISTRATION_ENABLED: ${AUTH_REGISTRATION_ENABLED:-false}
     ports:
       - '127.0.0.1:8000:8000'
     depends_on:

@@ -2,7 +2,7 @@
 import pytest
 
 
-@pytest.mark.parametrize("filename", ["app.js", "i18n.js", "catalogue-en.js"])
+@pytest.mark.parametrize("filename", ["app.js", "i18n.js", "account-i18n.js", "catalogue-en.js"])
 def test_language_assets_are_public_javascript(client, filename):
     response = client.get(f"/app-assets/{filename}")
     assert response.status_code == 200
@@ -24,7 +24,7 @@ def test_language_asset_route_does_not_expose_other_files(client, path):
 def test_app_loads_languages_before_frontend_and_does_not_cache_stale_markup(client):
     response = client.get("/app")
     assert response.status_code == 200
-    assert response.headers["cache-control"] == "no-cache"
+    assert response.headers["cache-control"] == "no-store"
     html = response.text
     assert html.index('/app-assets/catalogue-en.js') < html.index('/app-assets/i18n.js')
     assert html.index('/app-assets/i18n.js') < html.index('/app-assets/app.js')

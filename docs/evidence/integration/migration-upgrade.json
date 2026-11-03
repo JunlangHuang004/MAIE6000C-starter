@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "database": "nutrichat_integrated_upgrade_check",
+  "from_revision": "20261017_0005",
+  "to_revision": "20261027_0008",
+  "legacy_meals_preserved_exactly": 2,
+  "new_ownership_and_dates": [
+    {
+      "id": "legacy-confirmed",
+      "user_id": null,
+      "consumed_on": "2026-10-31"
+    },
+    {
+      "id": "legacy-open",
+      "user_id": null,
+      "consumed_on": null
+    }
+  ],
+  "tables": [
+    "alembic_version",
+    "analyses",
+    "auth_sessions",
+    "cases",
+    "daily_records",
+    "jobs",
+    "user_profiles",
+    "users"
+  ],
+  "scope": "Isolated real PostgreSQL upgrade with synthetic existing nutrichat rows; no original database modified."
+}

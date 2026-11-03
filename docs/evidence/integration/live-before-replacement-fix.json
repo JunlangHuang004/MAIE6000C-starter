@@ -1,0 +1,33 @@
+{
+  "scope": "Real HKUST + HTTP/API + PostgreSQL/worker integrated acceptance; synthetic accounts only.",
+  "passed": false,
+  "checks": [
+    {
+      "name": "registration/session and protected routes",
+      "passed": true,
+      "provider": "hkust",
+      "catalogue_count": 550
+    },
+    {
+      "name": "personal references: gain-muscle and fat-loss goals",
+      "passed": true,
+      "gain_calories": 2720,
+      "fat_loss_calories": 2330
+    },
+    {
+      "name": "Basic Chinese meal with reference portions",
+      "passed": true,
+      "analysis_id": "10acf59f-c92a-49e1-b791-02dbe639c53f",
+      "calories": 365.2
+    },
+    {
+      "name": "Basic to Advanced switch and reviewed structured recipe",
+      "passed": true,
+      "analysis_id": "10acf59f-c92a-49e1-b791-02dbe639c53f",
+      "calories": 365.2
+    }
+  ],
+  "model_submissions": 2,
+  "failure": "[{'key': '0.food_id', 'label': '数据库未找到“白米饭150克熟重，水煮鸡蛋80克熟重。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。', 'kind': 'unsupported'}]",
+  "recorded_at": "2026-11-03T06:16:18.736372+00:00"
+}

@@ -1,6 +1,6 @@
 # Estimate an unsupported dish from actual ingredients
 
-This `nutrichat` feature follows the separation studied in the
+This feature, retained from `nutrichat` in the merged application, follows the separation studied in the
 [OpenNutriTracker comparison](research/opennutritracker-comparison.md): explicit
 food selection, reviewed quantities and database-backed arithmetic. The code was
 written for this project's existing API/worker architecture; no third-party
@@ -12,7 +12,7 @@ add the dish to the catalogue or make the result measured nutrition.
 
 ## Use the form
 
-1. Enter a meal normally. If an item has no corresponding record, choose
+1. Sign in and enter a meal normally. If an item has no corresponding record, choose
    **按实际食材估算 / Build from actual ingredients** under that item.
 2. Check the item being replaced and give this meal's recipe a name. Other meal
    items remain in the record; another unresolved item still blocks all totals.
@@ -29,7 +29,8 @@ add the dish to the catalogue or make the result measured nutrition.
    Click **按这些食材计算 / Calculate from these ingredients**.
 6. Review the custom-recipe label, input quantities, portion fraction, nutrient
    totals and source records. Use **Edit ingredient recipe** to make corrections.
-   **Confirm and save** locks the meal; reloading retains the saved result.
+   Choose the consumption date; **Confirm and save** locks the meal and adds it
+   to that date’s private calorie total. Reloading retains the saved result.
 
 Language switching keeps the unsent form values. Changing a quantity or selection
 requires acceptance again. A stale record produces a conflict instead of
@@ -73,7 +74,9 @@ mode changes remain available. A replacement of the entire description starts
 the extraction process again.
 
 This feature does not provide a reusable personal recipe library, new food
-records, user accounts or nutritional-label import. Ingredient coverage remains
+records or nutritional-label import. The merged application provides separate
+[accounts](accounts.md); the recipe endpoint enforces the same ownership checks
+as other meal mutations. Ingredient coverage remains
 200 records. Names/quantities supplied in free text can still be misread or
 rejected. Consult [QA memory](qa/MEMORY.md) for dated browser findings, including
 failures that a passing controlled test does not close.

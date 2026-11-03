@@ -4,7 +4,7 @@ import logging
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import SecretStr, Field
+from pydantic import SecretStr, Field, field_validator
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from pythonjsonlogger import jsonlogger
@@ -17,13 +17,34 @@ class Settings(BaseSettings):
     ai_service_url: str = "http://ai:8100"
     worker_poll_seconds: float = 2.0
     worker_request_timeout_seconds: float = 20.0
-    nutrition_provider: Literal["demo", "qwen"] = "demo"
+    nutrition_provider: Literal["demo", "qwen", "hkust", "ollama", "heuristic"] = "demo"
+    llm_provider: Literal["demo", "qwen", "hkust", "ollama", "heuristic"] | None = None
+    llm_base_url: str = ""
+    llm_model: str = ""
+    llm_api_key: SecretStr = SecretStr("")
+    llm_api_key_header: str = "api-key"
+    llm_timeout_seconds: float = Field(default=120.0, gt=0, le=600)
     dashscope_api_key: SecretStr = SecretStr("")
     qwen_base_url: str = ""
     qwen_model: str = "qwen-plus"
     qwen_timeout_seconds: float = Field(default=12.0, gt=0)
+    auth_cookie_secure: bool = True
+    auth_public_origin: str = "http://localhost:8000"
+    auth_registration_enabled: bool = False
+    auth_session_ttl_seconds: int = Field(default=8 * 60 * 60, ge=300, le=7 * 24 * 60 * 60)
 
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+    @field_validator("llm_provider", mode="before")
+    @classmethod
+    def empty_llm_provider_is_unset(cls, value):
+        return None if isinstance(value, str) and not value.strip() else value
+
+    @property
+    def effective_nutrition_provider(self) -> str:
+        """The course selector overrides the legacy selector only when configured."""
+        provider = self.llm_provider or self.nutrition_provider
+        return "demo" if provider == "heuristic" else provider
 
 
 @lru_cache(maxsize=1)

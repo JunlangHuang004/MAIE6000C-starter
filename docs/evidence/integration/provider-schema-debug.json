@@ -1,0 +1,88 @@
+{
+  "date": "2026-11-03",
+  "provider": "hkust",
+  "model": "gemini-2.5-flash-lite",
+  "input": "一份番茄炒蛋，两个水煮鸡蛋",
+  "mode": "basic",
+  "scope": "Direct model adapter in isolated Python processes using runtime credentials; no container files, services or database records changed. Synthetic input only.",
+  "adapter_sha256": "7f4e07b264ce392bd96d300e1602ab14cba7e1bdfe95ed388e749a588575e76a",
+  "requests": [
+    {
+      "step": 1,
+      "variant": "merged adapter before fix",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outcome": "rejected",
+      "validation_error": {
+        "field": "preparation",
+        "actual": "炒",
+        "expected": "stir_fried"
+      }
+    },
+    {
+      "step": 2,
+      "variant": "exact display-label normalization and method prompt",
+      "outcome": "rejected",
+      "validation_error": "Schema failure; response not captured"
+    },
+    {
+      "step": 3,
+      "variant": "same as step 2 with response diagnostics",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outcome": "rejected",
+      "validation_error": {
+        "field": "weight_basis",
+        "actual": "as_served",
+        "expected": [
+          "raw",
+          "cooked",
+          "as_sold",
+          null
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "variant": "native json_schema response format probe",
+      "http_status": 400,
+      "outcome": "gateway rejection"
+    },
+    {
+      "step": 5,
+      "variant": "same native schema with error diagnostics",
+      "http_status": 400,
+      "outcome": "Vertex INVALID_ARGUMENT through LiteLLM gateway; no detailed field supplied"
+    },
+    {
+      "step": 6,
+      "variant": "supported json_object with full schema in HKUST system prompt and strict local validation",
+      "http_status": 200,
+      "finish_reason": "stop",
+      "outcome": "pass",
+      "food_ids": [
+        "dish_001",
+        "egg"
+      ],
+      "reference_portions_g": [
+        200,
+        100
+      ],
+      "calories": 365.2,
+      "protein_g": 23.3,
+      "fat_g": 25.5,
+      "carbs_g": 10.0,
+      "questions": []
+    }
+  ],
+  "limits": [
+    "One successful direct-adapter retest is not full HTTP workflow acceptance or general model accuracy.",
+    "Unknown enums/extra fields still fail validation. No automatic retry or provider/model fallback added.",
+    "Exact-name grounding and catalogue-only nutrient arithmetic unchanged."
+  ],
+  "references": [
+    "https://docs.litellm.ai/docs/providers/vertex",
+    "https://docs.litellm.ai/docs/completion/json_mode",
+    "https://ai.google.dev/gemini-api/docs/structured-output"
+  ]
+}

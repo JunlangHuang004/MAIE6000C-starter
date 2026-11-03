@@ -1,18 +1,123 @@
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Literal
+from datetime import date, datetime, timezone
+from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator, model_validator
 
 from services.common.nutrition import parse_meal
 from services.common.ingredient_recipe import IngredientRecipe
 from services.common.models import AnalysisStatus, CaseStatus, JobStatus, JobType
+from services.common.tracking import parse_record_date
 
 
 class HealthResponse(BaseModel):
     service: str
     status: str
+
+
+class AuthCredentials(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    username: str = Field(min_length=3, max_length=32, pattern=r"^[a-z0-9_]+$")
+    password: SecretStr = Field(min_length=10, max_length=128)
+
+    @field_validator("password")
+    @classmethod
+    def validate_password_encoding(cls, value):
+        try:
+            value.get_secret_value().encode("utf-8")
+        except UnicodeEncodeError as exc:
+            raise ValueError("Password must contain valid Unicode characters") from exc
+        return value
+
+    @field_validator("username", mode="before")
+    @classmethod
+    def normalize_username(cls, value):
+        if isinstance(value, str):
+            if not value.isascii():
+                raise ValueError("Username must use ASCII letters, digits or underscores")
+            return value.strip().lower()
+        return value
+
+
+class UserRead(BaseModel):
+    id: str
+    username: str
+
+    model_config = ConfigDict(from_attributes=True)
+
+
+class ProfileFields(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
+
+    age_years: int = Field(ge=18, le=80)
+    height_cm: float = Field(ge=120, le=220)
+    weight_kg: float = Field(ge=30, le=250)
+    sex: Literal["male", "female"]
+    goal: Literal["gain_muscle", "lose_fat"]
+    activity_level: Literal["sedentary", "light", "moderate", "high"]
+
+
+class ProfileUpdate(ProfileFields):
+    revision: int = Field(ge=0, le=2_147_483_646)
+
+
+class ProfileRead(ProfileFields):
+    model_config = ConfigDict(from_attributes=True)
+
+    revision: int = Field(ge=1)
+    updated_at: datetime
+
+    @field_validator("updated_at")
+    @classmethod
+    def normalize_timestamp(cls, value: datetime) -> datetime:
+        # SQLite drops timezone metadata; persisted values are always written in UTC.
+        return value.replace(tzinfo=timezone.utc) if value.tzinfo is None else value.astimezone(
+            timezone.utc,
+        )
+
+
+class ProfileResponse(BaseModel):
+    profile: ProfileRead | None
+    reference: dict[str, Any] | None
+
+
+class DailyRecordUpdate(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
+
+    revision: int = Field(ge=0, le=2_147_483_646)
+    weight_kg: float | None = Field(ge=30, le=250)
+    manual_calories: float | None = Field(ge=0, le=20000)
+
+
+class DailyRecordRead(BaseModel):
+    date: date
+    revision: int
+    weight_kg: float | None
+    manual_calories: float | None
+    meal_calories: float | None
+    meal_count: int
+    calories: float | None
+    calorie_source: Literal["manual", "meals"] | None
+
+
+class TrackingSummary(BaseModel):
+    recorded_days: int
+    average_calories: float | None
+    weight_entries: int
+    first_weight_kg: float | None
+    last_weight_kg: float | None
+    weight_change_kg: float | None
+
+
+class TrackingResponse(BaseModel):
+    timezone: Literal["Asia/Hong_Kong"] = "Asia/Hong_Kong"
+    today: date
+    start_date: date
+    end_date: date
+    days: list[DailyRecordRead]
+    summary: TrackingSummary
 
 
 class CaseCreate(BaseModel):
@@ -67,7 +172,7 @@ class AnalysisCreate(BaseModel):
     @classmethod
     def validate_supported_meal(cls, value):
         from services.common.config import get_settings
-        if get_settings().nutrition_provider == "demo":
+        if get_settings().effective_nutrition_provider == "demo":
             parse_meal(value)
         return value
 
@@ -77,7 +182,15 @@ class AnalysisCorrection(AnalysisCreate):
 
 
 class AnalysisConfirm(BaseModel):
-    revision: int = Field(ge=1)
+    model_config = ConfigDict(extra="forbid")
+
+    revision: int = Field(ge=1, le=2_147_483_646, strict=True)
+    consumed_on: date | None = None
+
+    @field_validator("consumed_on", mode="before")
+    @classmethod
+    def validate_consumed_on(cls, value):
+        return None if value is None else parse_record_date(value)
 
 
 class AnalysisMode(BaseModel):
@@ -113,6 +226,7 @@ class AnalysisRead(BaseModel):
     interpreted_food_text: str | None = None
     revision: int
     confirmed_at: datetime | None = None
+    consumed_on: date | None = None
     id: str
     food_text: str
     status: AnalysisStatus

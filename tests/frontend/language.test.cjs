@@ -6,7 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const {test} = require('node:test');
-const {JSDOM} = require('jsdom');
+const {JSDOM, VirtualConsole} = require('jsdom');
 
 const root = path.resolve(__dirname, '../..');
 const staticDir = path.join(root, 'services/api/app/static');
@@ -15,9 +15,11 @@ const fixtures = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/meal-
 const clone = value => JSON.parse(JSON.stringify(value));
 const flush = async () => { for (let i = 0; i < 4; i++) await new Promise(setImmediate); };
 
-async function mount(t, {meal = null, language, storageBlocked = false, respond} = {}) {
+async function mount(t, {meal = null, language, storageBlocked = false, storage = {}, respond} = {}) {
+  const virtualConsole=new VirtualConsole();
+  virtualConsole.on('jsdomError',error=>{if(!error.message.includes('Not implemented: navigation'))throw error;});
   const dom = new JSDOM(fs.readFileSync(path.join(staticDir, 'index.html'), 'utf8'), {
-    url:'http://localhost:8003/app', runScripts:'outside-only', pretendToBeVisual:true,
+    url:'http://localhost:8003/app', runScripts:'outside-only', pretendToBeVisual:true, virtualConsole,
   });
   t.after(() => dom.window.close());
   const {window} = dom;
@@ -27,8 +29,9 @@ async function mount(t, {meal = null, language, storageBlocked = false, respond}
   if (storageBlocked) {
     Object.defineProperty(window, 'localStorage', {get() {throw new Error('Storage disabled');}});
   } else {
+    for(const [key,value] of Object.entries(storage))window.localStorage.setItem(key,value);
     if (language !== undefined) window.localStorage.setItem('nutrichat.language', language);
-    if (meal) window.localStorage.setItem('nutrichat.analysis', meal.id);
+    if (meal) window.localStorage.setItem('nutrichat.analysis.user.ui-user', meal.id);
   }
   let nextTimer = 0;
   const timers = new Map();
@@ -37,11 +40,16 @@ async function mount(t, {meal = null, language, storageBlocked = false, respond}
   const requests = [];
   window.fetch = async (url, options = {}) => {
     const request = {url:String(url), method:options.method || 'GET',
-      body:options.body ? JSON.parse(options.body) : undefined};
+      body:options.body ? JSON.parse(options.body) : undefined,headers:options.headers};
     requests.push(request);
-    let response = respond ? respond(request) : undefined;
+    let response = respond ? await respond(request) : undefined;
     if (response === undefined) {
-      if (request.url === '/foods') response = {body:{provider:'qwen', catalogue:{foods:clone(foods)}}};
+      if (request.url === '/auth/me') response = {body:{id:'ui-user',username:'UI user'}};
+      else if(request.url === '/profile')response={body:{profile:null,reference:null}};
+      else if(request.url.startsWith('/tracking'))response={body:{today:'2026-11-03',start_date:'2026-10-05',end_date:'2026-11-03',days:[],summary:{recorded_days:0,average_calories:null,weight_entries:0,weight_change_kg:null}}};
+      else if(request.url.startsWith('/daily-records/'))response={body:{date:request.url.split('/').pop(),revision:0,manual_calories:null,weight_kg:null,calories:null,calorie_source:null,meal_count:0,meal_calories:null}};
+      else if(request.url === '/analyses?limit=20')response={body:meal?[clone(meal)]:[]};
+      else if (request.url === '/foods') response = {body:{provider:'qwen', catalogue:{foods:clone(foods)}}};
       else if (meal && request.url === '/analyses/' + meal.id && request.method === 'GET') {
         response = {body:clone(meal)};
       } else throw new Error('Unexpected request: ' + request.method + ' ' + request.url);
@@ -52,7 +60,7 @@ async function mount(t, {meal = null, language, storageBlocked = false, respond}
       headers:{get:name => name.toLowerCase() === 'content-type' ? 'application/json' : null},
       json:async () => clone(response.body)};
   };
-  for (const script of ['catalogue-en.js', 'i18n.js', 'app.js']) {
+  for (const script of ['catalogue-en.js', 'i18n.js', 'account-i18n.js', 'app.js']) {
     window.eval(fs.readFileSync(path.join(staticDir, script), 'utf8'));
   }
   await flush();
@@ -173,7 +181,7 @@ test('Completed estimate changes labels and food names without changing totals, 
   assert.doesNotMatch($('evidence').textContent, /基础版|整锅|配料|数据来源/);
   assert.equal($('result').hidden, false);
   assert.equal($('confirm').disabled, false);
-  assert.equal(window.localStorage.getItem('nutrichat.analysis'), meal.id);
+  assert.equal(window.localStorage.getItem('nutrichat.analysis.user.ui-user'), meal.id);
   assert.equal(requests.length, before);
 });
 
@@ -581,4 +589,165 @@ test('Changing a search query clears the old selected ingredient and acceptance,
   await submitIngredients(view);
   assert.equal(requests.filter(request => request.method === 'POST').length,0);
   assert.match($('message').textContent,/Select an actual catalogue ingredient/);
+});
+
+const profileFixture = () => ({
+  profile:{age_years:25,height_cm:175,weight_kg:70,sex:'male',goal:'gain_muscle',activity_level:'moderate',revision:1},
+  reference:{status:'estimated',resting_kcal:1673.8,maintenance_kcal:2594.3,activity_factor:1.55,
+    calories:2720,protein_g:170,fat_g:90.7,carbs_g:306,reason_codes:[],
+    notes:['这是根据所填资料推算的每日参考，并非测量值或必须达到的指标。']},
+});
+const trackingFixture = () => {
+  const days=Array.from({length:30},(_,index)=>({date:new Date(Date.UTC(2026,9,5+index)).toISOString().slice(0,10),calories:null,weight_kg:null,calorie_source:null,meal_count:0}));
+  days[0]={...days[0],calories:0,weight_kg:70,calorie_source:'manual'};
+  days[2]={...days[2],calories:155,weight_kg:69.5,calorie_source:'meals',meal_count:1};
+  return {today:'2026-11-03',start_date:days[0].date,end_date:days[29].date,days,
+    summary:{recorded_days:2,average_calories:77.5,weight_entries:2,weight_change_kg:-0.5,first_weight_kg:70,last_weight_kg:69.5}};
+};
+
+test('Profile fields, goal and draft values survive bilingual switching and save with a revision and CSRF header',async t=>{
+  const profile=profileFixture();
+  const view=await mount(t,{respond:request=>request.url==='/profile'?{body:profile}:undefined});
+  const {window,$,clickLanguage,requests}=view;
+  assert.match($('profile-calories').textContent,/2,720/);
+  $('profile-weight').value='72.5';$('profile-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.equal($('profile-reference').hidden,true,'Stale reference must hide during edits');
+  const count=requests.length;
+  await clickLanguage('en');
+  assert.equal($('profile-weight').value,'72.5');assert.equal($('profile-goal').value,'gain_muscle');
+  assert.match($('profile-title').textContent,/daily nutrition/);
+  assert.match($('profile-message').textContent,/not saved/);
+  assert.equal(requests.length,count);
+  $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  const sent=requests.find(request=>request.url==='/profile'&&request.method==='PUT');
+  assert.equal(sent.body.weight_kg,72.5);assert.equal(sent.body.goal,'gain_muscle');assert.equal(sent.body.revision,1);
+  assert.equal(sent.headers['X-NutriChat-Request'],'1');
+  assert.doesNotMatch($('profile-reference').textContent,/[\u3400-\u9fff]/u);
+  await clickLanguage('zh');assert.match($('profile-reference').textContent,/增肌/);
+});
+
+test('A profile review boundary withholds targets in both languages and leaves meal estimation available',async t=>{
+  const profile=profileFixture();profile.reference.status='needs_review';profile.reference.reason_codes=['underweight_fat_loss'];
+  profile.reference.calories=null;profile.profile.goal='lose_fat';
+  const {$,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
+  assert.equal($('profile-targets').hidden,true);assert.equal($('profile-review').hidden,false);
+  assert.equal($('estimate').disabled,false);
+  await clickLanguage('en');assert.match($('profile-review').textContent,/withheld|outside/);
+  assert.doesNotMatch($('profile-review').textContent,/[\u3400-\u9fff]/u);
+});
+
+test('A stale profile revision preserves entered values and requires reloading before another save',async t=>{
+  const profile=profileFixture();
+  const {window,$,requests,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'
+    ?r.method==='PUT'?{status:409,body:{detail:'Profile changed'}}:{body:profile}:undefined});
+  $('profile-height').value='180';$('profile-height').dispatchEvent(new window.Event('input',{bubbles:true}));
+  $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal($('profile-height').value,'180');assert.equal($('profile-save').disabled,true);
+  assert.equal($('profile-reload').hidden,false);
+  await clickLanguage('en');assert.match($('profile-message').textContent,/updated elsewhere/);
+  $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal(requests.filter(r=>r.url==='/profile'&&r.method==='PUT').length,1);
+});
+
+test('Daily manual zero remains data, gaps stay blank, charts do not connect missing days, and switching preserves edits',async t=>{
+  const tracking=trackingFixture();
+  const view=await mount(t,{respond:r=>r.url.startsWith('/tracking')?{body:tracking}:undefined});
+  const {window,$,document,requests,clickLanguage}=view;
+  assert.equal($('trend-table-body').children.length,30);
+  assert.equal($('calorie-chart').querySelectorAll('circle').length,2);
+  assert.equal($('calorie-chart').querySelectorAll('line[stroke="#246149"]').length,0);
+  assert.equal($('trend-table-body').children[0].children[1].textContent,'0');
+  assert.equal($('trend-table-body').children[1].children[1].textContent,'—');
+  $('daily-calories').value='0';$('daily-weight').value='68.5';
+  $('daily-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
+  const count=requests.length;await clickLanguage('en');
+  assert.equal($('daily-calories').value,'0');assert.equal($('daily-weight').value,'68.5');
+  assert.match($('tracking-title').textContent,/30-day/);assert.match(document.querySelector('svg title').textContent,/30-day/);
+  assert.equal(requests.length,count);
+  $('daily-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  const sent=requests.find(r=>r.method==='PUT'&&r.url.startsWith('/daily-records/'));
+  assert.equal(sent.body.manual_calories,0);assert.equal(sent.body.weight_kg,68.5);assert.equal(sent.body.revision,0);
+  assert.equal(sent.headers['X-NutriChat-Request'],'1');
+});
+
+test('Custom ingredient meal confirmation includes its chosen date and refreshes account trends',async t=>{
+  const meal=ingredientRecipeFixture();
+  const {window,$,requests,clickLanguage}=await mount(t,{meal,respond:r=>r.url.endsWith('/confirm')
+    ?{body:{...meal,status:'confirmed',consumed_on:r.body.consumed_on,revision:meal.revision+1}}:undefined});
+  $('meal-date').value='2026-10-27';await clickLanguage('en');
+  assert.equal($('meal-date').value,'2026-10-27');
+  const before=requests.filter(r=>r.url.startsWith('/tracking')).length;
+  $('confirm').click();await flush();
+  const sent=requests.find(r=>r.url.endsWith('/confirm'));
+  assert.deepEqual(sent.body,{revision:meal.revision,consumed_on:'2026-10-27'});
+  assert.equal(sent.headers['X-NutriChat-Request'],'1');
+  assert.equal($('meal-date-editor').hidden,true);assert.match($('meal-confirmed-date').textContent,/2026-10-27/);
+  assert.ok(requests.filter(r=>r.url.startsWith('/tracking')).length>before);
+  assert.equal($('confirm').hidden,true);
+});
+
+test('Offline demo hides misleading chat and replaces the complete meal through PATCH before confirmation',async t=>{
+  const meal={...clone(fixtures.tomato_egg_dish),food_text:'100g egg',calories:155,details:[],draft:[]};
+  const {window,$,requests}=await mount(t,{meal,language:'en',respond:r=>{
+    if(r.url==='/foods')return {body:{provider:'demo',catalogue:{foods:clone(foods)}}};
+    if(r.method==='PATCH')return {body:{...meal,food_text:r.body.food_text,calories:310,revision:meal.revision+1}};
+  }});
+  assert.equal($('reply-form').hidden,true);assert.equal($('offline-correction').hidden,false);
+  assert.match($('review-help').textContent,/full-description/);
+  $('offline-meal').value='200g egg';$('offline-correction').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal($('calories').textContent,'310');
+  const sent=requests.find(r=>r.method==='PATCH');
+  assert.deepEqual(sent.body,{food_text:'200g egg',revision:meal.revision});
+  assert.equal(sent.headers['X-NutriChat-Request'],'1');
+  assert.equal(requests.filter(r=>r.url.endsWith('/reply')).length,0);
+});
+
+test('Restored meals are scoped to the signed-in user and legacy shared storage is removed',async t=>{
+  const meal=clone(fixtures.tomato_egg_dish);
+  const {window,$,requests}=await mount(t,{meal,storage:{'nutrichat.analysis':'shared-old','nutrichat.analysis.user.other':'private-other'}});
+  assert.equal(window.localStorage.getItem('nutrichat.analysis'),null);
+  assert.equal(window.localStorage.getItem('nutrichat.analysis.user.other'),'private-other');
+  assert.ok(requests.some(r=>r.url==='/analyses/'+meal.id));
+  assert.ok(requests.every(r=>!r.url.includes('shared-old')&&!r.url.includes('private-other')));
+  assert.equal($('account-name').textContent,'UI user');
+});
+
+test('An in-flight meal response cannot restore private content after another tab changes the session',async t=>{
+  let finish;const meal=clone(fixtures.tomato_egg_dish);
+  const {window,$}=await mount(t,{respond:r=>r.method==='POST'&&r.url==='/analyses'
+    ?new Promise(resolve=>{finish=resolve;}):undefined});
+  $('meal').value='private meal';$('meal-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal(typeof finish,'function');
+  window.dispatchEvent(new window.StorageEvent('storage',{key:'nutrichat.auth-change',newValue:'logout'}));
+  finish({body:meal});await flush();
+  assert.equal($('meal').value,'');assert.equal($('result').hidden,true);assert.equal($('history').textContent,'');
+  assert.equal($('profile-reference').hidden,true);assert.equal($('trend-results').hidden,true);
+  assert.equal($('estimate').disabled,true);
+});
+
+async function mountAccount(t){
+  const dom=new JSDOM(fs.readFileSync(path.join(staticDir,'account.html'),'utf8'),{url:'http://localhost:8003/login',runScripts:'outside-only'});
+  t.after(()=>dom.window.close());const {window}=dom, requests=[], errors=[];
+  window.addEventListener('error',event=>errors.push(event.error||event.message));
+  window.fetch=async(url,options={})=>{
+    requests.push({url,options});const status=url==='/auth/config'?200:401;
+    return {ok:status===200,status,headers:{get:()=> 'application/json'},json:async()=>url==='/auth/config'?{registration_enabled:true}:{detail:'Authentication required'}};
+  };
+  for(const script of ['i18n.js','account-i18n.js'])window.eval(fs.readFileSync(path.join(staticDir,script),'utf8'));
+  const inline=Array.from(window.document.scripts).find(script=>!script.src);window.eval(inline.textContent);await flush();
+  assert.deepEqual(errors,[]);return {window,$:id=>window.document.getElementById(id),requests,errors};
+}
+
+test('Account form switches language without losing credentials or changing the selected registration tab',async t=>{
+  const {window,$,requests,errors}=await mountAccount(t);
+  $('register-tab').click();$('username').value='tester';$('password').value='  keep spaces  ';$('confirm-password').value='  keep spaces  ';
+  const count=requests.length;$('language-en').click();await flush();
+  assert.equal($('password').value,'  keep spaces  ');assert.equal($('confirm-password').value,'  keep spaces  ');
+  assert.equal($('register-tab').getAttribute('aria-selected'),'true');assert.match($('account-title').textContent,/Create/);
+  assert.match($('password-hint').textContent,/Spaces/);assert.equal(requests.length,count);
+  $('account-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  const sent=requests.find(r=>r.url==='/auth/register');
+  assert.equal(JSON.parse(sent.options.body).password,'  keep spaces  ');assert.equal(sent.options.headers['X-NutriChat-Request'],'1');
+  assert.match($('message').textContent,/Incorrect username/);
+  $('language-zh').click();await flush();assert.match($('message').textContent,/用户名或密码/);assert.deepEqual(errors,[]);
 });

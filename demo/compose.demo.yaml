@@ -4,8 +4,14 @@ x-demo: &demo
     - .env.example
   environment:
     NUTRITION_PROVIDER: demo
+    LLM_PROVIDER: heuristic
+    LLM_API_KEY: ''
+    LLM_BASE_URL: ''
     DASHSCOPE_API_KEY: ''
     QWEN_BASE_URL: ''
+    AUTH_COOKIE_SECURE: 'false'
+    AUTH_PUBLIC_ORIGIN: http://localhost:${NUTRICHAT_DEMO_PORT:-8006}
+    AUTH_REGISTRATION_ENABLED: 'true'
 
 services:
   db:
@@ -16,6 +22,6 @@ services:
   api:
     <<: *demo
     ports: !override
-      - '127.0.0.1:${NUTRICHAT_DEMO_PORT:-8002}:8000'
+      - '127.0.0.1:${NUTRICHAT_DEMO_PORT:-8006}:8000'
   worker:
     <<: *demo

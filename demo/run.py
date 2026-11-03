@@ -10,29 +10,39 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
+import re
+import secrets
 import subprocess
 import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "demo" / "output" / "check.json"
-PROJECT = "nutrichat-demo"
+PROJECT = os.getenv("NUTRICHAT_DEMO_PROJECT", "nutrichat-integrated-demo")
 SERVICES = ["db", "ai", "api", "worker"]
 COMPOSE = [
     "docker", "compose", "-p", PROJECT, "--env-file", ".env.example",
     "-f", "compose.yaml", "-f", "demo/compose.demo.yaml",
 ]
-HTTP = """import json,sys,urllib.request,urllib.error
+HTTP = """import http.cookiejar,json,os,sys,urllib.request,urllib.error
 method,path,payload = sys.argv[1:]
+cookies = http.cookiejar.MozillaCookieJar('/tmp/nutrichat-demo-cookies')
+try:
+    cookies.load(ignore_discard=True)
+except FileNotFoundError:
+    pass
+opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cookies))
 request = urllib.request.Request('http://api:8000'+path, method=method,
     data=payload.encode() if payload else None,
-    headers={'Content-Type':'application/json'})
+    headers={'Content-Type':'application/json','X-NutriChat-Request':'1'})
 try:
-    response = urllib.request.urlopen(request, timeout=10)
+    response = opener.open(request, timeout=10)
 except urllib.error.HTTPError as error:
     response = error
 with response:
     content = response.read().decode('utf-8')
+os.umask(0o077)
+cookies.save(ignore_discard=True)
 try:
     body = json.loads(content)
 except ValueError:
@@ -72,7 +82,7 @@ def require(condition, message):
 
 
 def demo_port():
-    value = os.getenv("NUTRICHAT_DEMO_PORT", "8002")
+    value = os.getenv("NUTRICHAT_DEMO_PORT", "8006")
     require(value.isascii() and value.isdigit(), "NUTRICHAT_DEMO_PORT must be an integer.")
     port = int(value)
     require(1024 <= port <= 65535, "NUTRICHAT_DEMO_PORT must be between 1024 and 65535.")
@@ -91,10 +101,15 @@ def source_metadata():
 
 
 def guard_source(source):
+    # Branch names do not prove source contents. Runtime preflight verifies the
+    # integrated contract; validate the project name before any Docker mutation.
     require(
-        source["branch"] in (None, "detached", "nutrichat"),
-        "Use the nutrichat branch for this demo; the current checkout is another branch.",
+        bool(re.fullmatch(r"[a-z0-9][a-z0-9_-]{0,62}", PROJECT)),
+        "NUTRICHAT_DEMO_PROJECT must be a lowercase Docker project name (1–63 characters).",
     )
+    require(PROJECT not in {"nutrichat-demo", "nutrichat-qwen-demo", "nutrichat-accounts",
+                            "nutrichat-model-lab"},
+            "Choose a new dedicated project name; existing preview projects are protected.")
 
 
 def request(method, path, payload=None, status=200):
@@ -112,6 +127,8 @@ def verify_stack():
         safe = run(COMPOSE + [
             "exec", "-T", service, "python", "-c",
             "import os; print(os.environ.get('NUTRITION_PROVIDER') == 'demo' "
+            "and os.environ.get('LLM_PROVIDER') == 'heuristic' "
+            "and not os.environ.get('LLM_API_KEY') "
             "and not os.environ.get('DASHSCOPE_API_KEY') "
             "and not os.environ.get('QWEN_BASE_URL'))",
         ]).strip()
@@ -123,12 +140,57 @@ def verify_stack():
     require(foods.get("provider") == "demo", "This check requires the key-free demo provider.")
     paths = request("GET", "/openapi.json")["body"].get("paths", {})
     require("/analyses/{analysis_id}/confirm" in paths, "Meal confirmation route is missing.")
-    require(not any(path.startswith(("/auth/", "/profile", "/tracking")) for path in paths),
-            "Unexpected account/personalization routes: rebuild from the nutrichat branch.")
+    require(all(path in paths for path in (
+        "/auth/register", "/auth/login", "/profile", "/tracking",
+    )), "Missing integrated account/profile/tracking routes: rebuild this checkout.")
     page = request("GET", "/app")["body"]
     require(isinstance(page, str) and "NutriChat" in page, "The meal UI was not served.")
     return {"health": health, "provider": foods["provider"],
             "supported_demo_foods": foods["foods"], "app_http_status": 200}
+
+
+def authenticate_check():
+    # Disposable account in this isolated database; no existing credentials used.
+    response = request("POST", "/auth/register", {
+        "username": "demo_" + secrets.token_hex(8),
+        "password": secrets.token_urlsafe(24),
+    }, status=201)
+    require(request("GET", "/auth/me")["body"] == response["body"],
+            "The demo session cookie was not accepted.")
+    return {"registered": True}
+
+
+def verify_personalization():
+    """Account profile and diary do not require a model provider."""
+    profile = request("PUT", "/profile", {
+        "revision": 0, "age_years": 25, "height_cm": 175, "weight_kg": 70,
+        "sex": "male", "goal": "gain_muscle", "activity_level": "moderate",
+    })["body"]
+    require(profile["reference"]["status"] == "estimated",
+            "A valid profile did not produce a daily reference.")
+    require(request("GET", "/profile")["body"] == profile,
+            "Profile did not persist.")
+    tracking = request("GET", "/tracking")["body"]
+    path = "/daily-records/" + tracking["today"]
+    initial = request("GET", path)["body"]
+    require(initial["meal_count"] == 1 and initial["calories"] == 310,
+            "Confirmed corrected meal was not included in today's diary.")
+    recorded = request("PUT", path, {
+        "revision": 0, "weight_kg": 70, "manual_calories": 1800,
+    })["body"]
+    require(recorded["calories"] == 1800 and recorded["calorie_source"] == "manual",
+            "Manual calories must replace, not add to, confirmed-meal calories.")
+    cleared = request("PUT", path, {
+        "revision": recorded["revision"], "weight_kg": 69.8, "manual_calories": None,
+    })["body"]
+    require(cleared["calories"] == 310 and cleared["weight_kg"] == 69.8,
+            "Clearing manual calories must restore the confirmed meal sum.")
+    trend = request("GET", "/tracking")["body"]
+    require(len(trend["days"]) == 30 and trend["summary"]["recorded_days"] == 1,
+            "Expected a 30-day window with one recorded calorie day.")
+    require(trend["summary"]["weight_entries"] == 1,
+            "Weight measurement was not included in the trend.")
+    return {"profile": profile, "daily_record": cleared, "trend_summary": trend["summary"]}
 
 
 def database(job_id):
@@ -230,10 +292,14 @@ def check():
     }
     stage = "preflight"
     restore_worker = False
+    authenticated = False
     failure = None
     try:
         guard_source(evidence["source"])
         evidence["stack"] = verify_stack()
+        stage = "account registration"
+        evidence["account"] = authenticate_check()
+        authenticated = True
         evidence["ai_requests_before"] = ai_requests()
         stage = "queued persistence"
         restore_worker = True
@@ -291,6 +357,8 @@ def check():
             "food_text": "300g egg", "revision": confirmed["body"]["revision"],
         }, status=409)
         require(request("GET", path) == confirmed, "A locked edit changed the confirmed meal.")
+        stage = "personal reference and daily tracking"
+        evidence["personalization"] = verify_personalization()
         stage = "worker logs"
         evidence["worker_events"] = worker_events([job_id, correction_job_id], started_at)
         stage = "AI HTTP counter"
@@ -308,6 +376,13 @@ def check():
         failure = f"{stage}: interrupted by the user"
         evidence["failure"] = failure
     finally:
+        if authenticated:
+            try:
+                request("POST", "/auth/logout", status=204)
+                evidence["session_revoked"] = True
+            except (DemoError, ValueError) as error:
+                evidence["session_revoked"] = False
+                failure = failure or str(error)
         if restore_worker:
             try:
                 run(COMPOSE + ["start", "worker"])
@@ -324,7 +399,7 @@ def check():
     if failure:
         raise DemoError(failure)
     print("PASS: queued DB state, worker completion, 155 -> 310 kcal correction, "
-          "confirmation, reload, locked edit, and matching worker logs.")
+          "confirmation, reload, profile, daily records, trends, and matching worker logs.")
     print(f"Synthetic meal ID: {meal_id}")
 
 
@@ -339,13 +414,14 @@ def main(argv=None):
             run(COMPOSE + ["up", "--build", "--detach", "--wait", "--wait-timeout", "180"]
                 + SERVICES, timeout=900, stream=True)
             verify_stack()
-            print(f"Ready: http://localhost:{port}/app (no login or API key required)")
+            print(f"Ready: http://localhost:{port}/app (register/sign in; no model key required)")
         elif args.command == "check":
             check()
         elif args.command == "status":
             run(COMPOSE + ["ps", "--all"] + SERVICES, stream=True)
             print(f"Demo URL: http://localhost:{port}/app")
         else:
+            guard_source({})
             run(COMPOSE + ["stop"] + SERVICES, stream=True)
             print("Dedicated demo stopped. Database records are retained; run start to resume.")
     except (DemoError, OSError) as error:

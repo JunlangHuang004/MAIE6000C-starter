@@ -10,8 +10,9 @@ from services.worker.app import main as worker
 
 @pytest.fixture()
 def qwen_mode(monkeypatch):
-    monkeypatch.setattr('services.common.config.get_settings',
-                        lambda: Settings(_env_file=None,nutrition_provider='qwen'))
+    settings = Settings(_env_file=None, nutrition_provider='qwen', llm_provider='qwen')
+    monkeypatch.setattr('services.common.config.get_settings', lambda: settings)
+    monkeypatch.setattr('services.api.app.main.get_settings', lambda: settings)
 
 
 def test_worker_dialogue_reply_reload_confirm(client,db_session,monkeypatch,qwen_mode):

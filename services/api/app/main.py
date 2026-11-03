@@ -4,18 +4,24 @@ import logging
 from time import perf_counter
 from pathlib import Path
 
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse
 from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
+from fastapi.exceptions import RequestValidationError
+from fastapi.exception_handlers import request_validation_exception_handler
 from prometheus_client import (
     CONTENT_TYPE_LATEST,
     Counter,
     Histogram,
     generate_latest,
 )
-from sqlalchemy import select, text, update
+from sqlalchemy import and_, or_, select, text, update
 from sqlalchemy.orm import Session
 
 from services.common.config import configure_logging, get_settings
+from services.api.app.auth import get_current_user, get_optional_user, router as auth_router
+from services.api.app.profile import router as profile_router
+from services.api.app.tracking import router as tracking_router
+from services.common import tracking
 from services.common.db import get_db
 from services.common.models import (
     Analysis,
@@ -26,6 +32,7 @@ from services.common.models import (
     Job,
     JobStatus,
     JobType,
+    User,
 )
 from services.common.schemas import (
     AnalysisMode,
@@ -47,6 +54,9 @@ configure_logging()
 logger = logging.getLogger("services.api.main")
 
 app = FastAPI(title="NutriChat API", version="0.1.0")
+app.include_router(auth_router)
+app.include_router(profile_router)
+app.include_router(tracking_router)
 
 HTTP_REQUESTS = Counter(
     "api_http_requests_total",
@@ -62,8 +72,11 @@ CASES_CREATED = Counter("api_cases_created_total", "Total cases created")
 ANALYSES_CREATED = Counter("api_analyses_created_total", "Total analyses created")
 
 
-def create_case_with_job(db: Session, payload: CaseCreate) -> tuple[Case, Job]:
+def create_case_with_job(
+    db: Session, payload: CaseCreate, user_id: str | None = None,
+) -> tuple[Case, Job]:
     case = Case(
+        user_id=user_id,
         title=payload.title.strip(),
         description=payload.description.strip(),
         status=CaseStatus.QUEUED.value,
@@ -83,24 +96,38 @@ def create_case_with_job(db: Session, payload: CaseCreate) -> tuple[Case, Job]:
     return case, job
 
 
-def list_cases(db: Session, limit: int) -> list[Case]:
-    stmt = select(Case).order_by(Case.created_at.desc()).limit(limit)
+def list_cases(db: Session, limit: int, user_id: str | None = None) -> list[Case]:
+    stmt = select(Case)
+    if user_id is not None:
+        stmt = stmt.where(Case.user_id == user_id)
+    stmt = stmt.order_by(Case.created_at.desc(), Case.id.desc()).limit(limit)
     return db.execute(stmt).scalars().all()
 
 
-def get_case(db: Session, case_id: str) -> Case | None:
-    return db.get(Case, case_id)
+def get_case(db: Session, case_id: str, user_id: str | None = None) -> Case | None:
+    stmt = select(Case).where(Case.id == case_id)
+    if user_id is not None:
+        stmt = stmt.where(Case.user_id == user_id)
+    return db.execute(stmt).scalar_one_or_none()
 
 
-def get_job(db: Session, job_id: int) -> Job | None:
-    return db.get(Job, job_id)
+def get_job(db: Session, job_id: int, user_id: str | None = None) -> Job | None:
+    stmt = select(Job).where(Job.id == job_id)
+    if user_id is not None:
+        stmt = stmt.where(or_(
+            and_(Job.case_id.is_(None), Job.analysis.has(Analysis.user_id == user_id)),
+            and_(Job.analysis_id.is_(None), Job.case.has(Case.user_id == user_id)),
+        ))
+    return db.execute(stmt).scalar_one_or_none()
 
 
 def create_analysis_with_job(
     db: Session,
     payload: AnalysisCreate,
+    user_id: str | None = None,
 ) -> tuple[Analysis, Job]:
     analysis = Analysis(
+        user_id=user_id,
         food_text=payload.food_text.strip(),
         conversation=[{"role":"user", "content":payload.food_text.strip()}],
         mode=payload.mode,
@@ -121,8 +148,35 @@ def create_analysis_with_job(
     return analysis, job
 
 
-def get_analysis(db: Session, analysis_id: str) -> Analysis | None:
-    return db.get(Analysis, analysis_id)
+def get_analysis(db: Session, analysis_id: str, user_id: str | None = None) -> Analysis | None:
+    stmt = select(Analysis).where(Analysis.id == analysis_id)
+    if user_id is not None:
+        stmt = stmt.where(Analysis.user_id == user_id)
+    return db.execute(stmt).scalar_one_or_none()
+
+
+@app.exception_handler(RequestValidationError)
+async def safe_validation_errors(request: Request, exc: RequestValidationError):
+    if request.url.path.startswith("/auth/"):
+        # FastAPI's default validation response can echo the rejected password.
+        return JSONResponse(status_code=422, content={
+            "detail": "Use a 3–32 character username (letters, digits or _) and a "
+                      "10–128 character password.",
+        })
+    if (
+        request.url.path == "/profile"
+        or request.url.path.startswith(("/daily-records", "/tracking"))
+        or (request.url.path.startswith("/analyses/")
+            and request.url.path.endswith(("/confirm", "/ingredients")))
+    ):
+        # Do not reflect personal inputs (or non-JSON NaN/Infinity) in errors.
+        return JSONResponse(status_code=422, content={
+            "detail": [
+                {key: error[key] for key in ("loc", "msg", "type")}
+                for error in exc.errors()
+            ],
+        })
+    return await request_validation_exception_handler(request, exc)
 
 
 @app.middleware("http")
@@ -130,11 +184,29 @@ async def observe_requests(request: Request, call_next):
     start = perf_counter()
     response: Response | None = None
     try:
-        response = await call_next(request)
+        if request.method in {"POST", "PUT", "PATCH", "DELETE"} and (
+            request.headers.get("X-NutriChat-Request") != "1"
+            or ("origin" in request.headers
+                and request.headers["origin"] != get_settings().auth_public_origin)
+        ):
+            response = JSONResponse(status_code=403, content={
+                "detail": "Request origin or security header is invalid.",
+            })
+        else:
+            response = await call_next(request)
+        if request.url.path.startswith((
+            "/auth/", "/analyses", "/cases", "/jobs", "/profile", "/daily-records", "/tracking",
+        )) or (
+            request.url.path in {"/app", "/login"}
+        ):
+            response.headers["Cache-Control"] = "no-store"
+            response.headers["Pragma"] = "no-cache"
+        response.headers["X-Content-Type-Options"] = "nosniff"
         return response
     finally:
         duration = perf_counter() - start
-        path = request.url.path
+        route = request.scope.get("route")
+        path = route.path if route is not None else "unmatched"
         status = str(response.status_code) if response is not None else "500"
         HTTP_REQUESTS.labels(request.method, path, status).inc()
         HTTP_REQUEST_LATENCY.labels(request.method, path).observe(duration)
@@ -171,8 +243,10 @@ def metrics() -> Response:
 
 
 @app.post("/cases", response_model=CaseCreateResponse, status_code=201)
-def create_case(payload: CaseCreate, db: Session = Depends(get_db)) -> CaseCreateResponse:
-    case, job = create_case_with_job(db, payload)
+def create_case(
+    payload: CaseCreate, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+) -> CaseCreateResponse:
+    case, job = create_case_with_job(db, payload, user.id)
     CASES_CREATED.inc()
     logger.info("case_created", extra={"case_id": case.id, "job_id": job.id})
     return CaseCreateResponse(
@@ -185,21 +259,26 @@ def create_case(payload: CaseCreate, db: Session = Depends(get_db)) -> CaseCreat
 def read_cases(
     limit: int = Query(default=20, ge=1, le=100),
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> list[CaseRead]:
-    return [CaseRead.model_validate(case) for case in list_cases(db, limit)]
+    return [CaseRead.model_validate(case) for case in list_cases(db, limit, user.id)]
 
 
 @app.get("/cases/{case_id}", response_model=CaseRead)
-def read_case(case_id: str, db: Session = Depends(get_db)) -> CaseRead:
-    case = get_case(db, case_id)
+def read_case(
+    case_id: str, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+) -> CaseRead:
+    case = get_case(db, case_id, user.id)
     if case is None:
         raise HTTPException(status_code=404, detail="Case not found")
     return CaseRead.model_validate(case)
 
 
 @app.get("/jobs/{job_id}", response_model=JobRead)
-def read_job(job_id: int, db: Session = Depends(get_db)) -> JobRead:
-    job = get_job(db, job_id)
+def read_job(
+    job_id: int, db: Session = Depends(get_db), user: User = Depends(get_current_user),
+) -> JobRead:
+    job = get_job(db, job_id, user.id)
     if job is None:
         raise HTTPException(status_code=404, detail="Job not found")
     return JobRead.model_validate(job)
@@ -209,8 +288,9 @@ def read_job(job_id: int, db: Session = Depends(get_db)) -> JobRead:
 def create_analysis(
     payload: AnalysisCreate,
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> AnalysisCreateResponse:
-    analysis, job = create_analysis_with_job(db, payload)
+    analysis, job = create_analysis_with_job(db, payload, user.id)
     ANALYSES_CREATED.inc()
     logger.info(
         "analysis_created",
@@ -222,28 +302,39 @@ def create_analysis(
     )
 
 
+@app.get("/analyses", response_model=list[AnalysisRead])
+def read_analyses(
+    limit: int = Query(default=20, ge=1, le=100), db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+) -> list[AnalysisRead]:
+    records = db.execute(select(Analysis).where(Analysis.user_id == user.id).order_by(
+        Analysis.created_at.desc(), Analysis.id.desc(),
+    ).limit(limit)).scalars().all()
+    return [AnalysisRead.model_validate(record) for record in records]
+
+
 @app.get("/analyses/{analysis_id}", response_model=AnalysisRead)
 def read_analysis(
     analysis_id: str,
     db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ) -> AnalysisRead:
-    analysis = get_analysis(db, analysis_id)
+    analysis = get_analysis(db, analysis_id, user.id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="Analysis not found")
     return AnalysisRead.model_validate(analysis)
 
 
 @app.get("/app", include_in_schema=False)
-def meal_app():
-    return FileResponse(
-        Path(__file__).parent / "static" / "index.html",
-        headers={"Cache-Control": "no-cache"},
-    )
+def meal_app(user: User | None = Depends(get_optional_user)):
+    if user is None:
+        return RedirectResponse("/login", status_code=303)
+    return FileResponse(Path(__file__).parent / "static" / "index.html")
 
 
 @app.get("/app-assets/{filename}", include_in_schema=False)
 def meal_app_asset(filename: str):
-    if filename not in {"app.js", "i18n.js", "catalogue-en.js"}:
+    if filename not in {"app.js", "i18n.js", "account-i18n.js", "catalogue-en.js"}:
         raise HTTPException(status_code=404, detail="Asset not found")
     return FileResponse(
         Path(__file__).parent / "static" / filename,
@@ -252,25 +343,35 @@ def meal_app_asset(filename: str):
     )
 
 
+@app.get("/login", include_in_schema=False)
+def account_app():
+    return FileResponse(Path(__file__).parent / "static" / "account.html")
+
+
 @app.get("/foods")
 def supported_foods():
     from services.common.nutrition import NUTRITION_PER_100G
     from services.common.meal_engine import catalogue
-    return {"provider": get_settings().nutrition_provider,
+    return {"provider": get_settings().effective_nutrition_provider,
             "catalogue": catalogue(), "foods": list(NUTRITION_PER_100G),
             "unit": "grams", "max_grams": 10000,
             "source": "USDA SR Legacy CC0 + user-reviewed project reference recipes."}
 
 
-def change_analysis(db, analysis_id, revision, allowed_states, values):
-    if db.get(Analysis, analysis_id) is None:
+def change_analysis(db, analysis_id, revision, allowed_states, values, user_id=None):
+    if get_analysis(db, analysis_id, user_id) is None:
         raise HTTPException(status_code=404, detail="Analysis not found")
+    predicates = [
+        Analysis.id == analysis_id,
+        Analysis.revision == revision,
+        Analysis.status.in_(allowed_states),
+    ]
+    if user_id is not None:
+        predicates.append(Analysis.user_id == user_id)
     result = db.execute(
-        update(Analysis).where(
-            Analysis.id == analysis_id,
-            Analysis.revision == revision,
-            Analysis.status.in_(allowed_states),
-        ).values(**values, revision=Analysis.revision + 1, updated_at=utcnow())
+        update(Analysis).where(*predicates).values(
+            **values, revision=Analysis.revision + 1, updated_at=utcnow(),
+        )
     )
     if result.rowcount != 1:
         db.rollback()
@@ -282,21 +383,23 @@ def change_analysis(db, analysis_id, revision, allowed_states, values):
 @app.patch("/analyses/{analysis_id}", response_model=AnalysisCreateResponse)
 def correct_analysis(
     analysis_id: str, payload: AnalysisCorrection, db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     change_analysis(db, analysis_id, payload.revision, ["completed", "failed", "needs_input"], {
         "food_text": payload.food_text, "status": "queued", "confirmed_at": None,
+        "consumed_on": None,
         "conversation": [{"role":"user", "content":payload.food_text}],
         "draft": [], "questions": [], "details": [], "error_message": None,
         "interpreted_food_text": None, "calories": None, "protein_g": None,
         "carbs_g": None, "fat_g": None,
-    })
+    }, user_id=user.id)
     job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
               status=JobStatus.PENDING.value)
     db.add(job)
     db.commit()
     db.expire_all()
     return AnalysisCreateResponse(
-        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        analysis=AnalysisRead.model_validate(get_analysis(db, analysis_id, user.id)),
         job=JobRead.model_validate(job),
     )
 
@@ -304,25 +407,36 @@ def correct_analysis(
 @app.post("/analyses/{analysis_id}/confirm", response_model=AnalysisRead)
 def confirm_analysis(
     analysis_id: str, payload: AnalysisConfirm, db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     change_analysis(db, analysis_id, payload.revision, ["completed"], {
         "status": "confirmed", "confirmed_at": utcnow(),
-    })
+        "consumed_on": payload.consumed_on or tracking.hong_kong_today(),
+    }, user_id=user.id)
     db.commit()
     db.expire_all()
-    return AnalysisRead.model_validate(db.get(Analysis, analysis_id))
+    return AnalysisRead.model_validate(get_analysis(db, analysis_id, user.id))
 
 
 @app.post("/analyses/{analysis_id}/reply", response_model=AnalysisCreateResponse)
-def reply_analysis(analysis_id: str, payload: AnalysisReply, db: Session = Depends(get_db)):
+def reply_analysis(
+    analysis_id: str, payload: AnalysisReply, db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
     import json
     from services.common.meal_engine import apply_answers, catalogue
-    analysis = db.get(Analysis, analysis_id)
+    analysis = get_analysis(db, analysis_id, user.id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="Analysis not found")
     if (analysis.revision != payload.revision
             or analysis.status not in ("needs_input", "completed", "failed")):
         raise HTTPException(status_code=409, detail="记录已更新，请刷新后回答。")
+    if payload.message and get_settings().effective_nutrition_provider == "demo":
+        raise HTTPException(
+            status_code=422,
+            detail="Offline mode cannot interpret conversational corrections. "
+                   "Replace the full meal description using PATCH /analyses/{id}.",
+        )
     if payload.message and any('custom_recipe' in item for item in analysis.draft):
         raise HTTPException(status_code=422,
                             detail="本餐包含自定义食材配方，请使用配方编辑器修改，或开始新的一餐。")
@@ -354,29 +468,30 @@ def reply_analysis(analysis_id: str, payload: AnalysisReply, db: Session = Depen
         raise HTTPException(status_code=422, detail="对话资料过长，请整理后开始新餐食。")
     change_analysis(db, analysis_id, payload.revision, ["needs_input", "completed", "failed"], {
         "conversation":conversation, "draft":draft, "questions":[], "details":[],
-        "status":"queued", "confirmed_at":None, "error_message":None,
+        "status":"queued", "confirmed_at":None, "consumed_on":None, "error_message":None,
         "interpreted_food_text":None, "calories":None, "protein_g":None,
         "carbs_g":None, "fat_g":None,
-    })
+    }, user_id=user.id)
     job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
               status=JobStatus.PENDING.value)
     db.add(job)
     db.commit()
     db.expire_all()
     return AnalysisCreateResponse(
-        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        analysis=AnalysisRead.model_validate(get_analysis(db, analysis_id, user.id)),
                                   job=JobRead.model_validate(job))
 
 
 @app.post("/analyses/{analysis_id}/ingredients", response_model=AnalysisCreateResponse)
 def replace_with_ingredient_recipe(
     analysis_id: str, payload: AnalysisIngredientRecipe, db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
 ):
     from copy import deepcopy
     from services.common.ingredient_recipe import validate_ingredient_recipe
     from services.common.meal_engine import catalogue
 
-    analysis = db.get(Analysis, analysis_id)
+    analysis = get_analysis(db, analysis_id, user.id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="Analysis not found")
     if (analysis.revision != payload.revision
@@ -408,24 +523,27 @@ def replace_with_ingredient_recipe(
     }]
     change_analysis(db, analysis_id, payload.revision, ["needs_input", "completed", "failed"], {
         "conversation":conversation, "draft":draft, "questions":[], "details":[],
-        "status":"queued", "confirmed_at":None, "error_message":None,
+        "status":"queued", "confirmed_at":None, "consumed_on":None, "error_message":None,
         "interpreted_food_text":None, "calories":None, "protein_g":None,
         "carbs_g":None, "fat_g":None,
-    })
+    }, user_id=user.id)
     job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
               status=JobStatus.PENDING.value)
     db.add(job)
     db.commit()
     db.expire_all()
     return AnalysisCreateResponse(
-        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        analysis=AnalysisRead.model_validate(get_analysis(db, analysis_id, user.id)),
         job=JobRead.model_validate(job),
     )
 
 
 @app.post("/analyses/{analysis_id}/mode", response_model=AnalysisCreateResponse)
-def switch_analysis_mode(analysis_id: str, payload: AnalysisMode, db: Session = Depends(get_db)):
-    analysis = db.get(Analysis, analysis_id)
+def switch_analysis_mode(
+    analysis_id: str, payload: AnalysisMode, db: Session = Depends(get_db),
+    user: User = Depends(get_current_user),
+):
+    analysis = get_analysis(db, analysis_id, user.id)
     if analysis is None:
         raise HTTPException(status_code=404, detail="Analysis not found")
     # Reuse explicit facts only. Basic-mode defaults are never written into this draft.
@@ -433,12 +551,13 @@ def switch_analysis_mode(analysis_id: str, payload: AnalysisMode, db: Session = 
         "mode":payload.mode, "status":"queued", "questions":[], "details":[],
         "calories":None, "protein_g":None, "carbs_g":None, "fat_g":None,
         "interpreted_food_text":None, "error_message":None,
-    })
+        "confirmed_at":None, "consumed_on":None,
+    }, user_id=user.id)
     job = Job(analysis_id=analysis_id, job_type=JobType.ANALYZE_NUTRITION.value,
               status=JobStatus.PENDING.value)
     db.add(job)
     db.commit()
     db.expire_all()
     return AnalysisCreateResponse(
-        analysis=AnalysisRead.model_validate(db.get(Analysis, analysis_id)),
+        analysis=AnalysisRead.model_validate(get_analysis(db, analysis_id, user.id)),
         job=JobRead.model_validate(job))

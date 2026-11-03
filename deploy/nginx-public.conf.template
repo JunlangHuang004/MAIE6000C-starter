@@ -21,26 +21,16 @@ server {
     add_header X-Frame-Options DENY always;
     location = / { return 302 /app; }
     location = /metrics { return 404; }
-    location = /_session {
-        internal;
-        proxy_pass http://gateway:8200/verify;
-        proxy_pass_request_body off;
-        proxy_set_header Content-Length "";
-        proxy_set_header Cookie $http_cookie;
-    }
-    location = /login {
+    location ~ ^/auth/(login|register)$ {
         limit_req zone=nutrichat_login burst=5 nodelay;
         limit_req_status 429;
-        proxy_pass http://gateway:8200;
+        proxy_pass http://api:8000;
         proxy_set_header Host $host;
-    }
-    location = /logout {
-        proxy_pass http://gateway:8200;
-        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Authorization "";
     }
     location / {
-        auth_request /_session;
-        error_page 401 = @login;
         limit_req zone=nutrichat_requests burst=20 nodelay;
         limit_req_status 429;
         proxy_pass http://api:8000;
@@ -50,5 +40,4 @@ server {
         proxy_set_header Authorization "";
         proxy_read_timeout 60s;
     }
-    location @login { return 303 /login; }
 }

@@ -31,8 +31,8 @@ def main() -> int:
         print('WORKER_REQUEST_TIMEOUT_SECONDS must exceed QWEN_TIMEOUT_SECONDS.')
         return 1
     print('Required settings are present. Credentials and model access are not yet verified.')
-    if settings.nutrition_provider != 'qwen':
-        print('The application is in demo mode. Set NUTRITION_PROVIDER=qwen to enable Qwen.')
+    if settings.effective_nutrition_provider != 'qwen':
+        print('The application is using another provider. Set LLM_PROVIDER=qwen to select Qwen.')
     if not args.live:
         print('Run with --live to verify a real request using a 100g boiled-egg meal.')
         return 0

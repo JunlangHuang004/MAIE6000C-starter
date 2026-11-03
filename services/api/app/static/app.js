@@ -6,6 +6,17 @@
   let analysis = null, busy = false, timer = null, catalogue = [];
   let questionVersion = '', notice = {raw:'', error:false};
   let ingredientEditor = null;
+  let currentUser=null,sessionVersion=0,loggingOut=false,recentVersion=0,provider=null,recentRecords=[];
+  const A=window.NutriAccountI18n.text;
+let profile=null,profileReference=null,profileLoaded=false,profileLoading=false,profileSaving=false,profileDirty=false,profileConflict=false,profileRequest=0;
+let tracking=null,trackingToday=null,trackingLoading=false,trackingRequest=0;
+let dailyRecord=null,dailyLoaded=false,dailyLoading=false,dailySaving=false,dailyDirty=false,dailyConflict=false,dailyRequest=0,mealDateAnalysisId=null;
+const profileFields={age_years:'profile-age',height_cm:'profile-height',weight_kg:'profile-weight',sex:'profile-sex',goal:'profile-goal',activity_level:'profile-activity'};
+const authEventKey='nutrichat.auth-change';
+const stored={get:I.storageGet,set:I.storageSet,remove:I.storageRemove};
+const analysisKey=()=>currentUser?'nutrichat.analysis.user.'+currentUser.id:null;
+const interrupted=()=>Object.assign(Error(A('登录状态已改变')),{silent:true});
+
   const el = (tag, text) => {
     const element = document.createElement(tag);
     if (text !== undefined) element.textContent = text;
@@ -16,7 +27,7 @@
     renderMessage();
   }
   function renderMessage() {
-    let value = notice.key ? I.t(notice.key, notice.values) : I.systemText(notice.raw || '');
+    let value = notice.key ? I.t(notice.key, notice.values) : notice.raw ? I.systemText(notice.raw) : '';
     if (notice.recovery) value += ' ' + I.t('refreshRecovery');
     $('message').textContent = value;
     $('message').classList.toggle('error', notice.error);
@@ -32,6 +43,7 @@
     catalogueInfo();
     modeHelp();
     renderMessage();
+    window.NutriAccountI18n.apply();
   }
   function changeLanguage(language) {
     I.setLanguage(language);
@@ -39,30 +51,39 @@
     render();
     translateIngredientEditor();
     showFoods();
+    $('profile-editor-title').textContent=A(profile?'修改个人资料':'填写个人资料');
+    $('profile-badge').textContent=A(profileConflict?'资料已在别处更新':profileDirty?'有未保存修改':!profileLoaded?'正在读取':!profile?'尚未填写':profileReference?.status==='estimated'?'已保存 · 参考估算':'已保存 · 需评估');
+    $('profile-reload').textContent=A(profileConflict?'载入最新资料':'重新读取资料');
+    renderProfileReference();renderDailySource();if(tracking)renderTracking(tracking);renderRecent();
   }
-  async function api(path, method = 'GET', body) {
-    const response = await fetch(path, {
-      method, headers:{'Content-Type':'application/json'},
-      ...(body ? {body:JSON.stringify(body)} : {})
-    });
-    if (response.redirected && new URL(response.url).pathname === '/login') {
-      location.href = '/login';
-      throw Error('请重新登录');
-    }
-    if (!(response.headers.get('content-type') || '').includes('application/json')) {
-      throw Error('连接暂时不可用，请稍后重试');
-    }
-    const data = await response.json();
-    if (!response.ok) {
-      const error = Error(Array.isArray(data.detail)
-        ? data.detail.map(item => item.msg).join('\n') : data.detail || '请求失败');
-      error.status = response.status;
-      throw error;
-    }
-    return data;
-  }
+function clearSession(){sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
+ clearProfile();clearTracking();closeIngredientEditor();questionVersion='';recentVersion++;recentRecords=[];provider=null;$('offline-meal').value='';
+ for(const id of ['meal','reply'])$(id).value='';
+ for(const id of ['history','questions','evidence'])$(id).replaceChildren();
+ for(const id of ['record','interpreted','status'])$(id).textContent='';
+ for(const id of ['calories','protein_g','carbs_g','fat_g'])$(id).textContent='—';
+ $('recent').replaceChildren(el('option',A('请先登录')));$('recent-message').textContent='';message('');
+ $('account-name').textContent=A('已退出当前账号');render();
+}
+function goToLogin(){clearSession();location.replace('/login?expired=1')}
+async function api(path,method='GET',body){
+ const version=sessionVersion;
+ const headers={'Content-Type':'application/json'};
+ if(method!=='GET'&&method!=='HEAD')headers['X-NutriChat-Request']='1';
+ let res;try{res=await fetch(path,{method,headers,credentials:'same-origin',cache:'no-store',...(body!==undefined?{body:JSON.stringify(body)}:{})})}catch(e){if(version!==sessionVersion)throw interrupted();throw Error(A('连接暂时不可用，请检查网络后重试'))}
+ if(version!==sessionVersion)throw interrupted();
+ if(res.status===401||(res.redirected&&new URL(res.url).pathname==='/login')){goToLogin();throw interrupted()}
+ if(res.status===204)return null;
+ const type=res.headers.get('content-type')||'';if(!type.includes('application/json'))throw Error('连接暂时不可用，请稍后重试');
+ const data=await res.json();if(version!==sessionVersion)throw interrupted();
+ if(!res.ok)throw Object.assign(Error(Array.isArray(data.detail)?data.detail.map(x=>x.msg).join('\n'):data.detail||'请求失败'),{status:res.status});return data;
+}
+
   function controls() {
-    const locked = busy || analysis?.status === 'queued';
+    const locked = !currentUser || busy || analysis?.status === 'queued';
+    profileControls();trackingControls();$('meal-date').disabled=locked||analysis?.status!=='completed';
+    $('recent').disabled=locked;$('recent-open').disabled=locked||!$('recent').value;$('recent-refresh').disabled=!currentUser||busy;
+    $('offline-meal').disabled=locked;$('offline-submit').disabled=locked;
     $('meal').disabled = locked || !!analysis;
     $('estimate').hidden = !!analysis;
     $('estimate').disabled = locked;
@@ -75,7 +96,7 @@
     document.querySelector('[data-i18n="answerHelp"]').hidden = !answerable;
     $('confirm').disabled = locked || analysis?.status !== 'completed' || !!ingredientEditor;
     $('reply').disabled = locked;
-    $('mode').disabled = !!analysis || busy;
+    $('mode').disabled = !currentUser || !!analysis || busy;
     $('switch-mode').hidden = !analysis || analysis.status === 'confirmed';
     $('switch-mode').disabled = locked;
     $('switch-mode').textContent = I.t(analysis?.mode === 'basic' ? 'switchAdvanced' : 'switchBasic');
@@ -92,6 +113,163 @@
     });
     // Language controls remain usable while a model job is pending.
   }
+function profileMessage(text,error=false){window.NutriAccountI18n.message('profile-message',text,error);}
+function profileControls(){const locked=!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict;
+ for(const id of Object.values(profileFields))$(id).disabled=locked;
+ $('profile-save').disabled=locked||(!profileDirty&&!!profile);$('profile-save').textContent=profileSaving?A('正在保存…'):A('保存并计算参考');
+ $('profile-reload').disabled=!currentUser||profileLoading||profileSaving;
+ $('profile-form').setAttribute('aria-busy',String(profileLoading||profileSaving));
+}
+function clearProfile(){profileRequest++;profile=null;profileReference=null;profileLoaded=false;profileLoading=false;profileSaving=false;profileDirty=false;profileConflict=false;
+ $('profile-form').reset();$('profile-editor').open=true;$('profile-editor-title').textContent=A('填写个人资料');$('profile-badge').textContent=A('请先登录');profileMessage('');$('profile-reload').hidden=true;
+ $('profile-reference').hidden=true;$('profile-review').hidden=true;$('profile-review').replaceChildren();$('profile-notes').replaceChildren();
+ for(const id of ['profile-energy-basis','profile-goal-basis','profile-macro-basis'])$(id).textContent='';
+ for(const id of ['profile-calories','profile-protein','profile-fat','profile-carbs'])$(id).textContent='—';$('profile-target-title').textContent=A('每天的大概参考');profileControls();
+}
+const activityNames={sedentary:'久坐',light:'轻度活动',moderate:'中度活动',high:'高度活动'};
+const profileNumber=(value,digits=0)=>Number.isFinite(value)?value.toLocaleString(I.getLanguage(),{maximumFractionDigits:digits,minimumFractionDigits:0}):'—';
+function renderProfileReference(){const reference=profileReference;$('profile-reference').hidden=!profile||!reference||profileDirty;if(!profile||!reference||profileDirty)return;
+ const estimated=reference.status==='estimated';$('profile-target-title').textContent=(profile.goal==='gain_muscle'?A('增肌'):A('减脂'))+A(' · 每日参考');$('profile-targets').hidden=!estimated;$('profile-review').hidden=estimated;
+ for(const [id,key] of [['profile-calories','calories'],['profile-protein','protein_g'],['profile-fat','fat_g'],['profile-carbs','carbs_g']])$(id).textContent=estimated?'≈ '+profileNumber(reference[key],key==='calories'?0:1):'—';
+ $('profile-energy-basis').textContent=A('采用 Mifflin–St Jeor 公式估计静息需求约 ')+profileNumber(reference.resting_kcal)+A(' kcal / 天；按')+(A(activityNames[profile.activity_level])||A('所选活动量'))+A('（系数 ')+profileNumber(reference.activity_factor,3)+A('）估计，维持当前体重约需 ')+profileNumber(reference.maintenance_kcal)+A(' kcal / 天。');
+ $('profile-goal-basis').textContent=profile.goal==='gain_muscle'?A('增肌参考：在估计维持热量上增加约 5%。'):A('减脂参考：在估计维持热量上减少约 10%。');
+ $('profile-macro-basis').textContent=A('营养比例暂按蛋白质 25%、脂肪 30%、碳水 45% 的热量分配。这是通用的起点，实际需要会因训练、身体状况和生活习惯而变化。');
+ $('profile-notes').replaceChildren();for(const note of reference.notes||[])$('profile-notes').append(el('p',A(note)));
+ $('profile-review').replaceChildren();if(!estimated){$('profile-review').append(el('strong',A('资料已保存，暂不提供减脂或增肌目标数值。')));const reasons=new Set();for(const code of reference.reason_codes||[]){reasons.add(code==='underweight_fat_loss'?A('按当前身高体重推算，暂不自动生成减脂参考；建议先咨询专业人士。'):A('计算结果超出本工具自动估算范围，请核对资料并咨询专业人士。'));}if(!reasons.size)reasons.add(A('当前资料需要进一步评估，不能仅靠通用公式给出合适目标。'));for(const reason of reasons)$('profile-review').append(el('p',reason));$('profile-review').append(el('p',A('你仍可照常使用餐食估算。')));}
+}
+function applyProfile(data){profile=data.profile;profileReference=data.reference;profileLoaded=true;profileDirty=false;profileConflict=false;$('profile-form').reset();
+ if(profile)for(const [key,id] of Object.entries(profileFields))$(id).value=profile[key];
+ $('profile-editor').open=!profile;$('profile-editor-title').textContent=profile?A('修改个人资料'):A('填写个人资料');$('profile-badge').textContent=!profile?A('尚未填写'):profileReference?.status==='estimated'?A('已保存 · 参考估算'):A('已保存 · 需评估');$('profile-reload').hidden=true;renderProfileReference();
+}
+async function loadProfile(){if(!currentUser||profileSaving)return;const version=sessionVersion,request=++profileRequest;profileLoading=true;$('profile-reference').hidden=true;profileMessage(A('正在读取个人资料…'));profileControls();
+ try{const data=await api('/profile');if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(profile?A('已载入当前账号的资料。'):A('填写并保存后，会在这里显示你的每日参考。'));}
+ catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){profileLoaded=false;profileMessage(e.message+A(' 餐食估算仍可照常使用。'),true);$('profile-badge').textContent=A('暂未读取');$('profile-reload').hidden=false;$('profile-reload').textContent=A('重新读取资料');}}
+ finally{if(version===sessionVersion&&request===profileRequest){profileLoading=false;profileControls();}}
+}
+for(const id of Object.values(profileFields))$(id).addEventListener('input',()=>{if(!profileLoaded||profileSaving||profileConflict)return;profileDirty=true;$('profile-badge').textContent=A('有未保存修改');$('profile-reference').hidden=true;profileMessage(A('资料尚未保存。保存后将按新资料重新计算参考。'));profileControls()});
+$('profile-reload').addEventListener('click',()=>loadProfile());
+$('profile-form').addEventListener('submit',async event=>{event.preventDefault();if(!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict||!$('profile-form').reportValidity())return;
+ const version=sessionVersion,request=++profileRequest;const body={revision:profile?.revision??0};for(const [key,id] of Object.entries(profileFields))body[key]=['age_years','height_cm','weight_kg'].includes(key)?Number($(id).value):$(id).value;
+ profileSaving=true;profileMessage(A('正在保存并计算…'));profileControls();
+ try{const data=await api('/profile','PUT',body);if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(A('资料已保存。')+(data.reference?.status==='estimated'?A('下方为每日参考值。'):A('请查看下方的适用范围提示。')));}
+ catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){if(e.status===409){profileConflict=true;$('profile-badge').textContent=A('资料已在别处更新');profileMessage(A('资料已在其他页面更新。请先载入最新资料，再重新修改；重新载入会替换当前未保存的内容。'),true);$('profile-reload').hidden=false;$('profile-reload').textContent=A('载入最新资料');}else profileMessage(e.message+A(' 当前修改还没有保存，请重试。'),true);}}
+ finally{if(version===sessionVersion&&request===profileRequest){profileSaving=false;profileControls();}}
+});
+function dailyMessage(text,error=false){window.NutriAccountI18n.message('daily-message',text,error);}
+function trendMessage(text,error=false){window.NutriAccountI18n.message('trend-message',text,error);}
+function trackingControls(){
+ const locked=!currentUser||!dailyLoaded||dailyLoading||dailySaving||dailyConflict;
+ for(const id of ['daily-calories','daily-weight'])$(id).disabled=locked;
+ $('daily-date').disabled=!currentUser||!trackingToday||dailySaving;
+ $('daily-save').disabled=locked||!dailyDirty;$('daily-save').textContent=dailySaving?A('正在保存…'):A('保存当天记录');
+ $('daily-reload').disabled=!currentUser||dailyLoading||dailySaving;
+ $('daily-reload').textContent=dailyConflict?A('载入最新记录'):A('重新读取当天');
+ $('daily-form').setAttribute('aria-busy',String(dailyLoading||dailySaving));
+ $('trend-end').disabled=!currentUser||!trackingToday||trackingLoading;
+ $('trend-refresh').disabled=!currentUser||trackingLoading;$('trend-today').disabled=!currentUser||!trackingToday||trackingLoading;
+ $('trend-refresh').textContent=trackingLoading?A('正在读取…'):A('查看趋势');
+ $('trend-results').setAttribute('aria-busy',String(trackingLoading));
+}
+function clearTracking(){
+ trackingRequest++;dailyRequest++;tracking=null;trackingToday=null;trackingLoading=false;
+ dailyRecord=null;dailyLoaded=false;dailyLoading=false;dailySaving=false;dailyDirty=false;dailyConflict=false;mealDateAnalysisId=null;
+ $('daily-form').reset();$('trend-form').reset();$('meal-date').value='';$('meal-date-editor').hidden=true;$('meal-confirmed-date').hidden=true;$('meal-confirmed-date').textContent='';
+ for(const id of ['daily-source','trend-period','trend-table-caption','trend-weight-count'])$(id).textContent='';
+ for(const id of ['trend-recorded','trend-average','trend-weight-change'])$(id).textContent='—';
+ for(const id of ['calorie-chart','weight-chart','trend-table-body'])$(id).replaceChildren();
+ $('trend-results').hidden=true;dailyMessage('');trendMessage('');trackingControls();
+}
+function renderMealDate(){
+ const state=analysis?.status;$('meal-date-editor').hidden=state!=='completed';$('meal-confirmed-date').hidden=state!=='confirmed';
+ if(analysis&&mealDateAnalysisId!==analysis.id){mealDateAnalysisId=analysis.id;$('meal-date').value=analysis.consumed_on||trackingToday||'';}
+ $('meal-confirmed-date').textContent=state==='confirmed'?(analysis.consumed_on?A('食用日期：')+analysis.consumed_on+A('（香港时间）'):A('这条旧记录未提供食用日期。')):'';
+}
+function dateIsValid(value,min='2000-01-01'){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;
+ const d=new Date(value+'T00:00:00Z');return !Number.isNaN(d.valueOf())&&d.toISOString().slice(0,10)===value&&value>=min&&(!trackingToday||value<=trackingToday);
+}
+function renderDailySource(){
+ if(!dailyRecord){$('daily-source').textContent='';return;}
+ const count=dailyRecord.meal_count;const meals=count?count+A(' 餐已确认 · 合计 ')+profileNumber(dailyRecord.meal_calories,1)+' kcal':A('还没有已确认餐食');
+ $('daily-source').textContent=dailyRecord.calorie_source==='manual'
+  ?A('已保存：手动总量 ')+profileNumber(dailyRecord.calories,1)+' kcal。'+meals+A('；餐食汇总不再叠加。')
+  :dailyRecord.calorie_source==='meals'?A('已保存：自动汇总 ')+profileNumber(dailyRecord.calories,1)+A(' kcal，来自 ')+count+A(' 餐已确认记录。'):A('当天暂无热量记录。确认餐食或填写当天总量后，会显示在趋势中。');
+}
+function applyDaily(data){
+ dailyRecord=data;dailyLoaded=true;dailyDirty=false;dailyConflict=false;
+ $('daily-calories').value=data.manual_calories??'';$('daily-weight').value=data.weight_kg??'';renderDailySource();
+}
+async function loadDaily(date=$('daily-date').value){
+ if(!currentUser||dailySaving)return;
+ if(!dateIsValid(date)){dailyRequest++;dailyLoaded=false;dailyLoading=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;$('daily-calories').value='';$('daily-weight').value='';$('daily-source').textContent='';dailyMessage(A('请选择 2000-01-01 至今天之间的有效日期。'),true);trackingControls();return;}
+ const version=sessionVersion,request=++dailyRequest;dailyLoading=true;dailyLoaded=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;
+ $('daily-calories').value='';$('daily-weight').value='';$('daily-source').textContent='';dailyMessage(A('正在读取 ')+date+A(' 的记录…'));trackingControls();
+ try{const data=await api('/daily-records/'+encodeURIComponent(date));if(version!==sessionVersion||request!==dailyRequest||$('daily-date').value!==date)return;
+  applyDaily(data);dailyMessage(A('已载入 ')+date+A('。填写需要记录的数值，然后保存；留空体重并保存可清除当天体重。'));
+ }catch(e){if(!e.silent&&version===sessionVersion&&request===dailyRequest){dailyMessage(e.message+A(' 请点击「重新读取当天」重试。'),true);}}
+ finally{if(version===sessionVersion&&request===dailyRequest){dailyLoading=false;trackingControls();}}
+}
+const svgNode=(tag,attrs={},text)=>{const node=document.createElementNS('http://www.w3.org/2000/svg',tag);for(const [key,value]of Object.entries(attrs))node.setAttribute(key,String(value));if(text!==undefined)node.textContent=text;return node;};
+function drawTrend(containerId,days,key,unit,color){
+ const container=$(containerId);container.replaceChildren();const points=days.map((day,index)=>({date:day.date,index,value:day[key]}));const recorded=points.filter(p=>Number.isFinite(p.value));
+ if(!recorded.length){const empty=el('div',unit==='kg'?A('这 30 天还没有体重记录'):A('这 30 天还没有热量记录'));empty.className='chart-empty';container.append(empty);return;}
+ const width=640,height=240,left=62,right=20,top=23,bottom=40,plotWidth=width-left-right,plotHeight=height-top-bottom;
+ const values=recorded.map(p=>p.value);let low=0,high=Math.max(100,Math.ceil(Math.max(...values)/500)*500);
+ if(unit==='kg'){low=Math.floor(Math.min(...values)-1);high=Math.ceil(Math.max(...values)+1);}
+ const x=index=>left+index/Math.max(1,days.length-1)*plotWidth,y=value=>top+(high-value)/(high-low)*plotHeight;
+ const titleId=containerId+'-title',descId=containerId+'-description';const svg=svgNode('svg',{viewBox:'0 0 '+width+' '+height,role:'img','aria-labelledby':titleId+' '+descId});
+ svg.append(svgNode('title',{id:titleId},unit==='kg'?A('30 天体重记录'):A('30 天热量摄入记录')));
+ svg.append(svgNode('desc',{id:descId},A('从 ')+days[0].date+A(' 到 ')+days[days.length-1].date+A('，共 ')+recorded.length+A(' 个有数据的日期。单位 ')+unit+A('。缺少记录的日期不连接；完整数值可在下方每日明细中查看。')));
+ for(let i=0;i<=4;i++){const value=low+(high-low)*i/4,py=y(value);svg.append(svgNode('line',{x1:left,y1:py,x2:width-right,y2:py,stroke:'#e3e9e1','stroke-width':1}));svg.append(svgNode('text',{x:left-9,y:py+4,'text-anchor':'end',fill:'#587268','font-size':12},profileNumber(value,unit==='kg'?1:0)));}
+ const ticks=[0,7,14,21,days.length-1];for(const index of ticks){const px=x(index);svg.append(svgNode('text',{x:px,y:height-12,'text-anchor':index===0?'start':index===days.length-1?'end':'middle',fill:'#587268','font-size':12},days[index].date.slice(5).replace('-','/')));}
+ let previous=null;for(const point of points){if(!Number.isFinite(point.value)){previous=null;continue;}if(previous)svg.append(svgNode('line',{x1:x(previous.index),y1:y(previous.value),x2:x(point.index),y2:y(point.value),stroke:color,'stroke-width':2.5}));
+  const circle=svgNode('circle',{cx:x(point.index),cy:y(point.value),r:4,fill:color,stroke:'#fff','stroke-width':1.5});circle.append(svgNode('title',{},point.date+' · '+profileNumber(point.value,1)+' '+unit));svg.append(circle);previous=point;}
+ container.append(svg);
+}
+function renderTracking(data){
+ const summary=data.summary;$('trend-period').textContent=data.start_date+' — '+data.end_date+A(' · 连续 30 天');
+ $('trend-recorded').textContent=summary.recorded_days+A(' / 30 天');$('trend-average').textContent=summary.average_calories==null?'—':profileNumber(summary.average_calories,1);
+ $('trend-weight-change').textContent=summary.weight_change_kg==null?'—':(summary.weight_change_kg>0?'+':'')+profileNumber(summary.weight_change_kg,2)+' kg';
+ $('trend-weight-count').textContent=summary.weight_entries>=2?summary.weight_entries+A(' 次 · ')+profileNumber(summary.first_weight_kg,2)+' → '+profileNumber(summary.last_weight_kg,2)+' kg':summary.weight_entries+A(' 次记录 · 至少需要两次');
+ drawTrend('calorie-chart',data.days,'calories','kcal','#246149');drawTrend('weight-chart',data.days,'weight_kg','kg','#477f9b');
+ $('trend-table-body').replaceChildren();for(const day of data.days){const row=el('tr');const dateCell=el('th',day.date);dateCell.scope='row';row.append(dateCell);
+  for(const value of [day.calories==null?'—':profileNumber(day.calories,1),day.calorie_source==='manual'?A('手动总量'):day.calorie_source==='meals'?A('餐食汇总'):'—',day.meal_count+A(' 餐'),day.weight_kg==null?'—':profileNumber(day.weight_kg,2)])row.append(el('td',value));$('trend-table-body').append(row);}
+ $('trend-table-caption').textContent=data.start_date+A(' 至 ')+data.end_date+A('。— 表示没有数据；手动总量替代当天餐食汇总。');$('trend-results').hidden=false;
+}
+async function loadTracking(end){
+ if(!currentUser)return false;const version=sessionVersion,request=++trackingRequest;trackingLoading=true;$('trend-results').hidden=true;trendMessage(A('正在读取 30 天记录…'));trackingControls();
+ try{const data=await api('/tracking'+(end?'?end='+encodeURIComponent(end):''));if(version!==sessionVersion||request!==trackingRequest)return false;
+  tracking=data;trackingToday=data.today;for(const id of ['daily-date','trend-end','meal-date'])$(id).max=data.today;
+  $('trend-end').value=data.end_date;if(!$('daily-date').value)$('daily-date').value=data.today;if(!$('meal-date').value)$('meal-date').value=data.today;
+  renderTracking(data);trendMessage(A('统计仅包含当前账号已保存的记录。'));return true;
+ }catch(e){if(!e.silent&&version===sessionVersion&&request===trackingRequest){trendMessage(e.message+A(' 请点击「查看趋势」重试。'),true);}}finally{if(version===sessionVersion&&request===trackingRequest){trackingLoading=false;trackingControls();}}
+ return false;
+}
+async function initializeTracking(){if(await loadTracking())await loadDaily();else if(currentUser)dailyMessage(A('日期暂未读取，请点击「重新读取当天」重试。'),true);}
+function refreshCurrentTracking(){const end=$('trend-end').value;if(!trackingToday)return loadTracking();if(!dateIsValid(end,'2000-01-30'))return Promise.resolve(false);return loadTracking(end);}
+async function refreshTrackingAfterMeal(){
+ const date=analysis?.consumed_on;await refreshCurrentTracking();
+ if(!currentUser||$('daily-date').value!==date||dailySaving)return;
+ if(dailyDirty){dailyMessage(A('餐食已确认。当前未保存的修改已保留；保存或重新读取当天后可查看最新汇总。'));return;}await loadDaily();
+}
+$('daily-date').addEventListener('change',()=>{if(!dailySaving)void loadDaily();});
+for(const id of ['daily-calories','daily-weight'])$(id).addEventListener('input',()=>{if(!dailyLoaded||dailyLoading||dailySaving||dailyConflict)return;dailyDirty=true;dailyMessage(A('有未保存的修改。保存后更新当天记录和趋势。'));trackingControls();});
+$('daily-reload').addEventListener('click',()=>trackingToday?loadDaily():initializeTracking());
+$('daily-form').addEventListener('submit',async event=>{
+ event.preventDefault();if(!currentUser||!dailyLoaded||dailyLoading||dailySaving||dailyConflict||!dailyDirty||!$('daily-form').reportValidity())return;
+ const date=$('daily-date').value;if(!dateIsValid(date)||dailyRecord?.date!==date)return;
+ const version=sessionVersion,request=++dailyRequest,body={revision:dailyRecord.revision,weight_kg:$('daily-weight').value===''?null:Number($('daily-weight').value),manual_calories:$('daily-calories').value===''?null:Number($('daily-calories').value)};
+ dailySaving=true;dailyMessage(A('正在保存 ')+date+A(' 的记录…'));trackingControls();
+ try{const data=await api('/daily-records/'+encodeURIComponent(date),'PUT',body);if(version!==sessionVersion||request!==dailyRequest||$('daily-date').value!==date)return;
+  applyDaily(data);dailyMessage(A('已保存 ')+date+'。'+(data.calorie_source==='manual'?A('当天热量使用你填写的总量。'):A('当天热量使用已确认餐食汇总。')));void refreshCurrentTracking();
+ }catch(e){if(!e.silent&&version===sessionVersion&&request===dailyRequest){if(e.status===409){dailyConflict=true;dailyMessage(A('这天的记录已在其他页面更新。请点击「载入最新记录」后重新修改；载入会替换当前未保存的内容。'),true);}else dailyMessage(e.message+A(' 当前修改尚未保存，请重试。'),true);}}
+ finally{if(version===sessionVersion&&request===dailyRequest){dailySaving=false;trackingControls();}}
+});
+$('trend-form').noValidate=true;
+$('trend-form').addEventListener('submit',event=>{event.preventDefault();if(!trackingToday){void initializeTracking();return;}if($('trend-form').reportValidity())void loadTracking($('trend-end').value);});
+$('trend-today').addEventListener('click',()=>loadTracking());
+
+
   function numberInput(value, min = 0, max = 10000) {
     const input = el('input');
     input.type = 'number'; input.step = 'any'; input.min = min; input.max = max;
@@ -295,7 +473,9 @@
     $('ingredient-name').focus();
   }
   function closeIngredientEditor() {
-    ingredientEditor = null; $('ingredient-builder').hidden = true; controls();
+    ingredientEditor = null; $('ingredient-builder').hidden = true;
+    $('ingredient-form').reset();$('ingredient-rows').replaceChildren();
+    $('ingredient-builder-target').textContent='';$('ingredient-editor-warning').hidden=true;controls();
   }
   function renderIngredientActions() {
     $('ingredient-editor-actions').replaceChildren();
@@ -402,7 +582,8 @@
     $('result').hidden = !analysis || !['completed','confirmed'].includes(state);
     $('answer-form').hidden = state !== 'needs_input';
     const custom = analysis?.draft?.some(item => item.custom_recipe);
-    $('reply-form').hidden = !['needs_input','completed','failed'].includes(state) || !!custom;
+    $('reply-form').hidden = provider === 'demo' || !['needs_input','completed','failed'].includes(state) || !!custom;
+    $('offline-correction').hidden = provider !== 'demo' || !['completed','failed'].includes(state) || !!custom;
     $('custom-recipe-guidance').hidden = !custom || !['needs_input','completed','failed'].includes(state);
     if (ingredientEditor && (analysis?.id !== ingredientEditor.analysisId || state === 'confirmed')) closeIngredientEditor();
     if (ingredientEditor && analysis?.revision !== ingredientEditor.revision) {
@@ -421,14 +602,18 @@
       for (const key of ['calories','protein_g','carbs_g','fat_g']) $(key).textContent = analysis[key] ?? '—';
       $('record').textContent = I.t('record',{id:analysis.id,revision:analysis.revision});
       $('confirm').hidden = state === 'confirmed';
-      $('review-help').textContent = I.t(state === 'confirmed' ? 'confirmedHelp' : 'reviewHelp');
+      $('review-help').textContent = I.t(state === 'confirmed' ? 'confirmedHelp' : provider==='demo' ? 'offlineReviewHelp' : 'reviewHelp');
       renderEvidence();
     }
+    renderMealDate();
     controls();
   }
   function saved(data) {
+    if (!currentUser) return;
     analysis = data.analysis || data;
-    I.storageSet('nutrichat.analysis',analysis.id);
+    stored.set(analysisKey(),analysis.id);
+    $('offline-meal').value = analysis.food_text;
+    void refreshRecent(true);
     $('meal').value = analysis.food_text;
     render(); clearTimeout(timer);
     if (analysis.status === 'queued') {
@@ -436,20 +621,21 @@
     }
   }
   async function poll() {
+    if (!currentUser || !analysis) return;
+    const id=analysis.id;
     try {
-      const next = await api('/analyses/' + analysis.id);
+      const next = await api('/analyses/' + encodeURIComponent(id));
+      if (!currentUser || analysis?.id !== id) return;
       analysis = next; render();
       if (next.status === 'queued') timer = setTimeout(poll,1500);
       else if (next.status === 'needs_input') message({key:next.questions?.some(q => q.kind === 'unsupported') ? 'unsupportedMessage' : 'needsInputMessage'});
       else if (next.status === 'failed') message(next.error_message || {key:'failedMessage'},true);
       else message({key:'savedMessage'});
-    } catch (error) { message({raw:error.message,recovery:true},true); }
+      if(next.status!=='queued')void refreshRecent(true);
+    } catch (error) { if(!error.silent)message({raw:error.message,recovery:true},true); }
   }
-  async function submit(work) {
-    busy = true; controls();
-    try { await work(); } catch (error) { message(error.message,true); }
-    finally { busy = false; controls(); }
-  }
+async function submit(work){if(busy||!currentUser)return;const version=sessionVersion;busy=true;controls();try{await work()}catch(e){if(!e.silent&&version===sessionVersion)message(e.message,true)}finally{if(version===sessionVersion){busy=false;controls()}}}
+
   $('meal-form').addEventListener('submit',event => {
     event.preventDefault();
     submit(async () => saved(await api('/analyses','POST',{food_text:$('meal').value,mode:$('mode').value})));
@@ -520,13 +706,19 @@
       }
     });
   });
-  $('confirm').addEventListener('click',() => submit(async () => {
-    saved(await api('/analyses/' + analysis.id + '/confirm','POST',{revision:analysis.revision}));
-    message({key:'confirmedMessage'});
-  }));
+$('confirm').addEventListener('click',()=>{
+ if(!$('meal-date').reportValidity())return;
+ const consumedOn=$('meal-date').value;
+ submit(async()=>{
+  saved(await api('/analyses/'+analysis.id+'/confirm','POST',{revision:analysis.revision,...(consumedOn?{consumed_on:consumedOn}:{})}));
+  message(A('这餐的估算已确认，并计入 ')+(analysis.consumed_on||A('所选日期'))+A(' 的热量记录。'));
+  void refreshTrackingAfterMeal();
+ });
+});
   $('new').addEventListener('click',() => {
     clearTimeout(timer); analysis = null; questionVersion = '';
-    I.storageRemove('nutrichat.analysis');
+    stored.remove(analysisKey());
+    closeIngredientEditor();$('offline-meal').value='';
     $('meal').value = ''; $('reply').value = ''; message(''); render(); $('meal').focus();
   });
   function modeHelp() { $('mode-help').textContent = I.t($('mode').value === 'basic' ? 'basicHelp' : 'advancedHelp'); }
@@ -567,21 +759,53 @@
   $('search').addEventListener('input',showFoods);
   $('language-zh').addEventListener('click',() => changeLanguage('zh-CN'));
   $('language-en').addEventListener('click',() => changeLanguage('en'));
+function renderRecent(){
+ const selected=analysis?.id||$('recent').value;$('recent').replaceChildren();
+ const empty=el('option',recentRecords.length?A('请选择餐食记录'):A('还没有餐食记录'));empty.value='';$('recent').append(empty);
+ for(const record of recentRecords){const date=new Date(record.created_at);const label=(Number.isNaN(date.valueOf())?'':date.toLocaleDateString(I.getLanguage())+' · ')+record.food_text.slice(0,70)+' · '+I.t(record.status);const option=el('option',label);option.value=record.id;$('recent').append(option);}
+ if(recentRecords.some(record=>record.id===selected))$('recent').value=selected;
+ $('recent-message').textContent=recentRecords.length?A('仅显示当前账号的记录。'):A('开始估算第一餐后，记录会显示在这里。');controls();
+}
+async function refreshRecent(quiet=false){
+ if(!currentUser)return;const version=++recentVersion;
+ if(!quiet)$('recent-message').textContent=A('正在读取你的记录…');
+ try{const records=await api('/analyses?limit=20');if(version!==recentVersion||!currentUser)return;
+  if(!Array.isArray(records))throw Error(A('记录列表暂时不可用，请稍后重试。'));
+  recentRecords=records;renderRecent();
+ }catch(error){if(!error.silent&&version===recentVersion)$('recent-message').textContent=error.message;}
+}
+$('recent').addEventListener('change',controls);
+$('recent-refresh').addEventListener('click',()=>refreshRecent());
+$('recent-form').addEventListener('submit',event=>{event.preventDefault();const id=$('recent').value;if(!id)return;submit(async()=>{clearTimeout(timer);analysis=null;render();$('reply').value='';saved(await api('/analyses/'+encodeURIComponent(id)));if(analysis.status!=='queued')message(A('已打开你的餐食记录。'))})});
+
+$('logout').addEventListener('click',async()=>{
+ if(loggingOut)return;loggingOut=true;clearSession();message(A('正在退出登录…'));$('logout').disabled=true;
+ try{
+  const res=await fetch('/auth/logout',{method:'POST',credentials:'same-origin',cache:'no-store',headers:{'X-NutriChat-Request':'1'}});
+  if(!res.ok&&res.status!==401)throw Error(A('退出登录未完成，请重试。'));
+  stored.set(authEventKey,JSON.stringify({type:'logout',at:Date.now()}));location.replace('/login?logged_out=1');
+ }catch(e){message(A('退出登录未完成，请检查网络并点击「重试退出」。'),true);$('logout').textContent=A('重试退出');$('logout').disabled=false;loggingOut=false}
+});
+window.addEventListener('storage',event=>{if(event.key===authEventKey&&event.newValue){clearSession();location.replace('/login')}});
+window.addEventListener('pageshow',event=>{if(event.persisted){clearSession();location.reload()}});
+
   async function init() {
-    applyStaticLanguage(); controls();
+    applyStaticLanguage(); controls();stored.remove('nutrichat.analysis');
     try {
-      const data = await api('/foods'); catalogue = data.catalogue.foods;
-      I.setCatalogue(catalogue); catalogueInfo(); showFoods();
-      if (data.provider === 'demo') message({key:'demoMessage'});
-      const id = I.storageGet('nutrichat.analysis');
-      if (id) {
-        analysis = await api('/analyses/' + encodeURIComponent(id));
-        $('meal').value = analysis.food_text; render();
-        if (analysis.status === 'queued') { message({key:'parsing'}); timer = setTimeout(poll,500); }
-        else if (analysis.status === 'failed') message(analysis.error_message || {key:'failedMessage'},true);
-        else if (analysis.status === 'needs_input' && analysis.questions?.some(q => q.kind === 'unsupported')) message({key:'unsupportedMessage'});
-      }
-    } catch (error) { message(error.message,true); }
+      currentUser=await api('/auth/me');$('account-name').textContent=currentUser.username;$('logout').disabled=false;controls();
+      void refreshRecent();void loadProfile();void initializeTracking();
+      const data=await api('/foods');catalogue=data.catalogue.foods;provider=data.provider;
+      I.setCatalogue(catalogue);catalogueInfo();showFoods();
+      if(provider==='demo')message({key:'demoMessage'});
+      const id=stored.get(analysisKey());
+      if(id){try{saved(await api('/analyses/'+encodeURIComponent(id)));if(analysis.status==='failed')message(analysis.error_message||{key:'failedMessage'},true);else if(analysis.status==='needs_input')message({key:analysis.questions?.some(q=>q.kind==='unsupported')?'unsupportedMessage':'needsInputMessage'});}catch(error){if(error.status===404){stored.remove(analysisKey());message(A('上次记录已不可用，可以开始新的一餐。'));}else throw error;}}
+    } catch(error){if(!error.silent)message(error.message,true);}
   }
+  $('offline-correction').addEventListener('submit',event=>{
+    event.preventDefault();submit(async()=>{
+      const food_text=$('offline-meal').value.trim();if(!food_text)return;
+      saved(await api('/analyses/'+analysis.id,'PATCH',{revision:analysis.revision,food_text}));
+    });
+  });
   init();
 })();

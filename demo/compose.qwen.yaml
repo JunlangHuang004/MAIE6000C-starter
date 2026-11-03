@@ -2,8 +2,12 @@
 # nutrichat-qwen-demo. The optional offline check runs as a separate project.
 x-qwen-demo: &qwen-demo
   NUTRITION_PROVIDER: qwen
+  LLM_PROVIDER: qwen
   QWEN_TIMEOUT_SECONDS: '30'
   WORKER_REQUEST_TIMEOUT_SECONDS: '45'
+  AUTH_COOKIE_SECURE: 'false'
+  AUTH_PUBLIC_ORIGIN: http://localhost:${NUTRICHAT_QWEN_DEMO_PORT:-8003}
+  AUTH_REGISTRATION_ENABLED: 'true'
 
 services:
   db:

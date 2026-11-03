@@ -16,7 +16,7 @@ def test_repeated_foods_and_decimals():
 
 
 def config():
-    return Settings(_env_file=None, nutrition_provider='qwen',
+    return Settings(_env_file=None, nutrition_provider='qwen', llm_provider='qwen',
                     dashscope_api_key=SecretStr('test-key'), qwen_base_url='https://example.test/v1')
 
 

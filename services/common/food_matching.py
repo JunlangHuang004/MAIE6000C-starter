@@ -4,7 +4,7 @@ import re
 import unicodedata
 from functools import lru_cache
 
-from services.common.meal_engine import DATA, ExtractedItem, catalogue
+from services.common.meal_engine import DATA, ExtractedItem, catalogue, evaluate
 
 
 def normalize_name(value):
@@ -205,6 +205,69 @@ def _current_identity_texts(texts):
     return texts
 
 
+def current_identity_texts(food_text, history=None):
+    """Share explicit replacement scope between model context and final grounding."""
+    return _current_identity_texts(user_texts(food_text, history))
+
+
+_ACKNOWLEDGMENT = re.compile(
+    r'(?:是|是的|对|對|对的|對的|没错|沒錯|正确|正確|确认|確認|不是|不对|不對|'
+    r'yes|no|correct|that[’\']s right)[.!。！]?', re.I,
+)
+_DETAIL_QUESTION = re.compile(
+    r'(?:(?:请问|請問|请确认|請確認|请确认一下|請確認一下|是否|是|这是|這是|'
+    r'这个重量是|這個重量是|重量是)\s*)*'
+    r'(?:(?:去壳|去殼|去骨)(?:后|後)?的?)?'
+    r'(?:熟重|生重|可食重量|可食部分的重量)(?:吗|嗎|么|麼)?[?？。]?|'
+    r'(?:is (?:this|that|it) (?:the )?|please confirm (?:the )?)'
+    r'(?:cooked edible weight|raw edible weight|edible weight|cooked weight|raw weight)'
+    r'[?.]?', re.I,
+)
+
+
+
+def _is_user_bound_weight_question(content, verified, prior_users):
+    # Apply the same explicit-replacement scope as final grounding. A prior
+    # "change to rice" is user naming evidence for rice, not an assistant suggestion.
+    prior_scope = _current_identity_texts(prior_users)
+    bound = [item for item in verified if is_user_mention(item.source_text, prior_scope)]
+    if not bound:
+        return False
+    if _DETAIL_QUESTION.fullmatch(content):
+        return True
+    # Recognize the exact current server-generated question, including its
+    # canonical food label and explanation. Do not strip arbitrary food prefixes
+    # or accept a combined recipe/multiple-question prompt as one confirmation.
+    pending = [{**item.model_dump(), 'weight_basis': None} for item in bound]
+    return any(question['key'].endswith('.weight_basis') and content == question['label']
+               for question in evaluate(pending)['questions'])
+
+def _detail_acknowledgments(food_text, history, verified):
+    """Exclude only standalone replies to a bounded weight clarification.
+
+    An assistant message cannot introduce a food identity. The food must already
+    be present in user text before the question; additions and arbitrary replies
+    still pass through the complete-meal coverage guard below.
+    """
+    entries = list(history or [])
+    if not entries or entries[-1].get('role') != 'user' or entries[-1].get('content') != food_text:
+        entries.append({'role': 'user', 'content': food_text})
+    accepted = set()
+    prior_users = [] if _ACKNOWLEDGMENT.fullmatch(food_text.strip()) else [food_text]
+    for index, entry in enumerate(entries):
+        if entry.get('role') != 'user':
+            continue
+        content = entry.get('content', '').strip()
+        previous = entries[index - 1] if index else {}
+        if (_ACKNOWLEDGMENT.fullmatch(content)
+                and previous.get('role') == 'assistant'
+                and _is_user_bound_weight_question(
+                    previous.get('content', '').strip(), verified, prior_users)):
+            accepted.add(content)
+        prior_users.append(content)
+    return accepted
+
+
 def ground_food_items(items, food_text, history=None):
     """Clear unverified IDs before any mode-specific nutrient assumptions.
 
@@ -212,7 +275,7 @@ def ground_food_items(items, food_text, history=None):
     responses, the unchanged name can provide the same evidence. A unique exact
     reviewed name match determines identity, independently of Qwen's guessed ID.
     """
-    texts = _current_identity_texts(user_texts(food_text, history))
+    texts = current_identity_texts(food_text, history)
     for item in items:
         mention = item.source_text or item.name
         grounded = is_user_mention(mention, texts)
@@ -238,7 +301,10 @@ def ground_food_items(items, food_text, history=None):
         # Do not let a model silently discard the unsupported half of a mixed
         # meal. Consume verified complete names, then inspect remaining clauses.
         verified = list(items)
+        acknowledgments = _detail_acknowledgments(food_text, history, verified)
         for text in texts:
+            if text.strip() in acknowledgments:
+                continue
             remaining = unicodedata.normalize('NFKC', text).casefold()
             for item in verified:
                 remaining = remaining.replace(

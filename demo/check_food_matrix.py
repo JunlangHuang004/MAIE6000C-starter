@@ -12,8 +12,12 @@ import math
 from pathlib import Path
 import sys
 import time
-import urllib.error
-import urllib.request
+
+# The current application requires an account; the frozen milestone did not.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from services.common.http_auth import authenticated_client, CheckAuthenticationError
+
+CLIENT = None
 
 ROOT = Path(__file__).resolve().parents[1]
 KEYS = ("calories", "protein_g", "fat_g", "carbs_g")
@@ -60,17 +64,9 @@ def require(condition, message):
 
 
 def request(base_url, method, path, payload=None):
-    req = urllib.request.Request(
-        base_url.rstrip("/") + path, method=method,
-        data=json.dumps(payload, ensure_ascii=False).encode() if payload is not None else None,
-        headers={"Content-Type": "application/json"},
-    )
-    try:
-        response = urllib.request.urlopen(req, timeout=20)
-    except urllib.error.HTTPError as error:
-        response = error
-    with response:
-        return {"status": response.status, "body": json.load(response)}
+    require(CLIENT is not None, "Run the CLI with a dedicated check account to authenticate.")
+    response = CLIENT.request(method, path, json=payload)
+    return {"status": response.status_code, "body": response.json()}
 
 
 def ready(base_url, meal):
@@ -181,8 +177,7 @@ def check(base_url, output):
         require(catalogue["status"] == 200, "Cannot read the target's supported foods")
         require(catalogue["body"].get("provider") == "qwen", "The target must use real Qwen")
         paths = request(base_url, "GET", "/openapi.json")["body"].get("paths", {})
-        require(not any(path.startswith(("/auth/", "/profile", "/tracking")) for path in paths),
-                "This script checks the nutrichat branch, not test accounts/personalization")
+        require("/auth/me" in paths, "Use the current account-enabled application.")
         foods = {food["id"]: food for food in catalogue["body"]["catalogue"]["foods"]}
         for case in CASES:
             row = {"id": case["id"], "input": case["text"], "mode": case["mode"],
@@ -230,7 +225,16 @@ def main():
     args = parser.parse_args()
     if not args.live:
         parser.error("--live is required to use model quota and create synthetic records")
-    return 0 if check(args.base_url, args.output) else 1
+    global CLIENT
+    try:
+        with authenticated_client(args.base_url) as client:
+            CLIENT = client
+            return 0 if check(args.base_url, args.output) else 1
+    except CheckAuthenticationError as error:
+        print(str(error), file=sys.stderr)
+        return 1
+    finally:
+        CLIENT = None
 
 
 if __name__ == "__main__":

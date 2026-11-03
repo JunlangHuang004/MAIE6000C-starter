@@ -1,0 +1,21 @@
+{
+  "scope": "Real HKUST + HTTP/API + PostgreSQL/worker integrated acceptance; synthetic accounts only.",
+  "passed": false,
+  "checks": [
+    {
+      "name": "registration/session and protected routes",
+      "passed": true,
+      "provider": "hkust",
+      "catalogue_count": 550
+    },
+    {
+      "name": "personal references: gain-muscle and fat-loss goals",
+      "passed": true,
+      "gain_calories": 2720,
+      "fat_loss_calories": 2330
+    }
+  ],
+  "model_submissions": 1,
+  "failure": "('failed', '估算服务暂时不可用，请重试或补充更清楚的餐食描述。')",
+  "recorded_at": "2026-11-03T06:07:33.037528+00:00"
+}

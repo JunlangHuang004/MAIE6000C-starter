@@ -1,5 +1,13 @@
 # NutriChat demo verification
 
+> Historical meal-only release: this document describes the original `nutrichat`
+> / `w07-midterm` snapshot and its dated evidence. For this merged checkout use
+> [current setup](README.md), [integrated walkthrough](INTEGRATED_GUIDE.md), and
+> [integration verification](../docs/evidence/integration-verification.md).
+> This checkout requires a personal account; the original ports and no-login
+> instructions below apply only to the older release.
+
+
 ## Final expanded source — 31 October 2026
 
 Initial expansion source: `71a0ecd56f2de09460ce899b1b183f723ab45b0e`; final
