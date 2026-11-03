@@ -1,8 +1,10 @@
 # Integrated NutriChat
 
 This checkout merges `nutrichat` at `7c9525d` and `test` at `5af1780` on
-`integrate/nutrichat-test`. The original branches and the `w07-midterm` tag remain
-unchanged. The public ECS deployment is not updated by this local integration.
+`integrate/nutrichat-test` as merge commit `cdd4c9c`. After validation, the merged
+implementation is published on **`test`**. The original `test` commits remain in
+its history; `nutrichat` and the `w07-midterm` tag are unchanged. The public ECS
+deployment is not updated by this publication.
 
 ## What is combined
 

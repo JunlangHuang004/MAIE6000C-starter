@@ -1,10 +1,10 @@
 # NutriChat
 
-This `integrate/nutrichat-test` branch combines the meal-estimation features from
+This `test` branch combines the meal-estimation features from
 `nutrichat` with independent accounts, personal daily references and 30-day tracking
 from `test`. It keeps **the exact `nutrichat` food catalogue: 200 USDA ingredient
-records and 350 editable Chinese reference recipes**. The original branches,
-`w07-midterm` submission tag and existing deployments are separate snapshots.
+records and 350 editable Chinese reference recipes**. The `nutrichat` branch,
+`w07-midterm` submission tag and existing deployments remain separate snapshots.
 
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions.
 Qwen or HKUST GenAI interprets foods and quantities; Python calculates from the

@@ -1,11 +1,12 @@
 # NutriChat architecture
 
-Current implementation reviewed: 2026-11-03, `integrate/nutrichat-test`.
+Current implementation reviewed: 2026-11-03, `test`.
 
 The merged application retains the exact `nutrichat` catalogue: 200 USDA ingredient records and 350 project-authored
 reference recipes. Expansion changes versioned data and validation, not model
 weights. Account/profile/tracking migrations extend the application schema separately.
-The original branches, Week 7 tag and public deployment are unchanged by this merge.
+The merged build is published on `test`; `nutrichat`, the Week 7 tag and the
+public deployment remain unchanged.
 
 ## Services and data flow
 

@@ -92,5 +92,5 @@ Unconfirmed meals retain a null date. Downgrading removes daily records and meal
 dates, so take a backup before rolling back a real database.
 
 The application stores current daily values, not a full edit audit or historical
-target snapshots. The merged implementation is on `integrate/nutrichat-test`; the
-public ECS app, original branches and Week 7 submission tag remain unchanged.
+target snapshots. The merged implementation is on `test`; the
+public ECS app, `nutrichat` branch and Week 7 submission tag remain unchanged.

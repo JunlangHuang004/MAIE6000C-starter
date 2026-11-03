@@ -2,6 +2,11 @@
 
 ## Source and scope
 
+Publication note: after the verification below, `test` was advanced to merge
+commit `cdd4c9c`. Publication updates only branch references in documentation;
+the tested service code and food data are unchanged. The original branch
+preservation statements below describe the verification stage.
+
 Merged `nutrichat` (`7c9525dc3a6af5ae63bc9dcfc5be19534b856bf1`) and local
 `test` (`5af1780`) on `integrate/nutrichat-test`. Verification ran on the merge
 working tree before its commit; the service fingerprint below identifies the

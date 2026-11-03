@@ -1,5 +1,13 @@
 # NutriChat change log
 
+## 2026-11-03 — Publish the integrated application on test
+
+- Advance `test` to the verified merge `cdd4c9c` without rewriting history.
+- Update current setup and feature documentation to identify `test` as the
+  published branch; retain the integration branch and dated verification evidence.
+- Preserve `nutrichat`, the course submission tag, food catalogue and deployments.
+  This publication changes no application code or model configuration.
+
 ## 2026-11-03 — Merge meal estimation, accounts and personal tracking
 
 - Combine `nutrichat` and `test` on `integrate/nutrichat-test`, preserving both

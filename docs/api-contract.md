@@ -1,6 +1,6 @@
 # NutriChat API contract
 
-Current implementation: 2026-11-03, `integrate/nutrichat-test`. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
+Current implementation: 2026-11-03, `test`. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
 ## Routes
 

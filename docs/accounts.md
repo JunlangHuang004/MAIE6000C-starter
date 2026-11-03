@@ -5,7 +5,8 @@ and account-owned meal histories. It also includes
 [private profiles and daily references](personalization.md), plus
 [daily calorie/weight records and 30-day trends](tracking.md). Google login is not
 implemented.
-The original branches and the `w07-midterm` submission snapshot remain unchanged.
+The merged features are published on `test`; the `nutrichat` branch and
+`w07-midterm` submission snapshot remain unchanged.
 No public ECS deployment is included in this increment.
 
 ## Run the merged preview

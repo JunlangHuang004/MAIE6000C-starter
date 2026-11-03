@@ -1,7 +1,7 @@
 # NutriChat operations
 
-Current instructions: 2026-11-03, `integrate/nutrichat-test`. This is the merged
-application; original branches, the `w07-midterm` tag and existing deployments
+Current instructions: 2026-11-03, `test`. This is the merged
+application; `nutrichat`, the `w07-midterm` tag and existing deployments
 remain separate snapshots. See [integration setup and verification](integration.md).
 
 ## Startup and isolation
