@@ -1,6 +1,7 @@
 # NutriChat
 
-This `test` branch combines the meal-estimation features from
+This local `merge/local-features-into-test` branch builds on GitHub `test`, which
+combines the meal-estimation features from
 `nutrichat` with independent accounts, personal daily references and 30-day tracking
 from `test`. It keeps **the exact `nutrichat` food catalogue: 200 USDA ingredient
 records and 350 editable Chinese reference recipes**. The `nutrichat` branch,
@@ -23,7 +24,7 @@ private configuration:
 
 ```sh
 test -f .env || cp .env.example .env
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml up -d --build
 ```
 
@@ -104,12 +105,20 @@ uses explicit assumptions; profile inputs are not sent to the model. Some inputs
 are saved without generating a target when the automatic-output guards apply.
 See [calculation assumptions and scope](docs/personalization.md).
 
-Choose a date to save weight and optionally a total calorie intake. Without a manual
+Choose a date to save weight, exercise energy and optionally a total calorie intake.
+Review five intake categories to flag whether the day is complete. With an
+applicable profile and explicit exercise value, the daily card estimates a positive
+surplus or deficit from recorded intake versus baseline expenditure plus exercise.
+This is approximate and should not alone set cardio intensity. Without a manual
 total, the diary sums that date's confirmed meals. A manual total **replaces** the
 sum; clearing it restores automatic aggregation. Two charts and a detail table show
 30 consecutive days. Missing dates remain gaps, and averages use recorded calorie
 days only. Dates use Hong Kong time. Daily weights do not automatically change the
 profile or its reference. See [the tracking guide](docs/tracking.md).
+
+The meal estimate card appears directly after the meal input. A fixed synthetic
+Chinese meal regression corpus and optional live Qwen evaluator are described in
+[the evaluation guide](docs/evaluation.md).
 
 ## Verification
 
@@ -117,10 +126,10 @@ Build this checkout first. Unit/integration tests use controlled model boundarie
 and need no private credentials:
 
 ```sh
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml run --rm --no-deps \
   -e LLM_PROVIDER=heuristic -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml run --rm --no-deps api ruff check .
 npm ci --prefix tests/frontend
 npm test --prefix tests/frontend

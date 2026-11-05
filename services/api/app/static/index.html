@@ -12,6 +12,7 @@ header{gap:16px;flex-wrap:wrap}.header-actions{display:flex;align-items:center;g
 </style>
 <style>
 .ingredient-builder{border:1px solid #b8cbbb;border-radius:12px;padding:18px;background:#f7faf5;margin:16px 0}.ingredient-row{border-top:1px solid #dbe5dc;padding:12px 0}.ingredient-row-fields{display:grid;grid-template-columns:minmax(0,1fr) 160px;gap:12px}.ingredient-row input[type=search]{width:100%}.ingredient-row p{margin:6px 0}.ingredient-builder h3{margin-top:0}.ingredient-builder fieldset{border:0;padding:0;margin:0}.ingredient-builder legend{font-weight:600;margin-top:16px}.ingredient-builder input[type=text]{width:100%}.quantity-origin{font-size:14px;background:#edf3eb;padding:10px;border-radius:8px}.ingredient-editor-actions:empty{display:none}@media(max-width:550px){.ingredient-row-fields{grid-template-columns:1fr}.ingredient-builder{padding:12px}}
+.daily-coverage{border:1px solid #dbe5dc;border-radius:12px;margin:18px 0;padding:12px 16px}.daily-coverage legend{font-weight:600;padding:0 6px}.daily-coverage-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px 16px}.daily-coverage-grid label{font-weight:400;margin:6px 0}.daily-coverage-grid input{margin-right:6px}.daily-balance{border:1px solid #dbe5dc;border-radius:12px;padding:16px;margin-top:18px;background:#fff}.daily-balance h3{margin:0 0 8px}.daily-balance strong{display:block;font-size:24px}.daily-balance p{margin:8px 0}.coverage-badge{display:inline-block;background:#f9eddb;border-radius:8px;padding:5px 9px;font-size:13px}.coverage-badge.complete{background:#e7f3e8}@media(max-width:550px){.daily-coverage-grid{grid-template-columns:1fr 1fr}}
 </style>
 <script defer src="/app-assets/catalogue-en.js"></script>
 <script defer src="/app-assets/i18n.js"></script>
@@ -63,30 +64,9 @@ header{gap:16px;flex-wrap:wrap}.header-actions{display:flex;align-items:center;g
 <button id="estimate" data-i18n="estimate">开始估算</button><button id="new" type="button" class="secondary" data-i18n="newMeal" hidden>新的一餐</button>
 <small id="catalogue-info"></small></form>
 <details><summary data-i18n="supportedFoods">查看支持的食材和菜谱</summary><input id="search" type="search" data-i18n-placeholder="searchPlaceholder" data-i18n-label="searchLabel" placeholder="搜索食物／菜名" aria-label="搜索食物"><div id="food-list"></div></details></section>
-<section class="card"><h2>我的餐食记录</h2><p class="muted">查看这个账号最近的 20 餐，继续补充或核对。</p><form id="recent-form"><label for="recent">选择一条记录</label><select id="recent" disabled><option value="">正在读取…</option></select><button id="recent-open" type="submit" disabled>打开记录</button><button id="recent-refresh" class="secondary" type="button" disabled>刷新列表</button></form><p id="recent-message" class="muted" role="status" aria-live="polite"></p></section>
-<section class="card tracking-card" id="tracking-card" aria-labelledby="tracking-title">
-<div class="tracking-heading"><div><h2 id="tracking-title">每日记录与 30 天趋势</h2><p class="muted">记下每天的摄入与体重，回看最近一个月的变化。</p></div><span class="tracking-zone">日期按香港时间</span></div>
-<div class="daily-editor">
-<form id="daily-form">
-<div class="daily-fields">
-<div class="daily-date-field"><label for="daily-date">记录日期</label><input id="daily-date" type="date" min="2000-01-01" required disabled><small>可补记过去的日期；切换日期会放弃未保存的修改。</small></div>
-<div><label for="daily-calories">当天总热量（kcal）</label><input id="daily-calories" type="number" min="0" max="20000" step="any" inputmode="decimal" autocomplete="off" placeholder="留空：汇总已确认餐食" disabled><small>填写后替代餐食汇总，不会叠加。留空并保存可恢复自动汇总。</small></div>
-<div><label for="daily-weight">当天体重（kg）</label><input id="daily-weight" type="number" min="30" max="250" step="any" inputmode="decimal" autocomplete="off" placeholder="可选，30–250 kg" disabled><small>独立保存，不会修改上方个人资料中的体重或每日参考。</small></div>
-</div>
-<div class="daily-actions"><button id="daily-save" type="submit" disabled>保存当天记录</button><button id="daily-reload" class="secondary" type="button" disabled>重新读取当天</button></div>
-</form>
-<p id="daily-source" class="daily-source muted"></p><p id="daily-message" class="daily-message muted" role="status" aria-live="polite">正在读取每日记录…</p>
-</div>
-<div class="trend-heading"><div><h3>回看 30 天</h3><p class="muted" id="trend-period">正在读取日期范围…</p></div><form id="trend-form" class="trend-range"><div><label for="trend-end">截止日期（含当天）</label><input id="trend-end" type="date" min="2000-01-30" required disabled></div><button id="trend-refresh" class="secondary" type="submit" disabled>查看趋势</button><button id="trend-today" class="secondary" type="button" disabled>回到今天</button></form></div>
-<p id="trend-message" class="muted" role="status" aria-live="polite"></p>
-<div id="trend-results" hidden>
-<div class="tracking-summary"><div class="tracking-stat"><span>有热量记录</span><strong id="trend-recorded">—</strong><span>仅统计有数据的日期</span></div><div class="tracking-stat"><span>记录日均热量</span><strong id="trend-average">—</strong><span>kcal / 记录日</span></div><div class="tracking-stat"><span>首末次体重变化</span><strong id="trend-weight-change">—</strong><span id="trend-weight-count">至少需要两次记录</span></div></div>
-<div class="trend-charts"><div class="trend-chart"><h4>热量摄入 · kcal</h4><p>已确认餐食汇总，或你填写的当天总量。</p><div id="calorie-chart"></div></div><div class="trend-chart"><h4>体重 · kg</h4><p>按实际填写的日期绘制，纵轴随记录范围调整。</p><div id="weight-chart"></div></div></div>
-<p class="muted trend-note">没有记录的日期留空，不作为 0 计算，也不会自动补齐。图中的断开表示日期之间缺少数据；数值仅反映已记录的内容。</p>
-<details><summary>查看每日明细</summary><div class="trend-table-wrap"><table class="trend-table"><caption id="trend-table-caption">30 天记录。— 表示没有数据。</caption><thead><tr><th scope="col">日期</th><th scope="col">热量（kcal）</th><th scope="col">来源</th><th scope="col">已确认餐食</th><th scope="col">体重（kg）</th></tr></thead><tbody id="trend-table-body"></tbody></table></div></details>
-</div>
-</section>
-<p id="message" role="status" aria-live="polite"></p>
+<section class="card" id="result" hidden><span class="tag" id="status"></span><h2 data-i18n="resultHeading">本餐营养估算</h2><p id="interpreted"></p>
+<div class="metrics"><div class="metric"><b id="calories">—</b><span data-i18n="calories">热量 · kcal</span></div><div class="metric"><b id="protein_g">—</b><span data-i18n="protein">蛋白质 · g</span></div><div class="metric"><b id="fat_g">—</b><span data-i18n="fat">脂肪 · g</span></div><div class="metric"><b id="carbs_g">—</b><span data-i18n="carbs">碳水 · g</span></div></div>
+<div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、用油及配方。需要修改时，在下方继续对话。</p><div id="meal-date-editor" class="meal-date"><label for="meal-date">这餐的食用日期</label><input id="meal-date" type="date" min="2000-01-01" aria-describedby="meal-date-help"><small id="meal-date-help">确认后计入所选日期的热量。未选日期时记为今天（香港时间）。</small></div><p id="meal-confirmed-date" class="confirmed-date" hidden></p><button id="confirm" data-i18n="confirm">确认并保存</button><p><small id="record"></small></p></section>
 <section class="card" id="dialogue" hidden><h2 id="dialogue-title">餐食对话</h2>
 <details id="history-panel"><summary data-i18n="history">查看本餐对话记录</summary><p class="muted history-note" data-i18n="originalHistory">你输入的描述及模型自由文本保留原文。</p><div id="history"></div></details>
 <form id="answer-form" hidden><div id="questions"></div><button id="answer-submit" data-i18n="answerSubmit">提交回答</button><small data-i18n="answerHelp">可以先回答已知的问题。不知道用量时，请在下方说明。</small></form>
@@ -109,8 +89,35 @@ header{gap:16px;flex-wrap:wrap}.header-actions{display:flex;align-items:center;g
 <p id="custom-recipe-guidance" class="muted" data-i18n="customRecipeGuidance" hidden>本餐含自定义食材配方。请使用“编辑食材配方”更改用量，或开始新的一餐；其他待回答的问题仍可逐项填写。</p>
 <form id="offline-correction" hidden><label for="offline-meal">替换完整餐食描述</label><p class="muted">离线模式不理解对话更正。请在这里重新填写整餐，例如 200g egg；保存后会重新计算。</p><textarea id="offline-meal" maxlength="2000" required></textarea><button id="offline-submit" type="submit">替换描述并重新计算</button></form>
 <form id="reply-form" hidden><label for="reply" data-i18n="replyLabel">继续对话／补充或更正</label><textarea id="reply" maxlength="2000" required data-i18n-placeholder="replyPlaceholder" placeholder="例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。"></textarea><button id="reply-submit" data-i18n="replySubmit">发送补充说明</button></form></section>
-<section class="card" id="result" hidden><span class="tag" id="status"></span><h2 data-i18n="resultHeading">本餐营养估算</h2><p id="interpreted"></p>
-<div class="metrics"><div class="metric"><b id="calories">—</b><span data-i18n="calories">热量 · kcal</span></div><div class="metric"><b id="protein_g">—</b><span data-i18n="protein">蛋白质 · g</span></div><div class="metric"><b id="fat_g">—</b><span data-i18n="fat">脂肪 · g</span></div><div class="metric"><b id="carbs_g">—</b><span data-i18n="carbs">碳水 · g</span></div></div>
-<div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、用油及配方。需要修改时，在上方继续对话。</p><div id="meal-date-editor" class="meal-date"><label for="meal-date">这餐的食用日期</label><input id="meal-date" type="date" min="2000-01-01" aria-describedby="meal-date-help"><small id="meal-date-help">确认后计入所选日期的热量。未选日期时记为今天（香港时间）。</small></div><p id="meal-confirmed-date" class="confirmed-date" hidden></p><button id="confirm" data-i18n="confirm">确认并保存</button><p><small id="record"></small></p></section>
+<section class="card"><h2>我的餐食记录</h2><p class="muted">查看这个账号最近的 20 餐，继续补充或核对。</p><form id="recent-form"><label for="recent">选择一条记录</label><select id="recent" disabled><option value="">正在读取…</option></select><button id="recent-open" type="submit" disabled>打开记录</button><button id="recent-refresh" class="secondary" type="button" disabled>刷新列表</button></form><p id="recent-message" class="muted" role="status" aria-live="polite"></p></section>
+<section class="card tracking-card" id="tracking-card" aria-labelledby="tracking-title">
+<div class="tracking-heading"><div><h2 id="tracking-title">每日记录与 30 天趋势</h2><p class="muted">记下每天的摄入与体重，回看最近一个月的变化。</p></div><span class="tracking-zone">日期按香港时间</span></div>
+<div class="daily-editor">
+<form id="daily-form">
+<div class="daily-fields">
+<div class="daily-date-field"><label for="daily-date">记录日期</label><input id="daily-date" type="date" min="2000-01-01" required disabled><small>可补记过去的日期；切换日期会放弃未保存的修改。</small></div>
+<div><label for="daily-calories">当天总热量（kcal）</label><input id="daily-calories" type="number" min="0" max="20000" step="any" inputmode="decimal" autocomplete="off" placeholder="留空：汇总已确认餐食" disabled><small>填写后替代餐食汇总，不会叠加。留空并保存可恢复自动汇总。</small></div>
+<div><label for="daily-exercise">当天运动消耗（kcal）</label><input id="daily-exercise" type="number" min="0" max="10000" step="any" inputmode="decimal" autocomplete="off" placeholder="没有运动填 0" disabled><small>按实际记录填写；设备估算仅供参考。</small></div>
+<div><label for="daily-weight">当天体重（kg）</label><input id="daily-weight" type="number" min="30" max="250" step="any" inputmode="decimal" autocomplete="off" placeholder="可选，30–250 kg" disabled><small>独立保存，不会修改上方个人资料中的体重或每日参考。</small></div>
+</div>
+<fieldset id="daily-coverage-fieldset" class="daily-coverage" disabled><legend>全天摄入核对</legend><p class="muted">逐项核对当天吃喝的内容；只有你能确认是否完整。</p><div class="daily-coverage-grid"><label><input id="coverage-breakfast" type="checkbox">早餐</label><label><input id="coverage-lunch" type="checkbox">午餐</label><label><input id="coverage-dinner" type="checkbox">晚餐</label><label><input id="coverage-snacks" type="checkbox">加餐和零食</label><label><input id="coverage-drinks" type="checkbox">饮品、油和酱料</label></div></fieldset>
+<p id="daily-completeness" class="muted" role="status"></p>
+<div class="daily-actions"><button id="daily-save" type="submit" disabled>保存当天记录</button><button id="daily-reload" class="secondary" type="button" disabled>重新读取当天</button></div>
+</form>
+<p id="daily-source" class="daily-source muted"></p><p id="daily-message" class="daily-message muted" role="status" aria-live="polite">正在读取每日记录…</p>
+<div id="daily-balance" class="daily-balance" hidden><h3>当天热量收支</h3><strong id="daily-balance-value"></strong><p id="daily-balance-detail"></p><span id="daily-balance-coverage" class="coverage-badge"></span><p id="daily-balance-note" class="muted"></p></div>
+</div>
+<div class="trend-heading"><div><h3>回看 30 天</h3><p class="muted" id="trend-period">正在读取日期范围…</p></div><form id="trend-form" class="trend-range"><div><label for="trend-end">截止日期（含当天）</label><input id="trend-end" type="date" min="2000-01-30" required disabled></div><button id="trend-refresh" class="secondary" type="submit" disabled>查看趋势</button><button id="trend-today" class="secondary" type="button" disabled>回到今天</button></form></div>
+<p id="trend-message" class="muted" role="status" aria-live="polite"></p>
+<div id="trend-results" hidden>
+<div class="tracking-summary"><div class="tracking-stat"><span>有热量记录</span><strong id="trend-recorded">—</strong><span>仅统计有数据的日期</span></div><div class="tracking-stat"><span>记录日均热量</span><strong id="trend-average">—</strong><span>kcal / 记录日</span></div><div class="tracking-stat"><span>首末次体重变化</span><strong id="trend-weight-change">—</strong><span id="trend-weight-count">至少需要两次记录</span></div></div>
+<div class="trend-charts"><div class="trend-chart"><h4>热量摄入 · kcal</h4><p>已确认餐食汇总，或你填写的当天总量。</p><div id="calorie-chart"></div></div><div class="trend-chart"><h4>体重 · kg</h4><p>按实际填写的日期绘制，纵轴随记录范围调整。</p><div id="weight-chart"></div></div></div>
+<p class="muted trend-note">没有记录的日期留空，不作为 0 计算，也不会自动补齐。图中的断开表示日期之间缺少数据；数值仅反映已记录的内容。</p>
+<details><summary>查看每日明细</summary><div class="trend-table-wrap"><table class="trend-table"><caption id="trend-table-caption">30 天记录。— 表示没有数据。</caption><thead><tr><th scope="col">日期</th><th scope="col">热量（kcal）</th><th scope="col">来源</th><th scope="col">已确认餐食</th><th scope="col">运动（kcal）</th><th scope="col">收支（kcal）</th><th scope="col">完整性</th><th scope="col">体重（kg）</th></tr></thead><tbody id="trend-table-body"></tbody></table></div></details>
+</div>
+</section>
+<p id="message" role="status" aria-live="polite"></p>
+
+
 <p><small data-i18n="disclaimer">参考估算会受到原料、烹调失水及实际摄入油量影响。生重与熟重不自动互换；菜谱默认用量须经你确认。所有重量均指可食部分。</small></p>
 </main></body></html>

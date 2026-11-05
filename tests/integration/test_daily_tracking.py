@@ -11,6 +11,8 @@ from services.common.models import Analysis, DailyRecord, Job, UserProfile
 
 DAY = "2024-03-01"
 PASSWORD = "Synthetic-tracking-password-42"
+COVERAGE = {"breakfast": True, "lunch": True, "dinner": True,
+            "snacks": True, "drinks": True}
 
 
 def register(browser, username):
@@ -24,6 +26,14 @@ def register(browser, username):
 def save(browser, day=DAY, **changes):
     return browser.put(f"/daily-records/{day}", json={
         "revision": 0, "weight_kg": 70, "manual_calories": None, **changes,
+    })
+
+
+def save_profile(browser, **changes):
+    return browser.put("/profile", json={
+        "age_years": 30, "height_cm": 175, "weight_kg": 72,
+        "sex": "male", "goal": "gain_muscle", "activity_level": "high",
+        "revision": 0, **changes,
     })
 
 
@@ -48,6 +58,117 @@ def assert_missing(day):
     assert day["meal_count"] == 0
     assert day["calories"] is None
     assert day["calorie_source"] is None
+    assert day["exercise_calories"] is None
+    assert day["total_expenditure_kcal"] is None
+    assert day["balance_type"] is None
+    assert day["balance_kcal"] is None
+    assert day["intake_coverage"] == {key: False for key in COVERAGE}
+    assert day["intake_complete"] is False
+
+
+def test_intake_coverage_requires_all_five_confirmations_and_survives_old_client(
+        client, db_session):
+    owner = client.get("/auth/me").json()["id"]
+    meal(db_session, owner, 240)
+    assert save_profile(client).status_code == 200
+    partial = {**COVERAGE, "drinks": False}
+    first = save(client, exercise_calories=250, intake_coverage=partial).json()
+    assert first["balance_type"] == "deficit"
+    assert first["intake_coverage"] == partial
+    assert first["intake_complete"] is False
+    full = save(client, revision=1, intake_coverage=COVERAGE).json()
+    assert full["intake_complete"] is True
+    assert full["intake_coverage"] == COVERAGE
+    assert full["balance_kcal"] == first["balance_kcal"]
+    old_client = save(client, revision=2).json()
+    assert old_client["intake_coverage"] == COVERAGE
+    assert old_client["intake_complete"] is True
+    assert client.get(f"/tracking?end={DAY}").json()["days"][-1] == old_client
+    cleared = save(client, revision=3, intake_coverage=None).json()
+    assert cleared["intake_coverage"] == {key: False for key in COVERAGE}
+    assert cleared["intake_complete"] is False
+
+
+@pytest.mark.parametrize("coverage", [
+    {**COVERAGE, "drinks": "true"},
+    {**COVERAGE, "extra": True},
+    {"breakfast": True},
+    [True, True, True, True, True],
+])
+def test_invalid_intake_coverage_preserves_saved_record(client, coverage):
+    original = save(client, intake_coverage=COVERAGE).json()
+    response = save(client, revision=1, intake_coverage=coverage)
+    assert response.status_code == 422
+    assert client.get(f"/daily-records/{DAY}").json() == original
+
+
+def test_energy_balance_shows_one_positive_magnitude_and_preserves_old_clients(client):
+    assert save_profile(client).status_code == 200
+    first = save(client, manual_calories=2500, exercise_calories=300).json()
+    assert first["baseline_expenditure_kcal"] == 2002.6
+    assert first["total_expenditure_kcal"] == 2302.6
+    assert first["balance_type"] == "surplus"
+    assert first["balance_kcal"] == 197.4
+    # An older client omitting exercise must preserve the recorded value.
+    second = save(client, revision=1, manual_calories=2000).json()
+    assert second["exercise_calories"] == 300
+    assert second["balance_type"] == "deficit"
+    assert second["balance_kcal"] == 302.6
+    equal = save(client, revision=2, manual_calories=2302.6).json()
+    assert equal["balance_type"] == "balanced"
+    assert equal["balance_kcal"] == 0
+    cleared = save(client, revision=3, exercise_calories=None).json()
+    assert cleared["exercise_calories"] is None
+    assert cleared["balance_type"] is None
+    assert cleared["balance_kcal"] is None
+    no_exercise = save(client, revision=4, manual_calories=2302.6,
+                       exercise_calories=0).json()
+    assert no_exercise["balance_type"] == "surplus"
+    assert no_exercise["balance_kcal"] == 300
+    assert client.get(f"/tracking?end={DAY}").json()["days"][-1] == no_exercise
+
+
+def test_balance_requires_intake_exercise_and_eligible_profile(client, db_session):
+    owner = client.get("/auth/me").json()["id"]
+    assert save(client, exercise_calories=250).json()["balance_type"] is None
+    assert save_profile(client).status_code == 200
+    incomplete = client.get(f"/daily-records/{DAY}").json()
+    assert incomplete["baseline_expenditure_kcal"] == 2002.6
+    assert incomplete["total_expenditure_kcal"] == 2252.6
+    assert incomplete["balance_type"] is None
+    meal(db_session, owner, 1900)
+    derived = client.get(f"/daily-records/{DAY}").json()
+    assert derived["calorie_source"] == "meals"
+    assert derived["balance_type"] == "deficit"
+    assert derived["balance_kcal"] == 352.6
+    # A profile outside automatic target bounds does not offer a balance.
+    changed = save_profile(client, revision=1, weight_kg=35, goal="lose_fat")
+    assert changed.status_code == 200
+    assert changed.json()["reference"]["status"] == "needs_review"
+    blocked = client.get(f"/daily-records/{DAY}").json()
+    assert blocked["balance_type"] is None
+    assert blocked["baseline_expenditure_kcal"] is None
+
+
+@pytest.mark.parametrize("exercise", [-1, 10001, "300", True])
+def test_invalid_exercise_is_rejected_without_changing_record(client, exercise):
+    original = save(client, exercise_calories=150).json()
+    response = save(client, revision=1, exercise_calories=exercise)
+    assert response.status_code == 422
+    assert client.get(f"/daily-records/{DAY}").json() == original
+
+
+@pytest.mark.parametrize("exercise", [float("nan"), float("inf"), -float("inf")])
+def test_nonfinite_exercise_is_rejected_without_changing_record(client, exercise):
+    original = save(client, exercise_calories=150).json()
+    response = client.put(
+        f"/daily-records/{DAY}",
+        content=json.dumps({"revision": 1, "weight_kg": 70,
+                            "manual_calories": None, "exercise_calories": exercise}),
+        headers={"Content-Type": "application/json"},
+    )
+    assert response.status_code == 422
+    assert client.get(f"/daily-records/{DAY}").json() == original
 
 
 def test_missing_history_is_empty_not_zero_and_reads_do_not_write(client, db_session):

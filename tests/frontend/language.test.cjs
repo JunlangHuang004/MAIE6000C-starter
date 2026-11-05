@@ -93,6 +93,41 @@ test('Chinese is the default; English switch updates accessibility and persists 
   assert.match($('estimate').textContent, /估算/);
 });
 
+test('Merged daily balance inputs save with intake coverage and remain bilingual', async t => {
+  const coverage={breakfast:false,lunch:false,dinner:false,snacks:false,drinks:false};
+  let saved=null;
+  const day=(revision,exercise,flags)=>({date:'2026-11-03',revision,manual_calories:1800,
+    weight_kg:null,calories:1800,calorie_source:'manual',meal_count:0,meal_calories:null,
+    exercise_calories:exercise,baseline_expenditure_kcal:1600,
+    total_expenditure_kcal:exercise==null?null:1900,
+    balance_type:exercise==null?null:'deficit',balance_kcal:exercise==null?null:100,
+    intake_coverage:flags,intake_complete:Object.values(flags).every(Boolean)});
+  const {document,$,requests,clickLanguage}=await mount(t,{respond:request=>{
+    if(request.url==='/daily-records/2026-11-03'){
+      if(request.method==='PUT'){saved=request.body;return {body:day(2,saved.exercise_calories,saved.intake_coverage)};}
+      return {body:day(1,null,coverage)};
+    }
+  }});
+  assert.ok(document.querySelector('#meal-form').compareDocumentPosition($('result')) & 4);
+  assert.ok($('result').compareDocumentPosition($('tracking-card')) & 4);
+  $('daily-exercise').value='300';$('daily-exercise').dispatchEvent(new document.defaultView.Event('input',{bubbles:true}));
+  for(const key of Object.keys(coverage)){
+    $('coverage-'+key).checked=true;
+    $('coverage-'+key).dispatchEvent(new document.defaultView.Event('change',{bubbles:true}));
+  }
+  assert.match($('daily-completeness').textContent,/尚未保存/);
+  await clickLanguage('en');
+  assert.equal($('daily-exercise').value,'300');
+  assert.equal($('coverage-drinks').checked,true);
+  assert.match($('daily-completeness').textContent,/unsaved/i);
+  $('daily-form').dispatchEvent(new document.defaultView.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+  assert.equal(saved.exercise_calories,300);
+  assert.deepEqual(saved.intake_coverage,{breakfast:true,lunch:true,dinner:true,snacks:true,drinks:true});
+  assert.match($('daily-balance-value').textContent,/deficit.*100/i);
+  assert.ok(requests.some(request=>request.method==='PUT'&&request.url==='/daily-records/2026-11-03'));
+});
+
 test('Saved English choice is applied on fresh load without changing input language', async t => {
   const {$, document} = await mount(t, {language:'en'});
   assert.equal(document.documentElement.lang, 'en');

@@ -83,12 +83,26 @@ class ProfileResponse(BaseModel):
     reference: dict[str, Any] | None
 
 
+class IntakeCoverage(BaseModel):
+    """User confirmation that each part of a day's intake was reviewed."""
+
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+    breakfast: bool
+    lunch: bool
+    dinner: bool
+    snacks: bool
+    drinks: bool
+
+
 class DailyRecordUpdate(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True, allow_inf_nan=False)
 
     revision: int = Field(ge=0, le=2_147_483_646)
     weight_kg: float | None = Field(ge=30, le=250)
     manual_calories: float | None = Field(ge=0, le=20000)
+    exercise_calories: float | None = Field(default=None, ge=0, le=10000)
+    intake_coverage: IntakeCoverage | None = None
 
 
 class DailyRecordRead(BaseModel):
@@ -100,6 +114,13 @@ class DailyRecordRead(BaseModel):
     meal_count: int
     calories: float | None
     calorie_source: Literal["manual", "meals"] | None
+    exercise_calories: float | None
+    baseline_expenditure_kcal: float | None
+    total_expenditure_kcal: float | None
+    balance_type: Literal["surplus", "deficit", "balanced"] | None
+    balance_kcal: float | None
+    intake_coverage: IntakeCoverage
+    intake_complete: bool
 
 
 class TrackingSummary(BaseModel):

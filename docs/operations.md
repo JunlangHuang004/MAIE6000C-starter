@@ -1,8 +1,9 @@
 # NutriChat operations
 
-Current instructions: 2026-11-03, `test`. This is the merged
-application; `nutrichat`, the `w07-midterm` tag and existing deployments
-remain separate snapshots. See [integration setup and verification](integration.md).
+Current instructions: 2026-11-05, local `merge/local-features-into-test` branch.
+GitHub `test` is the base; this checkout adds the local daily balance, intake
+review, result-card placement and Chinese-meal evaluator. The existing deployment
+remains a separate snapshot. See [integration setup and verification](integration.md).
 
 ## Startup and isolation
 
@@ -10,9 +11,9 @@ Use Docker and a recent Docker Compose. From this checkout:
 
 ```sh
 test -f .env || cp .env.example .env
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml up -d --build
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml ps
 ```
 
@@ -66,7 +67,7 @@ recalculation. This path demonstrates engineering integration, not model accurac
 | API/AI `/metrics` | Request/job operational signals; public proxy blocks metrics |
 
 ```sh
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml logs --tail=100 api worker ai
 ```
 
@@ -81,14 +82,18 @@ Build the current source first. Unit/integration tests use isolated test databas
 and controlled model responses, with no private model credentials required:
 
 ```sh
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml run --rm --no-deps \
   -e LLM_PROVIDER=heuristic -e NUTRITION_PROVIDER=demo api pytest -q -m 'not smoke'
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml run --rm --no-deps api ruff check .
 npm ci --prefix tests/frontend
 npm test --prefix tests/frontend
 ```
+
+The fixed synthetic Chinese meal corpus can be validated without model calls:
+`python scripts/evaluate_chinese_meals.py`. Optional live Qwen extraction checks
+are described in [the evaluation guide](evaluation.md).
 
 Frontend tests use Node.js 22 in CI and synthetic responses. They check bilingual
 UI behavior, form preservation and account/diary integration; the application
@@ -167,7 +172,7 @@ does not reverse schema migrations. Use a tested backup/compatible code path.
 Stop while retaining the preview database:
 
 ```sh
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml down
 ```
 

@@ -25,8 +25,8 @@ Current implementation: 2026-11-03, `test`. See the generated `/docs` and `/open
 | `POST /auth/logout` | Revoke current session and clear cookie | 204 |
 | `GET /profile` | Current account's profile and calculated reference | 200, object |
 | `PUT /profile` | Six profile fields plus revision | 200, object |
-| `GET /daily-records/{date}` | Daily weight, manual calories and confirmed meal sum | 200, object |
-| `PUT /daily-records/{date}` | `{revision, weight_kg, manual_calories}` | 200, object |
+| `GET /daily-records/{date}` | Daily intake, weight, exercise, coverage and estimated balance | 200, object |
+| `PUT /daily-records/{date}` | `{revision, weight_kg, manual_calories, exercise_calories?, intake_coverage?}` | 200, object |
 | `GET /tracking?end=YYYY-MM-DD` | 30-day views and summary for the current account | 200, object |
 
 Existing `/cases` routes and internal `/triage` are retained from the starter. The internal AI service receives `POST /analyze-nutrition`; it is not a public model endpoint.
@@ -170,8 +170,9 @@ and out-of-range inputs. The calculation returns a versioned approximate referen
 or null target values with reason codes when a guard applies. Inputs are private
 and never sent to the model. See [the profile contract](personalization.md).
 
-Daily records use the same initial revision 0 and optimistic update rules. Both
-nullable fields must be present; clearing `manual_calories` restores aggregation
+Daily records use the same initial revision 0 and optimistic update rules. Weight
+and manual calories remain nullable inputs; optional exercise and coverage fields
+support older clients. Clearing `manual_calories` restores aggregation
 from confirmed meals. Manual totals replace the sum, rather than adding to it.
 `consumed_on` and record dates use Asia/Hong_Kong; confirmed meal dates are locked.
 Tracking returns exactly 30 days, preserves missing values as null and excludes

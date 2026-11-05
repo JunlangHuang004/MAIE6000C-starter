@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "purpose": "Synthetic regression cases for Chinese meal extraction; reference calories are catalogue arithmetic, not measured meal truth.",
+  "cases": [
+    {
+      "id": "egg_explicit_weight",
+      "category": "explicit_weight",
+      "mode": "basic",
+      "text": "100克去壳水煮鸡蛋，熟重。",
+      "expected_status": "completed",
+      "expected_items": [{"food_id": "egg", "draft_grams": 100}],
+      "catalogue_calories": 155.0
+    },
+    {
+      "id": "rice_explicit_weight",
+      "category": "explicit_weight",
+      "mode": "basic",
+      "text": "100克熟白米饭。",
+      "expected_status": "completed",
+      "expected_items": [{"food_id": "rice", "draft_grams": 100}],
+      "catalogue_calories": 130.0
+    },
+    {
+      "id": "egg_piece_count",
+      "category": "count_vs_grams",
+      "mode": "basic",
+      "text": "两个水煮鸡蛋，去壳。",
+      "expected_status": "completed",
+      "expected_items": [{"food_id": "egg", "draft_grams": null, "portion_count": 2}]
+    },
+    {
+      "id": "dumpling_piece_count",
+      "category": "count_vs_grams",
+      "mode": "basic",
+      "text": "十个白菜猪肉饺子。",
+      "expected_status": "completed",
+      "expected_items": [{"food_id": "dish_241", "draft_grams": null, "portion_count": 10}]
+    },
+    {
+      "id": "tomato_egg_reference",
+      "category": "reference_recipe",
+      "mode": "basic",
+      "text": "一份番茄炒蛋。",
+      "expected_status": "completed",
+      "expected_items": [{"food_id": "dish_001", "draft_grams": null}]
+    },
+    {
+      "id": "pork_ribs_gross_weight",
+      "category": "inedible_weight",
+      "mode": "basic",
+      "text": "200克糖醋排骨，这200克包含骨头，不知道去骨后克数。",
+      "expected_status": "completed",
+      "expected_items": [{"food_id": "dish_069", "draft_grams": 200, "weight_includes_inedible": true}]
+    },
+    {
+      "id": "unsupported_food",
+      "category": "unsupported_food",
+      "mode": "basic",
+      "text": "一份火星紫色能量泥。",
+      "expected_status": "needs_input",
+      "expected_items": [{"food_id": null}]
+    }
+  ]
+}

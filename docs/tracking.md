@@ -9,13 +9,31 @@ estimates; a day with only some meals recorded is still an incomplete intake log
 
 1. Select the meal's date before confirming a completed estimate. Confirmed meals
    contribute to that date's automatic calorie total; other statuses do not.
-2. In the daily record form, choose a date and enter a weight measurement, a total
-   calorie intake, or both. Weight is in kilograms and energy is in kcal.
+2. In the daily record form, choose a date and enter weight, a calorie total, and
+   recorded exercise energy as available. Enter `0` for a day with no exercise;
+   blank means the exercise value is unknown.
 3. Leave the calorie field empty to use confirmed meals. A manual total replaces
    the meal sum; it is never added to it. Clear the manual field and save to return
    to automatic mode. Clear weight and save to remove that day's measurement.
 4. Choose the last day of the chart window to review 30 consecutive dates. The
    expandable detail table exposes the same numbers and calorie sources.
+5. Review breakfast, lunch, dinner, snacks, and drinks/oil/sauces. Mark each item
+   only when that part of the day has been accounted for. The completeness flag is
+   self-reported; the system cannot verify omissions.
+
+## Approximate daily energy balance
+
+When an applicable profile, calorie intake, and an explicit exercise value are all
+available, the day displays either a **positive surplus**, a **positive deficit**,
+or a balanced value of zero. Estimated expenditure is `resting_kcal × 1.2 +
+exercise_calories`. This uses a fixed low-activity baseline so the profile's
+activity factor and the separately logged exercise are not counted twice.
+
+The result is a rough estimate. Food logging may omit items, exercise devices have
+error, and daily activity outside workouts varies. In particular, an incomplete
+intake log can overstate a deficit. Do not prescribe cardio intensity from this
+number alone. A change to the profile recalculates displayed estimates, including
+past dates, using the current profile.
 
 There is one value per user/date, so a later weight entry for the same date updates
 that measurement. Daily weights do not automatically change the profile's current
@@ -51,13 +69,15 @@ analysis creation has no idempotency key.
 
 `GET /daily-records/{date}` returns an empty daily view with revision 0 when no
 manual record exists. Confirmed meals can already contribute to that view.
-`PUT /daily-records/{date}` requires both nullable fields and the current revision:
+`PUT /daily-records/{date}` requires the current revision and accepts nullable
+weight, calories, exercise, and a five-item intake review:
 
 ```json
-{"revision": 0, "weight_kg": 75.2, "manual_calories": 2100}
+{"revision": 0, "weight_kg": 75.2, "manual_calories": 2100, "exercise_calories": 300, "intake_coverage": {"breakfast": true, "lunch": true, "dinner": true, "snacks": true, "drinks": true}}
 ```
 
-Accepted bounds are finite weight 30–250 kg and manual calories 0–20000 kcal.
+Accepted bounds are finite weight 30–250 kg, manual calories 0–20000 kcal,
+and exercise calories 0–10000 kcal.
 These are input bounds, not recommended measurements/intakes. Numeric strings,
 booleans, unknown fields and non-finite numbers are rejected. The first save uses
 revision 0 and returns revision 1; later saves use the returned revision. A stale
@@ -65,9 +85,11 @@ or competing save returns 409 and requires an explicit reload. A row with both
 values null is retained with its revision so clearing does not erase concurrency
 history.
 
-Daily responses contain `date`, `revision`, `weight_kg`, `manual_calories`,
-`meal_calories`, `meal_count`, `calories` and `calorie_source`. Source is `manual`,
-`meals` or null. With no confirmed meals, `meal_calories` is null and count is 0.
+Daily responses also contain `exercise_calories`, `baseline_expenditure_kcal`,
+`total_expenditure_kcal`, `balance_type`, `balance_kcal`, `intake_coverage`, and
+`intake_complete`. A missing prerequisite leaves balance fields null. Source is
+`manual`, `meals` or null. With no confirmed meals, `meal_calories` is null and
+count is 0.
 
 `GET /tracking?end=YYYY-MM-DD` returns `timezone`, `today`, `start_date`, `end_date`,
 30 chronologically ordered daily views and `summary`. Omitting `end` selects today.
@@ -84,7 +106,9 @@ Mutations require the existing security header and origin checks; responses use
 browser clears diary/chart data on logout and does not persist it in localStorage.
 Tracking makes no AI service, Qwen or external charting request.
 
-Migration `20261027_0008` adds `daily_records` and `analyses.consumed_on`. Older
+Migrations `20261030_0009` and `20261030_0010` add exercise and intake coverage
+to daily records. Migration `20261027_0008` adds `daily_records` and
+`analyses.consumed_on`. Older
 confirmed meals receive the Hong Kong date of `confirmed_at`, falling back to
 `created_at` when necessary. This preserves a usable daily grouping but cannot
 recover an unknown actual meal date. Other saved meal fields remain unchanged.
@@ -92,5 +116,4 @@ Unconfirmed meals retain a null date. Downgrading removes daily records and meal
 dates, so take a backup before rolling back a real database.
 
 The application stores current daily values, not a full edit audit or historical
-target snapshots. The merged implementation is on `test`; the
-public ECS app, `nutrichat` branch and Week 7 submission tag remain unchanged.
+target snapshots. This local merge branch uses GitHub `test` as its base.

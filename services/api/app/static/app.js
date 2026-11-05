@@ -54,7 +54,7 @@ const interrupted=()=>Object.assign(Error(A('登录状态已改变')),{silent:tr
     $('profile-editor-title').textContent=A(profile?'修改个人资料':'填写个人资料');
     $('profile-badge').textContent=A(profileConflict?'资料已在别处更新':profileDirty?'有未保存修改':!profileLoaded?'正在读取':!profile?'尚未填写':profileReference?.status==='estimated'?'已保存 · 参考估算':'已保存 · 需评估');
     $('profile-reload').textContent=A(profileConflict?'载入最新资料':'重新读取资料');
-    renderProfileReference();renderDailySource();if(tracking)renderTracking(tracking);renderRecent();
+    renderProfileReference();renderDailySource();renderDailyCompleteness();renderDailyBalance();if(tracking)renderTracking(tracking);renderRecent();
   }
 function clearSession(){sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
  clearProfile();clearTracking();closeIngredientEditor();questionVersion='';recentVersion++;recentRecords=[];provider=null;$('offline-meal').value='';
@@ -151,15 +151,39 @@ $('profile-reload').addEventListener('click',()=>loadProfile());
 $('profile-form').addEventListener('submit',async event=>{event.preventDefault();if(!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict||!$('profile-form').reportValidity())return;
  const version=sessionVersion,request=++profileRequest;const body={revision:profile?.revision??0};for(const [key,id] of Object.entries(profileFields))body[key]=['age_years','height_cm','weight_kg'].includes(key)?Number($(id).value):$(id).value;
  profileSaving=true;profileMessage(A('正在保存并计算…'));profileControls();
- try{const data=await api('/profile','PUT',body);if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(A('资料已保存。')+(data.reference?.status==='estimated'?A('下方为每日参考值。'):A('请查看下方的适用范围提示。')));}
+ try{const data=await api('/profile','PUT',body);if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(A('资料已保存。')+(data.reference?.status==='estimated'?A('下方为每日参考值。'):A('请查看下方的适用范围提示。')));if(dailyLoaded&&!dailyDirty)void loadDaily();if(trackingToday)void refreshCurrentTracking();}
  catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){if(e.status===409){profileConflict=true;$('profile-badge').textContent=A('资料已在别处更新');profileMessage(A('资料已在其他页面更新。请先载入最新资料，再重新修改；重新载入会替换当前未保存的内容。'),true);$('profile-reload').hidden=false;$('profile-reload').textContent=A('载入最新资料');}else profileMessage(e.message+A(' 当前修改还没有保存，请重试。'),true);}}
  finally{if(version===sessionVersion&&request===profileRequest){profileSaving=false;profileControls();}}
 });
 function dailyMessage(text,error=false){window.NutriAccountI18n.message('daily-message',text,error);}
 function trendMessage(text,error=false){window.NutriAccountI18n.message('trend-message',text,error);}
+const coverageFields={breakfast:'早餐',lunch:'午餐',dinner:'晚餐',snacks:'加餐和零食',drinks:'饮品、油和酱料'};
+const coverageInput=key=>$('coverage-'+key);
+function clearCoverageInputs(){for(const key of Object.keys(coverageFields))coverageInput(key).checked=false;}
+function renderDailyCompleteness(){
+ if(!dailyRecord){$('daily-completeness').textContent='';return;}
+ const missing=Object.entries(coverageFields).filter(([key])=>!coverageInput(key).checked).map(([,name])=>A(name));
+ $('daily-completeness').textContent=(missing.length?A('全天记录未确认完整 · 待核对：')+missing.join(I.getLanguage()==='en'?', ':'、'):A('你已自行确认全天摄入记录完整'))+(dailyDirty?A('（尚未保存）'):I.getLanguage()==='en'?'.':'。');
+}
+function renderDailyBalance(){
+ const card=$('daily-balance');card.hidden=!dailyRecord||dailyDirty;if(card.hidden)return;
+ const day=dailyRecord,detail=$('daily-balance-detail'),badge=$('daily-balance-coverage');
+ const coverage=day.intake_coverage||{};
+ const missing=Object.entries(coverageFields).filter(([key])=>!coverage[key]).map(([,name])=>A(name));
+ badge.hidden=!day.balance_type;badge.classList.toggle('complete',!!day.intake_complete);
+ badge.textContent=day.intake_complete?A('已自行确认全天记录完整'):A('仅基于已记录食物 · 全天记录未确认完整');
+ $('daily-balance-note').textContent=(day.intake_complete?A('完整性由你自行确认，系统无法核实。'):A('尚未核对：')+missing.join(I.getLanguage()==='en'?', ':'、')+(I.getLanguage()==='en'?'. ':'。')+(day.balance_type==='deficit'?A('实际缺口可能小于显示值。'):A('热量收支可能失真。')))+A('按静息消耗 × 1.2 加已记录运动估算；其他日常活动、食物和设备读数都有误差。请勿只凭这个数字决定有氧强度。');
+ if(day.baseline_expenditure_kcal==null){$('daily-balance-value').textContent=A('需要个人资料');detail.textContent=A('请先保存适用的个人资料，才能估计日常基础消耗。');return;}
+ if(day.calories==null){$('daily-balance-value').textContent=A('需要当天摄入');detail.textContent=A('确认当天餐食，或填写并保存当天总热量。');return;}
+ if(day.exercise_calories==null){$('daily-balance-value').textContent=A('需要运动记录');detail.textContent=A('填写并保存当天运动消耗；没有运动时请填写 0。');return;}
+ const names={surplus:A('热量盈余'),deficit:A('热量缺口'),balanced:A('收支相抵')};
+ $('daily-balance-value').textContent=names[day.balance_type]+' '+profileNumber(day.balance_kcal,1)+' kcal';
+ detail.textContent=A('摄入 ')+profileNumber(day.calories,1)+A(' kcal；预计消耗 ')+profileNumber(day.total_expenditure_kcal,1)+A(' kcal（基础 ')+profileNumber(day.baseline_expenditure_kcal,1)+A(' + 运动 ')+profileNumber(day.exercise_calories,1)+(I.getLanguage()==='en'?').':'）。');
+}
 function trackingControls(){
  const locked=!currentUser||!dailyLoaded||dailyLoading||dailySaving||dailyConflict;
- for(const id of ['daily-calories','daily-weight'])$(id).disabled=locked;
+ for(const id of ['daily-calories','daily-exercise','daily-weight'])$(id).disabled=locked;
+ $('daily-coverage-fieldset').disabled=locked;
  $('daily-date').disabled=!currentUser||!trackingToday||dailySaving;
  $('daily-save').disabled=locked||!dailyDirty;$('daily-save').textContent=dailySaving?A('正在保存…'):A('保存当天记录');
  $('daily-reload').disabled=!currentUser||dailyLoading||dailySaving;
@@ -174,7 +198,8 @@ function clearTracking(){
  trackingRequest++;dailyRequest++;tracking=null;trackingToday=null;trackingLoading=false;
  dailyRecord=null;dailyLoaded=false;dailyLoading=false;dailySaving=false;dailyDirty=false;dailyConflict=false;mealDateAnalysisId=null;
  $('daily-form').reset();$('trend-form').reset();$('meal-date').value='';$('meal-date-editor').hidden=true;$('meal-confirmed-date').hidden=true;$('meal-confirmed-date').textContent='';
- for(const id of ['daily-source','trend-period','trend-table-caption','trend-weight-count'])$(id).textContent='';
+ $('daily-balance').hidden=true;
+ for(const id of ['daily-source','daily-completeness','trend-period','trend-table-caption','trend-weight-count'])$(id).textContent='';
  for(const id of ['trend-recorded','trend-average','trend-weight-change'])$(id).textContent='—';
  for(const id of ['calorie-chart','weight-chart','trend-table-body'])$(id).replaceChildren();
  $('trend-results').hidden=true;dailyMessage('');trendMessage('');trackingControls();
@@ -197,13 +222,15 @@ function renderDailySource(){
 }
 function applyDaily(data){
  dailyRecord=data;dailyLoaded=true;dailyDirty=false;dailyConflict=false;
- $('daily-calories').value=data.manual_calories??'';$('daily-weight').value=data.weight_kg??'';renderDailySource();
+ $('daily-calories').value=data.manual_calories??'';$('daily-exercise').value=data.exercise_calories??'';$('daily-weight').value=data.weight_kg??'';
+ for(const key of Object.keys(coverageFields))coverageInput(key).checked=!!data.intake_coverage?.[key];
+ renderDailySource();renderDailyCompleteness();renderDailyBalance();
 }
 async function loadDaily(date=$('daily-date').value){
  if(!currentUser||dailySaving)return;
- if(!dateIsValid(date)){dailyRequest++;dailyLoaded=false;dailyLoading=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;$('daily-calories').value='';$('daily-weight').value='';$('daily-source').textContent='';dailyMessage(A('请选择 2000-01-01 至今天之间的有效日期。'),true);trackingControls();return;}
+ if(!dateIsValid(date)){dailyRequest++;dailyLoaded=false;dailyLoading=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;$('daily-calories').value='';$('daily-exercise').value='';$('daily-weight').value='';clearCoverageInputs();$('daily-source').textContent='';$('daily-completeness').textContent='';$('daily-balance').hidden=true;dailyMessage(A('请选择 2000-01-01 至今天之间的有效日期。'),true);trackingControls();return;}
  const version=sessionVersion,request=++dailyRequest;dailyLoading=true;dailyLoaded=false;dailyRecord=null;dailyDirty=false;dailyConflict=false;
- $('daily-calories').value='';$('daily-weight').value='';$('daily-source').textContent='';dailyMessage(A('正在读取 ')+date+A(' 的记录…'));trackingControls();
+ $('daily-calories').value='';$('daily-exercise').value='';$('daily-weight').value='';clearCoverageInputs();$('daily-source').textContent='';$('daily-completeness').textContent='';$('daily-balance').hidden=true;dailyMessage(A('正在读取 ')+date+A(' 的记录…'));trackingControls();
  try{const data=await api('/daily-records/'+encodeURIComponent(date));if(version!==sessionVersion||request!==dailyRequest||$('daily-date').value!==date)return;
   applyDaily(data);dailyMessage(A('已载入 ')+date+A('。填写需要记录的数值，然后保存；留空体重并保存可清除当天体重。'));
  }catch(e){if(!e.silent&&version===sessionVersion&&request===dailyRequest){dailyMessage(e.message+A(' 请点击「重新读取当天」重试。'),true);}}
@@ -233,7 +260,8 @@ function renderTracking(data){
  $('trend-weight-count').textContent=summary.weight_entries>=2?summary.weight_entries+A(' 次 · ')+profileNumber(summary.first_weight_kg,2)+' → '+profileNumber(summary.last_weight_kg,2)+' kg':summary.weight_entries+A(' 次记录 · 至少需要两次');
  drawTrend('calorie-chart',data.days,'calories','kcal','#246149');drawTrend('weight-chart',data.days,'weight_kg','kg','#477f9b');
  $('trend-table-body').replaceChildren();for(const day of data.days){const row=el('tr');const dateCell=el('th',day.date);dateCell.scope='row';row.append(dateCell);
-  for(const value of [day.calories==null?'—':profileNumber(day.calories,1),day.calorie_source==='manual'?A('手动总量'):day.calorie_source==='meals'?A('餐食汇总'):'—',day.meal_count+A(' 餐'),day.weight_kg==null?'—':profileNumber(day.weight_kg,2)])row.append(el('td',value));$('trend-table-body').append(row);}
+  const balance=day.balance_type==='surplus'?A('热量盈余'):day.balance_type==='deficit'?A('热量缺口'):day.balance_type==='balanced'?A('收支相抵'):null;
+  for(const value of [day.calories==null?'—':profileNumber(day.calories,1),day.calorie_source==='manual'?A('手动总量'):day.calorie_source==='meals'?A('餐食汇总'):'—',day.meal_count+A(' 餐'),day.exercise_calories==null?'—':profileNumber(day.exercise_calories,1),balance?balance+' '+profileNumber(day.balance_kcal,1):'—',day.intake_complete?A('已确认完整'):A('未确认完整'),day.weight_kg==null?'—':profileNumber(day.weight_kg,2)])row.append(el('td',value));$('trend-table-body').append(row);}
  $('trend-table-caption').textContent=data.start_date+A(' 至 ')+data.end_date+A('。— 表示没有数据；手动总量替代当天餐食汇总。');$('trend-results').hidden=false;
 }
 async function loadTracking(end){
@@ -253,12 +281,14 @@ async function refreshTrackingAfterMeal(){
  if(dailyDirty){dailyMessage(A('餐食已确认。当前未保存的修改已保留；保存或重新读取当天后可查看最新汇总。'));return;}await loadDaily();
 }
 $('daily-date').addEventListener('change',()=>{if(!dailySaving)void loadDaily();});
-for(const id of ['daily-calories','daily-weight'])$(id).addEventListener('input',()=>{if(!dailyLoaded||dailyLoading||dailySaving||dailyConflict)return;dailyDirty=true;dailyMessage(A('有未保存的修改。保存后更新当天记录和趋势。'));trackingControls();});
+function dailyChanged(){if(!dailyLoaded||dailyLoading||dailySaving||dailyConflict)return;dailyDirty=true;renderDailyCompleteness();renderDailyBalance();dailyMessage(A('有未保存的修改。保存后更新当天记录和趋势。'));trackingControls();}
+for(const id of ['daily-calories','daily-exercise','daily-weight'])$(id).addEventListener('input',dailyChanged);
+for(const key of Object.keys(coverageFields))coverageInput(key).addEventListener('change',dailyChanged);
 $('daily-reload').addEventListener('click',()=>trackingToday?loadDaily():initializeTracking());
 $('daily-form').addEventListener('submit',async event=>{
  event.preventDefault();if(!currentUser||!dailyLoaded||dailyLoading||dailySaving||dailyConflict||!dailyDirty||!$('daily-form').reportValidity())return;
  const date=$('daily-date').value;if(!dateIsValid(date)||dailyRecord?.date!==date)return;
- const version=sessionVersion,request=++dailyRequest,body={revision:dailyRecord.revision,weight_kg:$('daily-weight').value===''?null:Number($('daily-weight').value),manual_calories:$('daily-calories').value===''?null:Number($('daily-calories').value)};
+ const version=sessionVersion,request=++dailyRequest,body={revision:dailyRecord.revision,weight_kg:$('daily-weight').value===''?null:Number($('daily-weight').value),manual_calories:$('daily-calories').value===''?null:Number($('daily-calories').value),exercise_calories:$('daily-exercise').value===''?null:Number($('daily-exercise').value),intake_coverage:Object.fromEntries(Object.keys(coverageFields).map(key=>[key,coverageInput(key).checked]))};
  dailySaving=true;dailyMessage(A('正在保存 ')+date+A(' 的记录…'));trackingControls();
  try{const data=await api('/daily-records/'+encodeURIComponent(date),'PUT',body);if(version!==sessionVersion||request!==dailyRequest||$('daily-date').value!==date)return;
   applyDaily(data);dailyMessage(A('已保存 ')+date+'。'+(data.calorie_source==='manual'?A('当天热量使用你填写的总量。'):A('当天热量使用已确认餐食汇总。')));void refreshCurrentTracking();

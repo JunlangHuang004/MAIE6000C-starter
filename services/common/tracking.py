@@ -9,6 +9,13 @@ TRACKING_TIMEZONE = "Asia/Hong_Kong"
 MIN_RECORD_DATE = date(2000, 1, 1)
 TREND_DAYS = 30
 MIN_TREND_END = MIN_RECORD_DATE + timedelta(days=TREND_DAYS - 1)
+INTAKE_CATEGORIES = ("breakfast", "lunch", "dinner", "snacks", "drinks")
+
+
+def intake_coverage(value: dict | None) -> dict[str, bool]:
+    """Treat legacy and unset category confirmations as unchecked."""
+    return {category: value.get(category) is True if value else False
+            for category in INTAKE_CATEGORIES}
 
 
 def hong_kong_today() -> date:

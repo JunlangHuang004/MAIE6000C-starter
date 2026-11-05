@@ -1,4 +1,4 @@
-"""Account-owned daily calorie and weight records and their 30-day history."""
+"""Account-owned daily records and their 30-day history."""
 from __future__ import annotations
 
 from datetime import date, timedelta
@@ -11,7 +11,9 @@ from sqlalchemy.orm import Session
 from services.api.app.auth import get_current_user
 from services.common import tracking
 from services.common.db import get_db
-from services.common.models import Analysis, DailyRecord, User, utcnow
+from services.common.energy_balance import calculate_energy_balance
+from services.common.models import Analysis, DailyRecord, User, UserProfile, utcnow
+from services.common.personalization import calculate_reference
 from services.common.schemas import (
     DailyRecordRead, DailyRecordUpdate, TrackingResponse,
 )
@@ -50,6 +52,12 @@ def daily_records(
             ).group_by(Analysis.consumed_on)
         )
     }
+    profile = db.get(UserProfile, user_id)
+    reference = calculate_reference(profile) if profile is not None else None
+    resting_kcal = (
+        reference["resting_kcal"] if reference is not None
+        and reference["status"] == "estimated" else None
+    )
     days = []
     current = start
     while current <= end:
@@ -58,6 +66,8 @@ def daily_records(
         manual = record.manual_calories if record is not None else None
         calories = manual if manual is not None else meal_calories
         source = "manual" if manual is not None else "meals" if meal_count else None
+        exercise_calories = record.exercise_calories if record is not None else None
+        coverage = tracking.intake_coverage(record.intake_coverage if record is not None else None)
         days.append(DailyRecordRead(
             date=current,
             revision=record.revision if record is not None else 0,
@@ -67,6 +77,13 @@ def daily_records(
             meal_count=meal_count,
             calories=calories,
             calorie_source=source,
+            exercise_calories=exercise_calories,
+            intake_coverage=coverage,
+            intake_complete=all(coverage.values()),
+            **calculate_energy_balance(
+                intake_kcal=calories, exercise_kcal=exercise_calories,
+                resting_kcal=resting_kcal,
+            ),
         ))
         current += timedelta(days=1)
     return days
@@ -90,7 +107,8 @@ def save_daily_record(
     user: User = Depends(get_current_user),
 ) -> DailyRecordRead:
     parsed = _date(record_date)
-    values = payload.model_dump(exclude={"revision"})
+    # An older client omitting the new field must not clear an existing exercise entry.
+    values = payload.model_dump(exclude={"revision"}, exclude_unset=True)
     now = utcnow()
     if payload.revision == 0:
         db.add(DailyRecord(

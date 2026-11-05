@@ -116,6 +116,9 @@ class DailyRecord(Base):
         CheckConstraint(
             "manual_calories BETWEEN 0 AND 20000", name="ck_daily_records_calories",
         ),
+        CheckConstraint(
+            "exercise_calories BETWEEN 0 AND 10000", name="ck_daily_records_exercise",
+        ),
         CheckConstraint("revision >= 1", name="ck_daily_records_revision"),
     )
 
@@ -125,6 +128,8 @@ class DailyRecord(Base):
     record_date: Mapped[date] = mapped_column(Date, primary_key=True)
     weight_kg: Mapped[float | None] = mapped_column(Float, nullable=True)
     manual_calories: Mapped[float | None] = mapped_column(Float, nullable=True)
+    exercise_calories: Mapped[float | None] = mapped_column(Float, nullable=True)
+    intake_coverage: Mapped[dict | None] = mapped_column(JSON, nullable=True)
     revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow, nullable=False,
