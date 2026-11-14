@@ -1,9 +1,15 @@
 # Independent NutriChat QA
 
 This folder is the durable working record for the on-demand `nutrichat-qa`
-reviewer. Each run begins by reading [MEMORY.md](MEMORY.md). The reviewer writes
-observations to files that a future run can read; this does not establish permanent
-private chat memory or schedule automatic work.
+reviewer. A continuity review begins with [MEMORY.md](MEMORY.md). When the user
+explicitly requests a **fresh/no-memory review**, that request overrides the
+continuity workflow: do not read prior QA memory or reports, and do not update
+MEMORY unless separately requested. Record new observations from the current
+requirements and tested build in a new dated report. File-based records do not
+establish permanent private chat memory or schedule automatic work.
+
+The [14 November fresh review](reports/2026-11-14-fresh-review.md) covers the
+four-panel workspace update. Its evidence remains separate from historical runs.
 
 The project agent is defined in
 [`nutrichat-qa.toml`](../../.codex/agents/nutrichat-qa.toml). Its required `name`,
@@ -14,18 +20,20 @@ The review-only boundaries are instructions, not an independent security sandbox
 
 ## Run workflow
 
-1. Read this document, MEMORY, the current user requirements, [main README](../../README.md)
-   and [demo guide](../../demo/README.md). Preserve unresolved defect IDs and
-   distinguish user-reported issues from personally reproduced ones.
+1. Establish whether the user requested continuity or a fresh/no-memory review.
+   Read this document, current requirements, [main README](../../README.md) and
+   [current walkthrough](../../demo/INTEGRATED_GUIDE.md). For continuity only, read
+   MEMORY and preserve unresolved defect IDs. In either mode, distinguish reported
+   issues from personally reproduced ones.
 2. Record the date/time zone, target URL, branch, full Git revision and dirty state.
-   Compare these with the last tested revision. Verify the running build corresponds
-   to the intended source using build metadata or non-secret source fingerprints;
+   For continuity, compare these with the last tested revision. Verify the running
+   build corresponds to the intended source using build metadata or non-secret source fingerprints;
    if verification is unavailable, label it unverified. A branch name alone is
    insufficient. Do not read `.env` contents, cookies or credentials.
-3. Establish the target provider without exposing configuration secrets. The
-   intended full product is Qwen on `http://localhost:8003/app`; the separate port
-   8002 demo fixture is not evidence of Chinese model extraction. Reconfirm target
-   details each run. A `READY` handoff is required when the parent is still updating
+3. Establish the target URL and provider from the current handoff without exposing
+   configuration secrets. Earlier port/provider choices are historical, not defaults
+   for a new run. An offline demo is not evidence of Chinese model extraction.
+   A `READY` handoff is required when the parent is still updating
    the runtime; initial preparation is not permission to test a stale build.
 4. Select 8–12 synthetic scenarios from the matrix below. Record the intended
    model-triggering request cap before starting; use at most 12 by default,
@@ -40,9 +48,10 @@ The review-only boundaries are instructions, not an independent security sandbox
    clarification with withheld totals can be a pass. A wrong food with plausible
    totals is a failure. Inspect the interpreted food, quantity and assumptions,
    not just the completion state.
-7. Save a dated report and evidence without replacing older reports. Update MEMORY
-   with tested source/build, report links, new observations, unresolved defects and
-   the next targeted checks. Close a defect only with an explicit relevant retest.
+7. Save a dated report and evidence without replacing older reports. For continuity,
+   update MEMORY with source/build, report links, observations, unresolved defects
+   and next checks. For fresh/no-memory reviews, leave MEMORY unchanged unless
+   requested otherwise. Close a defect only with an explicit relevant retest.
    Send findings to the implementing agent; do not change product code.
 
 ## Acceptance matrix
@@ -57,6 +66,14 @@ chicken (`dish_251`). The matrix below uses a fictional absent food for negative
 checks. Earlier dated reports used soy-sauce chicken before it was added; preserve
 those observations rather than applying their old identity expectation now.
 Focused follow-ups can use a smaller explicitly agreed case/request budget.
+
+For the current workspace, also check Meals/Daily diary/Trends/My goals navigation,
+keyboard/mobile access and unsaved values across panel/language switches. Expand
+food evidence and browse beyond the catalogue's first 20 search matches. Exercise
+manual totals, all five coverage flags, zero versus blank exercise, profile-conflict
+reload and dependent balance/trend refresh. Check complete meal replacement
+separately from portion-only edits and additions; unsupported foods must still
+withhold totals. Record these checks separately from model-request counts.
 
 | ID | Synthetic action/input | Required observation |
 | --- | --- | --- |
@@ -89,7 +106,8 @@ Each report contains:
 
 - **Scope and provenance:** requested outcome, URL, date/time interval, branch,
   full revision, dirty files relevant to the tested build, runtime verification,
-  provider/model if safely observable, and previous report compared.
+  provider/model if safely observable, and review mode. Name any previous report
+  compared, or state that no prior QA memory/reports were read for a fresh review.
 - **Execution:** planned versus attempted cases, model request count/cap, any
   deliberate retries, and tools used. Label browser/live-provider, direct API,
   deterministic, mocked/fixture and historical evidence separately.

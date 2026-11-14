@@ -1,0 +1,13 @@
+{
+  "date": "2026-11-14",
+  "base_sha": "254bebfc8fea07830d261adf2def54bc4cb217ed",
+  "source": "dec7190c2ab087c92020c905137430f4e594be85f53001831a0b09961a7cbfe8",
+  "containers": {
+    "api": "dec7190c2ab087c92020c905137430f4e594be85f53001831a0b09961a7cbfe8",
+    "ai": "dec7190c2ab087c92020c905137430f4e594be85f53001831a0b09961a7cbfe8",
+    "worker": "dec7190c2ab087c92020c905137430f4e594be85f53001831a0b09961a7cbfe8"
+  },
+  "all_match": true,
+  "food_data_unchanged": true,
+  "catalogue_sha256": "d9230087a5bd493afbc6d76a5c09e9b549df7746817f55e5ac43d1956a4e9db2"
+}

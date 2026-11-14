@@ -1,0 +1,12 @@
+✔ Recovery from a profile revision conflict refreshes energy balance derived from the profile (192.92125ms)
+ℹ {"profileResting":"Mifflin–St Jeor estimated resting energy: 1,880 kcal / day. Using moderate activity (factor 1.55), estimated weight-maintenance energy is 2,914 kcal / day.","dailyBalance":"Intake 2,000 kcal; estimated expenditure 2,256 kcal (baseline 2,256 + exercise 0).","extraDailyReads":1}
+✔ An open tab accepts the new Hong Kong date after midnight without requiring a trend refresh (65.415959ms)
+ℹ {"serverToday":"2026-11-04","inputMax":"2026-11-04","message":"已载入 2026-11-04。填写需要记录的数值，然后保存；留空体重并保存可清除当天体重。","requestedNewDay":true}
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 263.06725

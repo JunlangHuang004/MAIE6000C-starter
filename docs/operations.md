@@ -1,9 +1,10 @@
 # NutriChat operations
 
-Current instructions: 2026-11-05, local `merge/local-features-into-test` branch.
-GitHub `test` is the base; this checkout adds the local daily balance, intake
-review, result-card placement and Chinese-meal evaluator. The existing deployment
-remains a separate snapshot. See [integration setup and verification](integration.md).
+Current instructions: 2026-11-14, the `test` workspace update. The app separates
+Meals, Daily diary, Trends and My goals while retaining meal estimation, daily
+balance, intake review and the Chinese-meal evaluator. Existing deployments remain
+separate snapshots. See [integration setup](integration.md) and the
+[fresh review](qa/reports/2026-11-14-fresh-review.md).
 
 ## Startup and isolation
 
@@ -99,6 +100,19 @@ Frontend tests use Node.js 22 in CI and synthetic responses. They check bilingua
 UI behavior, form preservation and account/diary integration; the application
 requires no npm runtime/build step. Validate browser workflows separately.
 
+For workspace acceptance, switch all four panels with unsaved meal, recipe,
+profile and diary values, then switch languages. Values must remain intact and
+navigation must not submit requests or interrupt meal processing. Check keyboard
+navigation and a narrow viewport. Expand per-food evidence, search the catalogue
+and use **Show 20 more**; all matching records must remain reachable.
+
+In **Daily diary**, exercise and weight are visible directly; manual calorie totals
+and the five-category intake review are disclosures. A manual total replaces meal
+aggregation, including when it is zero. Blank exercise is unknown; zero explicitly
+records no exercise. Save changes before checking the balance and separate
+**Trends** panel. A profile reload after a conflict refreshes dependent saved diary
+and trend data while preserving unsaved diary changes.
+
 The smoke tests expect the offline provider's six-food arithmetic and require an
 authenticated session. Use the isolated offline project, not a live-model stack:
 
@@ -144,6 +158,14 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
   automatic recovery. Duplicate submissions create additional records/jobs.
 - **409 on an edit:** reload the current revision/state. Confirmed meals and meal
   dates are locked. Profile/daily edits also use revisions to prevent lost updates.
+- **422 on an edit:** supply the required bounded integer revision from the latest
+  record; strings, booleans, fractional values and out-of-range revisions are not
+  accepted. Validation must not change the saved meal or enqueue work.
+- **Correction still shows an old food:** an explicit complete replacement must
+  remove the superseded meal; quantity-only edits and additions retain other foods.
+  Removed-shell and no-extra-oil details must not appear as unsupported foods.
+  If reproducing this issue, record the exact wording and runtime version, and
+  rebuild the AI service after changes to food matching.
 - **Unexpected diary total:** only confirmed meals for the selected Hong Kong date
   count. A manual total replaces the meal sum; clear it to restore aggregation.
   Unrecorded days remain blank, not zero. Daily weight does not update the profile.
@@ -182,7 +204,9 @@ cloud deployment is performed by a Git push or this local merge. Follow the sepa
 
 ## Evidence and submission snapshots
 
-Current merged checks are recorded in [integration verification](integration.md).
+Current workspace checks are recorded in the
+[14 November fresh review](qa/reports/2026-11-14-fresh-review.md); earlier merged
+checks remain in [integration verification](integration.md).
 The [Week 6 workflow](async-workflow.md), [Week 7 artifact](../submissions/week07/README.md),
 [original screenshot guide](../demo/SCREENSHOT_GUIDE.md) and dated reports describe
 their labelled versions. Reproduce historical course scripts from their original

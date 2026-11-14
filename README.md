@@ -1,10 +1,9 @@
 # NutriChat
 
-This local `merge/local-features-into-test` branch builds on GitHub `test`, which
-combines the meal-estimation features from
-`nutrichat` with independent accounts, personal daily references and 30-day tracking
-from `test`. It keeps **the exact `nutrichat` food catalogue: 200 USDA ingredient
-records and 350 editable Chinese reference recipes**. The `nutrichat` branch,
+NutriChat combines the meal-estimation features from `nutrichat` with independent
+accounts, personal daily references and 30-day tracking on `test`. It keeps
+**the exact `nutrichat` food catalogue: 200 USDA ingredient records and 350 editable
+Chinese reference recipes**. The `nutrichat` branch,
 `w07-midterm` submission tag and existing deployments remain separate snapshots.
 
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions.
@@ -16,6 +15,9 @@ Start with [the integration guide](docs/integration.md) for the merged preview a
 verification. [The demo folder](demo/README.md) provides a self-guided workflow and
 a separate key-free integration check. Earlier screenshots and reports retain their
 original source/date; they are not evidence of this merged build.
+See the [current workspace walkthrough](demo/INTEGRATED_GUIDE.md) and
+[14 November fresh review](docs/qa/reports/2026-11-14-fresh-review.md) for the
+updated interface and dated verification scope.
 
 ## Run the merged application
 
@@ -63,6 +65,21 @@ For multiple checkouts, choose both a unique `NUTRICHAT_DEMO_PROJECT` and a free
 `NUTRICHAT_DEMO_PORT`, using the same values for start/check/stop. Changing a port
 alone does not isolate Docker resources. Stopping retains the database.
 
+## Four workspace panels
+
+| Panel | What to do here |
+| --- | --- |
+| **Meals** | Describe, review, correct and confirm a meal; use Basic or Advanced mode and the ingredient builder |
+| **Daily diary** | Check confirmed-meal totals, save weight and exercise, review intake coverage, and reopen recent meals |
+| **Trends** | View 30 days of calorie and weight charts, summary statistics and daily details |
+| **My goals** | Optionally save a personal profile and view approximate daily nutrition references |
+
+Meals opens first. Switching panels or interface language preserves unsaved form
+values; it does not submit them. Saving is still required before reloading or
+leaving the page. Meal evidence is summarized by food, with portions, assumptions
+and sources available on expansion. The searchable catalogue shows 20 matching
+entries at a time; **Show 20 more** reveals the next set without limiting coverage.
+
 ## Meal estimation
 
 | Mode | Use case | Missing information |
@@ -98,22 +115,25 @@ English display names do not guarantee recognition of every English food name.
 
 ## Personal references and tracking
 
-A profile is optional for meal estimation. Save age, height, current weight, the
-formula sex coefficient, activity level and a muscle-gain or fat-loss goal to obtain
+A profile in **My goals** is optional for meal estimation. Save age, height, current
+weight, the formula sex coefficient, activity level and a muscle-gain or fat-loss goal to obtain
 approximate daily energy and macronutrient references. The versioned Python formula
 uses explicit assumptions; profile inputs are not sent to the model. Some inputs
 are saved without generating a target when the automatic-output guards apply.
 See [calculation assumptions and scope](docs/personalization.md).
 
-Choose a date to save weight, exercise energy and optionally a total calorie intake.
-Review five intake categories to flag whether the day is complete. With an
+In **Daily diary**, choose a date to save weight and exercise energy. Expand the
+manual-total control only when replacing the confirmed-meal sum, and expand the
+coverage checklist to review breakfast, lunch, dinner, snacks and drinks/oils/sauces.
+Enter zero exercise when none was performed; a blank value remains unknown. With an
 applicable profile and explicit exercise value, the daily card estimates a positive
 surplus or deficit from recorded intake versus baseline expenditure plus exercise.
 This is approximate and should not alone set cardio intensity. Without a manual
 total, the diary sums that date's confirmed meals. A manual total **replaces** the
-sum; clearing it restores automatic aggregation. Two charts and a detail table show
-30 consecutive days. Missing dates remain gaps, and averages use recorded calorie
-days only. Dates use Hong Kong time. Daily weights do not automatically change the
+sum; clearing it and saving restores automatic aggregation. **Trends** keeps two
+charts and a detail table in a separate panel for 30 consecutive days. Missing dates
+remain gaps, and averages use recorded calorie days only. Dates use Hong Kong time.
+Daily weights do not automatically change the
 profile or its reference. See [the tracking guide](docs/tracking.md).
 
 The meal estimate card appears directly after the meal input. A fixed synthetic
@@ -141,6 +161,8 @@ the application serves plain JavaScript. CI includes `integrate/**`, `test`,
 that a pushed commit has passed GitHub Actions.
 
 [Integration verification](docs/integration.md) records checks for the merged build.
+The [fresh review](docs/qa/reports/2026-11-14-fresh-review.md) records the November
+workspace update and distinguishes automated, browser and live-provider evidence.
 Earlier [catalogue verification](docs/evidence/chinese-expansion-verification.md),
 [account](docs/evidence/accounts-verification.md),
 [profile](docs/evidence/personalization-verification.md),

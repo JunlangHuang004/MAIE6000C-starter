@@ -199,7 +199,7 @@ class AnalysisCreate(BaseModel):
 
 
 class AnalysisCorrection(AnalysisCreate):
-    revision: int = Field(ge=1)
+    revision: int = Field(ge=1, le=2_147_483_646, strict=True)
 
 
 class AnalysisConfirm(BaseModel):
@@ -215,13 +215,13 @@ class AnalysisConfirm(BaseModel):
 
 
 class AnalysisMode(BaseModel):
-    revision: int = Field(ge=1)
+    revision: int = Field(ge=1, le=2_147_483_646, strict=True)
     mode: Literal["basic", "advanced"]
 
 
 class AnalysisReply(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    revision: int = Field(ge=1)
+    revision: int = Field(ge=1, le=2_147_483_646, strict=True)
     message: str | None = Field(default=None, min_length=1, max_length=2000)
     answers: dict = Field(default_factory=dict, max_length=150)
 
@@ -233,7 +233,7 @@ class AnalysisReply(BaseModel):
 
 
 class AnalysisIngredientRecipe(IngredientRecipe):
-    revision: int = Field(strict=True, ge=1)
+    revision: int = Field(strict=True, ge=1, le=2_147_483_646)
     item_index: int = Field(strict=True, ge=0, le=29)
 
 

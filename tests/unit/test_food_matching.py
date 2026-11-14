@@ -225,6 +225,85 @@ def test_natural_portion_correction_does_not_turn_weight_details_into_foods(monk
     assert [i['grams'] for i in result.draft] == [150, 100]
 
 
+@pytest.mark.parametrize('mode', ['basic', 'advanced'])
+@pytest.mark.parametrize('correction', [
+    '更正：不要番茄炒蛋了，只吃了100克水煮鸡蛋，去壳后的熟重，没有额外用油。',
+    '不要番茄炒蛋了，只吃了100克水煮鸡蛋，去壳后的熟重，无额外油。',
+    '更正：這餐只吃了100克水煮雞蛋，去殼後的熟重，沒有額外用油。',
+])
+def test_explicit_only_ate_correction_replaces_old_meal_without_phantom_foods(
+        monkeypatch, mode, correction):
+    name = '水煮雞蛋' if '水煮雞蛋' in correction else '水煮鸡蛋'
+    result = extract(monkeypatch, '一份番茄炒蛋，两个水煮鸡蛋', [{
+        'food_id':'egg', 'name':name, 'source_text':name, 'grams':100,
+        'weight_basis':'cooked', 'preparation':'boiled', 'oil_g':0,
+        'weight_includes_inedible':False,
+    }], mode=mode, history=[{'role':'user', 'content':correction}])
+    assert result.calories == 155
+    assert [item['food_id'] for item in result.draft] == ['egg']
+    assert result.questions == []
+
+
+def test_exclusive_replacement_keeps_multiple_foods_and_later_portion_updates(monkeypatch):
+    result = extract(monkeypatch, '一份番茄炒蛋，两个水煮鸡蛋', [
+        {'food_id':'egg', 'name':'水煮鸡蛋', 'source_text':'水煮鸡蛋', 'grams':80},
+        {'food_id':'rice', 'name':'米饭', 'source_text':'米饭', 'grams':150},
+    ], history=[
+        {'role':'user', 'content':'更正：不要番茄炒蛋了，只吃了100克水煮鸡蛋和150克米饭'},
+        {'role':'user', 'content':'水煮鸡蛋实际吃了80克熟重'},
+    ])
+    assert result.calories == 319
+    assert [item['food_id'] for item in result.draft] == ['egg', 'rice']
+    assert [item['grams'] for item in result.draft] == [80, 150]
+
+
+@pytest.mark.parametrize('addition', [
+    '\n另外200克火星豉油鸡',
+    '，没有额外用油的火星豉油鸡200克',
+    '，去壳后的熟重火星豉油鸡200克',
+])
+@pytest.mark.parametrize('later_message', [False, True])
+def test_exclusive_replacement_cannot_hide_unknown_additions(
+        monkeypatch, addition, later_message):
+    replacement = '更正：不要番茄炒蛋了，只吃了100克水煮鸡蛋'
+    history = ([{'role':'user', 'content':replacement}, {'role':'user', 'content':addition}]
+               if later_message else [{'role':'user', 'content':replacement + addition}])
+    result = extract(monkeypatch, '一份番茄炒蛋，两个水煮鸡蛋', [
+        {'food_id':'egg', 'name':'水煮鸡蛋', 'source_text':'水煮鸡蛋', 'grams':100},
+    ], history=history)
+    assert result.calories is None and result.details == []
+    assert any(q['kind'] == 'unsupported' and '火星豉油鸡' in q['label']
+               for q in result.questions)
+
+
+@pytest.mark.parametrize('correction', [
+    '更正：不要番茄炒蛋了，只吃了100克火星豉油鸡',
+    '不是只吃了100克水煮鸡蛋',
+    '另外200克火星豉油鸡，更正：不要番茄炒蛋了，只吃了100克水煮鸡蛋',
+    '更正：不要番茄炒蛋了，只吃了100克',
+])
+def test_unjustified_replacement_or_unknown_identity_never_produces_partial_total(
+        monkeypatch, correction):
+    result = extract(monkeypatch, '一份番茄炒蛋，两个水煮鸡蛋', [
+        {'food_id':'egg', 'name':'水煮鸡蛋', 'source_text':'水煮鸡蛋', 'grams':100},
+    ], history=[{'role':'user', 'content':correction}])
+    assert result.calories is None and result.details == []
+    assert any(q['kind'] == 'unsupported' for q in result.questions)
+
+
+@pytest.mark.parametrize('detail', [
+    '去壳后的熟重，没有额外用油',
+    '去壳熟重，无额外油',
+    '去殼後的熟重，沒有額外用油',
+])
+def test_removed_shell_and_no_extra_oil_details_are_not_extra_foods(monkeypatch, detail):
+    result = extract(monkeypatch, '100克水煮鸡蛋，' + detail, [
+        {'food_id':'egg', 'name':'水煮鸡蛋', 'source_text':'水煮鸡蛋', 'grams':100},
+    ])
+    assert result.calories == 155
+    assert [item['food_id'] for item in result.draft] == ['egg']
+
+
 def test_common_cooked_white_rice_name_is_a_reviewed_alias(monkeypatch):
     result = extract(monkeypatch, '100克熟白米饭', [
         {'food_id':'rice','name':'熟白米饭','source_text':'熟白米饭','grams':100}])

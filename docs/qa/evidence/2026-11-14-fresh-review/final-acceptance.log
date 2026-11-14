@@ -1,0 +1,132 @@
+PASS GET /auth/me status 401
+PASS GET /profile status 401
+PASS GET /daily-records/2026-11-14 status 401
+PASS GET /tracking status 401
+PASS GET /analyses status 401
+PASS POST /auth/register status 201
+PASS POST /auth/register status 201
+PASS POST /auth/login status 401
+PASS PUT /profile status 403
+PASS PUT /profile status 403
+PASS POST /auth/register status 409
+PASS Private response is no-store
+PASS Fresh profile is absent
+PASS PUT /profile status 200
+PROFILE_SHAPE {"profile": {"age_years": 30, "height_cm": 180.0, "weight_kg": 80.0, "sex": "male", "goal": "gain_muscle", "activity_level": "moderate", "revision": 1, "updated_at": "2026-11-14T04:09:52.309345Z"}, "reference": {"status": "estimated", "formula_version": "mifflin-1990-nutrichat-v1", "resting_kcal": 1780.0, "maintenance_kcal": 2759.0, "activity_factor": 1.55, "goal_adjustment": 0.05, "bmi": 24.7, "calories": 2900, "protein_g": 181.3, "carbs_g": 326.3, "fat_g": 96.7, "reason_codes": [], "notes": ["\u8fd9\u662f\u6839\u636e\u6240\u586b\u8d44\u6599\u63a8\u7b97\u7684\u6bcf\u65e5\u53c2\u8003\uff0c\u5e76\u975e\u6d4b\u91cf\u503c\u6216\u5fc5\u987b\u8fbe\u5230\u7684\u6307\u6807\u3002", "\u6d3b\u52a8\u7cfb\u6570\u3001\u589e\u808c\u52a0 5%\uff0f\u51cf\u8102\u51cf 10% \u548c\u8425\u517b\u6bd4\u4f8b\u662f\u672c\u9879\u76ee\u7684\u7b80\u5316\u5047\u8bbe\u3002", "\u8425\u517b\u53c2\u8003\u6309\u70ed\u91cf\u7684 25% \u86cb\u767d\u8d28\u300130% \u8102\u80aa\u300145% \u78b3\u6c34\u5316\u5408\u7269\u6362\u7b97\u3002", "\u589e\u808c\u4e5f\u53d6\u51b3\u4e8e\u529b\u91cf\u8bad\u7ec3\u3001\u4f11\u606f\u7b49\u56e0\u7d20\uff1b\u6b64\u53c2\u8003\u4e0d\u9884\u6d4b\u4f53\u91cd\u6216\u808c\u8089\u53d8\u5316\u3002", "\u9002\u7528\u4e8e 18\u201380 \u5c81\u4e00\u822c\u5065\u5eb7\u6210\u4eba\uff1b\u5b55\u54fa\u671f\u6216\u9700\u8981\u4e34\u5e8a\u996e\u98df\u7ba1\u7406\u65f6\u5e94\u4f7f\u7528\u4e13\u4e1a\u6307\u5bfc\u3002"]}}
+PASS GET /profile status 200
+PASS Profile persisted
+PASS GET /profile status 200
+PASS Profile isolated
+PASS PUT /profile status 409
+PASS PUT /profile status 422
+PASS PUT /profile status 422
+PASS PUT /profile status 422
+PASS PUT /profile status 422
+PASS PUT /profile status 422
+PASS PUT /profile status 200
+PASS PUT /profile status 200
+PASS PUT /profile status 200
+PASS GET /tracking status 200
+PASS Tracking has 30 consecutive dates
+PASS Fresh tracking no invented zero records
+PASS GET /daily-records/2026-11-14 status 200
+PASS PUT /daily-records/2026-11-14 status 200
+PASS Daily intake complete
+PASS Balance uses resting × 1.2 plus exercise
+PASS GET /daily-records/2026-11-14 status 200
+PASS Diary owner isolation
+PASS PUT /daily-records/2026-11-14 status 409
+PASS PUT /daily-records/2026-11-14 status 422
+PASS PUT /daily-records/2026-11-14 status 422
+PASS PUT /daily-records/2026-11-14 status 422
+PASS PUT /daily-records/2026-11-14 status 422
+PASS PUT /daily-records/2026-11-15 status 422
+PASS GET /daily-records/1999-12-31 status 422
+PASS GET /tracking?end=2000-01-29 status 422
+PASS PUT /daily-records/2026-11-13 status 200
+PASS Explicit zero retained, incomplete retained
+PASS PUT /daily-records/2026-11-12 status 200
+PASS Missing intake/ exercise gives no balance
+PASS GET /tracking status 200
+PASS Average excludes missing/weight-only days; includes zero
+PASS Weight change follows chronological first and last
+PASS GET /profile status 200
+PASS Daily weight does not change profile
+PASS PUT /daily-records/2026-11-14 status 200
+PASS Old client preserves exercise and coverage
+PASS GET /foods status 200
+PASS Catalogue contains exactly 550 entries
+PASS POST /analyses status 201
+basic completed 365.2
+PASS Chinese Basic completes
+PASS Basic total equals saved per-food totals
+PASS POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/mode status 200
+advanced needs_input None
+PASS Advanced asks for missing measurements/recipe
+PASS POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/mode status 200
+basic_again completed 365.2
+PASS POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/reply status 200
+corrected completed 155.0
+PASS Natural-language correction replaces full contents
+PASS POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/confirm status 200
+PASS Confirmation backdates and locks
+PASS PATCH /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808 status 409
+PASS POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/confirm status 409
+PASS GET /daily-records/2026-11-11 status 200
+PASS Confirmed meal aggregates to chosen date
+PASS PUT /daily-records/2026-11-11 status 200
+PASS Manual calories replace meal sum
+PASS PUT /daily-records/2026-11-11 status 200
+PASS Clearing manual restores meals
+PASS POST /analyses status 201
+unknown needs_input None
+PASS Unknown food withholds every total
+UNKNOWN_DRAFT [{"food_id": "rice", "name": "熟白米饭", "source_text": "熟白米饭", "grams": 100.0, "weight_includes_inedible": null, "weight_basis": "cooked", "preparation": "as_served", "oil_g": null, "portion_count": null, "portion_unit": null, "recipe_ingredients": null, "recipe_yield_g": null, "uncertainty": null}, {"food_id": null, "name": "100克熟白米饭，150克星云魔法炖菜（自创菜，没有可用配方）", "source_text": null, "grams": 150.0, "weight_includes_inedible": null, "weight_basis": "cooked", "preparation": "braised", "oil_g": null, "portion_count": null, "portion_unit": null, "recipe_ingredients": null, "recipe_yield_g": null, "uncertainty": null}]
+PASS GET /analyses/609ff577-1cd0-402f-bed1-7618a285a440 status 404
+PASS GET /jobs/5 status 404
+PASS PATCH /analyses/609ff577-1cd0-402f-bed1-7618a285a440 status 404
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/confirm status 404
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/mode status 404
+PASS GET /analyses status 200
+PASS Meal histories isolated
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 404
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 422
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 200
+custom_batch completed 244.8
+PASS Custom batch repairs unknown and preserves rice
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/reply status 422
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 200
+custom_consumed completed 359.5
+PASS Custom consumed recipe exact arithmetic
+PASS POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/confirm status 200
+PASS GET /analyses/609ff577-1cd0-402f-bed1-7618a285a440 status 200
+PASS Custom recipe persists on read
+PASS POST /analyses status 201
+advanced_single needs_input None
+ADVANCED_QUESTIONS [{"key": "0.grams", "label": "水煮鸡蛋（去壳）吃了多少克？请填可食部分重量。", "kind": "number", "min": 0.1, "max": 10000}, {"key": "0.weight_basis", "label": "水煮鸡蛋（去壳）的数据按熟重计算，你提供的是这个重量吗？若不是，请在下方说明，不能将生熟重量直接互换。", "kind": "choice", "options": [{"value": "cooked", "label": "确认，是熟重"}]}]
+PASS POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/reply status 200
+advanced_answered completed 155.0
+PASS Advanced issued questions can be completed
+PASS POST /auth/logout status 204
+PASS GET /analyses status 401
+PASS POST /auth/login status 200
+PASS GET /analyses status 200
+PASS Sign-in restores private history
+PASS GET /profile status 200
+PASS GET /daily-records/2026-11-14 status 200
+PASS Sign-in restores profile and diary
+SUMMARY 105 / 105
+PASS GET /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 200
+PASS PATCH /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 200
+no_extra_oil_fixed completed 155.0
+PASS No-extra-oil replacement now completes
+PASS PATCH /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 422
+PASS POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/mode status 422
+PASS POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/reply status 422
+PASS PATCH /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 422
+PASS POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/mode status 422
+PASS POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/reply status 422
+PASS GET /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 200
+PASS Malformed revisions preserve record
+PASS GET /tracking status 200
+FINAL SUMMARY 117 / 117

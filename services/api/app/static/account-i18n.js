@@ -2,6 +2,7 @@
 (() => {
   'use strict';
   const strings = {
+  "餐食、身体资料和每日记录，保存在你自己的账号中。": "Meals, profile details and daily records are saved in your own account.",
   "当天运动消耗（kcal）": "Exercise energy (kcal)",
   "没有运动填 0": "Enter 0 if no exercise",
   "按实际记录填写；设备估算仅供参考。": "Enter recorded exercise; device estimates are approximate.",
@@ -88,7 +89,7 @@
   "填写后替代餐食汇总，不会叠加。留空并保存可恢复自动汇总。": "A manual total replaces the meal sum. Save an empty field to restore automatic aggregation.",
   "当天体重（kg）": "Weight for this date (kg)",
   "可选，30–250 kg": "Optional, 30–250 kg",
-  "独立保存，不会修改上方个人资料中的体重或每日参考。": "Saved separately; this does not change your profile weight or daily reference.",
+  "独立保存，不会修改个人资料中的体重或每日参考。": "Saved separately; this does not change your profile weight or daily reference.",
   "保存当天记录": "Save daily record",
   "重新读取当天": "Reload this date",
   "正在读取每日记录…": "Loading daily records…",
@@ -203,6 +204,7 @@
   "日期暂未读取，请点击「重新读取当天」重试。": "Dates are not loaded. Select Reload this date to retry.",
   "餐食已确认。当前未保存的修改已保留；保存或重新读取当天后可查看最新汇总。": "Meal confirmed. Your unsaved edits are preserved. Save or reload this date to see the latest total.",
   "有未保存的修改。保存后更新当天记录和趋势。": "Unsaved changes. Save to update the record and trends.",
+  "请检查标出的数值及允许范围，修改后再保存。": "Check the highlighted value and allowed range, then save again.",
   "正在保存 ": "Saving ",
   "已保存 ": "Saved ",
   "当天热量使用你填写的总量。": "Calories use your manual total.",

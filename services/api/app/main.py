@@ -166,8 +166,7 @@ async def safe_validation_errors(request: Request, exc: RequestValidationError):
     if (
         request.url.path == "/profile"
         or request.url.path.startswith(("/daily-records", "/tracking"))
-        or (request.url.path.startswith("/analyses/")
-            and request.url.path.endswith(("/confirm", "/ingredients")))
+        or request.url.path.startswith("/analyses/")
     ):
         # Do not reflect personal inputs (or non-JSON NaN/Infinity) in errors.
         return JSONResponse(status_code=422, content={

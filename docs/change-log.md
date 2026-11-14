@@ -1,5 +1,29 @@
 # NutriChat change log
 
+## 2026-11-14 — Focused workspace and correction recovery
+
+- Separate **Meals**, **Daily diary**, **Trends** and optional **My goals** into
+  navigable panels. Preserve unsaved form values across navigation and language
+  switches, with keyboard navigation and responsive layouts.
+- Keep meal entry first, summarize expandable per-food evidence, and show the
+  searchable catalogue in increments of 20. Retain Basic/Advanced estimation,
+  questions, corrections, actual-ingredient recipes and dated confirmation.
+- Keep exercise, weight and automatic meal totals in the diary. Place manual-total
+  overrides and the five-category intake review in disclosures; retain daily
+  surplus/deficit estimates and separate 30-day charts/details.
+- Normalize explicit whole-meal corrections and bounded removed-shell/no-extra-oil
+  details without weakening unknown-food rejection or dropping later additions.
+- Refresh saved diary balance and trends after profile-conflict reload, while
+  preserving unsaved diary changes. Reject malformed or out-of-range meal edit
+  revisions with HTTP 422 before mutation or queueing.
+- Reveal invalid inputs inside collapsed sections and keep recent-record failures
+  visible without discarding the current meal or reply. Refresh date bounds on
+  return after Hong Kong midnight, preserving unsaved diary values.
+- Refresh the walkthrough and allow explicitly requested fresh QA without reading
+  or updating prior QA memory. See the [fresh review](qa/reports/2026-11-14-fresh-review.md)
+  for final verification and runtime provenance. Older screenshots, reports and
+  the `w07-midterm` submission retain their historical attribution.
+
 ## 2026-11-03 — Publish the integrated application on test
 
 - Advance `test` to the verified merge `cdd4c9c` without rewriting history.

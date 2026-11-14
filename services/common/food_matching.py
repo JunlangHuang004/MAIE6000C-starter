@@ -57,7 +57,7 @@ _PREFIX = re.compile(
 _SUFFIX = re.compile(
     r'(?:\s|[.。:：()]|' + _MASS + r'|'
     r'熟重|生重|可食部分|净重|淨重|已去壳|已去殼|已去骨|'
-    r'去壳|去殼|去骨|共|总共|總共|的|少油|多油|不加油|'
+    r'(?:去壳|去殼|去骨)(?:后|後)?|共|总共|總共|的|少油|多油|不加油|'
     r'(?<![a-z])(?:cooked edible weight|raw edible weight|edible weight|'
     r'cooked weight|raw weight|bones removed|without shell)(?![a-z]))+', re.I,
 )
@@ -99,6 +99,8 @@ def _detail_clause(value):
         return True
     excluded = re.fullmatch(r'(?:不加|no |with no )(.+)', value, re.I)
     if excluded and _ingredient_name(excluded[1]):
+        return True
+    if re.fullmatch(r'(?:没有|沒有|无|無|未)(?:额外|額外)?(?:添加|加|用)?油', value):
         return True
     return re.fullmatch(
         r'(?:edible weight measured before cooking|edible raw weight before cooking|'
@@ -181,6 +183,18 @@ def _current_identity_texts(texts):
     """Keep the last explicit replacement and every subsequent user utterance."""
     for index in range(len(texts) - 1, -1, -1):
         text = texts[index]
+        exclusive_meal = re.fullmatch(
+            r'\s*(?:更正\s*[:：]\s*)?'
+            r'(?:(?:不要|没吃|沒吃|没有吃|沒有吃)[^,，;；。\n]+[,，;；]\s*)?'
+            r'(?:(?:我)?(?:这餐|這餐|这次|這次)|我)?'
+            r'只吃(?:下)?了\s*(.+)', text, re.S,
+        )
+        if exclusive_meal and any(
+                not _detail_clause(clause) for clause in _SPLIT.split(exclusive_meal[1])):
+            # "Only ate" explicitly replaces the meal; keep its entire list and
+            # all later additions. Never infer replacement from a negation alone
+            # or from a quantity-only update with no new food identity.
+            return [exclusive_meal[1], *texts[index + 1:]]
         consumed_ingredients = re.fullmatch(
             r'\s*(?:(?:改成|改为|改為|换成|換成|更正为|更正為)\s*)?'
             r'(?:这次实际吃下的食材|這次實際吃下的食材|实际吃下的食材|實際吃下的食材)'

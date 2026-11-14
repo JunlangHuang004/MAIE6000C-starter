@@ -1,0 +1,1267 @@
+{
+  "/analyses": {
+    "status": 200,
+    "body": [
+      {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "星云魔法炖菜150克"
+          },
+          {
+            "role": "assistant",
+            "content": "数据库未找到“星云魔法炖菜”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+          },
+          {
+            "role": "user",
+            "content": "已确认自定义食材配方：星云魔法炖菜",
+            "kind": "ingredient_recipe",
+            "item_index": 0
+          }
+        ],
+        "draft": [
+          {
+            "food_id": null,
+            "name": "星云魔法炖菜",
+            "source_text": "星云魔法炖菜",
+            "original_name": "星云魔法炖菜",
+            "custom_recipe": {
+              "name": "星云魔法炖菜",
+              "basis": "consumed",
+              "ingredients": [
+                {
+                  "food_id": "rice",
+                  "grams": 100.0
+                }
+              ],
+              "batch_yield_g": null,
+              "consumed_g": null,
+              "accepted": true
+            }
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "kind": "custom_recipe",
+            "food_id": null,
+            "name": "星云魔法炖菜",
+            "grams": 100.0,
+            "nutrients": {
+              "calories": 130.0,
+              "protein_g": 2.7,
+              "carbs_g": 28.2,
+              "fat_g": 0.3
+            },
+            "assumptions": [
+              "用户填写并确认的食材配方；不是数据库中的实测菜肴记录。",
+              "食材按所选记录的生重、熟重或可食净重计算，不自动互换。",
+              "油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "custom_recipe",
+              "basis": "consumed",
+              "ingredients": [
+                {
+                  "food_id": "rice",
+                  "name": "白米饭",
+                  "grams": 100.0,
+                  "state": "cooked",
+                  "consumed_grams": 100.0
+                }
+              ],
+              "batch_yield_g": null,
+              "consumed_g": null,
+              "factor": 1.0
+            },
+            "item_index": 0
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "星云魔法炖菜 100g",
+        "revision": 2,
+        "confirmed_at": null,
+        "consumed_on": null,
+        "id": "938a6e23-7ffb-4782-b0a6-d2c4f350632f",
+        "food_text": "星云魔法炖菜150克",
+        "status": "completed",
+        "calories": 130.0,
+        "protein_g": 2.7,
+        "carbs_g": 28.2,
+        "fat_g": 0.3,
+        "created_at": "2026-11-14T04:12:31.354791Z",
+        "updated_at": "2026-11-14T04:14:16.725396Z"
+      },
+      {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100克水煮鸡蛋，去壳熟重，无额外油"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "egg",
+            "name": "水煮鸡蛋",
+            "source_text": "水煮鸡蛋",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": 0.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "水煮鸡蛋（去壳）",
+            "grams": 100.0,
+            "food_id": "egg",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 155.0,
+              "protein_g": 12.6,
+              "carbs_g": 1.1,
+              "fat_g": 10.6
+            },
+            "assumptions": [
+              "按 水煮鸡蛋（去壳） 的每100g可食部分数据计算",
+              "做法：水煮；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173424",
+                "url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+                "description": "Egg, whole, cooked, hard-boiled",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 100.0,
+              "calculated_grams": 100.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "水煮鸡蛋（去壳） 100g",
+        "revision": 3,
+        "confirmed_at": null,
+        "consumed_on": null,
+        "id": "a5e0f4b2-7c91-4225-9346-d9b5ceccd504",
+        "food_text": "100克水煮鸡蛋，去壳熟重，无额外油",
+        "status": "completed",
+        "calories": 155.0,
+        "protein_g": 12.6,
+        "carbs_g": 1.1,
+        "fat_g": 10.6,
+        "created_at": "2026-11-14T04:10:13.689085Z",
+        "updated_at": "2026-11-14T04:10:24.116205Z"
+      },
+      {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "100克熟白米饭，150克星云魔法炖菜（自创菜，没有可用配方）"
+          },
+          {
+            "role": "assistant",
+            "content": "数据库未找到“100克熟白米饭，150克星云魔法炖菜（自创菜，没有可用配方）”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+          },
+          {
+            "role": "user",
+            "content": "已确认自定义食材配方：Synthetic chicken recipe",
+            "kind": "ingredient_recipe",
+            "item_index": 1
+          },
+          {
+            "role": "user",
+            "content": "已确认自定义食材配方：Synthetic chicken recipe",
+            "kind": "ingredient_recipe",
+            "item_index": 1
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "rice",
+            "name": "熟白米饭",
+            "source_text": "熟白米饭",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "as_served",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          },
+          {
+            "food_id": null,
+            "name": "Synthetic chicken recipe",
+            "source_text": "100克熟白米饭，150克星云魔法炖菜（自创菜，没有可用配方）",
+            "original_name": "100克熟白米饭，150克星云魔法炖菜（自创菜，没有可用配方）",
+            "custom_recipe": {
+              "name": "Synthetic chicken recipe",
+              "basis": "consumed",
+              "ingredients": [
+                {
+                  "food_id": "chicken",
+                  "grams": 150.0
+                },
+                {
+                  "food_id": "oil",
+                  "grams": 5.0
+                },
+                {
+                  "food_id": "soy_sauce",
+                  "grams": 10.0
+                }
+              ],
+              "batch_yield_g": null,
+              "consumed_g": null,
+              "accepted": true
+            }
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "白米饭",
+            "grams": 100.0,
+            "food_id": "rice",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 130.0,
+              "protein_g": 2.7,
+              "carbs_g": 28.2,
+              "fat_g": 0.3
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "按 白米饭 的每100g可食部分数据计算",
+              "做法：按所选食物的加工状态；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "168878",
+                "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+                "description": "Rice, white, long-grain, regular, enriched, cooked",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 100.0,
+              "calculated_grams": 100.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          },
+          {
+            "kind": "custom_recipe",
+            "food_id": null,
+            "name": "Synthetic chicken recipe",
+            "grams": 165.0,
+            "nutrients": {
+              "calories": 229.5,
+              "protein_g": 34.6,
+              "carbs_g": 0.5,
+              "fat_g": 9.0
+            },
+            "assumptions": [
+              "用户填写并确认的食材配方；不是数据库中的实测菜肴记录。",
+              "食材按所选记录的生重、熟重或可食净重计算，不自动互换。",
+              "油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171077",
+                "url": "https://fdc.nal.usda.gov/food-details/171077/nutrients",
+                "description": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "174277",
+                "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+                "description": "Soy sauce made from soy and wheat (shoyu)",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "custom_recipe",
+              "basis": "consumed",
+              "ingredients": [
+                {
+                  "food_id": "chicken",
+                  "name": "生去皮鸡胸肉",
+                  "grams": 150.0,
+                  "state": "raw",
+                  "consumed_grams": 150.0
+                },
+                {
+                  "food_id": "oil",
+                  "name": "大豆食用油",
+                  "grams": 5.0,
+                  "state": "as_sold",
+                  "consumed_grams": 5.0
+                },
+                {
+                  "food_id": "soy_sauce",
+                  "name": "普通酱油",
+                  "grams": 10.0,
+                  "state": "as_sold",
+                  "consumed_grams": 10.0
+                }
+              ],
+              "batch_yield_g": null,
+              "consumed_g": null,
+              "factor": 1.0
+            },
+            "item_index": 1
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "白米饭 100g；Synthetic chicken recipe 165g",
+        "revision": 4,
+        "confirmed_at": "2026-11-14T04:10:13.668414Z",
+        "consumed_on": "2026-11-14",
+        "id": "609ff577-1cd0-402f-bed1-7618a285a440",
+        "food_text": "100克熟白米饭，150克星云魔法炖菜（自创菜，没有可用配方）",
+        "status": "confirmed",
+        "calories": 359.5,
+        "protein_g": 37.3,
+        "carbs_g": 28.7,
+        "fat_g": 9.3,
+        "created_at": "2026-11-14T04:10:05.239731Z",
+        "updated_at": "2026-11-14T04:10:13.669123Z"
+      },
+      {
+        "mode": "basic",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "一份番茄炒蛋，两个水煮鸡蛋"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋：Please specify the weight of the tomato and egg stir-fry. 请核对所选食物，或在下方补充更正。\n番茄炒蛋吃了多少克？请填可食部分重量。\n番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。\n番茄炒蛋的食用克数是做熟后的成品重量吗？\n水煮鸡蛋（去壳）：Please specify the weight of the boiled eggs. 请核对所选食物，或在下方补充更正。\n水煮鸡蛋（去壳）吃了多少克？请填可食部分重量。\n水煮鸡蛋（去壳）的数据按熟重计算，你提供的是这个重量吗？若不是，请在下方说明，不能将生熟重量直接互换。"
+          },
+          {
+            "role": "user",
+            "content": "更正：不要番茄炒蛋了，只吃了100克水煮鸡蛋，去壳后的熟重，没有额外用油。",
+            "display": "更正：不要番茄炒蛋了，只吃了100克水煮鸡蛋，去壳后的熟重，没有额外用油。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "egg",
+            "name": "水煮鸡蛋",
+            "source_text": "水煮鸡蛋",
+            "grams": 100.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "boiled",
+            "oil_g": 0.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "水煮鸡蛋（去壳）",
+            "grams": 100.0,
+            "food_id": "egg",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 155.0,
+              "protein_g": 12.6,
+              "carbs_g": 1.1,
+              "fat_g": 10.6
+            },
+            "assumptions": [
+              "基础版快速参考估算",
+              "按 水煮鸡蛋（去壳） 的每100g可食部分数据计算",
+              "做法：水煮；另计食用油 0g",
+              "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173424",
+                "url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
+                "description": "Egg, whole, cooked, hard-boiled",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 100.0,
+              "calculated_grams": 100.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "水煮鸡蛋（去壳） 100g",
+        "revision": 5,
+        "confirmed_at": "2026-11-14T04:10:05.176219Z",
+        "consumed_on": "2026-11-11",
+        "id": "d5453ff6-2640-4794-a33b-2f1be5a1a808",
+        "food_text": "一份番茄炒蛋，两个水煮鸡蛋",
+        "status": "confirmed",
+        "calories": 155.0,
+        "protein_g": 12.6,
+        "carbs_g": 1.1,
+        "fat_g": 10.6,
+        "created_at": "2026-11-14T04:09:52.576103Z",
+        "updated_at": "2026-11-14T04:10:05.177267Z"
+      }
+    ]
+  },
+  "/profile": {
+    "status": 200,
+    "body": {
+      "profile": {
+        "age_years": 30,
+        "height_cm": 180.0,
+        "weight_kg": 90.0,
+        "sex": "male",
+        "goal": "gain_muscle",
+        "activity_level": "moderate",
+        "revision": 5,
+        "updated_at": "2026-11-14T04:12:01.538487Z"
+      },
+      "reference": {
+        "status": "estimated",
+        "formula_version": "mifflin-1990-nutrichat-v1",
+        "resting_kcal": 1880.0,
+        "maintenance_kcal": 2914.0,
+        "activity_factor": 1.55,
+        "goal_adjustment": 0.05,
+        "bmi": 27.8,
+        "calories": 3060,
+        "protein_g": 191.3,
+        "carbs_g": 344.3,
+        "fat_g": 102.0,
+        "reason_codes": [],
+        "notes": [
+          "这是根据所填资料推算的每日参考，并非测量值或必须达到的指标。",
+          "活动系数、增肌加 5%／减脂减 10% 和营养比例是本项目的简化假设。",
+          "营养参考按热量的 25% 蛋白质、30% 脂肪、45% 碳水化合物换算。",
+          "增肌也取决于力量训练、休息等因素；此参考不预测体重或肌肉变化。",
+          "适用于 18–80 岁一般健康成人；孕哺期或需要临床饮食管理时应使用专业指导。"
+        ]
+      }
+    }
+  },
+  "/daily-records/2026-11-14": {
+    "status": 200,
+    "body": {
+      "date": "2026-11-14",
+      "revision": 3,
+      "weight_kg": 80.1,
+      "manual_calories": 2100.0,
+      "meal_calories": 359.5,
+      "meal_count": 1,
+      "calories": 2100.0,
+      "calorie_source": "manual",
+      "exercise_calories": 350.0,
+      "baseline_expenditure_kcal": 2256.0,
+      "total_expenditure_kcal": 2606.0,
+      "balance_type": "deficit",
+      "balance_kcal": 506.0,
+      "intake_coverage": {
+        "breakfast": true,
+        "lunch": true,
+        "dinner": true,
+        "snacks": true,
+        "drinks": true
+      },
+      "intake_complete": true
+    }
+  },
+  "/daily-records/2026-11-11": {
+    "status": 200,
+    "body": {
+      "date": "2026-11-11",
+      "revision": 2,
+      "weight_kg": null,
+      "manual_calories": null,
+      "meal_calories": 155.0,
+      "meal_count": 1,
+      "calories": 155.0,
+      "calorie_source": "meals",
+      "exercise_calories": null,
+      "baseline_expenditure_kcal": 2256.0,
+      "total_expenditure_kcal": null,
+      "balance_type": null,
+      "balance_kcal": null,
+      "intake_coverage": {
+        "breakfast": false,
+        "lunch": false,
+        "dinner": false,
+        "snacks": false,
+        "drinks": false
+      },
+      "intake_complete": false
+    }
+  },
+  "/tracking": {
+    "status": 200,
+    "body": {
+      "timezone": "Asia/Hong_Kong",
+      "today": "2026-11-14",
+      "start_date": "2026-10-16",
+      "end_date": "2026-11-14",
+      "days": [
+        {
+          "date": "2026-10-16",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-17",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-18",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-19",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-20",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-21",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-22",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-23",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-24",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-25",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-26",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-27",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-28",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-29",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-30",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-31",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-01",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-02",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-03",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-04",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-05",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-06",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-07",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-08",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-09",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-10",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-11",
+          "revision": 2,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": 155.0,
+          "meal_count": 1,
+          "calories": 155.0,
+          "calorie_source": "meals",
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-12",
+          "revision": 1,
+          "weight_kg": 79.0,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": true,
+            "lunch": true,
+            "dinner": true,
+            "snacks": true,
+            "drinks": true
+          },
+          "intake_complete": true
+        },
+        {
+          "date": "2026-11-13",
+          "revision": 1,
+          "weight_kg": 79.5,
+          "manual_calories": 0.0,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": 0.0,
+          "calorie_source": "manual",
+          "exercise_calories": 0.0,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": 2256.0,
+          "balance_type": "deficit",
+          "balance_kcal": 2256.0,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-14",
+          "revision": 3,
+          "weight_kg": 80.1,
+          "manual_calories": 2100.0,
+          "meal_calories": 359.5,
+          "meal_count": 1,
+          "calories": 2100.0,
+          "calorie_source": "manual",
+          "exercise_calories": 350.0,
+          "baseline_expenditure_kcal": 2256.0,
+          "total_expenditure_kcal": 2606.0,
+          "balance_type": "deficit",
+          "balance_kcal": 506.0,
+          "intake_coverage": {
+            "breakfast": true,
+            "lunch": true,
+            "dinner": true,
+            "snacks": true,
+            "drinks": true
+          },
+          "intake_complete": true
+        }
+      ],
+      "summary": {
+        "recorded_days": 3,
+        "average_calories": 751.7,
+        "weight_entries": 3,
+        "first_weight_kg": 79.0,
+        "last_weight_kg": 80.1,
+        "weight_change_kg": 1.1
+      }
+    }
+  }
+}

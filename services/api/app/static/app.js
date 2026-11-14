@@ -6,6 +6,10 @@
   let analysis = null, busy = false, timer = null, catalogue = [];
   let questionVersion = '', notice = {raw:'', error:false};
   let ingredientEditor = null;
+  let foodLimit = 20;
+  const views = ['meal','diary','trends','profile'];
+  let activeView = 'meal';
+  let recentFailure = null;
   let currentUser=null,sessionVersion=0,loggingOut=false,recentVersion=0,provider=null,recentRecords=[];
   const A=window.NutriAccountI18n.text;
 let profile=null,profileReference=null,profileLoaded=false,profileLoading=false,profileSaving=false,profileDirty=false,profileConflict=false,profileRequest=0;
@@ -22,6 +26,72 @@ const interrupted=()=>Object.assign(Error(A('登录状态已改变')),{silent:tr
     if (text !== undefined) element.textContent = text;
     return element;
   };
+  // Panels stay mounted: navigation never submits, resets or reloads a draft.
+  function selectView(view, focusHeading = false) {
+    if (!views.includes(view)) view = 'meal';
+    const changed = activeView !== view;
+    activeView = view;
+    for (const name of views) {
+      const selected = name === view;
+      $('panel-' + name).hidden = !selected;
+      $('tab-' + name).setAttribute('aria-selected', String(selected));
+      $('tab-' + name).tabIndex = selected ? 0 : -1;
+    }
+    document.querySelector('.skip-link').href = '#panel-' + view;
+    try { history.replaceState(null, '', '#' + view); } catch {}
+    if (changed) $('heading-' + view).scrollIntoView?.({block:'start'});
+    if (focusHeading) $('heading-' + view).focus();
+  }
+  for (const [index,view] of views.entries()) {
+    $('tab-' + view).addEventListener('click', () => selectView(view));
+    $('tab-' + view).addEventListener('keydown', event => {
+      if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+      event.preventDefault();
+      const target = event.key === 'Home' ? 0 : event.key === 'End' ? views.length - 1
+        : (index + (event.key === 'ArrowRight' ? 1 : -1) + views.length) % views.length;
+      selectView(views[target]); $('tab-' + views[target]).focus();
+    });
+  }
+  document.querySelectorAll('[data-view]').forEach(button => {
+    button.addEventListener('click', () => selectView(button.dataset.view, true));
+  });
+  document.querySelector('.brand').addEventListener('click', event => {
+    event.preventDefault(); selectView('meal', true);
+  });
+  document.querySelector('.skip-link').addEventListener('click', event => {
+    event.preventDefault(); selectView(activeView, true);
+  });
+  // Native validation must be able to reveal and focus collapsed inputs.
+  document.addEventListener('invalid', event => {
+    for (let parent = event.target.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName === 'DETAILS') parent.open = true;
+    }
+    const panel = event.target.closest('.workspace-panel');
+    if (panel) selectView(panel.id.replace('panel-',''));
+    if (event.target.form?.id === 'daily-form') {
+      dailyMessage(A('请检查标出的数值及允许范围，修改后再保存。'), true);
+    }
+  }, true);
+  window.addEventListener('hashchange', () => selectView(location.hash.slice(1).replace(/^panel-/,'')));
+  function renderMealProgress() {
+    const step = analysis?.status === 'confirmed' ? 'save'
+      : analysis ? 'review' : 'describe';
+    for (const name of ['describe','review','save']) {
+      if (name === step) $('step-' + name).setAttribute('aria-current','step');
+      else $('step-' + name).removeAttribute('aria-current');
+    }
+    $('view-diary').hidden = analysis?.status !== 'confirmed';
+    $('meal-examples').hidden = !!analysis || !provider;
+    document.querySelectorAll('[data-example]').forEach(button => { button.hidden = provider === 'demo'; });
+    $('offline-example').hidden = provider !== 'demo';
+  }
+  document.querySelectorAll('[data-example],#offline-example').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!currentUser || analysis || busy) return;
+      $('meal').value = button.id === 'offline-example' ? '100g egg' : I.t(button.dataset.example);
+      $('meal').focus();
+    });
+  });
   function message(value, error = false) {
     notice = typeof value === 'string' ? {raw:value,error} : {...value,error};
     renderMessage();
@@ -42,6 +112,7 @@ const interrupted=()=>Object.assign(Error(A('登录状态已改变')),{silent:tr
     $('language-en').setAttribute('aria-pressed', String(I.getLanguage() === 'en'));
     catalogueInfo();
     modeHelp();
+    renderMealProgress();
     renderMessage();
     window.NutriAccountI18n.apply();
   }
@@ -56,13 +127,13 @@ const interrupted=()=>Object.assign(Error(A('登录状态已改变')),{silent:tr
     $('profile-reload').textContent=A(profileConflict?'载入最新资料':'重新读取资料');
     renderProfileReference();renderDailySource();renderDailyCompleteness();renderDailyBalance();if(tracking)renderTracking(tracking);renderRecent();
   }
-function clearSession(){sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
+function clearSession(){selectView('meal');sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
  clearProfile();clearTracking();closeIngredientEditor();questionVersion='';recentVersion++;recentRecords=[];provider=null;$('offline-meal').value='';
  for(const id of ['meal','reply'])$(id).value='';
  for(const id of ['history','questions','evidence'])$(id).replaceChildren();
  for(const id of ['record','interpreted','status'])$(id).textContent='';
  for(const id of ['calories','protein_g','carbs_g','fat_g'])$(id).textContent='—';
- $('recent').replaceChildren(el('option',A('请先登录')));$('recent-message').textContent='';message('');
+ $('recent').replaceChildren(el('option',A('请先登录')));recentFailure=null;window.NutriAccountI18n.message('recent-message','');message('');
  $('account-name').textContent=A('已退出当前账号');render();
 }
 function goToLogin(){clearSession();location.replace('/login?expired=1')}
@@ -81,6 +152,8 @@ async function api(path,method='GET',body){
 
   function controls() {
     const locked = !currentUser || busy || analysis?.status === 'queued';
+    document.querySelectorAll('[data-example],#offline-example').forEach(button => { button.disabled = locked || !!analysis; });
+    renderMealProgress();
     profileControls();trackingControls();$('meal-date').disabled=locked||analysis?.status!=='completed';
     $('recent').disabled=locked;$('recent-open').disabled=locked||!$('recent').value;$('recent-refresh').disabled=!currentUser||busy;
     $('offline-meal').disabled=locked;$('offline-submit').disabled=locked;
@@ -147,7 +220,13 @@ async function loadProfile(){if(!currentUser||profileSaving)return;const version
  finally{if(version===sessionVersion&&request===profileRequest){profileLoading=false;profileControls();}}
 }
 for(const id of Object.values(profileFields))$(id).addEventListener('input',()=>{if(!profileLoaded||profileSaving||profileConflict)return;profileDirty=true;$('profile-badge').textContent=A('有未保存修改');$('profile-reference').hidden=true;profileMessage(A('资料尚未保存。保存后将按新资料重新计算参考。'));profileControls()});
-$('profile-reload').addEventListener('click',()=>loadProfile());
+$('profile-reload').addEventListener('click',async()=>{
+ await loadProfile();
+ if(profileLoaded&&!profileConflict){
+  if(dailyLoaded&&!dailyDirty)void loadDaily();
+  if(trackingToday)void refreshCurrentTracking();
+ }
+});
 $('profile-form').addEventListener('submit',async event=>{event.preventDefault();if(!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict||!$('profile-form').reportValidity())return;
  const version=sessionVersion,request=++profileRequest;const body={revision:profile?.revision??0};for(const [key,id] of Object.entries(profileFields))body[key]=['age_years','height_cm','weight_kg'].includes(key)?Number($(id).value):$(id).value;
  profileSaving=true;profileMessage(A('正在保存并计算…'));profileControls();
@@ -222,6 +301,7 @@ function renderDailySource(){
 }
 function applyDaily(data){
  dailyRecord=data;dailyLoaded=true;dailyDirty=false;dailyConflict=false;
+ $('manual-intake').open=data.manual_calories!=null;
  $('daily-calories').value=data.manual_calories??'';$('daily-exercise').value=data.exercise_calories??'';$('daily-weight').value=data.weight_kg??'';
  for(const key of Object.keys(coverageFields))coverageInput(key).checked=!!data.intake_coverage?.[key];
  renderDailySource();renderDailyCompleteness();renderDailyBalance();
@@ -499,6 +579,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     $('ingredient-editor-warning').hidden = true;
     $('ingredient-builder').hidden = false;
     renderIngredientRows(recipe?.ingredients?.length ? recipe.ingredients : [{food_id:'',grams:''}]);
+    selectView('meal');
     $('ingredient-builder').scrollIntoView?.({block:'nearest',behavior:'smooth'});
     $('ingredient-name').focus();
   }
@@ -587,7 +668,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     $('evidence').replaceChildren();
     for (const [index,detail] of (analysis.details || []).entries()) {
       const block = el('details'); block.dataset.item = detail.food_id + ':' + index;
-      block.open = open.get(block.dataset.item) ?? true;
+      block.open = open.get(block.dataset.item) ?? false;
       block.append(el('summary',`${detailLabel(detail)} · ${detail.nutrients.calories} kcal`));
       quantityEvidence(detail,block);
       for (const assumption of detail.assumptions || []) block.append(el('p',I.assumption(assumption,detail.food_id)));
@@ -746,6 +827,7 @@ $('confirm').addEventListener('click',()=>{
  });
 });
   $('new').addEventListener('click',() => {
+    selectView('meal');
     clearTimeout(timer); analysis = null; questionVersion = '';
     stored.remove(analysisKey());
     closeIngredientEditor();$('offline-meal').value='';
@@ -775,7 +857,7 @@ $('confirm').addEventListener('click',()=>{
     $('food-list').replaceChildren();
     const matches = catalogue.filter(food => [food.name,...food.aliases,
       window.NUTRICHAT_EN_CATALOGUE?.[food.id]?.name || ''].join(' ').toLowerCase().includes(search));
-    for (const food of matches) {
+    for (const food of matches.slice(0, foodLimit)) {
       const block = el('details'); block.dataset.foodId = food.id; block.open = open.has(food.id);
       block.append(el('summary',I.foodName(food.id,food.name) + (food.kind === 'recipe' ? ' · ' + I.t('referenceRecipe') : '')));
       block.append(el('p',food.kind === 'recipe'
@@ -784,9 +866,12 @@ $('confirm').addEventListener('click',()=>{
           fat:food.nutrients.fat_g,carbs:food.nutrients.carbs_g,fdc:food.fdc_id})));
       $('food-list').append(block);
     }
+    $('food-count').textContent = catalogue.length ? I.t('foodCount',{shown:Math.min(foodLimit,matches.length),total:matches.length}) : '';
+    $('foods-more').hidden = matches.length <= foodLimit;
     if (!matches.length && catalogue.length) $('food-list').append(el('p',I.t('noFoods')));
   }
-  $('search').addEventListener('input',showFoods);
+  $('search').addEventListener('input',() => { foodLimit = 20; showFoods(); });
+  $('foods-more').addEventListener('click',() => { foodLimit += 20; showFoods(); });
   $('language-zh').addEventListener('click',() => changeLanguage('zh-CN'));
   $('language-en').addEventListener('click',() => changeLanguage('en'));
 function renderRecent(){
@@ -794,19 +879,32 @@ function renderRecent(){
  const empty=el('option',recentRecords.length?A('请选择餐食记录'):A('还没有餐食记录'));empty.value='';$('recent').append(empty);
  for(const record of recentRecords){const date=new Date(record.created_at);const label=(Number.isNaN(date.valueOf())?'':date.toLocaleDateString(I.getLanguage())+' · ')+record.food_text.slice(0,70)+' · '+I.t(record.status);const option=el('option',label);option.value=record.id;$('recent').append(option);}
  if(recentRecords.some(record=>record.id===selected))$('recent').value=selected;
- $('recent-message').textContent=recentRecords.length?A('仅显示当前账号的记录。'):A('开始估算第一餐后，记录会显示在这里。');controls();
+ if(!recentFailure)window.NutriAccountI18n.message('recent-message',recentRecords.length?A('仅显示当前账号的记录。'):A('开始估算第一餐后，记录会显示在这里。'));controls();
 }
 async function refreshRecent(quiet=false){
  if(!currentUser)return;const version=++recentVersion;
- if(!quiet)$('recent-message').textContent=A('正在读取你的记录…');
+ if(!quiet){recentFailure=null;window.NutriAccountI18n.message('recent-message',A('正在读取你的记录…'));}
  try{const records=await api('/analyses?limit=20');if(version!==recentVersion||!currentUser)return;
   if(!Array.isArray(records))throw Error(A('记录列表暂时不可用，请稍后重试。'));
   recentRecords=records;renderRecent();
- }catch(error){if(!error.silent&&version===recentVersion)$('recent-message').textContent=error.message;}
+ }catch(error){if(!error.silent&&version===recentVersion){recentFailure=error.message;window.NutriAccountI18n.message('recent-message',error.message,true);}}
 }
 $('recent').addEventListener('change',controls);
 $('recent-refresh').addEventListener('click',()=>refreshRecent());
-$('recent-form').addEventListener('submit',event=>{event.preventDefault();const id=$('recent').value;if(!id)return;submit(async()=>{clearTimeout(timer);analysis=null;render();$('reply').value='';saved(await api('/analyses/'+encodeURIComponent(id)));if(analysis.status!=='queued')message(A('已打开你的餐食记录。'))})});
+$('recent-form').addEventListener('submit',event=>{
+ event.preventDefault();const id=$('recent').value;if(!id)return;
+ submit(async()=>{
+  recentFailure=null;window.NutriAccountI18n.message('recent-message',A('正在读取你的记录…'));
+  try{
+   // Preserve the current meal and drafts until the requested record is available.
+   const data=await api('/analyses/'+encodeURIComponent(id));
+   clearTimeout(timer);$('reply').value='';saved(data);selectView('meal',true);
+   if(analysis.status!=='queued')message({key:'openedMeal'});
+  }catch(error){
+   if(!error.silent){recentFailure=error.message;window.NutriAccountI18n.message('recent-message',error.message,true);}
+  }
+ });
+});
 
 $('logout').addEventListener('click',async()=>{
  if(loggingOut)return;loggingOut=true;clearSession();message(A('正在退出登录…'));$('logout').disabled=true;
@@ -820,12 +918,13 @@ window.addEventListener('storage',event=>{if(event.key===authEventKey&&event.new
 window.addEventListener('pageshow',event=>{if(event.persisted){clearSession();location.reload()}});
 
   async function init() {
+    selectView(location.hash.slice(1));
     applyStaticLanguage(); controls();stored.remove('nutrichat.analysis');
     try {
       currentUser=await api('/auth/me');$('account-name').textContent=currentUser.username;$('logout').disabled=false;controls();
       void refreshRecent();void loadProfile();void initializeTracking();
       const data=await api('/foods');catalogue=data.catalogue.foods;provider=data.provider;
-      I.setCatalogue(catalogue);catalogueInfo();showFoods();
+      I.setCatalogue(catalogue);catalogueInfo();showFoods();renderMealProgress();
       if(provider==='demo')message({key:'demoMessage'});
       const id=stored.get(analysisKey());
       if(id){try{saved(await api('/analyses/'+encodeURIComponent(id)));if(analysis.status==='failed')message(analysis.error_message||{key:'failedMessage'},true);else if(analysis.status==='needs_input')message({key:analysis.questions?.some(q=>q.kind==='unsupported')?'unsupportedMessage':'needsInputMessage'});}catch(error){if(error.status===404){stored.remove(analysisKey());message(A('上次记录已不可用，可以开始新的一餐。'));}else throw error;}}
@@ -837,5 +936,14 @@ window.addEventListener('pageshow',event=>{if(event.persisted){clearSession();lo
       saved(await api('/analyses/'+analysis.id,'PATCH',{revision:analysis.revision,food_text}));
     });
   });
+  function refreshDateAfterReturn() {
+    if (!currentUser || !trackingToday || trackingLoading || document.visibilityState === 'hidden') return;
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en', {
+      timeZone:'Asia/Hong_Kong',year:'numeric',month:'2-digit',day:'2-digit'
+    }).formatToParts(new Date()).map(part => [part.type,part.value]));
+    if (`${parts.year}-${parts.month}-${parts.day}` !== trackingToday) void refreshCurrentTracking();
+  }
+  window.addEventListener('focus',refreshDateAfterReturn);
+  document.addEventListener('visibilitychange',refreshDateAfterReturn);
   init();
 })();

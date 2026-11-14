@@ -650,7 +650,7 @@ test('Profile fields, goal and draft values survive bilingual switching and save
   const count=requests.length;
   await clickLanguage('en');
   assert.equal($('profile-weight').value,'72.5');assert.equal($('profile-goal').value,'gain_muscle');
-  assert.match($('profile-title').textContent,/daily nutrition/);
+  assert.match($('profile-title').textContent,/details.*goal/);
   assert.match($('profile-message').textContent,/not saved/);
   assert.equal(requests.length,count);
   $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
@@ -697,7 +697,7 @@ test('Daily manual zero remains data, gaps stay blank, charts do not connect mis
   $('daily-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
   const count=requests.length;await clickLanguage('en');
   assert.equal($('daily-calories').value,'0');assert.equal($('daily-weight').value,'68.5');
-  assert.match($('tracking-title').textContent,/30-day/);assert.match(document.querySelector('svg title').textContent,/30-day/);
+  assert.match($('tracking-title').textContent,/Daily check-in/);assert.match(document.querySelector('svg title').textContent,/30-day/);
   assert.equal(requests.length,count);
   $('daily-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
   const sent=requests.find(r=>r.method==='PUT'&&r.url.startsWith('/daily-records/'));
@@ -785,4 +785,186 @@ test('Account form switches language without losing credentials or changing the 
   assert.equal(JSON.parse(sent.options.body).password,'  keep spaces  ');assert.equal(sent.options.headers['X-NutriChat-Request'],'1');
   assert.match($('message').textContent,/Incorrect username/);
   $('language-zh').click();await flush();assert.match($('message').textContent,/用户名或密码/);assert.deepEqual(errors,[]);
+});
+
+
+test('Workspace starts at meals, exposes every task and supports keyboard navigation', async t => {
+  const {window,document,$,requests}=await mount(t);
+  const views=['meal','diary','trends','profile'];
+  const before=requests.length;
+  assert.equal($('panel-meal').hidden,false);
+  for(const name of views.slice(1))assert.equal($('panel-'+name).hidden,true);
+  assert.ok($('panel-meal').contains($('meal-form')));
+  assert.ok($('panel-diary').contains($('daily-form')));
+  assert.ok($('panel-diary').contains($('recent-form')));
+  assert.ok($('panel-trends').contains($('trend-form')));
+  assert.ok($('panel-profile').contains($('profile-form')));
+  $('tab-meal').focus();
+  $('tab-meal').dispatchEvent(new window.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+  assert.equal(document.activeElement,$('tab-diary'));
+  assert.equal($('tab-diary').getAttribute('aria-selected'),'true');
+  assert.equal($('panel-diary').hidden,false);assert.equal($('panel-meal').hidden,true);
+  $('tab-diary').dispatchEvent(new window.KeyboardEvent('keydown',{key:'End',bubbles:true}));
+  assert.equal(document.activeElement,$('tab-profile'));
+  $('tab-profile').dispatchEvent(new window.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+  assert.equal(document.activeElement,$('tab-meal'));
+  assert.equal(document.querySelectorAll('[role=tab][tabindex="0"]').length,1);
+  assert.equal(requests.length,before,'Navigation must not request or submit data');
+});
+
+test('Navigation and translation preserve all drafts and disclosure states without requests',async t=>{
+  const {window,document,$,requests,clickLanguage}=await mount(t);
+  $('meal').value='我的午餐';$('reply').value='补充细节';
+  $('profile-weight').value='72.8';$('profile-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
+  $('daily-weight').value='71.2';$('daily-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
+  $('daily-calories').value='0';$('daily-exercise').value='250';$('coverage-lunch').checked=true;
+  $('manual-intake').open=true;$('coverage-panel').open=true;$('profile-editor').open=true;
+  const before=requests.length;
+  for(const view of ['diary','profile','meal','trends','diary'])$('tab-'+view).click();
+  await clickLanguage('en');await clickLanguage('zh');
+  assert.equal($('panel-diary').hidden,false);
+  for(const [id,value] of Object.entries({meal:'我的午餐',reply:'补充细节','profile-weight':'72.8','daily-weight':'71.2','daily-calories':'0','daily-exercise':'250'}))assert.equal($(id).value,value);
+  assert.equal($('coverage-lunch').checked,true);
+  for(const id of ['manual-intake','coverage-panel','profile-editor'])assert.equal($(id).open,true);
+  assert.equal(document.querySelector('.skip-link').getAttribute('href'),'#panel-diary');
+  assert.equal(requests.length,before);
+});
+
+test('Catalogue is bounded, searchable across all foods and progressively expanded',async t=>{
+  const {window,$,clickLanguage}=await mount(t);
+  assert.equal($('food-list').children.length,20);
+  $('foods-more').click();assert.equal($('food-list').children.length,40);
+  const target=foods[foods.length-1];
+  $('search').value=target.name;$('search').dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.ok($('food-list').textContent.includes(target.name));
+  assert.equal($('foods-more').hidden,true);
+  await clickLanguage('en');assert.match($('food-count').textContent,/Showing/);
+  $('search').value='';$('search').dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.equal($('food-list').children.length,20);
+});
+
+test('Food evidence starts compact but expanding it survives language changes',async t=>{
+  const {$,clickLanguage}=await mount(t,{meal:clone(fixtures.tomato_egg_dish)});
+  const disclosure=$('evidence').querySelector('details');
+  assert.equal(disclosure.open,false);
+  disclosure.open=true;
+  await clickLanguage('en');
+  assert.equal($('evidence').querySelector('details').open,true);
+  assert.match($('evidence').textContent,/reference|portion|recipe/i);
+  assert.equal($('record').closest('details').open,false);
+});
+
+test('Opening a saved meal returns to its visible workspace, then new meal focuses input',async t=>{
+  const meal=clone(fixtures.tomato_egg_dish);
+  const {window,document,$}=await mount(t,{meal});
+  $('tab-diary').click();$('recent').value=meal.id;
+  $('recent-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal($('panel-meal').hidden,false);assert.equal($('panel-diary').hidden,true);
+  assert.equal($('result').hidden,false);
+  assert.equal(document.activeElement,$('heading-meal'));
+  $('new').click();assert.equal(document.activeElement,$('meal'));
+  assert.equal($('meal').value,'');assert.equal($('step-describe').getAttribute('aria-current'),'step');
+});
+
+test('Queued meal polling never switches the selected view or resets diary edits',async t=>{
+  const completed=clone(fixtures.tomato_egg_dish),queued={...completed,status:'queued',details:[]};
+  let next=queued;
+  const {$,requests,timers,clickLanguage}=await mount(t,{meal:queued,respond:r=>r.url==='/analyses/'+queued.id?{body:next}:undefined});
+  $('tab-diary').click();$('daily-weight').value='71.5';
+  next=completed;const poll=Array.from(timers.values())[0];assert.ok(poll);await poll();await flush();
+  assert.equal($('panel-diary').hidden,false);assert.equal($('panel-meal').hidden,true);
+  assert.equal($('daily-weight').value,'71.5');
+  const before=requests.length;await clickLanguage('en');assert.equal(requests.length,before);
+  $('tab-meal').click();assert.equal($('result').hidden,false);
+});
+
+test('Example chips fill the description without sending it or erasing an active estimate',async t=>{
+  const {$,document,requests}=await mount(t);
+  const before=requests.length;
+  document.querySelector('[data-example]').click();
+  assert.match($('meal').value,/番茄炒蛋/);assert.equal(requests.length,before);
+  const active=await mount(t,{meal:clone(fixtures.tomato_egg_dish)});
+  assert.equal(active.$('meal-examples').hidden,true);
+});
+
+test('Reloading a conflicted profile refreshes saved balance while preserving dirty diary drafts',async t=>{
+  let latest=false;
+  const profile=profileFixture();
+  const {window,$,requests}=await mount(t,{respond:r=>{
+    if(r.url==='/profile'){
+      if(r.method==='PUT')return {status:409,body:{detail:'Profile changed'}};
+      const value=clone(profile);if(latest){value.profile.revision=2;value.reference.resting_kcal=1880;}
+      return {body:value};
+    }
+    if(r.url.startsWith('/daily-records/'))return {body:{date:'2026-11-03',revision:1,manual_calories:2000,calories:2000,calorie_source:'manual',weight_kg:70,meal_count:0,meal_calories:null,exercise_calories:0,intake_coverage:{},baseline_expenditure_kcal:latest?2256:2136,balance_type:'deficit',balance_kcal:latest?256:136}};
+  }});
+  $('profile-height').value='185';$('profile-height').dispatchEvent(new window.Event('input',{bubbles:true}));
+  $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal($('profile-reload').hidden,false);latest=true;$('profile-reload').click();await flush();
+  assert.match($('daily-balance-value').textContent,/256/);
+  assert.equal($('manual-intake').open,true,'An existing manual override must be discoverable');
+  $('daily-weight').value='72.2';$('daily-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
+  const before=requests.filter(r=>r.url.startsWith('/daily-records/')).length;
+  $('profile-reload').click();await flush();
+  assert.equal($('daily-weight').value,'72.2');
+  assert.equal(requests.filter(r=>r.url.startsWith('/daily-records/')).length,before);
+});
+
+
+test('Returning after Hong Kong midnight refreshes allowed dates without overwriting a diary draft',async t=>{
+  let day='2026-11-03';
+  const {window,$,requests}=await mount(t,{respond:r=>r.url.startsWith('/tracking')
+    ?{body:{...trackingFixture(),today:day}}:undefined});
+  $('tab-diary').click();$('daily-weight').value='73.4';
+  $('daily-weight').dispatchEvent(new window.Event('input',{bubbles:true}));
+  const before=requests.filter(r=>r.url.startsWith('/daily-records/')).length;
+  day='2026-11-04';const OriginalDate=window.Date;
+  window.Date=class extends OriginalDate{constructor(...args){super(...(args.length?args:['2026-11-04T01:00:00Z']));}};
+  window.dispatchEvent(new window.Event('focus'));await flush();
+  assert.equal($('daily-date').max,'2026-11-04');assert.equal($('meal-date').max,'2026-11-04');
+  assert.equal($('daily-weight').value,'73.4');assert.equal($('daily-date').value,'2026-11-03');
+  assert.equal($('panel-diary').hidden,false);
+  assert.equal(requests.filter(r=>r.url.startsWith('/daily-records/')).length,before);
+});
+
+test('Skip link focuses the active task, and logout failure remains visible from any panel',async t=>{
+  const {document,$}=await mount(t,{respond:r=>r.url==='/auth/logout'?{status:500,body:{detail:'unavailable'}}:undefined});
+  $('tab-profile').click();document.querySelector('.skip-link').click();
+  assert.equal(document.activeElement,$('heading-profile'));assert.equal($('panel-profile').hidden,false);
+  $('logout').click();await flush();
+  assert.equal($('panel-meal').hidden,false);
+  assert.match($('message').textContent,/退出登录未完成/);
+  assert.equal($('logout').disabled,false);
+});
+
+
+test('Failed recent-meal opening keeps current meal and visibly reports the failure in Diary',async t=>{
+  const meal=clone(fixtures.tomato_egg_dish);let fail=false;
+  const {window,$,clickLanguage}=await mount(t,{meal,respond:r=>r.url==='/analyses/'+meal.id&&fail
+    ?{status:503,body:{detail:'暂时无法完成营养估算，请稍后再试'}}:undefined});
+  $('reply').value='尚未发送的更正';$('tab-diary').click();$('recent').value=meal.id;fail=true;
+  $('recent-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal($('panel-diary').hidden,false);assert.equal($('recent-message').classList.contains('error'),true);
+  assert.ok($('recent-message').textContent.length>0);
+  assert.equal($('meal').value,meal.food_text);assert.equal($('reply').value,'尚未发送的更正');
+  await clickLanguage('en');assert.equal($('recent-message').classList.contains('error'),true);
+  fail=false;$('recent-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal($('panel-meal').hidden,false);assert.equal($('recent-message').classList.contains('error'),false);
+  assert.equal($('message').textContent,'Your meal record is open.');
+  await clickLanguage('zh');assert.equal($('message').textContent,'已打开你的餐食记录。');
+});
+
+test('Invalid manual calories reveal their closed disclosure before native validation',async t=>{
+  const {window,$,requests,clickLanguage}=await mount(t);
+  $('tab-diary').click();$('daily-calories').value='-1';
+  $('daily-calories').dispatchEvent(new window.Event('input',{bubbles:true}));
+  $('manual-intake').open=false;
+  assert.equal($('daily-form').checkValidity(),false);
+  assert.equal($('manual-intake').open,true);
+  assert.equal($('panel-diary').hidden,false);
+  assert.equal($('daily-calories').value,'-1');
+  assert.equal($('daily-message').classList.contains('error'),true);
+  assert.match($('daily-message').textContent,/允许范围/);
+  await clickLanguage('en');assert.match($('daily-message').textContent,/allowed range/);
+  assert.equal(requests.some(r=>r.method==='PUT'),false);
 });

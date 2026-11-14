@@ -1,0 +1,477 @@
+{
+  "checks": [
+    {
+      "name": "GET /auth/me status 401",
+      "pass": true
+    },
+    {
+      "name": "GET /profile status 401",
+      "pass": true
+    },
+    {
+      "name": "GET /daily-records/2026-11-14 status 401",
+      "pass": true
+    },
+    {
+      "name": "GET /tracking status 401",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses status 401",
+      "pass": true
+    },
+    {
+      "name": "POST /auth/register status 201",
+      "pass": true
+    },
+    {
+      "name": "POST /auth/register status 201",
+      "pass": true
+    },
+    {
+      "name": "POST /auth/login status 401",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 403",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 403",
+      "pass": true
+    },
+    {
+      "name": "POST /auth/register status 409",
+      "pass": true
+    },
+    {
+      "name": "Private response is no-store",
+      "pass": true
+    },
+    {
+      "name": "Fresh profile is absent",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "GET /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "Profile persisted",
+      "pass": true
+    },
+    {
+      "name": "GET /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "Profile isolated",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 409",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "PUT /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "GET /tracking status 200",
+      "pass": true
+    },
+    {
+      "name": "Tracking has 30 consecutive dates",
+      "pass": true
+    },
+    {
+      "name": "Fresh tracking no invented zero records",
+      "pass": true
+    },
+    {
+      "name": "GET /daily-records/2026-11-14 status 200",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 200",
+      "pass": true
+    },
+    {
+      "name": "Daily intake complete",
+      "pass": true
+    },
+    {
+      "name": "Balance uses resting × 1.2 plus exercise",
+      "pass": true
+    },
+    {
+      "name": "GET /daily-records/2026-11-14 status 200",
+      "pass": true
+    },
+    {
+      "name": "Diary owner isolation",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 409",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-15 status 422",
+      "pass": true
+    },
+    {
+      "name": "GET /daily-records/1999-12-31 status 422",
+      "pass": true
+    },
+    {
+      "name": "GET /tracking?end=2000-01-29 status 422",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-13 status 200",
+      "pass": true
+    },
+    {
+      "name": "Explicit zero retained, incomplete retained",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-12 status 200",
+      "pass": true
+    },
+    {
+      "name": "Missing intake/ exercise gives no balance",
+      "pass": true
+    },
+    {
+      "name": "GET /tracking status 200",
+      "pass": true
+    },
+    {
+      "name": "Average excludes missing/weight-only days; includes zero",
+      "pass": true
+    },
+    {
+      "name": "Weight change follows chronological first and last",
+      "pass": true
+    },
+    {
+      "name": "GET /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "Daily weight does not change profile",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-14 status 200",
+      "pass": true
+    },
+    {
+      "name": "Old client preserves exercise and coverage",
+      "pass": true
+    },
+    {
+      "name": "GET /foods status 200",
+      "pass": true
+    },
+    {
+      "name": "Catalogue contains exactly 550 entries",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses status 201",
+      "pass": true
+    },
+    {
+      "name": "Chinese Basic completes",
+      "pass": true
+    },
+    {
+      "name": "Basic total equals saved per-food totals",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/mode status 200",
+      "pass": true
+    },
+    {
+      "name": "Advanced asks for missing measurements/recipe",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/mode status 200",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/reply status 200",
+      "pass": true
+    },
+    {
+      "name": "Natural-language correction replaces full contents",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/confirm status 200",
+      "pass": true
+    },
+    {
+      "name": "Confirmation backdates and locks",
+      "pass": true
+    },
+    {
+      "name": "PATCH /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808 status 409",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/d5453ff6-2640-4794-a33b-2f1be5a1a808/confirm status 409",
+      "pass": true
+    },
+    {
+      "name": "GET /daily-records/2026-11-11 status 200",
+      "pass": true
+    },
+    {
+      "name": "Confirmed meal aggregates to chosen date",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-11 status 200",
+      "pass": true
+    },
+    {
+      "name": "Manual calories replace meal sum",
+      "pass": true
+    },
+    {
+      "name": "PUT /daily-records/2026-11-11 status 200",
+      "pass": true
+    },
+    {
+      "name": "Clearing manual restores meals",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses status 201",
+      "pass": true
+    },
+    {
+      "name": "Unknown food withholds every total",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses/609ff577-1cd0-402f-bed1-7618a285a440 status 404",
+      "pass": true
+    },
+    {
+      "name": "GET /jobs/5 status 404",
+      "pass": true
+    },
+    {
+      "name": "PATCH /analyses/609ff577-1cd0-402f-bed1-7618a285a440 status 404",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/confirm status 404",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/mode status 404",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses status 200",
+      "pass": true
+    },
+    {
+      "name": "Meal histories isolated",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 404",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 422",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 200",
+      "pass": true
+    },
+    {
+      "name": "Custom batch repairs unknown and preserves rice",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/reply status 422",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/ingredients status 200",
+      "pass": true
+    },
+    {
+      "name": "Custom consumed recipe exact arithmetic",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/609ff577-1cd0-402f-bed1-7618a285a440/confirm status 200",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses/609ff577-1cd0-402f-bed1-7618a285a440 status 200",
+      "pass": true
+    },
+    {
+      "name": "Custom recipe persists on read",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses status 201",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/reply status 200",
+      "pass": true
+    },
+    {
+      "name": "Advanced issued questions can be completed",
+      "pass": true
+    },
+    {
+      "name": "POST /auth/logout status 204",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses status 401",
+      "pass": true
+    },
+    {
+      "name": "POST /auth/login status 200",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses status 200",
+      "pass": true
+    },
+    {
+      "name": "Sign-in restores private history",
+      "pass": true
+    },
+    {
+      "name": "GET /profile status 200",
+      "pass": true
+    },
+    {
+      "name": "GET /daily-records/2026-11-14 status 200",
+      "pass": true
+    },
+    {
+      "name": "Sign-in restores profile and diary",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 200",
+      "pass": true
+    },
+    {
+      "name": "PATCH /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 200",
+      "pass": true
+    },
+    {
+      "name": "No-extra-oil replacement now completes",
+      "pass": true
+    },
+    {
+      "name": "PATCH /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 422",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/mode status 422",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/reply status 422",
+      "pass": true
+    },
+    {
+      "name": "PATCH /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 422",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/mode status 422",
+      "pass": true
+    },
+    {
+      "name": "POST /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504/reply status 422",
+      "pass": true
+    },
+    {
+      "name": "GET /analyses/a5e0f4b2-7c91-4225-9346-d9b5ceccd504 status 200",
+      "pass": true
+    },
+    {
+      "name": "Malformed revisions preserve record",
+      "pass": true
+    },
+    {
+      "name": "GET /tracking status 200",
+      "pass": true
+    }
+  ],
+  "passed": 117,
+  "total": 117,
+  "evidence_log": "final-acceptance.log",
+  "readbacks": "final-readbacks.json",
+  "note": "117-check execution log is authoritative for the final acceptance run. Intermediate response ledger was overwritten by the later UI seed harness; readbacks are freshly retrieved after synthetic UI diary/profile updates and are not represented as the original intermediate responses."
+}

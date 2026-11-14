@@ -1,0 +1,48 @@
+
+> nutrichat-ui-tests@1.0.0 test
+> node --test *.test.cjs
+
+✔ Chinese is the default; English switch updates accessibility and persists locally (258.333625ms)
+✔ Merged daily balance inputs save with intake coverage and remain bilingual (163.396375ms)
+✔ Saved English choice is applied on fresh load without changing input language (56.452583ms)
+✔ Unknown stored language falls back to Chinese and disabled storage does not break switching (159.208667ms)
+✔ Switch preserves meal, reply and search text and selected estimation mode (81.236041ms)
+✔ Existing English display names remain intact; Chinese additions use their original names (47.26575ms)
+✔ English catalogue search finds the translated recipe and keeps Chinese search usable (120.045791ms)
+✔ Completed estimate changes labels and food names without changing totals, ID or revision (134.423667ms)
+✔ Unsaved recipe quantities and approval survive repeated language switches and submit unchanged (205.246208ms)
+✔ Number and uncertainty answers remain filled and checked after switching (142.788417ms)
+✔ Unsupported food in basic stays blocked, translated and correctable by text (210.143917ms)
+✔ Unsupported food in advanced stays blocked, translated and correctable by text (262.228166ms)
+✔ Mixed unsupported food and known recipe keep recipe answers usable without substitution (140.649917ms)
+✔ Bone-inclusive weight question remains an edible-weight clarification in English (106.478584ms)
+✔ Switch remains available during a queued analysis and does not add polling timers (122.836917ms)
+✔ Confirmed result stays locked after switching and user conversation text stays original (108.70925ms)
+✔ A server error is presented in English and retranslated when the language changes (26.676875ms)
+✔ Untrusted conversation, food labels and source links remain inert text (108.730166ms)
+✔ Unknown item opens a separate ingredient form and searches without selecting a substitute (73.398833ms)
+✔ Consumed ingredient payload targets only the unresolved item and keeps names as inert text (134.517584ms)
+✔ Batch editor preserves selections, weights, searches and acceptance across both languages (199.966584ms)
+✔ Ingredient builder rejects unselected, blank, zero, excessive and duplicate amounts before any request (165.142167ms)
+✔ Whole-batch weights cannot be blank, zero or less than the eaten portion (102.110208ms)
+✔ Stale ingredient revision retains unsent fields and clearly requires reloading (139.751084ms)
+✔ Custom recipe displays explicit batch provenance, reopens for edit, and locks after confirmation (178.138958ms)
+✔ Consumed custom recipe labels ingredient sum and ordinary items expose quantity origins (118.789167ms)
+✔ Changing a search query clears the old selected ingredient and acceptance, unlike language switching (158.592542ms)
+✔ Profile fields, goal and draft values survive bilingual switching and save with a revision and CSRF header (155.7195ms)
+✔ A profile review boundary withholds targets in both languages and leaves meal estimation available (103.613958ms)
+✔ A stale profile revision preserves entered values and requires reloading before another save (106.748792ms)
+✔ Daily manual zero remains data, gaps stay blank, charts do not connect missing days, and switching preserves edits (121.736333ms)
+✔ Custom ingredient meal confirmation includes its chosen date and refreshes account trends (159.660708ms)
+✔ Offline demo hides misleading chat and replaces the complete meal through PATCH before confirmation (122.293709ms)
+✔ Restored meals are scoped to the signed-in user and legacy shared storage is removed (64.430166ms)
+✔ An in-flight meal response cannot restore private content after another tab changes the session (59.957791ms)
+✔ Account form switches language without losing credentials or changing the selected registration tab (10.12875ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4889.588875
