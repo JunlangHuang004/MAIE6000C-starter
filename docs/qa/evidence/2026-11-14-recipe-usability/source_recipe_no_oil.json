@@ -1,0 +1,238 @@
+[
+  {
+    "kind": "deterministic source reproduction, not HTTP/model",
+    "input": {
+      "food_id": "dish_016",
+      "name": "拍黄瓜",
+      "grams": 100,
+      "weight_basis": "cooked",
+      "oil_g": 0
+    },
+    "result": {
+      "draft": [
+        {
+          "food_id": "dish_016",
+          "name": "拍黄瓜",
+          "grams": 100,
+          "weight_basis": "cooked",
+          "oil_g": 0
+        }
+      ],
+      "questions": [],
+      "details": [
+        {
+          "name": "凉拌黄瓜",
+          "grams": 100,
+          "food_id": "dish_016",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 51.2,
+            "protein_g": 1.1,
+            "carbs_g": 5.7,
+            "fat_g": 3.0
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：凉拌",
+            "整锅成品 350g；本次食用 100g",
+            "整锅配料：带皮生黄瓜 300g、生大蒜 10g、蒸馏醋 20g、普通酱油 15g、芝麻油 10g、白砂糖 5g、大豆食用油 0g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168409",
+              "url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+              "description": "Cucumber, with peel, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169230",
+              "url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+              "description": "Garlic, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "172237",
+              "url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+              "description": "Vinegar, distilled",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171016",
+              "url": "https://fdc.nal.usda.gov/food-details/171016/nutrients",
+              "description": "Oil, sesame, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169655",
+              "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+              "description": "Sugars, granulated",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 100,
+            "calculated_grams": 100,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ],
+      "calories": 51.2,
+      "protein_g": 1.1,
+      "carbs_g": 5.7,
+      "fat_g": 3.0,
+      "interpreted_food_text": "凉拌黄瓜 100g"
+    }
+  },
+  {
+    "kind": "deterministic source reproduction, not HTTP/model",
+    "input": {
+      "food_id": "dish_016",
+      "name": "拍黄瓜",
+      "grams": 100,
+      "weight_basis": "cooked",
+      "oil_g": 0,
+      "recipe_ingredients": {
+        "sesame_oil": 0
+      }
+    },
+    "result": {
+      "draft": [
+        {
+          "food_id": "dish_016",
+          "name": "拍黄瓜",
+          "grams": 100,
+          "weight_basis": "cooked",
+          "oil_g": 0,
+          "recipe_ingredients": {
+            "sesame_oil": 0
+          }
+        }
+      ],
+      "questions": [],
+      "details": [
+        {
+          "name": "凉拌黄瓜",
+          "grams": 100,
+          "food_id": "dish_016",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 25.9,
+            "protein_g": 1.1,
+            "carbs_g": 5.7,
+            "fat_g": 0.1
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：凉拌",
+            "整锅成品 350g；本次食用 100g",
+            "整锅配料：带皮生黄瓜 300g、生大蒜 10g、蒸馏醋 20g、普通酱油 15g、芝麻油 0g、白砂糖 5g、大豆食用油 0g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168409",
+              "url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+              "description": "Cucumber, with peel, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169230",
+              "url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+              "description": "Garlic, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "172237",
+              "url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+              "description": "Vinegar, distilled",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171016",
+              "url": "https://fdc.nal.usda.gov/food-details/171016/nutrients",
+              "description": "Oil, sesame, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169655",
+              "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+              "description": "Sugars, granulated",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 100,
+            "calculated_grams": 100,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ],
+      "calories": 25.9,
+      "protein_g": 1.1,
+      "carbs_g": 5.7,
+      "fat_g": 0.1,
+      "interpreted_food_text": "凉拌黄瓜 100g"
+    }
+  }
+]

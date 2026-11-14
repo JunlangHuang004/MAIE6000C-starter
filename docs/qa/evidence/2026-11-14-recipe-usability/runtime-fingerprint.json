@@ -1,0 +1,12 @@
+{
+  "base_sha": "0c9f57380164e0c576616bde69457cff7e8f685a",
+  "source": "ffcc549f6427b3d09cc0fc71ec19a27c1b1afa765b911e2be13e0963eafc08eb",
+  "containers": {
+    "api": "ffcc549f6427b3d09cc0fc71ec19a27c1b1afa765b911e2be13e0963eafc08eb",
+    "ai": "ffcc549f6427b3d09cc0fc71ec19a27c1b1afa765b911e2be13e0963eafc08eb",
+    "worker": "ffcc549f6427b3d09cc0fc71ec19a27c1b1afa765b911e2be13e0963eafc08eb"
+  },
+  "all_match": true,
+  "nutrition_and_foods_unchanged_except_egg_portion_metadata": true,
+  "catalogue_sha256": "455a76a91fb24b25ad213db998f2c57edab654166b8a4f80fb1ab5d3555ad0c4"
+}

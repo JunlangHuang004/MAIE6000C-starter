@@ -1,0 +1,102 @@
+{
+  "case": "16_cucumber_no_oil",
+  "input": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_016"
+  ],
+  "http_status": 201,
+  "elapsed_s": 6.6,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "一小碟拍黄瓜，没有加香油，也没加其他油。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "a086976b-a3f6-495e-8426-71af153fa9fc",
+      "food_text": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:35.446634Z",
+      "updated_at": "2026-11-14T05:29:35.446639Z"
+    },
+    "job": {
+      "id": 29,
+      "case_id": null,
+      "analysis_id": "a086976b-a3f6-495e-8426-71af153fa9fc",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:35.450440Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "一小碟拍黄瓜，没有加香油，也没加其他油。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“一小碟拍黄瓜，没有加香油，也没加其他油。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+        "source_text": null,
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "other",
+        "oil_g": 0.0,
+        "portion_count": 1.0,
+        "portion_unit": "serving",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "label": "数据库未找到“一小碟拍黄瓜，没有加香油，也没加其他油。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "a086976b-a3f6-495e-8426-71af153fa9fc",
+    "food_text": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:35.446634Z",
+    "updated_at": "2026-11-14T05:29:41.374270Z"
+  }
+}

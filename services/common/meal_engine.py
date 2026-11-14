@@ -11,6 +11,7 @@ from services.common.ingredient_recipe import recipe_detail
 
 DATA = Path(__file__).with_name('data')
 KEYS = ('calories', 'protein_g', 'carbs_g', 'fat_g')
+COOKING_OILS = frozenset({'oil', 'sesame_oil', 'peanut_oil', 'canola_oil', 'olive_oil'})
 PREPARATIONS = {'raw':'生食', 'as_served':'按所选食物的加工状态', 'boiled':'水煮',
                 'steamed':'清蒸', 'roasted':'烤', 'stir_fried':'炒', 'fried':'煎／炸',
                 'braised':'炖／红烧', 'other':'其他做法'}
@@ -46,6 +47,20 @@ class ExtractedMeal(BaseModel):
 
 def question(key, label, kind='number', **kwargs):
     return dict(key=key, label=label, kind=kind, **kwargs)
+
+
+def _reference_recipe(food, item):
+    recipe = deepcopy(food['recipe'])
+    recipe['ingredients'].update(item.get('recipe_ingredients') or {})
+    recipe['yield_g'] = item.get('recipe_yield_g') or recipe['yield_g']
+    if item.get('oil_g') == 0:
+        # "No oil" also excludes sesame or other cooking oils in the template;
+        # sauces and naturally occurring fat are separate ingredients.
+        for food_id in COOKING_OILS & recipe['ingredients'].keys():
+            recipe['ingredients'][food_id] = 0
+    elif item.get('oil_g') is not None and item.get('grams') is not None:
+        recipe['ingredients']['oil'] = item['oil_g'] * recipe['yield_g'] / item['grams']
+    return recipe
 
 
 def evaluate(draft):
@@ -91,12 +106,7 @@ def evaluate(draft):
                                       min=0.1, max=10000))
         if food['kind'] == 'recipe':
             if not item.get('recipe_confirmed'):
-                reference = deepcopy(food['recipe'])
-                reference['ingredients'].update(item.get('recipe_ingredients') or {})
-                reference['yield_g'] = item.get('recipe_yield_g') or reference['yield_g']
-                if item.get('oil_g') is not None and item.get('grams'):
-                    reference['ingredients']['oil'] = (
-                        item['oil_g'] * reference['yield_g'] / item['grams'])
+                reference = _reference_recipe(food, item)
                 questions.append(question(prefix+'recipe',
                     f'{name}采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。'
                     '这些是估算假设，不代表你的实际用量。', 'recipe',
@@ -251,19 +261,24 @@ def evaluate_mode(draft, mode='advanced'):
                              '并非实测去骨率，可在进阶版填写实际净重。')
             item['weight_includes_inedible'] = False
         if item.get('grams') is None:
-            per_portion = food.get('default_portion_g', 200 if food['kind']=='recipe' else 100)
             unit = item.get('portion_unit') or 'serving'
-            per_portion = food.get('portion_weights_g', {}).get(unit, per_portion)
+            per_portion = food.get('portion_weights_g', {}).get(unit)
+            # A default serving is not a piece, bowl or cup conversion. When no
+            # unit-specific reference exists, retain the count and ask for grams.
+            if per_portion is None and unit == 'serving':
+                per_portion = food.get(
+                    'default_portion_g', 200 if food['kind'] == 'recipe' else 100)
             unit_label = {'bowl':'碗', 'piece':'个', 'cup':'杯', 'serving':'份'}[unit]
             count = item.get('portion_count') or 1
-            item['grams'] = min(per_portion * count, 10000)
-            if per_portion * count > 10000:
-                item['grams'] = None
-                assumptions.append(['份量过大，请填写实际克数。'])
-                continue
-            notes.append(f'未提供克数，暂按 {count:g} {unit_label}、'
-                         f'每{unit_label} {per_portion:g}g，'
-                         f'共 {item["grams"]:g}g 估算。')
+            if per_portion is not None:
+                item['grams'] = min(per_portion * count, 10000)
+                if per_portion * count > 10000:
+                    item['grams'] = None
+                    assumptions.append(['份量过大，请填写实际克数。'])
+                    continue
+                notes.append(f'未提供克数，暂按 {count:g} {unit_label}、'
+                             f'每{unit_label} {per_portion:g}g，'
+                             f'共 {item["grams"]:g}g 估算。')
         if item.get('weight_basis') is None:
             item['weight_basis'] = food['state']
             state = {'raw':'生可食重量','cooked':'熟可食重量','as_sold':'可食净重'}[food['state']]
@@ -272,11 +287,7 @@ def evaluate_mode(draft, mode='advanced'):
             notes.append('待核实：'+item['uncertainty'])
             item['uncertainty'] = None
         if food['kind']=='recipe':
-            recipe = deepcopy(food['recipe'])
-            recipe['ingredients'].update(item.get('recipe_ingredients') or {})
-            recipe['yield_g'] = item.get('recipe_yield_g') or recipe['yield_g']
-            if item.get('oil_g') is not None:
-                recipe['ingredients']['oil'] = item['oil_g']*recipe['yield_g']/item['grams']
+            recipe = _reference_recipe(food, item)
             item['recipe'] = item.get('recipe') or recipe
             item['recipe_assumed'] = not item.get('recipe_confirmed', False)
             item['recipe_confirmed'] = True

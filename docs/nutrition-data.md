@@ -131,6 +131,17 @@ Basic mode can use distinct labelled `portion_weights_g` for pieces, bowls and
 servings where defined. For example, a reference dumpling is 20g, whereas a serving
 is 200g. Explicit user grams always take precedence. These weights remain assumptions
 on the calculation copy; switching to advanced still asks for actual weights.
+An explicit piece, bowl or cup count without a matching unit reference asks for
+edible grams; it cannot borrow the generic serving weight. A default serving can
+still be used when no more specific unit was supplied.
+
+The boiled-egg record has an explicit 50g-per-piece reference for a **large,
+hard-cooked egg with its shell removed**, matching [USDA ARS, *Nutritive Value of
+Foods* (2002), Table 9, food 146, page 22](https://www.ars.usda.gov/ARSUserFiles/oc/np/NutritiveValueofFoods/NutritiveValueofFoods.pdf).
+This is a labelled reference estimate, not the measured weight of the user's egg.
+The source and portion metadata are stored in both the ingredient selection
+manifest and runtime catalogue. Nutrient values are unchanged; no piece weights
+have been inferred for meat chunks or chicken wings.
 
 Qwen receives a bounded shortlist of catalogue candidates and proposes existing
 IDs. Retrieval uses recorded name/alias spans in user input, with up to 60 primary

@@ -2,9 +2,11 @@
 
 NutriChat combines the meal-estimation features from `nutrichat` with independent
 accounts, personal daily references and 30-day tracking on `test`. It keeps
-**the exact `nutrichat` food catalogue: 200 USDA ingredient records and 350 editable
-Chinese reference recipes**. The `nutrichat` branch,
-`w07-midterm` submission tag and existing deployments remain separate snapshots.
+**the `nutrichat` catalogue's 200 USDA ingredient records and 350 editable
+Chinese reference recipes**, with their nutrient values unchanged. The current
+follow-up adds an explicit 50 g reference for one large shelled hard-boiled egg.
+The `nutrichat` branch, `w07-midterm` submission tag and existing deployments remain
+separate snapshots.
 
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions.
 Qwen or HKUST GenAI interprets foods and quantities; Python calculates from the
@@ -16,8 +18,10 @@ verification. [The demo folder](demo/README.md) provides a self-guided workflow 
 a separate key-free integration check. Earlier screenshots and reports retain their
 original source/date; they are not evidence of this merged build.
 See the [current workspace walkthrough](demo/INTEGRATED_GUIDE.md) and
-[14 November fresh review](docs/qa/reports/2026-11-14-fresh-review.md) for the
-updated interface and dated verification scope.
+[14 November recipe-usability follow-up](docs/qa/reports/2026-11-14-recipe-usability.md)
+for the updated meal flow and dated verification scope. The
+[earlier 14 November fresh review](docs/qa/reports/2026-11-14-fresh-review.md)
+retains evidence for the preceding workspace pass.
 
 ## Run the merged application
 
@@ -37,8 +41,9 @@ project/database avoids replacing the existing applications on other ports.
 
 The default `demo` provider requires no key and accepts six legacy English food
 names with explicit grams, such as `100g egg`. It does not interpret Chinese meals
-or conversational corrections. Use **Replace full description** to change an
-offline meal, for example to `200g egg`; the server rejects unsupported chat replies.
+or conversational corrections. Open **Edit this meal**, then use **Replace full
+description** to change an offline meal, for example to `200g egg`; the server
+rejects unsupported chat replies.
 
 For the full Chinese workflow, select one provider in the private `.env`:
 
@@ -76,9 +81,12 @@ alone does not isolate Docker resources. Stopping retains the database.
 
 Meals opens first. Switching panels or interface language preserves unsaved form
 values; it does not submit them. Saving is still required before reloading or
-leaving the page. Meal evidence is summarized by food, with portions, assumptions
-and sources available on expansion. The searchable catalogue shows 20 matching
-entries at a time; **Show 20 more** reveals the next set without limiting coverage.
+leaving the page. After submission, the description becomes compact and the result
+and its actions take priority. Reference-portion and reference-recipe badges remain
+visible while food evidence is collapsed; a banner explains any unverified
+references. Expand a food for its quantities, assumptions and sources. The searchable
+catalogue shows 20 matching entries at a time; **Show 20 more** reveals the next set
+without limiting coverage.
 
 ## Meal estimation
 
@@ -88,18 +96,36 @@ entries at a time; **Show 20 more** reveals the next set without limiting covera
 | Advanced | User-supplied weights and preparation details | Ask for edible grams, raw/cooked state, preparation and oil; require recipe review |
 
 1. Sign in, select a mode and describe the meal.
-2. Wait for background processing, then review the interpreted foods and sources.
-3. Answer questions or correct the description. Unconfirmed records can switch modes.
-4. If a food has no matching record, correct its name or use **Build from actual
+2. Wait for background processing, then review the totals, food weights and any
+   reference badges. Expand each food for assumptions and sources.
+3. Answer required questions. Recipe questions show a batch preview; expand
+   **Review or adjust batch quantities** only when needed. Explicitly accept the
+   reviewed recipe; changing any ingredient quantity or finished weight clears
+   acceptance and updates the preview.
+4. Choose **Edit this meal** to open corrections for a completed estimate.
+   Closing the editor, switching panels or changing language preserves an unsent
+   reply. Pending corrections block confirmation until submitted or cleared;
+   discard an offline replacement by restoring its original full description.
+   A visible notice explains this even when the editor is closed.
+   Unconfirmed records can switch modes.
+5. If a food has no matching record, correct its name or use **Build from actual
    ingredients** to select actual catalogue ingredients and their gram weights.
-5. Choose the meal date and confirm. The saved record and date are locked; start a
-   new meal to revise a confirmed entry. Your history restores saved records.
+6. Choose the meal date and confirm. The saved record and date are locked; start a
+   new meal to revise a confirmed entry. Conversation history remains available
+   below the result, without an empty correction card.
 
 **Food coverage is limited.** The catalogue does not cover every dish, synonym,
 brand or preparation. Matching requires recorded names or reviewed aliases.
 Unsupported foods produce “No corresponding food record” and withhold all meal
 nutrient totals; another dish is never used as a substitute. Basic assumptions
 fill missing portions, not missing food identities.
+
+Counts need a reference for the stated unit. Without a recorded piece, bowl or cup
+weight, Basic asks for edible grams and withholds meal totals until answered. The
+hard-boiled egg record explicitly uses 50 g for one large egg with its shell removed;
+this is a labelled reference, not a measurement of the user's egg. An explicit
+no-oil instruction removes all cooking oils from a reference recipe, including
+sesame oil, while preserving other ingredients and their naturally occurring fat.
 
 The ingredient builder creates a labelled user-defined recipe for one item. Choose
 consumed ingredient amounts, or a whole batch with finished weight and eaten portion.
@@ -161,8 +187,10 @@ the application serves plain JavaScript. CI includes `integrate/**`, `test`,
 that a pushed commit has passed GitHub Actions.
 
 [Integration verification](docs/integration.md) records checks for the merged build.
-The [fresh review](docs/qa/reports/2026-11-14-fresh-review.md) records the November
-workspace update and distinguishes automated, browser and live-provider evidence.
+The [recipe-usability follow-up](docs/qa/reports/2026-11-14-recipe-usability.md)
+records the current meal-flow changes and their verification scope. The
+[earlier fresh review](docs/qa/reports/2026-11-14-fresh-review.md) retains the
+preceding workspace pass and its separate automated, browser and provider evidence.
 Earlier [catalogue verification](docs/evidence/chinese-expansion-verification.md),
 [account](docs/evidence/accounts-verification.md),
 [profile](docs/evidence/personalization-verification.md),

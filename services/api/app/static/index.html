@@ -310,6 +310,38 @@ button.example-chip{font-size:11px;min-height:32px}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}
 }
 
+
+/* After submission, the meal and its next action take priority. */
+.composer-card.has-meal{padding:20px 26px}
+.composer-card.has-meal .composer-heading h2{font-size:16px;margin:0}
+.composer-card.has-meal .composer-actions{margin:12px 0 0;gap:10px;flex-direction:row;flex-wrap:wrap;align-items:center}
+.composer-card.has-meal .composer-actions button{padding:8px 13px;min-height:38px;min-width:0;width:auto;font-size:13px}
+.composer-card.has-meal .catalogue-panel{margin-top:14px;padding-top:12px}
+.submitted-meal{font-size:16px;line-height:1.6;margin:10px 0 0;overflow-wrap:anywhere}
+#result,#dialogue{scroll-margin-top:100px}
+.result-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:20px}
+.result-actions #confirm{margin:0}
+.estimate-basis{padding:12px 15px;background:#faf2df;border-radius:12px;color:#725325;font-size:13px;line-height:1.7}
+.food-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.food-badge{font-size:11px;font-weight:500;background:#eef2e9;color:#526647;padding:3px 7px;border-radius:6px}
+.food-badge.reference{background:#faf2df;color:#725325}
+#evidence summary{list-style:none;display:flex;align-items:start;gap:12px}
+#evidence summary::before{content:'+';color:var(--green);font-size:18px;line-height:1.35}
+#evidence details[open]>summary::before{content:'−'}
+#evidence summary::-webkit-details-marker{display:none}
+.food-summary{flex:1;min-width:0}.food-calories{white-space:nowrap;font-weight:700}
+#history-panel{margin:20px 0;color:var(--muted);font-size:13px}
+.question{padding:18px 0}.question>label,.question>p:first-child{font-weight:600}
+.recipe-reference{margin:10px 0 14px;line-height:1.8;font-size:13px;color:var(--muted)}
+.recipe-adjust{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}
+.recipe-adjust>summary{cursor:pointer;font-size:13px;font-weight:600}
+.recipe-adjust .ingredient{padding:8px 0}
+.recipe-accept{display:flex;align-items:start;gap:9px;background:#f1f5ed;padding:12px;border-radius:10px;line-height:1.7}
+.recipe-accept input{margin:5px 0 0;flex:none}
+.answer-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:20px}
+.answer-actions small{max-width:460px}
+@media(max-width:600px){.composer-card.has-meal{padding:18px}.submitted-meal{font-size:14px}.food-calories{font-size:13px}.result-actions button{flex:1}.recipe-adjust{padding:10px}.estimate-basis{font-size:12px}#result,#dialogue{scroll-margin-top:90px}}
+
 </style>
 <script defer src="/app-assets/catalogue-en.js"></script>
 <script defer src="/app-assets/i18n.js"></script>
@@ -326,21 +358,21 @@ button.example-chip{font-size:11px;min-height:32px}
 <button id="tab-diary" type="button" role="tab" aria-selected="false" aria-controls="panel-diary" tabindex="-1"><span class="nav-icon" aria-hidden="true">▤</span><span data-i18n="navDiary">每日记录</span></button>
 <button id="tab-trends" type="button" role="tab" aria-selected="false" aria-controls="panel-trends" tabindex="-1"><span class="nav-icon" aria-hidden="true">↗</span><span data-i18n="navTrends">月度趋势</span></button>
 <button id="tab-profile" type="button" role="tab" aria-selected="false" aria-controls="panel-profile" tabindex="-1"><span class="nav-icon" aria-hidden="true">◎</span><span data-i18n="navProfile">个人目标</span></button>
-</div></nav><main id="main-content"><section id="panel-meal" class="workspace-panel" role="tabpanel" aria-labelledby="tab-meal"><div class="page-heading"><p class="eyebrow" data-i18n="eyebrowMeal"></p><h1 id="heading-meal" tabindex="-1" data-i18n="heading">说说这餐吃了什么</h1><p class="muted" data-i18n="introduction">描述、核对、确认。把了解每一餐变成日常。</p></div><ol class="meal-steps" aria-label="估算进度" data-i18n-label="mealProgress"><li id="step-describe" aria-current="step"><span>1</span><span data-i18n="stepDescribe">描述餐食</span></li><li id="step-review"><span>2</span><span data-i18n="stepReview">核对估算</span></li><li id="step-save"><span>3</span><span data-i18n="stepSave">确认记录</span></li></ol><p id="message" class="meal-message" role="status" aria-live="polite"></p><section class="card composer-card" aria-labelledby="composer-title"><div class="composer-heading"><h2 id="composer-title" data-i18n="composerTitle">记录这一餐</h2><div class="mode-picker"><label class="sr-only" for="mode" data-i18n="chooseMode">选择估算模式</label>
+</div></nav><main id="main-content"><section id="panel-meal" class="workspace-panel" role="tabpanel" aria-labelledby="tab-meal"><div class="page-heading"><p class="eyebrow" data-i18n="eyebrowMeal"></p><h1 id="heading-meal" tabindex="-1" data-i18n="heading">说说这餐吃了什么</h1><p class="muted" data-i18n="introduction">描述、核对、确认。把了解每一餐变成日常。</p></div><ol class="meal-steps" aria-label="估算进度" data-i18n-label="mealProgress"><li id="step-describe" aria-current="step"><span>1</span><span data-i18n="stepDescribe">描述餐食</span></li><li id="step-review"><span>2</span><span data-i18n="stepReview">核对估算</span></li><li id="step-save"><span>3</span><span data-i18n="stepSave">确认记录</span></li></ol><p id="message" class="meal-message" role="status" aria-live="polite"></p><section class="card composer-card" id="composer-card" aria-labelledby="composer-title"><div class="composer-heading"><h2 id="composer-title" data-i18n="composerTitle">记录这一餐</h2><div class="mode-picker" id="mode-picker"><label class="sr-only" for="mode" data-i18n="chooseMode">选择估算模式</label>
 <select id="mode"><option value="basic" data-i18n="basicOption">基础版 · 快速大概估算</option><option value="advanced" data-i18n="advancedOption">进阶版 · 补充细节</option></select></div></div>
 <p class="muted" id="mode-help">按已有信息估算；缺少份量和配方时使用明确标注的参考值。</p>
-<button id="switch-mode" class="secondary" type="button" hidden>切换到进阶版补充细节</button>
-<form id="meal-form"><label for="meal" data-i18n="mealLabel">餐食描述</label>
-<textarea rows="4" id="meal" required maxlength="2000" data-i18n-placeholder="mealPlaceholder" placeholder="例如：番茄炒蛋200克，少油，配150克熟米饭。"></textarea>
+<p id="submitted-meal" class="submitted-meal" hidden></p>
+<form id="meal-form"><div id="meal-input"><label for="meal" data-i18n="mealLabel">餐食描述</label>
+<textarea rows="4" id="meal" required maxlength="2000" data-i18n-placeholder="mealPlaceholder" placeholder="例如：番茄炒蛋200克，少油，配150克熟米饭。"></textarea></div>
 <div id="meal-examples" class="meal-examples"><span data-i18n="tryExample">试一试</span><button type="button" class="example-chip" data-example="mealExampleOne" data-i18n="mealExampleOne">番茄炒蛋200克，熟米饭150克</button><button type="button" class="example-chip" data-example="mealExampleTwo" data-i18n="mealExampleTwo">两个水煮鸡蛋</button><button type="button" class="example-chip" id="offline-example" data-i18n="offlineExample" hidden>100g egg</button></div><div class="composer-actions"><button id="estimate" data-i18n="estimate">开始估算</button><button id="new" type="button" class="secondary" data-i18n="newMeal" hidden>新的一餐</button>
-<span class="composer-note" data-i18n="reviewBeforeSave">估算后核对，再确认计入每日记录。</span></div></form>
+<button id="switch-mode" class="secondary" type="button" hidden>切换到进阶版补充细节</button><span class="composer-note" id="composer-note" data-i18n="reviewBeforeSave">估算后核对，再确认计入每日记录。</span></div></form>
 <details id="catalogue-panel" class="catalogue-panel"><summary data-i18n="supportedFoods">查看支持的食材和菜谱</summary><p><small id="catalogue-info"></small></p><input id="search" type="search" data-i18n-placeholder="searchPlaceholder" data-i18n-label="searchLabel" placeholder="搜索食物／菜名" aria-label="搜索食物"><p id="food-count" class="muted" aria-live="polite"></p><div id="food-list"></div><button type="button" id="foods-more" class="secondary" data-i18n="showMoreFoods" hidden>再显示 20 条</button></details></section>
-<section class="card" id="result" hidden><span class="tag" id="status"></span><h2 data-i18n="resultHeading">本餐营养估算</h2><p id="interpreted"></p>
+<section class="card" id="result" hidden><span class="tag" id="status"></span><h2 id="result-heading" tabindex="-1" data-i18n="resultHeading">本餐营养估算</h2><p id="interpreted" class="sr-only"></p><p id="estimate-basis" class="estimate-basis" hidden></p>
 <div class="metrics"><div class="metric"><b id="calories">—</b><span data-i18n="calories">热量 · kcal</span></div><div class="metric"><b id="protein_g">—</b><span data-i18n="protein">蛋白质 · g</span></div><div class="metric"><b id="fat_g">—</b><span data-i18n="fat">脂肪 · g</span></div><div class="metric"><b id="carbs_g">—</b><span data-i18n="carbs">碳水 · g</span></div></div>
-<p class="evidence-label muted" data-i18n="evidenceHelp">逐项展开，核对份量、假设和数据来源。</p><div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、用油及配方。需要修改时，在下方继续对话。</p><div id="meal-date-editor" class="meal-date"><label for="meal-date">这餐的食用日期</label><input id="meal-date" type="date" min="2000-01-01" aria-describedby="meal-date-help"><small id="meal-date-help">确认后计入所选日期的热量。未选日期时记为今天（香港时间）。</small></div><p id="meal-confirmed-date" class="confirmed-date" hidden></p><button id="confirm" data-i18n="confirm">确认并保存</button><button type="button" id="view-diary" class="secondary" data-view="diary" data-i18n="viewDiary" hidden>查看每日记录</button><details class="record-details"><summary data-i18n="recordDetails">记录信息</summary><small id="record"></small></details></section>
-<section class="card" id="dialogue" hidden><h2 id="dialogue-title">餐食对话</h2>
-<details id="history-panel"><summary data-i18n="history">查看本餐对话记录</summary><p class="muted history-note" data-i18n="originalHistory">你输入的描述及模型自由文本保留原文。</p><div id="history"></div></details>
-<form id="answer-form" hidden><div id="questions"></div><button id="answer-submit" data-i18n="answerSubmit">提交回答</button><small data-i18n="answerHelp">可以先回答已知的问题。不知道用量时，请在下方说明。</small></form>
+<p class="evidence-label muted" data-i18n="evidenceHelp">逐项展开，核对份量、假设和数据来源。</p><div id="evidence"></div><p class="muted" id="review-help">请核对食用重量、做法、用油及配方。需要修改时，在下方继续对话。</p><div id="meal-date-editor" class="meal-date"><label for="meal-date">这餐的食用日期</label><input id="meal-date" type="date" min="2000-01-01" aria-describedby="meal-date-help"><small id="meal-date-help">确认后计入所选日期的热量。未选日期时记为今天（香港时间）。</small></div><p id="meal-confirmed-date" class="confirmed-date" hidden></p><p id="pending-edit-notice" class="estimate-basis" role="status" data-i18n="pendingMealEdit" hidden></p><div class="result-actions"><button id="confirm" data-i18n="confirm">确认并保存</button><button id="edit-meal" class="secondary" type="button" aria-controls="dialogue" aria-expanded="false" data-i18n="editMeal">修改这餐</button></div><button type="button" id="view-diary" class="secondary" data-view="diary" data-i18n="viewDiary" hidden>查看每日记录</button><details class="record-details"><summary data-i18n="recordDetails">记录信息</summary><small id="record"></small></details></section>
+<section class="card" id="dialogue" hidden><h2 id="dialogue-title" tabindex="-1">餐食对话</h2>
+
+<form id="answer-form" hidden><div id="questions"></div><div class="answer-actions"><button id="answer-submit" data-i18n="answerSubmit">提交回答</button><small id="answer-help" data-i18n="answerHelp">可以先回答已知的问题。不知道用量时，请在下方说明。</small></div></form>
 <div id="ingredient-editor-actions" class="ingredient-editor-actions"></div>
 <section id="ingredient-builder" class="ingredient-builder" aria-labelledby="ingredient-builder-title" hidden>
 <h3 id="ingredient-builder-title" data-i18n="ingredientBuilderTitle">按实际食材填写配方</h3>
@@ -360,7 +392,7 @@ button.example-chip{font-size:11px;min-height:32px}
 <p id="custom-recipe-guidance" class="muted" data-i18n="customRecipeGuidance" hidden>本餐含自定义食材配方。请使用“编辑食材配方”更改用量，或开始新的一餐；其他待回答的问题仍可逐项填写。</p>
 <form id="offline-correction" hidden><label for="offline-meal">替换完整餐食描述</label><p class="muted">离线模式不理解对话更正。请在这里重新填写整餐，例如 200g egg；保存后会重新计算。</p><textarea id="offline-meal" maxlength="2000" required></textarea><button id="offline-submit" type="submit">替换描述并重新计算</button></form>
 <form id="reply-form" hidden><label for="reply" data-i18n="replyLabel">继续对话／补充或更正</label><textarea id="reply" maxlength="2000" required data-i18n-placeholder="replyPlaceholder" placeholder="例如：其实是煎蛋，150克是熟重；我这一份额外用了5克油。"></textarea><button id="reply-submit" data-i18n="replySubmit">发送补充说明</button></form></section>
-<p class="page-footnote" data-i18n="disclaimer"></p></section><section id="panel-diary" class="workspace-panel" role="tabpanel" aria-labelledby="tab-diary" hidden><div class="page-heading"><p class="eyebrow" data-i18n="eyebrowDiary"></p><h1 id="heading-diary" tabindex="-1" data-i18n="diaryHeading">给今天留个记录</h1><p class="muted" data-i18n="diaryIntro">餐食自动汇总，补充体重和运动，了解当天的收支。</p></div><section class="card tracking-card" id="tracking-card" aria-labelledby="tracking-title">
+<details id="history-panel"><summary data-i18n="history">查看本餐对话记录</summary><p class="muted history-note" data-i18n="originalHistory">你输入的描述及模型自由文本保留原文。</p><div id="history"></div></details><p class="page-footnote" data-i18n="disclaimer"></p></section><section id="panel-diary" class="workspace-panel" role="tabpanel" aria-labelledby="tab-diary" hidden><div class="page-heading"><p class="eyebrow" data-i18n="eyebrowDiary"></p><h1 id="heading-diary" tabindex="-1" data-i18n="diaryHeading">给今天留个记录</h1><p class="muted" data-i18n="diaryIntro">餐食自动汇总，补充体重和运动，了解当天的收支。</p></div><section class="card tracking-card" id="tracking-card" aria-labelledby="tracking-title">
 <div class="tracking-heading"><div><h2 id="tracking-title" data-i18n="diaryCardTitle">每天的记录</h2><p class="muted" data-i18n="diaryCardHelp">已确认的餐食会自动汇总，也可以补记过去的日期。</p></div><span class="tracking-zone">日期按香港时间</span></div>
 <div class="daily-editor">
 <form id="daily-form">

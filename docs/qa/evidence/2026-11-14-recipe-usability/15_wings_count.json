@@ -1,0 +1,117 @@
+{
+  "case": "15_wings_count",
+  "input": "吃了4个可乐鸡翅，骨头没有吃。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_252"
+  ],
+  "http_status": 201,
+  "elapsed_s": 7.7,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "吃了4个可乐鸡翅，骨头没有吃。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "69de3307-c421-44b5-a215-2e7ad3f0ff6d",
+      "food_text": "吃了4个可乐鸡翅，骨头没有吃。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:32.303742Z",
+      "updated_at": "2026-11-14T05:29:32.303746Z"
+    },
+    "job": {
+      "id": 28,
+      "case_id": null,
+      "analysis_id": "69de3307-c421-44b5-a215-2e7ad3f0ff6d",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:32.309019Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "吃了4个可乐鸡翅，骨头没有吃。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“骨头没有吃”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_252",
+        "name": "可乐鸡翅",
+        "source_text": "可乐鸡翅",
+        "grams": null,
+        "weight_includes_inedible": true,
+        "weight_basis": null,
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": 4.0,
+        "portion_unit": "piece",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "The weight of the cola chicken wings was not specified."
+      },
+      {
+        "food_id": null,
+        "name": "骨头没有吃",
+        "source_text": "骨头没有吃",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“骨头没有吃”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "69de3307-c421-44b5-a215-2e7ad3f0ff6d",
+    "food_text": "吃了4个可乐鸡翅，骨头没有吃。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:32.303742Z",
+    "updated_at": "2026-11-14T05:29:39.013351Z"
+  }
+}

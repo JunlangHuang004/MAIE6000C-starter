@@ -1,0 +1,465 @@
+[
+  {
+    "case": "01_stirfry_vague",
+    "input": "午饭吃了一份番茄炒蛋。",
+    "mode": "basic",
+    "state": "completed",
+    "assessment": "Usable reference result",
+    "note": "Recognized dish_001; completed 200 g / 210.2 kcal. The input gave one serving, not 200 g. Quantity provenance labels this a serving reference. The recipe includes 15 g oil and 5 g sugar per 400 g batch; these are assumptions, not user facts.",
+    "expected_catalogue_ids": [
+      "dish_001"
+    ],
+    "observed_food_ids": [
+      "dish_001"
+    ],
+    "questions": [],
+    "calories": 210.2,
+    "analysis_id": "05b78927-0559-4da3-8f16-c146c809f13c"
+  },
+  {
+    "case": "02_pork_grams",
+    "input": "青椒肉丝150克，称的是炒熟后实际吃下的净重。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "False extra food",
+    "note": "Recognized dish_002 and 150 g cooked, but added “称的是炒熟后实际吃下的净重” as an unsupported food. An ordinary weighing explanation blocks the entire meal.",
+    "expected_catalogue_ids": [
+      "dish_002"
+    ],
+    "observed_food_ids": [
+      "dish_002",
+      null
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“称的是炒熟后实际吃下的净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "121503fb-b3e4-47b8-b7b6-55ac7e7839dd"
+  },
+  {
+    "case": "03_pork_pieces",
+    "input": "晚饭吃了三块红烧肉。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Known dish not grounded",
+    "note": "“晚饭吃了三块红烧肉。” is treated as an unsupported full food name although 红烧肉 is dish_005. Portion mass genuinely needs clarification unless an explicit piece conversion exists.",
+    "expected_catalogue_ids": [
+      "dish_005"
+    ],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“晚饭吃了三块红烧肉。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "77733075-9109-41f9-b8f9-b5270d467742"
+  },
+  {
+    "case": "04_chicken_share",
+    "input": "宫保鸡丁，我吃了半盘，大概一人份。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "False extra foods",
+    "note": "Recognized dish_003 but “我吃了半盘” and “大概一人份” become unsupported foods. Half a plate versus a person’s portion is ambiguous; ask a portion question, not a new-food question.",
+    "expected_catalogue_ids": [
+      "dish_003"
+    ],
+    "observed_food_ids": [
+      "dish_003",
+      null,
+      null
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“我吃了半盘”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      },
+      {
+        "key": "2.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“大概一人份”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "dc4ab00d-a87e-430f-a516-2c79d1fbb510"
+  },
+  {
+    "case": "05_fish_grams",
+    "input": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "False extra foods",
+    "note": "Recognized dish_123 / 200 g cooked. “熟鱼肉净重” and “没有骨头” become unsupported foods even though they clarify the quantity basis.",
+    "expected_catalogue_ids": [
+      "dish_123"
+    ],
+    "observed_food_ids": [
+      "dish_123",
+      null,
+      null
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“熟鱼肉净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      },
+      {
+        "key": "2.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“没有骨头”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "0cb6e98f-5fb8-4af3-a6e1-b3444c959c8d"
+  },
+  {
+    "case": "06_shrimp_count",
+    "input": "白灼虾吃了6只，去了虾壳，没有蘸料。",
+    "mode": "basic",
+    "state": "failed",
+    "assessment": "Response-boundary failure",
+    "note": "Generic failed message; no draft or edible-weight question. White boiled shrimp is dish_128. Shell removal/count require a supported portion conversion or grams. HKUST returned HTTP 200; internal AI route returned 502.",
+    "expected_catalogue_ids": [
+      "dish_128"
+    ],
+    "observed_food_ids": [],
+    "questions": [],
+    "calories": null,
+    "analysis_id": "f459bf27-8599-485a-99fa-89cdc166711f"
+  },
+  {
+    "case": "07_veg_plate",
+    "input": "吃了一小盘酸辣土豆丝。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Known dish not grounded",
+    "note": "The complete sentence “吃了一小盘酸辣土豆丝。” is unsupported although dish_022 exists. Small-plate amount is approximate; the app should either visibly estimate or ask weight.",
+    "expected_catalogue_ids": [
+      "dish_022"
+    ],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“吃了一小盘酸辣土豆丝。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "f99698dd-eb38-4aad-bb92-2329a72d11de"
+  },
+  {
+    "case": "08_egg_traditional",
+    "input": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Known alias not grounded",
+    "note": "Catalogue explicitly contains 絲瓜炒雞蛋 for dish_313, but the Cantonese sentence with 150 g and “煮熟之後磅” remains wholly unsupported. This demonstrates a natural-language wrapper gap, not absent recipe coverage.",
+    "expected_catalogue_ids": [
+      "dish_313"
+    ],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "a3a65b39-513c-42fd-940a-5e1bea91e63e"
+  },
+  {
+    "case": "09_noodles_bowl",
+    "input": "午饭是一大碗番茄鸡蛋面，汤也喝完了。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Known dish not grounded",
+    "note": "dish_044 exists, but “午饭是一大碗番茄鸡蛋面，汤也喝完了。” is wholly unsupported. A large bowl and consumed broth deserve clear portion handling.",
+    "expected_catalogue_ids": [
+      "dish_044"
+    ],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“午饭是一大碗番茄鸡蛋面，汤也喝完了。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "d9944fbf-f8eb-47dd-9059-bfb176570b29"
+  },
+  {
+    "case": "10_soup_ribs",
+    "input": "一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。",
+    "mode": "basic",
+    "state": "failed",
+    "assessment": "Response-boundary failure",
+    "note": "Generic failed message, no draft. Winter-melon rib soup is an alias of dish_071. Soup plus two rib pieces is not necessarily the reference recipe’s uniform mixture. HKUST HTTP 200 then internal 502.",
+    "expected_catalogue_ids": [
+      "dish_071"
+    ],
+    "observed_food_ids": [],
+    "questions": [],
+    "calories": null,
+    "analysis_id": "794d27f2-c800-4ffa-9675-44159836546b"
+  },
+  {
+    "case": "11_soup_only",
+    "input": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Conservative unresolved variant",
+    "note": "dish_127 exists, but the user drank only broth without fish/tofu. No total was produced, which avoids applying the full reference recipe to selective consumption. The generic unsupported-food message does not explain this specific limitation.",
+    "expected_catalogue_ids": [
+      "dish_127"
+    ],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "cb3c4c60-ad5b-4a16-a03c-6ab1fd0d5049"
+  },
+  {
+    "case": "12_mixed_units",
+    "input": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Known milk not grounded",
+    "note": "dish_041 and egg were correctly retained as half bowl and one piece. The milk item became the whole original sentence, food_id null, grams 250. 全脂牛奶 is catalogue milk. Millilitres versus mass should be explained, not silently treated as a confirmed gram weight.",
+    "expected_catalogue_ids": [
+      "dish_041",
+      "egg",
+      "milk"
+    ],
+    "observed_food_ids": [
+      "dish_041",
+      "egg",
+      null
+    ],
+    "questions": [
+      {
+        "key": "2.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "c06d0580-dbd1-4f63-b08f-be16be3facff"
+  },
+  {
+    "case": "13_mixed_grams",
+    "input": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "False extra food",
+    "note": "Recognized dish_004 / 80 g and rice / 100 g cooked, but added “都已经煮熟了” as an unsupported food. All meal totals blocked.",
+    "expected_catalogue_ids": [
+      "dish_004",
+      "rice"
+    ],
+    "observed_food_ids": [
+      "dish_004",
+      "rice",
+      null
+    ],
+    "questions": [
+      {
+        "key": "2.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“都已经煮熟了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "fd014a90-a835-45cb-a5db-712dbbe794dc"
+  },
+  {
+    "case": "14_eggplant",
+    "input": "鱼香茄子100克，是不放肉的那种。",
+    "mode": "basic",
+    "state": "failed",
+    "assessment": "Response-boundary failure",
+    "note": "dish_154 exists and its reference recipe itself has no meat. The no-meat wording nevertheless ends in generic failure. HKUST HTTP 200 then internal 502; exact invalid response field is unknown.",
+    "expected_catalogue_ids": [
+      "dish_154"
+    ],
+    "observed_food_ids": [],
+    "questions": [],
+    "calories": null,
+    "analysis_id": "f833012e-4267-4d0f-bd8f-8990b902e243"
+  },
+  {
+    "case": "15_wings_count",
+    "input": "吃了4个可乐鸡翅，骨头没有吃。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "False extra food plus unit risk",
+    "note": "Recognized dish_252 / four pieces, but added “骨头没有吃” as an unsupported food. No explicit piece mass exists, so removing that false blocker must lead to a gram question, not four default servings.",
+    "expected_catalogue_ids": [
+      "dish_252"
+    ],
+    "observed_food_ids": [
+      "dish_252",
+      null
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“骨头没有吃”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "69de3307-c421-44b5-a215-2e7ad3f0ff6d"
+  },
+  {
+    "case": "16_cucumber_no_oil",
+    "input": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Known alias not grounded",
+    "note": "拍黄瓜 is a reviewed alias of dish_016; the entire no-oil sentence becomes unsupported. oil_g 0 was extracted. No completed result proves that sesame oil was correctly excluded.",
+    "expected_catalogue_ids": [
+      "dish_016"
+    ],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“一小碟拍黄瓜，没有加香油，也没加其他油。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "a086976b-a3f6-495e-8426-71af153fa9fc"
+  },
+  {
+    "case": "17_unlisted_fish",
+    "input": "清蒸鲈鱼150克，去骨的熟鱼肉。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Expected unsupported",
+    "note": "清蒸鲈鱼 has no exact recipe/ingredient record in the inspected catalogue. The app preserves this name, asks for actual ingredients and does not substitute carp or cod. This is not counted as a missed listed recipe.",
+    "expected_catalogue_ids": [],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“清蒸鲈鱼”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "49d05fc6-0148-466f-9637-9537e2260258"
+  },
+  {
+    "case": "18_invented_unknown",
+    "input": "今天吃了一碗幻彩星云饭，是店里的招牌。",
+    "mode": "basic",
+    "state": "needs_input",
+    "assessment": "Expected unsupported",
+    "note": "Invented 幻彩星云饭 stays unknown with a clear request for actual ingredients and no nutrition total. Appropriate conservative behavior.",
+    "expected_catalogue_ids": [],
+    "observed_food_ids": [
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "3644e6af-399b-41c9-aa38-d6f877f9a4b2"
+  },
+  {
+    "case": "19_advanced_recipe",
+    "input": "番茄炒蛋200克，是实际吃下的熟食净重。",
+    "mode": "advanced",
+    "state": "needs_input",
+    "assessment": "Valid review plus false blocker",
+    "note": "As expected, Advanced asks to review dish_001 recipe; additionally the weighing phrase “是实际吃下的熟食净重” becomes an unsupported food. Setting the issued recipe’s oil to 0 g succeeds and persists, but the phantom food keeps totals null.",
+    "expected_catalogue_ids": [
+      "dish_001"
+    ],
+    "observed_food_ids": [
+      "dish_001",
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.recipe",
+        "kind": "recipe",
+        "label": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+      },
+      {
+        "key": "1.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“是实际吃下的熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "35ffd751-c0c8-4d70-ae0e-b6008bf86f73"
+  },
+  {
+    "case": "20_advanced_mixed",
+    "input": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。",
+    "mode": "advanced",
+    "state": "needs_input",
+    "assessment": "Valid review plus false blocker",
+    "note": "As expected, Advanced asks to review dish_256; rice / 100 g and curry chicken / 150 g are retained. “都是煮熟后吃下的重量” becomes an unsupported extra food. Advanced needs_input alone is not a failure; the false extra food is the issue.",
+    "expected_catalogue_ids": [
+      "dish_256",
+      "rice"
+    ],
+    "observed_food_ids": [
+      "dish_256",
+      "rice",
+      null
+    ],
+    "questions": [
+      {
+        "key": "0.recipe",
+        "kind": "recipe",
+        "label": "咖喱鸡采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+      },
+      {
+        "key": "2.food_id",
+        "kind": "unsupported",
+        "label": "数据库未找到“都是煮熟后吃下的重量”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "calories": null,
+    "analysis_id": "8b0f44cf-3d09-4b0c-9767-0383b0e65c05"
+  }
+]

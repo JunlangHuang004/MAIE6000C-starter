@@ -6,6 +6,7 @@
   let analysis = null, busy = false, timer = null, catalogue = [];
   let questionVersion = '', notice = {raw:'', error:false};
   let ingredientEditor = null;
+  let mealEditorOpen = false;
   let foodLimit = 20;
   const views = ['meal','diary','trends','profile'];
   let activeView = 'meal';
@@ -166,8 +167,12 @@ async function api(path,method='GET',body){
     const answerable = (analysis?.questions || []).some(q => ['number','choice','food','confirm','recipe'].includes(q.kind));
     $('answer-submit').hidden = !answerable;
     $('answer-submit').disabled = locked || !answerable;
-    document.querySelector('[data-i18n="answerHelp"]').hidden = !answerable;
-    $('confirm').disabled = locked || analysis?.status !== 'completed' || !!ingredientEditor;
+    $('answer-help').hidden = !answerable;
+    $('edit-meal').disabled = locked;
+    $('confirm').disabled = locked || analysis?.status !== 'completed' || !!ingredientEditor || hasPendingMealEdit();
+    $('pending-edit-notice').hidden = !hasPendingMealEdit();
+    $('pending-edit-notice').dataset.i18n = provider === 'demo' ? 'pendingOfflineEdit' : 'pendingMealEdit';
+    $('pending-edit-notice').textContent = I.t($('pending-edit-notice').dataset.i18n);
     $('reply').disabled = locked;
     $('mode').disabled = !currentUser || !!analysis || busy;
     $('switch-mode').hidden = !analysis || analysis.status === 'confirmed';
@@ -418,7 +423,15 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       const yieldLabel = row.querySelector('[data-yield-label]');
       if (yieldLabel) yieldLabel.textContent = I.t('batchYield');
       const acceptLabel = row.querySelector('[data-accept-label]');
-      if (acceptLabel) acceptLabel.textContent = I.t('acceptRecipe');
+      if (acceptLabel) acceptLabel.textContent = I.t('recipeAcceptLabel');
+      const adjustment = row.querySelector('[data-recipe-adjust-label]');
+      if (adjustment) adjustment.textContent = I.t('recipeAdjust');
+      const preview = row.querySelector('[data-recipe-preview]');
+      if (preview) preview.textContent = I.t(row.dataset.recipeEdited ? 'recipePreviewEdited' : 'recipePreview',{
+        ingredients:q.ingredients.map(ing => I.foodName(ing.id,ing.name) + ' ' +
+          (row.querySelector('[data-ingredient="' + ing.id + '"]').value || '—') + I.t('grams')).join(I.getLanguage() === 'en' ? ', ' : '、'),
+        yield:row.querySelector('[data-yield]').value || '—'
+      });
       const builder = row.querySelector('[data-build-ingredients]');
       if (builder) builder.textContent = I.t('ingredientBuild');
     }
@@ -466,23 +479,29 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         row.append(note,input,checked);
       } else if (q.kind === 'recipe') {
         const method = el('p'); method.dataset.recipeMethod = 'true'; row.append(method);
+        const preview = el('p'); preview.className = 'recipe-reference'; preview.dataset.recipePreview = 'true'; row.append(preview);
+        const adjust = el('details'); adjust.className = 'recipe-adjust';
+        const adjustLabel = el('summary'); adjustLabel.dataset.recipeAdjustLabel = 'true'; adjust.append(adjustLabel);
         for (const ingredient of q.ingredients) {
           const line = el('div'); line.className = 'ingredient';
           const input = numberInput(ingredient.grams);
           input.dataset.ingredient = ingredient.id; input.id = 'q-' + q.key + '-' + ingredient.id;
           const ingredientLabel = el('label'); ingredientLabel.htmlFor = input.id;
           ingredientLabel.dataset.ingredientLabel = ingredient.id;
-          line.append(ingredientLabel,input); row.append(line);
+          line.append(ingredientLabel,input); adjust.append(line);
         }
         const yieldInput = numberInput(q.recipe.yield_g,0.1);
         yieldInput.dataset.yield = 'true'; yieldInput.id = 'yield-' + q.key;
         const yieldLabel = el('label'); yieldLabel.htmlFor = yieldInput.id;
-        yieldLabel.dataset.yieldLabel = 'true'; row.append(yieldLabel,yieldInput);
+        yieldLabel.dataset.yieldLabel = 'true'; adjust.append(yieldLabel,yieldInput); row.append(adjust);
         const accept = el('input'); accept.type = 'checkbox';
         accept.dataset.accept = 'true'; accept.id = 'accept-' + q.key;
-        const acceptLabel = el('label'); acceptLabel.htmlFor = accept.id;
+        const acceptLabel = el('label'); acceptLabel.htmlFor = accept.id; acceptLabel.className = 'recipe-accept';
         const acceptText = el('span'); acceptText.dataset.acceptLabel = 'true';
         acceptLabel.append(accept,acceptText); row.append(acceptLabel);
+        adjust.addEventListener('input',() => {
+          accept.checked = false; row.dataset.recipeEdited = 'true'; translateQuestions();
+        });
       }
       box.append(row);
     }
@@ -578,6 +597,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     $('ingredient-accepted').checked = false;
     $('ingredient-editor-warning').hidden = true;
     $('ingredient-builder').hidden = false;
+    mealEditorOpen = true; $('dialogue').hidden = false;
     renderIngredientRows(recipe?.ingredients?.length ? recipe.ingredients : [{food_id:'',grams:''}]);
     selectView('meal');
     $('ingredient-builder').scrollIntoView?.({block:'nearest',behavior:'smooth'});
@@ -663,13 +683,33 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       $('history').append(bubble);
     }
   }
+  function hasPendingMealEdit() {
+    return analysis?.status === 'completed' && (
+      (!$('reply-form').hidden && !!$('reply').value.trim()) ||
+      (!$('offline-correction').hidden && $('offline-meal').value !== analysis.food_text));
+  }
   function renderEvidence() {
     const open = new Map(Array.from($('evidence').children).map(block => [block.dataset.item,block.open]));
     $('evidence').replaceChildren();
     for (const [index,detail] of (analysis.details || []).entries()) {
       const block = el('details'); block.dataset.item = detail.food_id + ':' + index;
       block.open = open.get(block.dataset.item) ?? false;
-      block.append(el('summary',`${detailLabel(detail)} · ${detail.nutrients.calories} kcal`));
+      const summary = el('summary'), title = el('span',detailLabel(detail)); title.className = 'food-summary';
+      const badges = el('span'); badges.className = 'food-badges';
+      const item = analysis.draft?.[index] || {};
+      const referencePortion = ['default_portion','portion_reference'].includes(detail.quantity_provenance?.kind);
+      const recipe = catalogue.find(food => food.id === detail.food_id)?.kind === 'recipe';
+      const referenceRecipe = recipe && (item.recipe_assumed || !item.recipe_confirmed);
+      const badgeKeys = [];
+      if (referencePortion) badgeKeys.push(['referencePortionBadge',true]);
+      else if (detail.quantity_provenance?.kind === 'user_grams') badgeKeys.push(['measuredWeightBadge',false]);
+      if (recipe) badgeKeys.push([referenceRecipe ? 'referenceRecipeBadge' : 'reviewedRecipeBadge',referenceRecipe]);
+      if (detail.kind === 'custom_recipe') badgeKeys.push(['customRecipeBadge',false]);
+      for (const [key,reference] of badgeKeys) {
+        const badge = el('span',I.t(key)); badge.className = 'food-badge' + (reference ? ' reference' : ''); badges.append(badge);
+      }
+      title.append(badges); const kcal = el('span',detail.nutrients.calories + ' kcal'); kcal.className = 'food-calories';
+      summary.append(title,kcal); block.append(summary);
       quantityEvidence(detail,block);
       for (const assumption of detail.assumptions || []) block.append(el('p',I.assumption(assumption,detail.food_id)));
       const sources = el('p'); sources.className = 'sources';
@@ -686,13 +726,28 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       }
       block.append(sources); $('evidence').append(block);
     }
+    const hasReference = !!$('evidence').querySelector('.food-badge.reference');
+    $('estimate-basis').hidden = !hasReference;
+    $('estimate-basis').textContent = hasReference ? I.t('referenceBasis') : '';
   }
   function render() {
     const state = analysis?.status;
-    $('dialogue').hidden = !analysis;
+    $('composer-card').classList.toggle('has-meal',!!analysis);
+    $('composer-title').textContent = I.t(analysis ? 'submittedMeal' : 'composerTitle');
+    $('meal-input').hidden = !!analysis;
+    $('submitted-meal').hidden = !analysis;
+    $('submitted-meal').textContent = analysis?.food_text || '';
+    $('mode-picker').hidden = !!analysis; $('mode-help').hidden = !!analysis; $('composer-note').hidden = !!analysis;
+    $('history-panel').hidden = !analysis;
+    $('dialogue').hidden = !analysis || !(['needs_input','failed'].includes(state) || (state === 'completed' && mealEditorOpen));
+    $('edit-meal').hidden = state !== 'completed';
+    $('edit-meal').setAttribute('aria-expanded',String(mealEditorOpen));
     $('result').hidden = !analysis || !['completed','confirmed'].includes(state);
     $('answer-form').hidden = state !== 'needs_input';
     const custom = analysis?.draft?.some(item => item.custom_recipe);
+    $('edit-meal').textContent = I.t(mealEditorOpen ? 'closeMealEdit' : custom ? 'editIngredients' : 'editMeal');
+    $('answer-help').dataset.i18n = custom ? 'customAnswerHelp' : 'answerHelp';
+    $('answer-help').textContent = I.t(custom ? 'customAnswerHelp' : 'answerHelp');
     $('reply-form').hidden = provider === 'demo' || !['needs_input','completed','failed'].includes(state) || !!custom;
     $('offline-correction').hidden = provider !== 'demo' || !['completed','failed'].includes(state) || !!custom;
     $('custom-recipe-guidance').hidden = !custom || !['needs_input','completed','failed'].includes(state);
@@ -703,7 +758,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     renderIngredientActions();
     if (analysis) {
       $('mode').value = analysis.mode; modeHelp();
-      $('dialogue-title').textContent = I.t(analysis.mode === 'basic' ? 'basicDialogue' : 'advancedDialogue');
+      $('dialogue-title').textContent = I.t(state === 'needs_input' ? 'clarifyHeading' : state === 'failed' ? 'retryHeading' : 'correctingHeading');
       renderHistory();
       if (state === 'needs_input') renderQuestions();
       $('status').textContent = I.t(analysis.mode) + ' · ' + I.t(state);
@@ -713,7 +768,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       for (const key of ['calories','protein_g','carbs_g','fat_g']) $(key).textContent = analysis[key] ?? '—';
       $('record').textContent = I.t('record',{id:analysis.id,revision:analysis.revision});
       $('confirm').hidden = state === 'confirmed';
-      $('review-help').textContent = I.t(state === 'confirmed' ? 'confirmedHelp' : provider==='demo' ? 'offlineReviewHelp' : 'reviewHelp');
+      $('review-help').textContent = I.t(state === 'confirmed' ? 'confirmedHelp' : custom ? 'customReviewHelp' : provider==='demo' ? 'offlineReviewHelp' : 'reviewHelp');
       renderEvidence();
     }
     renderMealDate();
@@ -721,7 +776,9 @@ $('trend-today').addEventListener('click',()=>loadTracking());
   }
   function saved(data) {
     if (!currentUser) return;
+    const previous = analysis;
     analysis = data.analysis || data;
+    if (!previous || previous.id !== analysis.id || previous.revision !== analysis.revision) mealEditorOpen = false;
     stored.set(analysisKey(),analysis.id);
     $('offline-meal').value = analysis.food_text;
     void refreshRecent(true);
@@ -737,7 +794,12 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     try {
       const next = await api('/analyses/' + encodeURIComponent(id));
       if (!currentUser || analysis?.id !== id) return;
+      const finished = analysis.status === 'queued' && next.status !== 'queued';
       analysis = next; render();
+      if (finished && activeView === 'meal') {
+        const target = ['completed','confirmed'].includes(next.status) ? $('result') : $('dialogue');
+        target.scrollIntoView?.({block:'start',behavior:'smooth'});
+      }
       if (next.status === 'queued') timer = setTimeout(poll,1500);
       else if (next.status === 'needs_input') message({key:next.questions?.some(q => q.kind === 'unsupported') ? 'unsupportedMessage' : 'needsInputMessage'});
       else if (next.status === 'failed') message(next.error_message || {key:'failedMessage'},true);
@@ -751,6 +813,15 @@ async function submit(work){if(busy||!currentUser)return;const version=sessionVe
     event.preventDefault();
     submit(async () => saved(await api('/analyses','POST',{food_text:$('meal').value,mode:$('mode').value})));
   });
+  $('edit-meal').addEventListener('click',() => {
+    if (busy || analysis?.status !== 'completed') return;
+    mealEditorOpen = !mealEditorOpen; render();
+    if (mealEditorOpen) {
+      $('dialogue').scrollIntoView?.({block:'start',behavior:'smooth'});
+      if (!$('reply-form').hidden) $('reply').focus();
+      else $('dialogue-title').focus();
+    }
+  });
   $('reply-form').addEventListener('submit',event => {
     event.preventDefault();
     submit(async () => {
@@ -759,6 +830,7 @@ async function submit(work){if(busy||!currentUser)return;const version=sessionVe
       $('reply').value = '';
     });
   });
+  for (const id of ['reply','offline-meal']) $(id).addEventListener('input',controls);
   $('answer-form').addEventListener('submit',event => {
     event.preventDefault();
     submit(async () => {
@@ -784,7 +856,8 @@ async function submit(work){if(busy||!currentUser)return;const version=sessionVe
         }
         answers[row.dataset.key] = value;
       }
-      if (!Object.keys(answers).length) throw Error('请至少回答一个问题，或使用下方对话补充。');
+      if (!Object.keys(answers).length) throw Error(analysis.draft?.some(item => item.custom_recipe)
+        ? I.t('customAnswerRequired') : '请至少回答一个问题，或使用下方对话补充。');
       saved(await api('/analyses/' + analysis.id + '/reply','POST',{revision:analysis.revision,answers}));
     });
   });
@@ -818,6 +891,7 @@ async function submit(work){if(busy||!currentUser)return;const version=sessionVe
     });
   });
 $('confirm').addEventListener('click',()=>{
+ if(hasPendingMealEdit())return;
  if(!$('meal-date').reportValidity())return;
  const consumedOn=$('meal-date').value;
  submit(async()=>{
@@ -828,7 +902,7 @@ $('confirm').addEventListener('click',()=>{
 });
   $('new').addEventListener('click',() => {
     selectView('meal');
-    clearTimeout(timer); analysis = null; questionVersion = '';
+    clearTimeout(timer); analysis = null; questionVersion = ''; mealEditorOpen = false;
     stored.remove(analysisKey());
     closeIngredientEditor();$('offline-meal').value='';
     $('meal').value = ''; $('reply').value = ''; message(''); render(); $('meal').focus();

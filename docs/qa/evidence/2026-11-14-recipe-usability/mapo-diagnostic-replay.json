@@ -1,0 +1,90 @@
+{
+  "input": "麻婆豆腐200克",
+  "mode": "advanced",
+  "diagnostic_replay": true,
+  "http_status": 200,
+  "finish_reason": "stop",
+  "model_content": "{\"items\":[{\"food_id\":\"dish_004\",\"name\":\"麻婆豆腐\",\"source_text\":\"麻婆豆腐\",\"grams\":200,\"weight_basis\":\"cooked\",\"preparation\":\"braised\",\"oil_g\":null,\"uncertainty\":null,\"recipe_ingredients\":null,\"recipe_yield_g\":null,\"portion_count\":null,\"portion_unit\":null,\"weight_includes_inedible\":null}]}",
+  "result": {
+    "draft": [
+      {
+        "food_id": "dish_004",
+        "name": "麻婆豆腐",
+        "source_text": "麻婆豆腐",
+        "grams": 200.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.recipe",
+        "label": "麻婆豆腐采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+        "kind": "recipe",
+        "recipe": {
+          "yield_g": 620.0,
+          "ingredients": {
+            "tofu_soft": 400.0,
+            "pork_ground": 80.0,
+            "oil": 15.0,
+            "soy_sauce": 20.0,
+            "chili": 10.0,
+            "starch": 10.0,
+            "water": 150.0
+          }
+        },
+        "method": "烧（简化家常配方，不含豆瓣酱）",
+        "ingredients": [
+          {
+            "id": "tofu_soft",
+            "name": "软豆腐（硫酸钙及卤水）",
+            "grams": 400.0
+          },
+          {
+            "id": "pork_ground",
+            "name": "生猪肉末",
+            "grams": 80.0
+          },
+          {
+            "id": "oil",
+            "name": "大豆食用油",
+            "grams": 15.0
+          },
+          {
+            "id": "soy_sauce",
+            "name": "普通酱油",
+            "grams": 20.0
+          },
+          {
+            "id": "chili",
+            "name": "生红辣椒",
+            "grams": 10.0
+          },
+          {
+            "id": "starch",
+            "name": "玉米淀粉",
+            "grams": 10.0
+          },
+          {
+            "id": "water",
+            "name": "饮用水",
+            "grams": 150.0
+          }
+        ]
+      }
+    ],
+    "details": [],
+    "interpreted_food_text": null,
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null
+  }
+}

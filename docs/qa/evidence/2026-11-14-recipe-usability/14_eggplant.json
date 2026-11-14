@@ -1,0 +1,76 @@
+{
+  "case": "14_eggplant",
+  "input": "鱼香茄子100克，是不放肉的那种。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_154"
+  ],
+  "http_status": 201,
+  "elapsed_s": 5.2,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "鱼香茄子100克，是不放肉的那种。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "f833012e-4267-4d0f-bd8f-8990b902e243",
+      "food_text": "鱼香茄子100克，是不放肉的那种。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:30.219420Z",
+      "updated_at": "2026-11-14T05:29:30.219423Z"
+    },
+    "job": {
+      "id": 27,
+      "case_id": null,
+      "analysis_id": "f833012e-4267-4d0f-bd8f-8990b902e243",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:30.222203Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "鱼香茄子100克，是不放肉的那种。"
+      }
+    ],
+    "draft": [],
+    "questions": [],
+    "details": [],
+    "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "f833012e-4267-4d0f-bd8f-8990b902e243",
+    "food_text": "鱼香茄子100克，是不放肉的那种。",
+    "status": "failed",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:30.219420Z",
+    "updated_at": "2026-11-14T05:29:34.426959Z"
+  }
+}

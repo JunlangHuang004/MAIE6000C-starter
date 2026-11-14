@@ -1,0 +1,137 @@
+{
+  "case": "04_chicken_share",
+  "input": "宫保鸡丁，我吃了半盘，大概一人份。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_003"
+  ],
+  "http_status": 201,
+  "elapsed_s": 5.2,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "宫保鸡丁，我吃了半盘，大概一人份。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "dc4ab00d-a87e-430f-a516-2c79d1fbb510",
+      "food_text": "宫保鸡丁，我吃了半盘，大概一人份。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:00.047949Z",
+      "updated_at": "2026-11-14T05:29:00.047953Z"
+    },
+    "job": {
+      "id": 17,
+      "case_id": null,
+      "analysis_id": "dc4ab00d-a87e-430f-a516-2c79d1fbb510",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:00.054777Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "宫保鸡丁，我吃了半盘，大概一人份。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“我吃了半盘”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“大概一人份”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_003",
+        "name": "宫保鸡丁",
+        "source_text": "宫保鸡丁",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": 1.0,
+        "portion_unit": "serving",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "用户表示吃了半盘，一人份，具体克数未知，需要追问。"
+      },
+      {
+        "food_id": null,
+        "name": "我吃了半盘",
+        "source_text": "我吃了半盘",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "大概一人份",
+        "source_text": "大概一人份",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“我吃了半盘”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      },
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“大概一人份”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "dc4ab00d-a87e-430f-a516-2c79d1fbb510",
+    "food_text": "宫保鸡丁，我吃了半盘，大概一人份。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:00.047949Z",
+    "updated_at": "2026-11-14T05:29:04.598416Z"
+  }
+}

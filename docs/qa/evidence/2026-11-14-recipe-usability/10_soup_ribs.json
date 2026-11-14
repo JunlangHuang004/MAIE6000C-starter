@@ -1,0 +1,76 @@
+{
+  "case": "10_soup_ribs",
+  "input": "一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_071"
+  ],
+  "http_status": 201,
+  "elapsed_s": 4.2,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "794d27f2-c800-4ffa-9675-44159836546b",
+      "food_text": "一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:17.682671Z",
+      "updated_at": "2026-11-14T05:29:17.682675Z"
+    },
+    "job": {
+      "id": 23,
+      "case_id": null,
+      "analysis_id": "794d27f2-c800-4ffa-9675-44159836546b",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:17.692681Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。"
+      }
+    ],
+    "draft": [],
+    "questions": [],
+    "details": [],
+    "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "794d27f2-c800-4ffa-9675-44159836546b",
+    "food_text": "一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。",
+    "status": "failed",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:17.682671Z",
+    "updated_at": "2026-11-14T05:29:21.680514Z"
+  }
+}

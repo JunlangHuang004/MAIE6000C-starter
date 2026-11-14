@@ -1,0 +1,102 @@
+{
+  "case": "07_veg_plate",
+  "input": "吃了一小盘酸辣土豆丝。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_022"
+  ],
+  "http_status": 201,
+  "elapsed_s": 7.3,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "吃了一小盘酸辣土豆丝。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "f99698dd-eb38-4aad-bb92-2329a72d11de",
+      "food_text": "吃了一小盘酸辣土豆丝。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:07.250744Z",
+      "updated_at": "2026-11-14T05:29:07.250747Z"
+    },
+    "job": {
+      "id": 20,
+      "case_id": null,
+      "analysis_id": "f99698dd-eb38-4aad-bb92-2329a72d11de",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:07.251901Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "吃了一小盘酸辣土豆丝。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“吃了一小盘酸辣土豆丝。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "吃了一小盘酸辣土豆丝。",
+        "source_text": null,
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": 1.0,
+        "portion_unit": "serving",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "label": "数据库未找到“吃了一小盘酸辣土豆丝。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "f99698dd-eb38-4aad-bb92-2329a72d11de",
+    "food_text": "吃了一小盘酸辣土豆丝。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:07.250744Z",
+    "updated_at": "2026-11-14T05:29:14.158511Z"
+  }
+}

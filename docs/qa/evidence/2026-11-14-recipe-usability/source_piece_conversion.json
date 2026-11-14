@@ -1,0 +1,202 @@
+[
+  {
+    "kind": "deterministic current-container source reproduction, not HTTP/model",
+    "input": {
+      "food_id": "dish_005",
+      "name": "红烧肉",
+      "portion_count": 3,
+      "portion_unit": "piece"
+    },
+    "result": {
+      "draft": [
+        {
+          "food_id": "dish_005",
+          "name": "红烧肉",
+          "portion_count": 3,
+          "portion_unit": "piece",
+          "weight_includes_inedible": false
+        }
+      ],
+      "questions": [],
+      "details": [
+        {
+          "name": "红烧肉",
+          "grams": 600,
+          "food_id": "dish_005",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 3027.2,
+            "protein_g": 52.5,
+            "carbs_g": 35.0,
+            "fat_g": 296.2
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "未提供克数，暂按 3 个、每个 200g，共 600g 估算。",
+            "未说明重量状态，暂按熟可食重量计算。",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：红烧",
+            "整锅成品 450g；本次食用 600g",
+            "整锅配料：生五花肉 400g、白砂糖 25g、普通酱油 25g、大豆食用油 10g、饮用水 200g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "167812",
+              "url": "https://fdc.nal.usda.gov/food-details/167812/nutrients",
+              "description": "Pork, fresh, belly, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169655",
+              "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+              "description": "Sugars, granulated",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173647",
+              "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+              "description": "Beverages, water, tap, drinking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "portion_reference",
+            "input_grams": null,
+            "calculated_grams": 600,
+            "portion_count": 3,
+            "portion_unit": "piece",
+            "reference_grams": 200.0
+          }
+        }
+      ],
+      "calories": 3027.2,
+      "protein_g": 52.5,
+      "carbs_g": 35.0,
+      "fat_g": 296.2,
+      "interpreted_food_text": "红烧肉 600g"
+    }
+  },
+  {
+    "kind": "deterministic current-container source reproduction, not HTTP/model",
+    "input": {
+      "food_id": "dish_252",
+      "name": "可乐鸡翅",
+      "portion_count": 4,
+      "portion_unit": "piece"
+    },
+    "result": {
+      "draft": [
+        {
+          "food_id": "dish_252",
+          "name": "可乐鸡翅",
+          "portion_count": 4,
+          "portion_unit": "piece",
+          "weight_includes_inedible": false
+        }
+      ],
+      "questions": [],
+      "details": [
+        {
+          "name": "可乐鸡翅",
+          "grams": 800,
+          "food_id": "dish_252",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 1746.1,
+            "protein_g": 138.3,
+            "carbs_g": 37.9,
+            "fat_g": 112.3
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "未提供克数，暂按 4 个、每个 200g，共 800g 估算。",
+            "未说明重量状态，暂按熟可食重量计算。",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：鸡翅可食肉加普通含糖可乐焖煮收汁；油按成品摄入量估算，不含骨头",
+            "整锅成品 520g；本次食用 800g",
+            "整锅配料：生带皮鸡翅可食部分 500g、含糖可乐 200g、普通酱油 25g、生姜 15g、大豆食用油 8g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "172390",
+              "url": "https://fdc.nal.usda.gov/food-details/172390/nutrients",
+              "description": "Chicken, broilers or fryers, wing, meat and skin, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174852",
+              "url": "https://fdc.nal.usda.gov/food-details/174852/nutrients",
+              "description": "Beverages, carbonated, cola, regular",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169231",
+              "url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+              "description": "Ginger root, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "portion_reference",
+            "input_grams": null,
+            "calculated_grams": 800,
+            "portion_count": 4,
+            "portion_unit": "piece",
+            "reference_grams": 200.0
+          }
+        }
+      ],
+      "calories": 1746.1,
+      "protein_g": 138.3,
+      "carbs_g": 37.9,
+      "fat_g": 112.3,
+      "interpreted_food_text": "可乐鸡翅 800g"
+    }
+  }
+]

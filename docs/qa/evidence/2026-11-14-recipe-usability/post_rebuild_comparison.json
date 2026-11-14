@@ -1,0 +1,1045 @@
+[
+  {
+    "case": "03_pork_pieces",
+    "input": "晚饭吃了三块红烧肉。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "0.food_id",
+          "label": "数据库未找到“晚饭吃了三块红烧肉。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "0.grams",
+          "label": "红烧肉吃了多少克？请填可食部分重量。",
+          "kind": "number",
+          "min": 0.1,
+          "max": 10000
+        }
+      ],
+      "calories": null,
+      "draft": [
+        {
+          "food_id": "dish_005",
+          "name": "红烧肉",
+          "source_text": "红烧肉",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": 3.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "Please specify the weight of the red-braised pork belly."
+        }
+      ]
+    },
+    "assessment": "Correct known dish retained; only edible-gram question; no unsupported extra food or invented per-piece weight."
+  },
+  {
+    "case": "15_wings_count",
+    "input": "吃了4个可乐鸡翅，骨头没有吃。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“骨头没有吃”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "0.grams",
+          "label": "可乐鸡翅吃了多少克？请填可食部分重量。",
+          "kind": "number",
+          "min": 0.1,
+          "max": 10000
+        }
+      ],
+      "calories": null,
+      "draft": [
+        {
+          "food_id": "dish_252",
+          "name": "可乐鸡翅",
+          "source_text": "可乐鸡翅",
+          "grams": null,
+          "weight_includes_inedible": true,
+          "weight_basis": null,
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": 4.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "The weight of the cola chicken wings was not specified."
+        }
+      ]
+    },
+    "assessment": "Correct known dish retained; only edible-gram question; no unsupported extra food or invented per-piece weight."
+  },
+  {
+    "case": "02_pork_grams",
+    "input": "青椒肉丝150克，称的是炒熟后实际吃下的净重。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“称的是炒熟后实际吃下的净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "completed",
+      "questions": [],
+      "calories": 149.1,
+      "draft": [
+        {
+          "food_id": "dish_002",
+          "name": "青椒肉丝",
+          "source_text": "青椒肉丝",
+          "grams": 150.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "details": [
+        {
+          "name": "青椒肉丝",
+          "grams": 150.0,
+          "food_id": "dish_002",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 149.1,
+            "protein_g": 16.0,
+            "carbs_g": 5.2,
+            "fat_g": 7.1
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：炒",
+            "整锅成品 420g；本次食用 150g",
+            "整锅配料：生猪里脊 200g、生青椒 200g、大豆食用油 15g、普通酱油 15g、玉米淀粉 5g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168249",
+              "url": "https://fdc.nal.usda.gov/food-details/168249/nutrients",
+              "description": "Pork, fresh, loin, tenderloin, separable lean only, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170427",
+              "url": "https://fdc.nal.usda.gov/food-details/170427/nutrients",
+              "description": "Peppers, sweet, green, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169698",
+              "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+              "description": "Cornstarch",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 150.0,
+            "calculated_grams": 150.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ]
+    },
+    "structured_review_steps": 0,
+    "assessment": "No phantom food; completed with labeled Basic reference assumptions."
+  },
+  {
+    "case": "05_fish_grams",
+    "input": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“熟鱼肉净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        },
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“没有骨头”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "completed",
+      "questions": [],
+      "calories": 222.5,
+      "draft": [
+        {
+          "food_id": "dish_123",
+          "name": "清蒸鳕鱼",
+          "source_text": "清蒸鳕鱼",
+          "grams": 200.0,
+          "weight_includes_inedible": false,
+          "weight_basis": "cooked",
+          "preparation": "steamed",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "details": [
+        {
+          "name": "清蒸鳕鱼",
+          "grams": 200.0,
+          "food_id": "dish_123",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 222.5,
+            "protein_g": 40.1,
+            "carbs_g": 2.8,
+            "fat_g": 4.7
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：鳕鱼肉配姜葱蒸制；去骨称重",
+            "整锅成品 320g；本次食用 200g",
+            "整锅配料：生大西洋鳕鱼 350g、生姜 15g、生葱 15g、普通酱油 15g、大豆食用油 5g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171955",
+              "url": "https://fdc.nal.usda.gov/food-details/171955/nutrients",
+              "description": "Fish, cod, Atlantic, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169231",
+              "url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+              "description": "Ginger root, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170005",
+              "url": "https://fdc.nal.usda.gov/food-details/170005/nutrients",
+              "description": "Onions, spring or scallions (includes tops and bulb), raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 200.0,
+            "calculated_grams": 200.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ]
+    },
+    "structured_review_steps": 0,
+    "assessment": "No phantom food; completed with labeled Basic reference assumptions."
+  },
+  {
+    "case": "13_mixed_grams",
+    "input": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“都已经煮熟了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "completed",
+      "questions": [],
+      "calories": 212.5,
+      "draft": [
+        {
+          "food_id": "dish_004",
+          "name": "麻婆豆腐",
+          "source_text": "麻婆豆腐",
+          "grams": 80.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": "rice",
+          "name": "白米饭",
+          "source_text": "白米饭",
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "boiled",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "details": [
+        {
+          "name": "麻婆豆腐",
+          "grams": 80.0,
+          "food_id": "dish_004",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 82.5,
+            "protein_g": 5.7,
+            "carbs_g": 2.0,
+            "fat_g": 6.0
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：烧（简化家常配方，不含豆瓣酱）",
+            "整锅成品 620g；本次食用 80g",
+            "整锅配料：软豆腐（硫酸钙及卤水） 400g、生猪肉末 80g、大豆食用油 15g、普通酱油 20g、生红辣椒 10g、玉米淀粉 10g、饮用水 150g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "172449",
+              "url": "https://fdc.nal.usda.gov/food-details/172449/nutrients",
+              "description": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "167902",
+              "url": "https://fdc.nal.usda.gov/food-details/167902/nutrients",
+              "description": "Pork, fresh, ground, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170106",
+              "url": "https://fdc.nal.usda.gov/food-details/170106/nutrients",
+              "description": "Peppers, hot chili, red, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169698",
+              "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+              "description": "Cornstarch",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173647",
+              "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+              "description": "Beverages, water, tap, drinking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 80.0,
+            "calculated_grams": 80.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        },
+        {
+          "name": "白米饭",
+          "grams": 100.0,
+          "food_id": "rice",
+          "item_index": 1,
+          "nutrients": {
+            "calories": 130.0,
+            "protein_g": 2.7,
+            "carbs_g": 28.2,
+            "fat_g": 0.3
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "按 白米饭 的每100g可食部分数据计算",
+            "做法：水煮；另计食用油 0g",
+            "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168878",
+              "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+              "description": "Rice, white, long-grain, regular, enriched, cooked",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 100.0,
+            "calculated_grams": 100.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ]
+    },
+    "structured_review_steps": 0,
+    "assessment": "No phantom food; completed with labeled Basic reference assumptions."
+  },
+  {
+    "case": "16_cucumber_no_oil",
+    "input": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "0.food_id",
+          "label": "数据库未找到“一小碟拍黄瓜，没有加香油，也没加其他油。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "completed",
+      "questions": [],
+      "calories": 51.9,
+      "draft": [
+        {
+          "food_id": "dish_016",
+          "name": "拍黄瓜",
+          "source_text": "拍黄瓜",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": "other",
+          "oil_g": 0.0,
+          "portion_count": 1.0,
+          "portion_unit": "serving",
+          "recipe_ingredients": {
+            "sesame_oil": 0.0,
+            "oil": 0.0
+          },
+          "recipe_yield_g": null,
+          "uncertainty": "请确认凉拌黄瓜的重量和油量。"
+        }
+      ],
+      "details": [
+        {
+          "name": "凉拌黄瓜",
+          "grams": 200.0,
+          "food_id": "dish_016",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 51.9,
+            "protein_g": 2.2,
+            "carbs_g": 11.4,
+            "fat_g": 0.3
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "未提供克数，暂按 1 份、每份 200g，共 200g 估算。",
+            "未说明重量状态，暂按熟可食重量计算。",
+            "待核实：请确认凉拌黄瓜的重量和油量。",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：凉拌",
+            "整锅成品 350g；本次食用 200g",
+            "整锅配料：带皮生黄瓜 300g、生大蒜 10g、蒸馏醋 20g、普通酱油 15g、芝麻油 0g、白砂糖 5g、大豆食用油 0g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168409",
+              "url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+              "description": "Cucumber, with peel, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169230",
+              "url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+              "description": "Garlic, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "172237",
+              "url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+              "description": "Vinegar, distilled",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171016",
+              "url": "https://fdc.nal.usda.gov/food-details/171016/nutrients",
+              "description": "Oil, sesame, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169655",
+              "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+              "description": "Sugars, granulated",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "portion_reference",
+            "input_grams": null,
+            "calculated_grams": 200.0,
+            "portion_count": 1.0,
+            "portion_unit": "serving",
+            "reference_grams": 200.0
+          }
+        }
+      ]
+    },
+    "structured_review_steps": 0,
+    "assessment": "No phantom food; completed with labeled Basic reference assumptions."
+  },
+  {
+    "case": "19_advanced_recipe",
+    "input": "番茄炒蛋200克，是实际吃下的熟食净重。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "0.recipe",
+          "label": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+          "kind": "recipe",
+          "recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 15.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          },
+          "method": "炒",
+          "ingredients": [
+            {
+              "id": "tomato",
+              "name": "生番茄",
+              "grams": 300.0
+            },
+            {
+              "id": "egg_raw",
+              "name": "生鸡蛋液",
+              "grams": 150.0
+            },
+            {
+              "id": "oil",
+              "name": "大豆食用油",
+              "grams": 15.0
+            },
+            {
+              "id": "sugar",
+              "name": "白砂糖",
+              "grams": 5.0
+            },
+            {
+              "id": "salt",
+              "name": "食盐",
+              "grams": 2.0
+            }
+          ]
+        },
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“是实际吃下的熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "completed",
+      "questions": [],
+      "calories": 210.2,
+      "draft": [
+        {
+          "food_id": "dish_001",
+          "name": "番茄炒蛋",
+          "source_text": "番茄炒蛋",
+          "grams": 200.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null,
+          "recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 15.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          },
+          "recipe_confirmed": true
+        }
+      ],
+      "details": [
+        {
+          "name": "番茄炒蛋",
+          "grams": 200.0,
+          "food_id": "dish_001",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 210.2,
+            "protein_g": 10.7,
+            "carbs_g": 8.9,
+            "fat_g": 14.9
+          },
+          "assumptions": [
+            "参考做法：炒",
+            "整锅成品 400g；本次食用 200g",
+            "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 15g、白砂糖 5g、食盐 2g",
+            "参考配方已由用户确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170457",
+              "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+              "description": "Tomatoes, red, ripe, raw, year round average",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171287",
+              "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+              "description": "Egg, whole, raw, fresh",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169655",
+              "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+              "description": "Sugars, granulated",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173468",
+              "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+              "description": "Salt, table",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 200.0,
+            "calculated_grams": 200.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ]
+    },
+    "structured_review_steps": 1,
+    "assessment": "No phantom food; exact identity/portion retained. Advanced reference recipe was explicitly reviewed before completion."
+  },
+  {
+    "case": "20_advanced_mixed",
+    "input": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。",
+    "before": {
+      "state": "needs_input",
+      "questions": [
+        {
+          "key": "0.recipe",
+          "label": "咖喱鸡采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+          "kind": "recipe",
+          "recipe": {
+            "yield_g": 850.0,
+            "ingredients": {
+              "chicken_thigh": 400.0,
+              "potato": 200.0,
+              "carrot": 100.0,
+              "onion": 100.0,
+              "curry_powder": 12.0,
+              "oil": 20.0,
+              "water": 180.0,
+              "salt": 3.0
+            }
+          },
+          "method": "去皮鸡腿肉与土豆胡萝卜炖煮，咖喱粉调味；本参考配方不含椰奶或奶油",
+          "ingredients": [
+            {
+              "id": "chicken_thigh",
+              "name": "生去皮鸡腿肉",
+              "grams": 400.0
+            },
+            {
+              "id": "potato",
+              "name": "生土豆",
+              "grams": 200.0
+            },
+            {
+              "id": "carrot",
+              "name": "生胡萝卜",
+              "grams": 100.0
+            },
+            {
+              "id": "onion",
+              "name": "生洋葱",
+              "grams": 100.0
+            },
+            {
+              "id": "curry_powder",
+              "name": "咖喱粉",
+              "grams": 12.0
+            },
+            {
+              "id": "oil",
+              "name": "大豆食用油",
+              "grams": 20.0
+            },
+            {
+              "id": "water",
+              "name": "饮用水",
+              "grams": 180.0
+            },
+            {
+              "id": "salt",
+              "name": "食盐",
+              "grams": 3.0
+            }
+          ]
+        },
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“都是煮熟后吃下的重量”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ]
+    },
+    "after": {
+      "state": "completed",
+      "questions": [],
+      "calories": 295.0,
+      "draft": [
+        {
+          "food_id": "dish_256",
+          "name": "咖喱鸡",
+          "source_text": "咖喱鸡",
+          "grams": 150.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "boiled",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null,
+          "recipe": {
+            "yield_g": 850.0,
+            "ingredients": {
+              "chicken_thigh": 400.0,
+              "potato": 200.0,
+              "carrot": 100.0,
+              "onion": 100.0,
+              "curry_powder": 12.0,
+              "oil": 20.0,
+              "water": 180.0,
+              "salt": 3.0
+            }
+          },
+          "recipe_confirmed": true
+        },
+        {
+          "food_id": "rice",
+          "name": "白米饭",
+          "source_text": "白米饭",
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "boiled",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "details": [
+        {
+          "name": "咖喱鸡",
+          "grams": 150.0,
+          "food_id": "dish_256",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 165.0,
+            "protein_g": 15.3,
+            "carbs_g": 10.7,
+            "fat_g": 6.8
+          },
+          "assumptions": [
+            "参考做法：去皮鸡腿肉与土豆胡萝卜炖煮，咖喱粉调味；本参考配方不含椰奶或奶油",
+            "整锅成品 850g；本次食用 150g",
+            "整锅配料：生去皮鸡腿肉 400g、生土豆 200g、生胡萝卜 100g、生洋葱 100g、咖喱粉 12g、大豆食用油 20g、饮用水 180g、食盐 3g",
+            "参考配方已由用户确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173627",
+              "url": "https://fdc.nal.usda.gov/food-details/173627/nutrients",
+              "description": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170026",
+              "url": "https://fdc.nal.usda.gov/food-details/170026/nutrients",
+              "description": "Potatoes, flesh and skin, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170393",
+              "url": "https://fdc.nal.usda.gov/food-details/170393/nutrients",
+              "description": "Carrots, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170000",
+              "url": "https://fdc.nal.usda.gov/food-details/170000/nutrients",
+              "description": "Onions, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170924",
+              "url": "https://fdc.nal.usda.gov/food-details/170924/nutrients",
+              "description": "Spices, curry powder",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173647",
+              "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+              "description": "Beverages, water, tap, drinking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173468",
+              "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+              "description": "Salt, table",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 150.0,
+            "calculated_grams": 150.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        },
+        {
+          "name": "白米饭",
+          "grams": 100.0,
+          "food_id": "rice",
+          "item_index": 1,
+          "nutrients": {
+            "calories": 130.0,
+            "protein_g": 2.7,
+            "carbs_g": 28.2,
+            "fat_g": 0.3
+          },
+          "assumptions": [
+            "按 白米饭 的每100g可食部分数据计算",
+            "做法：水煮；另计食用油 0g",
+            "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168878",
+              "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+              "description": "Rice, white, long-grain, regular, enriched, cooked",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 100.0,
+            "calculated_grams": 100.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ]
+    },
+    "structured_review_steps": 1,
+    "assessment": "No phantom food; exact identity/portion retained. Advanced reference recipe was explicitly reviewed before completion."
+  }
+]

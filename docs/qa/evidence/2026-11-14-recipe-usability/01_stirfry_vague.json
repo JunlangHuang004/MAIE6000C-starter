@@ -1,0 +1,165 @@
+{
+  "case": "01_stirfry_vague",
+  "input": "午饭吃了一份番茄炒蛋。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_001"
+  ],
+  "http_status": 201,
+  "elapsed_s": 6.3,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "午饭吃了一份番茄炒蛋。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "05b78927-0559-4da3-8f16-c146c809f13c",
+      "food_text": "午饭吃了一份番茄炒蛋。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:28:53.741249Z",
+      "updated_at": "2026-11-14T05:28:53.741250Z"
+    },
+    "job": {
+      "id": 15,
+      "case_id": null,
+      "analysis_id": "05b78927-0559-4da3-8f16-c146c809f13c",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:28:53.743940Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "午饭吃了一份番茄炒蛋。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_001",
+        "name": "番茄炒蛋",
+        "source_text": "番茄炒蛋",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": 1.0,
+        "portion_unit": "serving",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "番茄炒蛋",
+        "grams": 200.0,
+        "food_id": "dish_001",
+        "item_index": 0,
+        "nutrients": {
+          "calories": 210.2,
+          "protein_g": 10.7,
+          "carbs_g": 8.9,
+          "fat_g": 14.9
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "未提供克数，暂按 1 份、每份 200g，共 200g 估算。",
+          "未说明重量状态，暂按熟可食重量计算。",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：炒",
+          "整锅成品 400g；本次食用 200g",
+          "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 15g、白砂糖 5g、食盐 2g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "170457",
+            "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+            "description": "Tomatoes, red, ripe, raw, year round average",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171287",
+            "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+            "description": "Egg, whole, raw, fresh",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169655",
+            "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+            "description": "Sugars, granulated",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "173468",
+            "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+            "description": "Salt, table",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "portion_reference",
+          "input_grams": null,
+          "calculated_grams": 200.0,
+          "portion_count": 1.0,
+          "portion_unit": "serving",
+          "reference_grams": 200.0
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "番茄炒蛋 200g",
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "05b78927-0559-4da3-8f16-c146c809f13c",
+    "food_text": "午饭吃了一份番茄炒蛋。",
+    "status": "completed",
+    "calories": 210.2,
+    "protein_g": 10.7,
+    "carbs_g": 8.9,
+    "fat_g": 14.9,
+    "created_at": "2026-11-14T05:28:53.741249Z",
+    "updated_at": "2026-11-14T05:28:59.691490Z"
+  }
+}

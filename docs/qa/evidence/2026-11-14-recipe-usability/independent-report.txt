@@ -1,0 +1,158 @@
+Independent ordinary-user recipe review — 2026-11-14
+
+Scope and evidence
+Fresh inspection of current source/docs and live catalogue; no previous QA reports or MEMORY were read. Base service http://localhost:8008, provider returned by /foods: hkust. Source baseline supplied by parent: test HEAD 0c9f573. Initial run preceded runtime rebuild. This is a real authenticated HTTP/API review, not browser verification. All accounts and meals were synthetic; none of the initial20 baseline meals were confirmed into a diary. A separate final correction journey was later confirmed, as documented below.
+20 diverse initial model-triggering requests, two in-flight client requests maximum, no automatic retries. One structured recipe-edit request, which does not invoke the model. Initial model total: 20 / cap 24. Polling GETs are logged separately. Raw case responses and request attempts are preserved. Password/session tokens are not included.
+
+Outcome
+{'needs_input': 16, 'completed': 1, 'failed': 3} across 20 initial meals. These are state counts, not a pass rate. One usable reference result; two correctly unsupported dishes; one conservatively unresolved broth-only variant; thirteen known-food inputs blocked by natural-language grounding/coverage behavior; three failed at the model-response boundary. Advanced recipe review is legitimate and is not itself counted as a defect.
+Median end-to-end initial time: 5.2 seconds. This small one-attempt convenience sample is not a population accuracy estimate.
+
+Prioritized findings in the initial snapshot (post-fix outcomes below)
+P1 — Unsupported unit fallback can grossly inflate portions. Deterministic evaluation inside the same isolated container, without a new model request, maps three 红烧肉 pieces to 600 g / 3027.2 kcal and four 可乐鸡翅 pieces to 800 g / 1746.1 kcal. Both use a default 200 g serving as if it were a per-piece reference. Source reproduction is saved in source_piece_conversion.json; the original HTTP cases were blocked before producing totals. Once grounding accepts these sentences, ask for edible grams when that unit lacks an explicit catalogue conversion. Do not invent a piece weight.
+P1 — Helpful meal details are repeatedly converted into unknown foods. Exact known identities and weights can be extracted correctly and then blocked by phrases such as “都已经煮熟了”, “没有骨头”, or “称的是炒熟后实际吃下的净重”. The user is told the database lacks a food corresponding to their explanation. Add narrowly bounded detail grammar while preserving genuinely unknown additions. Avoid broad substring matching or dropping arbitrary clauses.
+P2 — Result assumptions deserve visibility before confirmation. Case01 yields precise-looking 210.2 kcal from an assumed 200 g portion and reference ingredients. Current initial UI source puts quantity provenance and assumptions inside collapsed per-food details (renderEvidence/quantityEvidence). This is a source-based UI observation; no browser layout was inspected here. Surface a compact “reference portion/reference recipe” notice beside results, with an obvious correction/review action.
+P2 — Failure wording loses the available cause distinction. Cases06,10,14 receive the same service-unavailable message. Logs show successful HKUST HTTP200 responses followed by internal AI502. Source narrows this to response envelope/finish_reason/JSON/schema/ingredient validation, but exact fields are not logged. Do not label this a demonstrated provider outage. Offer a clear retry or edit-description recovery route and retain the original meal.
+P2 — Generic no-oil extraction does not remove every recipe oil. A deterministic current-container source reproduction of dish_016 / 100 g / oil_g=0 retains the reference sesame_oil 10 g per batch: 51.2 kcal. Explicit recipe_ingredients.sesame_oil=0 produces 25.9 kcal. Initial HTTP case16 was blocked, so this is a source-level failure mode, not an observed completed user result. See source_recipe_no_oil.json. Broader no-oil matching must preserve ingredient-specific semantics.
+P2 — Supported household, Cantonese and no-oil descriptions remain uneven. The listed dishes in cases03,07,08,09,16 are not absent from the catalogue; surrounding ordinary language blocks matching. Selective broth consumption in case11 is different and should remain unresolved unless its actual consumed composition can be represented.
+
+Initial case matrix
+01_stirfry_vague | basic | completed | Usable reference result
+Input: 午饭吃了一份番茄炒蛋。
+Assessment: Recognized dish_001; completed 200 g / 210.2 kcal. The input gave one serving, not 200 g. Quantity provenance labels this a serving reference. The recipe includes 15 g oil and 5 g sugar per 400 g batch; these are assumptions, not user facts.
+Evidence: 01_stirfry_vague.json
+
+02_pork_grams | basic | needs_input | False extra food
+Input: 青椒肉丝150克，称的是炒熟后实际吃下的净重。
+Assessment: Recognized dish_002 and 150 g cooked, but added “称的是炒熟后实际吃下的净重” as an unsupported food. An ordinary weighing explanation blocks the entire meal.
+Evidence: 02_pork_grams.json
+
+03_pork_pieces | basic | needs_input | Known dish not grounded
+Input: 晚饭吃了三块红烧肉。
+Assessment: “晚饭吃了三块红烧肉。” is treated as an unsupported full food name although 红烧肉 is dish_005. Portion mass genuinely needs clarification unless an explicit piece conversion exists.
+Evidence: 03_pork_pieces.json
+
+04_chicken_share | basic | needs_input | False extra foods
+Input: 宫保鸡丁，我吃了半盘，大概一人份。
+Assessment: Recognized dish_003 but “我吃了半盘” and “大概一人份” become unsupported foods. Half a plate versus a person’s portion is ambiguous; ask a portion question, not a new-food question.
+Evidence: 04_chicken_share.json
+
+05_fish_grams | basic | needs_input | False extra foods
+Input: 清蒸鳕鱼200克，熟鱼肉净重，没有骨头。
+Assessment: Recognized dish_123 / 200 g cooked. “熟鱼肉净重” and “没有骨头” become unsupported foods even though they clarify the quantity basis.
+Evidence: 05_fish_grams.json
+
+06_shrimp_count | basic | failed | Response-boundary failure
+Input: 白灼虾吃了6只，去了虾壳，没有蘸料。
+Assessment: Generic failed message; no draft or edible-weight question. White boiled shrimp is dish_128. Shell removal/count require a supported portion conversion or grams. HKUST returned HTTP 200; internal AI route returned 502.
+Evidence: 06_shrimp_count.json
+
+07_veg_plate | basic | needs_input | Known dish not grounded
+Input: 吃了一小盘酸辣土豆丝。
+Assessment: The complete sentence “吃了一小盘酸辣土豆丝。” is unsupported although dish_022 exists. Small-plate amount is approximate; the app should either visibly estimate or ask weight.
+Evidence: 07_veg_plate.json
+
+08_egg_traditional | basic | needs_input | Known alias not grounded
+Input: 晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。
+Assessment: Catalogue explicitly contains 絲瓜炒雞蛋 for dish_313, but the Cantonese sentence with 150 g and “煮熟之後磅” remains wholly unsupported. This demonstrates a natural-language wrapper gap, not absent recipe coverage.
+Evidence: 08_egg_traditional.json
+
+09_noodles_bowl | basic | needs_input | Known dish not grounded
+Input: 午饭是一大碗番茄鸡蛋面，汤也喝完了。
+Assessment: dish_044 exists, but “午饭是一大碗番茄鸡蛋面，汤也喝完了。” is wholly unsupported. A large bowl and consumed broth deserve clear portion handling.
+Evidence: 09_noodles_bowl.json
+
+10_soup_ribs | basic | failed | Response-boundary failure
+Input: 一碗冬瓜排骨汤，主要喝汤，只吃了两块排骨。
+Assessment: Generic failed message, no draft. Winter-melon rib soup is an alias of dish_071. Soup plus two rib pieces is not necessarily the reference recipe’s uniform mixture. HKUST HTTP 200 then internal 502.
+Evidence: 10_soup_ribs.json
+
+11_soup_only | basic | needs_input | Conservative unresolved variant
+Input: 鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。
+Assessment: dish_127 exists, but the user drank only broth without fish/tofu. No total was produced, which avoids applying the full reference recipe to selective consumption. The generic unsupported-food message does not explain this specific limitation.
+Evidence: 11_soup_only.json
+
+12_mixed_units | basic | needs_input | Known milk not grounded
+Input: 早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。
+Assessment: dish_041 and egg were correctly retained as half bowl and one piece. The milk item became the whole original sentence, food_id null, grams 250. 全脂牛奶 is catalogue milk. Millilitres versus mass should be explained, not silently treated as a confirmed gram weight.
+Evidence: 12_mixed_units.json
+
+13_mixed_grams | basic | needs_input | False extra food
+Input: 麻婆豆腐80克，白米饭100克，都已经煮熟了。
+Assessment: Recognized dish_004 / 80 g and rice / 100 g cooked, but added “都已经煮熟了” as an unsupported food. All meal totals blocked.
+Evidence: 13_mixed_grams.json
+
+14_eggplant | basic | failed | Response-boundary failure
+Input: 鱼香茄子100克，是不放肉的那种。
+Assessment: dish_154 exists and its reference recipe itself has no meat. The no-meat wording nevertheless ends in generic failure. HKUST HTTP 200 then internal 502; exact invalid response field is unknown.
+Evidence: 14_eggplant.json
+
+15_wings_count | basic | needs_input | False extra food plus unit risk
+Input: 吃了4个可乐鸡翅，骨头没有吃。
+Assessment: Recognized dish_252 / four pieces, but added “骨头没有吃” as an unsupported food. No explicit piece mass exists, so removing that false blocker must lead to a gram question, not four default servings.
+Evidence: 15_wings_count.json
+
+16_cucumber_no_oil | basic | needs_input | Known alias not grounded
+Input: 一小碟拍黄瓜，没有加香油，也没加其他油。
+Assessment: 拍黄瓜 is a reviewed alias of dish_016; the entire no-oil sentence becomes unsupported. oil_g 0 was extracted. No completed result proves that sesame oil was correctly excluded.
+Evidence: 16_cucumber_no_oil.json
+
+17_unlisted_fish | basic | needs_input | Expected unsupported
+Input: 清蒸鲈鱼150克，去骨的熟鱼肉。
+Assessment: 清蒸鲈鱼 has no exact recipe/ingredient record in the inspected catalogue. The app preserves this name, asks for actual ingredients and does not substitute carp or cod. This is not counted as a missed listed recipe.
+Evidence: 17_unlisted_fish.json
+
+18_invented_unknown | basic | needs_input | Expected unsupported
+Input: 今天吃了一碗幻彩星云饭，是店里的招牌。
+Assessment: Invented 幻彩星云饭 stays unknown with a clear request for actual ingredients and no nutrition total. Appropriate conservative behavior.
+Evidence: 18_invented_unknown.json
+
+19_advanced_recipe | advanced | needs_input | Valid review plus false blocker
+Input: 番茄炒蛋200克，是实际吃下的熟食净重。
+Assessment: As expected, Advanced asks to review dish_001 recipe; additionally the weighing phrase “是实际吃下的熟食净重” becomes an unsupported food. Setting the issued recipe’s oil to 0 g succeeds and persists, but the phantom food keeps totals null.
+Evidence: 19_advanced_recipe.json
+
+20_advanced_mixed | advanced | needs_input | Valid review plus false blocker
+Input: 咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。
+Assessment: As expected, Advanced asks to review dish_256; rice / 100 g and curry chicken / 150 g are retained. “都是煮熟后吃下的重量” becomes an unsupported extra food. Advanced needs_input alone is not a failure; the false extra food is the issue.
+Evidence: 20_advanced_mixed.json
+
+Recipe correction flow
+Case19 offered the normal reference ingredient review plus a phantom unknown phrase. A structured answer changed oil from 15 g to 0 g for a 400 g batch, retained the 200 g eaten quantity and set recipe_confirmed true. The API accepted it (200, revision2); all totals remain null because the phantom food is unresolved. A natural-language portion correction was intentionally not sent against this blocked flow. This establishes successful persistence of the structured correction, not successful end-to-end recipe calculation. See 21_recipe_correction_flow.json.
+
+Failure diagnostics
+Only relevant read-only container logs were inspected; no environment, credentials or model request/response bodies were read. ai_diagnostic_excerpt.json and worker_diagnostic_excerpt.json contain time-correlated events for cases06,10,14. The exact malformed model field cannot be recovered from these logs. No additional model request was spent to speculate about it.
+
+Limits
+One initial attempt per phrase. Model behavior may vary. No full dietary or nutrition accuracy validation; no claim that all 350 reference recipes or all ingredient foods work. No browser screenshots, clicks, responsive layout or accessibility interactions in this subtask. Product files were not edited by this reviewer. Parent owns product changes and the runtime rebuild. This reviewer performed the explicitly authorized post-rebuild HTTP replays below.
+
+
+Post-rebuild live verification — final update
+
+Parent explicitly expanded the model-request cap from24 to30 to replay eight exact failed baseline inputs plus a clean Advanced correction flow. Parent then authorized two more calls (final cap32) because the first replay harness answered the recipe but omitted a separately issued known oil0 confirmation and exited its ephemeral session. The incomplete prior record is preserved; a fresh equivalent journey was completed and is not represented as the same record. No automatic retries occurred. request_budget_audit.json verifies32 model-triggering requests:20 baseline +10 post-fix +2 explicit follow-up. Structured answers, confirmation and GET polling do not invoke the model. Parent’s browser/diagnostic calls are outside this count.
+
+Eight exact-input comparisons after the rebuild:
+- 03 “晚饭吃了三块红烧肉。”: now dish_005 with3pieces, only edible-grams question, all totals null. The invalid600g assumption is prevented.
+- 15 “吃了4个可乐鸡翅，骨头没有吃。”: now dish_252 with4pieces, only edible-grams question, all totals null. No phantom bone phrase or invalid800g assumption.
+- 02 青椒肉丝150克 + weighing explanation: completed dish_002,150g,149.1kcal; phantom phrase removed.
+- 05 清蒸鳕鱼200克 + net fish/no bones: completed dish_123,200g,222.5kcal; both phantom phrases removed.
+- 13 麻婆豆腐80克 + 白米饭100克 + cooked explanation: completed both correct items,212.5kcal total.
+- 16 一小碟拍黄瓜 + no sesame/other oil: completed dish_016 at labeled reference200g,51.9kcal; sesame_oil0 and oil0 are visible in the recipe assumptions. “Small dish” remains an approximate reference portion, not measured200g.
+- 19 Advanced番茄炒蛋200克 + cooked-edible explanation: only legitimate recipe review; after explicit structured review, completed200g,210.2kcal.
+- 20 Advanced咖喱鸡150克 + 白米饭100克 + cooked explanation: only legitimate recipe review; after explicit structured review, completed correct two items,295.0kcal.
+
+Complete fresh correction journey (real HTTP, distinct new record):
+1. Advanced “番茄炒蛋200克熟重” asks for recipe review.
+2. Reviewed400g batch with tomato300g, raw egg150g, oil0g, sugar5g, salt2g;200g eaten produces143.9kcal.
+3. Natural reply “番茄炒蛋改成150克熟重，整锅用油0克。” correctly changes the eaten amount to150g and preserves oil0.
+4. The app asks both renewed recipe review and a separate confirmation of the already explicit “整锅用油0克” fact. Both were answered from known test facts. This is additional user friction, not evidence that the nutrition calculation failed.
+5. Result completes at150g,107.9kcal, then is confirmed for2026-11-14 and read back as confirmed revision5 with the same amount and total.
+Final record: f8761c77-649c-4a01-939d-e39c33cc94ff
+Evidence:32_finished_correction_journey.json and finished_flow.log. The earlier id7445433e-d14e-4135-bfa3-641df12b2103 remains at its legitimate oil0 confirmation; its incomplete state is a harness/session limitation, not falsely reported as completed.
+
+Remaining limits after fixes:
+- These are eight targeted exact-input checks and a complete correction journey, not a rerun of all20baseline meals or all350reference recipes.
+- The three initial model-response boundary failures (06,10,14) were not retried in this subtask and remain unresolved observations. Exact malformed response fields are unknown.
+- Cantonese wrapper08, noodle-bowl09 and mixed millilitre meal12 were not live rechecked after the rebuild; do not claim those cases were fixed.
+- Broth-only case11 remains a composition limitation and should not be silently calculated using the full fish/tofu reference recipe.
+- Reference portions and recipes remain assumptions. This subtask provides no independent measured-nutrition validation and no browser/UI-layout verification. Root’s separate browser evidence is required for UI claims.

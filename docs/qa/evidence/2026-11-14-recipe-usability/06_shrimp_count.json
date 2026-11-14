@@ -1,0 +1,76 @@
+{
+  "case": "06_shrimp_count",
+  "input": "白灼虾吃了6只，去了虾壳，没有蘸料。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_128"
+  ],
+  "http_status": 201,
+  "elapsed_s": 5.2,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "白灼虾吃了6只，去了虾壳，没有蘸料。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "f459bf27-8599-485a-99fa-89cdc166711f",
+      "food_text": "白灼虾吃了6只，去了虾壳，没有蘸料。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:05.193232Z",
+      "updated_at": "2026-11-14T05:29:05.193234Z"
+    },
+    "job": {
+      "id": 19,
+      "case_id": null,
+      "analysis_id": "f459bf27-8599-485a-99fa-89cdc166711f",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:05.194641Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "白灼虾吃了6只，去了虾壳，没有蘸料。"
+      }
+    ],
+    "draft": [],
+    "questions": [],
+    "details": [],
+    "error_message": "估算服务暂时不可用，请重试或补充更清楚的餐食描述。",
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "f459bf27-8599-485a-99fa-89cdc166711f",
+    "food_text": "白灼虾吃了6只，去了虾壳，没有蘸料。",
+    "status": "failed",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:05.193232Z",
+    "updated_at": "2026-11-14T05:29:09.574529Z"
+  }
+}

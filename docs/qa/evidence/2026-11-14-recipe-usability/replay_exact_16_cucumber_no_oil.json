@@ -1,0 +1,142 @@
+{
+  "label": "post-rebuild explicit replay/flow, not initial-run result",
+  "name": "replay_exact_16_cucumber_no_oil",
+  "input": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+  "mode": "basic",
+  "http_status": 201,
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "一小碟拍黄瓜，没有加香油，也没加其他油。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_016",
+        "name": "拍黄瓜",
+        "source_text": "拍黄瓜",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "other",
+        "oil_g": 0.0,
+        "portion_count": 1.0,
+        "portion_unit": "serving",
+        "recipe_ingredients": {
+          "sesame_oil": 0.0,
+          "oil": 0.0
+        },
+        "recipe_yield_g": null,
+        "uncertainty": "请确认凉拌黄瓜的重量和油量。"
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "凉拌黄瓜",
+        "grams": 200.0,
+        "food_id": "dish_016",
+        "item_index": 0,
+        "nutrients": {
+          "calories": 51.9,
+          "protein_g": 2.2,
+          "carbs_g": 11.4,
+          "fat_g": 0.3
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "未提供克数，暂按 1 份、每份 200g，共 200g 估算。",
+          "未说明重量状态，暂按熟可食重量计算。",
+          "待核实：请确认凉拌黄瓜的重量和油量。",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：凉拌",
+          "整锅成品 350g；本次食用 200g",
+          "整锅配料：带皮生黄瓜 300g、生大蒜 10g、蒸馏醋 20g、普通酱油 15g、芝麻油 0g、白砂糖 5g、大豆食用油 0g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "168409",
+            "url": "https://fdc.nal.usda.gov/food-details/168409/nutrients",
+            "description": "Cucumber, with peel, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169230",
+            "url": "https://fdc.nal.usda.gov/food-details/169230/nutrients",
+            "description": "Garlic, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "172237",
+            "url": "https://fdc.nal.usda.gov/food-details/172237/nutrients",
+            "description": "Vinegar, distilled",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171016",
+            "url": "https://fdc.nal.usda.gov/food-details/171016/nutrients",
+            "description": "Oil, sesame, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169655",
+            "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+            "description": "Sugars, granulated",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "portion_reference",
+          "input_grams": null,
+          "calculated_grams": 200.0,
+          "portion_count": 1.0,
+          "portion_unit": "serving",
+          "reference_grams": 200.0
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "凉拌黄瓜 200g",
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "7f8f33bd-a667-437e-a8f2-09d50e9a457d",
+    "food_text": "一小碟拍黄瓜，没有加香油，也没加其他油。",
+    "status": "completed",
+    "calories": 51.9,
+    "protein_g": 2.2,
+    "carbs_g": 11.4,
+    "fat_g": 0.3,
+    "created_at": "2026-11-14T05:43:24.560836Z",
+    "updated_at": "2026-11-14T05:43:28.704155Z"
+  }
+}

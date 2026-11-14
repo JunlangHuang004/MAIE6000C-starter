@@ -42,7 +42,9 @@ def user_texts(food_text, history):
 
 
 _NUMBER = r'(?:\d+(?:\.\d+)?|[零〇一二两兩三四五六七八九十百千半]+)'
-_MASS = _NUMBER + r'\s*(?:千克|公斤|kg|grams?|克|g|斤|碗|个|個|份|杯)'
+_MASS = _NUMBER + (
+    r'\s*(?:千克|公斤|kg|grams?|克|g|斤|(?:小|大)?(?:碗|盘|盤|碟)|'
+    r'块|塊|个|個|人?份|杯)')
 _SPLIT = re.compile(
     r'[,，;；。\n、]|(?<!\d)\.(?=\s|$)|\b(?:and|plus)\b|以及|还有|還有|另外|和', re.I)
 _PREFIX = re.compile(
@@ -100,7 +102,33 @@ def _detail_clause(value):
     excluded = re.fullmatch(r'(?:不加|no |with no )(.+)', value, re.I)
     if excluded and _ingredient_name(excluded[1]):
         return True
-    if re.fullmatch(r'(?:没有|沒有|无|無|未)(?:额外|額外)?(?:添加|加|用)?油', value):
+    if re.fullmatch(
+            r'(?:也)?(?:没有|沒有|没|沒|无|無|未)(?:额外|額外)?(?:添加|加|用)?'
+            r'(?:(?:其他|其它)?油|香油|芝麻油|花生油|菜籽油|橄榄油|橄欖油|食用油)', value):
+        return True
+    # Complete measurement/preparation sentences are not additional foods.
+    # Keep the grammar closed: arbitrary nouns or appended dishes must still
+    # reach the coverage guard, even when they follow one of these phrases.
+    if re.fullmatch(
+            r'(?:(?:称|稱)(?:的)?(?:是|为|為)|(?:重量|称重|稱重)(?:是|为|為))?'
+            r'(?:(?:炒熟|煮熟|蒸熟|烤熟|做熟|熟制|烹调|烹調)(?:后|後)(?:的)?)?'
+            r'(?:(?:本次|这次|這次)?(?:实际|實際)?(?:吃下|吃了)(?:的)?)?'
+            r'(?:熟重|生重|可食重量|可食部分(?:的重量)?|净重|淨重)', value):
+        return True
+    if re.fullmatch(r'熟(?:鱼肉|魚肉)(?:净重|淨重|可食重量)', value):
+        return True
+    if re.fullmatch(
+            r'(?:都)?是(?:实际|實際)(?:吃下|吃了)的熟食(?:净重|淨重)|'
+            r'(?:都)?是(?:炒熟|煮熟|蒸熟|烤熟|做熟)(?:后|後)(?:吃下|吃了)的重量', value):
+        return True
+    if re.fullmatch(
+            r'(?:都)?(?:已经|已經|已)?(?:炒熟|煮熟|蒸熟|烤熟|做熟)(?:了)?', value):
+        return True
+    if re.fullmatch(
+            r'(?:没有|沒有|无|無)(?:骨头|骨頭|鱼骨|魚骨)|'
+            r'(?:骨头|骨頭|鱼骨|魚骨)(?:没有|沒有|没|沒)(?:吃|吃下)', value):
+        return True
+    if re.fullmatch(r'(?:大概|大约|大約|约|約)\s*' + _MASS, value, re.I):
         return True
     return re.fullmatch(
         r'(?:edible weight measured before cooking|edible raw weight before cooking|'

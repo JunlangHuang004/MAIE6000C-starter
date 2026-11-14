@@ -1,0 +1,137 @@
+{
+  "case": "05_fish_grams",
+  "input": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_123"
+  ],
+  "http_status": 201,
+  "elapsed_s": 4.1,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "0cb6e98f-5fb8-4af3-a6e1-b3444c959c8d",
+      "food_text": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:03.143940Z",
+      "updated_at": "2026-11-14T05:29:03.143942Z"
+    },
+    "job": {
+      "id": 18,
+      "case_id": null,
+      "analysis_id": "0cb6e98f-5fb8-4af3-a6e1-b3444c959c8d",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:03.145618Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“熟鱼肉净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“没有骨头”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_123",
+        "name": "清蒸鳕鱼",
+        "source_text": "清蒸鳕鱼",
+        "grams": 200.0,
+        "weight_includes_inedible": false,
+        "weight_basis": "cooked",
+        "preparation": "steamed",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "熟鱼肉净重",
+        "source_text": "熟鱼肉净重",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "没有骨头",
+        "source_text": "没有骨头",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“熟鱼肉净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      },
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“没有骨头”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "0cb6e98f-5fb8-4af3-a6e1-b3444c959c8d",
+    "food_text": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:03.143940Z",
+    "updated_at": "2026-11-14T05:29:06.894308Z"
+  }
+}

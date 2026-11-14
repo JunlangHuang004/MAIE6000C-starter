@@ -1,0 +1,61 @@
+{
+  "label": "post-rebuild explicit replay/flow, not initial-run result",
+  "name": "22_replay_pork_pieces",
+  "input": "晚饭吃了三块红烧肉。",
+  "mode": "basic",
+  "http_status": 201,
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "晚饭吃了三块红烧肉。"
+      },
+      {
+        "role": "assistant",
+        "content": "红烧肉吃了多少克？请填可食部分重量。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_005",
+        "name": "红烧肉",
+        "source_text": "红烧肉",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": 3.0,
+        "portion_unit": "piece",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "Please specify the weight of the red-braised pork belly."
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.grams",
+        "label": "红烧肉吃了多少克？请填可食部分重量。",
+        "kind": "number",
+        "min": 0.1,
+        "max": 10000
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "f7b94893-ba2c-45b3-97f1-574b74fe3a70",
+    "food_text": "晚饭吃了三块红烧肉。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:42:48.701796Z",
+    "updated_at": "2026-11-14T05:42:52.621154Z"
+  }
+}

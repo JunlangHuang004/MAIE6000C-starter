@@ -220,15 +220,147 @@ test('Completed estimate changes labels and food names without changing totals, 
   assert.equal(requests.length, before);
 });
 
+test('Submitted meals keep a compact description and New meal restores the complete composer', async t => {
+  const meal = clone(fixtures.tomato_egg_dish);
+  const {document, $, requests, clickLanguage} = await mount(t, {meal});
+  const before = requests.length;
+  const composerInputs = ['meal-input','mode-picker','mode-help','meal-examples','composer-note','estimate'];
+  for (const id of composerInputs) assert.equal($(id).hidden,true,id + ' should collapse after submission');
+  assert.equal($('submitted-meal').hidden,false);
+  assert.equal($('submitted-meal').textContent,meal.food_text);
+  assert.equal($('meal').disabled,true);
+  assert.equal($('new').hidden,false);
+  assert.equal($('result').hidden,false);
+  assert.equal($('dialogue').hidden,true);
+  await clickLanguage('en');
+  assert.match($('composer-title').textContent,/This meal/);
+  assert.equal($('submitted-meal').textContent,meal.food_text,'Keep the original description in either language');
+  for (const id of composerInputs) assert.equal($(id).hidden,true);
+  $('new').click();
+  for (const id of composerInputs) assert.equal($(id).hidden,false,id + ' should return for a new meal');
+  assert.equal($('submitted-meal').hidden,true);
+  assert.equal($('submitted-meal').textContent,'');
+  assert.equal($('meal').disabled,false);
+  assert.equal($('meal').value,'');
+  assert.equal(document.activeElement,$('meal'));
+  assert.equal($('result').hidden,true);
+  assert.equal($('dialogue').hidden,true);
+  assert.equal($('history-panel').hidden,true);
+  assert.equal(requests.length,before,'Opening a new composer does not submit a meal');
+});
+
+test('Edit this meal discloses corrections and preserves an unsent reply through closing, navigation and translation', async t => {
+  const meal = clone(fixtures.tomato_egg_dish);
+  const revised = {...clone(meal),revision:meal.revision+1};
+  const {window, document, $, requests, clickLanguage} = await mount(t, {meal,language:'en',
+    respond:request => request.url.endsWith('/reply') ? {body:{analysis:revised}} : undefined});
+  const before = requests.length;
+  assert.equal($('dialogue').hidden,true);
+  assert.equal($('edit-meal').hidden,false);
+  assert.equal($('edit-meal').getAttribute('aria-controls'),'dialogue');
+  assert.equal($('edit-meal').getAttribute('aria-expanded'),'false');
+  $('edit-meal').click();
+  assert.equal($('dialogue').hidden,false);
+  assert.equal($('reply-form').hidden,false);
+  assert.equal($('edit-meal').getAttribute('aria-expanded'),'true');
+  assert.equal(document.activeElement,$('reply'));
+  $('reply').value = 'Actually 175g, cooked weight';
+  $('edit-meal').click();
+  assert.equal($('dialogue').hidden,true);
+  assert.equal($('edit-meal').getAttribute('aria-expanded'),'false');
+  await clickLanguage('zh');
+  assert.equal($('dialogue').hidden,true,'Translation must not reopen the editor');
+  $('edit-meal').click();
+  $('tab-diary').click();
+  await clickLanguage('en');
+  assert.equal($('panel-diary').hidden,false);
+  $('tab-meal').click();
+  assert.equal($('dialogue').hidden,false);
+  assert.equal($('edit-meal').getAttribute('aria-expanded'),'true');
+  assert.equal($('reply').value,'Actually 175g, cooked weight');
+  assert.equal(requests.length,before,'Disclosure, navigation and translation must not send corrections');
+  $('reply-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+  const sent = requests.find(request => request.url.endsWith('/reply'));
+  assert.deepEqual(sent.body,{revision:meal.revision,message:'Actually 175g, cooked weight'});
+  assert.equal($('reply').value,'');
+  assert.equal($('dialogue').hidden,true,'The returned estimate should be ready for review');
+  assert.equal($('edit-meal').getAttribute('aria-expanded'),'false');
+  assert.equal($('confirm').disabled,false);
+  assert.equal($('pending-edit-notice').hidden,true);
+});
+
+for (const provider of ['qwen','demo']) {
+  test(`Unsent ${provider === 'demo' ? 'offline replacements' : 'conversation corrections'} block confirmation until discarded, even with the editor closed`, async t => {
+    const meal = {...clone(fixtures.tomato_egg_dish),food_text:'100g egg'};
+    const {window, $, requests, clickLanguage} = await mount(t,{meal,language:'en',respond:request => {
+      if (request.url === '/foods') return {body:{provider,catalogue:{foods:clone(foods)}}};
+      if (request.url.endsWith('/confirm')) return {body:{...meal,status:'confirmed',revision:meal.revision+1}};
+    }});
+    const draft = $(provider === 'demo' ? 'offline-meal' : 'reply');
+    const input = value => {
+      draft.value = value;
+      draft.dispatchEvent(new window.Event('input',{bubbles:true}));
+    };
+    assert.equal($('confirm').disabled,false);
+    assert.equal($('pending-edit-notice').hidden,true);
+    $('edit-meal').click();
+    input(provider === 'demo' ? '200g egg' : 'Actually 200g egg');
+    assert.equal($('confirm').disabled,true);
+    assert.equal($('pending-edit-notice').hidden,false);
+    assert.equal($('pending-edit-notice').getAttribute('role'),'status');
+    assert.match($('pending-edit-notice').textContent,provider === 'demo'
+      ? /submit.*restore the original full description/i : /submit or clear/i);
+    const before = requests.length;
+    $('confirm').click();
+    $('confirm').dispatchEvent(new window.Event('click',{bubbles:true}));
+    await flush();
+    assert.equal(requests.length,before,'Unsubmitted changes must never confirm the previous estimate');
+    $('edit-meal').click();
+    assert.equal($('dialogue').hidden,true);
+    assert.equal($('confirm').disabled,true,'Closing the editor does not discard the pending change');
+    assert.equal($('pending-edit-notice').closest('[hidden]'),null,'The reason for disabled confirmation stays visible');
+    $('tab-diary').click();await clickLanguage('zh');$('tab-meal').click();
+    assert.equal($('confirm').disabled,true);
+    assert.equal($('pending-edit-notice').hidden,false);
+    assert.match($('pending-edit-notice').textContent,/提交/);
+    assert.match($('pending-edit-notice').textContent,provider === 'demo' ? /恢复原来的完整描述/ : /清空修改/);
+    assert.equal(draft.value,provider === 'demo' ? '200g egg' : 'Actually 200g egg');
+    await clickLanguage('en');
+    assert.equal($('confirm').disabled,true);
+    assert.match($('pending-edit-notice').textContent,provider === 'demo'
+      ? /submit.*restore the original full description/i : /submit or clear/i);
+    assert.equal(requests.length,before,'Switching language must not send or discard the pending change');
+    $('edit-meal').click();
+    if (provider === 'demo') {
+      input('');
+      assert.equal($('confirm').disabled,true,'A blank replacement must not silently approve the previous meal');
+      input(meal.food_text);
+    } else {
+      input('   ');
+    }
+    assert.equal($('confirm').disabled,false);
+    assert.equal($('pending-edit-notice').hidden,true);
+    $('confirm').click();await flush();
+    assert.equal(requests.filter(request => request.url.endsWith('/confirm')).length,1);
+    assert.equal($('confirm').hidden,true);
+    assert.equal($('pending-edit-notice').hidden,true);
+  });
+}
+
 test('Unsaved recipe quantities and approval survive repeated language switches and submit unchanged', async t => {
   const meal = clone(fixtures.mapo_tofu);
   const completed = clone(fixtures.tomato_egg_dish);
   completed.id = meal.id;
   const {window, document, $, requests, clickLanguage} = await mount(t, {meal,
     respond:request => request.method === 'POST' ? {body:{analysis:completed}} : undefined});
+  const adjustment = document.querySelector('.recipe-adjust');
+  adjustment.open = true;
   const ingredient = document.querySelector('[data-ingredient="oil"]');
   ingredient.value = '7.5';
+  ingredient.dispatchEvent(new window.Event('input',{bubbles:true}));
   document.querySelector('[data-yield]').value = '700';
+  document.querySelector('[data-yield]').dispatchEvent(new window.Event('input',{bubbles:true}));
   document.querySelector('[data-accept]').checked = true;
   $('reply').value = 'Still editing this reply';
   const before = requests.length;
@@ -236,12 +368,15 @@ test('Unsaved recipe quantities and approval survive repeated language switches 
   assert.equal(document.querySelector('[data-ingredient="oil"]').value, '7.5');
   assert.equal(document.querySelector('[data-yield]').value, '700');
   assert.equal(document.querySelector('[data-accept]').checked, true);
+  assert.equal(document.querySelector('.recipe-adjust').open,true);
+  assert.match(document.querySelector('[data-recipe-preview]').textContent,/Current batch:.*7\.5.*700/);
   assert.match($('questions').textContent, /Mapo/i);
   assert.doesNotMatch($('questions').textContent, /整锅|请选择|配方|豆瓣酱/);
   await clickLanguage('zh');
   assert.equal(document.querySelector('[data-ingredient="oil"]').value, '7.5');
   assert.equal(document.querySelector('[data-yield]').value, '700');
   assert.equal(document.querySelector('[data-accept]').checked, true);
+  assert.equal(document.querySelector('.recipe-adjust').open,true);
   assert.equal($('reply').value, 'Still editing this reply');
   assert.equal(requests.length, before);
   $('answer-form').dispatchEvent(new window.Event('submit', {bubbles:true,cancelable:true}));
@@ -251,6 +386,45 @@ test('Unsaved recipe quantities and approval survive repeated language switches 
   assert.equal(sent.body.revision, meal.revision);
   assert.equal(sent.body.answers['0.recipe'].ingredients.oil, 7.5);
   assert.equal(sent.body.answers['0.recipe'].yield_g, 700);
+});
+
+test('Recipe quantities stay in a closed disclosure, need explicit acceptance, and every edit updates the preview and clears acceptance', async t => {
+  const meal = clone(fixtures.mapo_tofu);
+  const {window, document, $, requests, clickLanguage} = await mount(t, {meal,language:'en'});
+  const row = document.querySelector('[data-kind="recipe"]');
+  const adjustment = row.querySelector('details');
+  const accept = row.querySelector('[data-accept]');
+  const preview = row.querySelector('[data-recipe-preview]');
+  assert.equal(adjustment.open,false);
+  assert.equal(accept.checked,false);
+  assert.equal(adjustment.contains(accept),false,'Acceptance must remain available without expanding quantities');
+  assert.equal(adjustment.contains(preview),false,'The reference recipe must remain readable while quantities are collapsed');
+  assert.match(preview.textContent,/Reference batch:.*620.*Review before accepting/);
+  const quantities = [...row.querySelectorAll('[data-ingredient],[data-yield]')];
+  assert.equal(quantities.length,meal.questions[0].ingredients.length+1);
+  assert.ok(quantities.every(input => adjustment.contains(input)));
+  const before = requests.length;
+  $('answer-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+  assert.equal(requests.length,before,'Opening a recipe does not count as accepting it');
+  adjustment.open = true;
+  for (const [index,input] of quantities.entries()) {
+    accept.checked = true;
+    input.value = String(100 + index + 0.25);
+    input.dispatchEvent(new window.Event('input',{bubbles:true}));
+    assert.equal(accept.checked,false,'Changing ' + (input.dataset.ingredient || 'yield') + ' must require renewed review');
+    assert.ok(preview.textContent.includes(input.value),'The preview must show the edited quantity');
+    assert.match(preview.textContent,/Current batch:.*Review and accept again/);
+  }
+  const values = quantities.map(input => input.value);
+  $('tab-diary').click();await clickLanguage('zh');$('tab-meal').click();
+  assert.equal(adjustment.open,true);
+  assert.deepEqual(quantities.map(input => input.value),values);
+  assert.equal(accept.checked,false);
+  assert.match(preview.textContent,/当前整锅配方.*重新核对/);
+  await clickLanguage('en');
+  assert.equal(accept.checked,false,'Translation must not approve edited quantities');
+  assert.equal(requests.length,before);
 });
 
 test('Number and uncertainty answers remain filled and checked after switching', async t => {
@@ -361,6 +535,12 @@ test('Confirmed result stays locked after switching and user conversation text s
   const meal = {...clone(fixtures.tomato_egg_dish),status:'confirmed',revision:3};
   meal.conversation = [{role:'user',content:'我吃了番茄炒蛋，请保留我的原文。'}];
   const {$, clickLanguage} = await mount(t, {meal});
+  assert.equal($('dialogue').hidden,true,'Confirmed meals must not leave an empty correction card');
+  assert.equal($('edit-meal').hidden,true);
+  assert.equal($('history-panel').hidden,false);
+  assert.equal($('dialogue').contains($('history-panel')),false,'Conversation history remains reachable outside the hidden editor');
+  assert.equal($('history-panel').open,false);
+  $('history-panel').open = true;
   await clickLanguage('en');
   assert.equal($('confirm').hidden, true);
   assert.equal($('reply-form').hidden, true);
@@ -368,6 +548,12 @@ test('Confirmed result stays locked after switching and user conversation text s
   assert.match($('status').textContent, /confirmed/i);
   assert.match($('history').textContent, /我吃了番茄炒蛋，请保留我的原文。/);
   assert.match($('record').textContent, /3/);
+  assert.equal($('dialogue').hidden,true);
+  assert.equal($('history-panel').hidden,false);
+  assert.equal($('history-panel').open,true);
+  $('tab-diary').click();$('tab-meal').click();
+  assert.equal($('history-panel').closest('[hidden]'),null);
+  assert.equal($('history-panel').open,true);
 });
 
 test('A server error is presented in English and retranslated when the language changes', async t => {
@@ -382,12 +568,15 @@ test('A server error is presented in English and retranslated when the language 
 test('Untrusted conversation, food labels and source links remain inert text', async t => {
   const meal = clone(fixtures.tomato_egg_dish);
   const attack = '<img src=x onerror="window.__injected=true">';
+  meal.food_text = attack;
   meal.conversation = [{role:'user',content:attack}];
   meal.details[0].sources.push({name:attack,id:'attack',license:'test',url:'javascript:window.__injected=true'});
   const {window, document, $, clickLanguage} = await mount(t, {meal});
   await clickLanguage('en');
   assert.match($('history').textContent, /<img src=x/);
   assert.equal(document.querySelector('#history img'), null);
+  assert.equal($('submitted-meal').textContent,attack);
+  assert.equal(document.querySelector('#submitted-meal img'),null);
   assert.equal(document.querySelector('#evidence img'), null);
   assert.equal(document.querySelector('a[href^="javascript:"]'), null);
   assert.equal(window.__injected, undefined);
@@ -561,6 +750,15 @@ test('Custom recipe displays explicit batch provenance, reopens for edit, and lo
     ? {body:{...clone(meal),status:'confirmed',revision:meal.revision+1}} : undefined});
   const {window,document,$,clickLanguage} = view;
   assert.equal($('reply-form').hidden,true);
+  $('reply').value = 'An older unsent conversation draft';
+  $('reply').dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.equal($('confirm').disabled,false,'Hidden conversation fields cannot block a custom recipe');
+  assert.equal($('pending-edit-notice').hidden,true);
+  assert.equal($('dialogue').hidden,true);
+  assert.match($('review-help').textContent,/Select Edit ingredients/);
+  assert.doesNotMatch($('review-help').textContent,/conversation|chat|below/i);
+  $('edit-meal').click();
+  assert.equal($('dialogue').hidden,false);
   assert.equal($('custom-recipe-guidance').hidden,false);
   assert.match($('evidence').textContent,/User-defined ingredient recipe/);
   assert.match($('evidence').textContent,/allocating 25%/);
@@ -573,6 +771,8 @@ test('Custom recipe displays explicit batch provenance, reopens for edit, and lo
   assert.equal($('ingredient-accepted').checked,false,'Editing requires renewed recipe review');
   await clickLanguage('zh');
   assert.match($('evidence').textContent,/自定义食材配方/);
+  assert.match($('review-help').textContent,/修改食材配方/);
+  assert.doesNotMatch($('review-help').textContent,/对话|下方/);
   assert.equal($('confirm').disabled,true,'Do not confirm an old estimate while editing ingredients');
   $('ingredient-cancel').click();
   $('confirm').click(); await flush();
@@ -580,9 +780,39 @@ test('Custom recipe displays explicit batch provenance, reopens for edit, and lo
   assert.equal(document.querySelector('[data-edit-ingredients]'),null);
   assert.equal($('reply-form').hidden,true);
   assert.equal($('confirm').hidden,true);
+  assert.equal($('dialogue').hidden,true);
   $('ingredient-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
   await flush();
   assert.equal(view.requests.filter(request => request.url.endsWith('/ingredients')).length,0);
+});
+
+test('Custom meals with outstanding questions direct users to ingredient editing and never to a hidden conversation', async t => {
+  const meal = ingredientRecipeFixture('needs_input');
+  meal.draft.push({food_id:'rice',name:'白米饭',grams:null});
+  meal.questions = [{key:'1.grams',kind:'number',label:'白米饭吃了多少克？请填可食部分重量。',min:0.1,max:10000}];
+  const {window, document, $, requests, clickLanguage} = await mount(t,{meal,language:'en'});
+  assert.equal($('dialogue').hidden,false);
+  assert.equal($('answer-form').hidden,false);
+  assert.equal($('answer-submit').hidden,false);
+  assert.equal($('answer-help').hidden,false);
+  assert.equal($('reply-form').hidden,true);
+  assert.match($('answer-help').textContent,/Edit ingredient recipe/);
+  assert.doesNotMatch($('answer-help').textContent,/conversation|chat|below/i);
+  const before = requests.length;
+  $('answer-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+  assert.equal(requests.length,before);
+  assert.match($('message').textContent,/answer|ingredient/i);
+  assert.doesNotMatch($('message').textContent,/conversation|chat|below/i);
+  await clickLanguage('zh');
+  assert.match($('answer-help').textContent,/编辑食材配方/);
+  assert.doesNotMatch($('answer-help').textContent,/对话|下方/);
+  $('answer-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+  await flush();
+  assert.doesNotMatch($('message').textContent,/对话|下方/);
+  document.querySelector('[data-edit-ingredients="0"]').click();
+  assert.equal($('ingredient-builder').hidden,false,'The recommended editing action must be available');
+  assert.equal(requests.length,before);
 });
 
 test('Consumed custom recipe labels ingredient sum and ordinary items expose quantity origins', async t => {
@@ -728,9 +958,14 @@ test('Offline demo hides misleading chat and replaces the complete meal through 
     if(r.method==='PATCH')return {body:{...meal,food_text:r.body.food_text,calories:310,revision:meal.revision+1}};
   }});
   assert.equal($('reply-form').hidden,true);assert.equal($('offline-correction').hidden,false);
-  assert.match($('review-help').textContent,/full-description/);
+  assert.equal($('dialogue').hidden,true);
+  assert.match($('review-help').textContent,/Edit this meal.*full description/);
+  $('edit-meal').click();
+  assert.equal($('dialogue').hidden,false);
   $('offline-meal').value='200g egg';$('offline-correction').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
   assert.equal($('calories').textContent,'310');
+  assert.equal($('confirm').disabled,false);
+  assert.equal($('pending-edit-notice').hidden,true);
   const sent=requests.find(r=>r.method==='PATCH');
   assert.deepEqual(sent.body,{food_text:'200g egg',revision:meal.revision});
   assert.equal(sent.headers['X-NutriChat-Request'],'1');
@@ -852,6 +1087,51 @@ test('Food evidence starts compact but expanding it survives language changes',a
   assert.equal($('evidence').querySelector('details').open,true);
   assert.match($('evidence').textContent,/reference|portion|recipe/i);
   assert.equal($('record').closest('details').open,false);
+});
+
+test('Reference portions and recipes remain labelled with a visible warning while evidence is collapsed',async t=>{
+  for (const kind of ['default_portion','portion_reference']) {
+    const meal = clone(fixtures.tomato_egg_dish);
+    meal.draft[0].recipe_assumed = true;
+    meal.draft.push({food_id:'rice',name:'白米饭',grams:100});
+    meal.details.push({food_id:'rice',name:'白米饭',grams:100,
+      nutrients:{calories:130,protein_g:2.7,fat_g:0.3,carbs_g:28},sources:[],assumptions:[],
+      quantity_provenance:{kind,calculated_grams:100,portion_count:1,reference_grams:100}});
+    const {$,clickLanguage} = await mount(t,{meal,language:'en'});
+    const evidence = [...$('evidence').children];
+    assert.ok(evidence.every(item => item.tagName === 'DETAILS' && !item.open));
+    assert.match(evidence[0].querySelector('summary').textContent,/Reference recipe.*210\.2 kcal/);
+    assert.match(evidence[1].querySelector('summary').textContent,/Reference portion.*130 kcal/);
+    assert.ok(evidence.every(item => item.querySelector('summary .food-badge.reference')),
+      'Reference labels must remain in the visible summary');
+    assert.equal($('estimate-basis').hidden,false);
+    assert.equal($('estimate-basis').closest('[hidden],details'),null);
+    assert.match($('estimate-basis').textContent,/reference estimate.*not been individually verified/i);
+    await clickLanguage('zh');
+    assert.match($('evidence').children[0].querySelector('summary').textContent,/参考配方/);
+    assert.match($('evidence').children[1].querySelector('summary').textContent,/参考份量/);
+    assert.match($('estimate-basis').textContent,/参考估算.*尚未逐项核实/);
+    assert.ok([...$('evidence').children].every(item => !item.open));
+  }
+});
+
+test('Reviewed recipes and entered ingredient quantities have distinct badges without an unverified-reference warning',async t=>{
+  const meal = clone(fixtures.tomato_egg_dish);
+  meal.draft[0].recipe_confirmed = true;
+  meal.draft[0].recipe_assumed = false;
+  meal.details[0].quantity_provenance = {kind:'user_grams',input_grams:200,calculated_grams:200};
+  const {$,clickLanguage} = await mount(t,{meal,language:'en'});
+  const summary = $('evidence').querySelector('summary');
+  assert.match(summary.textContent,/Entered grams/);
+  assert.match(summary.textContent,/Reviewed recipe/);
+  assert.equal(summary.querySelector('.reference'),null);
+  assert.equal($('estimate-basis').hidden,true);
+  await clickLanguage('zh');
+  assert.match($('evidence').querySelector('summary').textContent,/按填写克数.*已核对配方/);
+  assert.equal($('estimate-basis').hidden,true);
+  const custom = await mount(t,{meal:ingredientRecipeFixture(),language:'en'});
+  assert.match(custom.$('evidence').querySelector('summary').textContent,/Entered ingredients/);
+  assert.equal(custom.$('estimate-basis').hidden,true);
 });
 
 test('Opening a saved meal returns to its visible workspace, then new meal focuses input',async t=>{

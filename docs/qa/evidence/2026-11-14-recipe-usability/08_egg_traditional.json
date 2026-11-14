@@ -1,0 +1,102 @@
+{
+  "case": "08_egg_traditional",
+  "input": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_313"
+  ],
+  "http_status": 201,
+  "elapsed_s": 7.3,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "a3a65b39-513c-42fd-940a-5e1bea91e63e",
+      "food_text": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:10.352902Z",
+      "updated_at": "2026-11-14T05:29:10.352906Z"
+    },
+    "job": {
+      "id": 21,
+      "case_id": null,
+      "analysis_id": "a3a65b39-513c-42fd-940a-5e1bea91e63e",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:10.355114Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。",
+        "source_text": null,
+        "grams": 150.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "label": "数据库未找到“晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "a3a65b39-513c-42fd-940a-5e1bea91e63e",
+    "food_text": "晚餐食咗絲瓜炒雞蛋150克，煮熟之後磅。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:10.352902Z",
+    "updated_at": "2026-11-14T05:29:16.704537Z"
+  }
+}

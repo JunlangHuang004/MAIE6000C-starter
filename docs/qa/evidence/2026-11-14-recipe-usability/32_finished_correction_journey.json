@@ -1,0 +1,846 @@
+{
+  "label": "Fresh equivalent record, distinct from incomplete prior flow",
+  "steps": [
+    {
+      "action": "Fresh Advanced recipe initial",
+      "request": {
+        "food_text": "番茄炒蛋200克熟重",
+        "mode": "advanced"
+      },
+      "http_status": 201,
+      "result": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "番茄炒蛋200克熟重"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "source_text": "番茄炒蛋",
+            "grams": 200.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "stir_fried",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null
+          }
+        ],
+        "questions": [
+          {
+            "key": "0.recipe",
+            "label": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+            "kind": "recipe",
+            "recipe": {
+              "yield_g": 400.0,
+              "ingredients": {
+                "tomato": 300.0,
+                "egg_raw": 150.0,
+                "oil": 0,
+                "sugar": 5.0,
+                "salt": 2.0
+              }
+            },
+            "method": "炒",
+            "ingredients": [
+              {
+                "id": "tomato",
+                "name": "生番茄",
+                "grams": 300.0
+              },
+              {
+                "id": "egg_raw",
+                "name": "生鸡蛋液",
+                "grams": 150.0
+              },
+              {
+                "id": "oil",
+                "name": "大豆食用油",
+                "grams": 15.0
+              },
+              {
+                "id": "sugar",
+                "name": "白砂糖",
+                "grams": 5.0
+              },
+              {
+                "id": "salt",
+                "name": "食盐",
+                "grams": 2.0
+              }
+            ]
+          }
+        ],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 1,
+        "confirmed_at": null,
+        "consumed_on": null,
+        "id": "f8761c77-649c-4a01-939d-e39c33cc94ff",
+        "food_text": "番茄炒蛋200克熟重",
+        "status": "needs_input",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-11-14T05:47:45.125344Z",
+        "updated_at": "2026-11-14T05:47:49.897509Z"
+      }
+    },
+    {
+      "action": "Review400g batch with oil0 and200g eaten",
+      "request": {
+        "revision": 1,
+        "answers": {
+          "0.recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          }
+        }
+      },
+      "http_status": 200,
+      "result": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "番茄炒蛋200克熟重"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "source_text": "番茄炒蛋",
+            "grams": 200.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "stir_fried",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": null,
+            "recipe_yield_g": null,
+            "uncertainty": null,
+            "recipe": {
+              "yield_g": 400.0,
+              "ingredients": {
+                "tomato": 300.0,
+                "egg_raw": 150.0,
+                "oil": 0,
+                "sugar": 5.0,
+                "salt": 2.0
+              }
+            },
+            "recipe_confirmed": true
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "番茄炒蛋",
+            "grams": 200.0,
+            "food_id": "dish_001",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 143.9,
+              "protein_g": 10.7,
+              "carbs_g": 8.9,
+              "fat_g": 7.4
+            },
+            "assumptions": [
+              "参考做法：炒",
+              "整锅成品 400g；本次食用 200g",
+              "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 0g、白砂糖 5g、食盐 2g",
+              "参考配方已由用户确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170457",
+                "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+                "description": "Tomatoes, red, ripe, raw, year round average",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171287",
+                "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+                "description": "Egg, whole, raw, fresh",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169655",
+                "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+                "description": "Sugars, granulated",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173468",
+                "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+                "description": "Salt, table",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 200.0,
+              "calculated_grams": 200.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "番茄炒蛋 200g",
+        "revision": 2,
+        "confirmed_at": null,
+        "consumed_on": null,
+        "id": "f8761c77-649c-4a01-939d-e39c33cc94ff",
+        "food_text": "番茄炒蛋200克熟重",
+        "status": "completed",
+        "calories": 143.9,
+        "protein_g": 10.7,
+        "carbs_g": 8.9,
+        "fat_g": 7.4,
+        "created_at": "2026-11-14T05:47:45.125344Z",
+        "updated_at": "2026-11-14T05:47:51.957503Z"
+      }
+    },
+    {
+      "action": "Natural correction to150g, explicit batch oil0",
+      "request": {
+        "revision": 2,
+        "message": "番茄炒蛋改成150克熟重，整锅用油0克。"
+      },
+      "http_status": 200,
+      "result": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "番茄炒蛋200克熟重"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          },
+          {
+            "role": "user",
+            "content": "番茄炒蛋改成150克熟重，整锅用油0克。",
+            "display": "番茄炒蛋改成150克熟重，整锅用油0克。"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。\n番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "source_text": "番茄炒蛋",
+            "grams": 150.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "stir_fried",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": {
+              "oil": 0.0
+            },
+            "recipe_yield_g": null,
+            "uncertainty": "整锅用油0克"
+          }
+        ],
+        "questions": [
+          {
+            "key": "0.resolved",
+            "label": "番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。",
+            "kind": "confirm"
+          },
+          {
+            "key": "0.recipe",
+            "label": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+            "kind": "recipe",
+            "recipe": {
+              "yield_g": 400.0,
+              "ingredients": {
+                "tomato": 300.0,
+                "egg_raw": 150.0,
+                "oil": 0.0,
+                "sugar": 5.0,
+                "salt": 2.0
+              }
+            },
+            "method": "炒",
+            "ingredients": [
+              {
+                "id": "tomato",
+                "name": "生番茄",
+                "grams": 300.0
+              },
+              {
+                "id": "egg_raw",
+                "name": "生鸡蛋液",
+                "grams": 150.0
+              },
+              {
+                "id": "oil",
+                "name": "大豆食用油",
+                "grams": 0.0
+              },
+              {
+                "id": "sugar",
+                "name": "白砂糖",
+                "grams": 5.0
+              },
+              {
+                "id": "salt",
+                "name": "食盐",
+                "grams": 2.0
+              }
+            ]
+          }
+        ],
+        "details": [],
+        "error_message": null,
+        "interpreted_food_text": null,
+        "revision": 3,
+        "confirmed_at": null,
+        "consumed_on": null,
+        "id": "f8761c77-649c-4a01-939d-e39c33cc94ff",
+        "food_text": "番茄炒蛋200克熟重",
+        "status": "needs_input",
+        "calories": null,
+        "protein_g": null,
+        "carbs_g": null,
+        "fat_g": null,
+        "created_at": "2026-11-14T05:47:45.125344Z",
+        "updated_at": "2026-11-14T05:47:56.459180Z"
+      }
+    },
+    {
+      "action": "Re-review recipe and explicitly confirm known oil0 fact",
+      "request": {
+        "revision": 3,
+        "answers": {
+          "0.resolved": true,
+          "0.recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 0.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          }
+        }
+      },
+      "http_status": 200,
+      "result": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "番茄炒蛋200克熟重"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          },
+          {
+            "role": "user",
+            "content": "番茄炒蛋改成150克熟重，整锅用油0克。",
+            "display": "番茄炒蛋改成150克熟重，整锅用油0克。"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。\n番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.resolved\": true, \"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 150.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": {\"oil\": 0.0}, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。 → 确认；番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "source_text": "番茄炒蛋",
+            "grams": 150.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "stir_fried",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": {
+              "oil": 0.0
+            },
+            "recipe_yield_g": null,
+            "uncertainty": null,
+            "recipe": {
+              "yield_g": 400.0,
+              "ingredients": {
+                "tomato": 300.0,
+                "egg_raw": 150.0,
+                "oil": 0.0,
+                "sugar": 5.0,
+                "salt": 2.0
+              }
+            },
+            "recipe_confirmed": true
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "番茄炒蛋",
+            "grams": 150.0,
+            "food_id": "dish_001",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 107.9,
+              "protein_g": 8.1,
+              "carbs_g": 6.7,
+              "fat_g": 5.6
+            },
+            "assumptions": [
+              "参考做法：炒",
+              "整锅成品 400g；本次食用 150g",
+              "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 0g、白砂糖 5g、食盐 2g",
+              "参考配方已由用户确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170457",
+                "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+                "description": "Tomatoes, red, ripe, raw, year round average",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171287",
+                "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+                "description": "Egg, whole, raw, fresh",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169655",
+                "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+                "description": "Sugars, granulated",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173468",
+                "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+                "description": "Salt, table",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 150.0,
+              "calculated_grams": 150.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "番茄炒蛋 150g",
+        "revision": 4,
+        "confirmed_at": null,
+        "consumed_on": null,
+        "id": "f8761c77-649c-4a01-939d-e39c33cc94ff",
+        "food_text": "番茄炒蛋200克熟重",
+        "status": "completed",
+        "calories": 107.9,
+        "protein_g": 8.1,
+        "carbs_g": 6.7,
+        "fat_g": 5.6,
+        "created_at": "2026-11-14T05:47:45.125344Z",
+        "updated_at": "2026-11-14T05:47:58.535720Z"
+      }
+    },
+    {
+      "action": "Confirm reviewed synthetic meal",
+      "request": {
+        "revision": 4,
+        "consumed_on": "2026-11-14"
+      },
+      "http_status": 200,
+      "result": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "番茄炒蛋200克熟重"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          },
+          {
+            "role": "user",
+            "content": "番茄炒蛋改成150克熟重，整锅用油0克。",
+            "display": "番茄炒蛋改成150克熟重，整锅用油0克。"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。\n番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.resolved\": true, \"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 150.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": {\"oil\": 0.0}, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。 → 确认；番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "source_text": "番茄炒蛋",
+            "grams": 150.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "stir_fried",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": {
+              "oil": 0.0
+            },
+            "recipe_yield_g": null,
+            "uncertainty": null,
+            "recipe": {
+              "yield_g": 400.0,
+              "ingredients": {
+                "tomato": 300.0,
+                "egg_raw": 150.0,
+                "oil": 0.0,
+                "sugar": 5.0,
+                "salt": 2.0
+              }
+            },
+            "recipe_confirmed": true
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "番茄炒蛋",
+            "grams": 150.0,
+            "food_id": "dish_001",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 107.9,
+              "protein_g": 8.1,
+              "carbs_g": 6.7,
+              "fat_g": 5.6
+            },
+            "assumptions": [
+              "参考做法：炒",
+              "整锅成品 400g；本次食用 150g",
+              "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 0g、白砂糖 5g、食盐 2g",
+              "参考配方已由用户确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170457",
+                "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+                "description": "Tomatoes, red, ripe, raw, year round average",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171287",
+                "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+                "description": "Egg, whole, raw, fresh",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169655",
+                "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+                "description": "Sugars, granulated",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173468",
+                "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+                "description": "Salt, table",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 150.0,
+              "calculated_grams": 150.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "番茄炒蛋 150g",
+        "revision": 5,
+        "confirmed_at": "2026-11-14T05:47:58.740036Z",
+        "consumed_on": "2026-11-14",
+        "id": "f8761c77-649c-4a01-939d-e39c33cc94ff",
+        "food_text": "番茄炒蛋200克熟重",
+        "status": "confirmed",
+        "calories": 107.9,
+        "protein_g": 8.1,
+        "carbs_g": 6.7,
+        "fat_g": 5.6,
+        "created_at": "2026-11-14T05:47:45.125344Z",
+        "updated_at": "2026-11-14T05:47:58.741650Z"
+      }
+    },
+    {
+      "action": "Read back confirmed record",
+      "http_status": 200,
+      "result": {
+        "mode": "advanced",
+        "conversation": [
+          {
+            "role": "user",
+            "content": "番茄炒蛋200克熟重"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          },
+          {
+            "role": "user",
+            "content": "番茄炒蛋改成150克熟重，整锅用油0克。",
+            "display": "番茄炒蛋改成150克熟重，整锅用油0克。"
+          },
+          {
+            "role": "assistant",
+            "content": "番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。\n番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+          },
+          {
+            "role": "user",
+            "content": "已回答：{\"0.resolved\": true, \"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 150.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": {\"oil\": 0.0}, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 0.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+            "display": "已补充：番茄炒蛋：整锅用油0克 请核对所选食物，或在下方补充更正。 → 确认；番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+          }
+        ],
+        "draft": [
+          {
+            "food_id": "dish_001",
+            "name": "番茄炒蛋",
+            "source_text": "番茄炒蛋",
+            "grams": 150.0,
+            "weight_includes_inedible": null,
+            "weight_basis": "cooked",
+            "preparation": "stir_fried",
+            "oil_g": null,
+            "portion_count": null,
+            "portion_unit": null,
+            "recipe_ingredients": {
+              "oil": 0.0
+            },
+            "recipe_yield_g": null,
+            "uncertainty": null,
+            "recipe": {
+              "yield_g": 400.0,
+              "ingredients": {
+                "tomato": 300.0,
+                "egg_raw": 150.0,
+                "oil": 0.0,
+                "sugar": 5.0,
+                "salt": 2.0
+              }
+            },
+            "recipe_confirmed": true
+          }
+        ],
+        "questions": [],
+        "details": [
+          {
+            "name": "番茄炒蛋",
+            "grams": 150.0,
+            "food_id": "dish_001",
+            "item_index": 0,
+            "nutrients": {
+              "calories": 107.9,
+              "protein_g": 8.1,
+              "carbs_g": 6.7,
+              "fat_g": 5.6
+            },
+            "assumptions": [
+              "参考做法：炒",
+              "整锅成品 400g；本次食用 150g",
+              "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 0g、白砂糖 5g、食盐 2g",
+              "参考配方已由用户确认；不是实测菜肴营养。"
+            ],
+            "sources": [
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "170457",
+                "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+                "description": "Tomatoes, red, ripe, raw, year round average",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171287",
+                "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+                "description": "Egg, whole, raw, fresh",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "171411",
+                "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+                "description": "Oil, soybean, salad or cooking",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "169655",
+                "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+                "description": "Sugars, granulated",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              },
+              {
+                "name": "USDA FoodData Central SR Legacy 2018",
+                "license": "CC0-1.0",
+                "id": "173468",
+                "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+                "description": "Salt, table",
+                "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+              }
+            ],
+            "quantity_provenance": {
+              "kind": "user_grams",
+              "input_grams": 150.0,
+              "calculated_grams": 150.0,
+              "portion_count": null,
+              "portion_unit": null,
+              "reference_grams": null
+            }
+          }
+        ],
+        "error_message": null,
+        "interpreted_food_text": "番茄炒蛋 150g",
+        "revision": 5,
+        "confirmed_at": "2026-11-14T05:47:58.740036Z",
+        "consumed_on": "2026-11-14",
+        "id": "f8761c77-649c-4a01-939d-e39c33cc94ff",
+        "food_text": "番茄炒蛋200克熟重",
+        "status": "confirmed",
+        "calories": 107.9,
+        "protein_g": 8.1,
+        "carbs_g": 6.7,
+        "fat_g": 5.6,
+        "created_at": "2026-11-14T05:47:45.125344Z",
+        "updated_at": "2026-11-14T05:47:58.741650Z"
+      }
+    }
+  ],
+  "model_attempts_total": 32
+}

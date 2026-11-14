@@ -304,6 +304,114 @@ def test_removed_shell_and_no_extra_oil_details_are_not_extra_foods(monkeypatch,
     assert [item['food_id'] for item in result.draft] == ['egg']
 
 
+@pytest.mark.parametrize('text,name,food_id,grams', [
+    ('青椒肉丝150克，称的是炒熟后实际吃下的净重。', '青椒肉丝', 'dish_002', 150),
+    ('青椒肉丝150克，稱的是炒熟後實際吃下的淨重。', '青椒肉丝', 'dish_002', 150),
+    ('青椒肉丝150克，是实际吃下的熟食净重。', '青椒肉丝', 'dish_002', 150),
+    ('青椒肉丝150克，是實際吃下的熟食淨重。', '青椒肉丝', 'dish_002', 150),
+    ('清蒸鳕鱼200克，熟鱼肉净重，没有骨头。', '清蒸鳕鱼', 'dish_123', 200),
+    ('宫保鸡丁，我吃了半盘，大概一人份。', '宫保鸡丁', 'dish_003', None),
+    ('晚饭吃了三块红烧肉。', '红烧肉', 'dish_005', None),
+    ('吃了一小盘酸辣土豆丝。', '酸辣土豆丝', 'dish_022', None),
+    ('吃了4个可乐鸡翅，骨头没有吃。', '可乐鸡翅', 'dish_252', None),
+    ('一小碟拍黄瓜，没有加香油，也没加其他油。', '拍黄瓜', 'dish_016', None),
+    ('晚餐一大碗白米饭，还有一碟拍黄瓜。', '拍黄瓜', 'dish_016', None),
+])
+@pytest.mark.parametrize('wrapped_source', [False, True])
+def test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity(
+        text, name, food_id, grams, wrapped_source):
+    # The multi-food case supplies the other food separately; its portion must
+    # not cause the complete-meal guard to discard that second item.
+    source = text if wrapped_source and '还有' not in text else name
+    items = [ExtractedItem(name=name, source_text=source, food_id=food_id, grams=grams)]
+    if '还有' in text:
+        items.insert(0, ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice'))
+    grounded = ground_food_items(items, text)
+    expected = ['rice', food_id] if '还有' in text else [food_id]
+    assert [item.food_id for item in grounded] == expected
+    assert grounded[-1].source_text == name
+    assert grounded[-1].grams == grams, 'Portion grammar must not invent a gram weight'
+
+
+@pytest.mark.parametrize('mode', ['basic', 'advanced'])
+def test_measured_stir_fry_is_supported_without_bypassing_recipe_review(monkeypatch, mode):
+    result = extract(monkeypatch, '青椒肉丝150克，称的是炒熟后实际吃下的净重。', [{
+        'food_id': 'dish_002', 'name': '青椒肉丝', 'source_text': '青椒肉丝',
+        'grams': 150, 'weight_basis': 'cooked', 'weight_includes_inedible': False,
+        'preparation': 'stir_fried',
+    }], mode=mode)
+    assert [item['food_id'] for item in result.draft] == ['dish_002']
+    assert not any(q['kind'] == 'unsupported' for q in result.questions)
+    if mode == 'advanced':
+        assert result.calories is None and result.details == []
+        assert any(q['kind'] == 'recipe' for q in result.questions)
+    else:
+        assert result.calories is not None
+
+
+@pytest.mark.parametrize('detail', [
+    '都已经煮熟了',
+    '都是煮熟后吃下的重量',
+    '都是煮熟後吃下的重量',
+])
+def test_complete_cooking_detail_does_not_add_food_to_a_mixed_meal(detail):
+    items = ground_food_items([
+        ExtractedItem(name='麻婆豆腐', source_text='麻婆豆腐', food_id='dish_004'),
+        ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice'),
+    ], '麻婆豆腐80克，白米饭100克，' + detail + '。')
+    assert [item.food_id for item in items] == ['dish_004', 'rice']
+
+
+@pytest.mark.parametrize('detail', [
+    '称的是炒熟后实际吃下的净重',
+    '是实际吃下的熟食净重',
+    '都是煮熟后吃下的重量',
+    '熟鱼肉净重',
+    '没有骨头',
+    '骨头没有吃',
+    '都已经煮熟了',
+    '我吃了半盘',
+    '大概一人份',
+    '没有加香油',
+    '也没加其他油',
+])
+@pytest.mark.parametrize('addition', [
+    '火星豉油鸡200克',
+    '，另外一小盘火星豉油鸡',
+])
+def test_natural_detail_grammar_never_hides_unknown_food_additions(detail, addition):
+    items = ground_food_items([
+        ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice', grams=100),
+    ], '白米饭100克，' + detail + addition)
+    assert any(item.food_id is None and '火星豉油鸡' in item.name for item in items)
+    result = evaluate([item.model_dump() for item in items])
+    assert result['calories'] is None and result['details'] == []
+
+
+@pytest.mark.parametrize('detail', [
+    '只喝汤，没有吃鱼片和豆腐',
+    '称的是火星豉油鸡的净重',
+    '没有骨头的火星豉油鸡',
+])
+def test_partial_recipe_consumption_and_food_bearing_weight_details_stay_unresolved(detail):
+    items = ground_food_items([
+        ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice', grams=100),
+    ], '白米饭100克，' + detail)
+    assert any(item.food_id is None for item in items)
+    assert evaluate([item.model_dump() for item in items])['calories'] is None
+
+
+def test_cucumber_no_oil_description_uses_zero_oil_recipe_without_extra_foods(monkeypatch):
+    result = extract(monkeypatch, '一小碟拍黄瓜，没有加香油，也没加其他油。', [{
+        'food_id': 'dish_016', 'name': '拍黄瓜', 'source_text': '拍黄瓜',
+        'grams': None, 'portion_count': 1, 'portion_unit': 'serving', 'oil_g': 0,
+    }])
+    assert [food['food_id'] for food in result.draft] == ['dish_016']
+    assert result.questions == []
+    assert result.calories == 51.9
+    assert '芝麻油 0g' in ' '.join(result.details[0]['assumptions'])
+
+
 def test_common_cooked_white_rice_name_is_a_reviewed_alias(monkeypatch):
     result = extract(monkeypatch, '100克熟白米饭', [
         {'food_id':'rice','name':'熟白米饭','source_text':'熟白米饭','grams':100}])

@@ -1,0 +1,9 @@
+{
+  "original_cap": 24,
+  "prior_expanded_cap": 30,
+  "updated_cap": 32,
+  "model_count_before": 30,
+  "username": "qa_finish_4051b20cdc77",
+  "reason": "Parent explicitly authorized two bounded extra model requests to finish a fresh equivalent correction journey after previous harness omitted a known confirmation and exited its ephemeral session. Old record remains incomplete.",
+  "automatic_retries": 0
+}

@@ -1,0 +1,133 @@
+{
+  "case": "13_mixed_grams",
+  "input": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_004",
+    "rice"
+  ],
+  "http_status": 201,
+  "elapsed_s": 5.2,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "麻婆豆腐80克，白米饭100克，都已经煮熟了。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "fd014a90-a835-45cb-a5db-712dbbe794dc",
+      "food_text": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:27.070082Z",
+      "updated_at": "2026-11-14T05:29:27.070089Z"
+    },
+    "job": {
+      "id": 26,
+      "case_id": null,
+      "analysis_id": "fd014a90-a835-45cb-a5db-712dbbe794dc",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:27.072125Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "麻婆豆腐80克，白米饭100克，都已经煮熟了。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“都已经煮熟了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_004",
+        "name": "麻婆豆腐",
+        "source_text": "麻婆豆腐",
+        "grams": 80.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": "rice",
+        "name": "白米饭",
+        "source_text": "白米饭",
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "boiled",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "都已经煮熟了",
+        "source_text": "都已经煮熟了",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“都已经煮熟了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "fd014a90-a835-45cb-a5db-712dbbe794dc",
+    "food_text": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:27.070082Z",
+    "updated_at": "2026-11-14T05:29:31.919049Z"
+  }
+}

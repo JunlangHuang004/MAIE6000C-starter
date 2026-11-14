@@ -1,0 +1,120 @@
+{
+  "label": "post-rebuild explicit replay/flow, not initial-run result",
+  "name": "replay_exact_02_pork_grams",
+  "input": "青椒肉丝150克，称的是炒熟后实际吃下的净重。",
+  "mode": "basic",
+  "http_status": 201,
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "青椒肉丝150克，称的是炒熟后实际吃下的净重。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_002",
+        "name": "青椒肉丝",
+        "source_text": "青椒肉丝",
+        "grams": 150.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "青椒肉丝",
+        "grams": 150.0,
+        "food_id": "dish_002",
+        "item_index": 0,
+        "nutrients": {
+          "calories": 149.1,
+          "protein_g": 16.0,
+          "carbs_g": 5.2,
+          "fat_g": 7.1
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：炒",
+          "整锅成品 420g；本次食用 150g",
+          "整锅配料：生猪里脊 200g、生青椒 200g、大豆食用油 15g、普通酱油 15g、玉米淀粉 5g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "168249",
+            "url": "https://fdc.nal.usda.gov/food-details/168249/nutrients",
+            "description": "Pork, fresh, loin, tenderloin, separable lean only, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "170427",
+            "url": "https://fdc.nal.usda.gov/food-details/170427/nutrients",
+            "description": "Peppers, sweet, green, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169698",
+            "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+            "description": "Cornstarch",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "user_grams",
+          "input_grams": 150.0,
+          "calculated_grams": 150.0,
+          "portion_count": null,
+          "portion_unit": null,
+          "reference_grams": null
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "青椒肉丝 150g",
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "6ed00a91-c96a-4691-ac3b-2b68b13f67b0",
+    "food_text": "青椒肉丝150克，称的是炒熟后实际吃下的净重。",
+    "status": "completed",
+    "calories": 149.1,
+    "protein_g": 16.0,
+    "carbs_g": 5.2,
+    "fat_g": 7.1,
+    "created_at": "2026-11-14T05:43:10.954232Z",
+    "updated_at": "2026-11-14T05:43:15.072144Z"
+  }
+}

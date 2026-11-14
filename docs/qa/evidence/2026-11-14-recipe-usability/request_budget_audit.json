@@ -1,0 +1,17 @@
+{
+  "total_model_triggering_requests": 32,
+  "initial_requests": 20,
+  "authorized_post_rebuild_replays": 10,
+  "authorized_fresh_correction_followup": 2,
+  "original_cap": 24,
+  "first_expanded_cap": 30,
+  "final_expanded_cap": 32,
+  "automatic_retries": 0,
+  "mutation_counts": {
+    "POST analysis-create": 30,
+    "POST reply": 9,
+    "POST confirm": 1
+  },
+  "parent_browser_requests_excluded": true,
+  "note": "Expanded caps were explicitly authorized by parent after concrete findings. Repeated phrases are labeled explicit post-fix replays, not hidden automatic retries."
+}

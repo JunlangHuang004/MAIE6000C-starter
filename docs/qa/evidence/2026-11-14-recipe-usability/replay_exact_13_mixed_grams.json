@@ -1,0 +1,187 @@
+{
+  "label": "post-rebuild explicit replay/flow, not initial-run result",
+  "name": "replay_exact_13_mixed_grams",
+  "input": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+  "mode": "basic",
+  "http_status": 201,
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "麻婆豆腐80克，白米饭100克，都已经煮熟了。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_004",
+        "name": "麻婆豆腐",
+        "source_text": "麻婆豆腐",
+        "grams": 80.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": "rice",
+        "name": "白米饭",
+        "source_text": "白米饭",
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "boiled",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "麻婆豆腐",
+        "grams": 80.0,
+        "food_id": "dish_004",
+        "item_index": 0,
+        "nutrients": {
+          "calories": 82.5,
+          "protein_g": 5.7,
+          "carbs_g": 2.0,
+          "fat_g": 6.0
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：烧（简化家常配方，不含豆瓣酱）",
+          "整锅成品 620g；本次食用 80g",
+          "整锅配料：软豆腐（硫酸钙及卤水） 400g、生猪肉末 80g、大豆食用油 15g、普通酱油 20g、生红辣椒 10g、玉米淀粉 10g、饮用水 150g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "172449",
+            "url": "https://fdc.nal.usda.gov/food-details/172449/nutrients",
+            "description": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "167902",
+            "url": "https://fdc.nal.usda.gov/food-details/167902/nutrients",
+            "description": "Pork, fresh, ground, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "170106",
+            "url": "https://fdc.nal.usda.gov/food-details/170106/nutrients",
+            "description": "Peppers, hot chili, red, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169698",
+            "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+            "description": "Cornstarch",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "173647",
+            "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+            "description": "Beverages, water, tap, drinking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "user_grams",
+          "input_grams": 80.0,
+          "calculated_grams": 80.0,
+          "portion_count": null,
+          "portion_unit": null,
+          "reference_grams": null
+        }
+      },
+      {
+        "name": "白米饭",
+        "grams": 100.0,
+        "food_id": "rice",
+        "item_index": 1,
+        "nutrients": {
+          "calories": 130.0,
+          "protein_g": 2.7,
+          "carbs_g": 28.2,
+          "fat_g": 0.3
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "按 白米饭 的每100g可食部分数据计算",
+          "做法：水煮；另计食用油 0g",
+          "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "168878",
+            "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+            "description": "Rice, white, long-grain, regular, enriched, cooked",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "user_grams",
+          "input_grams": 100.0,
+          "calculated_grams": 100.0,
+          "portion_count": null,
+          "portion_unit": null,
+          "reference_grams": null
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "麻婆豆腐 80g；白米饭 100g",
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "ae4b8567-5561-4e39-9c80-fe75ac850ae4",
+    "food_text": "麻婆豆腐80克，白米饭100克，都已经煮熟了。",
+    "status": "completed",
+    "calories": 212.5,
+    "protein_g": 8.4,
+    "carbs_g": 30.2,
+    "fat_g": 6.3,
+    "created_at": "2026-11-14T05:43:20.346401Z",
+    "updated_at": "2026-11-14T05:43:24.111960Z"
+  }
+}

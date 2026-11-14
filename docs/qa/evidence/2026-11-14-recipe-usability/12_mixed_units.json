@@ -1,0 +1,134 @@
+{
+  "case": "12_mixed_units",
+  "input": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_041",
+    "egg",
+    "milk"
+  ],
+  "http_status": 201,
+  "elapsed_s": 8.3,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "c06d0580-dbd1-4f63-b08f-be16be3facff",
+      "food_text": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:21.866446Z",
+      "updated_at": "2026-11-14T05:29:21.866447Z"
+    },
+    "job": {
+      "id": 25,
+      "case_id": null,
+      "analysis_id": "c06d0580-dbd1-4f63-b08f-be16be3facff",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:21.870347Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_041",
+        "name": "蛋炒饭",
+        "source_text": "蛋炒饭",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": 0.5,
+        "portion_unit": "bowl",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "半碗的量需要确认"
+      },
+      {
+        "food_id": "egg",
+        "name": "水煮鸡蛋",
+        "source_text": "水煮鸡蛋",
+        "grams": null,
+        "weight_includes_inedible": false,
+        "weight_basis": "cooked",
+        "preparation": "boiled",
+        "oil_g": null,
+        "portion_count": 1.0,
+        "portion_unit": "piece",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+        "source_text": null,
+        "grams": 250.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "as_sold",
+        "preparation": "as_served",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "c06d0580-dbd1-4f63-b08f-be16be3facff",
+    "food_text": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:21.866446Z",
+    "updated_at": "2026-11-14T05:29:29.267055Z"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "label": "post-rebuild explicit replay/flow, not initial-run result",
+  "name": "replay_exact_05_fish_grams",
+  "input": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+  "mode": "basic",
+  "http_status": 201,
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_123",
+        "name": "清蒸鳕鱼",
+        "source_text": "清蒸鳕鱼",
+        "grams": 200.0,
+        "weight_includes_inedible": false,
+        "weight_basis": "cooked",
+        "preparation": "steamed",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "清蒸鳕鱼",
+        "grams": 200.0,
+        "food_id": "dish_123",
+        "item_index": 0,
+        "nutrients": {
+          "calories": 222.5,
+          "protein_g": 40.1,
+          "carbs_g": 2.8,
+          "fat_g": 4.7
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：鳕鱼肉配姜葱蒸制；去骨称重",
+          "整锅成品 320g；本次食用 200g",
+          "整锅配料：生大西洋鳕鱼 350g、生姜 15g、生葱 15g、普通酱油 15g、大豆食用油 5g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171955",
+            "url": "https://fdc.nal.usda.gov/food-details/171955/nutrients",
+            "description": "Fish, cod, Atlantic, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169231",
+            "url": "https://fdc.nal.usda.gov/food-details/169231/nutrients",
+            "description": "Ginger root, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "170005",
+            "url": "https://fdc.nal.usda.gov/food-details/170005/nutrients",
+            "description": "Onions, spring or scallions (includes tops and bulb), raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "user_grams",
+          "input_grams": 200.0,
+          "calculated_grams": 200.0,
+          "portion_count": null,
+          "portion_unit": null,
+          "reference_grams": null
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "清蒸鳕鱼 200g",
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "9df006e1-49df-46cc-9364-0390f1af40d7",
+    "food_text": "清蒸鳕鱼200克，熟鱼肉净重，没有骨头。",
+    "status": "completed",
+    "calories": 222.5,
+    "protein_g": 40.1,
+    "carbs_g": 2.8,
+    "fat_g": 4.7,
+    "created_at": "2026-11-14T05:43:15.133919Z",
+    "updated_at": "2026-11-14T05:43:19.473666Z"
+  }
+}

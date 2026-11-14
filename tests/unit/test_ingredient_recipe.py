@@ -100,7 +100,7 @@ def test_recipe_row_limit_rejects_an_overlong_list_of_valid_distinct_ingredients
 
 @pytest.mark.parametrize('facts,kind', [
     ({'grams': 100}, 'user_grams'),
-    ({'portion_count': 2, 'portion_unit': 'bowl'}, 'portion_reference'),
+    ({'portion_count': 2, 'portion_unit': 'serving'}, 'portion_reference'),
     ({}, 'default_portion'),
     ({'grams': 100, 'weight_includes_inedible': True}, 'edible_fraction'),
 ])
@@ -121,6 +121,17 @@ def test_basic_quantity_evidence_distinguishes_facts_from_assumptions(facts, kin
         assert provenance['reference_grams'] * 2 == provenance['calculated_grams']
     assert result['draft'] == before
     assert draft == before
+
+
+def test_bowl_without_explicit_conversion_asks_grams_instead_of_claiming_reference():
+    draft = [ExtractedItem(name='米饭', food_id='rice', portion_count=2,
+                           portion_unit='bowl').model_dump()]
+    before = deepcopy(draft)
+    result = evaluate_mode(draft, 'basic')
+    assert [q['key'] for q in result['questions']] == ['0.grams']
+    assert all(result[key] is None for key in KEYS)
+    assert result['details'] == []
+    assert result['draft'] == draft == before
 
 
 def test_custom_recipe_does_not_hide_another_unresolved_food():

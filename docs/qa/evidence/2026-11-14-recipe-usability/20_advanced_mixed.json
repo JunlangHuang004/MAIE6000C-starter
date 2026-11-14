@@ -1,0 +1,194 @@
+{
+  "case": "20_advanced_mixed",
+  "input": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。",
+  "mode": "advanced",
+  "catalogue_expectation_ids": [
+    "dish_256",
+    "rice"
+  ],
+  "http_status": 201,
+  "elapsed_s": 5.3,
+  "initial": {
+    "analysis": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "8b0f44cf-3d09-4b0c-9767-0383b0e65c05",
+      "food_text": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:52.468152Z",
+      "updated_at": "2026-11-14T05:29:52.468155Z"
+    },
+    "job": {
+      "id": 34,
+      "case_id": null,
+      "analysis_id": "8b0f44cf-3d09-4b0c-9767-0383b0e65c05",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:52.470081Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "advanced",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。"
+      },
+      {
+        "role": "assistant",
+        "content": "咖喱鸡采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。\n数据库未找到“都是煮熟后吃下的重量”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_256",
+        "name": "咖喱鸡",
+        "source_text": "咖喱鸡",
+        "grams": 150.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "boiled",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": "rice",
+        "name": "白米饭",
+        "source_text": "白米饭",
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "boiled",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "都是煮熟后吃下的重量",
+        "source_text": "都是煮熟后吃下的重量",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.recipe",
+        "label": "咖喱鸡采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+        "kind": "recipe",
+        "recipe": {
+          "yield_g": 850.0,
+          "ingredients": {
+            "chicken_thigh": 400.0,
+            "potato": 200.0,
+            "carrot": 100.0,
+            "onion": 100.0,
+            "curry_powder": 12.0,
+            "oil": 20.0,
+            "water": 180.0,
+            "salt": 3.0
+          }
+        },
+        "method": "去皮鸡腿肉与土豆胡萝卜炖煮，咖喱粉调味；本参考配方不含椰奶或奶油",
+        "ingredients": [
+          {
+            "id": "chicken_thigh",
+            "name": "生去皮鸡腿肉",
+            "grams": 400.0
+          },
+          {
+            "id": "potato",
+            "name": "生土豆",
+            "grams": 200.0
+          },
+          {
+            "id": "carrot",
+            "name": "生胡萝卜",
+            "grams": 100.0
+          },
+          {
+            "id": "onion",
+            "name": "生洋葱",
+            "grams": 100.0
+          },
+          {
+            "id": "curry_powder",
+            "name": "咖喱粉",
+            "grams": 12.0
+          },
+          {
+            "id": "oil",
+            "name": "大豆食用油",
+            "grams": 20.0
+          },
+          {
+            "id": "water",
+            "name": "饮用水",
+            "grams": 180.0
+          },
+          {
+            "id": "salt",
+            "name": "食盐",
+            "grams": 3.0
+          }
+        ]
+      },
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“都是煮熟后吃下的重量”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "8b0f44cf-3d09-4b0c-9767-0383b0e65c05",
+    "food_text": "咖喱鸡150克和白米饭100克，都是煮熟后吃下的重量。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:52.468152Z",
+    "updated_at": "2026-11-14T05:29:56.762615Z"
+  }
+}

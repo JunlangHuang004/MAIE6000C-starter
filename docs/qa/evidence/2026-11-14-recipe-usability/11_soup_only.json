@@ -1,0 +1,102 @@
+{
+  "case": "11_soup_only",
+  "input": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [
+    "dish_127"
+  ],
+  "http_status": 201,
+  "elapsed_s": 7.3,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "cb3c4c60-ad5b-4a16-a03c-6ab1fd0d5049",
+      "food_text": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:19.758478Z",
+      "updated_at": "2026-11-14T05:29:19.758484Z"
+    },
+    "job": {
+      "id": 24,
+      "case_id": null,
+      "analysis_id": "cb3c4c60-ad5b-4a16-a03c-6ab1fd0d5049",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:19.762235Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。",
+        "source_text": null,
+        "grams": 300.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "boiled",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "label": "数据库未找到“鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "cb3c4c60-ad5b-4a16-a03c-6ab1fd0d5049",
+    "food_text": "鱼片豆腐汤喝了300克，只喝汤，没有吃鱼片和豆腐。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:19.758478Z",
+    "updated_at": "2026-11-14T05:29:26.281984Z"
+  }
+}

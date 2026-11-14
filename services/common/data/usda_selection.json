@@ -481,7 +481,15 @@
       "boiled",
       "steamed"
     ],
-    "default_portion_g": 50
+    "default_portion_g": 50,
+    "portion_weights_g": {
+      "piece": 50
+    },
+    "portion_reference": {
+      "description": "1 large hard-cooked egg, shell removed",
+      "source": "USDA ARS, Nutritive Value of Foods (2002), Table 9, food 146, page 22",
+      "url": "https://www.ars.usda.gov/ARSUserFiles/oc/np/NutritiveValueofFoods/NutritiveValueofFoods.pdf"
+    }
   },
   {
     "id": "egg_white",

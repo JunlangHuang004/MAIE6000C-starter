@@ -1,0 +1,100 @@
+{
+  "case": "18_invented_unknown",
+  "input": "今天吃了一碗幻彩星云饭，是店里的招牌。",
+  "mode": "basic",
+  "catalogue_expectation_ids": [],
+  "http_status": 201,
+  "elapsed_s": 10.4,
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "今天吃了一碗幻彩星云饭，是店里的招牌。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "3644e6af-399b-41c9-aa38-d6f877f9a4b2",
+      "food_text": "今天吃了一碗幻彩星云饭，是店里的招牌。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-14T05:29:42.083030Z",
+      "updated_at": "2026-11-14T05:29:42.083032Z"
+    },
+    "job": {
+      "id": 32,
+      "case_id": null,
+      "analysis_id": "3644e6af-399b-41c9-aa38-d6f877f9a4b2",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-14T05:29:42.084649Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "今天吃了一碗幻彩星云饭，是店里的招牌。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "幻彩星云饭",
+        "source_text": "幻彩星云饭",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": 1.0,
+        "portion_unit": "bowl",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.food_id",
+        "label": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "3644e6af-399b-41c9-aa38-d6f877f9a4b2",
+    "food_text": "今天吃了一碗幻彩星云饭，是店里的招牌。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-14T05:29:42.083030Z",
+    "updated_at": "2026-11-14T05:29:51.862686Z"
+  }
+}

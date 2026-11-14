@@ -1,5 +1,34 @@
 # NutriChat change log
 
+## 2026-11-14 — Recipe review and result usability follow-up
+
+- Collapse the submitted description and starter controls so meal results and
+  their actions are easier to reach. Keep reference-portion and reference-recipe
+  badges visible on collapsed food rows, with a banner explaining unverified
+  assumptions.
+- Open the correction editor through **Edit this meal**. Preserve unsent replies
+  across closing, panel navigation and language changes. Block confirmation while
+  a correction remains unsubmitted, with a visible notice even when the editor is
+  closed. Clearing a conversation correction or restoring the original offline
+  description removes this block. Confirmed meals retain
+  accessible conversation history without an empty correction card. Custom meals
+  direct users to ingredient editing, including when questions remain unanswered.
+- Show a recipe batch preview before optional quantity details. Require explicit
+  acceptance; editing any ingredient quantity or finished weight updates the
+  preview and clears acceptance. Preserve draft values and disclosure state when
+  switching languages.
+- Apply an explicit no-oil instruction to every cooking oil in a reference recipe,
+  including sesame oil, while preserving other ingredients and naturally occurring
+  fat. Ask for edible grams when a piece, bowl or cup count lacks a recorded
+  conversion; withhold meal totals until the missing weight is supplied.
+- Add an explicit USDA-sourced 50 g portion reference for one large hard-boiled egg
+  with its shell removed. Keep all ingredient nutrient values and recipe
+  formulations unchanged.
+- Add the [recipe-usability report](qa/reports/2026-11-14-recipe-usability.md) and
+  [updated walkthrough](../demo/INTEGRATED_GUIDE.md), with meal captures under
+  `demo/images/2026-11-14-recipe-usability/`. The earlier same-day workspace report
+  and images remain separate dated evidence; they are not overwritten.
+
 ## 2026-11-14 — Focused workspace and correction recovery
 
 - Separate **Meals**, **Daily diary**, **Trends** and optional **My goals** into
@@ -20,8 +49,9 @@
   visible without discarding the current meal or reply. Refresh date bounds on
   return after Hong Kong midnight, preserving unsaved diary values.
 - Refresh the walkthrough and allow explicitly requested fresh QA without reading
-  or updating prior QA memory. See the [fresh review](qa/reports/2026-11-14-fresh-review.md)
-  for final verification and runtime provenance. Older screenshots, reports and
+  or updating prior QA memory. See the [earlier fresh review](qa/reports/2026-11-14-fresh-review.md)
+  for this pass's verification and runtime provenance. Its dated evidence predates
+  the recipe-usability follow-up above. Older screenshots, reports and
   the `w07-midterm` submission retain their historical attribution.
 
 ## 2026-11-03 — Publish the integrated application on test
