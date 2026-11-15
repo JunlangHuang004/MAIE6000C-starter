@@ -1,0 +1,7 @@
+{
+  "auth_payloads_omitted": true,
+  "auth_username_responses_redacted": true,
+  "no_cookie_or_authorization_headers_in_events": true,
+  "provider_request_events": 8,
+  "auth_events": 15
+}

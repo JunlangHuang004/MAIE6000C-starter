@@ -1,0 +1,33 @@
+{
+  "images": [
+    {
+      "tags": [
+        "nutrichat-w13-20261115-api:latest"
+      ],
+      "id": "sha256:385ffdcf040606c02e16b23d9dbf9d51e71b2b18b2e8bb787223524bdbc90c20",
+      "created": "2026-11-15T09:52:27.592359096Z",
+      "size": 94221640
+    },
+    {
+      "tags": [
+        "nutrichat-w13-20261115-ai:latest"
+      ],
+      "id": "sha256:6b45696e010710c08666664eec89f95f7a29d7bd93ea8435d3d0bb134cb409ac",
+      "created": "2026-11-15T09:52:27.592359096Z",
+      "size": 94221639
+    },
+    {
+      "tags": [
+        "nutrichat-w13-20261115-worker:latest"
+      ],
+      "id": "sha256:899ddaa302b8c3e7b43df4b506f2c7533901127fc8bbea667d6df05fae011651",
+      "created": "2026-11-15T09:52:27.592359096Z",
+      "size": 94221643
+    }
+  ],
+  "corrected_files_match_worktree": true,
+  "corrected_file_sha256": {
+    "services/common/food_matching.py": "a9a4a07fd7b7b243f3d0bc756d5be11384af38281c5835f16ff049d33c5ec5c6",
+    "tests/unit/test_food_matching.py": "8a2ecb410ae01016ced92887a48d15830c5f02a5ec7236111e1bd5335c842984"
+  }
+}

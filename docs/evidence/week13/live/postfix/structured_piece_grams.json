@@ -1,0 +1,204 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "晚饭吃了三块红烧肉，没有称重。"
+        },
+        {
+          "role": "assistant",
+          "content": "红烧肉吃了多少克？请填可食部分重量。"
+        },
+        {
+          "role": "user",
+          "content": "已回答：{\"0.grams\": 90}\n当前餐食资料：[{\"food_id\": \"dish_005\", \"name\": \"红烧肉\", \"source_text\": \"红烧肉\", \"grams\": 90, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": \"braised\", \"oil_g\": null, \"portion_count\": 3.0, \"portion_unit\": \"piece\", \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": \"用户未提供重量信息，需要追问。\", \"catalogue_name\": \"红烧肉\"}]",
+          "display": "已补充：红烧肉吃了多少克 → 90"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_005",
+          "name": "红烧肉",
+          "source_text": "红烧肉",
+          "grams": 90,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": 3.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "用户未提供重量信息，需要追问。"
+        }
+      ],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 2,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "981e42c6-b036-4c1e-a839-3e415e451ced",
+      "food_text": "晚饭吃了三块红烧肉，没有称重。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:54:31.647449Z",
+      "updated_at": "2026-11-15T09:54:35.759851Z"
+    },
+    "job": {
+      "id": 79,
+      "case_id": null,
+      "analysis_id": "981e42c6-b036-4c1e-a839-3e415e451ced",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:54:35.765047Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "晚饭吃了三块红烧肉，没有称重。"
+      },
+      {
+        "role": "assistant",
+        "content": "红烧肉吃了多少克？请填可食部分重量。"
+      },
+      {
+        "role": "user",
+        "content": "已回答：{\"0.grams\": 90}\n当前餐食资料：[{\"food_id\": \"dish_005\", \"name\": \"红烧肉\", \"source_text\": \"红烧肉\", \"grams\": 90, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": \"braised\", \"oil_g\": null, \"portion_count\": 3.0, \"portion_unit\": \"piece\", \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": \"用户未提供重量信息，需要追问。\", \"catalogue_name\": \"红烧肉\"}]",
+        "display": "已补充：红烧肉吃了多少克 → 90"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_005",
+        "name": "红烧肉",
+        "source_text": "红烧肉",
+        "grams": 90,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": 3.0,
+        "portion_unit": "piece",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "用户未提供重量信息，需要追问。"
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "name": "红烧肉",
+        "grams": 90,
+        "food_id": "dish_005",
+        "item_index": 0,
+        "nutrients": {
+          "calories": 454.1,
+          "protein_g": 7.9,
+          "carbs_g": 5.2,
+          "fat_g": 44.4
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "未说明重量状态，暂按熟可食重量计算。",
+          "待核实：用户未提供重量信息，需要追问。",
+          "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+          "参考做法：红烧",
+          "整锅成品 450g；本次食用 90g",
+          "整锅配料：生五花肉 400g、白砂糖 25g、普通酱油 25g、大豆食用油 10g、饮用水 200g",
+          "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "167812",
+            "url": "https://fdc.nal.usda.gov/food-details/167812/nutrients",
+            "description": "Pork, fresh, belly, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "169655",
+            "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+            "description": "Sugars, granulated",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "173647",
+            "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+            "description": "Beverages, water, tap, drinking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "user_grams",
+          "input_grams": 90,
+          "calculated_grams": 90,
+          "portion_count": null,
+          "portion_unit": null,
+          "reference_grams": null
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "红烧肉 90g",
+    "revision": 2,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "981e42c6-b036-4c1e-a839-3e415e451ced",
+    "food_text": "晚饭吃了三块红烧肉，没有称重。",
+    "status": "completed",
+    "calories": 454.1,
+    "protein_g": 7.9,
+    "carbs_g": 5.2,
+    "fat_g": 44.4,
+    "created_at": "2026-11-15T09:54:31.647449Z",
+    "updated_at": "2026-11-15T09:54:37.700205Z"
+  },
+  "job": {
+    "id": 79,
+    "case_id": null,
+    "analysis_id": "981e42c6-b036-4c1e-a839-3e415e451ced",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:54:35.765047Z",
+    "claimed_at": "2026-11-15T09:54:37.664752Z",
+    "completed_at": "2026-11-15T09:54:37.699499Z"
+  },
+  "polls": 3
+}

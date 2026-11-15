@@ -1,0 +1,2991 @@
+[
+  {
+    "check": "runtime readiness",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "live provider configured qwen",
+    "outcome": "fail",
+    "category": "live_api_no_model",
+    "evidence": {
+      "reported_provider": "hkust"
+    }
+  },
+  {
+    "check": "owner registration signs in",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "stranger registration signs in",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "anonymous read blocked /auth/me",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "anonymous read blocked /analyses",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "anonymous read blocked /profile",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "anonymous read blocked /daily-records/2026-11-14",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "anonymous read blocked /tracking",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "initial profile empty",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "missing day is unknown not zero",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid analysis payload blocked",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid analysis payload blocked",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid analysis payload blocked",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "profile persists and reference estimated",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid profile rejected",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "weight_kg"
+            ],
+            "msg": "Input should be a valid number",
+            "type": "float_type"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "stale profile rejected",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 409,
+      "response": {
+        "detail": "Your profile has changed. Reload it before saving again."
+      }
+    }
+  },
+  {
+    "check": "profile no-store",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "profile isolation and ignored owner spoof",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_01_basic_grams accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_01_basic_grams queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_01_basic_grams one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 62,
+      "case_id": null,
+      "analysis_id": "19fcfa92-5c6e-4e55-a0dc-8e1901a619f6",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:45:54.284074Z",
+      "claimed_at": "2026-11-15T09:45:55.989002Z",
+      "completed_at": "2026-11-15T09:45:58.909152Z"
+    }
+  },
+  {
+    "check": "Chinese basic gram meal maps correctly",
+    "outcome": "fail",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "青椒肉丝150克，称的是炒熟后实际吃下的可食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "数据库未找到“称的是炒熟后实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_002",
+          "name": "青椒肉丝",
+          "source_text": "青椒肉丝",
+          "grams": 150.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "称的是炒熟后实际吃下的可食净重",
+          "source_text": "称的是炒熟后实际吃下的可食净重",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“称的是炒熟后实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "19fcfa92-5c6e-4e55-a0dc-8e1901a619f6",
+      "food_text": "青椒肉丝150克，称的是炒熟后实际吃下的可食净重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:45:54.282920Z",
+      "updated_at": "2026-11-15T09:45:58.911601Z"
+    }
+  },
+  {
+    "check": "basic arithmetic",
+    "outcome": "not_tested",
+    "reason": "No complete result"
+  },
+  {
+    "check": "provider_02_advanced accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_02_advanced queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_02_advanced one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 63,
+      "case_id": null,
+      "analysis_id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:45:59.572643Z",
+      "claimed_at": "2026-11-15T09:46:00.941400Z",
+      "completed_at": "2026-11-15T09:46:03.318881Z"
+    }
+  },
+  {
+    "check": "advanced requires recipe review and withholds totals",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "番茄炒蛋200克，是实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_001",
+          "name": "番茄炒蛋",
+          "source_text": "番茄炒蛋",
+          "grams": 200.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.recipe",
+          "label": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+          "kind": "recipe",
+          "recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 15.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          },
+          "method": "炒",
+          "ingredients": [
+            {
+              "id": "tomato",
+              "name": "生番茄",
+              "grams": 300.0
+            },
+            {
+              "id": "egg_raw",
+              "name": "生鸡蛋液",
+              "grams": 150.0
+            },
+            {
+              "id": "oil",
+              "name": "大豆食用油",
+              "grams": 15.0
+            },
+            {
+              "id": "sugar",
+              "name": "白砂糖",
+              "grams": 5.0
+            },
+            {
+              "id": "salt",
+              "name": "食盐",
+              "grams": 2.0
+            }
+          ]
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "food_text": "番茄炒蛋200克，是实际吃下的熟食净重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:45:59.571645Z",
+      "updated_at": "2026-11-15T09:46:03.320043Z"
+    }
+  },
+  {
+    "check": "provider_03_unknown_mixed accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_03_unknown_mixed queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_03_unknown_mixed one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 64,
+      "case_id": null,
+      "analysis_id": "6e6b0288-be49-4718-92ca-8a26a0fb3491",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:03.754286Z",
+      "claimed_at": "2026-11-15T09:46:05.343978Z",
+      "completed_at": "2026-11-15T09:46:08.005082Z"
+    }
+  },
+  {
+    "check": "unknown mixed meal withholds every total and detail",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": null,
+          "name": "幻彩星云饭",
+          "source_text": "幻彩星云饭",
+          "grams": 150.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+          "source_text": null,
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.food_id",
+          "label": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        },
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "6e6b0288-be49-4718-92ca-8a26a0fb3491",
+      "food_text": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:03.752318Z",
+      "updated_at": "2026-11-15T09:46:08.007029Z"
+    }
+  },
+  {
+    "check": "unknown remains unresolved without substituted food",
+    "outcome": "fail",
+    "category": "real_provider",
+    "evidence": [
+      {
+        "food_id": null,
+        "name": "幻彩星云饭",
+        "source_text": "幻彩星云饭",
+        "grams": 150.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "as_served",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+        "source_text": null,
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "as_served",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ]
+  },
+  {
+    "check": "provider_04_zero_oil accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_04_zero_oil queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_04_zero_oil one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 65,
+      "case_id": null,
+      "analysis_id": "b21b53b3-e09d-4d8c-bc99-ab7edf17db9b",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:08.090729Z",
+      "claimed_at": "2026-11-15T09:46:10.033980Z",
+      "completed_at": "2026-11-15T09:46:12.552520Z"
+    }
+  },
+  {
+    "check": "explicit zero oil retained",
+    "outcome": "fail",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。"
+        },
+        {
+          "role": "assistant",
+          "content": "凉拌黄瓜的食用克数是做熟后的成品重量吗？\n数据库未找到“实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“也没加任何其他油”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_016",
+          "name": "拍黄瓜",
+          "source_text": "拍黄瓜",
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "as_sold",
+          "preparation": "other",
+          "oil_g": 0.0,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": {
+            "sesame_oil": 0.0
+          },
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "实际吃下的可食净重",
+          "source_text": "实际吃下的可食净重",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "也没加任何其他油",
+          "source_text": "也没加任何其他油",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.weight_basis",
+          "label": "凉拌黄瓜的食用克数是做熟后的成品重量吗？",
+          "kind": "choice",
+          "options": [
+            {
+              "value": "cooked",
+              "label": "是，熟制成品的可食重量"
+            }
+          ]
+        },
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        },
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“也没加任何其他油”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "b21b53b3-e09d-4d8c-bc99-ab7edf17db9b",
+      "food_text": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:08.089488Z",
+      "updated_at": "2026-11-15T09:46:12.553636Z"
+    }
+  },
+  {
+    "check": "zero oil arithmetic",
+    "outcome": "not_tested",
+    "reason": "No complete result"
+  },
+  {
+    "check": "provider_05_piece_count accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_05_piece_count queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_05_piece_count one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 66,
+      "case_id": null,
+      "analysis_id": "a632d4a3-9301-4888-890d-db19a7484b84",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:13.366240Z",
+      "claimed_at": "2026-11-15T09:46:14.595730Z",
+      "completed_at": "2026-11-15T09:46:17.036601Z"
+    }
+  },
+  {
+    "check": "piece count asks for grams and withholds totals",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "晚饭吃了三块红烧肉，没有称重。"
+        },
+        {
+          "role": "assistant",
+          "content": "红烧肉吃了多少克？请填可食部分重量。\n数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_005",
+          "name": "红烧肉",
+          "source_text": "红烧肉",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": 3.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "用户未提供重量信息，需要追问。"
+        },
+        {
+          "food_id": null,
+          "name": "没有称重",
+          "source_text": "没有称重",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.grams",
+          "label": "红烧肉吃了多少克？请填可食部分重量。",
+          "kind": "number",
+          "min": 0.1,
+          "max": 10000
+        },
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "a632d4a3-9301-4888-890d-db19a7484b84",
+      "food_text": "晚饭吃了三块红烧肉，没有称重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:13.365342Z",
+      "updated_at": "2026-11-15T09:46:17.039378Z"
+    }
+  },
+  {
+    "check": "provider_06_mixed_grams accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_06_mixed_grams queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_06_mixed_grams one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 67,
+      "case_id": null,
+      "analysis_id": "879ef36d-31be-49d0-a52a-78177b5747f9",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:17.571270Z",
+      "claimed_at": "2026-11-15T09:46:19.081270Z",
+      "completed_at": "2026-11-15T09:46:22.004124Z"
+    }
+  },
+  {
+    "check": "mixed grams retain both foods",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "麻婆豆腐80克，白米饭100克，都是实际吃下的熟食净重。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_004",
+          "name": "麻婆豆腐",
+          "source_text": "麻婆豆腐",
+          "grams": 80.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": "rice",
+          "name": "白米饭",
+          "source_text": "白米饭",
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [],
+      "details": [
+        {
+          "name": "麻婆豆腐",
+          "grams": 80.0,
+          "food_id": "dish_004",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 82.5,
+            "protein_g": 5.7,
+            "carbs_g": 2.0,
+            "fat_g": 6.0
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。",
+            "参考做法：烧（简化家常配方，不含豆瓣酱）",
+            "整锅成品 620g；本次食用 80g",
+            "整锅配料：软豆腐（硫酸钙及卤水） 400g、生猪肉末 80g、大豆食用油 15g、普通酱油 20g、生红辣椒 10g、玉米淀粉 10g、饮用水 150g",
+            "基础版参考配方，未经逐项确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "172449",
+              "url": "https://fdc.nal.usda.gov/food-details/172449/nutrients",
+              "description": "Tofu, soft, prepared with calcium sulfate and magnesium chloride (nigari)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "167902",
+              "url": "https://fdc.nal.usda.gov/food-details/167902/nutrients",
+              "description": "Pork, fresh, ground, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "174277",
+              "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+              "description": "Soy sauce made from soy and wheat (shoyu)",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170106",
+              "url": "https://fdc.nal.usda.gov/food-details/170106/nutrients",
+              "description": "Peppers, hot chili, red, raw",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169698",
+              "url": "https://fdc.nal.usda.gov/food-details/169698/nutrients",
+              "description": "Cornstarch",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173647",
+              "url": "https://fdc.nal.usda.gov/food-details/173647/nutrients",
+              "description": "Beverages, water, tap, drinking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 80.0,
+            "calculated_grams": 80.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        },
+        {
+          "name": "白米饭",
+          "grams": 100.0,
+          "food_id": "rice",
+          "item_index": 1,
+          "nutrients": {
+            "calories": 130.0,
+            "protein_g": 2.7,
+            "carbs_g": 28.2,
+            "fat_g": 0.3
+          },
+          "assumptions": [
+            "基础版快速参考估算",
+            "按 白米饭 的每100g可食部分数据计算",
+            "做法：按所选食物的加工状态；另计食用油 0g",
+            "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "168878",
+              "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+              "description": "Rice, white, long-grain, regular, enriched, cooked",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 100.0,
+            "calculated_grams": 100.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ],
+      "error_message": null,
+      "interpreted_food_text": "麻婆豆腐 80g；白米饭 100g",
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "879ef36d-31be-49d0-a52a-78177b5747f9",
+      "food_text": "麻婆豆腐80克，白米饭100克，都是实际吃下的熟食净重。",
+      "status": "completed",
+      "calories": 212.5,
+      "protein_g": 8.4,
+      "carbs_g": 30.2,
+      "fat_g": 6.3,
+      "created_at": "2026-11-15T09:46:17.568737Z",
+      "updated_at": "2026-11-15T09:46:22.006051Z"
+    }
+  },
+  {
+    "check": "mixed grams independent catalogue arithmetic",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "expected": {
+        "calories": 212.5,
+        "protein_g": 8.4,
+        "carbs_g": 30.2,
+        "fat_g": 6.3
+      },
+      "actual": {
+        "calories": 212.5,
+        "protein_g": 8.4,
+        "carbs_g": 30.2,
+        "fat_g": 6.3
+      }
+    }
+  },
+  {
+    "check": "provider_07_mixed_units accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 201
+    }
+  },
+  {
+    "check": "provider_07_mixed_units queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_07_mixed_units one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 68,
+      "case_id": null,
+      "analysis_id": "9afca340-edcd-401a-ad3c-71ee6bc0a499",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:22.836021Z",
+      "claimed_at": "2026-11-15T09:46:24.043850Z",
+      "completed_at": "2026-11-15T09:46:26.965289Z"
+    }
+  },
+  {
+    "check": "mixed units retains all foods without meal omission",
+    "outcome": "fail",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。"
+        },
+        {
+          "role": "assistant",
+          "content": "蛋炒饭吃了多少克？请填可食部分重量。\n数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_041",
+          "name": "蛋炒饭",
+          "source_text": "蛋炒饭",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": 0.5,
+          "portion_unit": "bowl",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "半碗的量需要确认"
+        },
+        {
+          "food_id": "egg",
+          "name": "水煮鸡蛋",
+          "source_text": "水煮鸡蛋",
+          "grams": null,
+          "weight_includes_inedible": false,
+          "weight_basis": "cooked",
+          "preparation": "boiled",
+          "oil_g": null,
+          "portion_count": 1.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+          "source_text": null,
+          "grams": 250.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "as_sold",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.grams",
+          "label": "蛋炒饭吃了多少克？请填可食部分重量。",
+          "kind": "number",
+          "min": 0.1,
+          "max": 10000
+        },
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "9afca340-edcd-401a-ad3c-71ee6bc0a499",
+      "food_text": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:22.834854Z",
+      "updated_at": "2026-11-15T09:46:26.966776Z"
+    }
+  },
+  {
+    "check": "mixed units safe pending state",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。"
+        },
+        {
+          "role": "assistant",
+          "content": "蛋炒饭吃了多少克？请填可食部分重量。\n数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_041",
+          "name": "蛋炒饭",
+          "source_text": "蛋炒饭",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": 0.5,
+          "portion_unit": "bowl",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "半碗的量需要确认"
+        },
+        {
+          "food_id": "egg",
+          "name": "水煮鸡蛋",
+          "source_text": "水煮鸡蛋",
+          "grams": null,
+          "weight_includes_inedible": false,
+          "weight_basis": "cooked",
+          "preparation": "boiled",
+          "oil_g": null,
+          "portion_count": 1.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+          "source_text": null,
+          "grams": 250.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "as_sold",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.grams",
+          "label": "蛋炒饭吃了多少克？请填可食部分重量。",
+          "kind": "number",
+          "min": 0.1,
+          "max": 10000
+        },
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "9afca340-edcd-401a-ad3c-71ee6bc0a499",
+      "food_text": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:22.834854Z",
+      "updated_at": "2026-11-15T09:46:26.966776Z"
+    }
+  },
+  {
+    "check": "structured_advanced_accept accepted",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 200
+    }
+  },
+  {
+    "check": "structured_advanced_accept queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "structured_advanced_accept one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "id": 69,
+      "case_id": null,
+      "analysis_id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:27.060537Z",
+      "claimed_at": "2026-11-15T09:46:28.999153Z",
+      "completed_at": "2026-11-15T09:46:29.033167Z"
+    }
+  },
+  {
+    "check": "advanced recipe acceptance completes",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "番茄炒蛋200克，是实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+        },
+        {
+          "role": "user",
+          "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+          "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_001",
+          "name": "番茄炒蛋",
+          "source_text": "番茄炒蛋",
+          "grams": 200.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null,
+          "recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 15.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          },
+          "recipe_confirmed": true
+        }
+      ],
+      "questions": [],
+      "details": [
+        {
+          "name": "番茄炒蛋",
+          "grams": 200.0,
+          "food_id": "dish_001",
+          "item_index": 0,
+          "nutrients": {
+            "calories": 210.2,
+            "protein_g": 10.7,
+            "carbs_g": 8.9,
+            "fat_g": 14.9
+          },
+          "assumptions": [
+            "参考做法：炒",
+            "整锅成品 400g；本次食用 200g",
+            "整锅配料：生番茄 300g、生鸡蛋液 150g、大豆食用油 15g、白砂糖 5g、食盐 2g",
+            "参考配方已由用户确认；不是实测菜肴营养。"
+          ],
+          "sources": [
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "170457",
+              "url": "https://fdc.nal.usda.gov/food-details/170457/nutrients",
+              "description": "Tomatoes, red, ripe, raw, year round average",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171287",
+              "url": "https://fdc.nal.usda.gov/food-details/171287/nutrients",
+              "description": "Egg, whole, raw, fresh",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "171411",
+              "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+              "description": "Oil, soybean, salad or cooking",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "169655",
+              "url": "https://fdc.nal.usda.gov/food-details/169655/nutrients",
+              "description": "Sugars, granulated",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            },
+            {
+              "name": "USDA FoodData Central SR Legacy 2018",
+              "license": "CC0-1.0",
+              "id": "173468",
+              "url": "https://fdc.nal.usda.gov/food-details/173468/nutrients",
+              "description": "Salt, table",
+              "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+            }
+          ],
+          "quantity_provenance": {
+            "kind": "user_grams",
+            "input_grams": 200.0,
+            "calculated_grams": 200.0,
+            "portion_count": null,
+            "portion_unit": null,
+            "reference_grams": null
+          }
+        }
+      ],
+      "error_message": null,
+      "interpreted_food_text": "番茄炒蛋 200g",
+      "revision": 2,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "food_text": "番茄炒蛋200克，是实际吃下的熟食净重。",
+      "status": "completed",
+      "calories": 210.2,
+      "protein_g": 10.7,
+      "carbs_g": 8.9,
+      "fat_g": 14.9,
+      "created_at": "2026-11-15T09:45:59.571645Z",
+      "updated_at": "2026-11-15T09:46:29.033458Z"
+    }
+  },
+  {
+    "check": "advanced accepted independent catalogue arithmetic",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "expected": {
+        "calories": 210.2,
+        "protein_g": 10.7,
+        "carbs_g": 8.9,
+        "fat_g": 14.9
+      },
+      "actual": {
+        "calories": 210.2,
+        "protein_g": 10.7,
+        "carbs_g": 8.9,
+        "fat_g": 14.9
+      }
+    }
+  },
+  {
+    "check": "natural gram correction accepted",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "status": 200
+    }
+  },
+  {
+    "check": "provider_08_gram_correction queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "provider_08_gram_correction one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "real_provider",
+    "evidence": {
+      "id": 70,
+      "case_id": null,
+      "analysis_id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:29.199032Z",
+      "claimed_at": "2026-11-15T09:46:31.057669Z",
+      "completed_at": "2026-11-15T09:46:33.858781Z"
+    }
+  },
+  {
+    "check": "gram correction retains requested food and 150g",
+    "outcome": "fail",
+    "category": "real_provider",
+    "evidence": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "番茄炒蛋200克，是实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+        },
+        {
+          "role": "user",
+          "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+          "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+        },
+        {
+          "role": "user",
+          "content": "刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。",
+          "display": "刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。"
+        },
+        {
+          "role": "assistant",
+          "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。\n数据库未找到“刚才份量记错了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“实际吃了150克熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“配方及其他资料都不变”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_001",
+          "name": "番茄炒蛋",
+          "source_text": "番茄炒蛋",
+          "grams": 150.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": {
+            "tomato": 300.0,
+            "egg_raw": 150.0,
+            "oil": 15.0,
+            "sugar": 5.0,
+            "salt": 2.0
+          },
+          "recipe_yield_g": 400.0,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "刚才份量记错了",
+          "source_text": "刚才份量记错了",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "实际吃了150克熟食净重",
+          "source_text": "实际吃了150克熟食净重",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "配方及其他资料都不变",
+          "source_text": "配方及其他资料都不变",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "0.recipe",
+          "label": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。",
+          "kind": "recipe",
+          "recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 15.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          },
+          "method": "炒",
+          "ingredients": [
+            {
+              "id": "tomato",
+              "name": "生番茄",
+              "grams": 300.0
+            },
+            {
+              "id": "egg_raw",
+              "name": "生鸡蛋液",
+              "grams": 150.0
+            },
+            {
+              "id": "oil",
+              "name": "大豆食用油",
+              "grams": 15.0
+            },
+            {
+              "id": "sugar",
+              "name": "白砂糖",
+              "grams": 5.0
+            },
+            {
+              "id": "salt",
+              "name": "食盐",
+              "grams": 2.0
+            }
+          ]
+        },
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“刚才份量记错了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        },
+        {
+          "key": "2.food_id",
+          "label": "数据库未找到“实际吃了150克熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        },
+        {
+          "key": "3.food_id",
+          "label": "数据库未找到“配方及其他资料都不变”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 3,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "food_text": "番茄炒蛋200克，是实际吃下的熟食净重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:45:59.571645Z",
+      "updated_at": "2026-11-15T09:46:33.860200Z"
+    }
+  },
+  {
+    "check": "structured_correction_review accepted",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 200
+    }
+  },
+  {
+    "check": "structured_correction_review queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "structured_correction_review one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "id": 71,
+      "case_id": null,
+      "analysis_id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:34.488426Z",
+      "claimed_at": "2026-11-15T09:46:35.872603Z",
+      "completed_at": "2026-11-15T09:46:35.903935Z"
+    }
+  },
+  {
+    "check": "correction confirm/readback",
+    "outcome": "not_tested",
+    "reason": "Corrected meal did not complete"
+  },
+  {
+    "check": "unknown cannot confirm",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 409,
+      "response": {
+        "detail": "State or revision changed; reload the estimate."
+      }
+    }
+  },
+  {
+    "check": "recipe rejects unknown ingredient",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": "请选择目录中已有的食材记录；不能使用未知食物或整道参考菜谱。"
+      }
+    }
+  },
+  {
+    "check": "recipe rejects duplicate ingredient",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body"
+            ],
+            "msg": "Value error, 同一食材只能添加一次，请合并其克数。",
+            "type": "value_error"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "recipe rejects zero ingredient",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "ingredients",
+              0,
+              "grams"
+            ],
+            "msg": "Input should be greater than 0",
+            "type": "greater_than"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "recipe rejects unaccepted recipe",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body"
+            ],
+            "msg": "Value error, 请先核对食材、重量状态及用量，并确认配方。",
+            "type": "value_error"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "recipe rejects overconsumed batch",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body"
+            ],
+            "msg": "Value error, 本次食用重量不能超过整锅成品总重。",
+            "type": "value_error"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "recipe rejects injected calories",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "calories"
+            ],
+            "msg": "Extra inputs are not permitted",
+            "type": "extra_forbidden"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "structured_actual_ingredients queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "structured_actual_ingredients one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "id": 72,
+      "case_id": null,
+      "analysis_id": "6e6b0288-be49-4718-92ca-8a26a0fb3491",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:36.780487Z",
+      "claimed_at": "2026-11-15T09:46:37.921826Z",
+      "completed_at": "2026-11-15T09:46:37.958446Z"
+    }
+  },
+  {
+    "check": "actual ingredient recovery completes and preserves other food",
+    "outcome": "fail",
+    "category": "live_api_no_model",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        },
+        {
+          "role": "user",
+          "content": "已确认自定义食材配方：Synthetic actual chicken ingredients",
+          "kind": "ingredient_recipe",
+          "item_index": 0
+        },
+        {
+          "role": "assistant",
+          "content": "数据库未找到“幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": null,
+          "name": "Synthetic actual chicken ingredients",
+          "source_text": "幻彩星云饭",
+          "original_name": "幻彩星云饭",
+          "custom_recipe": {
+            "name": "Synthetic actual chicken ingredients",
+            "basis": "consumed",
+            "ingredients": [
+              {
+                "food_id": "chicken",
+                "grams": 150.0
+              },
+              {
+                "food_id": "oil",
+                "grams": 5.0
+              },
+              {
+                "food_id": "soy_sauce",
+                "grams": 10.0
+              }
+            ],
+            "batch_yield_g": null,
+            "consumed_g": null,
+            "accepted": true
+          }
+        },
+        {
+          "food_id": null,
+          "name": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+          "source_text": null,
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 2,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "6e6b0288-be49-4718-92ca-8a26a0fb3491",
+      "food_text": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:03.752318Z",
+      "updated_at": "2026-11-15T09:46:37.958741Z"
+    }
+  },
+  {
+    "check": "actual ingredients arithmetic",
+    "outcome": "not_tested",
+    "reason": "No complete result"
+  },
+  {
+    "check": "structured_piece_grams accepted",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 200
+    }
+  },
+  {
+    "check": "structured_piece_grams queued state withholds all totals",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "structured_piece_grams one worker attempt and terminal result",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "id": 73,
+      "case_id": null,
+      "analysis_id": "a632d4a3-9301-4888-890d-db19a7484b84",
+      "job_type": "analyze_nutrition",
+      "status": "completed",
+      "attempts": 1,
+      "error": null,
+      "created_at": "2026-11-15T09:46:38.931360Z",
+      "claimed_at": "2026-11-15T09:46:39.972233Z",
+      "completed_at": "2026-11-15T09:46:40.005109Z"
+    }
+  },
+  {
+    "check": "missing grams can be supplied",
+    "outcome": "fail",
+    "category": "live_api_no_model",
+    "evidence": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "晚饭吃了三块红烧肉，没有称重。"
+        },
+        {
+          "role": "assistant",
+          "content": "红烧肉吃了多少克？请填可食部分重量。\n数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        },
+        {
+          "role": "user",
+          "content": "已回答：{\"0.grams\": 90}\n当前餐食资料：[{\"food_id\": \"dish_005\", \"name\": \"红烧肉\", \"source_text\": \"红烧肉\", \"grams\": 90, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": \"braised\", \"oil_g\": null, \"portion_count\": 3.0, \"portion_unit\": \"piece\", \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": \"用户未提供重量信息，需要追问。\", \"catalogue_name\": \"红烧肉\"}, {\"food_id\": null, \"name\": \"没有称重\", \"source_text\": \"没有称重\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}]",
+          "display": "已补充：红烧肉吃了多少克 → 90"
+        },
+        {
+          "role": "assistant",
+          "content": "数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_005",
+          "name": "红烧肉",
+          "source_text": "红烧肉",
+          "grams": 90,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": "braised",
+          "oil_g": null,
+          "portion_count": 3.0,
+          "portion_unit": "piece",
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": "用户未提供重量信息，需要追问。"
+        },
+        {
+          "food_id": null,
+          "name": "没有称重",
+          "source_text": "没有称重",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [
+        {
+          "key": "1.food_id",
+          "label": "数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+          "kind": "unsupported"
+        }
+      ],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 2,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "a632d4a3-9301-4888-890d-db19a7484b84",
+      "food_text": "晚饭吃了三块红烧肉，没有称重。",
+      "status": "needs_input",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:13.365342Z",
+      "updated_at": "2026-11-15T09:46:40.005457Z"
+    }
+  },
+  {
+    "check": "confirmed immutability/meal aggregation",
+    "outcome": "not_tested",
+    "reason": "Advanced correction flow did not confirm"
+  },
+  {
+    "check": "manual override exercise and partial coverage persist",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "date": "2026-11-14",
+      "revision": 1,
+      "weight_kg": 70.0,
+      "manual_calories": 2100.0,
+      "meal_calories": null,
+      "meal_count": 0,
+      "calories": 2100.0,
+      "calorie_source": "manual",
+      "exercise_calories": 250.0,
+      "baseline_expenditure_kcal": 2002.6,
+      "total_expenditure_kcal": 2252.6,
+      "balance_type": "deficit",
+      "balance_kcal": 152.6,
+      "intake_coverage": {
+        "breakfast": true,
+        "lunch": true,
+        "dinner": true,
+        "snacks": true,
+        "drinks": false
+      },
+      "intake_complete": false
+    }
+  },
+  {
+    "check": "daily rejects negative exercise",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "exercise_calories"
+            ],
+            "msg": "Input should be greater than or equal to 0",
+            "type": "greater_than_equal"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "daily rejects string calories",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "manual_calories"
+            ],
+            "msg": "Input should be a valid number",
+            "type": "float_type"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "daily rejects incomplete coverage",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "intake_coverage",
+              "lunch"
+            ],
+            "msg": "Field required",
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "body",
+              "intake_coverage",
+              "dinner"
+            ],
+            "msg": "Field required",
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "body",
+              "intake_coverage",
+              "snacks"
+            ],
+            "msg": "Field required",
+            "type": "missing"
+          },
+          {
+            "loc": [
+              "body",
+              "intake_coverage",
+              "drinks"
+            ],
+            "msg": "Field required",
+            "type": "missing"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "daily rejects boolean weight",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 422,
+      "response": {
+        "detail": [
+          {
+            "loc": [
+              "body",
+              "weight_kg"
+            ],
+            "msg": "Input should be a valid number",
+            "type": "float_type"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "check": "stale daily rejected",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "status": 409,
+      "response": {
+        "detail": "This daily record has changed. Reload it before saving again."
+      }
+    }
+  },
+  {
+    "check": "clear manual override restores meals and omitted exercise persists",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "date": "2026-11-14",
+      "revision": 2,
+      "weight_kg": 70.0,
+      "manual_calories": null,
+      "meal_calories": null,
+      "meal_count": 0,
+      "calories": null,
+      "calorie_source": null,
+      "exercise_calories": 250.0,
+      "baseline_expenditure_kcal": 2002.6,
+      "total_expenditure_kcal": 2252.6,
+      "balance_type": null,
+      "balance_kcal": null,
+      "intake_coverage": {
+        "breakfast": true,
+        "lunch": true,
+        "dinner": true,
+        "snacks": true,
+        "drinks": true
+      },
+      "intake_complete": true
+    }
+  },
+  {
+    "check": "clear exercise withholds balance and preserves coverage",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "date": "2026-11-14",
+      "revision": 3,
+      "weight_kg": 70.0,
+      "manual_calories": null,
+      "meal_calories": null,
+      "meal_count": 0,
+      "calories": null,
+      "calorie_source": null,
+      "exercise_calories": null,
+      "baseline_expenditure_kcal": 2002.6,
+      "total_expenditure_kcal": null,
+      "balance_type": null,
+      "balance_kcal": null,
+      "intake_coverage": {
+        "breakfast": true,
+        "lunch": true,
+        "dinner": true,
+        "snacks": true,
+        "drinks": true
+      },
+      "intake_complete": true
+    }
+  },
+  {
+    "check": "zero exercise is known zero",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "date": "2026-11-14",
+      "revision": 4,
+      "weight_kg": 70.0,
+      "manual_calories": null,
+      "meal_calories": null,
+      "meal_count": 0,
+      "calories": null,
+      "calorie_source": null,
+      "exercise_calories": 0.0,
+      "baseline_expenditure_kcal": 2002.6,
+      "total_expenditure_kcal": 2002.6,
+      "balance_type": null,
+      "balance_kcal": null,
+      "intake_coverage": {
+        "breakfast": true,
+        "lunch": true,
+        "dinner": true,
+        "snacks": true,
+        "drinks": true
+      },
+      "intake_complete": true
+    }
+  },
+  {
+    "check": "30 day trend exact and latest day matches",
+    "outcome": "fail",
+    "category": "live_api_no_model",
+    "evidence": {
+      "timezone": "Asia/Hong_Kong",
+      "today": "2026-11-15",
+      "start_date": "2026-10-16",
+      "end_date": "2026-11-14",
+      "days": [
+        {
+          "date": "2026-10-16",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-17",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-18",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-19",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-20",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-21",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-22",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-23",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-24",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-25",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-26",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-27",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-28",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-29",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-30",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-10-31",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-01",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-02",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-03",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-04",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-05",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-06",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-07",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-08",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-09",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-10",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-11",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-12",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-13",
+          "revision": 0,
+          "weight_kg": null,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": null,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": null,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": false,
+            "lunch": false,
+            "dinner": false,
+            "snacks": false,
+            "drinks": false
+          },
+          "intake_complete": false
+        },
+        {
+          "date": "2026-11-14",
+          "revision": 4,
+          "weight_kg": 70.0,
+          "manual_calories": null,
+          "meal_calories": null,
+          "meal_count": 0,
+          "calories": null,
+          "calorie_source": null,
+          "exercise_calories": 0.0,
+          "baseline_expenditure_kcal": 2002.6,
+          "total_expenditure_kcal": 2002.6,
+          "balance_type": null,
+          "balance_kcal": null,
+          "intake_coverage": {
+            "breakfast": true,
+            "lunch": true,
+            "dinner": true,
+            "snacks": true,
+            "drinks": true
+          },
+          "intake_complete": true
+        }
+      ],
+      "summary": {
+        "recorded_days": 0,
+        "average_calories": null,
+        "weight_entries": 1,
+        "first_weight_kg": 70.0,
+        "last_weight_kg": 70.0,
+        "weight_change_kg": null
+      }
+    }
+  },
+  {
+    "check": "daily weight does not rewrite profile",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "other account history empty",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "other account day remains unknown",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "other account trends remain empty",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid date rejected /daily-records/2026-02-30",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid date rejected /tracking?end=1999-01-01",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "invalid date rejected /daily-records/2099-01-01",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "history contains every original request without duplicates",
+    "outcome": "pass",
+    "category": "live_api_no_model",
+    "evidence": {
+      "count": 7
+    }
+  },
+  {
+    "check": "login rotates prior session",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "login restores profile and history",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "bad login does not disclose account existence",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "owner logout revokes session and replay",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  },
+  {
+    "check": "stranger logout revokes session and replay",
+    "outcome": "pass",
+    "category": "live_api_no_model"
+  }
+]

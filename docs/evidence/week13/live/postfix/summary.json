@@ -1,0 +1,24 @@
+{
+  "finished_at": "2026-11-15T09:54:56.939322+00:00",
+  "provider_requests_this_replay": 6,
+  "provider_requests_cumulative": 14,
+  "cumulative_cap": 15,
+  "automatic_retries": 0,
+  "counts": {
+    "pass": 105,
+    "fail": 0,
+    "not_tested": 1
+  },
+  "failed_or_unmet": [
+    {
+      "check": "zero-oil completed arithmetic",
+      "outcome": "not_tested",
+      "reason": "Cold cucumber still asks for cooked-weight confirmation; original input did not state cooked, so reviewer did not invent this fact."
+    }
+  ],
+  "retained_limitations": [
+    "Mixed millilitre meal was not replayed or fixed.",
+    "Cold cucumber reference-basis prompt uses cooked wording; see cold_dish_basis_limitation.json if observed.",
+    "Original first-pass failures remain intact."
+  ]
+}

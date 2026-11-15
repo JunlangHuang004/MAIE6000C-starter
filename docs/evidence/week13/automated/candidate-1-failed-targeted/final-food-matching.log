@@ -1,0 +1,100 @@
+ Container nutrichat-w13-20261115-api-run-8e1913191261 Creating
+ Container nutrichat-w13-20261115-api-run-8e1913191261 Created
+........................................................................ [ 36%]
+..............F..............F.......................................... [ 72%]
+........................................................                 [100%]
+=================================== FAILURES ===================================
+_ test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity[False-\u53e6\u5403\u767d\u7c73\u996d100\u514b\u719f\u91cd\u3002-\u767d\u7c73\u996d-rice-100] _
+
+text = '另吃白米饭100克熟重。', name = '白米饭', food_id = 'rice', grams = 100
+wrapped_source = False
+
+    @pytest.mark.parametrize('text,name,food_id,grams', [
+        ('青椒肉丝150克，称的是炒熟后实际吃下的净重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，称的是炒熟后实际吃下的可食净重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，稱的是炒熟後實際吃下的淨重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，是实际吃下的熟食净重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，是實際吃下的熟食淨重。', '青椒肉丝', 'dish_002', 150),
+        ('清蒸鳕鱼200克，熟鱼肉净重，没有骨头。', '清蒸鳕鱼', 'dish_123', 200),
+        ('宫保鸡丁，我吃了半盘，大概一人份。', '宫保鸡丁', 'dish_003', None),
+        ('晚饭吃了三块红烧肉。', '红烧肉', 'dish_005', None),
+        ('吃了一小盘酸辣土豆丝。', '酸辣土豆丝', 'dish_022', None),
+        ('吃了4个可乐鸡翅，骨头没有吃。', '可乐鸡翅', 'dish_252', None),
+        ('吃了4个可乐鸡翅，没有称重。', '可乐鸡翅', 'dish_252', None),
+        ('一小碟拍黄瓜，没有加香油，也没加其他油。', '拍黄瓜', 'dish_016', None),
+        ('一小碟拍黄瓜，没有加香油，也没加任何其他油。', '拍黄瓜', 'dish_016', None),
+        ('另吃白米饭100克熟重。', '白米饭', 'rice', 100),
+        ('晚餐一大碗白米饭，还有一碟拍黄瓜。', '拍黄瓜', 'dish_016', None),
+    ])
+    @pytest.mark.parametrize('wrapped_source', [False, True])
+    def test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity(
+            text, name, food_id, grams, wrapped_source):
+        # The multi-food case supplies the other food separately; its portion must
+        # not cause the complete-meal guard to discard that second item.
+        source = text if wrapped_source and '还有' not in text else name
+        items = [ExtractedItem(name=name, source_text=source, food_id=food_id, grams=grams)]
+        if '还有' in text:
+            items.insert(0, ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice'))
+        grounded = ground_food_items(items, text)
+        expected = ['rice', food_id] if '还有' in text else [food_id]
+>       assert [item.food_id for item in grounded] == expected
+E       AssertionError: assert ['rice', None] == ['rice']
+E
+E         Left contains one more item: None
+E         Use -v to get more diff
+
+tests/unit/test_food_matching.py:335: AssertionError
+_ test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity[True-\u53e6\u5403\u767d\u7c73\u996d100\u514b\u719f\u91cd\u3002-\u767d\u7c73\u996d-rice-100] _
+
+text = '另吃白米饭100克熟重。', name = '白米饭', food_id = 'rice', grams = 100
+wrapped_source = True
+
+    @pytest.mark.parametrize('text,name,food_id,grams', [
+        ('青椒肉丝150克，称的是炒熟后实际吃下的净重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，称的是炒熟后实际吃下的可食净重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，稱的是炒熟後實際吃下的淨重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，是实际吃下的熟食净重。', '青椒肉丝', 'dish_002', 150),
+        ('青椒肉丝150克，是實際吃下的熟食淨重。', '青椒肉丝', 'dish_002', 150),
+        ('清蒸鳕鱼200克，熟鱼肉净重，没有骨头。', '清蒸鳕鱼', 'dish_123', 200),
+        ('宫保鸡丁，我吃了半盘，大概一人份。', '宫保鸡丁', 'dish_003', None),
+        ('晚饭吃了三块红烧肉。', '红烧肉', 'dish_005', None),
+        ('吃了一小盘酸辣土豆丝。', '酸辣土豆丝', 'dish_022', None),
+        ('吃了4个可乐鸡翅，骨头没有吃。', '可乐鸡翅', 'dish_252', None),
+        ('吃了4个可乐鸡翅，没有称重。', '可乐鸡翅', 'dish_252', None),
+        ('一小碟拍黄瓜，没有加香油，也没加其他油。', '拍黄瓜', 'dish_016', None),
+        ('一小碟拍黄瓜，没有加香油，也没加任何其他油。', '拍黄瓜', 'dish_016', None),
+        ('另吃白米饭100克熟重。', '白米饭', 'rice', 100),
+        ('晚餐一大碗白米饭，还有一碟拍黄瓜。', '拍黄瓜', 'dish_016', None),
+    ])
+    @pytest.mark.parametrize('wrapped_source', [False, True])
+    def test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity(
+            text, name, food_id, grams, wrapped_source):
+        # The multi-food case supplies the other food separately; its portion must
+        # not cause the complete-meal guard to discard that second item.
+        source = text if wrapped_source and '还有' not in text else name
+        items = [ExtractedItem(name=name, source_text=source, food_id=food_id, grams=grams)]
+        if '还有' in text:
+            items.insert(0, ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice'))
+        grounded = ground_food_items(items, text)
+        expected = ['rice', food_id] if '还有' in text else [food_id]
+>       assert [item.food_id for item in grounded] == expected
+E       AssertionError: assert [None] == ['rice']
+E
+E         At index 0 diff: None != 'rice'
+E         Use -v to get more diff
+
+tests/unit/test_food_matching.py:335: AssertionError
+=============================== warnings summary ===============================
+../usr/local/lib/python3.11/site-packages/starlette/testclient.py:51
+  /usr/local/lib/python3.11/site-packages/starlette/testclient.py:51: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.
+    _PortalFactoryType = Callable[[], AbstractContextManager[anyio.abc.BlockingPortal]]
+
+../usr/local/lib/python3.11/site-packages/pythonjsonlogger/jsonlogger.py:11
+  /usr/local/lib/python3.11/site-packages/pythonjsonlogger/jsonlogger.py:11: DeprecationWarning: pythonjsonlogger.jsonlogger has been moved to pythonjsonlogger.json
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/unit/test_food_matching.py::test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity[False-\u53e6\u5403\u767d\u7c73\u996d100\u514b\u719f\u91cd\u3002-\u767d\u7c73\u996d-rice-100]
+FAILED tests/unit/test_food_matching.py::test_ordinary_portions_and_complete_weight_details_preserve_exact_food_identity[True-\u53e6\u5403\u767d\u7c73\u996d100\u514b\u719f\u91cd\u3002-\u767d\u7c73\u996d-rice-100]
+2 failed, 198 passed, 2 warnings in 0.25s

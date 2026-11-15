@@ -1,0 +1,129 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "晚饭吃了三块红烧肉，没有称重。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "a632d4a3-9301-4888-890d-db19a7484b84",
+      "food_text": "晚饭吃了三块红烧肉，没有称重。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:13.365342Z",
+      "updated_at": "2026-11-15T09:46:13.365344Z"
+    },
+    "job": {
+      "id": 66,
+      "case_id": null,
+      "analysis_id": "a632d4a3-9301-4888-890d-db19a7484b84",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:46:13.366240Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "晚饭吃了三块红烧肉，没有称重。"
+      },
+      {
+        "role": "assistant",
+        "content": "红烧肉吃了多少克？请填可食部分重量。\n数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_005",
+        "name": "红烧肉",
+        "source_text": "红烧肉",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": "braised",
+        "oil_g": null,
+        "portion_count": 3.0,
+        "portion_unit": "piece",
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": "用户未提供重量信息，需要追问。"
+      },
+      {
+        "food_id": null,
+        "name": "没有称重",
+        "source_text": "没有称重",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.grams",
+        "label": "红烧肉吃了多少克？请填可食部分重量。",
+        "kind": "number",
+        "min": 0.1,
+        "max": 10000
+      },
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“没有称重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "a632d4a3-9301-4888-890d-db19a7484b84",
+    "food_text": "晚饭吃了三块红烧肉，没有称重。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-15T09:46:13.365342Z",
+    "updated_at": "2026-11-15T09:46:17.039378Z"
+  },
+  "job": {
+    "id": 66,
+    "case_id": null,
+    "analysis_id": "a632d4a3-9301-4888-890d-db19a7484b84",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:46:13.366240Z",
+    "claimed_at": "2026-11-15T09:46:14.595730Z",
+    "completed_at": "2026-11-15T09:46:17.036601Z"
+  },
+  "polls": 5
+}

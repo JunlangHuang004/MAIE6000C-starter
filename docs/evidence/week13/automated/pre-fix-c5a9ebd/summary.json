@@ -1,0 +1,34 @@
+{
+  "release_phase": "pre-final-correction baseline",
+  "source_commit": "c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c",
+  "project": "nutrichat-w13-20261115",
+  "port": 8013,
+  "fresh_database_empty": true,
+  "backend": {
+    "passed": 1208,
+    "deselected": 2,
+    "warnings": 2
+  },
+  "frontend": {
+    "passed": 56,
+    "npm_ci_exit": 0
+  },
+  "http_smoke": {
+    "passed": 2,
+    "warnings": 2
+  },
+  "ruff": "passed",
+  "chinese_corpus": {
+    "valid_cases": 7,
+    "categories": 5,
+    "provider_called": false
+  },
+  "alembic_current_and_head": "20261030_0010",
+  "demo_lifecycle": "passed",
+  "restart_retained_rows_unchanged": true,
+  "restart_authenticated_http_readback": false,
+  "runtime_all_103_files_match_commit": true,
+  "runtime_application_test_102_files_match_worktree": true,
+  "no_model_calls": true,
+  "note": "Pre-fix tests passed, but independent live findings require a source fix and final rerun. Parent-owned documentation edits occurred during verification."
+}

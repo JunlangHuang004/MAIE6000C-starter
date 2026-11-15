@@ -1,0 +1,40 @@
+[
+  {
+    "clause": "称的是炒熟后实际吃下的可食净重",
+    "recognized_as_detail": false
+  },
+  {
+    "clause": "实际吃下的可食净重",
+    "recognized_as_detail": false
+  },
+  {
+    "clause": "也没加任何其他油",
+    "recognized_as_detail": false
+  },
+  {
+    "clause": "没有称重",
+    "recognized_as_detail": false
+  },
+  {
+    "clause": "刚才份量记错了",
+    "recognized_as_detail": false
+  },
+  {
+    "clause": "实际吃了150克熟食净重",
+    "recognized_as_detail": false
+  },
+  {
+    "clause": "配方及其他资料都不变",
+    "recognized_as_detail": false
+  },
+  {
+    "mention": "白米饭",
+    "input": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+    "recognized_as_user_mention": false
+  },
+  {
+    "mention": "全脂牛奶",
+    "input": "早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。",
+    "recognized_as_user_mention": false
+  }
+]

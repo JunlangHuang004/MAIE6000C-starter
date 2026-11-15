@@ -1,0 +1,88 @@
+Independent live API acceptance — final review
+
+Core gram-based meal, recipe, account, ownership, and daily tracking journeys pass
+after the bounded grounding fix. Two limitations remain and prevent an unqualified
+claim that every tested Chinese-meal input completes: cold cucumber asks for a
+cooked-weight confirmation, and the mixed millilitre case remains unresolved.
+
+Evidence scope and provenance
+Runtime: http://localhost:8008, configured HKUST real provider.
+Initial source: c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c.
+Post-fix source is identified by the SHA-256 in postfix/metadata.json; it matches
+the actual AI container module in postfix/runtime-food-matching.json.
+First pass: 2026-11-15 09:45:52–09:46:41 UTC.
+Deliberate post-fix replay finished: 2026-11-15 09:54:56 UTC.
+14 total real-provider requests: 8 original + 6 exact post-fix replays; approved
+cumulative cap 15. No automatic request retries. First failures remain unchanged.
+All recorded real-provider jobs completed with one worker attempt and no job error.
+
+Post-fix live outcomes
+- Exact basic Chinese meal: 青椒肉丝150克，称的是炒熟后实际吃下的可食净重。
+  One dish_002 item, 150 edible grams; completed at 149.1 kcal. All four nutrient
+  totals match independent catalogue arithmetic; confirmed/read back.
+- Exact unknown mixed meal retains unknown 幻彩星云饭 plus separate rice 100g.
+  All totals and details withheld until the unknown is resolved. No food substitute.
+- Actual ingredients recover that unknown without altering rice. Consumed recipe
+  returns 359.5 kcal; explicitly portioned batch returns 244.8 kcal. Both match
+  independent catalogue arithmetic, batch recipe confirms and reads back.
+- Exact three-piece pork input retains count 3 and no invented grams; asks only
+  for grams. A structured 90g answer completes at 454.1 kcal; arithmetic matches.
+- Exact advanced tomato-and-egg input requires review of the reference recipe.
+  Accepted 200g recipe: 210.2 kcal. Exact natural correction to 150g preserves the
+  dish and recipe facts, requests renewed recipe review, then completes at 157.7
+  kcal. Confirmation/readback succeeds and arithmetic scales correctly.
+- Zero-oil cucumber now has one correct food, 100g, oil_g=0 and sesame_oil=0;
+  descriptive clauses no longer become phantom foods. It remains needs_input on
+  weight basis. The reviewer did not invent a cooked-weight assertion.
+- Mixed gram tofu/rice passed the initial real-provider run at 212.5 kcal with
+  independent arithmetic matching. It was not repeated after the bounded fix.
+
+Live API controls without model inference
+- Registration, duplicate registration rejection, authenticated/anonymous access,
+  missing mutation security header and wrong-origin rejection.
+- Profile persistence, reference estimate, invalid/stale profile prevention,
+  privacy cache headers, account isolation, daily weight separate from profile.
+- Invalid meal/recipe/day/date inputs preserve saved state; stale recipe edit
+  rejected; natural-language editing of an actual ingredient recipe safely blocked.
+- Three confirmed meals read back unchanged. For EACH confirmed meal, patch,
+  reply, mode change, reconfirmation, and ingredient edit return 409 and preserve
+  the original. A different account's corresponding reads/writes return 404.
+  Job ownership and anonymous confirmed-meal access also reject correctly.
+- Three confirmed meals aggregate to 551.6 kcal on the chosen day. Manual override
+  gives 2100 while preserving meal sum; clearing restores 551.6. Exercise and
+  coverage persist when omitted. Initial run additionally verified exercise
+  clearing and explicit zero. Exact 30-day history, daily readback, summary, owner
+  history, and stranger isolation pass.
+- Initial login rotation revoked the old cookie; login restored saved profile and
+  history; wrong-password and missing-account errors were indistinguishable.
+  Every created session was logged out and replayed cookies were rejected (401).
+
+Remaining limitations, not passed or hidden
+1. Cold cucumber: the only issued weight-basis option asserts cooked food, while
+   the user supplied edible net weight for a cold dish. No completed zero-oil
+   arithmetic acceptance is claimed. See postfix/cold_dish_basis_limitation.json.
+2. Original mixed units input included 250毫升全脂牛奶. The grounding wrapper
+   rejects 喝了250毫升 and the extracted item nevertheless carries grams=250.
+   Current totals are withheld. This was deliberately NOT fixed or replayed; any
+   later volume-identity support must avoid silently treating ml as explicit grams.
+   See provider_07_mixed_units.json and first-pass-review.txt.
+3. This audit exercises the HTTP API and real configured provider. Browser UI
+   acceptance is the root reviewer's separate evidence. No claims about provider
+   reliability beyond these 14 requests or universal Chinese phrase coverage.
+
+Counts and interpretation
+Post-fix: 105 script checks pass, 0 fail, 1 not_tested (cold-cucumber completed
+arithmetic). These are mixed functional checks, not a model accuracy percentage.
+Initial raw: 90 pass, 9 fail, 5 not_tested. Seven failures reflect blocked user
+journeys; two are documented harness expectation errors: qwen vs actual hkust,
+and expecting a calorie-recorded day after clearing the only calorie source.
+Do not erase those first results or treat raw counts as distinct defect counts.
+
+Artifacts and rerun safety
+run_live_acceptance.py: original capped first-run script.
+run_postfix_replay.py: six deliberate exact replays plus completion controls.
+Both refuse to overwrite their request evidence. Credentials are generated only
+in memory; auth payloads/usernames/session values are omitted or redacted; no .env
+or provider key was read. Both use finally to revoke active sessions. Synthetic
+meal/profile/day records remain in the authorized disposable runtime. No audit
+agent source changes, commit, push, or runtime restarts were performed.

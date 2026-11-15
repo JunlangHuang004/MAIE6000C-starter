@@ -13,6 +13,13 @@ Qwen or HKUST GenAI interprets foods and quantities; Python calculates from the
 versioned food data. Users review, correct and confirm the saved estimate, then
 track confirmed meals and weight measurements privately. No model training is required.
 
+The final course package is [Week 13 — `w13-final`](submissions/week13/README.md),
+with a [seven-point TA demo](submissions/week13/DEMO.md),
+[technical brief](submissions/week13/final-technical-brief.md) and
+[AI Use Statement](submissions/week13/AI_USE_STATEMENT.md). The
+[Week 13 verification record](docs/evidence/week13-verification.md) separates final
+checks from earlier dated evidence.
+
 Start with [the integration guide](docs/integration.md) for the merged preview and
 verification. [The demo folder](demo/README.md) provides a self-guided workflow and
 a separate key-free integration check. Earlier screenshots and reports retain their
@@ -186,7 +193,9 @@ the application serves plain JavaScript. CI includes `integrate/**`, `test`,
 `nutrichat` and `main` pushes, plus pull requests. Local passing tests do not imply
 that a pushed commit has passed GitHub Actions.
 
-[Integration verification](docs/integration.md) records checks for the merged build.
+[Week 13 verification](docs/evidence/week13-verification.md) is the release-check
+record. [Integration verification](docs/evidence/integration-verification.md)
+records the earlier 3 November merged build.
 The [recipe-usability follow-up](docs/qa/reports/2026-11-14-recipe-usability.md)
 records the current meal-flow changes and their verification scope. The
 [earlier fresh review](docs/qa/reports/2026-11-14-fresh-review.md) retains the
@@ -222,6 +231,7 @@ and do not use the model. Qwen/HKUST run in the cloud and need no local GPU.
 | [Operations](docs/operations.md) | Startup, tests, migrations and troubleshooting |
 | [Cloud deployment](docs/cloud-deployment.md) | Separate future deployment procedure |
 | [Change log](docs/change-log.md) | Changes and dated evidence |
+| [Week 13 final package](submissions/week13/README.md) | Final workflow, demo, evidence, responsibilities and `w13-final` hand-in |
 | [Week 7 milestone](submissions/week07/README.md) | Historical submission scope at `w07-midterm` |
 
 ## Current limitations

@@ -1,0 +1,310 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        },
+        {
+          "role": "user",
+          "content": "已确认自定义食材配方：Synthetic actual chicken ingredients",
+          "kind": "ingredient_recipe",
+          "item_index": 0
+        },
+        {
+          "role": "user",
+          "content": "已确认自定义食材配方：Synthetic actual chicken ingredients",
+          "kind": "ingredient_recipe",
+          "item_index": 0
+        }
+      ],
+      "draft": [
+        {
+          "food_id": null,
+          "name": "Synthetic actual chicken ingredients",
+          "source_text": "幻彩星云饭",
+          "original_name": "幻彩星云饭",
+          "custom_recipe": {
+            "name": "Synthetic actual chicken ingredients",
+            "basis": "batch",
+            "ingredients": [
+              {
+                "food_id": "chicken",
+                "grams": 300.0
+              },
+              {
+                "food_id": "oil",
+                "grams": 10.0
+              },
+              {
+                "food_id": "soy_sauce",
+                "grams": 20.0
+              }
+            ],
+            "batch_yield_g": 600.0,
+            "consumed_g": 150.0,
+            "accepted": true
+          }
+        },
+        {
+          "food_id": "rice",
+          "name": "白米饭",
+          "source_text": "白米饭",
+          "grams": 100.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "as_served",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 3,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "9c863b66-4ba5-43a6-afb7-3d5828019c30",
+      "food_text": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:54:22.294682Z",
+      "updated_at": "2026-11-15T09:54:29.546191Z"
+    },
+    "job": {
+      "id": 77,
+      "case_id": null,
+      "analysis_id": "9c863b66-4ba5-43a6-afb7-3d5828019c30",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:54:29.548898Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“幻彩星云饭”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      },
+      {
+        "role": "user",
+        "content": "已确认自定义食材配方：Synthetic actual chicken ingredients",
+        "kind": "ingredient_recipe",
+        "item_index": 0
+      },
+      {
+        "role": "user",
+        "content": "已确认自定义食材配方：Synthetic actual chicken ingredients",
+        "kind": "ingredient_recipe",
+        "item_index": 0
+      }
+    ],
+    "draft": [
+      {
+        "food_id": null,
+        "name": "Synthetic actual chicken ingredients",
+        "source_text": "幻彩星云饭",
+        "original_name": "幻彩星云饭",
+        "custom_recipe": {
+          "name": "Synthetic actual chicken ingredients",
+          "basis": "batch",
+          "ingredients": [
+            {
+              "food_id": "chicken",
+              "grams": 300.0
+            },
+            {
+              "food_id": "oil",
+              "grams": 10.0
+            },
+            {
+              "food_id": "soy_sauce",
+              "grams": 20.0
+            }
+          ],
+          "batch_yield_g": 600.0,
+          "consumed_g": 150.0,
+          "accepted": true
+        }
+      },
+      {
+        "food_id": "rice",
+        "name": "白米饭",
+        "source_text": "白米饭",
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "as_served",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [],
+    "details": [
+      {
+        "kind": "custom_recipe",
+        "food_id": null,
+        "name": "Synthetic actual chicken ingredients",
+        "grams": 150.0,
+        "nutrients": {
+          "calories": 114.8,
+          "protein_g": 17.3,
+          "carbs_g": 0.2,
+          "fat_g": 4.5
+        },
+        "assumptions": [
+          "用户填写并确认的食材配方；不是数据库中的实测菜肴记录。",
+          "食材按所选记录的生重、熟重或可食净重计算，不自动互换。",
+          "油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171077",
+            "url": "https://fdc.nal.usda.gov/food-details/171077/nutrients",
+            "description": "Chicken, broiler or fryers, breast, skinless, boneless, meat only, raw",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "171411",
+            "url": "https://fdc.nal.usda.gov/food-details/171411/nutrients",
+            "description": "Oil, soybean, salad or cooking",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          },
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "174277",
+            "url": "https://fdc.nal.usda.gov/food-details/174277/nutrients",
+            "description": "Soy sauce made from soy and wheat (shoyu)",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "custom_recipe",
+          "basis": "batch",
+          "ingredients": [
+            {
+              "food_id": "chicken",
+              "name": "生去皮鸡胸肉",
+              "grams": 300.0,
+              "state": "raw",
+              "consumed_grams": 75.0
+            },
+            {
+              "food_id": "oil",
+              "name": "大豆食用油",
+              "grams": 10.0,
+              "state": "as_sold",
+              "consumed_grams": 2.5
+            },
+            {
+              "food_id": "soy_sauce",
+              "name": "普通酱油",
+              "grams": 20.0,
+              "state": "as_sold",
+              "consumed_grams": 5.0
+            }
+          ],
+          "batch_yield_g": 600.0,
+          "consumed_g": 150.0,
+          "factor": 0.25
+        },
+        "item_index": 0
+      },
+      {
+        "name": "白米饭",
+        "grams": 100.0,
+        "food_id": "rice",
+        "item_index": 1,
+        "nutrients": {
+          "calories": 130.0,
+          "protein_g": 2.7,
+          "carbs_g": 28.2,
+          "fat_g": 0.3
+        },
+        "assumptions": [
+          "基础版快速参考估算",
+          "按 白米饭 的每100g可食部分数据计算",
+          "做法：按所选食物的加工状态；另计食用油 0g",
+          "烹调失水不自动换算；额外糖、酱料需作为食材补充。"
+        ],
+        "sources": [
+          {
+            "name": "USDA FoodData Central SR Legacy 2018",
+            "license": "CC0-1.0",
+            "id": "168878",
+            "url": "https://fdc.nal.usda.gov/food-details/168878/nutrients",
+            "description": "Rice, white, long-grain, regular, enriched, cooked",
+            "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+          }
+        ],
+        "quantity_provenance": {
+          "kind": "user_grams",
+          "input_grams": 100.0,
+          "calculated_grams": 100.0,
+          "portion_count": null,
+          "portion_unit": null,
+          "reference_grams": null
+        }
+      }
+    ],
+    "error_message": null,
+    "interpreted_food_text": "Synthetic actual chicken ingredients 150g；白米饭 100g",
+    "revision": 3,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "9c863b66-4ba5-43a6-afb7-3d5828019c30",
+    "food_text": "幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。",
+    "status": "completed",
+    "calories": 244.8,
+    "protein_g": 20.0,
+    "carbs_g": 28.4,
+    "fat_g": 4.8,
+    "created_at": "2026-11-15T09:54:22.294682Z",
+    "updated_at": "2026-11-15T09:54:31.266735Z"
+  },
+  "job": {
+    "id": 77,
+    "case_id": null,
+    "analysis_id": "9c863b66-4ba5-43a6-afb7-3d5828019c30",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:54:29.548898Z",
+    "claimed_at": "2026-11-15T09:54:31.164228Z",
+    "completed_at": "2026-11-15T09:54:31.260621Z"
+  },
+  "polls": 3
+}

@@ -1,5 +1,21 @@
 # NutriChat change log
 
+## 2026-11-15 — Final milestone package and grounded detail handling
+
+- Add the Week 13 submission, seven-point TA demo, technical brief, concise AI
+  Use Statement and seven current synthetic browser screenshots.
+- Unify local project names and update architecture, migration, catalogue and
+  release-boundary documentation.
+- Fix observed false-food clauses for edible net weight, unweighed portions,
+  explicit no-oil wording, portion corrections and additional rice. Keep matching
+  anchored and retain regression tests that block unknown additions.
+- Complete fresh-start and final regression checks: 1,230 backend, 56 frontend
+  and 2 service smoke tests; retain first live failures and post-fix evidence.
+  See [final verification](evidence/week13-verification.md), including cold-dish
+  clarification and mixed-volume limitations.
+- Publish the final package on `test` with `w13-final`; the original `nutrichat`
+  branch and public deployment remain separate snapshots.
+
 ## 2026-11-14 — Recipe review and result usability follow-up
 
 - Collapse the submitted description and starter controls so meal results and

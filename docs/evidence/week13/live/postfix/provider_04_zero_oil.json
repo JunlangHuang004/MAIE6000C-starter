@@ -1,0 +1,115 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "6d43e764-80da-4727-b2d9-87e70110c47d",
+      "food_text": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:54:37.835491Z",
+      "updated_at": "2026-11-15T09:54:37.835493Z"
+    },
+    "job": {
+      "id": 80,
+      "case_id": null,
+      "analysis_id": "6d43e764-80da-4727-b2d9-87e70110c47d",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:54:37.836328Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。"
+      },
+      {
+        "role": "assistant",
+        "content": "凉拌黄瓜的食用克数是做熟后的成品重量吗？"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_016",
+        "name": "拍黄瓜",
+        "source_text": "拍黄瓜",
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "as_sold",
+        "preparation": "other",
+        "oil_g": 0.0,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": {
+          "sesame_oil": 0.0
+        },
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.weight_basis",
+        "label": "凉拌黄瓜的食用克数是做熟后的成品重量吗？",
+        "kind": "choice",
+        "options": [
+          {
+            "value": "cooked",
+            "label": "是，熟制成品的可食重量"
+          }
+        ]
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "6d43e764-80da-4727-b2d9-87e70110c47d",
+    "food_text": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-15T09:54:37.835491Z",
+    "updated_at": "2026-11-15T09:54:42.282885Z"
+  },
+  "job": {
+    "id": 80,
+    "case_id": null,
+    "analysis_id": "6d43e764-80da-4727-b2d9-87e70110c47d",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:54:37.836328Z",
+    "claimed_at": "2026-11-15T09:54:39.709981Z",
+    "completed_at": "2026-11-15T09:54:42.282008Z"
+  },
+  "polls": 6
+}

@@ -1,0 +1,122 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "青椒肉丝150克，称的是炒熟后实际吃下的可食净重。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "19fcfa92-5c6e-4e55-a0dc-8e1901a619f6",
+      "food_text": "青椒肉丝150克，称的是炒熟后实际吃下的可食净重。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:45:54.282920Z",
+      "updated_at": "2026-11-15T09:45:54.282933Z"
+    },
+    "job": {
+      "id": 62,
+      "case_id": null,
+      "analysis_id": "19fcfa92-5c6e-4e55-a0dc-8e1901a619f6",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:45:54.284074Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "青椒肉丝150克，称的是炒熟后实际吃下的可食净重。"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“称的是炒熟后实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_002",
+        "name": "青椒肉丝",
+        "source_text": "青椒肉丝",
+        "grams": 150.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "称的是炒熟后实际吃下的可食净重",
+        "source_text": "称的是炒熟后实际吃下的可食净重",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“称的是炒熟后实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "19fcfa92-5c6e-4e55-a0dc-8e1901a619f6",
+    "food_text": "青椒肉丝150克，称的是炒熟后实际吃下的可食净重。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-15T09:45:54.282920Z",
+    "updated_at": "2026-11-15T09:45:58.911601Z"
+  },
+  "job": {
+    "id": 62,
+    "case_id": null,
+    "analysis_id": "19fcfa92-5c6e-4e55-a0dc-8e1901a619f6",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:45:54.284074Z",
+    "claimed_at": "2026-11-15T09:45:55.989002Z",
+    "completed_at": "2026-11-15T09:45:58.909152Z"
+  },
+  "polls": 6
+}

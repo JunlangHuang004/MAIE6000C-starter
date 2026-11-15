@@ -1,0 +1,174 @@
+[
+  {
+    "name": "backend-tests",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "nutrichat-w13-20261115",
+      "--env-file",
+      ".env.example",
+      "-f",
+      "compose.yaml",
+      "-f",
+      "demo/compose.demo.yaml",
+      "run",
+      "--rm",
+      "--no-deps",
+      "api",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "-m",
+      "not smoke"
+    ],
+    "started_at": "2026-11-15T09:53:05.349261+00:00",
+    "elapsed_seconds": 114.54,
+    "exit_code": 0
+  },
+  {
+    "name": "ruff",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "nutrichat-w13-20261115",
+      "--env-file",
+      ".env.example",
+      "-f",
+      "compose.yaml",
+      "-f",
+      "demo/compose.demo.yaml",
+      "exec",
+      "-T",
+      "api",
+      "ruff",
+      "check",
+      "--no-cache",
+      "."
+    ],
+    "started_at": "2026-11-15T09:54:59.892206+00:00",
+    "elapsed_seconds": 0.28,
+    "exit_code": 0
+  },
+  {
+    "name": "smoke-tests",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "nutrichat-w13-20261115",
+      "--env-file",
+      ".env.example",
+      "-f",
+      "compose.yaml",
+      "-f",
+      "demo/compose.demo.yaml",
+      "exec",
+      "-T",
+      "-e",
+      "SMOKE_BASE_URL=http://api:8000",
+      "api",
+      "pytest",
+      "tests/smoke",
+      "-q",
+      "-p",
+      "no:cacheprovider"
+    ],
+    "started_at": "2026-11-15T09:55:00.177840+00:00",
+    "elapsed_seconds": 7.53,
+    "exit_code": 0
+  },
+  {
+    "name": "chinese-corpus",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "nutrichat-w13-20261115",
+      "--env-file",
+      ".env.example",
+      "-f",
+      "compose.yaml",
+      "-f",
+      "demo/compose.demo.yaml",
+      "exec",
+      "-T",
+      "api",
+      "python",
+      "scripts/evaluate_chinese_meals.py"
+    ],
+    "started_at": "2026-11-15T09:55:07.710010+00:00",
+    "elapsed_seconds": 0.42,
+    "exit_code": 0
+  },
+  {
+    "name": "alembic-heads",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "nutrichat-w13-20261115",
+      "--env-file",
+      ".env.example",
+      "-f",
+      "compose.yaml",
+      "-f",
+      "demo/compose.demo.yaml",
+      "exec",
+      "-T",
+      "api",
+      "alembic",
+      "heads"
+    ],
+    "started_at": "2026-11-15T09:55:08.127722+00:00",
+    "elapsed_seconds": 0.53,
+    "exit_code": 0
+  },
+  {
+    "name": "alembic-current",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "nutrichat-w13-20261115",
+      "--env-file",
+      ".env.example",
+      "-f",
+      "compose.yaml",
+      "-f",
+      "demo/compose.demo.yaml",
+      "exec",
+      "-T",
+      "api",
+      "alembic",
+      "current"
+    ],
+    "started_at": "2026-11-15T09:55:08.657871+00:00",
+    "elapsed_seconds": 0.79,
+    "exit_code": 0
+  },
+  {
+    "name": "demo-check",
+    "command": [
+      "python3",
+      "demo/run.py",
+      "check"
+    ],
+    "started_at": "2026-11-15T09:55:09.449107+00:00",
+    "elapsed_seconds": 15.13,
+    "exit_code": 0
+  },
+  {
+    "name": "demo-status",
+    "command": [
+      "python3",
+      "demo/run.py",
+      "status"
+    ],
+    "started_at": "2026-11-15T09:55:24.583403+00:00",
+    "elapsed_seconds": 0.19,
+    "exit_code": 0
+  }
+]

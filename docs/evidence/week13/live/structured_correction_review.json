@@ -1,0 +1,303 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "advanced",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "番茄炒蛋200克，是实际吃下的熟食净重。"
+        },
+        {
+          "role": "assistant",
+          "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+        },
+        {
+          "role": "user",
+          "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+          "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+        },
+        {
+          "role": "user",
+          "content": "刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。",
+          "display": "刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。"
+        },
+        {
+          "role": "assistant",
+          "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。\n数据库未找到“刚才份量记错了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“实际吃了150克熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“配方及其他资料都不变”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+        },
+        {
+          "role": "user",
+          "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 150.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}, \"recipe_yield_g\": 400.0, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}, {\"food_id\": null, \"name\": \"刚才份量记错了\", \"source_text\": \"刚才份量记错了\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}, {\"food_id\": null, \"name\": \"实际吃了150克熟食净重\", \"source_text\": \"实际吃了150克熟食净重\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}, {\"food_id\": null, \"name\": \"配方及其他资料都不变\", \"source_text\": \"配方及其他资料都不变\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}]",
+          "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+        }
+      ],
+      "draft": [
+        {
+          "food_id": "dish_001",
+          "name": "番茄炒蛋",
+          "source_text": "番茄炒蛋",
+          "grams": 150.0,
+          "weight_includes_inedible": null,
+          "weight_basis": "cooked",
+          "preparation": "stir_fried",
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": {
+            "tomato": 300.0,
+            "egg_raw": 150.0,
+            "oil": 15.0,
+            "sugar": 5.0,
+            "salt": 2.0
+          },
+          "recipe_yield_g": 400.0,
+          "uncertainty": null,
+          "recipe": {
+            "yield_g": 400.0,
+            "ingredients": {
+              "tomato": 300.0,
+              "egg_raw": 150.0,
+              "oil": 15.0,
+              "sugar": 5.0,
+              "salt": 2.0
+            }
+          },
+          "recipe_confirmed": true
+        },
+        {
+          "food_id": null,
+          "name": "刚才份量记错了",
+          "source_text": "刚才份量记错了",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "实际吃了150克熟食净重",
+          "source_text": "实际吃了150克熟食净重",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        },
+        {
+          "food_id": null,
+          "name": "配方及其他资料都不变",
+          "source_text": "配方及其他资料都不变",
+          "grams": null,
+          "weight_includes_inedible": null,
+          "weight_basis": null,
+          "preparation": null,
+          "oil_g": null,
+          "portion_count": null,
+          "portion_unit": null,
+          "recipe_ingredients": null,
+          "recipe_yield_g": null,
+          "uncertainty": null
+        }
+      ],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 4,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "food_text": "番茄炒蛋200克，是实际吃下的熟食净重。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:45:59.571645Z",
+      "updated_at": "2026-11-15T09:46:34.484546Z"
+    },
+    "job": {
+      "id": 71,
+      "case_id": null,
+      "analysis_id": "550fbc12-af04-4005-96bc-77476254de3b",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:46:34.488426Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "advanced",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "番茄炒蛋200克，是实际吃下的熟食净重。"
+      },
+      {
+        "role": "assistant",
+        "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。"
+      },
+      {
+        "role": "user",
+        "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 200.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}]",
+        "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+      },
+      {
+        "role": "user",
+        "content": "刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。",
+        "display": "刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。"
+      },
+      {
+        "role": "assistant",
+        "content": "番茄炒蛋采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。这些是估算假设，不代表你的实际用量。\n数据库未找到“刚才份量记错了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“实际吃了150克熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“配方及其他资料都不变”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      },
+      {
+        "role": "user",
+        "content": "已回答：{\"0.recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}}\n当前餐食资料：[{\"food_id\": \"dish_001\", \"name\": \"番茄炒蛋\", \"source_text\": \"番茄炒蛋\", \"grams\": 150.0, \"weight_includes_inedible\": null, \"weight_basis\": \"cooked\", \"preparation\": \"stir_fried\", \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}, \"recipe_yield_g\": 400.0, \"uncertainty\": null, \"recipe\": {\"yield_g\": 400.0, \"ingredients\": {\"tomato\": 300.0, \"egg_raw\": 150.0, \"oil\": 15.0, \"sugar\": 5.0, \"salt\": 2.0}}, \"recipe_confirmed\": true, \"catalogue_name\": \"番茄炒蛋\"}, {\"food_id\": null, \"name\": \"刚才份量记错了\", \"source_text\": \"刚才份量记错了\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}, {\"food_id\": null, \"name\": \"实际吃了150克熟食净重\", \"source_text\": \"实际吃了150克熟食净重\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}, {\"food_id\": null, \"name\": \"配方及其他资料都不变\", \"source_text\": \"配方及其他资料都不变\", \"grams\": null, \"weight_includes_inedible\": null, \"weight_basis\": null, \"preparation\": null, \"oil_g\": null, \"portion_count\": null, \"portion_unit\": null, \"recipe_ingredients\": null, \"recipe_yield_g\": null, \"uncertainty\": null, \"catalogue_name\": null}]",
+        "display": "已补充：番茄炒蛋采用以下参考做法和整锅配方吗 → 已核对配方及成品重量"
+      },
+      {
+        "role": "assistant",
+        "content": "数据库未找到“刚才份量记错了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“实际吃了150克熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“配方及其他资料都不变”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_001",
+        "name": "番茄炒蛋",
+        "source_text": "番茄炒蛋",
+        "grams": 150.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "cooked",
+        "preparation": "stir_fried",
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": {
+          "tomato": 300.0,
+          "egg_raw": 150.0,
+          "oil": 15.0,
+          "sugar": 5.0,
+          "salt": 2.0
+        },
+        "recipe_yield_g": 400.0,
+        "uncertainty": null,
+        "recipe": {
+          "yield_g": 400.0,
+          "ingredients": {
+            "tomato": 300.0,
+            "egg_raw": 150.0,
+            "oil": 15.0,
+            "sugar": 5.0,
+            "salt": 2.0
+          }
+        },
+        "recipe_confirmed": true
+      },
+      {
+        "food_id": null,
+        "name": "刚才份量记错了",
+        "source_text": "刚才份量记错了",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "实际吃了150克熟食净重",
+        "source_text": "实际吃了150克熟食净重",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "配方及其他资料都不变",
+        "source_text": "配方及其他资料都不变",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“刚才份量记错了”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      },
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“实际吃了150克熟食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      },
+      {
+        "key": "3.food_id",
+        "label": "数据库未找到“配方及其他资料都不变”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 4,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "550fbc12-af04-4005-96bc-77476254de3b",
+    "food_text": "番茄炒蛋200克，是实际吃下的熟食净重。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-15T09:45:59.571645Z",
+    "updated_at": "2026-11-15T09:46:35.904208Z"
+  },
+  "job": {
+    "id": 71,
+    "case_id": null,
+    "analysis_id": "550fbc12-af04-4005-96bc-77476254de3b",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:46:34.488426Z",
+    "claimed_at": "2026-11-15T09:46:35.872603Z",
+    "completed_at": "2026-11-15T09:46:35.903935Z"
+  },
+  "polls": 3
+}

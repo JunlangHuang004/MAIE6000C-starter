@@ -1,0 +1,9 @@
+{
+  "started_at": "2026-11-15T09:54:17.209790+00:00",
+  "base_url": "http://localhost:8008",
+  "source_food_matching_sha256": "a9a4a07fd7b7b243f3d0bc756d5be11384af38281c5835f16ff049d33c5ec5c6",
+  "prior_provider_requests": 8,
+  "cumulative_cap": 15,
+  "expected_new_provider_requests": 6,
+  "policy": "Exact deliberate post-fix replays only; retain first failures; no automatic retries; sessions revoked finally."
+}

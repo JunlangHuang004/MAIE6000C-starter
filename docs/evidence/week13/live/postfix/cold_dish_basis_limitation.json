@@ -1,0 +1,16 @@
+{
+  "observed": [
+    {
+      "key": "0.weight_basis",
+      "label": "凉拌黄瓜的食用克数是做熟后的成品重量吗？",
+      "kind": "choice",
+      "options": [
+        {
+          "value": "cooked",
+          "label": "是，熟制成品的可食重量"
+        }
+      ]
+    }
+  ],
+  "disposition": "Remaining limitation: cold cucumber reference recipe requires cooked state. No cooked assertion supplied because the exact original input only states edible net weight."
+}

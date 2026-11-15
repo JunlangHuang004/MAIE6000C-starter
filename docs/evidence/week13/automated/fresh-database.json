@@ -1,0 +1,31 @@
+{
+  "observed_at": "2026-11-15T09:43:31.739378+00:00",
+  "project": "nutrichat-w13-20261115",
+  "port": 8013,
+  "source_commit": "c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c",
+  "source_branch": "test",
+  "source_dirty": true,
+  "database": {
+    "users": 0,
+    "analyses": 0,
+    "jobs": 0,
+    "daily_records": 0,
+    "schema": "20261030_0010"
+  },
+  "volumes": [
+    {
+      "CreatedAt": "2026-11-15T09:42:51Z",
+      "Driver": "local",
+      "Labels": {
+        "com.docker.compose.config-hash": "322167b9b20bc154723c59f463ce07dc93390b3a7edf25cd014185f227d75127",
+        "com.docker.compose.project": "nutrichat-w13-20261115",
+        "com.docker.compose.version": "5.5.0",
+        "com.docker.compose.volume": "postgres_data"
+      },
+      "Mountpoint": "/var/lib/docker/volumes/nutrichat-w13-20261115_postgres_data/_data",
+      "Name": "nutrichat-w13-20261115_postgres_data",
+      "Options": null,
+      "Scope": "local"
+    }
+  ]
+}

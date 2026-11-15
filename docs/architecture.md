@@ -1,10 +1,13 @@
 # NutriChat architecture
 
-Current implementation reviewed: 2026-11-03, `test`.
+Current implementation documented: 2026-11-15, `test`; final checkpoint `w13-final`.
 
-The merged application retains the exact `nutrichat` catalogue: 200 USDA ingredient records and 350 project-authored
-reference recipes. Expansion changes versioned data and validation, not model
-weights. Account/profile/tracking migrations extend the application schema separately.
+The merged application retains the `nutrichat` catalogue's 200 USDA ingredient
+records, 350 project-authored reference recipes, food identities and nutrient values.
+The 14 November follow-up adds an explicit 50 g reference and source metadata for
+one large peeled hard-boiled egg; the catalogue is therefore not byte-for-byte
+identical. Data and validation updates do not train model weights.
+Account/profile/tracking migrations extend the application schema separately.
 The merged build is published on `test`; `nutrichat`, the Week 7 tag and the
 public deployment remain unchanged.
 
@@ -47,12 +50,40 @@ analyses. Daily records contain weight, a nullable manual calorie override and a
 optimistic revision. The API computes automatic calorie totals from that user's
 confirmed meals and combines them with the daily records for a 30-day window.
 Manual totals replace meal sums, and absent data remains null. Historical results
-use saved meal estimates, not a recalculation against today's catalogue.
+use saved meal estimates, not a recalculation against today's catalogue. Migration
+0009 adds nullable exercise calories, and 0010 adds the five-category intake
+coverage checklist. A blank exercise value is unknown; zero explicitly records
+no exercise. Coverage is self-reported and does not prove complete intake.
+
+When intake, an applicable profile and exercise are available, the API derives an
+approximate energy balance using `resting_kcal × 1.2 + exercise_calories` as
+expenditure. The fixed baseline avoids counting the profile activity factor and
+logged exercise twice. A surplus or deficit has a nonnegative magnitude; absent
+prerequisites withhold the balance. Changing the current profile can recalculate
+displayed balances for past dates; there are no historical profile snapshots.
 
 The browser draws two SVG charts and a corresponding data table. Tracking does not
 call the worker or Qwen, change the personal profile, or store measurements in
-localStorage. The current reference is not projected onto past dates. See the
+localStorage. Charts do not project the current nutrition target onto past dates;
+the separately derived balance uses the current applicable profile. See the
 [tracking contract and migration policy](tracking.md).
+
+## Four workspace panels
+
+The browser presents **Meals**, **Daily diary**, **Trends** and **My goals**. Meals
+contains input, results, clarification, correction and confirmation; Diary contains
+dated intake, weight, exercise, coverage and recent meals; Trends contains the
+30-day charts/table; My goals holds the optional profile and references. Panel and
+language changes preserve unsaved form values without submitting them. Draft
+values are not promised to survive a page reload.
+
+After submission, the result takes priority over the compact original description.
+Reference badges and the uncertainty notice remain visible while source details
+are collapsed. Recipe questions show a batch preview before optional quantity
+controls. Explicit recipe acceptance is required; quantity or finished-weight
+edits clear it. Unsubmitted meal corrections block confirmation of the old result,
+even when the correction editor is closed. The catalogue renders 20 search hits at
+a time with a control to reveal further results; this does not reduce coverage.
 
 ## Chinese and English interface
 
@@ -161,13 +192,14 @@ Analysis states are `queued`, `needs_input`, `completed`, `failed`, `confirmed`.
 Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. Migration 0006 adds users/sessions and nullable owners; ownerless historical
 records remain preserved but inaccessible to new accounts. Migration 0007 adds
 profiles; 0008 adds daily records and backfills older confirmed meal dates using
-Hong Kong confirmation dates. These migrations do not overwrite saved nutrient
-results or food catalogue files. API startup runs migrations before the worker starts.
+Hong Kong confirmation dates. Migrations 0009 and 0010 add exercise and intake
+coverage respectively; the current head is `20261030_0010`. These migrations do
+not overwrite saved nutrient results or food catalogue files. API startup runs migrations before the worker starts.
 
 ## Deployment boundaries
 
 The recommended merged preview uses `compose.integrated.yaml`, project
-`nutrichat-integrated`, and API loopback port 8005. It keeps AI/PostgreSQL internal
+`nutrichat-merged-qwen`, and API loopback port 8005. It keeps AI/PostgreSQL internal
 and uses a separate database volume; only AI receives private provider settings.
 The separate offline demo defaults to project `nutrichat-integrated-demo` and port
 8006. Project names isolate Docker resources; port changes alone do not.
@@ -201,7 +233,14 @@ fail or propose a similar but incorrect food. The identity guard rejects
 unverified food matches, but it does not prove that all quantities or cooking facts
 are correct. Users must review interpreted foods and assumptions before confirming.
 
-See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack and [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design.
+See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack,
+[ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design and
+[ADR 0003](adrs/0003-private-tracking-and-release-boundaries.md) for account-private
+tracking and release boundaries. Current evidence is in
+[Week 13 verification](evidence/week13-verification.md); the
+[14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md)
+records the most recent earlier meal/browser review, after the
+[14 November workspace review](qa/reports/2026-11-14-fresh-review.md).
 
 ## Worker contract and state ownership
 
@@ -255,7 +294,7 @@ rows or confirm user records. There is no scheduler in this implementation.
 - A user correction or reply creates a new job; it does not replay the failed job.
 - A worker crash after claim can leave `claimed` indefinitely. Recovery is a
   documented gap; the polling loop only selects `pending`. There is no exactly-once guarantee.
-- Idempotency keys are deferred beyond the Week 7 minimum. Repeated POST requests
+- Idempotency keys remain deferred in the final prototype. Repeated POST requests
   create distinct analyses/jobs and can incur duplicate work/provider usage.
 - Analysis failures expose a generic message. No stable public error-code taxonomy
   exists yet. `/jobs/{id}` exposes bounded operational error text, so it must not be
@@ -275,8 +314,8 @@ isolated Compose project so existing local and public demos keep running.
 
 ## Historical Week 7 evidence
 
-The following reports describe their labelled source snapshots. Current merged-build
-validation is recorded separately in [integration verification](integration.md).
+The following reports describe their labelled source snapshots. Final-release
+validation is recorded separately in [Week 13 verification](evidence/week13-verification.md).
 
 The [midterm artifact](../submissions/week07/README.md) records the submitted historical scope and
 team responsibilities. A [fresh rehearsal](evidence/week07-verification.md) captures

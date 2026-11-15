@@ -1,0 +1,23 @@
+{
+  "runs": [
+    {
+      "directory": "/Users/jadenhuang/Documents/Codex/2026-10-16/d/outputs/w13-final-2026-11-15/live",
+      "auth_payloads_omitted": true,
+      "auth_username_responses_redacted": true,
+      "no_cookie_or_authorization_headers_in_events": true,
+      "provider_request_events": 8,
+      "auth_events": 15
+    },
+    {
+      "directory": "/Users/jadenhuang/Documents/Codex/2026-10-16/d/outputs/w13-final-2026-11-15/live/postfix",
+      "auth_payloads_omitted": true,
+      "auth_username_responses_redacted": true,
+      "no_cookie_or_authorization_headers_in_events": true,
+      "provider_request_events": 6,
+      "auth_events": 11
+    }
+  ],
+  "total_provider_request_events": 14,
+  "maximum_authorized_provider_requests": 15,
+  "automatic_retries": 0
+}

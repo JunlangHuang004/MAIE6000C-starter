@@ -306,6 +306,7 @@ def test_removed_shell_and_no_extra_oil_details_are_not_extra_foods(monkeypatch,
 
 @pytest.mark.parametrize('text,name,food_id,grams', [
     ('青椒肉丝150克，称的是炒熟后实际吃下的净重。', '青椒肉丝', 'dish_002', 150),
+    ('青椒肉丝150克，称的是炒熟后实际吃下的可食净重。', '青椒肉丝', 'dish_002', 150),
     ('青椒肉丝150克，稱的是炒熟後實際吃下的淨重。', '青椒肉丝', 'dish_002', 150),
     ('青椒肉丝150克，是实际吃下的熟食净重。', '青椒肉丝', 'dish_002', 150),
     ('青椒肉丝150克，是實際吃下的熟食淨重。', '青椒肉丝', 'dish_002', 150),
@@ -314,7 +315,10 @@ def test_removed_shell_and_no_extra_oil_details_are_not_extra_foods(monkeypatch,
     ('晚饭吃了三块红烧肉。', '红烧肉', 'dish_005', None),
     ('吃了一小盘酸辣土豆丝。', '酸辣土豆丝', 'dish_022', None),
     ('吃了4个可乐鸡翅，骨头没有吃。', '可乐鸡翅', 'dish_252', None),
+    ('吃了4个可乐鸡翅，没有称重。', '可乐鸡翅', 'dish_252', None),
     ('一小碟拍黄瓜，没有加香油，也没加其他油。', '拍黄瓜', 'dish_016', None),
+    ('一小碟拍黄瓜，没有加香油，也没加任何其他油。', '拍黄瓜', 'dish_016', None),
+    ('另吃白米饭100克熟重。', '白米饭', 'rice', 100),
     ('晚餐一大碗白米饭，还有一碟拍黄瓜。', '拍黄瓜', 'dish_016', None),
 ])
 @pytest.mark.parametrize('wrapped_source', [False, True])
@@ -362,6 +366,23 @@ def test_complete_cooking_detail_does_not_add_food_to_a_mixed_meal(detail):
     assert [item.food_id for item in items] == ['dish_004', 'rice']
 
 
+def test_exact_final_review_correction_preserves_food_without_phantom_clauses():
+    text = '刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。'
+    items = ground_food_items([
+        ExtractedItem(name='番茄炒蛋', source_text='番茄炒蛋', food_id='dish_001', grams=150),
+    ], '番茄炒蛋200克', [{'role': 'user', 'content': text}])
+    assert [(item.food_id, item.grams) for item in items] == [('dish_001', 150)]
+
+
+def test_additional_rice_does_not_hide_the_unknown_half_of_a_meal():
+    items = ground_food_items([
+        ExtractedItem(name='白米饭', source_text='白米饭', food_id='rice', grams=100),
+    ], '另吃白米饭100克熟重，火星豉油鸡200克')
+    assert items[0].food_id == 'rice'
+    assert any(item.food_id is None and '火星豉油鸡' in item.name for item in items)
+    assert evaluate([item.model_dump() for item in items])['calories'] is None
+
+
 @pytest.mark.parametrize('detail', [
     '称的是炒熟后实际吃下的净重',
     '是实际吃下的熟食净重',
@@ -374,6 +395,12 @@ def test_complete_cooking_detail_does_not_add_food_to_a_mixed_meal(detail):
     '大概一人份',
     '没有加香油',
     '也没加其他油',
+    '也没加任何其他油',
+    '没有称重',
+    '称的是炒熟后实际吃下的可食净重',
+    '刚才份量记错了',
+    '实际吃了150克熟食净重',
+    '配方及其他资料都不变',
 ])
 @pytest.mark.parametrize('addition', [
     '火星豉油鸡200克',

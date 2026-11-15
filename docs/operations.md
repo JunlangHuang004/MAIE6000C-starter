@@ -1,10 +1,12 @@
 # NutriChat operations
 
-Current instructions: 2026-11-14, the `test` workspace update. The app separates
+Current instructions: 2026-11-15, the `test` final package (`w13-final`). The app separates
 Meals, Daily diary, Trends and My goals while retaining meal estimation, daily
 balance, intake review and the Chinese-meal evaluator. Existing deployments remain
 separate snapshots. See [integration setup](integration.md) and the
-[fresh review](qa/reports/2026-11-14-fresh-review.md).
+[14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md).
+The [earlier 14 November workspace review](qa/reports/2026-11-14-fresh-review.md)
+remains separate dated evidence.
 
 ## Startup and isolation
 
@@ -141,6 +143,11 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 
 ## Diagnose problems
 
+- **Connection refused / Docker commands hang:** check Docker Desktop and free disk
+  space before restarting the existing project. A local review encountered virtual
+  disk write errors when host storage was almost full. Preserve named volumes;
+  deleting the database is not a recovery step. Verify readiness and saved records
+  after recovery.
 - **Login loops / 401:** sign in again after expiry; keep the same host/port and
   check cookie/origin settings. HTTP localhost requires `AUTH_COOKIE_SECURE=false`.
   An old shared public password is not an automatically migrated personal account.
@@ -175,13 +182,17 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 
 ## Data, migrations and recovery
 
-The food catalogue is versioned JSON and is retained unchanged from `nutrichat`.
+The food catalogue is versioned JSON: 200 ingredients and 350 reference recipes.
+It retains the `nutrichat` food identities and nutrient values, with the later
+explicit 50 g reference/source metadata for one large peeled hard-boiled egg.
+Do not use byte-for-byte equality with the earlier catalogue as a release check.
 The application database is PostgreSQL. The merged preview starts a separate volume;
 it does not automatically combine records from existing deployments.
 
 API startup runs `alembic upgrade head` before the worker starts. Migrations 0006–0008
-add users/sessions/ownership, profiles, daily records and meal dates. Old ownerless
-meals/cases are preserved but inaccessible through account APIs; they are not
+add users/sessions/ownership, profiles, daily records and meal dates; 0009 adds
+exercise calories and 0010 adds intake coverage. The expected head is
+`20261030_0010`. Old ownerless meals/cases are preserved but inaccessible through account APIs; they are not
 assigned to the first registrant. Existing confirmed meals receive a Hong Kong date
 from their confirmation timestamp, with creation time as fallback. Saved meal
 nutrients are not recalculated against newer catalogue data.
@@ -204,9 +215,12 @@ cloud deployment is performed by a Git push or this local merge. Follow the sepa
 
 ## Evidence and submission snapshots
 
-Current workspace checks are recorded in the
-[14 November fresh review](qa/reports/2026-11-14-fresh-review.md); earlier merged
-checks remain in [integration verification](integration.md).
+Final checks and their exact scope are recorded in
+[Week 13 verification](evidence/week13-verification.md). The latest earlier meal
+review is the [14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md);
+the [earlier 14 November workspace review](qa/reports/2026-11-14-fresh-review.md)
+and [3 November integration verification](evidence/integration-verification.md)
+retain their own runtime versions and results.
 The [Week 6 workflow](async-workflow.md), [Week 7 artifact](../submissions/week07/README.md),
 [original screenshot guide](../demo/SCREENSHOT_GUIDE.md) and dated reports describe
 their labelled versions. Reproduce historical course scripts from their original
@@ -215,5 +229,8 @@ commit/tag; do not silently reinterpret them as authenticated merged workflows.
 CI includes `main`, `nutrichat`, `test` and `integrate/**` pushes plus pull requests.
 It checks Python/Ruff, PostgreSQL migrations and frontend tests. Inspect the run for
 the actual pushed SHA; local results do not establish remote CI success.
-`w07-midterm` remains the existing submission snapshot. This merge does not move it
-or submit Canvas. Test counts from separate versions must not be added together.
+The final hand-in uses `w13-final` on `test`; see the
+[Week 13 package](../submissions/week13/README.md) and its seven-point
+[TA demo](../submissions/week13/DEMO.md). `w07-midterm` remains the historical
+submission snapshot. Publishing Git branches/tags does not submit Canvas or deploy
+the public server. Test counts from separate versions must not be added together.

@@ -1,0 +1,7 @@
+{
+  "started_at": "2026-11-15T09:45:52.833931+00:00",
+  "base_url": "http://localhost:8008",
+  "source_commit": "c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c",
+  "provider_request_cap": 12,
+  "policy": "First-result audit; no automatic request retries; credentials never persisted; sessions revoked finally; HTTP polling does not trigger model."
+}

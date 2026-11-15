@@ -1,0 +1,26 @@
+{
+  "command": [
+    "docker",
+    "compose",
+    "-p",
+    "nutrichat-w13-20261115",
+    "--env-file",
+    ".env.example",
+    "-f",
+    "compose.yaml",
+    "-f",
+    "demo/compose.demo.yaml",
+    "run",
+    "--rm",
+    "--no-deps",
+    "api",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/unit/test_food_matching.py"
+  ],
+  "started_at": "2026-11-15T09:50:45.415868+00:00",
+  "exit_code": 1,
+  "elapsed_seconds": 2.54
+}

@@ -49,7 +49,7 @@ _SPLIT = re.compile(
     r'[,，;；。\n、]|(?<!\d)\.(?=\s|$)|\b(?:and|plus)\b|以及|还有|還有|另外|和', re.I)
 _PREFIX = re.compile(
     r'(?:\s|[:：]|' + _MASS + r'|'
-    r'我|今天|早餐|午餐|晚餐|午饭|晚饭|吃了|吃的|吃|有|一份|一碗|两个|兩個|'
+    r'我|今天|早餐|午餐|晚餐|午饭|晚饭|另吃了|另吃|吃了|吃的|吃|有|一份|一碗|两个|兩個|'
     r'请估算|估算|请计算|计算|去壳|去殼|去骨|净重|淨重|的|'
     r'(?<![a-z])(?:i ate|i had|i have|for lunch|for dinner|for breakfast|'
     r'a serving of|one serving of|a portion of|one bowl of|a bowl of|'
@@ -87,7 +87,7 @@ def _detail_clause(value):
             _wrapper(without_mass, _PREFIX) or _wrapper(without_mass, _SUFFIX)):
         return True
     if without_mass != value and re.fullmatch(
-            r'(?:实际|實際|吃了|吃下|可食部分|还是|還是|仍是|是|为|為|共|总共|'
+            r'(?:实际|實際|另吃了|另吃|吃了|吃下|可食部分|还是|還是|仍是|是|为|為|共|总共|'
             r'熟重|生重|\s)+', without_mass):
         return True
     if re.fullmatch(r'(?:改成|改为|改為|换成|換成)?\s*' + _MASS + r'(?:熟重|生重|少油)?',
@@ -104,7 +104,7 @@ def _detail_clause(value):
         return True
     if re.fullmatch(
             r'(?:也)?(?:没有|沒有|没|沒|无|無|未)(?:额外|額外)?(?:添加|加|用)?'
-            r'(?:(?:其他|其它)?油|香油|芝麻油|花生油|菜籽油|橄榄油|橄欖油|食用油)', value):
+            r'(?:任何)?(?:(?:其他|其它)?油|香油|芝麻油|花生油|菜籽油|橄榄油|橄欖油|食用油)', value):
         return True
     # Complete measurement/preparation sentences are not additional foods.
     # Keep the grammar closed: arbitrary nouns or appended dishes must still
@@ -113,7 +113,17 @@ def _detail_clause(value):
             r'(?:(?:称|稱)(?:的)?(?:是|为|為)|(?:重量|称重|稱重)(?:是|为|為))?'
             r'(?:(?:炒熟|煮熟|蒸熟|烤熟|做熟|熟制|烹调|烹調)(?:后|後)(?:的)?)?'
             r'(?:(?:本次|这次|這次)?(?:实际|實際)?(?:吃下|吃了)(?:的)?)?'
-            r'(?:熟重|生重|可食重量|可食部分(?:的重量)?|净重|淨重)', value):
+            r'(?:熟重|生重|可食(?:重量|净重|淨重)|可食部分(?:的重量)?|净重|淨重)', value):
+        return True
+    if re.fullmatch(r'(?:没有|沒有|没|沒)(?:称重|稱重)', value):
+        return True
+    if re.fullmatch(r'(?:刚才|剛才)?(?:份量|分量|重量)(?:记错了|記錯了)', value):
+        return True
+    if re.fullmatch(r'配方(?:及其他(?:资料|資料))?(?:都)?(?:不变|不變)', value):
+        return True
+    if re.fullmatch(
+            r'(?:实际|實際)(?:吃了|吃下)\s*' + _MASS +
+            r'(?:熟食)?(?:净重|淨重|可食净重|可食淨重)', value, re.I):
         return True
     if re.fullmatch(r'熟(?:鱼肉|魚肉)(?:净重|淨重|可食重量)', value):
         return True

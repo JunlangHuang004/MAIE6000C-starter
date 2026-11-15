@@ -1,0 +1,68 @@
+
+> nutrichat-ui-tests@1.0.0 test
+> node --test *.test.cjs
+
+✔ Chinese is the default; English switch updates accessibility and persists locally (170.120291ms)
+✔ Merged daily balance inputs save with intake coverage and remain bilingual (133.263875ms)
+✔ Saved English choice is applied on fresh load without changing input language (42.869791ms)
+✔ Unknown stored language falls back to Chinese and disabled storage does not break switching (115.001625ms)
+✔ Switch preserves meal, reply and search text and selected estimation mode (88.456375ms)
+✔ Existing English display names remain intact; Chinese additions use their original names (45.117208ms)
+✔ English catalogue search finds the translated recipe and keeps Chinese search usable (50.846542ms)
+✔ Completed estimate changes labels and food names without changing totals, ID or revision (110.93875ms)
+✔ Submitted meals keep a compact description and New meal restores the complete composer (92.017625ms)
+✔ Edit this meal discloses corrections and preserves an unsent reply through closing, navigation and translation (106.290208ms)
+✔ Unsent conversation corrections block confirmation until discarded, even with the editor closed (91.594792ms)
+✔ Unsent offline replacements block confirmation until discarded, even with the editor closed (112.113833ms)
+✔ Unsaved recipe quantities and approval survive repeated language switches and submit unchanged (87.899459ms)
+✔ Recipe quantities stay in a closed disclosure, need explicit acceptance, and every edit updates the preview and clears acceptance (75.308834ms)
+✔ Number and uncertainty answers remain filled and checked after switching (54.595833ms)
+✔ Unsupported food in basic stays blocked, translated and correctable by text (68.978667ms)
+✔ Unsupported food in advanced stays blocked, translated and correctable by text (66.941541ms)
+✔ Mixed unsupported food and known recipe keep recipe answers usable without substitution (72.757792ms)
+✔ Bone-inclusive weight question remains an edible-weight clarification in English (49.807459ms)
+✔ Switch remains available during a queued analysis and does not add polling timers (47.502875ms)
+✔ Confirmed result stays locked after switching and user conversation text stays original (48.991917ms)
+✔ A server error is presented in English and retranslated when the language changes (37.805042ms)
+✔ Untrusted conversation, food labels and source links remain inert text (45.223708ms)
+✔ Unknown item opens a separate ingredient form and searches without selecting a substitute (50.918583ms)
+✔ Consumed ingredient payload targets only the unresolved item and keeps names as inert text (99.07525ms)
+✔ Batch editor preserves selections, weights, searches and acceptance across both languages (76.823083ms)
+✔ Ingredient builder rejects unselected, blank, zero, excessive and duplicate amounts before any request (116.213375ms)
+✔ Whole-batch weights cannot be blank, zero or less than the eaten portion (76.863083ms)
+✔ Stale ingredient revision retains unsent fields and clearly requires reloading (74.101583ms)
+✔ Custom recipe displays explicit batch provenance, reopens for edit, and locks after confirmation (110.977792ms)
+✔ Custom meals with outstanding questions direct users to ingredient editing and never to a hidden conversation (79.325125ms)
+✔ Consumed custom recipe labels ingredient sum and ordinary items expose quantity origins (66.938125ms)
+✔ Changing a search query clears the old selected ingredient and acceptance, unlike language switching (119.181709ms)
+✔ Profile fields, goal and draft values survive bilingual switching and save with a revision and CSRF header (58.662917ms)
+✔ A profile review boundary withholds targets in both languages and leaves meal estimation available (41.322958ms)
+✔ A stale profile revision preserves entered values and requires reloading before another save (46.476708ms)
+✔ Daily manual zero remains data, gaps stay blank, charts do not connect missing days, and switching preserves edits (57.489459ms)
+✔ Custom ingredient meal confirmation includes its chosen date and refreshes account trends (60.404208ms)
+✔ Offline demo hides misleading chat and replaces the complete meal through PATCH before confirmation (50.79575ms)
+✔ Restored meals are scoped to the signed-in user and legacy shared storage is removed (36.37225ms)
+✔ An in-flight meal response cannot restore private content after another tab changes the session (41.102375ms)
+✔ Account form switches language without losing credentials or changing the selected registration tab (12.83525ms)
+✔ Workspace starts at meals, exposes every task and supports keyboard navigation (33.744584ms)
+✔ Navigation and translation preserve all drafts and disclosure states without requests (52.289375ms)
+✔ Catalogue is bounded, searchable across all foods and progressively expanded (42.009833ms)
+✔ Food evidence starts compact but expanding it survives language changes (45.454083ms)
+✔ Reference portions and recipes remain labelled with a visible warning while evidence is collapsed (94.098666ms)
+✔ Reviewed recipes and entered ingredient quantities have distinct badges without an unverified-reference warning (82.120417ms)
+✔ Opening a saved meal returns to its visible workspace, then new meal focuses input (52.153666ms)
+✔ Queued meal polling never switches the selected view or resets diary edits (52.297291ms)
+✔ Example chips fill the description without sending it or erasing an active estimate (69.347042ms)
+✔ Reloading a conflicted profile refreshes saved balance while preserving dirty diary drafts (36.704667ms)
+✔ Returning after Hong Kong midnight refreshes allowed dates without overwriting a diary draft (40.574791ms)
+✔ Skip link focuses the active task, and logout failure remains visible from any panel (38.055417ms)
+✔ Failed recent-meal opening keeps current meal and visibly reports the failure in Diary (72.564333ms)
+✔ Invalid manual calories reveal their closed disclosure before native validation (44.813541ms)
+ℹ tests 56
+ℹ suites 0
+ℹ pass 56
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4131.600583

@@ -1,0 +1,28 @@
+{
+  "checked_at": "2026-11-15T17:54:22.331146+08:00",
+  "base_commit": "c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c",
+  "source": {
+    "sha256": "61fa01f506970553c5a819ff1925a9dab65a09c28e444cf103aac545796309b1",
+    "file_count": 40
+  },
+  "containers": {
+    "api": {
+      "sha256": "61fa01f506970553c5a819ff1925a9dab65a09c28e444cf103aac545796309b1",
+      "file_count": 40
+    },
+    "ai": {
+      "sha256": "61fa01f506970553c5a819ff1925a9dab65a09c28e444cf103aac545796309b1",
+      "file_count": 40
+    },
+    "worker": {
+      "sha256": "61fa01f506970553c5a819ff1925a9dab65a09c28e444cf103aac545796309b1",
+      "file_count": 40
+    }
+  },
+  "application_source_matches": true,
+  "code_changes_since_base": [
+    "services/common/food_matching.py",
+    "tests/unit/test_food_matching.py"
+  ],
+  "note": "Release commit also packages documentation and evidence; service source identified by this digest."
+}

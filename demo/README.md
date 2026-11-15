@@ -1,5 +1,9 @@
 # Run and inspect the integrated demo
 
+For the final course submission, start with the [Week 13 package](../submissions/week13/README.md)
+and its [seven-point TA walkthrough](../submissions/week13/DEMO.md). Check out
+`w13-final` to reproduce the submitted release; branch HEAD may advance later.
+
 This checkout combines the `nutrichat` food workflow with accounts, personal
 references and daily tracking. The frozen `w07-midterm` tag remains a separate
 meal-only submission; do not use its no-login instructions for this checkout.
@@ -8,8 +12,11 @@ meal-only submission; do not use its no-login instructions for this checkout.
 
 Follow [integrated setup](../docs/integration.md) to select Qwen or HKUST, start an
 isolated project and open <http://localhost:8005/app>. Register/sign in before
-creating meals. The catalogue is the unchanged `nutrichat` set of **200 ingredients
-and 350 recipes**. No private model key is included in Git.
+creating meals. The catalogue retains **200 ingredients
+and 350 recipes**, with unchanged food identities and nutrient values. The later
+50 g reference/source metadata for one large peeled boiled egg is an explicit
+addition, so the catalogue is not byte-for-byte unchanged. No private model key
+is included in Git.
 
 Suggested review sequence:
 
@@ -24,16 +31,22 @@ Suggested review sequence:
 5. Choose the consumption date and confirm a completed estimate. Reload; its
    saved result and date must remain. It should appear in your recent meals and
    that day's automatic calorie sum.
-6. Save a daily weight and optional manual calorie total. A manual total replaces
-   the meal sum; clear it to restore automatic aggregation. Review both 30-day
-   charts; absent days remain blank.
+6. In **Daily diary**, save weight and exercise; zero means no exercise and blank
+   is unknown. Review intake coverage. An applicable profile plus intake/exercise
+   produces an approximate balance. A manual calorie total replaces the meal sum;
+   clear it to restore aggregation. In **Trends**, review both 30-day charts; absent
+   days remain blank.
 7. Sign out and use a second account. Its history/profile/tracking are separate;
    the first account's meal URL must return 404 for the second account.
 
 [Integrated screenshots](INTEGRATED_GUIDE.md) show accounts, profile and trends.
 [Meal screenshots](SCREENSHOT_GUIDE.md) illustrate the preserved estimation
-workflow and identify their capture versions. See [the integration verification
-record](../docs/evidence/integration-verification.md) for current acceptance results.
+workflow and identify their capture versions. See [Week 13 verification](../docs/evidence/week13-verification.md)
+for final checks. The [14 November recipe-usability follow-up](../docs/qa/reports/2026-11-14-recipe-usability.md)
+is the latest earlier meal/browser review, following the
+[14 November workspace review](../docs/qa/reports/2026-11-14-fresh-review.md). The
+[3 November integration record](../docs/evidence/integration-verification.md)
+retains its original merged-build scope.
 Reference recipes are estimates; successful workflow checks do not establish
 measured nutrition accuracy or recognition of every dish.
 
@@ -57,8 +70,8 @@ and revokes its session afterward. It writes synthetic evidence to ignored
 This project is `nutrichat-integrated-demo`, with its own PostgreSQL volume. No
 private `.env` is loaded. Only API loopback port 8006 is published. The default
 fixture supports six English foods and explicit grams: `100g egg` is 155 kcal;
-use **Replace meal description** with `200g egg` to obtain 310 kcal. It does not
-interpret Chinese descriptions or conversational replies. Unsupported offline
+use **Edit this meal** then **Replace full description** with `200g egg` to obtain
+310 kcal. It does not interpret Chinese descriptions or conversational replies. Unsupported offline
 free-text replies return an explicit error instead of silently retaining old totals.
 
 The check observes pending rows while its worker is paused, resumes the worker,
@@ -119,4 +132,4 @@ It retains failure evidence and does not retry failed inputs to improve a score.
 
 Earlier [demo verification](VERIFICATION.md) and screenshots remain dated evidence
 of the original meal-only release. Current limits and checks are documented in
-[operations](../docs/operations.md) and the integration report.
+[operations](../docs/operations.md) and the final verification record.

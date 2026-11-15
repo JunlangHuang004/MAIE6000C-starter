@@ -1,0 +1,186 @@
+{
+  "started_at": "2026-11-15T09:55:34.292561+00:00",
+  "scope": "Final corrected runtime: readback of lifecycle runner account synthetic PostgreSQL meal, jobs, profile and daily record after stopping and starting all four services. HTTP readiness verified. Runner revokes its session; authenticated HTTP readback after restart is not claimed.",
+  "project": "nutrichat-w13-20261115",
+  "passed": true,
+  "before": {
+    "analysis": {
+      "id": "377b558b-31cb-4bdb-83da-c19833785baf",
+      "user_id": "e829a89d-3472-4e47-a60a-868c10f0c636",
+      "status": "confirmed",
+      "revision": 3,
+      "calories": 310,
+      "protein_g": 26,
+      "fat_g": 22,
+      "carbs_g": 2.2,
+      "confirmed_at": "2026-11-15T09:55:20.89722+00:00",
+      "consumed_on": "2026-11-15"
+    },
+    "profile": {
+      "user_id": "e829a89d-3472-4e47-a60a-868c10f0c636",
+      "age_years": 25,
+      "height_cm": 175,
+      "weight_kg": 70,
+      "sex": "male",
+      "goal": "gain_muscle",
+      "activity_level": "moderate",
+      "revision": 1,
+      "created_at": "2026-11-15T09:55:22.280113+00:00",
+      "updated_at": "2026-11-15T09:55:22.280113+00:00"
+    },
+    "daily_records": [
+      {
+        "user_id": "e829a89d-3472-4e47-a60a-868c10f0c636",
+        "record_date": "2026-11-15",
+        "weight_kg": 69.8,
+        "manual_calories": null,
+        "revision": 2,
+        "created_at": "2026-11-15T09:55:23.356967+00:00",
+        "updated_at": "2026-11-15T09:55:23.644311+00:00",
+        "exercise_calories": null,
+        "intake_coverage": null
+      }
+    ],
+    "jobs": [
+      {
+        "id": 9,
+        "status": "completed",
+        "attempts": 1,
+        "claimed_at": "2026-11-15T09:55:17.816431+00:00",
+        "completed_at": "2026-11-15T09:55:17.841768+00:00"
+      },
+      {
+        "id": 10,
+        "status": "completed",
+        "attempts": 1,
+        "claimed_at": "2026-11-15T09:55:19.867187+00:00",
+        "completed_at": "2026-11-15T09:55:19.906572+00:00"
+      }
+    ],
+    "schema": "20261030_0010"
+  },
+  "container_ids_before": {
+    "db": "f39a5adfc19f95de032c35adab45f07e79e6d9e5120bf429e83f9ea7a58502b4",
+    "ai": "cef3db8f7ab20419977490413481bff5734db7621dd5c3ffc124c0869edb5a94",
+    "api": "1ef239cb3985a5741f7c3ca8f882d16de03eee0aa44d0ff504d095090f3b9859",
+    "worker": "d89329b9451d0b9fa5c894fa1f9c9e8b4f338859f294950f145415239694ed1a"
+  },
+  "commands": [
+    {
+      "name": "demo-stop",
+      "args": [
+        "python3",
+        "demo/run.py",
+        "stop"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.43
+    },
+    {
+      "name": "retained-start",
+      "args": [
+        "docker",
+        "compose",
+        "-p",
+        "nutrichat-w13-20261115",
+        "--env-file",
+        ".env.example",
+        "-f",
+        "compose.yaml",
+        "-f",
+        "demo/compose.demo.yaml",
+        "start",
+        "db",
+        "ai",
+        "api",
+        "worker"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 21.55
+    }
+  ],
+  "stack_after": {
+    "health": {
+      "status": 200,
+      "body": {
+        "service": "api",
+        "status": "ok"
+      }
+    },
+    "provider": "demo",
+    "supported_demo_foods": [
+      "chicken breast",
+      "white rice",
+      "rice",
+      "egg",
+      "salmon",
+      "broccoli"
+    ],
+    "app_http_status": 200
+  },
+  "after": {
+    "analysis": {
+      "id": "377b558b-31cb-4bdb-83da-c19833785baf",
+      "user_id": "e829a89d-3472-4e47-a60a-868c10f0c636",
+      "status": "confirmed",
+      "revision": 3,
+      "calories": 310,
+      "protein_g": 26,
+      "fat_g": 22,
+      "carbs_g": 2.2,
+      "confirmed_at": "2026-11-15T09:55:20.89722+00:00",
+      "consumed_on": "2026-11-15"
+    },
+    "profile": {
+      "user_id": "e829a89d-3472-4e47-a60a-868c10f0c636",
+      "age_years": 25,
+      "height_cm": 175,
+      "weight_kg": 70,
+      "sex": "male",
+      "goal": "gain_muscle",
+      "activity_level": "moderate",
+      "revision": 1,
+      "created_at": "2026-11-15T09:55:22.280113+00:00",
+      "updated_at": "2026-11-15T09:55:22.280113+00:00"
+    },
+    "daily_records": [
+      {
+        "user_id": "e829a89d-3472-4e47-a60a-868c10f0c636",
+        "record_date": "2026-11-15",
+        "weight_kg": 69.8,
+        "manual_calories": null,
+        "revision": 2,
+        "created_at": "2026-11-15T09:55:23.356967+00:00",
+        "updated_at": "2026-11-15T09:55:23.644311+00:00",
+        "exercise_calories": null,
+        "intake_coverage": null
+      }
+    ],
+    "jobs": [
+      {
+        "id": 9,
+        "status": "completed",
+        "attempts": 1,
+        "claimed_at": "2026-11-15T09:55:17.816431+00:00",
+        "completed_at": "2026-11-15T09:55:17.841768+00:00"
+      },
+      {
+        "id": 10,
+        "status": "completed",
+        "attempts": 1,
+        "claimed_at": "2026-11-15T09:55:19.867187+00:00",
+        "completed_at": "2026-11-15T09:55:19.906572+00:00"
+      }
+    ],
+    "schema": "20261030_0010"
+  },
+  "container_ids_after": {
+    "db": "f39a5adfc19f95de032c35adab45f07e79e6d9e5120bf429e83f9ea7a58502b4",
+    "ai": "cef3db8f7ab20419977490413481bff5734db7621dd5c3ffc124c0869edb5a94",
+    "api": "1ef239cb3985a5741f7c3ca8f882d16de03eee0aa44d0ff504d095090f3b9859",
+    "worker": "d89329b9451d0b9fa5c894fa1f9c9e8b4f338859f294950f145415239694ed1a"
+  },
+  "rows_unchanged": true,
+  "same_containers": true,
+  "finished_at": "2026-11-15T09:56:06.208883+00:00"
+}

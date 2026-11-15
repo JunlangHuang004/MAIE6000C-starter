@@ -1,0 +1,123 @@
+Independent live API acceptance, first pass
+Source: c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c
+Runtime: http://localhost:8008; /foods reports hkust.
+Executed: 2026-11-15 09:45:52–09:46:41 UTC.
+
+Disposition: NOT ACCEPTED. Safety withheld totals on unresolved input, but normal
+Chinese measurement/correction language produces phantom foods and blocks key
+completion paths. No automatic retries or source changes were performed.
+
+Budget: eight real-provider requests of twelve maximum. All eight jobs completed
+on their first worker attempt; no job transport/provider failure. The remaining
+four requests are reserved for explicitly coordinated post-fix exact replays.
+Structured answers and ingredient edits are separate no-model operations.
+
+Real-provider findings (full first responses in provider_*.json):
+
+1. provider_01_basic_grams.json, job 62:
+   Input: 青椒肉丝150克，称的是炒熟后实际吃下的可食净重。
+   Expected: dish_002, edible cooked grams 150, basic estimate.
+   Observed: correct dish plus unknown item “称的是炒熟后实际吃下的可食净重”.
+   All totals withheld; ordinary measurement language blocks completion.
+
+2. provider_02_advanced.json:
+   Input: 番茄炒蛋200克，是实际吃下的熟食净重。
+   Passed: needs_input, recipe review issued, all totals withheld; accepting the
+   offered recipe completed with 210.2 kcal. Independent catalogue arithmetic
+   passed. See structured_advanced_accept.json.
+
+3. provider_03_unknown_mixed.json:
+   Input: 幻彩星云饭150克，是店里自创菜，具体配料未知。另吃白米饭100克。两者均为实际吃下的熟食净重。
+   Passed safety: unknown food remained unresolved and all totals/details withheld.
+   Failed usability: the separate 100g rice lost identity; its item was replaced by
+   the full meal sentence. _PREFIX rejects “另吃”. Replacing the unknown dish via
+   actual ingredients preserved the unresolved rice item, so completion was still
+   blocked. This is an upstream grounding failure, not evidence of bad recipe math.
+   See structured_actual_ingredients.json.
+
+4. provider_04_zero_oil.json:
+   Input: 拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。
+   Oil facts passed: oil_g=0 and recipe_ingredients.sesame_oil=0 retained.
+   Completion failed: phantom items “实际吃下的可食净重” and “也没加任何其他油”.
+   Also returned as_sold weight basis, while recipe engine asks for cooked weight
+   even for cold cucumber. No calorie result was available to validate zero-oil math.
+
+5. provider_05_piece_count.json:
+   Input: 晚饭吃了三块红烧肉，没有称重。
+   Passed: portion_count=3, piece, grams unknown; grams question and totals withheld.
+   Failed: “没有称重” became another food. Supplying 90g through the issued number
+   field correctly changes the meat grams but cannot complete due to phantom item.
+
+6. provider_06_mixed_grams.json:
+   Input: 麻婆豆腐80克，白米饭100克，都是实际吃下的熟食净重。
+   Passed: dish_004 80g + rice 100g, completed 212.5 kcal; independent catalogue
+   arithmetic matched all four nutrient totals.
+
+7. provider_07_mixed_units.json:
+   Input: 早餐吃了半碗蛋炒饭，一个水煮鸡蛋，喝了250毫升全脂牛奶。
+   Egg-fried rice and egg identities retained. Milk identity was cleared because
+   the grounding wrapper rejects “喝了250毫升”. It also carried grams=250 although
+   the user supplied millilitres. Totals remain safely withheld currently. A future
+   identity fix must not silently expose a 1 ml = 1 g assumption as a user gram fact.
+
+8. provider_08_gram_correction.json:
+   After real advanced extraction and recipe acceptance, input:
+   刚才份量记错了，番茄炒蛋实际吃了150克熟食净重，配方及其他资料都不变。
+   Expected: same dish and recipe, edible cooked grams 150, then confirmation.
+   Dish grams correctly changed to 150, but three phantom items appeared:
+   “刚才份量记错了”, “实际吃了150克熟食净重”, “配方及其他资料都不变”.
+   Reaccepting the recipe did not remove these items. Confirmation/readback and
+   confirmed immutability could not be reached in this first pass.
+
+Deterministic diagnosis (not additional real-provider evidence):
+services/common/food_matching.py lines 105–123 use whole-clause patterns that omit
+可食净重, 没有称重, 任何其他油, and ordinary correction metadata. Lines 344–357
+append every nonmatching remaining clause as an unknown food. The live runtime
+returns false for all seven observed detail clauses in diagnose_grounding.py.
+is_user_mention also returns false for 白米饭 after 另吃 and 全脂牛奶 after 喝了250毫升.
+
+Smallest fix recommendation:
+- Extend only anchored whole-clause patterns for the exact bounded measurement,
+  no-weighing, no-oil, and correction forms above. Do not broadly drop clauses
+  containing “重量”, “配方”, or “不变”.
+- Add narrowly defined additive eating/drinking wrapper forms. Keep volume
+  recognition separate from mass evidence and conversion policy.
+- Preserve regression controls where an unknown dish follows a valid detail
+  phrase; all totals must still be withheld and the unknown dish retained.
+- Address the cold-cucumber cooked-weight prompt separately; do not assert cooked
+  facts that the user did not supply just to make a test green.
+
+No-model live API controls that passed:
+registration/authentication, anonymous read rejection, empty optional profile,
+profile persistence/reference/stale and invalid edits/privacy header/account
+isolation, invalid meal input, unknown confirmation rejection, six invalid actual
+recipe payloads with preserved state, manual calories override/clear, exercise
+entry/clear/explicit zero, coverage completion and persistence, daily input/date
+validation, stale-day prevention, profile unchanged by daily weight, empty stranger
+history/day/trends, seven-record owner history, login rotation with old-token
+replay rejection, login restoring saved data, indistinguishable bad-login errors,
+and both accounts' logout with subsequent cookie replay rejection.
+
+Unmet in first pass:
+confirmed readback and immutability, cross-account individual meal/job ownership
+probes, confirmed-meal daily aggregation, completed actual ingredient recovery
+and batch mode, completed basic/zero-oil/correction arithmetic. These require
+successful replay or separate controlled setup; they are not reported as passed.
+
+Harness corrections (preserved transparently; not product defects):
+- Raw checks.json wrongly expects provider=qwen. Actual expected deployment is
+  hkust and /foods correctly reports hkust. That raw failure is a harness mistake.
+- Trend check wrongly expects recorded_days=1 after clearing manual calories even
+  though no confirmed meal exists. The trend has exactly 30 days, latest day equals
+  GET /daily-records, weight_entries=1, recorded_days=0 because calories are absent.
+  This is a harness expectation error, not a trend bug.
+- Raw first-pass count is 90 pass, 9 fail, 5 not_tested. Seven failed checks reflect
+  product/user-journey failures and two are the harness errors above. Do not use
+  the raw aggregate as a product defect count or as a comprehensive acceptance rate.
+
+Security/evidence:
+Two synthetic account usernames/passwords and every session cookie were generated
+in memory and omitted/redacted from all evidence. Both sessions were revoked and
+replay attempts returned 401. Disposable meal/profile/day records remain. No .env
+contents or provider keys were read or logged. No source edits, commit, push, or
+runtime restart. Browser UI acceptance belongs to the root reviewer.

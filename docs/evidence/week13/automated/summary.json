@@ -1,0 +1,48 @@
+{
+  "release_phase": "final corrected working tree",
+  "completed_at": "2026-11-15T09:56:06.210353+00:00",
+  "passed": true,
+  "source_base_commit": "c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c",
+  "source_code_test_fingerprint_sha256": "aa7e9cebe29fc2c73562d44c31c2212d6f98efad4f4f86111a94a2f5cb86adc1",
+  "changed_code_test_files_from_base": [
+    "services/common/food_matching.py",
+    "tests/unit/test_food_matching.py"
+  ],
+  "project": "nutrichat-w13-20261115",
+  "port": 8013,
+  "fresh_database_empty_before_first_run": true,
+  "final_rebuild_retained_same_isolated_database": true,
+  "backend": {
+    "passed": 1230,
+    "deselected": 2,
+    "warnings": 2
+  },
+  "targeted_food_matching": {
+    "passed": 200,
+    "warnings": 2
+  },
+  "frontend": {
+    "passed": 56,
+    "npm_ci_exit": 0,
+    "inputs_verified_unchanged": true
+  },
+  "http_smoke": {
+    "passed": 2,
+    "warnings": 2
+  },
+  "ruff": "passed",
+  "chinese_corpus": {
+    "valid_cases": 7,
+    "categories": 5,
+    "provider_called": false,
+    "scope": "offline corpus/catalogue validation; no live extraction accuracy claimed"
+  },
+  "alembic_current_and_head": "20261030_0010",
+  "demo_lifecycle": "passed",
+  "restart_retained_rows_unchanged": true,
+  "restart_authenticated_http_readback": false,
+  "runtime_all_103_files_match_worktree": true,
+  "no_model_calls": true,
+  "intermediate_failure": "candidate-1-failed-targeted/ retains two failures corrected before final build",
+  "baseline_evidence": "pre-fix-c5a9ebd/"
+}

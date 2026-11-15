@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-15",
+  "review_method": "Real in-app browser through visible controls; synthetic local account and data. Not an independent human-team rehearsal.",
+  "runtime": "http://localhost:8008",
+  "base_commit": "c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c",
+  "scope": "UI checks before final bounded food-phrase fix; frontend files unchanged by that fix. Final live API replay separately verifies updated backend.",
+  "provider": "hkust",
+  "model_backed_initial_submissions": 1,
+  "checks": {
+    "registration": "passed",
+    "basic_mixed_meal": {
+      "input": "番茄炒蛋200克，熟米饭150克",
+      "kcal": 405.2
+    },
+    "advanced_recipe": {
+      "whole_batch_oil_before_g": 15,
+      "whole_batch_oil_after_g": 5,
+      "batch_yield_g": 400,
+      "kcal_after": 361,
+      "acceptance_cleared_after_edit": true,
+      "values_preserved_on_language_change": true
+    },
+    "unsent_correction_blocks_confirmation": true,
+    "clear_correction_restores_confirmation": true,
+    "confirmation_reload": {
+      "kcal": 361,
+      "date": "2026-11-15",
+      "state": "confirmed"
+    },
+    "profile": {
+      "synthetic": true,
+      "age": 30,
+      "height_cm": 175,
+      "weight_kg": 75,
+      "sex_coefficient": "male",
+      "activity": "light",
+      "goal": "muscle_gain",
+      "reference_kcal": 2450
+    },
+    "diary": {
+      "automatic_kcal": 361,
+      "manual_override_kcal": 2100,
+      "clear_restores_kcal": 361,
+      "weight_kg": 74.8,
+      "exercise_kcal": 0,
+      "coverage": "unconfirmed"
+    },
+    "prior_day": {
+      "date": "2026-11-14",
+      "manual_kcal": 2100,
+      "weight_kg": 75.2,
+      "exercise_kcal": 150
+    },
+    "trends": {
+      "days": 30,
+      "recorded_days": 2,
+      "average_kcal": 1230.5,
+      "weight_change_kg": -0.4,
+      "missing_days_are_gaps": true
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "document_width": 390,
+      "viewport_reset": true
+    },
+    "logout_login_restores_confirmed_meal": true
+  },
+  "screenshots_directory": "submissions/week13/images",
+  "limitations": [
+    "No physical-device study",
+    "Not a measured nutrition accuracy study",
+    "One initial model submission; other steps use saved drafts or deterministic API work"
+  ]
+}

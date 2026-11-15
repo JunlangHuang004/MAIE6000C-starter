@@ -1,0 +1,155 @@
+{
+  "initial": {
+    "analysis": {
+      "mode": "basic",
+      "conversation": [
+        {
+          "role": "user",
+          "content": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。"
+        }
+      ],
+      "draft": [],
+      "questions": [],
+      "details": [],
+      "error_message": null,
+      "interpreted_food_text": null,
+      "revision": 1,
+      "confirmed_at": null,
+      "consumed_on": null,
+      "id": "b21b53b3-e09d-4d8c-bc99-ab7edf17db9b",
+      "food_text": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。",
+      "status": "queued",
+      "calories": null,
+      "protein_g": null,
+      "carbs_g": null,
+      "fat_g": null,
+      "created_at": "2026-11-15T09:46:08.089488Z",
+      "updated_at": "2026-11-15T09:46:08.089492Z"
+    },
+    "job": {
+      "id": 65,
+      "case_id": null,
+      "analysis_id": "b21b53b3-e09d-4d8c-bc99-ab7edf17db9b",
+      "job_type": "analyze_nutrition",
+      "status": "pending",
+      "attempts": 0,
+      "error": null,
+      "created_at": "2026-11-15T09:46:08.090729Z",
+      "claimed_at": null,
+      "completed_at": null
+    }
+  },
+  "result": {
+    "mode": "basic",
+    "conversation": [
+      {
+        "role": "user",
+        "content": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。"
+      },
+      {
+        "role": "assistant",
+        "content": "凉拌黄瓜的食用克数是做熟后的成品重量吗？\n数据库未找到“实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。\n数据库未找到“也没加任何其他油”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。"
+      }
+    ],
+    "draft": [
+      {
+        "food_id": "dish_016",
+        "name": "拍黄瓜",
+        "source_text": "拍黄瓜",
+        "grams": 100.0,
+        "weight_includes_inedible": null,
+        "weight_basis": "as_sold",
+        "preparation": "other",
+        "oil_g": 0.0,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": {
+          "sesame_oil": 0.0
+        },
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "实际吃下的可食净重",
+        "source_text": "实际吃下的可食净重",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      },
+      {
+        "food_id": null,
+        "name": "也没加任何其他油",
+        "source_text": "也没加任何其他油",
+        "grams": null,
+        "weight_includes_inedible": null,
+        "weight_basis": null,
+        "preparation": null,
+        "oil_g": null,
+        "portion_count": null,
+        "portion_unit": null,
+        "recipe_ingredients": null,
+        "recipe_yield_g": null,
+        "uncertainty": null
+      }
+    ],
+    "questions": [
+      {
+        "key": "0.weight_basis",
+        "label": "凉拌黄瓜的食用克数是做熟后的成品重量吗？",
+        "kind": "choice",
+        "options": [
+          {
+            "value": "cooked",
+            "label": "是，熟制成品的可食重量"
+          }
+        ]
+      },
+      {
+        "key": "1.food_id",
+        "label": "数据库未找到“实际吃下的可食净重”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      },
+      {
+        "key": "2.food_id",
+        "label": "数据库未找到“也没加任何其他油”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。",
+        "kind": "unsupported"
+      }
+    ],
+    "details": [],
+    "error_message": null,
+    "interpreted_food_text": null,
+    "revision": 1,
+    "confirmed_at": null,
+    "consumed_on": null,
+    "id": "b21b53b3-e09d-4d8c-bc99-ab7edf17db9b",
+    "food_text": "拍黄瓜100克，实际吃下的可食净重。没有加香油，也没加任何其他油。",
+    "status": "needs_input",
+    "calories": null,
+    "protein_g": null,
+    "carbs_g": null,
+    "fat_g": null,
+    "created_at": "2026-11-15T09:46:08.089488Z",
+    "updated_at": "2026-11-15T09:46:12.553636Z"
+  },
+  "job": {
+    "id": 65,
+    "case_id": null,
+    "analysis_id": "b21b53b3-e09d-4d8c-bc99-ab7edf17db9b",
+    "job_type": "analyze_nutrition",
+    "status": "completed",
+    "attempts": 1,
+    "error": null,
+    "created_at": "2026-11-15T09:46:08.090729Z",
+    "claimed_at": "2026-11-15T09:46:10.033980Z",
+    "completed_at": "2026-11-15T09:46:12.552520Z"
+  },
+  "polls": 6
+}

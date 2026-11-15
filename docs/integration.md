@@ -6,24 +6,30 @@ implementation is published on **`test`**. The original `test` commits remain in
 its history; `nutrichat` and the `w07-midterm` tag are unchanged. The public ECS
 deployment is not updated by this publication.
 
+The current `test` final package is [Week 13](../submissions/week13/README.md),
+with checkpoint tag `w13-final`. The merge identifiers above describe the original
+3 November integration; subsequent changes and checks have their own dated evidence.
+
 ## What is combined
 
 | Area | Integrated behavior |
 | --- | --- |
-| Food data | The exact `nutrichat` catalogue: 200 USDA ingredients and 350 reference recipes |
+| Food data | 200 USDA ingredients and 350 reference recipes; retained food identities/nutrients with later egg-portion metadata |
 | Estimation | Basic/Advanced, Chinese descriptions, strict supported-name matching, clarification and correction |
 | Unknown food | No substitute dish or partial meal total; explicit actual-ingredient recipe editor |
 | Languages | Chinese/English controls, with Chinese fallback for catalogue entries without translations |
 | Accounts | Register, sign in/out, revocable sessions, private meal history and ownership checks |
 | Personal reference | Age, height, weight, formula sex coefficient, activity and goal; deterministic daily energy/macronutrient reference |
-| Diary | Dated confirmed meals, optional manual calorie total and weight; manual total replaces the meal sum |
+| Diary | Dated confirmed meals, optional manual calorie total, weight, exercise and intake coverage; manual total replaces the meal sum |
 | Trends | 30-day calorie/weight charts; missing dates stay blank |
 | Models | Qwen and HKUST adapters share exact identity checks; Ollama remains experimental |
 
-The catalogue files are preserved byte-for-byte from `nutrichat`, including the
-reviewed aliases, ingredients, recipes, portions and source metadata. The merge
-does not import the older `test` food catalogue or train a model. The catalogue
-contains reference assumptions, not measurements of every Chinese dish.
+The current catalogue retains the `nutrichat` records, food identities and nutrient
+values. The 14 November follow-up adds explicit 50 g portion/source metadata for
+one large peeled hard-boiled egg, so current files are not byte-for-byte identical
+to the earlier catalogue. The merge does not import the older `test` food catalogue
+or train a model. The catalogue contains reference assumptions, not measurements
+of every Chinese dish.
 
 ## Start an isolated preview
 
@@ -31,7 +37,7 @@ Requirements: Docker running, Compose 2.24.4+; run from this checkout.
 
 ```sh
 test -f .env || cp .env.example .env
-docker compose -p nutrichat-integrated --env-file .env \
+docker compose -p nutrichat-merged-qwen --env-file .env \
   -f compose.yaml -f compose.integrated.yaml up -d --build --wait db ai api worker
 ```
 
@@ -50,8 +56,8 @@ trying this merge.
 
 The default `.env.example` uses the offline six-food English parser. It verifies
 accounts, persistence and charts but cannot interpret Chinese meals. Use explicit
-grams such as `100g egg`; use **Replace meal description** to change it to
-`200g egg`. Free-text follow-up is disabled for this parser rather than pretending
+grams such as `100g egg`; use **Edit this meal** then **Replace full description**
+to change it to `200g egg`. Free-text follow-up is disabled for this parser rather than pretending
 to interpret replies.
 
 For Qwen, set the following in private `.env`:
@@ -92,11 +98,16 @@ in Git. See [provider setup](local-hkust.md) and [data limits](nutrition-data.md
    ingredients and weights. The app must not invent a similar dish.
 4. Correct the result while unconfirmed. Choose the consumption date, then
    confirm. Confirmed meals are locked and contribute to that date's calorie sum.
-5. In the daily record panel, choose a date and save weight and/or a manual total.
-   Clearing the manual total restores that day's confirmed-meal sum.
-6. Select the end date of a 30-day trend. Missing days are not zero-calorie days.
+5. In **Daily diary**, choose a date and save weight and exercise; zero means no
+   exercise, while blank is unknown. Review the optional five-category intake
+   checklist. A manual calorie total replaces the meal sum; clearing it restores
+   the sum. An applicable profile plus intake/exercise enables approximate balance.
+6. In **Trends**, select the end date of the 30-day window. Missing days are not
+   zero-calorie days.
    Sign out and sign back in to check private history and persistence.
 
+The four panels are Meals, Daily diary, Trends and My goals. Switching panels or
+languages preserves unsaved values without submitting them; save before reloading.
 Profile references are approximate adult references, not clinical prescriptions.
 Daily weight entries do not automatically alter the current profile or target.
 See [personalization](personalization.md) and [tracking](tracking.md).
@@ -105,8 +116,9 @@ See [personalization](personalization.md) and [tracking](tracking.md).
 
 Food catalogue data and user records are different: the former is versioned JSON;
 the latter lives in PostgreSQL. Migrations 0006–0008 add users/sessions, profiles,
-daily records and meal dates to the existing `nutrichat` schema without replacing
-its food data or deleting old meals.
+daily records and meal dates; 0009 adds exercise and 0010 adds intake coverage.
+The head is `20261030_0010`. These schema upgrades do not replace food data or
+delete old meals.
 
 Old shared meals have no verifiable owner. They remain in the database with null
 ownership and are not assigned to the first registered user or exposed to every
@@ -122,14 +134,18 @@ use the current [cloud deployment guide](cloud-deployment.md) before deployment.
 
 ## Verification
 
-Final checks passed: 1,049 Python tests, 35 frontend tests, 2 service smoke tests,
-a PostgreSQL upgrade, desktop/mobile UI flows, and the full synthetic HKUST
-workflow including restart persistence. See the detailed evidence and limits below.
+Use [Week 13 verification](evidence/week13-verification.md) for final release
+checks. The [14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md)
+is the most recent earlier meal-flow review; it records 1,208 backend and 56
+frontend tests plus separate bounded live/browser checks and unresolved cases.
+The [earlier 14 November workspace review](qa/reports/2026-11-14-fresh-review.md)
+covers the preceding four-panel/account/tracking pass.
 
-The [integration verification record](evidence/integration-verification.md)
-separates automated regressions, database migrations, browser workflows and live
-provider checks. Earlier evidence describes its recorded source version and is
-not proof that the merge passes.
+The [3 November integration verification record](evidence/integration-verification.md)
+records 1,049 Python tests, 35 frontend tests, two service smoke tests, a PostgreSQL
+upgrade and live/browser checks for that earlier merged build. These are historical
+checkpoints, not final-tag test counts. Do not add counts across versions or treat
+a key-free workflow check as live-model accuracy evidence.
 
 For a repeatable, credential-free durable check:
 
