@@ -20,15 +20,17 @@ def fingerprint(value):
     return hashlib.sha256(serialized.encode()).hexdigest()
 
 
-def test_expansion_preserves_every_existing_ingredient_and_original_recipe_formula():
-    ingredients = [food for food in FOODS if food['kind'] == 'ingredient']
+def test_expansion_preserves_original_data_except_documented_white_chicken_correction():
+    ingredients = [food for food in FOODS if food['kind'] == 'ingredient'
+                   and food['id'] not in {'chicken_skin_stewed', 'chicken_meat_stewed'}]
     assert fingerprint(ingredients) == (
         '23a20d4f62d090b53d83dff33e1d63aa51c791263d25c9c5ad7bbc4a3298330d')
     originals = [{key: value for key, value in food.items() if key != 'aliases'}
                  for food in FOODS
-                 if food['id'].startswith('dish_') and int(food['id'][5:]) <= 350]
+                 if food['id'].startswith('dish_') and int(food['id'][5:]) <= 350
+                 and food['id'] != 'dish_109']
     assert fingerprint(originals) == (
-        '9852bf75d22c68d53c388370ec7157194846f62909de07497f374fd9f27c0485')
+        '0a27d66f8a03bcd0ce645c130eed788cb7fa3d41f9b0ad5afd4c7993a79f4018')
     assert {food['id'] for food in NEW_RECIPES} == NEW_IDS
 
 

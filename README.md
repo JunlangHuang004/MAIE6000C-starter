@@ -2,10 +2,13 @@
 
 NutriChat combines the meal-estimation features from `nutrichat` with independent
 accounts, personal daily references and 30-day tracking on `test`. Catalogue
-**2026-11-23.1 contains 200 USDA ingredient records and 384 editable Chinese
-reference recipes**, with English names for all 584 records and bilingual recipe
+**2026-11-23.2 contains 202 USDA ingredient records and 384 editable Chinese
+reference recipes**, with English names for all 586 records and bilingual recipe
 methods. The [home-recipe follow-up](docs/home-recipe-expansion.md) adds 34 reference
-recipes while preserving existing ingredient nutrients and recipe formulations.
+recipes while preserving existing ingredient nutrients. The subsequent
+[white-cut chicken correction](docs/white-chicken-reference.md) adds two cooked
+chicken records and corrects one reference formula; it remains a labelled proxy,
+not measured white-cut chicken nutrition.
 The `nutrichat` branch, `w07-midterm` and `w13-final` tags, and existing deployments
 remain separate historical snapshots; this follow-up does not deploy the app or rewrite those snapshots.
 
@@ -143,10 +146,19 @@ are disabled to avoid losing their facts. This is not a personal recipe library.
 
 Use **中文 / English** to switch the interface without changing saved nutrients or
 submitting a model request. Original user text and free-form model notes keep their
-wording. All 584 catalogue records have English display names, and all 384 recipes
+wording. All 586 catalogue records have English display names, and all 384 recipes
 have English reference methods. This includes the 162 previously untranslated
 records. Reviewed English names also support exact matching; unlisted English food
 names still require clarification.
+
+## Unknown dishes and similar references
+
+An unknown dish still withholds meal totals. Optionally select its main ingredients
+and cooking method to request up to three existing recipes as approximate
+references. Nothing is substituted automatically: choose a candidate, acknowledge
+its limitations, then review and accept its ingredient amounts before calculation.
+The original dish name and reference label persist after saving. See the
+[similar-recipe guide](docs/similar-recipe-references.md) for the workflow and limits.
 
 ## Personal references and tracking
 

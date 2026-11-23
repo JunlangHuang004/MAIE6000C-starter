@@ -13,6 +13,35 @@
     reviewedRecipeBadge: ['已核对配方', 'Reviewed recipe'],
     measuredWeightBadge: ['按填写克数', 'Entered grams'],
     customRecipeBadge: ['按实际食材', 'Entered ingredients'],
+    similarRecipeBadge: ['相似菜参考估算', 'Reference estimate'],
+    similarFind: ['查找相似菜作参考', 'Find a similar recipe for reference'],
+    similarIntro: ['补充主要食材和做法，只查找可供你审核的现有配方。选择前，本餐仍不提供总量。', 'Add the main ingredients and preparation to find existing recipes you can review. Meal totals remain unavailable until the unresolved food is reviewed.'],
+    similarIngredients: ['主要食材', 'Main ingredients'],
+    similarIngredientsHint: ['搜索食材名称，再逐项选择', 'Search ingredient names, then select each one'],
+    similarIngredientHelp: ['选 1–8 种主要食材，暂不用填写克数。请核对食材名称和生熟状态；未收录的食材不要用其他食材代替。', 'Select 1–8 main ingredients; no gram amounts are needed yet. Check the ingredient and raw/cooked state. Do not replace an unlisted ingredient with a different one.'],
+    similarRemove: ['移除 {name}', 'Remove {name}'],
+    similarMethod: ['做法', 'Preparation'],
+    similarColdMethod: ['凉拌／拌匀', 'Cold dish / mixed without further cooking'],
+    similarMethodHint: ['例如：炒，酸甜汁', 'For example: stir-fried with a sweet and sour sauce'],
+    similarSearch: ['查找参考配方', 'Find reference recipes'],
+    similarSearching: ['正在查找参考配方…', 'Finding reference recipes…'],
+    similarRequired: ['请填写主要食材和做法，再查找参考。', 'Enter the main ingredients and preparation first.'],
+    similarNone: ['没有足够相似的参考配方。可以补充描述，或按实际食材填写。', 'No sufficiently similar reference recipe was found. Add more detail or enter the actual ingredients.'],
+    similarChoose: ['选择一份参考配方', 'Choose a reference recipe'],
+    similarChooseRequired: ['请先选择参考配方，并确认接受近似估算。', 'Choose a reference recipe and acknowledge the approximation first.'],
+    similarAccept: ['我知道这不是原菜的准确匹配，只用它作近似参考，并会核对食材、克数和成品重量。', 'I understand this is not an exact match. I accept it as an approximate reference and will review the ingredients, grams and finished weight.'],
+    similarContinue: ['选择并核对配方', 'Select and review recipe'],
+    similarReview: ['继续核对参考配方', 'Continue reviewing reference recipe'],
+    similarCancel: ['取消查找', 'Cancel search'],
+    similarNoMatch: ['没有合适的，按实际食材填写', 'None fits — enter actual ingredients'],
+    similarStale: ['这餐已更新，旧的参考选项不能继续使用。请重新载入这餐后再查找。', 'This meal has changed. These suggestions can no longer be used. Reload the meal before searching again.'],
+    similarReload: ['重新载入这餐', 'Reload this meal'],
+    similarUnavailable: ['暂时无法读取这餐，请重新打开记录或开始新的一餐。', 'This meal is unavailable. Reopen the record or start a new meal.'],
+    similarFailed: ['暂时无法查找或选择参考配方，请重试。', 'Reference recipes are temporarily unavailable. Please try again.'],
+    similarSource: ['“{original}”以“{reference}”作近似参考；原菜名保留，这不是准确匹配。', '“{original}” uses “{reference}” as an approximate reference. The original name is retained; this is not an exact match.'],
+    similarReferenceBasis: ['本餐包含相似菜参考估算。核对配方也不能证明它与原菜完全相同；请确认食材、用油和实际食用重量。', 'This meal includes a similar-recipe reference estimate. Reviewing the recipe does not make it an exact match; check the ingredients, oil and portion eaten.'],
+    confirmedSimilarReferenceBasis: ['本餐包含相似菜参考估算，并已确认保存。这不是原菜的准确匹配；如需修改，请开始新的一餐。', 'This confirmed meal includes a similar-recipe reference estimate, not an exact match for the original dish. Start a new meal to make changes.'],
+    similarRecorded: ['已选择相似菜参考：{name}', 'Similar-recipe reference selected: {name}'],
     referenceBasis: ['这是参考估算：标注的份量或配方尚未逐项核实，可能与你实际吃的不同。可以修改这餐或切换进阶版。', 'This is a reference estimate: labelled portions or recipes have not been individually verified and may differ from your meal. Edit the meal or switch to Advanced.'],
     confirmedReferenceBasis: ['这是参考估算：标注的份量或配方尚未逐项核实，可能与你实际吃的不同。这餐已确认保存；如需修改，请开始新的一餐。', 'This is a reference estimate: labelled portions or recipes have not been individually verified and may differ from your meal. This meal is confirmed and saved. Start a new meal to make changes.'],
     recipeAdjust: ['查看或调整整锅用量', 'Review or adjust batch quantities'],
@@ -117,7 +146,7 @@
     parsing: ['正在解析并检查缺失信息…', 'Reading the meal and checking for missing details…'],
     needsInputMessage: ['还需要这些信息，回答后会继续估算。', 'Please answer these questions to continue the estimate.'],
     unsupportedMessage: ['以下食物没有对应记录，本餐暂不提供营养估算。请核对名称或补充实际食材。', 'Some foods below have no corresponding records, so this meal has no nutrition estimate. Check their names or describe the actual ingredients.'],
-    unsupportedFood: ['数据库未找到“{name}”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。', '{name}: no corresponding food record was found, so it cannot be estimated. Check the name or provide the actual ingredients and their gram weights below. Other foods will not be substituted.'],
+    unsupportedFood: ['数据库未找到“{name}”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会自动使用其他食物代替。', '{name}: no corresponding food record was found, so it cannot be estimated. Check the name or provide the actual ingredients and their gram weights below. Other foods will not be substituted automatically.'],
     failedMessage: ['估算暂未完成，请补充描述后重试。', 'The estimate could not be completed. Add details and try again.'],
     savedMessage: ['估算已生成，核对并确认后才计入每日记录。', 'Your estimate is ready. It enters your diary only after you review and confirm.'],
     confirmedMessage: ['这餐的估算已确认并保存。', 'This meal estimate is confirmed and saved.'],
@@ -226,6 +255,7 @@
   };
   const states = {raw: 'raw edible weight before cooking', cooked: 'cooked edible weight', as_sold: 'net edible weight as sold'};
   function questionLabel(q, draft = []) {
+    if (q.kind === 'unsupported') return t('unsupportedFood', {name:draft[Number(q.key.split('.')[0])]?.name || 'This food'});
     if (!english()) return q.label;
     const [index, field] = q.key.split('.');
     const item = draft[Number(index)] || {};
@@ -259,6 +289,7 @@
     return systemText(option.label);
   }
   const exactEnglish = {
+    '用户明确选择了相近参考配方并核对食材；原食物仍未准确匹配，结果仅作近似估算。': 'The user explicitly selected a similar reference recipe and reviewed its ingredients. The original food is still not an exact match; this result is only an approximate estimate.',
     '用户填写并确认的食材配方；不是数据库中的实测菜肴记录。': 'An ingredient recipe supplied and reviewed by the user, not a measured dish record in the database.',
     '食材按所选记录的生重、熟重或可食净重计算，不自动互换。': 'Ingredient weights use the selected raw, cooked or net edible state. These states are not converted automatically.',
     '油、糖及酱料需逐项列入；不自动估计未填写的配料或烹调损耗。': 'List oil, sugar and sauces separately. Unlisted ingredients and cooking losses are not estimated automatically.',

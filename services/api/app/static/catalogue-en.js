@@ -1035,7 +1035,7 @@ window.NUTRICHAT_EN_CATALOGUE = Object.freeze({
   },
   "dish_109": {
     "name": "White-cut poached chicken",
-    "method": "Poach chicken with skin and serve with ginger-spring onion dipping sauce; exclude discarded cooking water and weigh after removing bones."
+    "method": "Uses cooked, stewed boneless chicken with skin as a proxy, not measured white-cut chicken data. Dipping sauce is excluded by default; enter ginger, scallion and oil actually eaten. Chicken amounts here are cooked weights. For skinless meat, select the stewed skinless chicken record in the actual-ingredient form."
   },
   "dish_110": {
     "name": "Sichuan chicken in chili sauce",
@@ -2136,5 +2136,11 @@ window.NUTRICHAT_EN_CATALOGUE = Object.freeze({
   "dish_385": {
     "name": "White radish soup",
     "method": "Simmer white radish in water with spring onion, ginger and a little sesame oil. This reference contains no meat, seafood or stock; the portion includes both broth and radish."
+  },
+  "chicken_skin_stewed": {
+    "name": "Stewed chicken meat and skin (boneless)"
+  },
+  "chicken_meat_stewed": {
+    "name": "Stewed chicken meat without skin (boneless)"
   }
 });

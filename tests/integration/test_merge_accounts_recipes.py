@@ -164,7 +164,7 @@ def test_public_catalogue_reports_effective_provider_and_expanded_data(
     payload = response.json()
     assert payload['provider'] == reported
     foods = payload['catalogue']['foods']
-    assert len(foods) == 584
+    assert len(foods) == 586
     assert sum(food['kind'] == 'recipe' for food in foods) == 384
     assert next(food for food in foods if food['id'] == 'dish_251')['name'] == '豉油鸡'
 

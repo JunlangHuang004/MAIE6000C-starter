@@ -2,7 +2,7 @@
 
 Current implementation documented: 2026-11-23 follow-up to `test`; historical course checkpoint `w13-final` is unchanged.
 
-Catalogue `2026-11-23.1` contains 200 USDA ingredient records and 384
+Catalogue `2026-11-23.2` contains 202 USDA ingredient records and 384
 project-authored reference recipes. The 23 November follow-up adds 34 recipes;
 existing ingredient nutrients, recipe IDs and the preceding 350 formulations are
 unchanged. The earlier 14 November egg-portion metadata remains in place.
@@ -97,7 +97,7 @@ with the Python application, loaded in that order and served with `no-cache` so
 the browser revalidates after an update. Authenticated HTML and private API responses use `no-store`. No frontend build service is required.
 
 `i18n.js` translates controls, status messages, structured questions and evidence.
-The English display catalogue covers all 584 records and all 384 recipe methods,
+The English display catalogue covers all 586 records and all 384 recipe methods,
 including the 162 previously untranslated entries. Catalogue search checks Chinese
 and English display names. Reviewed English names are also exact matching aliases;
 translation alone does not authorize other English synonyms. User descriptions and free-form model notes retain their
@@ -222,7 +222,7 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 
 ## Current limitations
 
-Food coverage is limited to 200 ingredient records and 384 reference recipes;
+Food coverage is limited to 202 ingredient records and 384 reference recipes;
 this is not a general food database. Unlisted foods, names and variants need
 clarification or catalogue additions instead of a substitute estimate.
 
@@ -341,3 +341,13 @@ records the subsequent `7c841b1` checks; the
 [Chinese expansion verification](evidence/chinese-expansion-verification.md)
 records the final expanded-catalogue checks. Historical results do not imply that
 every newer commit or provider interpretation has passed the same live checks.
+
+## Explicit similar-recipe references
+
+The [similar-recipe workflow](similar-recipe-references.md) adds owner-scoped
+candidate and selection endpoints. The AI service ranks a bounded server
+shortlist; the API validates its IDs and persists the offer against the meal
+revision and catalogue version. Explicit user selection creates an unaccepted
+ingredient template, not a calorie total. The existing ingredient endpoint and
+worker calculate only after review; original identity and approximation
+provenance remain in the JSON draft and details. No schema migration is needed.

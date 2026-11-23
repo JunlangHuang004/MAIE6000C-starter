@@ -1,5 +1,44 @@
 # NutriChat change log
 
+## 2026-11-23 — Explicit similar-recipe references
+
+- Add an optional unknown-dish workflow: collect main ingredients and cooking
+  method, request up to three existing recipe candidates, explain differences,
+  require explicit selection, then review ingredient quantities before calculation.
+- Keep the original unknown name and approximate-reference provenance in drafts,
+  results and confirmed records. No automatic substitution or model nutrient values.
+- Bind candidate offers to owner, revision and catalogue version; reject stale,
+  incompatible or malformed candidates and confirmed-meal edits. Clear raw/gross
+  source weights before requesting a cooked edible portion.
+- Use the existing ingredient calculator and JSON persistence; no new migration.
+  Document [the workflow, provider behavior and limits](similar-recipe-references.md).
+- Pass 2,160 full backend tests (two HTTP smoke tests skipped because
+  `SMOKE_BASE_URL` was unset), 79 frontend tests, and Ruff. A subsequent 83-test
+  provider-validation run covers the additional energy/joule wording guard; it
+  overlaps the full suite and is not an extra independent full-suite total.
+- Verify the local HKUST flow in the browser: no main-ingredient match, explicit
+  candidate choice and acknowledgement, ingredient edits, mixed-meal preservation,
+  separate confirmation, English reload and one-time daily aggregation. Preserve
+  [the acceptance scope and limitations](evidence/recipe-reference-verification.md).
+- Hide mode switching during reference/custom recipes, avoid duplicate pending
+  edit actions, and distinguish ingredient-weight sums from cooked portion weights.
+
+## 2026-11-23 — Cooked chicken reference correction
+
+- Investigate the reported 568.7 kcal estimate for 200 g white-cut chicken. The
+  old formula retained all raw chicken fat despite discarded poaching liquid and
+  assumed consumed dipping oil; arithmetic tests did not validate these assumptions.
+- Add official cooked-state USDA records 171051 and 171451 without changing the
+  raw chicken record. Catalogue `2026-11-23.2` has 202 ingredients and 384 recipes.
+- Use the explicitly labelled cooked, skin-on proxy for `dish_109`, excluding
+  unreported dipping sauce. It is 438 kcal per 200 g under those assumptions,
+  not a measured white-cut chicken value. Skinless cooked meat is a separate entry.
+- Document [the source review and remaining limits](white-chicken-reference.md).
+  No directly corresponding official white-cut chicken measurement was verified.
+  Historical saved estimates and the published `cfa02f0` checkpoint are unchanged.
+- Pass 687 targeted source, recipe and bilingual-grounding checks. Broader feature
+  checks and a deployment are separate from this targeted result.
+
 ## 2026-11-23 — Home-recipe coverage, English completion and compact input
 
 - Advance catalogue data to `2026-11-23.1`: 200 unchanged USDA ingredient records

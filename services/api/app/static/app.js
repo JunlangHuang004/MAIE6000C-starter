@@ -6,6 +6,7 @@
   let analysis = null, busy = false, timer = null, catalogue = [];
   let questionVersion = '', notice = {raw:'', error:false};
   let ingredientEditor = null;
+  const similarStates = new Map();
   let mealEditorOpen = false;
   let foodLimit = 20;
   const views = ['meal','diary','trends','profile'];
@@ -128,7 +129,7 @@ const interrupted=()=>Object.assign(Error(A('登录状态已改变')),{silent:tr
     $('profile-reload').textContent=A(profileConflict?'载入最新资料':'重新读取资料');
     renderProfileReference();renderDailySource();renderDailyCompleteness();renderDailyBalance();if(tracking)renderTracking(tracking);renderRecent();
   }
-function clearSession(){selectView('meal');sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;
+function clearSession(){selectView('meal');sessionVersion++;clearTimeout(timer);timer=null;analysis=null;currentUser=null;busy=false;similarStates.clear();
  clearProfile();clearTracking();closeIngredientEditor();questionVersion='';recentVersion++;recentRecords=[];provider=null;$('offline-meal').value='';
  for(const id of ['meal','reply'])$(id).value='';
  for(const id of ['history','questions','evidence'])$(id).replaceChildren();
@@ -175,7 +176,8 @@ async function api(path,method='GET',body){
     $('pending-edit-notice').textContent = I.t($('pending-edit-notice').dataset.i18n);
     $('reply').disabled = locked;
     $('mode').disabled = !currentUser || !!analysis || busy;
-    $('switch-mode').hidden = !analysis || analysis.status === 'confirmed';
+    $('switch-mode').hidden = !analysis || analysis.status === 'confirmed'
+      || analysis.draft?.some(item => item.custom_recipe || item.reference_selection);
     $('switch-mode').disabled = locked;
     $('switch-mode').textContent = I.t(analysis?.mode === 'basic' ? 'switchAdvanced' : 'switchBasic');
     const recipeLocked = locked || !analysis || analysis.status === 'confirmed';
@@ -189,6 +191,18 @@ async function api(path,method='GET',body){
     $('ingredient-rows').querySelectorAll('[data-remove-ingredient]').forEach(button => {
       button.disabled = recipeLocked || $('ingredient-rows').children.length <= 1;
     });
+    document.querySelectorAll('[data-similar-panel]').forEach(panel => {
+      const state = similarStates.get(panel.dataset.similarPanel);
+      panel.querySelectorAll('input,select,button').forEach(control => {
+        control.disabled = recipeLocked || !!state?.stale && !control.matches('[data-similar-reload],[data-similar-cancel],[data-similar-actual]');
+      });
+      const choose = panel.querySelector('[data-similar-continue]');
+      if (choose) choose.disabled = recipeLocked || !!state?.stale || !state?.selected || !state?.accepted;
+      const ingredients = panel.querySelector('[data-similar-ingredient]');
+      if (ingredients) ingredients.disabled ||= (state?.ingredient_ids.length || 0) >= 8;
+      panel.setAttribute('aria-busy',String(!!state?.loading));
+    });
+    document.querySelectorAll('[data-find-similar]').forEach(button => { button.disabled = recipeLocked; });
     // Language controls remain usable while a model job is pending.
   }
 function profileMessage(text,error=false){window.NutriAccountI18n.message('profile-message',text,error);}
@@ -393,6 +407,170 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     if (value != null) input.value = value;
     return input;
   }
+  const preparationOptions = [
+    ['raw','生食'],['as_served','凉拌／拌匀'],['boiled','煮'],['steamed','蒸'],['roasted','烤'],
+    ['stir_fried','炒'],['fried','煎／炸'],['braised','焖／炖'],['other','其他做法']
+  ];
+  function referenceText(value, field) {
+    return value?.[field + (I.getLanguage() === 'en' ? '_en' : '_zh')] || '';
+  }
+  function similarKey(index) { return analysis.id + ':' + index; }
+  function similarState(index) {
+    const key = similarKey(index), item = analysis.draft[index];
+    let state = similarStates.get(key);
+    if (!state || state.revision !== analysis.revision) {
+      const offer = item.reference_selection ? null : item.reference_suggestions;
+      state = {index,analysisId:analysis.id,revision:analysis.revision,
+        open:!!offer,ingredient_ids:[...(offer?.ingredient_ids || item.reference_selection?.ingredient_ids || [])],preparation:offer?.preparation || item.reference_selection?.preparation || '',
+        search:'',offer,selected:null,accepted:false,loading:false,error:null,
+        stale:!!offer && offer.issued_revision !== analysis.revision};
+      if (state.stale) state.error = 'similarStale';
+      similarStates.set(key,state);
+    }
+    return state;
+  }
+  function similarError(error, state) {
+    if (error.silent) return;
+    state.error = error.status === 409 ? 'similarStale'
+      : [403,404].includes(error.status) ? 'similarUnavailable' : 'similarFailed';
+    if ([403,404,409].includes(error.status)) state.stale = true;
+  }
+  function questionInputSnapshot() {
+    return Array.from($('questions').querySelectorAll('[data-answer],[data-ingredient],[data-yield],[data-accept]'))
+      .map(input => ({id:input.id,value:input.value,checked:input.checked}));
+  }
+  function restoreQuestionInputs(values) {
+    for (const value of values) {
+      const input = $(value.id);
+      if (input && input.closest('#questions')) { input.value = value.value; input.checked = value.checked; }
+    }
+    translateQuestions();
+  }
+  function renderSimilarPanel(panel, state) {
+    if (!panel) return;
+    panel.replaceChildren(); panel.hidden = !state.open;
+    if (!state.open) return;
+    const text = (tag,key,values) => el(tag,I.t(key,values));
+    const action = (key,attribute,handler) => {
+      const button = text('button',key); button.type = 'button'; button.className = 'secondary';
+      button.dataset[attribute] = 'true'; button.addEventListener('click',handler); return button;
+    };
+    panel.append(text('p','similarIntro'));
+    const search = el('input'); search.type = 'search'; search.value = state.search;
+    search.id = 'similar-search-' + state.index; search.dataset.similarSearchInput = 'true';
+    search.placeholder = I.t('similarIngredientsHint');
+    const ingredientLabel = text('label','similarIngredients'); ingredientLabel.htmlFor = search.id;
+    const select = el('select'); select.id = 'similar-ingredient-' + state.index; select.dataset.similarIngredient = 'true';
+    select.setAttribute('aria-label',I.t('similarIngredients'));
+    const populate = () => {
+      select.replaceChildren(); const empty = text('option','select'); empty.value = ''; select.append(empty);
+      const query = state.search.trim().toLowerCase();
+      for (const food of catalogue.filter(food => food.kind === 'ingredient' && !state.ingredient_ids.includes(food.id)
+        && [food.name,...(food.aliases || []),I.foodName(food.id,food.name)].join(' ').toLowerCase().includes(query))) {
+        const option = el('option',I.foodName(food.id,food.name) + ' · ' + ingredientState(food.state)); option.value = food.id; select.append(option);
+      }
+    };
+    populate();
+    search.addEventListener('input',() => { state.search = search.value; populate(); });
+    const invalidate = () => { state.offer = null; state.selected = null; state.accepted = false; state.error = null; };
+    select.addEventListener('change',() => {
+      if (!select.value || state.ingredient_ids.length >= 8) return;
+      state.ingredient_ids.push(select.value); state.search = ''; invalidate(); renderSimilarPanel(panel,state); controls();
+    });
+    panel.append(ingredientLabel,search,select,text('p','similarIngredientHelp'));
+    const chosen = el('div'); chosen.className = 'similar-ingredients';
+    for (const id of state.ingredient_ids) {
+      const food = catalogue.find(food => food.id === id);
+      const button = action('similarRemove','similarRemove',() => {
+        state.ingredient_ids = state.ingredient_ids.filter(value => value !== id); invalidate(); renderSimilarPanel(panel,state); controls();
+      });
+      button.textContent = I.t('similarRemove',{name:I.foodName(id,food?.name || id)}); chosen.append(button);
+    }
+    panel.append(chosen);
+    const method = el('select'); method.id = 'similar-method-' + state.index; method.dataset.similarMethod = 'true';
+    const methodLabel = text('label','similarMethod'); methodLabel.htmlFor = method.id;
+    const empty = text('option','select'); empty.value = ''; method.append(empty);
+    for (const [value,label] of preparationOptions) {
+      const option = el('option',value === 'as_served' ? I.t('similarColdMethod')
+        : I.questionOption({key:'0.preparation'},{value,label})); option.value = value; method.append(option);
+    }
+    method.value = state.preparation;
+    method.addEventListener('change',() => { state.preparation = method.value; invalidate(); renderSimilarPanel(panel,state); controls(); });
+    const find = action(state.loading ? 'similarSearching' : 'similarSearch','similarSearch',() => {
+      if (!state.ingredient_ids.length || !state.preparation) {
+        state.error = 'similarRequired'; renderSimilarPanel(panel,state); controls(); return;
+      }
+      submit(async () => {
+        const before = questionInputSnapshot(); state.loading = true; state.error = null; renderSimilarPanel(panel,state); controls();
+        try {
+          const data = await api('/analyses/' + state.analysisId + '/reference-candidates','POST',{
+            revision:state.revision,item_index:state.index,ingredient_ids:state.ingredient_ids,preparation:state.preparation
+          });
+          const next = data.analysis || data;
+          state.revision = next.revision; state.offer = next.draft?.[state.index]?.reference_suggestions;
+          state.selected = null; state.accepted = false; state.loading = false;
+          saved(data); restoreQuestionInputs(before);
+        } catch (error) {
+          similarError(error,state);
+        } finally {
+          state.loading = false;
+          if (analysis?.id === state.analysisId && currentUser) renderSimilarPanel(panel.isConnected ? panel : document.querySelector('[data-similar-panel="' + similarKey(state.index) + '"]'),state);
+        }
+      });
+    });
+    search.addEventListener('keydown',event => {
+      if (event.key === 'Enter') { event.preventDefault(); find.click(); }
+    });
+    panel.append(methodLabel,method,find);
+    const status = el('p'); status.className = 'similar-status'; status.setAttribute('role','status'); status.setAttribute('aria-live','polite');
+    status.textContent = state.error ? I.t(state.error) : state.loading ? I.t('similarSearching') : '';
+    status.classList.toggle('error',!!state.error); panel.append(status);
+    if (state.stale) panel.append(action('similarReload','similarReload',() => submit(async () => {
+      try {
+        const data = await api('/analyses/' + state.analysisId), next = data.analysis || data;
+        // Reload discards the expired offer, even if it remains in saved history.
+        similarStates.set(state.analysisId + ':' + state.index,{...state,revision:next.revision,
+          offer:null,selected:null,accepted:false,loading:false,stale:false,error:null,open:true});
+        saved(data);
+      }
+      catch (error) { similarError(error,state); renderSimilarPanel(panel,state); }
+    })));
+    const offer = state.offer;
+    for (const question of offer?.questions || []) panel.append(el('p',referenceText(question,'label')));
+    if (offer?.status === 'no_match') panel.append(text('p','similarNone'));
+    if (offer?.status === 'candidates' && offer.candidates?.length) {
+      const choices = el('fieldset'); choices.append(text('legend','similarChoose'));
+      for (const candidate of offer.candidates.slice(0,3)) {
+        const label = el('label'); label.className = 'similar-candidate';
+        const radio = el('input'); radio.type = 'radio'; radio.name = 'similar-choice-' + state.index;
+        radio.value = candidate.food_id; radio.dataset.similarCandidate = candidate.food_id; radio.checked = state.selected === candidate.food_id;
+        radio.addEventListener('change',() => { state.selected = candidate.food_id; state.accepted = false; renderSimilarPanel(panel,state); controls(); });
+        label.append(radio,el('span',I.foodName(candidate.food_id,candidate.name)),el('p',referenceText(candidate,'reason')));
+        label.append(el('p',I.t('method',{method:I.method(candidate.food_id,candidate.method)})));
+        for (const difference of referenceText(candidate,'differences') || []) label.append(el('p',difference));
+        choices.append(label);
+      }
+      const acknowledgement = el('label'); acknowledgement.className = 'similar-accept';
+      const accepted = el('input'); accepted.type = 'checkbox'; accepted.dataset.similarAccepted = 'true'; accepted.checked = state.accepted;
+      accepted.addEventListener('change',() => { state.accepted = accepted.checked; controls(); });
+      acknowledgement.append(accepted,text('span','similarAccept'));
+      const proceed = action('similarContinue','similarContinue',() => {
+        if (!state.selected || !state.accepted || state.stale) return;
+        submit(async () => {
+          try {
+            const before = questionInputSnapshot();
+            const data = await api('/analyses/' + state.analysisId + '/reference-selection','POST',{
+              revision:state.revision,item_index:state.index,offer_id:offer.offer_id,food_id:state.selected,accepted:true
+            });
+            similarStates.delete(similarKey(state.index)); saved(data); restoreQuestionInputs(before); openIngredientEditor(state.index,true);
+          } catch (error) { similarError(error,state); renderSimilarPanel(panel,state); }
+        });
+      });
+      panel.append(choices,acknowledgement,proceed);
+    }
+    panel.append(action('similarCancel','similarCancel',() => { state.open = false; renderSimilarPanel(panel,state); translateQuestions(); controls(); }));
+    panel.append(action('similarNoMatch','similarActual',() => { state.open = false; renderSimilarPanel(panel,state); openIngredientEditor(state.index); }));
+  }
   function translateQuestions() {
     const questions = new Map((analysis?.questions || []).map(q => [q.key,q]));
     for (const row of $('questions').children) {
@@ -435,7 +613,18 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         yield:row.querySelector('[data-yield]').value || '—'
       });
       const builder = row.querySelector('[data-build-ingredients]');
-      if (builder) builder.textContent = I.t('ingredientBuild');
+      if (builder) builder.textContent = I.t(item.reference_template ? 'similarReview' : 'ingredientBuild');
+      const similar = row.querySelector('[data-find-similar]');
+      if (similar) {
+        const state = similarState(Number(similar.dataset.findSimilar));
+        similar.textContent = I.t('similarFind'); similar.setAttribute('aria-expanded',String(state.open));
+        renderSimilarPanel(row.querySelector('[data-similar-panel]'),state);
+      }
+      const reference = row.querySelector('[data-similar-source]');
+      if (reference) reference.textContent = I.t('similarSource',{
+        original:item.reference_selection.original_name,
+        reference:I.foodName(item.reference_selection.source_food_id,item.reference_selection.source_name)
+      });
     }
   }
   function renderQuestions() {
@@ -454,11 +643,20 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       if (q.kind === 'unsupported') row.classList.add('error');
       row.append(label);
       if (q.kind === 'unsupported') {
+        const index = Number(q.key.split('.')[0]), item = analysis.draft[index];
+        if (item.reference_selection) {
+          const reference = el('p'); reference.dataset.similarSource = 'true'; row.append(reference);
+        }
         const button = el('button'); button.type = 'button'; button.className = 'secondary';
         button.dataset.buildIngredients = q.key.split('.')[0];
         button.setAttribute('aria-controls','ingredient-builder');
         button.addEventListener('click',() => openIngredientEditor(Number(button.dataset.buildIngredients)));
         row.append(button);
+        const find = el('button'); find.type = 'button'; find.className = 'secondary'; find.dataset.findSimilar = index;
+        const panel = el('div'); panel.className = 'similar-panel'; panel.dataset.similarPanel = similarKey(index);
+        panel.id = 'similar-panel-' + index; find.setAttribute('aria-controls',panel.id);
+        find.addEventListener('click',() => { const state = similarState(index); state.open = true; renderSimilarPanel(panel,state); translateQuestions(); controls(); panel.querySelector('input')?.focus(); });
+        row.append(find,panel);
       } else if (q.kind === 'number') {
         const input = numberInput(null,q.min,q.max);
         input.dataset.answer = 'value'; input.id = 'q-' + q.key;
@@ -576,6 +774,11 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     $('ingredient-builder-target').textContent = I.t('ingredientBuilderTarget',{
       index:ingredientEditor.itemIndex + 1,name:ingredientEditor.originalName
     });
+    const reference = analysis?.draft?.[ingredientEditor.itemIndex]?.reference_selection;
+    $('ingredient-reference').hidden = !reference;
+    $('ingredient-reference').textContent = reference ? I.t('similarSource',{
+      original:reference.original_name,reference:I.foodName(reference.source_food_id,reference.source_name)
+    }) : '';
     const batch = $('ingredient-basis').value === 'batch';
     $('ingredient-batch-fields').hidden = !batch;
     $('ingredient-basis-help').textContent = I.t(batch ? 'ingredientBatchHelp' : 'ingredientConsumedHelp');
@@ -587,12 +790,13 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       populateIngredientSelect(row);
     }
   }
-  function openIngredientEditor(index) {
-    if (busy || !analysis || !['needs_input','completed','failed'].includes(analysis.status)) return;
+  function openIngredientEditor(index, allowBusy = false) {
+    if (busy && !allowBusy || !analysis || !['needs_input','completed','failed'].includes(analysis.status)) return;
     const item = analysis.draft?.[index]; if (!item) return;
-    const recipe = item.custom_recipe;
+    const recipe = item.custom_recipe || item.reference_template;
     ingredientEditor = {analysisId:analysis.id,revision:analysis.revision,itemIndex:index,originalName:item.name,stale:false};
-    $('ingredient-name').value = recipe?.name || item.name;
+    $('ingredient-name').value = item.reference_selection?.original_name || recipe?.name || item.name;
+    $('ingredient-name').readOnly = !!item.reference_selection;
     $('ingredient-basis').value = recipe?.basis || 'consumed';
     $('ingredient-yield').value = recipe?.batch_yield_g ?? '';
     $('ingredient-consumed').value = recipe?.consumed_g ?? '';
@@ -607,15 +811,17 @@ $('trend-today').addEventListener('click',()=>loadTracking());
   }
   function closeIngredientEditor() {
     ingredientEditor = null; $('ingredient-builder').hidden = true;
+    $('ingredient-name').readOnly = false;
     $('ingredient-form').reset();$('ingredient-rows').replaceChildren();
     $('ingredient-builder-target').textContent='';$('ingredient-editor-warning').hidden=true;controls();
+    $('ingredient-reference').textContent='';$('ingredient-reference').hidden=true;
   }
   function renderIngredientActions() {
     $('ingredient-editor-actions').replaceChildren();
     if (!analysis || !['needs_input','completed','failed'].includes(analysis.status)) return;
     (analysis.draft || []).forEach((item,index) => {
       if (!item.custom_recipe) return;
-      const button = el('button',I.t('ingredientEdit',{name:item.custom_recipe.name || item.name}));
+      const button = el('button',I.t('ingredientEdit',{name:item.reference_selection?.original_name || item.custom_recipe?.name || item.name}));
       button.type = 'button'; button.className = 'secondary'; button.dataset.editIngredients = index;
       button.setAttribute('aria-controls','ingredient-builder');
       button.addEventListener('click',() => openIngredientEditor(index));
@@ -667,6 +873,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
   function detailLabel(detail) {
     if (detail.kind !== 'custom_recipe') return `${I.foodName(detail.food_id,detail.name)} · ${detail.grams}g`;
     const weight = I.t(detail.quantity_provenance?.basis === 'batch' ? 'customConsumedWeight' : 'customIngredientSum',{grams:detail.grams});
+    if (detail.reference_selection) return `${detail.reference_selection.original_name || detail.name} · ${weight}`;
     return `${I.t('customRecipeTitle',{name:detail.name})} · ${weight}`;
   }
   function renderHistory() {
@@ -699,6 +906,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       const summary = el('summary'), title = el('span',detailLabel(detail)); title.className = 'food-summary';
       const badges = el('span'); badges.className = 'food-badges';
       const item = analysis.draft?.[index] || {};
+      const similar = detail.reference_selection || item.reference_selection;
       const referencePortion = ['default_portion','portion_reference'].includes(detail.quantity_provenance?.kind);
       const recipe = catalogue.find(food => food.id === detail.food_id)?.kind === 'recipe';
       const referenceRecipe = recipe && (item.recipe_assumed || !item.recipe_confirmed);
@@ -706,12 +914,18 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       if (referencePortion) badgeKeys.push(['referencePortionBadge',true]);
       else if (detail.quantity_provenance?.kind === 'user_grams') badgeKeys.push(['measuredWeightBadge',false]);
       if (recipe) badgeKeys.push([referenceRecipe ? 'referenceRecipeBadge' : 'reviewedRecipeBadge',referenceRecipe]);
-      if (detail.kind === 'custom_recipe') badgeKeys.push(['customRecipeBadge',false]);
+      if (similar) badgeKeys.push(['similarRecipeBadge',true]);
+      else if (detail.kind === 'custom_recipe') badgeKeys.push(['customRecipeBadge',false]);
       for (const [key,reference] of badgeKeys) {
         const badge = el('span',I.t(key)); badge.className = 'food-badge' + (reference ? ' reference' : ''); badges.append(badge);
       }
       title.append(badges); const kcal = el('span',detail.nutrients.calories + ' kcal'); kcal.className = 'food-calories';
       summary.append(title,kcal); block.append(summary);
+      if (similar) {
+        block.append(el('p',I.t('similarSource',{original:similar.original_name || detail.name,
+          reference:I.foodName(similar.source_food_id,similar.source_name)})));
+        for (const difference of referenceText(similar,'differences') || []) block.append(el('p',difference));
+      }
       quantityEvidence(detail,block);
       for (const assumption of detail.assumptions || []) block.append(el('p',I.assumption(assumption,detail.food_id)));
       const sources = el('p'); sources.className = 'sources';
@@ -729,9 +943,11 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       block.append(sources); $('evidence').append(block);
     }
     const hasReference = !!$('evidence').querySelector('.food-badge.reference');
+    const hasSimilar = (analysis.details || []).some(detail => detail.reference_selection || detail.approximate_reference);
     $('estimate-basis').hidden = !hasReference;
     $('estimate-basis').textContent = hasReference
-      ? I.t(analysis.status === 'confirmed' ? 'confirmedReferenceBasis' : 'referenceBasis') : '';
+      ? I.t(hasSimilar ? (analysis.status === 'confirmed' ? 'confirmedSimilarReferenceBasis' : 'similarReferenceBasis')
+        : analysis.status === 'confirmed' ? 'confirmedReferenceBasis' : 'referenceBasis') : '';
   }
   function render() {
     const state = analysis?.status;
@@ -747,7 +963,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     $('edit-meal').setAttribute('aria-expanded',String(mealEditorOpen));
     $('result').hidden = !analysis || !['completed','confirmed'].includes(state);
     $('answer-form').hidden = state !== 'needs_input';
-    const custom = analysis?.draft?.some(item => item.custom_recipe);
+    const custom = analysis?.draft?.some(item => item.custom_recipe || item.reference_selection);
     $('edit-meal').textContent = I.t(mealEditorOpen ? 'closeMealEdit' : custom ? 'editIngredients' : 'editMeal');
     $('answer-help').dataset.i18n = custom ? 'customAnswerHelp' : 'answerHelp';
     $('answer-help').textContent = I.t(custom ? 'customAnswerHelp' : 'answerHelp');
@@ -905,7 +1121,7 @@ $('confirm').addEventListener('click',()=>{
 });
   $('new').addEventListener('click',() => {
     selectView('meal');
-    clearTimeout(timer); analysis = null; questionVersion = ''; mealEditorOpen = false;
+    clearTimeout(timer); analysis = null; questionVersion = ''; mealEditorOpen = false; similarStates.clear();
     stored.remove(analysisKey());
     closeIngredientEditor();$('offline-meal').value='';
     $('meal').value = ''; $('reply').value = ''; message(''); render(); $('meal').focus();

@@ -153,7 +153,7 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
   An old shared public password is not an automatically migrated personal account.
 - **403 on writes:** check `X-NutriChat-Request: 1` and exact `Origin` matching.
   Do not remove these checks to make a cross-origin client work.
-- **No corresponding food record:** coverage is limited to 200 ingredients and
+- **No corresponding food record:** coverage is limited to 202 ingredients and
   384 reference recipes with reviewed names/aliases. Correct the name or select
   actual supported ingredients. Keep all totals empty while any item is unresolved.
 - **`needs_input`:** normal clarification, with a successfully completed job.
@@ -182,8 +182,8 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 
 ## Data, migrations and recovery
 
-Food catalogue `2026-11-23.1` is versioned JSON: 200 ingredients and 384 reference
-recipes. All 584 records have English names, and all recipe methods are bilingual.
+Food catalogue `2026-11-23.2` is versioned JSON: 202 ingredients and 384 reference
+recipes. All 586 records have English names, and all recipe methods are bilingual.
 The [home-recipe follow-up](home-recipe-expansion.md) adds 34 project-authored
 reference formulas while preserving earlier ingredient nutrients and 350 recipe
 formulations, with the existing egg-portion metadata retained. Recipe-site URLs

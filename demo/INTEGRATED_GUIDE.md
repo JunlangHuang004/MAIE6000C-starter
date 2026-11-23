@@ -3,8 +3,8 @@
 Use the [current setup](README.md), then register/sign in. The merged preview uses
 port **8005** with a configured model; the key-free integration preview uses
 **8006**. Meals, Daily diary, Trends and My goals share the same private account.
-Catalogue `2026-11-23.1` contains 200 ingredients and 384 reference recipes, with
-English names for all 584 records and English methods for every recipe. The
+Catalogue `2026-11-23.2` contains 202 ingredients and 384 reference recipes, with
+English names for all 586 records and English methods for every recipe. The
 [23 November catalogue follow-up](../docs/home-recipe-expansion.md) records the
 34 added reference recipes, reviewed aliases and remaining coverage limits.
 The screenshots below retain their original dates and do not verify this expansion.

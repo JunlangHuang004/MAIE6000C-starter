@@ -1364,3 +1364,337 @@ test('Invalid manual calories reveal their closed disclosure before native valid
   await clickLanguage('en');assert.match($('daily-message').textContent,/allowed range/);
   assert.equal(requests.some(r=>r.method==='PUT'),false);
 });
+
+function referenceOfferFixture(base, status = 'candidates') {
+  const meal = clone(base); meal.revision += 1;
+  meal.draft[1].reference_suggestions = {
+    offer_id:'offer-for-this-revision',issued_revision:meal.revision,status,provider:'hkust',
+    ingredient_ids:['chicken'],preparation:'boiled',questions:[],
+    candidates:status === 'candidates' ? [{food_id:'dish_109',name:'白切鸡',method:'煮熟后切块',
+      reason_zh:'主要食材和做法相近。',reason_en:'The main ingredient and preparation are similar.',
+      differences_zh:['原菜的酱汁和实际用油仍需核对。'],differences_en:['Review the original dish’s sauce and actual oil.']}] : []
+  };
+  return meal;
+}
+function referenceSelectedFixture(offered) {
+  const meal = clone(offered); meal.revision += 1;
+  const source = meal.draft[1].reference_suggestions.candidates[0];
+  meal.draft[1].reference_selection = {original_name:meal.draft[1].name,
+    source_food_id:source.food_id,source_name:source.name,provider:'hkust',ingredient_ids:['chicken'],
+    preparation:'boiled',acknowledged:true,reason_zh:source.reason_zh,reason_en:source.reason_en,
+    differences_zh:source.differences_zh,differences_en:source.differences_en};
+  meal.draft[1].reference_template = {name:meal.draft[1].name,basis:'batch',
+    ingredients:[{food_id:'chicken',grams:500},{food_id:'oil',grams:20}],batch_yield_g:400,consumed_g:200,accepted:false};
+  return meal;
+}
+function openReference(view) {
+  view.document.querySelector('[data-find-similar="1"]').click();
+  return view.document.querySelector('[data-similar-panel]');
+}
+function selectReferenceIngredients(view, panel) {
+  const select = panel.querySelector('[data-similar-ingredient]'); select.value = 'chicken';
+  select.dispatchEvent(new view.window.Event('change',{bubbles:true}));
+  const method = panel.querySelector('[data-similar-method]'); method.value = 'boiled';
+  method.dispatchEvent(new view.window.Event('change',{bubbles:true}));
+}
+async function searchReference(view, panel) {
+  panel.querySelector('[data-similar-search]').click(); await flush();
+  return view.document.querySelector('[data-similar-panel]');
+}
+
+test('Similar-recipe search is optional, requires ingredients and method, and never computes totals', async t => {
+  const meal = unsupportedIngredientMeal(); const offered = referenceOfferFixture(meal);
+  const view = await mount(t,{meal,respond:request => request.url.endsWith('/reference-candidates') ? {body:offered} : undefined});
+  let panel = openReference(view);
+  assert.equal(view.requests.filter(request => request.method === 'POST').length,0);
+  panel = await searchReference(view,panel);
+  assert.match(panel.textContent,/请填写主要食材和做法/);
+  assert.equal(view.requests.filter(request => request.method === 'POST').length,0);
+  selectReferenceIngredients(view,panel); panel = await searchReference(view,panel);
+  const sent = view.requests.find(request => request.url.endsWith('/reference-candidates'));
+  assert.deepEqual(sent.body,{revision:meal.revision,item_index:1,ingredient_ids:['chicken'],preparation:'boiled'});
+  assert.equal(sent.headers['X-NutriChat-Request'],'1');
+  assert.equal(panel.querySelector('[data-similar-candidate]').checked,false);
+  assert.equal(panel.querySelector('[data-similar-accepted]').checked,false);
+  assert.equal(panel.querySelector('[data-similar-continue]').disabled,true);
+  assert.equal(view.$('result').hidden,true);
+  assert.equal(view.$('confirm').disabled,true);
+  assert.match(panel.textContent,/原菜的酱汁和实际用油仍需核对/);
+  assert.equal(view.$('ingredient-builder').hidden,true);
+});
+
+test('Reference choices and explicit acknowledgement survive translation, but changed search criteria invalidate them', async t => {
+  const meal = unsupportedIngredientMeal(), offered = referenceOfferFixture(meal);
+  const view = await mount(t,{meal,respond:request => request.url.endsWith('/reference-candidates') ? {body:offered} : undefined});
+  let panel = openReference(view); selectReferenceIngredients(view,panel); panel = await searchReference(view,panel);
+  panel.querySelector('[data-similar-candidate]').click();
+  panel.querySelector('[data-similar-accepted]').click();
+  assert.equal(panel.querySelector('[data-similar-continue]').disabled,false);
+  const before = view.requests.length; await view.clickLanguage('en');
+  panel = view.document.querySelector('[data-similar-panel]');
+  assert.equal(panel.querySelector('[data-similar-candidate]').checked,true);
+  assert.equal(panel.querySelector('[data-similar-accepted]').checked,true);
+  assert.match(panel.textContent,/not an exact match/);
+  assert.match(panel.textContent,/Review the original dish’s sauce/);
+  assert.doesNotMatch(panel.textContent,/原菜的酱汁/);
+  assert.equal(view.requests.length,before);
+  const method = panel.querySelector('[data-similar-method]'); method.value = 'steamed';
+  method.dispatchEvent(new view.window.Event('change',{bubbles:true}));
+  assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+  assert.equal(panel.querySelector('[data-similar-continue]'),null);
+  panel.querySelector('[data-similar-cancel]').click();
+  assert.equal(panel.hidden,true);
+  assert.equal(view.$('result').hidden,true);
+});
+
+test('Reference selection opens an unaccepted editable batch while retaining original name and other meal items', async t => {
+  const meal = unsupportedIngredientMeal(), offered = referenceOfferFixture(meal), selected = referenceSelectedFixture(offered);
+  const view = await mount(t,{meal,respond:request => {
+    if(request.url.endsWith('/reference-candidates'))return {body:offered};
+    if(request.url.endsWith('/reference-selection'))return {body:selected};
+  }});
+  let panel = openReference(view); selectReferenceIngredients(view,panel); panel = await searchReference(view,panel);
+  panel.querySelector('[data-similar-candidate]').click();
+  panel.querySelector('[data-similar-continue]').click(); await flush();
+  assert.equal(view.requests.some(request => request.url.endsWith('/reference-selection')),false);
+  panel.querySelector('[data-similar-accepted]').click();
+  panel.querySelector('[data-similar-continue]').click(); await flush();
+  const sent = view.requests.find(request => request.url.endsWith('/reference-selection'));
+  assert.deepEqual(sent.body,{revision:offered.revision,item_index:1,offer_id:'offer-for-this-revision',food_id:'dish_109',accepted:true});
+  assert.equal(view.$('ingredient-builder').hidden,false);
+  assert.equal(view.$('ingredient-name').value,'火星豉油鸡');
+  assert.equal(view.$('ingredient-name').readOnly,true);
+  assert.equal(view.$('ingredient-basis').value,'batch');
+  assert.equal(view.$('ingredient-yield').value,'400');
+  assert.equal(view.$('ingredient-consumed').value,'200');
+  assert.equal(view.$('ingredient-accepted').checked,false);
+  assert.equal(view.document.querySelector('[data-ingredient-grams]').value,'500');
+  assert.match(view.$('ingredient-reference').textContent,/火星豉油鸡.*白切鸡.*不是准确匹配/);
+  assert.equal(view.$('result').hidden,true,'Choosing a reference alone cannot calculate the meal');
+  assert.equal(view.requests.some(request => request.url.endsWith('/ingredients')),false);
+  assert.match(view.$('submitted-meal').textContent,/100克熟米饭/);
+  await view.clickLanguage('en');
+  assert.equal(view.$('ingredient-name').value,'火星豉油鸡');
+  assert.match(view.$('ingredient-reference').textContent,/not an exact match/);
+  view.$('ingredient-cancel').click();
+  assert.equal(view.$('ingredient-builder').hidden,true);
+  assert.equal(view.$('result').hidden,true);
+});
+
+test('Reference templates have one review action and ingredient recipes keep mode switching unavailable', async t => {
+  const unresolved = await mount(t,{meal:unsupportedIngredientMeal()});
+  assert.equal(unresolved.$('switch-mode').hidden,false,'Ordinary unresolved meals can still change modes');
+  const selected = referenceSelectedFixture(referenceOfferFixture(unsupportedIngredientMeal()));
+  const pending = await mount(t,{meal:selected});
+  assert.equal(pending.$('switch-mode').hidden,true,'A reference template must not be invalidated by switching modes');
+  assert.equal(pending.document.querySelectorAll('[data-edit-ingredients]').length,0,'The unaccepted template has no duplicate generic edit action');
+  const review = pending.document.querySelector('[data-build-ingredients="1"]');
+  assert.ok(review);
+  assert.match(review.textContent,/继续核对参考配方/);
+  review.click();
+  assert.equal(pending.$('ingredient-builder').hidden,false);
+  pending.document.querySelector('[data-ingredient-grams]').value='450';
+  await pending.clickLanguage('en');
+  assert.equal(pending.$('switch-mode').hidden,true);
+  assert.equal(pending.document.querySelector('[data-ingredient-grams]').value,'450');
+  assert.equal(pending.$('ingredient-submit').disabled,false);
+  pending.$('ingredient-cancel').click();
+  assert.equal(pending.$('switch-mode').hidden,true,'Closing the editor does not remove reference provenance');
+
+  for (const reference of [false,true]) {
+    const meal = ingredientRecipeFixture();
+    if (reference) meal.draft[0].reference_selection=clone(selected.draft[1].reference_selection);
+    const accepted = await mount(t,{meal});
+    assert.equal(accepted.$('switch-mode').hidden,true);
+    assert.equal(accepted.document.querySelectorAll('[data-edit-ingredients]').length,1,'Accepted ingredient recipes retain their edit action');
+  }
+});
+
+test('Reference search preserves unsubmitted answers for other foods through its revision change', async t => {
+  const meal = unsupportedIngredientMeal();
+  meal.questions.unshift({key:'0.grams',kind:'number',min:0.1,max:10000,label:'熟米饭吃了多少克？'});
+  const offered = referenceOfferFixture(meal);
+  const view = await mount(t,{meal,respond:request => request.url.endsWith('/reference-candidates') ? {body:offered} : undefined});
+  view.document.querySelector('[data-answer]').value = '125';
+  let panel = openReference(view); selectReferenceIngredients(view,panel); await searchReference(view,panel);
+  assert.equal(view.document.querySelector('[data-answer]').value,'125');
+});
+
+for (const status of [409,403,404,503]) {
+  test(`Reference search handles HTTP ${status} without exposing another meal or computing totals`, async t => {
+    const meal = unsupportedIngredientMeal();
+    const view = await mount(t,{meal,language:'en',respond:request => request.url.endsWith('/reference-candidates')
+      ? {status,body:{detail:'private-server-detail'}} : undefined});
+    let panel = openReference(view); selectReferenceIngredients(view,panel); panel = await searchReference(view,panel);
+    assert.equal(view.$('result').hidden,true);
+    assert.doesNotMatch(panel.textContent,/private-server-detail/);
+    assert.match(panel.textContent,status===409 ? /meal has changed/ : status===503 ? /temporarily unavailable/ : /meal is unavailable/);
+    assert.equal(panel.querySelector('[data-similar-search]').disabled,status!==503);
+    assert.equal(panel.querySelector('[data-similar-actual]').disabled,false);
+  });
+}
+
+test('No suitable reference offers an actual-ingredient path without auto-selecting a different dish', async t => {
+  const meal = unsupportedIngredientMeal();
+  const view = await mount(t,{meal,language:'en',respond:request => request.url.endsWith('/reference-candidates')
+    ? {body:referenceOfferFixture(meal,'no_match')} : undefined});
+  let panel = openReference(view); selectReferenceIngredients(view,panel); panel = await searchReference(view,panel);
+  assert.match(panel.textContent,/No sufficiently similar reference/);
+  assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+  panel.querySelector('[data-similar-actual]').click();
+  assert.equal(view.$('ingredient-builder').hidden,false);
+  assert.equal(view.$('ingredient-name').value,'火星豉油鸡');
+  assert.equal(view.document.querySelector('[data-ingredient-food]').value,'');
+  assert.equal(view.$('ingredient-accepted').checked,false);
+});
+
+test('Saved reference estimate keeps original name, source, differences and badge after confirmation and translation', async t => {
+  const selected = referenceSelectedFixture(referenceOfferFixture(unsupportedIngredientMeal()));
+  const meal = ingredientRecipeFixture('confirmed');
+  meal.draft[0].reference_selection = selected.draft[1].reference_selection;
+  meal.draft[0].name = '火星豉油鸡';
+  meal.details[0].name = '火星豉油鸡';
+  meal.details[0].reference_selection = clone(selected.draft[1].reference_selection);
+  meal.details[0].approximate_reference = true;
+  meal.details[0].assumptions = ['用户明确选择了相近参考配方并核对食材；原食物仍未准确匹配，结果仅作近似估算。'];
+  const view = await mount(t,{meal});
+  assert.match(view.$('evidence').textContent,/火星豉油鸡.*相似菜参考估算/);
+  assert.match(view.$('estimate-basis').textContent,/已确认保存/);
+  assert.equal(view.$('confirm').hidden,true);
+  await view.clickLanguage('en');
+  assert.match(view.$('evidence').textContent,/火星豉油鸡.*Reference estimate/);
+  assert.match(view.$('evidence').textContent,/not an exact match/);
+  assert.match(view.$('evidence').textContent,/Review the original dish’s sauce/);
+  assert.match(view.$('evidence').textContent,/The original food is still not an exact match/);
+  assert.doesNotMatch(view.$('evidence').textContent,/用户明确选择了相近参考配方/);
+  assert.match(view.$('estimate-basis').textContent,/confirmed.*reference estimate/);
+  assert.doesNotMatch(view.$('evidence').querySelector('summary').textContent,/White-cut|Poached chicken/);
+});
+
+for (const basis of ['consumed','batch']) {
+  test(`Reference result retains its original name and distinguishes ${basis} weight in both languages`, async t => {
+    const selected = referenceSelectedFixture(referenceOfferFixture(unsupportedIngredientMeal()));
+    const meal = ingredientRecipeFixture();
+    const reference = clone(selected.draft[1].reference_selection);
+    meal.draft[0].reference_selection=reference;
+    meal.draft[0].custom_recipe.basis=basis;
+    meal.details[0].reference_selection=reference;
+    meal.details[0].approximate_reference=true;
+    meal.details[0].grams=basis==='consumed'?520:100;
+    meal.details[0].quantity_provenance.basis=basis;
+    if (basis==='consumed') {
+      Object.assign(meal.draft[0].custom_recipe,{batch_yield_g:null,consumed_g:null});
+      Object.assign(meal.details[0].quantity_provenance,{factor:1,batch_yield_g:null,consumed_g:null});
+    }
+    const view = await mount(t,{meal});
+    const expectedZh = basis==='consumed' ? /食材重量合计 520g（非成品熟重）/ : /本次熟制食用量 100g/;
+    const expectedEn = basis==='consumed' ? /Ingredient weight sum 520g \(not finished cooked weight\)/ : /Cooked portion eaten: 100g/;
+    for (const text of [view.$('interpreted').textContent,view.$('evidence').querySelector('summary').textContent]) {
+      assert.match(text,/火星豉油鸡/);
+      assert.match(text,expectedZh);
+      assert.doesNotMatch(text,/我的鸡肉配方|白切鸡/);
+    }
+    await view.clickLanguage('en');
+    for (const text of [view.$('interpreted').textContent,view.$('evidence').querySelector('summary').textContent]) {
+      assert.match(text,/火星豉油鸡/);
+      assert.match(text,expectedEn);
+      assert.doesNotMatch(text,/White-cut|Poached chicken/);
+      if (basis==='consumed') assert.doesNotMatch(text,/Cooked portion eaten/);
+    }
+  });
+}
+
+test('Reference provider text remains inert and a late search response cannot restore content after logout', async t => {
+  const meal = unsupportedIngredientMeal(), offered = referenceOfferFixture(meal);
+  offered.draft[1].reference_suggestions.candidates[0].reason_zh = '<img src=x onerror="window.__injected=true">';
+  const safe = await mount(t,{meal,respond:request => request.url.endsWith('/reference-candidates') ? {body:offered} : undefined});
+  let panel = openReference(safe); selectReferenceIngredients(safe,panel); panel = await searchReference(safe,panel);
+  assert.match(panel.textContent,/<img src=x/);
+  assert.equal(panel.querySelector('img'),null);
+  assert.equal(safe.window.__injected,undefined);
+  let release;
+  const view = await mount(t,{meal,respond:request => request.url.endsWith('/reference-candidates')
+    ? new Promise(resolve => {release=()=>resolve({body:offered});}) : undefined});
+  panel = openReference(view); selectReferenceIngredients(view,panel);
+  panel.querySelector('[data-similar-search]').click(); await flush();
+  assert.equal(panel.getAttribute('aria-busy'),'true');
+  view.window.dispatchEvent(new view.window.StorageEvent('storage',{key:'nutrichat.auth-change',newValue:'logout'}));
+  release(); await flush();
+  assert.equal(view.$('questions').textContent,'');
+  assert.equal(view.$('evidence').textContent,'');
+  assert.equal(view.$('ingredient-builder').hidden,true);
+});
+
+test('Accepted reference recipe submits reviewed quantities only for its item and persists the approximation through save', async t => {
+  const meal = unsupportedIngredientMeal(), offered = referenceOfferFixture(meal), selected = referenceSelectedFixture(offered);
+  let server = meal, submitted;
+  const view = await mount(t,{meal,respond:request => {
+    if(request.url === '/analyses/'+meal.id && request.method === 'GET')return {body:server};
+    if(request.url.endsWith('/reference-candidates')){server=offered;return {body:server};}
+    if(request.url.endsWith('/reference-selection')){server=selected;return {body:server};}
+    if(request.url.endsWith('/ingredients')){
+      submitted=request.body;
+      server={...clone(selected),revision:selected.revision+1,status:'queued'};
+      return {body:{analysis:server}};
+    }
+    if(request.url.endsWith('/confirm')){server={...clone(server),status:'confirmed',revision:server.revision+1};return {body:server};}
+  }});
+  let panel=openReference(view);selectReferenceIngredients(view,panel);panel=await searchReference(view,panel);
+  panel.querySelector('[data-similar-candidate]').click();panel.querySelector('[data-similar-accepted]').click();
+  panel.querySelector('[data-similar-continue]').click();await flush();
+  assert.equal(view.$('reply-form').hidden,true,'A selected reference uses ingredient editing, not a blocked free-text correction');
+  assert.equal(view.document.querySelector('[data-similar-panel]').hidden,true);
+  await submitIngredients(view);
+  assert.equal(submitted,undefined,'Template selection must not pre-accept ingredient quantities');
+  const oil=view.document.querySelectorAll('[data-ingredient-grams]')[1];oil.value='10';
+  view.$('ingredient-yield').value='420';view.$('ingredient-accepted').checked=true;
+  await submitIngredients(view);
+  assert.deepEqual(submitted.ingredients,[{food_id:'chicken',grams:500},{food_id:'oil',grams:10}]);
+  assert.equal(submitted.name,'火星豉油鸡');assert.equal(submitted.item_index,1);
+  assert.equal(submitted.batch_yield_g,420);assert.equal(submitted.consumed_g,200);
+  assert.equal(submitted.revision,selected.revision);
+  assert.equal(view.requests.some(request => request.url.endsWith('/reply')),false);
+  const completed=ingredientRecipeFixture();
+  const reference=clone(selected.draft[1].reference_selection);
+  completed.id=meal.id;completed.revision=server.revision;completed.food_text=meal.food_text;
+  completed.draft[0].name='火星豉油鸡';completed.draft[0].custom_recipe.name='火星豉油鸡';completed.draft[0].reference_selection=reference;
+  completed.details[0].name='火星豉油鸡';completed.details[0].reference_selection=reference;completed.details[0].approximate_reference=true;
+  server=completed;
+  const poll=Array.from(view.timers.values())[0];assert.ok(poll);await poll();await flush();
+  assert.equal(view.$('result').hidden,false);assert.match(view.$('evidence').textContent,/相似菜参考估算/);
+  view.$('confirm').click();await flush();
+  assert.equal(view.$('confirm').hidden,true);assert.match(view.$('estimate-basis').textContent,/相似菜参考估算.*已确认保存/);
+});
+
+test('Expired candidate selection keeps totals unavailable and requires a fresh read before retry', async t => {
+  const meal=unsupportedIngredientMeal(),offered=referenceOfferFixture(meal);
+  const view=await mount(t,{meal,language:'en',respond:request=>{
+    if(request.url.endsWith('/reference-candidates'))return {body:offered};
+    if(request.url.endsWith('/reference-selection'))return {status:409,body:{detail:'offer expired'}};
+  }});
+  let panel=openReference(view);selectReferenceIngredients(view,panel);panel=await searchReference(view,panel);
+  panel.querySelector('[data-similar-candidate]').click();panel.querySelector('[data-similar-accepted]').click();
+  panel.querySelector('[data-similar-continue]').click();await flush();
+  assert.match(panel.textContent,/meal has changed/);
+  assert.equal(panel.querySelector('[data-similar-continue]').disabled,true);
+  assert.equal(view.$('result').hidden,true);assert.equal(view.$('ingredient-builder').hidden,true);
+});
+
+test('Reloading an expired reference offer enables a fresh search without reusing its old candidate', async t => {
+  const meal=unsupportedIngredientMeal(),offered=referenceOfferFixture(meal);
+  const stale={...clone(offered),revision:offered.revision+1};
+  let getCount=0;
+  const view=await mount(t,{meal:stale,language:'en',respond:request=>{
+    if(request.url==='/analyses/'+stale.id && request.method==='GET'){getCount++;return {body:stale};}
+  }});
+  let panel=view.document.querySelector('[data-similar-panel]');
+  assert.match(panel.textContent,/meal has changed/);
+  assert.equal(panel.querySelector('[data-similar-search]').disabled,true);
+  panel.querySelector('[data-similar-reload]').click();await flush();
+  panel=view.document.querySelector('[data-similar-panel]');
+  assert.equal(getCount,2);
+  assert.equal(panel.querySelector('[data-similar-search]').disabled,false);
+  assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+  assert.equal(panel.querySelector('[data-similar-accepted]'),null);
+  assert.equal(view.$('result').hidden,true);
+});

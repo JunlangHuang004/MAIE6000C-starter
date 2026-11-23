@@ -72,6 +72,14 @@ def evaluate(draft):
         prefix = str(index) + '.'
         if 'custom_recipe' in item:
             nutrients, detail = recipe_detail(item['custom_recipe'], foods, KEYS)
+            if item.get('reference_selection'):
+                from services.common.recipe_references import validate_reference_selection
+                selection = validate_reference_selection(item['reference_selection'])
+                detail['name'] = selection['original_name']
+                detail['reference_selection'] = selection
+                detail['approximate_reference'] = True
+                detail['assumptions'].insert(0, '用户明确选择了相近参考配方并核对食材；'
+                    '原食物仍未准确匹配，结果仅作近似估算。')
             detail['item_index'] = index
             for key in KEYS:
                 totals[key] += nutrients[key]

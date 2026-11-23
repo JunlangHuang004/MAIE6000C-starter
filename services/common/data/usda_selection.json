@@ -2383,5 +2383,37 @@
       "西式普通切片火腿（午餐肉類）"
     ],
     "default_portion_g": 50
+  },
+  {
+    "id": "chicken_skin_stewed",
+    "name": "熟炖带皮鸡肉可食部分（不含骨）",
+    "state": "cooked",
+    "fdc_id": 171051,
+    "aliases": [
+      "熟炖带皮鸡肉",
+      "熟带皮鸡肉",
+      "熟燉帶皮雞肉"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled"
+    ],
+    "default_portion_g": 100
+  },
+  {
+    "id": "chicken_meat_stewed",
+    "name": "熟炖去皮鸡肉可食部分（不含骨）",
+    "state": "cooked",
+    "fdc_id": 171451,
+    "aliases": [
+      "熟炖去皮鸡肉",
+      "熟去皮鸡肉",
+      "熟燉去皮雞肉"
+    ],
+    "preparations": [
+      "as_served",
+      "boiled"
+    ],
+    "default_portion_g": 100
   }
 ]

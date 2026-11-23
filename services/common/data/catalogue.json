@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-23.1",
+  "version": "2026-11-23.2",
   "foods": [
     {
       "id": "rice",
@@ -5587,6 +5587,70 @@
       }
     },
     {
+      "id": "chicken_skin_stewed",
+      "name": "熟炖带皮鸡肉可食部分（不含骨）",
+      "state": "cooked",
+      "fdc_id": 171051,
+      "aliases": [
+        "熟炖带皮鸡肉",
+        "熟带皮鸡肉",
+        "熟燉帶皮雞肉"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 24.68,
+        "fat_g": 12.56,
+        "carbs_g": 0.0,
+        "calories": 219.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171051",
+        "url": "https://fdc.nal.usda.gov/food-details/171051/nutrients",
+        "description": "Chicken, broilers or fryers, meat and skin, cooked, stewed",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
+      "id": "chicken_meat_stewed",
+      "name": "熟炖去皮鸡肉可食部分（不含骨）",
+      "state": "cooked",
+      "fdc_id": 171451,
+      "aliases": [
+        "熟炖去皮鸡肉",
+        "熟去皮鸡肉",
+        "熟燉去皮雞肉"
+      ],
+      "preparations": [
+        "as_served",
+        "boiled"
+      ],
+      "default_portion_g": 100,
+      "kind": "ingredient",
+      "nutrients": {
+        "protein_g": 27.29,
+        "fat_g": 6.71,
+        "carbs_g": 0.0,
+        "calories": 177.0
+      },
+      "nutrition_basis": "per_100g_edible",
+      "source": {
+        "name": "USDA FoodData Central SR Legacy 2018",
+        "license": "CC0-1.0",
+        "id": "171451",
+        "url": "https://fdc.nal.usda.gov/food-details/171451/nutrients",
+        "description": "Chicken, broilers or fryers, meat only, cooked, stewed",
+        "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
+      }
+    },
+    {
       "id": "dish_001",
       "name": "番茄炒蛋",
       "aliases": [
@@ -8805,24 +8869,31 @@
       "state": "cooked",
       "category": "poultry",
       "variant_policy": "one_home_style_reference_per_dish",
-      "method": "带皮鸡肉水煮，配姜葱蘸汁；不计弃去的煮鸡水，去骨称重",
+      "method": "以熟炖去骨带皮鸡肉数据近似白切鸡，不是白切鸡实测值；默认不含蘸汁，姜葱和油按实际吃下的量另填。这里的鸡肉克数为熟重；去皮版本请在实际食材中选择熟炖去皮鸡肉。",
       "recipe": {
-        "yield_g": 340.0,
+        "yield_g": 400.0,
         "ingredients": {
-          "chicken_skin": 400.0,
-          "ginger": 15.0,
-          "spring_onion": 20.0,
-          "oil": 10.0,
-          "salt": 3.0
+          "chicken_skin_stewed": 400.0,
+          "ginger": 0.0,
+          "spring_onion": 0.0,
+          "oil": 0.0,
+          "salt": 0.0
         }
       },
       "source": {
         "name": "NutriChat 可编辑参考配方 v2（项目自建假设，非标准菜谱）",
         "license": "Project-authored",
-        "url": null
+        "url": null,
+        "quantity_origin": "project_authored_assumptions",
+        "reference_scope": "cooked_chicken_proxy_not_measured_white_cut_chicken",
+        "revision_note": "Replaces raw chicken with a matched cooked-state ingredient reference; excludes unreported dipping sauce and avoids assuming all raw fat is retained after poaching."
       },
       "nutrition_basis": "recipe_batch_then_cooked_weight",
-      "default_portion_g": 200
+      "default_portion_g": 200,
+      "preparations": [
+        "boiled",
+        "as_served"
+      ]
     },
     {
       "id": "dish_110",

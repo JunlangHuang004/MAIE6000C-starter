@@ -1,8 +1,10 @@
 # NutriChat dish index
 
-Catalogue `2026-11-23.1` contains 384 project-authored home-style reference recipes. Chinese and English names and methods below match the application. One reference is maintained per dish; reviewed alternative names share its ID. This is a coverage list, not a popularity ranking or measured nutrition dataset.
+Catalogue `2026-11-23.2` contains 384 project-authored home-style reference recipes. Chinese and English names and methods below match the application. One reference is maintained per dish; reviewed alternative names share its ID. This is a coverage list, not a popularity ranking or measured nutrition dataset.
 
 All ingredient grams, retained oil and cooked edible batch yields are editable assumptions. Advanced mode requires explicit recipe review. Seafood and meat weights exclude shells, bones and other inedible parts; Basic defaults do not become user-supplied facts.
+
+The subsequent [white-cut chicken correction](white-chicken-reference.md) adds two cooked chicken ingredient records and changes only `dish_109`; all other formulas retain their prior values.
 
 The [23 November expansion](home-recipe-expansion.md) adds 34 recipes while preserving the preceding 350 formulas and 200 ingredient nutrient records. The unpublished `dish_373` salt-poached-duck trial was withdrawn; later IDs are not renumbered. See [nutrition data](nutrition-data.md) for source and calculation limits. The maintained formula source is `services/common/data/recipes.json`, with English display names and methods in `services/api/app/static/catalogue-en.js`.
 
@@ -157,7 +159,7 @@ The [23 November expansion](home-recipe-expansion.md) adds 34 recipes while pres
 | dish_106 | 红烧鸡翅 | Red-braised chicken wings | 带皮鸡翅红烧，鸡翅按去骨可食部分计 | Red-braise chicken wings with skin; enter only the boneless edible portion. |
 | dish_107 | 蒜香鸡翅 | Garlic chicken wings | 带皮鸡翅煎制，鸡翅按去骨可食部分计 | Pan-fry chicken wings with skin; enter only the boneless edible portion. |
 | dish_108 | 姜葱鸡 | Ginger and spring onion chicken | 带皮鸡肉配姜葱焖制，鸡肉按去骨可食部分计 | Braise chicken meat and skin with ginger and spring onion; enter only the boneless edible portion. |
-| dish_109 | 白切鸡 | White-cut poached chicken | 带皮鸡肉水煮，配姜葱蘸汁；不计弃去的煮鸡水，去骨称重 | Poach chicken with skin and serve with ginger-spring onion dipping sauce; exclude discarded cooking water and weigh after removing bones. |
+| dish_109 | 白切鸡 | White-cut poached chicken | 以熟炖去骨带皮鸡肉数据近似白切鸡，不是白切鸡实测值；默认不含蘸汁，姜葱和油按实际吃下的量另填。这里的鸡肉克数为熟重；去皮版本请在实际食材中选择熟炖去皮鸡肉。 | Uses cooked, stewed boneless chicken with skin as a proxy, not measured white-cut chicken data. Dipping sauce is excluded by default; enter ginger, scallion and oil actually eaten. Chicken amounts here are cooked weights. For skinless meat, select the stewed skinless chicken record in the actual-ingredient form. |
 | dish_110 | 口水鸡 | Sichuan chicken in chili sauce | 带皮鸡肉煮熟切块，拌辣椒、花生及酱汁；去骨称重 | Boil and chop chicken with skin, then dress with chili, peanuts and sauce; weigh after removing bones. |
 | dish_111 | 香煎鸡胸 | Pan-fried chicken breast | 去皮鸡胸肉煎制 | Pan-fry skinless chicken breast. |
 | dish_112 | 青椒鸡丁 | Chicken and green pepper stir-fry | 去皮鸡胸肉与青椒炒制 | Stir-fry diced skinless chicken breast with green peppers. |

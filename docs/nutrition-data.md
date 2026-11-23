@@ -1,7 +1,7 @@
 # Chinese food catalogue and clarification dialogue
 
-Version **2026-11-23.1** contains **200 ingredient records and 384 editable Chinese
-recipe reference templates**, 584 records in total. All records have English names,
+Version **2026-11-23.2** contains **202 ingredient records and 384 editable Chinese
+recipe reference templates**, 586 records in total. All records have English names,
 and all recipes have English methods. No model training is required.
 Qwen extracts explicit facts
 and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
@@ -61,7 +61,7 @@ for checks and unresolved limits rather than treating a larger catalogue as
 measured nutrition or validated model recognition.
 
 The [23 November home-recipe expansion](home-recipe-expansion.md) adds 34 recipes
-without changing the 200 ingredient nutrient records or the preceding 350 recipe
+without changing the then-existing 200 ingredient nutrient records or the preceding 350 recipe
 formulations. Meishichina supplies observed dish names and cooking-style evidence;
 it does not supply these recipes' quantities, cooked yields or nutrient values.
 The new formulas are project-authored assumptions calculated with existing USDA
@@ -71,9 +71,19 @@ not complete coverage of the site's menu. Salt-poached duck was withdrawn before
 publication because the raw skin-on duck and assumed cooked yield did not support
 a useful estimate without a drained-fat model.
 
+## Cooked chicken correction and evidence quality
+
+The [white-cut chicken correction](white-chicken-reference.md) replaces one
+raw-meat/yield formula with an explicitly labelled cooked-chicken proxy and adds
+two cooked-state USDA ingredients. The other 383 recipe formulas are unchanged.
+Authority applies to the cited ingredient record, not to a project-authored dish.
+Automated tests verify arithmetic and behavior; they cannot validate a recipe
+against laboratory food measurements. Other formulas remain subject to cooking-
+loss and yield review.
+
 ## Dish coverage policy
 
-Coverage is finite: **200 ingredient records and 384 reference recipes**. The
+Coverage is finite: **202 ingredient records and 384 reference recipes**. The
 catalogue does not include every common Chinese dish, regional name, restaurant
 recipe or branded ingredient. Soy-sauce chicken (`豉油鸡` / `酱油鸡`) is now
 recorded as `dish_251`; it must resolve to its own reviewed reference recipe,
@@ -81,7 +91,7 @@ never steamed carp. Synthetic unknown names such as `月球紫晶兽肉` remain
 unsupported rather than being mapped to a familiar dish.
 
 Reviewed matching names are stored in `services/common/data/matching_aliases.json`,
-separately from nutrient data. All 584 records have English display names and
+separately from nutrient data. All 586 records have English display names and
 reviewed English matching names; all 384 recipes have English reference methods.
 The previous 162 missing translations are now present. Additional Chinese aliases
 share existing IDs instead of creating duplicate recipes. Matching aliases do not
@@ -96,6 +106,10 @@ foods and unverified matches are retained and reported with no meal totals in
 both modes. Users can correct the name or explicitly select supported actual
 ingredients and their weights in the ingredient builder. Unlisted synonyms or spelling variants may need
 rephrasing; this restriction does not establish perfect extraction accuracy.
+An optional [similar-recipe workflow](similar-recipe-references.md) keeps the
+original dish unresolved until the user explicitly selects a reference and
+reviews an ingredient recipe. It never turns a recommendation into an exact
+identity match.
 
 For a replacement ingredient list, explicitly identify whether the quantities
 describe the consumed ingredients or a whole batch. A whole-pot list for an

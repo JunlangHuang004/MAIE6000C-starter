@@ -119,6 +119,18 @@ details[open]>summary{margin-bottom:10px}
 #confirm,#view-diary{margin-right:10px}
 .question{border-top:1px solid var(--line);padding:16px 0}
 .question p{font-size:14px}
+.similar-panel{border:1px solid var(--line);border-radius:12px;background:#f7f8f2;padding:16px;margin:12px 0;color:var(--ink)}
+.similar-panel input[type=text],.similar-panel input[type=search],.similar-panel select{width:100%;margin-bottom:12px}
+.similar-panel button,.question>button{margin:6px 8px 6px 0}
+.similar-panel fieldset{border:0;margin:14px 0;padding:0}
+.similar-panel legend{font-size:14px;font-weight:600}
+.similar-candidate{display:block;border:1px solid var(--line);border-radius:10px;padding:12px;margin:10px 0;background:#fff}
+.similar-candidate>span{font-weight:600}
+.similar-candidate input[type=radio]{width:18px;height:18px;min-height:18px;margin:0 8px 0 0;vertical-align:middle;accent-color:var(--green)}
+.similar-candidate p{font-weight:400;margin:6px 0}
+.similar-accept{display:flex;align-items:flex-start;gap:8px;font-size:13px;margin:14px 0}
+.similar-accept input{margin-top:4px;flex-shrink:0}
+.similar-status{font-size:13px;white-space:pre-wrap}
 .ingredient{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:8px 0}
 .ingredient label{overflow-wrap:anywhere;font-weight:400}
 .ingredient input{flex-shrink:0}
@@ -377,6 +389,7 @@ button.example-chip{font-size:11px;min-height:32px}
 <section id="ingredient-builder" class="ingredient-builder" aria-labelledby="ingredient-builder-title" hidden>
 <h3 id="ingredient-builder-title" data-i18n="ingredientBuilderTitle">按实际食材填写配方</h3>
 <p id="ingredient-builder-target" class="muted"></p>
+<p id="ingredient-reference" class="recipe-reference" hidden></p>
 <p id="ingredient-editor-warning" class="error" data-i18n="ingredientStale" role="status" hidden>记录版本已变化，填写内容已保留。请先记下这些用量，再刷新页面重新读取记录。</p>
 <p data-i18n="ingredientBuilderHelp">逐项选择实际食材及其生熟状态，填写克数。油、糖和酱料也要单独填写；没有对应记录的食材不能用相近食物替代。</p>
 <form id="ingredient-form" novalidate>

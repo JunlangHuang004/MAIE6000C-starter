@@ -14,10 +14,10 @@ with checkpoint tag `w13-final`. The merge identifiers above describe the origin
 
 | Area | Integrated behavior |
 | --- | --- |
-| Food data | Catalogue 2026-11-23.1: 200 USDA ingredients and 384 reference recipes; existing nutrients/formulations retained |
+| Food data | Catalogue 2026-11-23.2: 202 USDA ingredients and 384 reference recipes; existing nutrients/formulations retained |
 | Estimation | Basic/Advanced, Chinese descriptions, strict supported-name matching, clarification and correction |
 | Unknown food | No substitute dish or partial meal total; explicit actual-ingredient recipe editor |
-| Languages | Chinese/English controls; English names for all 584 records and English methods for all 384 recipes |
+| Languages | Chinese/English controls; English names for all 586 records and English methods for all 384 recipes |
 | Accounts | Register, sign in/out, revocable sessions, private meal history and ownership checks |
 | Personal reference | Age, height, weight, formula sex coefficient, activity and goal; deterministic daily energy/macronutrient reference |
 | Diary | Dated confirmed meals, optional manual calorie total, weight, exercise and intake coverage; manual total replaces the meal sum |

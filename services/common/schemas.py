@@ -239,6 +239,80 @@ class AnalysisIngredientRecipe(IngredientRecipe):
     item_index: int = Field(strict=True, ge=0, le=29)
 
 
+ReferencePreparation = Literal[
+    'raw', 'as_served', 'boiled', 'steamed', 'roasted', 'stir_fried', 'fried', 'braised', 'other',
+]
+
+
+class AnalysisReferenceCandidates(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    revision: int = Field(ge=1, le=2_147_483_646)
+    item_index: int = Field(ge=0, le=29)
+    ingredient_ids: list[str] = Field(default_factory=list, max_length=8)
+    preparation: ReferencePreparation | None = None
+
+
+class AnalysisReferenceSelection(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    revision: int = Field(ge=1, le=2_147_483_646)
+    item_index: int = Field(ge=0, le=29)
+    offer_id: str = Field(min_length=16, max_length=100)
+    food_id: str = Field(min_length=1, max_length=100)
+    accepted: bool
+
+    @model_validator(mode='after')
+    def require_acknowledgment(self):
+        if not self.accepted:
+            raise ValueError('请先确认这只是近似参考，不是原食物的准确匹配。')
+        return self
+
+
+class RecipeRecommendationRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    original_name: str = Field(min_length=1, max_length=120)
+    ingredient_ids: list[str] = Field(min_length=1, max_length=8)
+    preparation: ReferencePreparation
+
+
+class RecipeRankCandidate(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    food_id: str = Field(min_length=1, max_length=100)
+    reason_zh: str = Field(min_length=1, max_length=240)
+    reason_en: str = Field(min_length=1, max_length=400)
+    differences_zh: list[str] = Field(min_length=1, max_length=5)
+    differences_en: list[str] = Field(min_length=1, max_length=5)
+
+    @field_validator('reason_zh', 'reason_en')
+    @classmethod
+    def plain_reason(cls, value):
+        import re
+        if (not value.strip() or re.search(r'[<>\x00-\x08\x0b-\x1f]', value)
+                or re.search(r'\d\s*(?:kcal|calories?|kj|grams?|g\b|克|卡路里|千卡|千焦)'
+                             r'|\b(?:energy|joules?|calories?|kcal|kilocalories?|kj|kilojoules?|protein|fat|'
+                             r'carbohydrates?|carbs?|macros?|nutrition(?:al)?|nutrients?)\b'
+                             r'|热量|能量|卡路里|千卡|千焦|蛋白质|脂肪|碳水|营养', value, re.I)):
+            raise ValueError('Recommendation explanations must be plain text without nutrition')
+        return value.strip()
+
+    @field_validator('differences_zh', 'differences_en')
+    @classmethod
+    def plain_differences(cls, values):
+        if any(len(value) > 400 for value in values):
+            raise ValueError('Recommendation difference is too long')
+        return [cls.plain_reason(value) for value in values]
+
+
+class RecipeRecommendationResponse(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    provider: Literal['demo', 'qwen', 'hkust', 'ollama']
+    candidates: list[RecipeRankCandidate] = Field(max_length=3)
+
+
 class AnalysisRead(BaseModel):
     mode: Literal["basic", "advanced"] = "advanced"
     conversation: list = Field(default_factory=list)

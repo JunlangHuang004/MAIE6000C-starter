@@ -21,6 +21,7 @@ from services.common.config import configure_logging, get_settings
 from services.api.app.auth import get_current_user, get_optional_user, router as auth_router
 from services.api.app.profile import router as profile_router
 from services.api.app.tracking import router as tracking_router
+from services.api.app.reference_recipes import router as reference_recipes_router
 from services.common import tracking
 from services.common.db import get_db
 from services.common.models import (
@@ -57,6 +58,7 @@ app = FastAPI(title="NutriChat API", version="0.1.0")
 app.include_router(auth_router)
 app.include_router(profile_router)
 app.include_router(tracking_router)
+app.include_router(reference_recipes_router)
 
 HTTP_REQUESTS = Counter(
     "api_http_requests_total",
@@ -436,7 +438,8 @@ def reply_analysis(
             detail="Offline mode cannot interpret conversational corrections. "
                    "Replace the full meal description using PATCH /analyses/{id}.",
         )
-    if payload.message and any('custom_recipe' in item for item in analysis.draft):
+    if payload.message and any('custom_recipe' in item or 'reference_selection' in item
+                               for item in analysis.draft):
         raise HTTPException(status_code=422,
                             detail="本餐包含自定义食材配方，请使用配方编辑器修改，或开始新的一餐。")
     if len(analysis.conversation) >= 36:
@@ -509,11 +512,22 @@ def replace_with_ingredient_recipe(
     draft = deepcopy(analysis.draft)
     original = draft[payload.item_index]
     original_name = original.get('original_name') or original['name']
+    selected_reference = original.get('reference_selection')
+    if selected_reference:
+        from services.common.recipe_references import validate_reference_selection
+        try:
+            selected_reference = validate_reference_selection(selected_reference)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+        original_name = selected_reference['original_name']
+        recipe.name = original_name
     draft[payload.item_index] = {
         'food_id': None, 'name': recipe.name,
         'source_text': original.get('source_text') or original_name,
         'original_name': original_name, 'custom_recipe': recipe.model_dump(),
     }
+    if selected_reference:
+        draft[payload.item_index]['reference_selection'] = selected_reference
     # The durable draft is the source of truth. Keep history concise and do not ask
     # a model to reinterpret the accepted ingredient quantities on this path.
     conversation = [*(analysis.conversation or []), {

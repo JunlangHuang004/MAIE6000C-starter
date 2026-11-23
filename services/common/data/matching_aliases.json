@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-23.1",
+  "version": "2026-11-23.2",
   "aliases": {
     "rice": [
       "Cooked white rice",
@@ -1800,6 +1800,12 @@
     ],
     "dish_385": [
       "White radish soup"
+    ],
+    "chicken_skin_stewed": [
+      "Stewed chicken meat and skin (boneless)"
+    ],
+    "chicken_meat_stewed": [
+      "Stewed chicken meat without skin (boneless)"
     ]
   }
 }
