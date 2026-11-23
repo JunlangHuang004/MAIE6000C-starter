@@ -9,12 +9,14 @@ import zipfile
 
 DATA = Path(__file__).resolve().parents[1] / 'services/common/data'
 SOURCE = 'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip'
-VERSION = '2026-11-24.1'
+VERSION = '2026-11-24.2'
 CFS_WORKBOOK_URL = 'https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx'
 CFS_REFERENCE_ROWS = {
     'dish_004': 351, 'dish_007': 350, 'dish_012': 333, 'dish_064': 375,
     'dish_110': 346, 'dish_202': 343, 'dish_266': 339, 'dish_269': 355,
     'dish_339': 386, 'dish_341': 471,
+    'dish_047': 327, 'dish_154': 341, 'dish_222': 640, 'dish_251': 224,
+    'dish_267': 124, 'dish_340': 387,
 }
 PREPARED_REFERENCE_PREPARATIONS = {
     'as_served', 'boiled', 'steamed', 'roasted', 'stir_fried', 'fried', 'braised',
@@ -25,6 +27,9 @@ CFS_REFERENCE_PREPARATIONS = {
     'dish_110': {'as_served', 'steamed'}, 'dish_202': {'as_served', 'braised'},
     'dish_266': {'as_served'}, 'dish_269': {'as_served', 'fried'},
     'dish_339': {'as_served', 'stir_fried'}, 'dish_341': {'as_served'},
+    'dish_047': {'as_served'}, 'dish_154': {'as_served', 'braised'},
+    'dish_222': {'as_served'}, 'dish_251': {'as_served'}, 'dish_267': {'as_served'},
+    'dish_340': {'as_served', 'stir_fried'},
 }
 
 

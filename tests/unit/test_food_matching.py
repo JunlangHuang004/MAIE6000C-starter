@@ -637,7 +637,9 @@ def test_new_soy_chicken_reference_never_uses_the_old_wrong_fish_id(monkeypatch,
     assert result.calories is not None
     assert result.draft[0]['food_id'] == 'dish_251'
     assert result.details[0]['food_id'] == 'dish_251'
-    assert any('参考配方' in note for note in result.details[0]['assumptions'])
+    assert result.details[0]['calculation_basis'] == 'measured_reference'
+    assert result.details[0]['measured_reference']['source']['id'] == 'CFS-FRL-Eng-224'
+    assert result.calories == 500
 
 
 @pytest.mark.parametrize('name,food_id,detail', [

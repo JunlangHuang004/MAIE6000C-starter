@@ -1,0 +1,359 @@
+{
+  "date": "2026-11-24",
+  "catalogue_version_before": "2026-11-24.1",
+  "catalogue_version_after": "2026-11-24.2",
+  "source_url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+  "source_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+  "sample_method": "Twenty preselected common dishes across categories; purposive, not random. Scope fixed before source matches reviewed.",
+  "reviewed_count": 20,
+  "accepted_count": 6,
+  "unchanged_count": 14,
+  "scope": "CFS FRL workbook only; no claim that an unmatched dish is absent from every CFS publication or other nutrition database.",
+  "comparison": "Energy difference is between an illustrative formula and a source sample reference, not measured error for a real meal. USDA total and CFS available carbohydrates are not directly compared.",
+  "records": [
+    {
+      "recipe_id": "dish_001",
+      "recipe_name": "番茄炒蛋",
+      "previous_formula_per_100g": {
+        "calories": 105.1125,
+        "protein_g": 5.37,
+        "fat_g": 7.4662,
+        "carbs_g": 4.4373
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "No matching tomato-and-egg stir-fry in the reviewed FRL workbook; tomato-and-egg sandwich row592 includes bread."
+    },
+    {
+      "recipe_id": "dish_003",
+      "recipe_name": "宫保鸡丁",
+      "previous_formula_per_100g": {
+        "calories": 167.0375,
+        "protein_g": 16.4886,
+        "fat_g": 9.1349,
+        "carbs_g": 4.9127
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "No same-named kung pao chicken prepared-food vector in the reviewed FRL workbook."
+    },
+    {
+      "recipe_id": "dish_005",
+      "recipe_name": "红烧肉",
+      "previous_formula_per_100g": {
+        "calories": 504.5333,
+        "protein_g": 8.7544,
+        "fat_g": 49.3739,
+        "carbs_g": 5.8283
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "No same-named red-braised pork vector in the reviewed FRL workbook; roasted pork or pork-over-rice are not substitutes."
+    },
+    {
+      "recipe_id": "dish_006",
+      "recipe_name": "鱼香肉丝",
+      "previous_formula_per_100g": {
+        "calories": 103.39,
+        "protein_g": 9.3664,
+        "fat_g": 4.0088,
+        "carbs_g": 7.5516
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "No same-named fish-fragrant shredded pork vector in the reviewed FRL workbook."
+    },
+    {
+      "recipe_id": "dish_014",
+      "recipe_name": "蒸水蛋",
+      "previous_formula_per_100g": {
+        "calories": 58.6667,
+        "protein_g": 4.3676,
+        "fat_g": 4.2938,
+        "carbs_g": 0.3496
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Row673 is steamed egg pudding, a sweet dessert, not the app savoury steamed egg with water and soy sauce."
+    },
+    {
+      "recipe_id": "dish_016",
+      "recipe_name": "凉拌黄瓜",
+      "previous_formula_per_100g": {
+        "calories": 51.2,
+        "protein_g": 1.0877,
+        "fat_g": 2.9901,
+        "carbs_g": 5.6979
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Rows740/741 are plain cucumber ingredients, not dressed cucumber with oil and seasonings."
+    },
+    {
+      "recipe_id": "dish_017",
+      "recipe_name": "清炒西兰花",
+      "previous_formula_per_100g": {
+        "calories": 74.1,
+        "protein_g": 3.502,
+        "fat_g": 3.7817,
+        "carbs_g": 8.8487
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Row733 is broccoli; rows337/338 include fish or mushrooms. None is the plain stir-fried broccoli recipe."
+    },
+    {
+      "recipe_id": "dish_022",
+      "recipe_name": "酸辣土豆丝",
+      "previous_formula_per_100g": {
+        "calories": 114.9167,
+        "protein_g": 2.0907,
+        "fat_g": 4.2744,
+        "carbs_g": 17.5154
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "No same-named hot-and-sour shredded potato prepared-food vector in the reviewed FRL workbook."
+    },
+    {
+      "recipe_id": "dish_041",
+      "recipe_name": "蛋炒饭",
+      "previous_formula_per_100g": {
+        "calories": 154.5,
+        "protein_g": 4.9388,
+        "fat_g": 5.1478,
+        "carbs_g": 21.4034
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Available fried-rice records include different major ingredients, e.g. egg-white/dried-scallop rice row523; no plain egg-fried-rice match."
+    },
+    {
+      "recipe_id": "dish_047",
+      "recipe_name": "白粥",
+      "previous_formula_per_100g": {
+        "calories": 45.625,
+        "protein_g": 0.8912,
+        "fat_g": 0.0825,
+        "carbs_g": 9.9938
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "added_cfs_prepared_reference",
+      "source_row": 327,
+      "source_name_zh": "白粥",
+      "source_name_en": "Plain congee",
+      "source_values_per_100g": {
+        "calories": 32.0,
+        "protein_g": 0.71,
+        "fat_g": 0.69,
+        "carbs_g": 5.8,
+        "dietary_fibre": {
+          "value_g": 0.0
+        }
+      },
+      "source_carbohydrate_basis": "available",
+      "reason": "Plain congee; rice-to-water ratio and final thickness vary. This does not cover congee with meat, egg or other additions.",
+      "formula_energy_difference_percent_of_source": 42.58
+    },
+    {
+      "recipe_id": "dish_069",
+      "recipe_name": "糖醋排骨",
+      "previous_formula_per_100g": {
+        "calories": 298.245,
+        "protein_g": 13.8779,
+        "fat_g": 23.5114,
+        "carbs_g": 6.7925
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Row353 is Peking-style spareribs, a different named preparation; pineapple sweet-and-sour pork row339 is not ribs."
+    },
+    {
+      "recipe_id": "dish_093",
+      "recipe_name": "黑椒牛柳",
+      "previous_formula_per_100g": {
+        "calories": 162.2025,
+        "protein_g": 16.3281,
+        "fat_g": 8.3704,
+        "carbs_g": 5.8855
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Black-pepper beef rows459/566 include noodles or rice and cannot represent standalone beef fillet."
+    },
+    {
+      "recipe_id": "dish_109",
+      "recipe_name": "白切鸡",
+      "previous_formula_per_100g": {
+        "calories": 219.0,
+        "protein_g": 24.68,
+        "fat_g": 12.56,
+        "carbs_g": 0.0
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Row533 is chicken with rice; no standalone white-cut chicken vector was found in the reviewed FRL workbook."
+    },
+    {
+      "recipe_id": "dish_128",
+      "recipe_name": "白灼虾",
+      "previous_formula_per_100g": {
+        "calories": 92.0833,
+        "protein_g": 17.0883,
+        "fat_g": 1.2937,
+        "carbs_g": 1.8779
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "No standalone poached/boiled shrimp prepared-food vector in the reviewed FRL workbook."
+    },
+    {
+      "recipe_id": "dish_154",
+      "recipe_name": "鱼香茄子",
+      "previous_formula_per_100g": {
+        "calories": 111.85,
+        "protein_g": 1.8032,
+        "fat_g": 6.2344,
+        "carbs_g": 13.5948
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "added_cfs_prepared_reference",
+      "source_row": 341,
+      "source_name_zh": "素鱼香茄子",
+      "source_name_en": "Braised eggplant",
+      "source_values_per_100g": {
+        "calories": 120.0,
+        "protein_g": 1.8,
+        "fat_g": 10.0,
+        "carbs_g": 3.8,
+        "dietary_fibre": {
+          "value_g": 1.9
+        }
+      },
+      "source_carbohydrate_basis": "available",
+      "reason": "Matches this app vegetarian eggplant reference only, without meat or salted fish. Versions containing either need actual-ingredient calculation. Oil and sauce proportions vary.",
+      "formula_energy_difference_percent_of_source": -6.79
+    },
+    {
+      "recipe_id": "dish_157",
+      "recipe_name": "干煸四季豆",
+      "previous_formula_per_100g": {
+        "calories": 121.8419,
+        "protein_g": 3.0445,
+        "fat_g": 8.4088,
+        "carbs_g": 11.0683
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "unchanged_no_verified_prepared_match",
+      "reason": "Row332 contains minced pork and preserved olive, unlike this explicitly meat-free dry-fried green-bean recipe."
+    },
+    {
+      "recipe_id": "dish_222",
+      "recipe_name": "酸辣汤",
+      "previous_formula_per_100g": {
+        "calories": 44.8333,
+        "protein_g": 4.1812,
+        "fat_g": 2.026,
+        "carbs_g": 2.4871
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "added_cfs_prepared_reference",
+      "source_row": 640,
+      "source_name_zh": "酸辣汤",
+      "source_name_en": "Hot and sour soup",
+      "source_values_per_100g": {
+        "calories": 42.0,
+        "protein_g": 2.2,
+        "fat_g": 1.8,
+        "carbs_g": 4.2,
+        "dietary_fibre": {
+          "qualifier": "trace"
+        }
+      },
+      "source_carbohydrate_basis": "available",
+      "reason": "Same named hot and sour soup; tofu, meat, egg, starch and broth proportions vary. Grams include the broth and solids consumed.",
+      "formula_energy_difference_percent_of_source": 6.75
+    },
+    {
+      "recipe_id": "dish_251",
+      "recipe_name": "豉油鸡",
+      "previous_formula_per_100g": {
+        "calories": 234.4308,
+        "protein_g": 19.3385,
+        "fat_g": 15.1328,
+        "carbs_g": 4.2282
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "added_cfs_prepared_reference",
+      "source_row": 224,
+      "source_name_zh": "豉油鸡",
+      "source_name_en": "Soy sause chicken",
+      "source_values_per_100g": {
+        "calories": 250.0,
+        "protein_g": 20.0,
+        "fat_g": 18.0,
+        "carbs_g": 1.7,
+        "dietary_fibre": {
+          "value_g": 0.0
+        }
+      },
+      "source_carbohydrate_basis": "available",
+      "reason": "Same named soy-sauce chicken; skin, cuts, sauce and sugar proportions vary. Weigh boneless edible prepared chicken, excluding rice and discarded braising liquid.",
+      "formula_energy_difference_percent_of_source": -6.23
+    },
+    {
+      "recipe_id": "dish_267",
+      "recipe_name": "叉烧肉",
+      "previous_formula_per_100g": {
+        "calories": 185.766,
+        "protein_g": 23.1482,
+        "fat_g": 4.3062,
+        "carbs_g": 12.8393
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "added_cfs_prepared_reference",
+      "source_row": 124,
+      "source_name_zh": "叉烧",
+      "source_name_en": "Barbecued pork",
+      "source_values_per_100g": {
+        "calories": 300.0,
+        "protein_g": 25.0,
+        "fat_g": 17.0,
+        "carbs_g": 9.4,
+        "dietary_fibre": {
+          "value_g": 0.0
+        }
+      },
+      "source_carbohydrate_basis": "available",
+      "reason": "Same named char siu; pork cut, fat content, glaze and cooked moisture vary. This is not a measurement of the app lean-tenderloin recipe. Grams exclude rice.",
+      "formula_energy_difference_percent_of_source": -38.08
+    },
+    {
+      "recipe_id": "dish_340",
+      "recipe_name": "星洲炒米粉",
+      "previous_formula_per_100g": {
+        "calories": 142.3,
+        "protein_g": 6.8873,
+        "fat_g": 5.6374,
+        "carbs_g": 15.8599
+      },
+      "previous_carbohydrate_basis": "total_by_difference",
+      "decision": "added_cfs_prepared_reference",
+      "source_row": 387,
+      "source_name_zh": "星州炒米粉",
+      "source_name_en": "Fried rice vermicelli (Singapore style)",
+      "source_values_per_100g": {
+        "calories": 160.0,
+        "protein_g": 6.3,
+        "fat_g": 8.4,
+        "carbs_g": 15.0,
+        "dietary_fibre": {
+          "value_g": 3.6
+        }
+      },
+      "source_carbohydrate_basis": "available",
+      "reason": "Same named Singapore-style fried rice vermicelli; noodle moisture, meat/seafood additions, oil and seasoning proportions vary.",
+      "formula_energy_difference_percent_of_source": -11.06
+    }
+  ]
+}

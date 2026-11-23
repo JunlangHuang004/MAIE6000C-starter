@@ -28,6 +28,7 @@ def test_targeted_measured_coverage_and_large_discrepancy_values():
     assert {food['id'] for food in REFERENCES} == {
         'dish_012', 'dish_266', 'dish_341', 'dish_004', 'dish_007',
         'dish_064', 'dish_110', 'dish_202', 'dish_269', 'dish_339',
+        'dish_047', 'dish_154', 'dish_222', 'dish_251', 'dish_267', 'dish_340',
     }
     for food_id, calories in [('dish_012', 230), ('dish_266', 240), ('dish_341', 190)]:
         result = evaluate_mode(draft_for(FOODS[food_id]), 'basic')

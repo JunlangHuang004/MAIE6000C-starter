@@ -28,6 +28,12 @@ EXPECTED = {
     'dish_269': (355, 290, 20, 20, 6.9),
     'dish_339': (386, 140, 4, 5.1, 20),
     'dish_341': (471, 190, 6.9, 10, 16),
+    'dish_047': (327, 32, 0.71, 0.69, 5.8),
+    'dish_154': (341, 120, 1.8, 10, 3.8),
+    'dish_222': (640, 42, 2.2, 1.8, 4.2),
+    'dish_251': (224, 250, 20, 18, 1.7),
+    'dish_267': (124, 300, 25, 17, 9.4),
+    'dish_340': (387, 160, 6.3, 8.4, 15),
 }
 EXPECTED_PREPARATIONS = {
     'dish_004': ['as_served', 'braised'], 'dish_007': ['as_served', 'stir_fried'],
@@ -35,6 +41,9 @@ EXPECTED_PREPARATIONS = {
     'dish_110': ['as_served', 'steamed'], 'dish_202': ['as_served', 'braised'],
     'dish_266': ['as_served'], 'dish_269': ['as_served', 'fried'],
     'dish_339': ['as_served', 'stir_fried'], 'dish_341': ['as_served'],
+    'dish_047': ['as_served'], 'dish_154': ['as_served', 'braised'],
+    'dish_222': ['as_served'], 'dish_251': ['as_served'], 'dish_267': ['as_served'],
+    'dish_340': ['as_served', 'stir_fried'],
 }
 
 
@@ -43,14 +52,14 @@ def fingerprint(value):
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def test_only_ten_selected_references_change_existing_catalogue():
-    assert SNAPSHOT['version'] == importer.VERSION == '2026-11-24.1'
+def test_only_reviewed_references_change_existing_catalogue():
+    assert SNAPSHOT['version'] == importer.VERSION == '2026-11-24.2'
     assert {food['id'] for food in SNAPSHOT['foods'] if 'measured_reference' in food} == (
         set(EXPECTED))
     ingredients = [food for food in SNAPSHOT['foods'] if food['kind'] == 'ingredient']
     assert len(ingredients) == 202
     assert len(RECIPES) == 384
-    assert sum('measured_reference' not in recipe for recipe in RECIPES) == 374
+    assert sum('measured_reference' not in recipe for recipe in RECIPES) == 368
     assert [food for food in SNAPSHOT['foods'] if food['kind'] == 'recipe'] == RECIPES
     assert fingerprint(ingredients) == (
         '4593b21c99d6cdb6df095a5c3ce0d90b87c0fe6ecb71d4b80c8168f164c3a661')
@@ -128,8 +137,32 @@ def test_source_energy_trace_fibre_and_observed_ranges_keep_their_meaning():
             assert not {'sample_count', 'sample_collection_period',
                         'observed_ranges', 'range_source_url'} & reference.keys()
     assert {record['recipe_id'] for record in MANIFEST['records']} == set(EXPECTED)
-    assert MANIFEST['reference_count'] == 10
-    assert MANIFEST['recipes_without_measured_reference'] == 374
+    assert MANIFEST['reference_count'] == 16
+    assert MANIFEST['recipes_without_measured_reference'] == 368
+
+
+def test_pilot_keeps_fourteen_unmatched_foods_as_recipes_and_six_source_matches():
+    audit = json.loads((ROOT / 'docs/evidence/cfs-pilot20-review.json').read_text())
+    assert len(audit['records']) == audit['reviewed_count'] == 20
+    accepted = {record['recipe_id'] for record in audit['records']
+                if record['decision'] == 'added_cfs_prepared_reference'}
+    assert accepted == {'dish_047', 'dish_154', 'dish_222', 'dish_251',
+                        'dish_267', 'dish_340'}
+    for record in audit['records']:
+        food = BY_ID[record['recipe_id']]
+        assert record['reason']
+        if record['recipe_id'] in accepted:
+            ref = food['measured_reference']
+            assert record['source_values_per_100g'] == dict(
+                ref['nutrients'], dietary_fibre=ref['dietary_fibre'])
+        else:
+            assert 'measured_reference' not in food
+    # The vegetarian record must not be replaced by the salted-fish/meat casserole.
+    eggplant = BY_ID['dish_154']['measured_reference']
+    assert eggplant['source']['id'] == 'CFS-FRL-Eng-341'
+    assert eggplant['source_name_zh'] == '素鱼香茄子'
+    assert 'without meat or salted fish' in eggplant['notes_en']
+    assert BY_ID['dish_222']['measured_reference']['dietary_fibre'] == {'qualifier': 'trace'}
 
 
 @pytest.mark.parametrize('key,value', [
@@ -207,7 +240,7 @@ def test_offline_rebuild_retains_cfs_reference_and_failure_preserves_snapshot(
     rebuilt = json.loads(previous)
     assert rebuilt['foods'][1] == recipe
     assert rebuilt['foods'][0]['source']['license'] == 'CC0-1.0'
-    assert rebuilt['version'] == '2026-11-24.1'
+    assert rebuilt['version'] == '2026-11-24.2'
     recipe['measured_reference']['nutrients']['fat_g'] = float('nan')
     (tmp_path / 'recipes.json').write_text(json.dumps([recipe]))
     with pytest.raises(ValueError, match='measured reference'):

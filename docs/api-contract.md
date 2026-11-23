@@ -51,7 +51,7 @@ Analysis fields include `id`, `food_text`, `mode`, `status`, `revision`, timesta
   `available`, `total_by_difference` or `mixed`, and the two separately named
   subtotals. Legacy details retain the USDA total-by-difference interpretation.
 
-For the ten dishes with a CFS prepared-food reference, detail `calculation_basis`
+For the sixteen dishes with a CFS prepared-food reference, detail `calculation_basis`
 identifies `measured_reference`, `ingredient_recipe`, `ingredient_record` or
 `custom_recipe`. `carbohydrate_basis`, `measured_reference` where applicable, and
 `calculation_evidence` are saved provenance, not reconstructed from a newer

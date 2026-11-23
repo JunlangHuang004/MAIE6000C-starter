@@ -1,13 +1,13 @@
 # Chinese food catalogue and clarification dialogue
 
-Version **2026-11-24.1** contains **202 ingredient records and 384 editable Chinese
+Version **2026-11-24.2** contains **202 ingredient records and 384 editable Chinese
 recipe reference templates**, 586 records in total. All records have English names,
 and all recipes have English methods. No model training is required.
 Qwen extracts explicit facts
 and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
 facts; basic mode uses visible reference assumptions where supported. Unresolved
 questions create `needs_input`, not a failed job or a partial calorie total.
-Ten existing dishes also carry attributed CFS prepared-food references. Basic
+Sixteen existing dishes also carry attributed CFS prepared-food references. Basic
 uses those full source vectors for ordinary matched dishes; Advanced offers a
 choice of source reference or editable ingredient calculation. See the
 [CFS source and calculation guide](cfs-prepared-food-references.md).
@@ -32,7 +32,7 @@ formulations**, not measurements, authentic standardized recipes, or imports of
 HowToCook/Figshare. Some use simplified ingredients, clearly described by `method`.
 Their nutrient numbers are computed from USDA ingredients; every assumed ingredient
 amount and finished batch weight must be explicitly reviewed/accepted when using
-the ingredient calculation in advanced mode. For the other 374 dishes, Basic
+the ingredient calculation in advanced mode. For the other 368 dishes, Basic
 continues using these formula values as labelled, unconfirmed assumptions.
 The user can change every existing ingredient amount or set omitted ingredients
 to zero. A custom ingredient recipe provides explicit selection and quantities

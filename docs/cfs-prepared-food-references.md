@@ -1,7 +1,7 @@
 # CFS prepared-food references
 
-Catalogue `2026-11-24.1` adds attributed prepared-food references from the Hong Kong
-Centre for Food Safety (CFS) to ten existing dish records. The catalogue still
+Catalogue `2026-11-24.2` adds attributed prepared-food references from the Hong Kong
+Centre for Food Safety (CFS) to sixteen existing dish records. The catalogue still
 contains 202 USDA ingredient records and 384 recipe identities. No new aliases,
 ingredient nutrient values or illustrative recipe quantities are invented to make
 the old formulas reproduce the CFS figures.
@@ -28,6 +28,12 @@ oil, sauce, moisture and serving size from the sampled food.
 | 椒盐排骨 / Salt-and-pepper pork ribs | `dish_269` | 290 | 20 | 20 | 6.9 |
 | 干炒牛河 / Dry-fried rice noodles with beef | `dish_339` | 140 | 4 | 5.1 | 20 |
 | 鸡丝凉面 / Cold noodles with shredded chicken | `dish_341` | 190 | 6.9 | 10 | 16 |
+| 白粥 / Plain congee | `dish_047` | 32 | 0.71 | 0.69 | 5.8 |
+| 素鱼香茄子 / Vegetarian braised eggplant | `dish_154` | 120 | 1.8 | 10 | 3.8 |
+| 酸辣汤 / Hot and sour soup | `dish_222` | 42 | 2.2 | 1.8 | 4.2 |
+| 豉油鸡 / Soy-sauce chicken | `dish_251` | 250 | 20 | 18 | 1.7 |
+| 叉烧 / Barbecued pork | `dish_267` | 300 | 25 | 17 | 9.4 |
+| 星洲炒米粉 / Singapore-style fried rice vermicelli | `dish_340` | 160 | 6.3 | 8.4 | 15 |
 
 All values in this table are per 100 g edible prepared food. The
 [source map](evidence/cfs-prepared-food-source-map.json) records the exact workbook
@@ -91,13 +97,16 @@ rather than recomputed from rounded displayed macros.
 
 ## Remaining coverage
 
-The other 374 recipe identities have no verified CFS prepared-food reference in
+The other 368 recipe identities have no verified CFS prepared-food reference in
 this update and retain their explicitly labelled illustrative ingredient formulas.
 The same-name links above do not validate every recipe, every restaurant variant
 or a claim of less than 20% actual-meal error. White-cut chicken still uses its
 documented cooked-chicken proxy; chicken-with-rice data are not substituted for
 standalone chicken. Generic fish-fragrant aubergine is not automatically mapped
-to the CFS salted-fish-and-minced-pork casserole.
+to the CFS salted-fish-and-minced-pork casserole. The app's vegetarian reference
+uses the explicitly vegetarian CFS row341; versions with meat or salted fish
+need actual-ingredient calculation.
 
-See the [verification report](evidence/cfs-prepared-reference-verification.md)
-for automated checks, independent review and observed browser workflows.
+See the [initial verification report](evidence/cfs-prepared-reference-verification.md)
+for the first ten references and browser workflows, and the
+[20-dish pilot review](evidence/cfs-pilot20-review.md) for the six additions.

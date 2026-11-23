@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "catalogue_version": "2026-11-24.1",
+  "catalogue_version": "2026-11-24.2",
   "retrieved_at": "2026-11-24",
-  "scope": "Ten individually selected same-name CFS factual nutrient references. This is not a copy of the CFS workbook and does not validate all recipe formulas.",
-  "reference_count": 10,
+  "scope": "Sixteen individually selected CFS factual prepared-food references. This is not a copy of the workbook and does not validate all recipe formulas.",
+  "reference_count": 16,
   "ingredient_count": 202,
   "recipe_count": 384,
-  "recipes_without_measured_reference": 374,
+  "recipes_without_measured_reference": 368,
   "source": {
     "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
     "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
@@ -34,7 +34,7 @@
   "rights": {
     "notice_url": "https://www.cfs.gov.hk/english/notices/notices.html",
     "status": "No open licence asserted",
-    "scope": "Only ten selected factual nutrient entries and source attribution are included; the workbook is not republished. The CFS notice reserves rights in protected content and data compilations and refers to prior written FEHD authorisation. Permission for redistribution of a compilation was not verified; this file does not assert such permission or a legal conclusion about individual facts."
+    "scope": "Only sixteen selected factual nutrient entries and source attribution are included; the workbook is not republished. The CFS notice reserves rights in protected content and data compilations and refers to prior written FEHD authorisation. Permission for redistribution of a compilation was not verified; this file does not assert such permission or a legal conclusion about individual facts."
   },
   "preservation": {
     "ingredient_records_sha256": "4593b21c99d6cdb6df095a5c3ce0d90b87c0fe6ecb71d4b80c8168f164c3a661",
@@ -141,6 +141,33 @@
       "preparation_notes_en": "The source Chinese name specifies stir-fried shrimp and egg, supporting stir_fried. Raw or steamed versions are different preparations."
     },
     {
+      "recipe_id": "dish_047",
+      "recipe_name": "白粥",
+      "source_id": "CFS-FRL-Eng-327",
+      "source_name_zh": "白粥",
+      "source_name_en": "Plain congee",
+      "source_range": "C327:I327",
+      "match_scope": "same_named_prepared_dish",
+      "exact_recipe_composition_match": false,
+      "source_values_per_100g": {
+        "calories": 32.0,
+        "protein_g": 0.71,
+        "fat_g": 0.69,
+        "carbs_g": 5.8,
+        "dietary_fibre": {
+          "value_g": 0.0
+        }
+      },
+      "carbohydrate_basis": "available",
+      "match_limit_zh": "同名白粥；米水比例和熬煮浓稠度会变化，不适用于加入肉、蛋或其他配料的粥。",
+      "match_limit_en": "Plain congee; rice-to-water ratio and final thickness vary. This does not cover congee with meat, egg or other additions.",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源只标为白粥／Plain congee；按来源成品状态使用，不从示例配方推断其他加工枚举。",
+      "preparation_notes_en": "The source names plain congee without an explicit cooking-route label. Use the source prepared state only."
+    },
+    {
       "recipe_id": "dish_064",
       "recipe_name": "蒜泥白肉",
       "source_id": "CFS-FRL-Eng-375",
@@ -196,6 +223,34 @@
       "preparation_notes_en": "The source explicitly names steamed chicken in chilli oil sauce, supporting steamed. The app illustrative boiled-chicken recipe does not override the source preparation."
     },
     {
+      "recipe_id": "dish_154",
+      "recipe_name": "鱼香茄子",
+      "source_id": "CFS-FRL-Eng-341",
+      "source_name_zh": "素鱼香茄子",
+      "source_name_en": "Braised eggplant",
+      "source_range": "C341:I341",
+      "match_scope": "same_named_prepared_dish",
+      "exact_recipe_composition_match": false,
+      "source_values_per_100g": {
+        "calories": 120.0,
+        "protein_g": 1.8,
+        "fat_g": 10.0,
+        "carbs_g": 3.8,
+        "dietary_fibre": {
+          "value_g": 1.9
+        }
+      },
+      "carbohydrate_basis": "available",
+      "match_limit_zh": "仅对应本应用不含肉和咸鱼的素鱼香茄子配方；含肉末或咸鱼的版本须改用实际食材计算。用油和酱汁比例会变化。",
+      "match_limit_en": "Matches this app vegetarian eggplant reference only, without meat or salted fish. Versions containing either need actual-ingredient calculation. Oil and sauce proportions vary.",
+      "compatible_preparations": [
+        "as_served",
+        "braised"
+      ],
+      "preparation_notes_zh": "来源英文为 Braised eggplant，中文明确为素鱼香茄子，支持烧制；不采用含咸鱼和肉末的另一条鱼香茄子煲记录。",
+      "preparation_notes_en": "The source explicitly names braised eggplant and vegetarian fish-fragrant eggplant. Braised is supported; the separate salted-fish/minced-pork casserole is not used."
+    },
+    {
       "recipe_id": "dish_202",
       "recipe_name": "红烧豆腐",
       "source_id": "CFS-FRL-Eng-343",
@@ -222,6 +277,60 @@
       ],
       "preparation_notes_zh": "来源英文名称明确为 Braised tofu，对应红烧／焖烧；不推断煎炸等其他步骤。",
       "preparation_notes_en": "The source names braised tofu, supporting braised. Frying or other steps are not inferred."
+    },
+    {
+      "recipe_id": "dish_222",
+      "recipe_name": "酸辣汤",
+      "source_id": "CFS-FRL-Eng-640",
+      "source_name_zh": "酸辣汤",
+      "source_name_en": "Hot and sour soup",
+      "source_range": "C640:I640",
+      "match_scope": "same_named_prepared_dish",
+      "exact_recipe_composition_match": false,
+      "source_values_per_100g": {
+        "calories": 42.0,
+        "protein_g": 2.2,
+        "fat_g": 1.8,
+        "carbs_g": 4.2,
+        "dietary_fibre": {
+          "qualifier": "trace"
+        }
+      },
+      "carbohydrate_basis": "available",
+      "match_limit_zh": "同名酸辣汤；豆腐、肉、蛋、淀粉及汤水比例会变化。克数包含本次喝下的汤和吃下的配料。",
+      "match_limit_en": "Same named hot and sour soup; tofu, meat, egg, starch and broth proportions vary. Grams include the broth and solids consumed.",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源仅标为酸辣汤／Hot and sour soup，未注明加工路线；仅按来源成品状态使用。",
+      "preparation_notes_en": "The source names hot and sour soup without an explicit cooking-route label. Use the source prepared state only."
+    },
+    {
+      "recipe_id": "dish_251",
+      "recipe_name": "豉油鸡",
+      "source_id": "CFS-FRL-Eng-224",
+      "source_name_zh": "豉油鸡",
+      "source_name_en": "Soy sause chicken",
+      "source_range": "C224:I224",
+      "match_scope": "same_named_prepared_dish",
+      "exact_recipe_composition_match": false,
+      "source_values_per_100g": {
+        "calories": 250.0,
+        "protein_g": 20.0,
+        "fat_g": 18.0,
+        "carbs_g": 1.7,
+        "dietary_fibre": {
+          "value_g": 0.0
+        }
+      },
+      "carbohydrate_basis": "available",
+      "match_limit_zh": "同名豉油鸡；鸡皮、部位、酱汁和糖的比例会变化。按去骨可食成品称重，不包含米饭或弃掉的卤汁。",
+      "match_limit_en": "Same named soy-sauce chicken; skin, cuts, sauce and sugar proportions vary. Weigh boneless edible prepared chicken, excluding rice and discarded braising liquid.",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源仅标为豉油鸡，未明确烹调路线；不从本应用焖鸡配方推断来源做法。",
+      "preparation_notes_en": "The source names soy-sauce chicken without specifying its cooking route. The illustrative braising recipe is not evidence for the source method."
     },
     {
       "recipe_id": "dish_266",
@@ -262,6 +371,33 @@
       ],
       "preparation_notes_zh": "来源名称仅描述菠萝咕噜肉及甜酸汁，未明确裹粉、炸制或后续翻炒路线；仅接受按来源成品状态，不从本应用配方推断煎炸或炒。",
       "preparation_notes_en": "The source names pork and pineapple with sweet and sour sauce without specifying coating, frying or subsequent stir-frying. Only the source prepared state is supported; fried or stir_fried is not inferred from the app recipe."
+    },
+    {
+      "recipe_id": "dish_267",
+      "recipe_name": "叉烧肉",
+      "source_id": "CFS-FRL-Eng-124",
+      "source_name_zh": "叉烧",
+      "source_name_en": "Barbecued pork",
+      "source_range": "C124:I124",
+      "match_scope": "same_named_prepared_dish",
+      "exact_recipe_composition_match": false,
+      "source_values_per_100g": {
+        "calories": 300.0,
+        "protein_g": 25.0,
+        "fat_g": 17.0,
+        "carbs_g": 9.4,
+        "dietary_fibre": {
+          "value_g": 0.0
+        }
+      },
+      "carbohydrate_basis": "available",
+      "match_limit_zh": "同名叉烧；猪肉部位、肥瘦、蜜汁和成品含水量会变化，不代表本应用瘦里脊简化配方。克数不包含米饭。",
+      "match_limit_en": "Same named char siu; pork cut, fat content, glaze and cooked moisture vary. This is not a measurement of the app lean-tenderloin recipe. Grams exclude rice.",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源为 Barbecued pork；现有加工选项没有独立烧烤枚举，仅按来源成品状态使用，不自动视为烤箱烤制。",
+      "preparation_notes_en": "The source names barbecued pork. There is no separate barbecue enum, so use as_served rather than assume oven roasting."
     },
     {
       "recipe_id": "dish_269",
@@ -318,6 +454,34 @@
       ],
       "preparation_notes_zh": "来源中文名称为干炒牛肉河粉，明确对应炒；英文 Fried 不解释为深炸。",
       "preparation_notes_en": "The source Chinese name explicitly specifies dry stir-fried flat noodles with beef, supporting stir_fried. The English word fried is not interpreted as deep-fried."
+    },
+    {
+      "recipe_id": "dish_340",
+      "recipe_name": "星洲炒米粉",
+      "source_id": "CFS-FRL-Eng-387",
+      "source_name_zh": "星州炒米粉",
+      "source_name_en": "Fried rice vermicelli (Singapore style)",
+      "source_range": "C387:I387",
+      "match_scope": "same_named_prepared_dish",
+      "exact_recipe_composition_match": false,
+      "source_values_per_100g": {
+        "calories": 160.0,
+        "protein_g": 6.3,
+        "fat_g": 8.4,
+        "carbs_g": 15.0,
+        "dietary_fibre": {
+          "value_g": 3.6
+        }
+      },
+      "carbohydrate_basis": "available",
+      "match_limit_zh": "同名星洲炒米粉（来源写作星州炒米粉）；米粉含水量、肉类海鲜配料、油和调味比例会变化。",
+      "match_limit_en": "Same named Singapore-style fried rice vermicelli; noodle moisture, meat/seafood additions, oil and seasoning proportions vary.",
+      "compatible_preparations": [
+        "as_served",
+        "stir_fried"
+      ],
+      "preparation_notes_zh": "来源中文明确为炒米粉，对应炒制；不适用于汤米粉或生干米粉。",
+      "preparation_notes_en": "The source Chinese name explicitly specifies stir-fried rice vermicelli, supporting stir_fried; it does not describe soup noodles or dry uncooked vermicelli."
     },
     {
       "recipe_id": "dish_341",

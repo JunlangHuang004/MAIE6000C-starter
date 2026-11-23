@@ -1,5 +1,21 @@
 # NutriChat change log
 
+## 2026-11-24 — Review a 20-dish CFS pilot
+
+- Review twenty previously unreferenced common dishes against the CFS FRL
+  workbook. Add six defensible prepared-food vectors: plain congee, vegetarian
+  fish-fragrant eggplant, hot-and-sour soup, soy-sauce chicken, char siu and
+  Singapore-style fried rice vermicelli. Keep the other fourteen unchanged with
+  documented exclusion reasons; do not substitute rice dishes for standalone meat.
+- Catalogue `2026-11-24.2` has 16 CFS references and 368 illustrative-only recipes.
+  Preserve all ingredient values, recipe formulas and prior source references.
+  Record full nutrient vectors, source-specific cooking compatibility and the
+  vegetarian scope of the eggplant reference.
+- Pass 2,465 backend tests and 108 frontend tests, plus lint and source review.
+  Extend source and runtime regression coverage. See the
+  [pilot findings](evidence/cfs-pilot20-review.md); the sample does not establish
+  database-wide nutritional accuracy or a fixed Codex usage percentage.
+
 ## 2026-11-24 — Add CFS prepared-food nutrition references
 
 - Attribute ten verified same-name prepared-dish nutrient vectors to the Hong

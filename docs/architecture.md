@@ -2,8 +2,8 @@
 
 Current implementation documented: 2026-11-23 follow-up to `test`; historical course checkpoint `w13-final` is unchanged.
 
-Catalogue `2026-11-24.1` contains 202 USDA ingredient records and 384
-project-authored reference recipes. Ten existing recipe identities also carry
+Catalogue `2026-11-24.2` contains 202 USDA ingredient records and 384
+project-authored reference recipes. Sixteen existing recipe identities also carry
 separate CFS prepared-food references. Source-vector calculations and ingredient
 calculations remain distinct. The 23 November follow-up added 34 recipes;
 existing ingredient nutrients, recipe IDs and the preceding 350 formulations are

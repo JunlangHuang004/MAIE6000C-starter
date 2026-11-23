@@ -9,7 +9,7 @@ from pydantic import SecretStr, ValidationError
 from services.ai.app import qwen
 from services.ai.app.qwen import analyze_with_provider, select_ollama_catalogue
 from services.common.config import Settings
-from services.common.meal_engine import catalogue
+from services.common.meal_engine import apply_answers, catalogue, evaluate_mode
 
 
 PROVIDERS = ("hkust", "ollama")
@@ -480,8 +480,17 @@ def test_expanded_soy_chicken_name_overrules_unrelated_model_id(monkeypatch, pro
     result = analyze_with_provider("豉油鸡200克熟重", provider_settings(provider), mode="basic")
     assert result.draft[0]["food_id"] == "dish_251"
     assert result.draft[0]["source_text"] == "豉油鸡"
-    assert result.questions == []
-    assert result.calories > 0
+    # The source does not document braising. Preserve identity correction but
+    # require review before using its prepared-food vector.
+    assert [question["key"] for question in result.questions] == ["0.preparation"]
+    assert result.calories is None and not result.details
+    reviewed = apply_answers(result.draft, {"0.preparation": "as_served"}, mode="basic")
+    completed = evaluate_mode(reviewed, "basic")
+    assert not completed["questions"]
+    assert completed["calories"] == 500
+    assert completed["details"][0]["food_id"] == "dish_251"
+    assert completed["details"][0]["measured_reference"]["source"]["id"] == (
+        "CFS-FRL-Eng-224")
 
 
 @pytest.mark.parametrize("provider", PROVIDERS)
