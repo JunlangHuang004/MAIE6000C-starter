@@ -23,11 +23,11 @@ FOODS = {food['id']: food for food in catalogue()['foods']}
 def offered_candidate(food_id='dish_003'):
     return {
         'food_id': food_id,
-        'reason_zh': '主要食材包含鸡肉和花生，做法为炒制。',
-        'reason_en': 'The main ingredients include chicken and peanuts and are stir-fried.',
-        'differences_zh': ['参考配方还包含黄瓜和调味料，实际用量需要核对。'],
+        'reason_zh': '主要食材为鸡肉、花生和黄瓜，做法为炒制。',
+        'reason_en': 'The main ingredients are chicken, peanuts and cucumber, stir-fried.',
+        'differences_zh': ['参考配方还包含调味料，实际用量需要核对。'],
         'differences_en': [
-            'The reference also contains cucumber and seasonings; review the amounts.'
+            'The reference also contains seasonings; review the amounts.'
         ],
     }
 
@@ -35,7 +35,7 @@ def offered_candidate(food_id='dish_003'):
 def search_payload(revision=1, item_index=0, **changes):
     return {
         'revision': revision, 'item_index': item_index,
-        'ingredient_ids': ['chicken', 'peanut'], 'preparation': 'stir_fried', **changes,
+        'ingredient_ids': ['chicken', 'peanut', 'cucumber'], 'preparation': 'stir_fried', **changes,
     }
 
 
@@ -168,17 +168,18 @@ def test_name_inference_is_editable_advice_and_only_reviewed_facts_drive_ranking
     assert calls == [{'original_name': ORIGINAL_NAME}] and rank_calls == []
     assert db_session.scalar(select(func.count(Job.id))) == 0
 
-    # The user removes the guessed peanut before explicitly requesting candidates.
+    # The user supplies the missing cucumber before explicitly requesting candidates.
+    reviewed_ids = ['chicken', 'peanut', 'cucumber']
     response = client.post(path + '/reference-candidates', json=search_payload(
-        state['revision'], ingredient_ids=['chicken']))
+        state['revision'], ingredient_ids=reviewed_ids))
     assert response.status_code == 200, response.text
     offered = response.json()
     assert offered['draft'][0]['reference_inference'] == inferred
-    assert offered['draft'][0]['reference_suggestions']['ingredient_ids'] == ['chicken']
+    assert offered['draft'][0]['reference_suggestions']['ingredient_ids'] == reviewed_ids
     assert rank_calls == [{'original_name': ORIGINAL_NAME,
-                           'ingredient_ids': ['chicken'], 'preparation': 'stir_fried'}]
+                           'ingredient_ids': reviewed_ids, 'preparation': 'stir_fried'}]
     selected = request_selection(client, path, offered)
-    assert selected['draft'][0]['reference_selection']['ingredient_ids'] == ['chicken']
+    assert selected['draft'][0]['reference_selection']['ingredient_ids'] == reviewed_ids
     assert selected['draft'][0]['reference_inference'] == inferred
     assert selected['draft'][0]['food_id'] is None
     assert all(selected[key] is None for key in KEYS)
@@ -486,6 +487,102 @@ def test_no_suitable_candidate_is_valid_and_does_not_silently_choose_another_foo
     assert state['draft'][1:] == original[1:]
     assert state['calories'] is None and state['details'] == []
     assert len(calls) == 1
+
+
+@pytest.mark.parametrize('ingredient_ids,preparation', [
+    (['shrimp', 'bok_choy', 'noodles'], 'boiled'),
+    (['tofu', 'edamame'], 'stir_fried'),
+    (['chicken', 'peanut'], 'stir_fried'),
+    (['chicken', 'peanut', 'cucumber', 'noodles'], 'stir_fried'),
+    (['chicken_roast', 'cucumber'], 'as_served'),
+    (['chicken', 'peanut', 'cucumber'], 'boiled'),
+    (['oil', 'salt'], 'boiled'),
+])
+def test_nonidentical_main_ingredients_return_no_match_without_calling_ranker(
+        client, reference_flow, ingredient_ids, preparation):
+    seed, _, _, calls = reference_flow
+    path, original = seed(extra_unknown=True)
+    response = client.post(path + '/reference-candidates', json=search_payload(
+        ingredient_ids=ingredient_ids, preparation=preparation))
+    assert response.status_code == 200, response.text
+    state = response.json()
+    offer = state['draft'][0]['reference_suggestions']
+    assert offer['status'] == 'no_match' and offer['candidates'] == []
+    assert offer['ingredient_ids'] == ingredient_ids and offer['preparation'] == preparation
+    assert state['draft'][0]['food_id'] is None
+    assert state['draft'][1:] == original[1:]
+    assert all(state[key] is None for key in KEYS) and state['details'] == []
+    assert calls == []
+
+
+def test_api_cold_chicken_offer_rejects_model_suggestion_with_extra_noodles(
+        client, reference_flow):
+    seed, _, gateway, calls = reference_flow
+    gateway['candidates'] = [offered_candidate(food_id='dish_341')]
+    path, _ = seed()
+    before = client.get(path).json()
+    response = client.post(path + '/reference-candidates', json=search_payload(
+        ingredient_ids=['chicken', 'cucumber'], preparation='as_served'))
+    assert response.status_code == 502
+    assert client.get(path).json() == before and len(calls) == 1
+
+
+def test_offer_display_explanations_are_catalogue_facts_not_model_claims(
+        client, reference_flow):
+    seed, _, gateway, _ = reference_flow
+    gateway['candidates'][0].update(
+        reason_zh='此配方含虾。', reason_en='This recipe contains shrimp.',
+        differences_zh=['参考配方额外含虾。'],
+        differences_en=['Additional reference seasonings: shrimp'])
+    path, _ = seed()
+    offered = request_offer(client, path)
+    shown = offered['draft'][0]['reference_suggestions']['candidates'][0]
+    assert 'shrimp' not in shown['reason_en'] + ' '.join(shown['differences_en'])
+    assert '虾' not in shown['reason_zh'] + ''.join(shown['differences_zh'])
+    assert shown['differences_en'] == [
+        'Additional reference seasonings: chili, oil, soy sauce, sugar, vinegar',
+        'Review seasonings, all quantities and the finished batch weight.',
+    ]
+
+
+@pytest.mark.parametrize('legacy_ids', [
+    ['chicken', 'peanut'], ['chicken', 'peanut', 'cucumber', 'noodles'],
+])
+def test_previously_issued_offer_with_different_main_ingredients_cannot_be_selected(
+        client, db_session, reference_flow, legacy_ids):
+    seed, _, _, calls = reference_flow
+    path, _ = seed()
+    offered = request_offer(client, path)
+    row = db_session.get(Analysis, offered['id'])
+    legacy_draft = deepcopy(row.draft)
+    legacy_draft[0]['reference_suggestions']['ingredient_ids'] = legacy_ids
+    row.draft = legacy_draft
+    db_session.commit()
+    before = client.get(path).json()
+    response = client.post(path + '/reference-selection', json=select_payload(offered))
+    assert response.status_code == 409, response.text
+    assert client.get(path).json() == before and len(calls) == 1
+
+
+def test_selecting_compatible_legacy_offer_refreshes_unverified_explanations(
+        client, db_session, reference_flow):
+    seed, _, _, calls = reference_flow
+    path, _ = seed()
+    offered = request_offer(client, path)
+    expected = deepcopy(offered['draft'][0]['reference_suggestions']['candidates'][0])
+    row = db_session.get(Analysis, offered['id'])
+    legacy_draft = deepcopy(row.draft)
+    legacy_draft[0]['reference_suggestions']['candidates'][0].update(
+        reason_zh='旧模型声称含虾。', reason_en='The old model claims this contains shrimp.',
+        differences_zh=['旧模型编造的差异。'], differences_en=['Made-up old differences.'])
+    row.draft = legacy_draft
+    db_session.commit()
+    selected = request_selection(client, path, offered)
+    provenance = selected['draft'][0]['reference_selection']
+    assert all(provenance[key] == expected[key] for key in (
+        'reason_zh', 'reason_en', 'differences_zh', 'differences_en'))
+    assert selected['draft'][0]['food_id'] is None
+    assert all(selected[key] is None for key in KEYS) and len(calls) == 1
 
 
 @pytest.mark.parametrize('change', [

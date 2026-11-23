@@ -1603,7 +1603,8 @@ test('No suitable reference offers an actual-ingredient path without auto-select
   const view = await mount(t,{meal,language:'en',respond:request => request.url.endsWith('/reference-candidates')
     ? {body:referenceOfferFixture(meal,'no_match')} : undefined});
   let panel = openReference(view); selectReferenceIngredients(view,panel); panel = await searchReference(view,panel);
-  assert.match(panel.textContent,/No sufficiently similar reference/);
+  assert.match(panel.textContent,/No reference has the same main ingredients and a compatible method/);
+  assert.match(panel.textContent,/No other dish will be recommended as a substitute/);
   assert.equal(panel.querySelector('[data-similar-candidate]'),null);
   panel.querySelector('[data-similar-actual]').click();
   assert.equal(view.$('ingredient-builder').hidden,false);

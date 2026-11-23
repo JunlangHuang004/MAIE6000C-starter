@@ -156,7 +156,10 @@ names still require clarification.
 An unknown dish still withholds meal totals. The optional AI-assisted entry can
 suggest possible main ingredients and a cooking method from its name. These are
 editable guesses: review or correct them before requesting up to three existing
-recipes as approximate references. Manual ingredient/method selection remains
+recipes as approximate references. Candidates must have exactly the same main
+ingredients and a compatible cooking method; recipes missing a main ingredient
+or adding another one are excluded. Seasonings may differ and remain subject to
+review. When none qualifies, no substitute is recommended. Manual ingredient/method selection remains
 available, and ambiguous names require clarification. Nothing is substituted
 automatically: choose a candidate, acknowledge
 its limitations, then review and accept its ingredient amounts before calculation.

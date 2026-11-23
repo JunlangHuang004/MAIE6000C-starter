@@ -15,17 +15,6 @@ SEASONINGS = frozenset({
     'black_pepper', 'white_pepper', 'chili_powder', 'curry_powder', 'cumin',
     'fish_sauce', 'yeast',
 })
-ANIMAL_INGREDIENTS = frozenset({
-    'chicken', 'chicken_roast', 'chicken_stew', 'chicken_thigh', 'chicken_wing',
-    'chicken_skin', 'chicken_skin_stewed', 'chicken_meat_stewed', 'chicken_gizzard',
-    'chicken_heart', 'chicken_liver', 'pork_belly', 'pork', 'pork_ground', 'pork_ribs',
-    'pork_heart', 'pork_kidney', 'pork_intestine', 'pork_stomach', 'pork_ear',
-    'pork_feet', 'pork_feet_cooked', 'liver', 'pork_liver_cooked', 'beef',
-    'beef_chunk', 'beef_lean', 'lamb', 'lamb_leg', 'duck', 'duck_skin', 'duck_roast',
-    'goose', 'rabbit', 'salmon', 'salmon_cooked', 'cod', 'tilapia', 'carp',
-    'shrimp', 'shrimp_cooked', 'squid', 'clam', 'mussel', 'crab', 'scallop',
-    'octopus', 'octopus_cooked', 'ham',
-})
 
 
 def validate_reference_ingredients(ingredient_ids):
@@ -56,24 +45,47 @@ def _method_matches(food, preparation):
 
 
 def reference_shortlist(ingredient_ids, preparation):
-    """Bound model input using user-declared material ingredients and preparation."""
+    """Require all and only the declared main ingredients, plus compatible preparation."""
     validate_reference_ingredients(ingredient_ids)
     primary = set(ingredient_ids) - SEASONINGS
     if not primary:
         return []
-    declared_animal = primary & ANIMAL_INGREDIENTS
-    ranked = []
+    matches = []
     for food in catalogue()['foods']:
         if food['kind'] != 'recipe' or not _method_matches(food, preparation):
             continue
-        recipe_ids = set(food['recipe']['ingredients'])
-        common = primary & recipe_ids
-        if not common or (declared_animal and not declared_animal & recipe_ids):
+        recipe_ids = {key for key, grams in food['recipe']['ingredients'].items() if grams > 0}
+        if recipe_ids - SEASONINGS != primary:
             continue
-        score = (-len(common), len(primary - recipe_ids), len(recipe_ids - SEASONINGS - primary))
-        ranked.append((score, food['id'], food))
-    ranked.sort(key=lambda row: (row[0], row[1]))
-    return [food for _, _, food in ranked[:MAX_REFERENCE_CANDIDATES]]
+        matches.append(food)
+    return sorted(matches, key=lambda food: food['id'])[:MAX_REFERENCE_CANDIDATES]
+
+
+def reference_candidate(food, ingredient_ids, provider):
+    """Build display explanations from catalogue facts, never provider-written claims."""
+    foods = validate_reference_ingredients(ingredient_ids)
+    actual = {key for key, grams in food['recipe']['ingredients'].items() if grams > 0}
+    declared = set(ingredient_ids)
+    if not declared - SEASONINGS or actual - SEASONINGS != declared - SEASONINGS:
+        raise ValueError('Reference explanations require identical main ingredients')
+    differences_zh, differences_en = [], []
+    for ids, zh, en in (
+            (actual - declared, '参考配方另含调味料：', 'Additional reference seasonings: '),
+            (declared - actual, '参考配方未含你选择的调味料：',
+             'Declared seasonings absent from this reference: ')):
+        if ids:
+            differences_zh.append(zh + '、'.join(foods[key]['name'] for key in sorted(ids)))
+            differences_en.append(en + ', '.join(key.replace('_', ' ') for key in sorted(ids)))
+    differences_zh.append('调味料、全部用量和成品重量仍须逐项核对。')
+    differences_en.append('Review seasonings, all quantities and the finished batch weight.')
+    reason_zh = '主要食材一致，做法匹配；调味料和全部用量仍须核对。'
+    reason_en = 'The main ingredients match and preparation is compatible; '
+    reason_en += 'review seasonings and all quantities.'
+    if provider == 'demo':
+        reason_zh += '这是离线规则结果，不是模型推荐。'
+        reason_en += ' This is an offline rule-based result, not a model recommendation.'
+    return {'food_id': food['id'], 'reason_zh': reason_zh, 'reason_en': reason_en,
+            'differences_zh': differences_zh, 'differences_en': differences_en}
 
 
 def validated_reference_candidates(value, ingredient_ids, preparation):
@@ -82,7 +94,9 @@ def validated_reference_candidates(value, ingredient_ids, preparation):
     ids = [candidate.food_id for candidate in response.candidates]
     if len(ids) != len(set(ids)) or set(ids) - allowed.keys():
         raise ValueError('The recommendation included an invalid or incompatible recipe')
-    candidates = [{**candidate.model_dump(), 'name': allowed[candidate.food_id]['name'],
+    candidates = [{**reference_candidate(allowed[candidate.food_id], ingredient_ids,
+                                        response.provider),
+                   'name': allowed[candidate.food_id]['name'],
                    'method': allowed[candidate.food_id]['method']}
                   for candidate in response.candidates]
     return {'provider': response.provider, 'candidates': candidates}

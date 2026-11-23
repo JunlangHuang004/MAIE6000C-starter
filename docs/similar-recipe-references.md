@@ -16,7 +16,10 @@ to the catalogue or relax exact-name recognition.
    the stored unknown dish name. The interface labels inferred values and lets
    the user correct them. If the name is ambiguous, supply the missing details.
    Exact ingredient amounts are not required at this search stage.
-3. After checking the selected ingredients and method, request suggestions.
+3. After checking all selected main ingredients and the method, request suggestions.
+   A candidate must have exactly the same main ingredients and a compatible
+   cooking method. Missing or additional main ingredients disqualify it; no
+   alternative is offered if none qualifies. Seasonings can still differ.
    Inference alone never triggers this search. Review up to three existing recipes, their preparation,
    the reason for suggesting each one, and differences that need checking.
    A result with no suitable match is valid; no recipe is selected automatically.
@@ -38,11 +41,18 @@ reference recipes that have a familiar name.
 
 ## Responsibilities and boundaries
 
-The server builds a bounded shortlist from the declared ingredients and cooking
-method. Common seasonings alone cannot establish similarity. Cloud providers
-(Qwen or HKUST) and the configured local Ollama provider can rank that shortlist
-and provide short bilingual explanations. Offline demo mode uses explicitly
-labelled deterministic rules. The model never supplies nutrient values or recipe
+The server builds a bounded shortlist using equality of the declared and recipe
+main-ingredient sets, plus compatible cooking methods. Only positive ingredient
+amounts belong to a recipe's set. Classified seasonings such as oil, salt, ginger
+and garlic are excluded from this equality test; common seasonings alone cannot
+establish a match. Raw/cooked and different species IDs are not interchangeable.
+For example, shrimp soup cannot stand in for shrimp noodles, and a chicken and
+cucumber dish cannot gain noodles merely to obtain a candidate. Cloud providers
+(Qwen or HKUST) and the configured local Ollama provider can rank that shortlist.
+User-visible reasons and seasoning differences are derived from the actual
+catalogue and reviewed ingredients, rather than free-form model claims about
+recipe contents. Offline demo mode uses explicitly labelled deterministic rules.
+The model never supplies nutrient values or recipe
 weights on this path.
 
 The optional inference request sends only the stored unknown name and a bounded
@@ -99,12 +109,13 @@ JSON fields retain the offer and provenance. API keys remain on the AI service.
 
 ## Limits
 
-Coverage still depends on the maintained catalogue. Exact ingredient IDs and
-simple cooking-method filters are conservative; they may miss a reasonable
+Coverage still depends on the maintained catalogue. Exact main-ingredient set
+equality and cooking-method filters are conservative; they may miss a reasonable
 reference, especially across raw/cooked ingredient records. The user must be able
 to review at least the main ingredients and cooking style; a dish name alone may
-be ambiguous, and inferred fields can be wrong. A plausible model explanation
-is not evidence of nutritional equivalence, and a reference recipe's quantities,
+be ambiguous, and inferred fields can be wrong. Users must include every actual
+main ingredient; the filter can only check the reviewed list it receives.
+Identical main ingredients do not establish nutritional equivalence: quantities,
 cooked yield and retained oil may differ substantially from the actual dish.
 
 This feature does not provide allergy checks, laboratory accuracy, automatic
@@ -113,4 +124,6 @@ library. When the reference is unsuitable, cancel and use the actual ingredients
 or leave the item unresolved.
 
 See the [name-assisted acceptance report](evidence/name-reference-inference-verification.md)
-for the automated checks and observed live-model workflow.
+for the initial automated checks and observed live-model workflow, and the
+[same-main-ingredient audit](evidence/strict-reference-verification.md) for the
+subsequent stricter filtering, independent retests and external nutrition findings.

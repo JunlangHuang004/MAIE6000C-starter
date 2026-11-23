@@ -1,5 +1,9 @@
 # Name-assisted reference acceptance — 23 November 2026
 
+This report records the initial implementation. The later
+[same-main-ingredient audit](strict-reference-verification.md) supersedes its
+broader candidate filtering; the earlier observations remain historical evidence.
+
 ## Scope
 
 This follow-up applies to `test` and catalogue `2026-11-23.2`. It adds an optional

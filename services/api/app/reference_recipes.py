@@ -12,7 +12,8 @@ from services.common.db import get_db
 from services.common.meal_engine import catalogue
 from services.common.models import User
 from services.common.recipe_references import (
-    reference_shortlist, validate_reference_ingredients, validated_reference_candidates,
+    reference_candidate, reference_shortlist, validate_reference_ingredients,
+    validated_reference_candidates,
     validated_reference_inference,
 )
 from services.common.schemas import (
@@ -176,6 +177,9 @@ def reference_selection(
     food = allowed.get(payload.food_id)
     if food is None:
         raise HTTPException(status_code=409, detail='参考目录已变化，请重新请求。')
+    # Older offers may contain model-written explanations; refresh them from the
+    # current catalogue rather than carrying unverified prose into provenance.
+    candidate = reference_candidate(food, offer['ingredient_ids'], offer['provider'])
     original_name = original.get('original_name') or original['name']
     selection = {
         'original_name': original_name, 'source_food_id': food['id'],

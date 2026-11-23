@@ -38,17 +38,17 @@ def settings(provider):
 
 def facts(**changes):
     return RecipeRecommendationRequest(
-        **{'original_name': '火星鸡丁', 'ingredient_ids': ['chicken', 'peanut'],
+        **{'original_name': '火星鸡丁', 'ingredient_ids': ['chicken', 'peanut', 'cucumber'],
            'preparation': 'stir_fried', **changes})
 
 
 def candidate(**changes):
     return {
         'food_id': 'dish_003',
-        'reason_zh': '鸡肉与花生相符，做法同为炒制。',
-        'reason_en': 'Chicken and peanuts overlap, and both are stir-fried.',
-        'differences_zh': ['参考配方另含黄瓜；实际用量仍需核对。'],
-        'differences_en': ['The reference also has cucumber; review the actual quantities.'],
+        'reason_zh': '主要食材同为鸡肉、花生和黄瓜，做法同为炒制。',
+        'reason_en': 'Chicken, peanuts and cucumber match, and both are stir-fried.',
+        'differences_zh': ['参考配方另含调味料；实际用量仍需核对。'],
+        'differences_en': ['The reference has additional seasonings; review actual quantities.'],
         **changes,
     }
 
@@ -72,11 +72,13 @@ def mock_response(monkeypatch, provider, value, finish='stop', raw_envelope=Fals
     return calls
 
 
-def test_shortlist_requires_primary_overlap_and_never_swaps_declared_meat():
+def test_shortlist_requires_identical_main_ingredients_and_compatible_preparation():
     assert references.reference_shortlist(['ginger', 'oil', 'salt'], 'boiled') == []
-    foods = references.reference_shortlist(['chicken', 'ginger', 'wheat_flour'], 'fried')
+    foods = references.reference_shortlist(
+        ['chicken', 'egg_raw', 'ginger', 'wheat_flour'], 'fried')
     assert foods
-    assert all('chicken' in food['recipe']['ingredients'] for food in foods)
+    assert all(set(food['recipe']['ingredients']) - references.SEASONINGS
+               == {'chicken', 'egg_raw', 'wheat_flour'} for food in foods)
     assert all('炸' in food['method'] or '煎' in food['method'] for food in foods)
     assert len(foods) <= references.MAX_REFERENCE_CANDIDATES
     assert references.reference_shortlist(['chicken'], 'other') == []
@@ -87,6 +89,42 @@ def test_method_filter_excludes_fried_references_from_boiled_and_honors_explicit
     explicit = {'method': '白切鸡参考使用熟炖食材数据', 'preparations': ['boiled', 'as_served']}
     assert references._method_matches(explicit, 'boiled')
     assert not references._method_matches(explicit, 'braised')
+
+
+@pytest.mark.parametrize('ingredient_ids,preparation', [
+    (['shrimp', 'bok_choy', 'noodles'], 'boiled'),
+    (['tofu', 'edamame'], 'stir_fried'),
+    (['chicken', 'peanut'], 'stir_fried'),
+    (['chicken', 'peanut', 'cucumber', 'noodles'], 'stir_fried'),
+    (['chicken_roast', 'cucumber'], 'as_served'),
+    (['chicken', 'peanut', 'cucumber'], 'boiled'),
+    ([], 'boiled'), (['salt', 'oil'], 'boiled'),
+])
+def test_shortlist_declines_missing_extra_wrong_state_or_wrong_method_main_foods(
+        ingredient_ids, preparation):
+    assert references.reference_shortlist(ingredient_ids, preparation) == []
+
+
+def test_cold_chicken_and_cucumber_excludes_extra_staple_and_other_main_ingredients():
+    foods = references.reference_shortlist(['chicken', 'cucumber'], 'as_served')
+    assert [food['id'] for food in foods] == ['dish_255']
+    for incompatible in ('dish_341', 'dish_374'):
+        with pytest.raises(ValueError, match='incompatible'):
+            references.validated_reference_candidates(
+                {'provider': 'qwen', 'candidates': [candidate(food_id=incompatible)]},
+                ['chicken', 'cucumber'], 'as_served')
+
+
+def test_matching_main_ingredients_allow_only_seasoning_differences():
+    declared = ['cucumber', 'peanut', 'chicken', 'ginger']
+    foods = references.reference_shortlist(declared, 'stir_fried')
+    assert [food['id'] for food in foods] == ['dish_003']
+    shown = references.validated_reference_candidates(
+        {'provider': 'qwen', 'candidates': [candidate()]}, declared, 'stir_fried')['candidates'][0]
+    assert 'Additional reference seasonings: chili, oil, soy sauce, sugar, vinegar' in (
+        shown['differences_en'])
+    assert 'Declared seasonings absent from this reference: ginger' in shown['differences_en']
+    assert all('cucumber' not in line for line in shown['differences_en'])
 
 
 @pytest.mark.parametrize('ids', [['dish_003'], ['unknown'], ['chicken', 'chicken']])
@@ -103,7 +141,8 @@ def test_only_unique_catalogue_ingredients_are_user_facts(ids):
 def test_server_rejects_unoffered_incompatible_duplicate_or_nutrient_fields(rows):
     with pytest.raises(ValueError):
         references.validated_reference_candidates(
-            {'provider': 'qwen', 'candidates': rows}, ['chicken', 'peanut'], 'stir_fried')
+            {'provider': 'qwen', 'candidates': rows},
+            ['chicken', 'peanut', 'cucumber'], 'stir_fried')
 
 
 @pytest.mark.parametrize('text', [
@@ -117,23 +156,29 @@ def test_model_explanations_cannot_smuggle_markup_or_nutrition_claims(text, fiel
     row = candidate(**{field: [text] if field.startswith('differences') else text})
     with pytest.raises(ValidationError):
         references.validated_reference_candidates(
-            {'provider': 'qwen', 'candidates': [row]}, ['chicken', 'peanut'], 'stir_fried')
+            {'provider': 'qwen', 'candidates': [row]},
+            ['chicken', 'peanut', 'cucumber'], 'stir_fried')
 
 
 def test_demo_is_labelled_rule_based_and_reports_concrete_ingredient_differences():
     result = ranking.rank_recipe_references(facts(), settings('demo'))
     assert result.provider == 'demo' and 1 <= len(result.candidates) <= 3
     assert all('offline rule-based' in row.reason_en for row in result.candidates)
-    assert any('Additional reference ingredients:' in line
+    assert any('Additional reference seasonings:' in line
                for row in result.candidates for line in row.differences_en)
     references.validated_reference_candidates(
-        result.model_dump(), ['chicken', 'peanut'], 'stir_fried')
+        result.model_dump(), ['chicken', 'peanut', 'cucumber'], 'stir_fried')
 
 
 @pytest.mark.parametrize('provider', (*PROVIDERS, 'demo'))
-def test_no_suitable_primary_overlap_never_calls_model(provider):
+@pytest.mark.parametrize('ingredient_ids,preparation', [
+    (['salt'], 'boiled'), (['shrimp', 'bok_choy', 'noodles'], 'boiled'),
+    (['tofu', 'edamame'], 'stir_fried'), (['chicken', 'peanut'], 'stir_fried'),
+])
+def test_no_identical_main_ingredient_recipe_never_calls_model(
+        provider, ingredient_ids, preparation):
     result = ranking.rank_recipe_references(
-        facts(ingredient_ids=['salt'], preparation='boiled'), settings(provider))
+        facts(ingredient_ids=ingredient_ids, preparation=preparation), settings(provider))
     assert result.provider == provider and result.candidates == []
 
 
@@ -168,6 +213,44 @@ def test_providers_only_rank_bounded_recipe_ids_without_nutrition_or_weights(mon
         assert url == 'https://qwen.example.test/v1/chat/completions'
         assert request['headers'] == {'Authorization': 'Bearer ' + SYNTHETIC_KEY}
         assert body['enable_thinking'] is False
+
+
+@pytest.mark.parametrize('provider', PROVIDERS)
+@pytest.mark.parametrize('food_id,ingredient_ids,preparation,false_ingredient', [
+    ('dish_012', ['shrimp', 'egg_raw', 'spring_onion'], 'stir_fried', 'spring onion'),
+    ('dish_351', ['pork', 'carrot', 'ketchup'], 'fried', 'ketchup'),
+    ('dish_305', ['asparagus', 'egg_raw'], 'stir_fried', 'garlic'),
+])
+def test_provider_ranks_but_cannot_invent_displayed_recipe_ingredients(
+        monkeypatch, provider, food_id, ingredient_ids, preparation, false_ingredient):
+    invented_reason = f'The recipe contains {false_ingredient}.'
+    raw = candidate(food_id=food_id, reason_zh='模型声称含有目录没有的食材。',
+                    reason_en=invented_reason,
+                    differences_zh=['模型编造的差异。'],
+                    differences_en=[f'Additional reference seasonings: {false_ingredient}'])
+    mock_response(monkeypatch, provider, {'candidates': [raw]})
+    result = ranking.rank_recipe_references(
+        facts(ingredient_ids=ingredient_ids, preparation=preparation), settings(provider))
+    shown = result.candidates[0]
+    assert shown.reason_en != invented_reason and '模型' not in shown.reason_zh
+    assert shown.food_id == food_id and 'main ingredients match' in shown.reason_en
+    assert '模型编造的差异。' not in shown.differences_zh
+    assert not any(false_ingredient in line for line in shown.differences_en
+                   if line.startswith('Additional'))
+    if false_ingredient != 'garlic':
+        assert f'Declared seasonings absent from this reference: {false_ingredient}' in (
+            shown.differences_en)
+    else:
+        assert 'garlic' not in ' '.join(shown.differences_en)
+
+
+@pytest.mark.parametrize('provider', PROVIDERS)
+def test_provider_cannot_rank_a_recipe_with_extra_main_foods(monkeypatch, provider):
+    mock_response(monkeypatch, provider, {'candidates': [candidate(food_id='dish_341')]})
+    with pytest.raises(RuntimeError, match='未采用任何参考菜谱'):
+        ranking.rank_recipe_references(
+            facts(ingredient_ids=['chicken', 'cucumber'], preparation='as_served'),
+            settings(provider))
 
 
 @pytest.mark.parametrize('provider', PROVIDERS)

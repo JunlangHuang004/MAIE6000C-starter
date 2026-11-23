@@ -1,5 +1,23 @@
 # NutriChat change log
 
+## 2026-11-24 — Require identical main ingredients for references
+
+- Reject candidates with missing or additional main ingredients, including
+  soups without the declared noodles, added meat/staples, and species/state
+  substitutions. Keep compatible-method checks and explicitly review seasoning
+  differences. Return no match when no recipe qualifies.
+- Generate displayed reasons and ingredient differences from catalogue facts.
+  Retain model ranking, but discard model-written ingredient claims. Revalidate
+  old offers and refresh their explanations on selection; preserve historical
+  accepted recipes and saved nutrition.
+- Update bilingual instructions and the no-match message. Pass 2,338 full
+  unit/integration tests and 95 frontend tests; the 302 focused reference tests
+  overlap the full run. Rebuild and verify the local preview.
+- Preserve the independent agent's baseline and strict retest findings, including
+  two remaining model-output failures and external recipe discrepancies above
+  the requested 20% screening threshold. Do not relabel these as passes or change
+  nutrient values to hide them. See [the audit](evidence/strict-reference-verification.md).
+
 ## 2026-11-23 — Name-assisted similar-recipe entry
 
 - Let the configured model suggest supported ingredients and a cooking method

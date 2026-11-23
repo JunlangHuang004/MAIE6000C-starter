@@ -161,6 +161,13 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
   Review them before requesting reference candidates. An ambiguous name, offline
   demo, provider failure or invalid response still requires manual details; none
   of these cases authorizes a substitute or a partial whole-meal total.
+- **No reference with the same main ingredients:** this is an expected result.
+  The complete set of selected main ingredient IDs must equal the recipe's main
+  ingredient IDs, with a compatible cooking method. Missing noodles, added meat,
+  different species or raw/cooked records cannot be ignored to produce an offer.
+  Review the selected facts or enter the actual ingredient recipe; do not remove
+  real ingredients just to obtain a match. Oil, salt and other classified
+  seasonings can differ, and their differences still require review.
 - **`needs_input`:** normal clarification, with a successfully completed job.
   Answer the issued questions or use the ingredient builder for an unknown item.
 - **`failed`:** inspect the owned job and logs; check provider region/model/key,

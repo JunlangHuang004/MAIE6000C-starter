@@ -349,7 +349,11 @@ inference, candidate and selection endpoints. Optional name inference proposes
 supported ingredient IDs and a preparation as editable guesses. It persists in
 `reference_inference` and requires user review before requesting candidates;
 it never fills the unknown item's exact identity or nutrition. The AI service ranks a bounded server
-shortlist; the API validates its IDs and persists the offer against the meal
+shortlist with identical main-ingredient sets and compatible methods. Missing or
+additional main ingredients are rejected before ranking and again on selection;
+classified seasonings may differ. Display explanations are built from catalogue
+ingredients, without trusting model assertions about ingredient contents. The API
+validates candidate IDs and persists the offer against the meal
 revision and catalogue version. Explicit user selection creates an unaccepted
 ingredient template, not a calorie total. The existing ingredient endpoint and
 worker calculate only after review; original identity and approximation
