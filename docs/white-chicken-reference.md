@@ -44,6 +44,10 @@ not an exact measurement of the user's meal.
 Saved historical estimates are not silently recalculated. A new estimate uses
 the updated catalogue after deployment; the earlier checkpoint and its evidence
 retain their original version.
+Preparation translations also respect the saved source text. Switching an old
+estimate to English must not replace its legacy sauce/formula explanation with
+the new proxy explanation. Unknown historical method text is retained rather
+than silently described using the latest recipe.
 
 ## Other official sources checked
 

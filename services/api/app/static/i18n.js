@@ -237,7 +237,13 @@
     return english() ? (catalogue()[id]?.name || fallback || id || '') : (foods.get(id)?.name || fallback || id || '');
   }
   function method(id, fallback = '') {
-    return english() ? (catalogue()[id]?.method || systemText(fallback)) : fallback;
+    if (!english()) return fallback;
+    const entry = catalogue()[id];
+    const historical = entry?.legacy_methods?.[fallback];
+    if (historical) return historical;
+    // Translate the recorded method, never replace it with a newer recipe's method.
+    const source = entry?.method_source || foods.get(id)?.method;
+    return fallback && source === fallback && entry?.method ? entry.method : systemText(fallback);
   }
   function translatedNames(text) {
     let result = String(text ?? '');

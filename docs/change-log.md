@@ -13,7 +13,7 @@
 - Use the existing ingredient calculator and JSON persistence; no new migration.
   Document [the workflow, provider behavior and limits](similar-recipe-references.md).
 - Pass 2,160 full backend tests (two HTTP smoke tests skipped because
-  `SMOKE_BASE_URL` was unset), 79 frontend tests, and Ruff. A subsequent 83-test
+  `SMOKE_BASE_URL` was unset), 82 frontend tests, and Ruff. A subsequent 83-test
   provider-validation run covers the additional energy/joule wording guard; it
   overlaps the full suite and is not an extra independent full-suite total.
 - Verify the local HKUST flow in the browser: no main-ingredient match, explicit
@@ -22,6 +22,9 @@
   [the acceptance scope and limitations](evidence/recipe-reference-verification.md).
 - Hide mode switching during reference/custom recipes, avoid duplicate pending
   edit actions, and distinguish ingredient-weight sums from cooked portion weights.
+- Translate saved preparation evidence by its recorded method rather than using
+  the latest recipe explanation. Old chicken estimates retain the old assumptions
+  in English; current estimates show the cooked-state proxy explanation.
 
 ## 2026-11-23 — Cooked chicken reference correction
 

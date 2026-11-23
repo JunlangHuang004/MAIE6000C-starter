@@ -187,6 +187,70 @@ test('Every catalogue food has an English display name and every recipe has an E
   assert.doesNotMatch(entries.dish_017.name, /gai lan|Chinese broccoli/i);
 });
 
+const legacyWhiteChickenMethod = '带皮鸡肉水煮，配姜葱蘸汁；不计弃去的煮鸡水，去骨称重';
+
+for (const historical of [true,false]) {
+  test(`${historical ? 'Historical 568.7' : 'Current 438'} kcal chicken evidence keeps its recorded preparation when translated`, async t => {
+    const food = foods.find(food => food.id==='dish_109');
+    const recipe = historical ? {yield_g:340,ingredients:{chicken_skin:400,ginger:15,spring_onion:20,oil:10,salt:3}} : clone(food.recipe);
+    const method = historical ? legacyWhiteChickenMethod : food.method;
+    const nutrients = Object.fromEntries(['calories','protein_g','fat_g','carbs_g'].map(key => [key,
+      Math.round(Object.entries(recipe.ingredients).reduce((total,[id,grams]) =>
+        total+foods.find(food => food.id===id).nutrients[key]*grams/100,0)*200/recipe.yield_g*10)/10]));
+    const meal = clone(fixtures.tomato_egg_dish);
+    Object.assign(meal,nutrients,{status:'confirmed',food_text:'200克熟白切鸡可食部分',
+      conversation:[{role:'user',content:'200克熟白切鸡可食部分'}]});
+    meal.draft=[{food_id:'dish_109',name:'白切鸡',grams:200,weight_basis:'cooked',recipe_confirmed:true,recipe}];
+    meal.details=[{food_id:'dish_109',name:'白切鸡',grams:200,nutrients,
+      assumptions:['参考做法：'+method,`整锅成品 ${recipe.yield_g}g；本次食用 200g`,
+        '整锅配料：'+Object.entries(recipe.ingredients).map(([id,grams]) => foods.find(food => food.id===id).name+' '+grams+'g').join('、'),
+        '参考配方已由用户确认；不是实测菜肴营养。'],
+      sources:Object.keys(recipe.ingredients).map(id => foods.find(food => food.id===id).source)}];
+    const expected = historical ? 568.7 : 438;
+    assert.equal(meal.calories,expected);
+    const view = await mount(t,{meal});
+    const before = view.requests.length;
+    assert.ok(view.$('evidence').textContent.includes(method));
+    await view.clickLanguage('en');
+    const evidence = view.$('evidence').textContent;
+    if (historical) {
+      assert.match(evidence,/Poach chicken with skin and serve with ginger-spring onion dipping sauce/);
+      assert.match(evidence,/Finished batch: 340g/);
+      assert.doesNotMatch(evidence,/as a proxy|Dipping sauce is excluded|Chicken amounts here are cooked weights/);
+    } else {
+      assert.match(evidence,/as a proxy, not measured white-cut chicken data/);
+      assert.match(evidence,/Dipping sauce is excluded by default/);
+      assert.match(evidence,/Chicken amounts here are cooked weights/);
+      assert.match(evidence,/Finished batch: 400g/);
+      assert.doesNotMatch(evidence,/serve with ginger-spring onion dipping sauce/);
+    }
+    assert.equal(view.$('calories').textContent,String(expected));
+    assert.equal(view.$('confirm').hidden,true);
+    await view.clickLanguage('zh');
+    assert.ok(view.$('evidence').textContent.includes(method));
+    assert.equal(view.$('calories').textContent,String(expected));
+    assert.equal(view.requests.length,before,'Language changes must not re-evaluate or overwrite a saved estimate');
+  });
+}
+
+test('Method translation retains unknown historical text and binds chicken English to its exact Chinese source', async t => {
+  const {window} = await mount(t,{language:'en'});
+  const I = window.NutriI18n, entries = window.NUTRICHAT_EN_CATALOGUE;
+  for (const food of foods.filter(food => food.kind==='recipe')) {
+    assert.equal(I.method(food.id,food.method),entries[food.id].method);
+  }
+  const original = '旧版做法：鸡肉与酱汁分别称重';
+  assert.ok(I.method('dish_003',original).includes(original));
+  assert.notEqual(I.method('dish_003',original),entries.dish_003.method);
+  const staleCatalogue = clone(foods);
+  staleCatalogue.find(food => food.id==='dish_109').method=legacyWhiteChickenMethod;
+  I.setCatalogue(staleCatalogue);
+  assert.match(I.method('dish_109',legacyWhiteChickenMethod),/^Poach chicken with skin/);
+  assert.equal(I.method('dish_109',entries.dish_109.method_source),entries.dish_109.method);
+  assert.ok(I.method('dish_109',original).includes(original));
+  assert.doesNotMatch(I.assumption('参考做法：'+original,'dish_109'),/as a proxy|cooked weights/);
+});
+
 test('English catalogue search finds the translated recipe and keeps Chinese search usable', async t => {
   const {window, $, clickLanguage} = await mount(t);
   await clickLanguage('en');

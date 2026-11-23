@@ -1035,7 +1035,11 @@ window.NUTRICHAT_EN_CATALOGUE = Object.freeze({
   },
   "dish_109": {
     "name": "White-cut poached chicken",
-    "method": "Uses cooked, stewed boneless chicken with skin as a proxy, not measured white-cut chicken data. Dipping sauce is excluded by default; enter ginger, scallion and oil actually eaten. Chicken amounts here are cooked weights. For skinless meat, select the stewed skinless chicken record in the actual-ingredient form."
+    "method": "Uses cooked, stewed boneless chicken with skin as a proxy, not measured white-cut chicken data. Dipping sauce is excluded by default; enter ginger, scallion and oil actually eaten. Chicken amounts here are cooked weights. For skinless meat, select the stewed skinless chicken record in the actual-ingredient form.",
+    "method_source": "以熟炖去骨带皮鸡肉数据近似白切鸡，不是白切鸡实测值；默认不含蘸汁，姜葱和油按实际吃下的量另填。这里的鸡肉克数为熟重；去皮版本请在实际食材中选择熟炖去皮鸡肉。",
+    "legacy_methods": {
+      "带皮鸡肉水煮，配姜葱蘸汁；不计弃去的煮鸡水，去骨称重": "Poach chicken with skin and serve with ginger-spring onion dipping sauce; exclude discarded cooking water and weigh after removing bones."
+    }
   },
   "dish_110": {
     "name": "Sichuan chicken in chili sauce",

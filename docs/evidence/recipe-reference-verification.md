@@ -14,9 +14,12 @@ public deployment has been updated or that every cloud provider was exercised.
   `SMOKE_BASE_URL` was unset; nine warnings retained in the local run log.
 - Subsequent provider-response hardening: **83 passed**, including additional
   energy/joule wording rejection. This overlaps the full suite.
-- Final frontend suite: **79 passed**. Includes stale offers, session changes,
+- Final frontend suite: **82 passed**. Includes stale offers, session changes,
   explicit acknowledgement, language switching, single pending edit action,
-  mode controls and ingredient-sum versus cooked-portion labels.
+  mode controls, ingredient-sum versus cooked-portion labels and historical
+  preparation evidence across language changes. The old 568.7 kcal chicken
+  fixture keeps its legacy explanation; the current 438 kcal fixture uses the
+  cooked proxy explanation. No saved nutrient values are rewritten.
 - Independent review: **131 targeted backend tests passed** and no remaining
   concrete high/medium severity findings in the reviewed change. This was a
   separate agent without the parent conversation; it reviewed source/tests,
