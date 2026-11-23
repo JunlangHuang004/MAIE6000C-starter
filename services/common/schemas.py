@@ -253,6 +253,13 @@ class AnalysisReferenceCandidates(BaseModel):
     preparation: ReferencePreparation | None = None
 
 
+class AnalysisReferenceInference(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    revision: int = Field(ge=1, le=2_147_483_646)
+    item_index: int = Field(ge=0, le=29)
+
+
 class AnalysisReferenceSelection(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)
 
@@ -275,6 +282,12 @@ class RecipeRecommendationRequest(BaseModel):
     original_name: str = Field(min_length=1, max_length=120)
     ingredient_ids: list[str] = Field(min_length=1, max_length=8)
     preparation: ReferencePreparation
+
+
+class RecipeInferenceRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    original_name: str = Field(min_length=1, max_length=120)
 
 
 class RecipeRankCandidate(BaseModel):
@@ -311,6 +324,52 @@ class RecipeRecommendationResponse(BaseModel):
 
     provider: Literal['demo', 'qwen', 'hkust', 'ollama']
     candidates: list[RecipeRankCandidate] = Field(max_length=3)
+
+
+class RecipeInferenceResponse(BaseModel):
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    provider: Literal['demo', 'qwen', 'hkust', 'ollama']
+    status: Literal['suggested', 'needs_clarification']
+    ingredient_ids: list[str] = Field(max_length=8)
+    preparation: ReferencePreparation | None
+    reason_zh: str = Field(min_length=1, max_length=240)
+    reason_en: str = Field(min_length=1, max_length=400)
+
+    @field_validator('reason_zh', 'reason_en')
+    @classmethod
+    def plain_reason(cls, value):
+        import re
+        value = RecipeRankCandidate.plain_reason(value)
+        number = r'(?:\d+(?:\.\d+)?|[零〇一二两三四五六七八九十百千万半]+)'
+        measure = number + r'\s*(?:杯|份|勺)'
+        # Match quantities, not isolated words or names such as 三杯鸡 and one-pot.
+        if re.search(
+                r'\b(?:\d+(?:\.\d+)?|zero|one|two|three|four|five|six|seven|eight|nine|ten|'
+                r'eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|'
+                r'twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|'
+                r'half|quarter|dozen)\s*(?:(?:of\s+)?an?\s+)?'
+                r'(?:g|kg|mg|ml|l|oz|lb|grams?|kilograms?|milligrams?|'
+                r'ounces?|pounds?|liters?|litres?|milliliters?|millilitres?|cups?|'
+                r'tablespoons?|teaspoons?|servings?|portions?|percent(?:age)?)\b'
+                + '|' + number + r'\s*(?:毫克|千克|公斤|克|毫升|升|斤|两|%|％)'
+                + '|百分之' + number
+                + '|' + measure + r'(?=$|[\s，。；、,.;])'
+                + r'|(?:加入|添加|使用|取用|食用|吃|喝|用)\s*' + measure
+                + r'|(?:confidence|similarity|score|相似度|置信度|可信度)\s*'
+                r'(?:(?:is|of|为|是)\s*)?[:=：]?\s*' + number,
+                value, re.I):
+            raise ValueError('Inference explanations must not supply amounts or scores')
+        return value
+
+    @model_validator(mode='after')
+    def coherent_inference(self):
+        if self.status == 'suggested':
+            if not self.ingredient_ids or self.preparation in (None, 'other'):
+                raise ValueError('An inferred suggestion needs ingredients and a concrete method')
+        elif self.ingredient_ids or self.preparation is not None:
+            raise ValueError('Clarification must not retain unsubstantiated guesses')
+        return self
 
 
 class AnalysisRead(BaseModel):

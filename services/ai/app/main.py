@@ -16,6 +16,8 @@ from services.common.schemas import (
     NutritionAnalysisResponse,
     RecipeRecommendationRequest,
     RecipeRecommendationResponse,
+    RecipeInferenceRequest,
+    RecipeInferenceResponse,
     TriageRequest,
     TriageResponse,
 )
@@ -24,6 +26,17 @@ configure_logging()
 logger = logging.getLogger("services.ai.main")
 
 app = FastAPI(title="MAIE 6000C Starter AI Service", version="0.1.0")
+
+
+@app.post('/infer-reference-facts', response_model=RecipeInferenceResponse)
+def infer_reference_facts(payload: RecipeInferenceRequest):
+    from services.ai.app.recipe_references import infer_recipe_reference
+    try:
+        return infer_recipe_reference(payload, get_settings())
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=502, detail=str(exc)) from exc
 
 
 @app.post('/recommend-recipes', response_model=RecipeRecommendationResponse)

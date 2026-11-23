@@ -345,7 +345,10 @@ every newer commit or provider interpretation has passed the same live checks.
 ## Explicit similar-recipe references
 
 The [similar-recipe workflow](similar-recipe-references.md) adds owner-scoped
-candidate and selection endpoints. The AI service ranks a bounded server
+inference, candidate and selection endpoints. Optional name inference proposes
+supported ingredient IDs and a preparation as editable guesses. It persists in
+`reference_inference` and requires user review before requesting candidates;
+it never fills the unknown item's exact identity or nutrition. The AI service ranks a bounded server
 shortlist; the API validates its IDs and persists the offer against the meal
 revision and catalogue version. Explicit user selection creates an unaccepted
 ingredient template, not a calorie total. The existing ingredient endpoint and

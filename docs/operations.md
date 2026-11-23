@@ -156,6 +156,11 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 - **No corresponding food record:** coverage is limited to 202 ingredients and
   384 reference recipes with reviewed names/aliases. Correct the name or select
   actual supported ingredients. Keep all totals empty while any item is unresolved.
+- **Unknown name with recognizable cooking clues:** the optional similar-recipe
+  panel can ask the configured model to suggest editable ingredients and a method.
+  Review them before requesting reference candidates. An ambiguous name, offline
+  demo, provider failure or invalid response still requires manual details; none
+  of these cases authorizes a substitute or a partial whole-meal total.
 - **`needs_input`:** normal clarification, with a successfully completed job.
   Answer the issued questions or use the ingredient builder for an unknown item.
 - **`failed`:** inspect the owned job and logs; check provider region/model/key,

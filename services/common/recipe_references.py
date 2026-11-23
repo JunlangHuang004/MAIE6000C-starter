@@ -3,7 +3,7 @@ import re
 from copy import deepcopy
 
 from services.common.meal_engine import catalogue
-from services.common.schemas import RecipeRecommendationResponse
+from services.common.schemas import RecipeInferenceResponse, RecipeRecommendationResponse
 
 
 MAX_REFERENCE_CANDIDATES = 30
@@ -86,6 +86,15 @@ def validated_reference_candidates(value, ingredient_ids, preparation):
                    'method': allowed[candidate.food_id]['method']}
                   for candidate in response.candidates]
     return {'provider': response.provider, 'candidates': candidates}
+
+
+def validated_reference_inference(value):
+    """Treat inferred ingredients as reviewable suggestions, never observed facts."""
+    response = RecipeInferenceResponse.model_validate(value)
+    validate_reference_ingredients(response.ingredient_ids)
+    if response.status == 'suggested' and not set(response.ingredient_ids) - SEASONINGS:
+        raise ValueError('An inferred suggestion needs at least one main ingredient')
+    return response.model_dump()
 
 
 def validate_reference_selection(selection):

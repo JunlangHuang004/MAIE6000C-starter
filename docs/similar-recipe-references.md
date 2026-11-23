@@ -1,8 +1,9 @@
 # Optional similar-recipe references
 
 An unknown dish remains unknown. NutriChat can now help the user find an existing
-recipe to use as an **explicit approximate reference**, after the user supplies
-the main ingredients and cooking method. This does not add a new measured dish
+recipe to use as an **explicit approximate reference**, after the user reviews
+the main ingredients and cooking method. An optional AI step suggests these facts
+from the unknown name; they remain guesses until reviewed. This does not add a new measured dish
 to the catalogue or relax exact-name recognition.
 
 ## User workflow
@@ -10,10 +11,13 @@ to the catalogue or relax exact-name recognition.
 1. Enter a meal. If a dish has no matching record, the usual message and missing
    totals remain visible. Correcting the name or entering actual ingredients
    remain available.
-2. Expand **Find a similar recipe** for that unresolved item. Select its main
-   ingredients from the supported ingredient list and choose the cooking method.
+2. Expand **Find a similar recipe** for that unresolved item. Either select its
+   main ingredients and cooking method manually, or ask AI to suggest them from
+   the stored unknown dish name. The interface labels inferred values and lets
+   the user correct them. If the name is ambiguous, supply the missing details.
    Exact ingredient amounts are not required at this search stage.
-3. Request suggestions. Review up to three existing recipes, their preparation,
+3. After checking the selected ingredients and method, request suggestions.
+   Inference alone never triggers this search. Review up to three existing recipes, their preparation,
    the reason for suggesting each one, and differences that need checking.
    A result with no suitable match is valid; no recipe is selected automatically.
 4. Select one candidate and explicitly acknowledge that it is an approximate
@@ -41,11 +45,26 @@ and provide short bilingual explanations. Offline demo mode uses explicitly
 labelled deterministic rules. The model never supplies nutrient values or recipe
 weights on this path.
 
+The optional inference request sends only the stored unknown name and a bounded
+list of supported ingredient names/IDs/states and cooking-method choices to the
+configured model. Personal profile information, meal weights and nutrient numbers
+are not included. Suggested ingredient IDs and method must pass schema and
+catalogue checks. A successful suggestion contains a non-seasoning main ingredient
+and a concrete method; an ambiguous result contains no proposed facts and asks
+for manual clarification. Offline demo mode requests clarification without
+pretending that a model inferred the name.
+
+Inference is saved separately from exact identity and ingredient recipes. It
+does not populate `food_id`, calculate a total, select a reference, or confirm a
+meal. Requesting a new inference invalidates older candidate offers and pending
+reference templates. The existing candidate request uses the user's reviewed,
+editable fields, including corrections to the inferred values.
+
 Every returned ID must belong to the compatible server shortlist. Unknown IDs,
 duplicate IDs, malformed responses, unexpected fields and incomplete output are
 rejected. A provider failure leaves the original meal unresolved. The server
 stores each issued offer against the record revision and catalogue version;
-the user can select only a candidate from that offer. Both mutation endpoints
+the user can select only a candidate from that offer. All three reference endpoints
 require the signed-in owner and the application's normal CSRF protection.
 Confirmed meals and stale revisions cannot be edited.
 
@@ -59,6 +78,11 @@ mode-switch control, following the existing actual-ingredient workflow.
 
 ## API contract
 
+- `POST /analyses/{id}/reference-inference`: `revision` and `item_index`.
+  Uses the stored unknown name and returns an updated `AnalysisRead` with
+  `draft[item_index].reference_inference`. The persisted object records provider,
+  catalogue version, revision, inferred status, proposed ingredients/method and
+  bilingual explanation. Ownership, confirmed-state and revision checks apply.
 - `POST /analyses/{id}/reference-candidates`: `revision`, `item_index`, up to eight
   supported `ingredient_ids`, and `preparation`. Returns an updated `AnalysisRead`.
   Missing facts produce a clarification state. Suggestions are stored in
@@ -77,8 +101,9 @@ JSON fields retain the offer and provenance. API keys remain on the AI service.
 
 Coverage still depends on the maintained catalogue. Exact ingredient IDs and
 simple cooking-method filters are conservative; they may miss a reasonable
-reference, especially across raw/cooked ingredient records. The user must know
-at least the main ingredients and cooking style. A plausible model explanation
+reference, especially across raw/cooked ingredient records. The user must be able
+to review at least the main ingredients and cooking style; a dish name alone may
+be ambiguous, and inferred fields can be wrong. A plausible model explanation
 is not evidence of nutritional equivalence, and a reference recipe's quantities,
 cooked yield and retained oil may differ substantially from the actual dish.
 
@@ -86,3 +111,6 @@ This feature does not provide allergy checks, laboratory accuracy, automatic
 portion recognition, automatic unknown-food substitution or a personal recipe
 library. When the reference is unsuitable, cancel and use the actual ingredients
 or leave the item unresolved.
+
+See the [name-assisted acceptance report](evidence/name-reference-inference-verification.md)
+for the automated checks and observed live-model workflow.

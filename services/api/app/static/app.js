@@ -200,6 +200,8 @@ async function api(path,method='GET',body){
       if (choose) choose.disabled = recipeLocked || !!state?.stale || !state?.selected || !state?.accepted;
       const ingredients = panel.querySelector('[data-similar-ingredient]');
       if (ingredients) ingredients.disabled ||= (state?.ingredient_ids.length || 0) >= 8;
+      const cancel = panel.querySelector('[data-similar-cancel]');
+      if (cancel && state?.loading) cancel.disabled = !currentUser || analysis?.status === 'confirmed';
       panel.setAttribute('aria-busy',String(!!state?.loading));
     });
     document.querySelectorAll('[data-find-similar]').forEach(button => { button.disabled = recipeLocked; });
@@ -420,19 +422,22 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     let state = similarStates.get(key);
     if (!state || state.revision !== analysis.revision) {
       const offer = item.reference_selection ? null : item.reference_suggestions;
+      const inference = item.reference_selection ? null : item.reference_inference;
+      const suggestion = inference?.status === 'suggested' ? inference : null;
       state = {index,analysisId:analysis.id,revision:analysis.revision,
-        open:!!offer,ingredient_ids:[...(offer?.ingredient_ids || item.reference_selection?.ingredient_ids || [])],preparation:offer?.preparation || item.reference_selection?.preparation || '',
-        search:'',offer,selected:null,accepted:false,loading:false,error:null,
-        stale:!!offer && offer.issued_revision !== analysis.revision};
+        open:!!offer || !!inference,ingredient_ids:[...(offer?.ingredient_ids || item.reference_selection?.ingredient_ids || suggestion?.ingredient_ids || [])],
+        preparation:offer?.preparation || item.reference_selection?.preparation || suggestion?.preparation || '',
+        search:'',offer,inference,ingredientsEdited:false,preparationEdited:false,selected:null,accepted:false,loading:false,error:null,
+        stale:!!offer && offer.issued_revision !== analysis.revision || !offer && !!inference && inference.issued_revision !== analysis.revision};
       if (state.stale) state.error = 'similarStale';
       similarStates.set(key,state);
     }
     return state;
   }
-  function similarError(error, state) {
+  function similarError(error, state, failure = 'similarFailed') {
     if (error.silent) return;
     state.error = error.status === 409 ? 'similarStale'
-      : [403,404].includes(error.status) ? 'similarUnavailable' : 'similarFailed';
+      : [403,404].includes(error.status) ? 'similarUnavailable' : failure;
     if ([403,404,409].includes(error.status)) state.stale = true;
   }
   function questionInputSnapshot() {
@@ -446,6 +451,29 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     }
     translateQuestions();
   }
+  function saveReferenceUpdate(data, state, before) {
+    const next = data.analysis || data;
+    // A reference action only changes this item's assistance metadata. Keep other
+    // unsent answers and ingredient edits when their underlying food is unchanged.
+    for (const other of similarStates.values()) {
+      if (other === state || other.analysisId !== analysis.id) continue;
+      const oldItem = analysis.draft?.[other.index], newItem = next.draft?.[other.index];
+      if (oldItem?.name === newItem?.name && oldItem?.food_id === newItem?.food_id) {
+        other.revision = next.revision; other.offer = null; other.selected = null; other.accepted = false;
+      }
+    }
+    if (ingredientEditor?.analysisId === analysis.id && !ingredientEditor.stale) {
+      const oldItem = analysis.draft?.[ingredientEditor.itemIndex], newItem = next.draft?.[ingredientEditor.itemIndex];
+      const facts = item => item && [item.name,item.food_id,item.custom_recipe,item.reference_template,item.reference_selection];
+      if (JSON.stringify(facts(oldItem)) === JSON.stringify(facts(newItem))) ingredientEditor.revision = next.revision;
+    }
+    const unchangedAnswers = before.filter(value => {
+      const index = Number($(value.id)?.closest('[data-key]')?.dataset.key.split('.')[0]);
+      const oldItem = analysis.draft?.[index], newItem = next.draft?.[index];
+      return oldItem && newItem && oldItem.name === newItem.name && oldItem.food_id === newItem.food_id;
+    });
+    saved(data); restoreQuestionInputs(unchangedAnswers);
+  }
   function renderSimilarPanel(panel, state) {
     if (!panel) return;
     panel.replaceChildren(); panel.hidden = !state.open;
@@ -456,6 +484,45 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       button.dataset[attribute] = 'true'; button.addEventListener('click',handler); return button;
     };
     panel.append(text('p','similarIntro'));
+    panel.append(action(state.loading === 'inference' ? 'similarInferring' : 'similarInfer','similarInfer',() => submit(async () => {
+      state.loading = 'inference'; state.error = null;
+      renderSimilarPanel(panel,state); controls();
+      try {
+        const data = await api('/analyses/' + state.analysisId + '/reference-inference','POST',{
+          revision:state.revision,item_index:state.index
+        });
+        if (analysis?.id !== state.analysisId) return;
+        const next = data.analysis || data;
+        state.revision = next.revision; state.inference = next.draft?.[state.index]?.reference_inference;
+        state.offer = null; state.selected = null; state.accepted = false; state.stale = false; state.loading = false;
+        if (state.inference?.status === 'suggested') {
+          if (!state.ingredientsEdited) state.ingredient_ids = [...state.inference.ingredient_ids];
+          if (!state.preparationEdited) state.preparation = state.inference.preparation;
+        } else {
+          if (!state.ingredientsEdited) state.ingredient_ids = [];
+          if (!state.preparationEdited) state.preparation = '';
+        }
+        saveReferenceUpdate(data,state,questionInputSnapshot());
+      } catch (error) { similarError(error,state,'similarInferenceFailed'); }
+      finally {
+        state.loading = false;
+        if (analysis?.id === state.analysisId && currentUser) renderSimilarPanel(document.querySelector('[data-similar-panel="' + similarKey(state.index) + '"]'),state);
+      }
+    })));
+    if (state.inference) {
+      const inferred = el('div'); inferred.dataset.similarInference = 'true';
+      inferred.append(text('strong',state.inference.status === 'suggested' ? 'similarInferred' : 'similarClarify'));
+      inferred.append(el('p',referenceText(state.inference,'reason')));
+      if (state.inference.status === 'suggested') {
+        const method = preparationOptions.find(([value]) => value === state.inference.preparation);
+        inferred.append(text('p','similarInferredFacts',{
+          ingredients:state.inference.ingredient_ids.map(id => I.foodName(id,catalogue.find(food => food.id === id)?.name || id)).join(I.getLanguage() === 'en' ? ', ' : '、'),
+          preparation:method?.[0] === 'as_served' ? I.t('similarColdMethod') : I.questionOption({key:'0.preparation'},{value:method?.[0],label:method?.[1] || ''})
+        }),text('p','similarInferenceReview'));
+      }
+      if (state.ingredientsEdited || state.preparationEdited) inferred.append(text('p','similarManualKept'));
+      panel.append(inferred);
+    }
     const search = el('input'); search.type = 'search'; search.value = state.search;
     search.id = 'similar-search-' + state.index; search.dataset.similarSearchInput = 'true';
     search.placeholder = I.t('similarIngredientsHint');
@@ -475,14 +542,14 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     const invalidate = () => { state.offer = null; state.selected = null; state.accepted = false; state.error = null; };
     select.addEventListener('change',() => {
       if (!select.value || state.ingredient_ids.length >= 8) return;
-      state.ingredient_ids.push(select.value); state.search = ''; invalidate(); renderSimilarPanel(panel,state); controls();
+      state.ingredientsEdited = true; state.ingredient_ids.push(select.value); state.search = ''; invalidate(); renderSimilarPanel(panel,state); controls();
     });
     panel.append(ingredientLabel,search,select,text('p','similarIngredientHelp'));
     const chosen = el('div'); chosen.className = 'similar-ingredients';
     for (const id of state.ingredient_ids) {
       const food = catalogue.find(food => food.id === id);
       const button = action('similarRemove','similarRemove',() => {
-        state.ingredient_ids = state.ingredient_ids.filter(value => value !== id); invalidate(); renderSimilarPanel(panel,state); controls();
+        state.ingredientsEdited = true; state.ingredient_ids = state.ingredient_ids.filter(value => value !== id); invalidate(); renderSimilarPanel(panel,state); controls();
       });
       button.textContent = I.t('similarRemove',{name:I.foodName(id,food?.name || id)}); chosen.append(button);
     }
@@ -495,13 +562,13 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         : I.questionOption({key:'0.preparation'},{value,label})); option.value = value; method.append(option);
     }
     method.value = state.preparation;
-    method.addEventListener('change',() => { state.preparation = method.value; invalidate(); renderSimilarPanel(panel,state); controls(); });
-    const find = action(state.loading ? 'similarSearching' : 'similarSearch','similarSearch',() => {
+    method.addEventListener('change',() => { state.preparationEdited = true; state.preparation = method.value; invalidate(); renderSimilarPanel(panel,state); controls(); });
+    const find = action(state.loading === 'candidates' ? 'similarSearching' : 'similarSearch','similarSearch',() => {
       if (!state.ingredient_ids.length || !state.preparation) {
         state.error = 'similarRequired'; renderSimilarPanel(panel,state); controls(); return;
       }
       submit(async () => {
-        const before = questionInputSnapshot(); state.loading = true; state.error = null; renderSimilarPanel(panel,state); controls();
+        state.loading = 'candidates'; state.error = null; renderSimilarPanel(panel,state); controls();
         try {
           const data = await api('/analyses/' + state.analysisId + '/reference-candidates','POST',{
             revision:state.revision,item_index:state.index,ingredient_ids:state.ingredient_ids,preparation:state.preparation
@@ -509,7 +576,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
           const next = data.analysis || data;
           state.revision = next.revision; state.offer = next.draft?.[state.index]?.reference_suggestions;
           state.selected = null; state.accepted = false; state.loading = false;
-          saved(data); restoreQuestionInputs(before);
+          saveReferenceUpdate(data,state,questionInputSnapshot());
         } catch (error) {
           similarError(error,state);
         } finally {
@@ -523,15 +590,17 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     });
     panel.append(methodLabel,method,find);
     const status = el('p'); status.className = 'similar-status'; status.setAttribute('role','status'); status.setAttribute('aria-live','polite');
-    status.textContent = state.error ? I.t(state.error) : state.loading ? I.t('similarSearching') : '';
+    status.textContent = state.error ? I.t(state.error) : state.loading ? I.t(state.loading === 'inference' ? 'similarInferring' : 'similarSearching') : '';
     status.classList.toggle('error',!!state.error); panel.append(status);
     if (state.stale) panel.append(action('similarReload','similarReload',() => submit(async () => {
       try {
         const data = await api('/analyses/' + state.analysisId), next = data.analysis || data;
         // Reload discards the expired offer, even if it remains in saved history.
-        similarStates.set(state.analysisId + ':' + state.index,{...state,revision:next.revision,
-          offer:null,selected:null,accepted:false,loading:false,stale:false,error:null,open:true});
-        saved(data);
+        const oldItem = analysis.draft?.[state.index], newItem = next.draft?.[state.index];
+        const sameFood = oldItem?.name === newItem?.name && oldItem?.food_id === newItem?.food_id;
+        Object.assign(state,{revision:next.revision,offer:null,inference:null,selected:null,accepted:false,loading:false,stale:false,error:null,open:true});
+        if (!sameFood) Object.assign(state,{ingredient_ids:[],preparation:'',search:'',ingredientsEdited:false,preparationEdited:false});
+        saveReferenceUpdate(data,state,questionInputSnapshot());
       }
       catch (error) { similarError(error,state); renderSimilarPanel(panel,state); }
     })));

@@ -119,6 +119,196 @@ def request_selection(client, path, offer):
     return response.json()
 
 
+@pytest.fixture()
+def inference_gateway(reference_flow, monkeypatch):
+    from services.api.app import reference_recipes as api_reference
+
+    gateway = {
+        'provider': 'qwen', 'status': 'suggested',
+        'ingredient_ids': ['chicken', 'peanut'], 'preparation': 'stir_fried',
+        'reason_zh': '根据菜名推测可能为鸡肉花生炒制，请核对修改。',
+        'reason_en': 'The name suggests stir-fried chicken and peanuts; review and edit.',
+    }
+    calls = []
+
+    def infer(payload, settings):
+        calls.append(payload.model_dump())
+        return deepcopy(gateway)
+
+    monkeypatch.setattr(api_reference, 'request_reference_inference', infer)
+    return gateway, calls
+
+
+def request_inference(client, path, revision=1):
+    result = client.post(path + '/reference-inference',
+                         json={'revision': revision, 'item_index': 0})
+    assert result.status_code == 200, result.text
+    return result.json()
+
+
+def test_name_inference_is_editable_advice_and_only_reviewed_facts_drive_ranking(
+        client, db_session, reference_flow, inference_gateway):
+    seed, _, _, rank_calls = reference_flow
+    _, calls = inference_gateway
+    path, original = seed(extra_unknown=True)
+    before = client.get(path).json()
+    state = request_inference(client, path)
+    item = state['draft'][0]
+    inferred = deepcopy(item.pop('reference_inference'))
+    assert item == original[0]
+    assert state['draft'][1:] == original[1:]
+    assert state['food_text'] == before['food_text']
+    assert state['conversation'] == before['conversation']
+    assert inferred['inferred'] is True and inferred['status'] == 'suggested'
+    assert inferred['issued_revision'] == state['revision'] == before['revision'] + 1
+    assert inferred['catalogue_version'] == catalogue()['version']
+    assert inferred['ingredient_ids'] == ['chicken', 'peanut']
+    assert inferred['preparation'] == 'stir_fried'
+    assert all(state[key] is None for key in KEYS) and state['details'] == []
+    assert calls == [{'original_name': ORIGINAL_NAME}] and rank_calls == []
+    assert db_session.scalar(select(func.count(Job.id))) == 0
+
+    # The user removes the guessed peanut before explicitly requesting candidates.
+    response = client.post(path + '/reference-candidates', json=search_payload(
+        state['revision'], ingredient_ids=['chicken']))
+    assert response.status_code == 200, response.text
+    offered = response.json()
+    assert offered['draft'][0]['reference_inference'] == inferred
+    assert offered['draft'][0]['reference_suggestions']['ingredient_ids'] == ['chicken']
+    assert rank_calls == [{'original_name': ORIGINAL_NAME,
+                           'ingredient_ids': ['chicken'], 'preparation': 'stir_fried'}]
+    selected = request_selection(client, path, offered)
+    assert selected['draft'][0]['reference_selection']['ingredient_ids'] == ['chicken']
+    assert selected['draft'][0]['reference_inference'] == inferred
+    assert selected['draft'][0]['food_id'] is None
+    assert all(selected[key] is None for key in KEYS)
+
+
+def test_name_inference_clarification_has_no_assumed_facts_or_candidates(
+        client, reference_flow, inference_gateway):
+    seed, _, _, rank_calls = reference_flow
+    gateway, calls = inference_gateway
+    gateway.update(status='needs_clarification', ingredient_ids=[], preparation=None,
+                   reason_zh='菜名含义不明确，请选择实际主要食材和做法。',
+                   reason_en='The name is ambiguous. Select actual ingredients and preparation.')
+    path, original = seed()
+    state = request_inference(client, path)
+    item = state['draft'][0]
+    inferred = item.pop('reference_inference')
+    assert inferred['status'] == 'needs_clarification'
+    assert inferred['ingredient_ids'] == [] and inferred['preparation'] is None
+    assert item == original[0]
+    assert all(state[key] is None for key in KEYS)
+    assert len(calls) == 1 and rank_calls == []
+
+
+def test_reinference_invalidates_previous_reference_offer_selection_and_template(
+        client, reference_flow, inference_gateway):
+    seed, _, _, _ = reference_flow
+    path, original = seed()
+    selected = request_selection(client, path, request_offer(client, path))
+    state = request_inference(client, path, selected['revision'])
+    item = state['draft'][0]
+    assert item['reference_inference']['inferred'] is True
+    assert not {'reference_suggestions', 'reference_selection', 'reference_template'} & item.keys()
+    assert state['draft'][1:] == original[1:]
+    assert item['food_id'] is None
+    old_offer = client.post(path + '/reference-selection',
+                            json=select_payload(selected, revision=state['revision']))
+    assert old_offer.status_code == 409
+
+
+@pytest.mark.parametrize('change', [
+    {'provider': 'demo'}, {'ingredient_ids': ['unknown']}, {'ingredient_ids': ['dish_003']},
+    {'ingredient_ids': ['chicken', 'chicken']}, {'ingredient_ids': ['salt']},
+    {'ingredient_ids': []}, {'preparation': None}, {'preparation': 'other'},
+    {'status': 'needs_clarification'}, {'food_id': 'dish_003'}, {'grams': 200},
+    {'reason_en': 'This has five hundred calories.'}, {'reason_en': 'Use two cups.'},
+])
+def test_invalid_inference_gateway_output_cannot_mutate_a_meal(
+        client, reference_flow, inference_gateway, change):
+    seed, _, _, _ = reference_flow
+    gateway, _ = inference_gateway
+    gateway.update(change)
+    path, _ = seed()
+    before = client.get(path).json()
+    result = client.post(path + '/reference-inference', json={'revision': 1, 'item_index': 0})
+    assert result.status_code == 502, result.text
+    assert client.get(path).json() == before
+
+
+@pytest.mark.parametrize('change', [
+    {'revision': True}, {'item_index': True}, {'item_index': -1}, {'item_index': 20},
+    {'item_index': 1}, {'ingredient_ids': ['chicken']}, {'original_name': 'Forged name'},
+])
+def test_invalid_inference_request_cannot_invoke_provider_or_mutate_meal(
+        client, reference_flow, inference_gateway, change):
+    seed, _, _, _ = reference_flow
+    _, calls = inference_gateway
+    path, _ = seed()
+    before = client.get(path).json()
+    result = client.post(path + '/reference-inference',
+                         json={'revision': 1, 'item_index': 0, **change})
+    assert result.status_code == 422, result.text
+    assert client.get(path).json() == before and calls == []
+
+
+def test_inference_requires_current_owned_unconfirmed_record_and_csrf(
+        client, client_factory, db_session, reference_flow, inference_gateway):
+    seed, _, _, _ = reference_flow
+    _, calls = inference_gateway
+    path, _ = seed()
+    state = request_inference(client, path)
+    body = {'revision': state['revision'], 'item_index': 0}
+    anonymous, stranger = client_factory(), client_factory()
+    assert stranger.post('/auth/register', json={
+        'username': 'inference_stranger', 'password': 'Synthetic-test-password-42',
+    }).status_code == 201
+    assert anonymous.post(path + '/reference-inference', json=body).status_code == 401
+    assert stranger.post(path + '/reference-inference', json=body).status_code == 404
+    assert client.post(path + '/reference-inference', json=body,
+                       headers={'X-NutriChat-Request': ''}).status_code == 403
+    assert client.post(path + '/reference-inference',
+                       json={**body, 'revision': 1}).status_code == 409
+    assert client.get(path).json() == state
+    row = db_session.get(Analysis, state['id'])
+    row.status = 'confirmed'
+    db_session.commit()
+    confirmed = client.get(path).json()
+    assert client.post(path + '/reference-inference', json=body).status_code == 409
+    assert client.get(path).json() == confirmed and len(calls) == 1
+
+
+def test_inflight_inference_cannot_overwrite_a_newer_meal_revision(
+        client, db_session, reference_flow, inference_gateway, monkeypatch):
+    from services.api.app import reference_recipes as api_reference
+
+    seed, _, _, _ = reference_flow
+    gateway, _ = inference_gateway
+    path, original = seed()
+    before = client.get(path).json()
+    newer_draft = deepcopy(original)
+    newer_draft[1]['grams'] = 333
+    other_session = make_session_factory(db_session.get_bind())
+
+    def concurrent_update(payload, settings):
+        with other_session() as session:
+            row = session.get(Analysis, before['id'])
+            row.draft = newer_draft
+            row.revision += 1
+            session.commit()
+        return deepcopy(gateway)
+
+    monkeypatch.setattr(api_reference, 'request_reference_inference', concurrent_update)
+    result = client.post(path + '/reference-inference', json={'revision': 1, 'item_index': 0})
+    assert result.status_code == 409, result.text
+    db_session.expire_all()
+    after = client.get(path).json()
+    assert after['revision'] == before['revision'] + 1
+    assert after['draft'] == newer_draft and after['questions'] == before['questions']
+    assert all(after[key] is None for key in KEYS)
+
+
 @pytest.mark.parametrize('mode', ['basic', 'advanced'])
 def test_offer_and_selection_never_resolve_unknown_until_separate_recipe_review(
         client, db_session, reference_flow, mode):

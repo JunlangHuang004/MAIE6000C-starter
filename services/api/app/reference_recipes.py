@@ -13,10 +13,11 @@ from services.common.meal_engine import catalogue
 from services.common.models import User
 from services.common.recipe_references import (
     reference_shortlist, validate_reference_ingredients, validated_reference_candidates,
+    validated_reference_inference,
 )
 from services.common.schemas import (
-    AnalysisRead, AnalysisReferenceCandidates, AnalysisReferenceSelection,
-    RecipeRecommendationRequest,
+    AnalysisRead, AnalysisReferenceCandidates, AnalysisReferenceInference,
+    AnalysisReferenceSelection, RecipeInferenceRequest, RecipeRecommendationRequest,
 )
 
 
@@ -35,6 +36,20 @@ def request_recommendations(payload, settings):
         return response.json()
     except (httpx.HTTPError, ValueError):
         raise RuntimeError('参考菜谱推荐暂时不可用，请稍后重试或填写实际食材。') from None
+
+
+def request_reference_inference(payload, settings):
+    try:
+        response = httpx.post(
+            settings.ai_service_url.rstrip('/') + '/infer-reference-facts',
+            json=payload.model_dump(), timeout=max(
+                settings.worker_request_timeout_seconds, settings.llm_timeout_seconds,
+                settings.qwen_timeout_seconds) + 5,
+        )
+        response.raise_for_status()
+        return response.json()
+    except (httpx.HTTPError, ValueError):
+        raise RuntimeError('菜名推测暂时不可用，请稍后重试或自行选择食材和做法。') from None
 
 
 def _unknown_item(db, analysis_id, payload, user_id):
@@ -64,6 +79,33 @@ def _save_draft(db, analysis_id, revision, draft, user_id):
     db.commit()
     db.expire_all()
     return AnalysisRead.model_validate(get_analysis(db, analysis_id, user_id))
+
+
+@router.post('/analyses/{analysis_id}/reference-inference', response_model=AnalysisRead)
+def reference_inference(
+    analysis_id: str, payload: AnalysisReferenceInference,
+    db: Session = Depends(get_db), user: User = Depends(get_current_user),
+):
+    analysis, original = _unknown_item(db, analysis_id, payload, user.id)
+    settings = get_settings()
+    try:
+        request = RecipeInferenceRequest(
+            original_name=original.get('original_name') or original['name'])
+        result = validated_reference_inference(request_reference_inference(request, settings))
+        if result['provider'] != settings.effective_nutrition_provider:
+            raise ValueError('Inference provider differs from configured provider')
+    except (RuntimeError, ValueError, TypeError, KeyError) as exc:
+        raise HTTPException(status_code=502,
+                            detail='未采用菜名推测，请重试或自行选择食材和做法。') from exc
+    draft = deepcopy(analysis.draft)
+    item = draft[payload.item_index]
+    for key in ('reference_suggestions', 'reference_selection', 'reference_template'):
+        item.pop(key, None)
+    item['reference_inference'] = {
+        **result, 'inferred': True, 'issued_revision': payload.revision + 1,
+        'catalogue_version': catalogue()['version'],
+    }
+    return _save_draft(db, analysis_id, payload.revision, draft, user.id)
 
 
 @router.post('/analyses/{analysis_id}/reference-candidates', response_model=AnalysisRead)

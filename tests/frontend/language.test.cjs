@@ -1762,3 +1762,244 @@ test('Reloading an expired reference offer enables a fresh search without reusin
   assert.equal(panel.querySelector('[data-similar-accepted]'),null);
   assert.equal(view.$('result').hidden,true);
 });
+
+function referenceInferenceFixture(base, status = 'suggested', provider = 'hkust') {
+  const meal = clone(base); meal.revision += 1;
+  delete meal.draft[1].reference_suggestions;
+  delete meal.draft[1].reference_selection;
+  delete meal.draft[1].reference_template;
+  meal.draft[1].reference_inference = {provider,catalogue_version:'test-catalogue',issued_revision:meal.revision,
+    inferred:true,status,ingredient_ids:status === 'suggested' ? ['chicken'] : [],
+    preparation:status === 'suggested' ? 'braised' : null,
+    reason_zh:status === 'suggested' ? '菜名可能指以酱油焖煮的鸡肉。' : '名称不足以确定食材，请按实际情况填写。',
+    reason_en:status === 'suggested' ? 'The name may describe chicken braised in soy sauce.' : 'The name is insufficient. Enter the actual ingredients.'};
+  return meal;
+}
+async function inferReference(view, panel) {
+  panel.querySelector('[data-similar-infer]').click(); await flush();
+  return view.document.querySelector('[data-similar-panel]');
+}
+
+test('Name inference only prefills editable guesses; reviewed edits are sent to candidate search', async t => {
+  const meal = unsupportedIngredientMeal();
+  meal.questions.unshift({key:'0.grams',kind:'number',min:0.1,max:10000,label:'熟米饭吃了多少克？'});
+  const inferred = referenceInferenceFixture(meal), offered = referenceOfferFixture(inferred);
+  Object.assign(offered.draft[1].reference_suggestions,{ingredient_ids:['egg'],preparation:'steamed'});
+  const view = await mount(t,{meal,respond:request => {
+    if (request.url.endsWith('/reference-inference')) return {body:inferred};
+    if (request.url.endsWith('/reference-candidates')) return {body:offered};
+  }});
+  view.document.querySelector('[data-answer]').value = '125';
+  let panel = await inferReference(view,openReference(view));
+  const request = view.requests.find(request => request.url.endsWith('/reference-inference'));
+  assert.deepEqual(request.body,{revision:meal.revision,item_index:1});
+  assert.equal(request.headers['X-NutriChat-Request'],'1');
+  assert.match(panel.querySelector('[data-similar-remove]').textContent,/鸡/);
+  assert.equal(panel.querySelector('[data-similar-method]').value,'braised');
+  assert.match(panel.querySelector('[data-similar-inference]').textContent,/AI 根据菜名推测.*待核对/);
+  assert.equal(panel.querySelector('[data-similar-search]').textContent,'核对后查找相似菜');
+  assert.equal(view.document.querySelector('[data-answer]').value,'125');
+  assert.equal(view.requests.filter(request => request.method === 'POST').length,1);
+  assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+  assert.equal(view.$('ingredient-builder').hidden,true);
+  assert.equal(view.$('result').hidden,true);
+  assert.equal(view.$('confirm').disabled,true);
+  assert.equal(view.$('calories').textContent,'—');
+  const before = view.requests.length; await view.clickLanguage('en');
+  panel = view.document.querySelector('[data-similar-panel]');
+  assert.match(panel.textContent,/AI guesses from the name.*review needed/);
+  assert.match(panel.textContent,/chicken braised in soy sauce/);
+  assert.doesNotMatch(panel.textContent,/菜名可能/);
+  assert.equal(panel.querySelector('[data-similar-method]').value,'braised');
+  assert.equal(view.$('submitted-meal').textContent,meal.food_text);
+  assert.equal(view.requests.length,before);
+  panel.querySelector('[data-similar-remove]').click();
+  let ingredient = panel.querySelector('[data-similar-ingredient]'); ingredient.value = 'egg';
+  ingredient.dispatchEvent(new view.window.Event('change',{bubbles:true}));
+  const method = panel.querySelector('[data-similar-method]'); method.value = 'steamed';
+  method.dispatchEvent(new view.window.Event('change',{bubbles:true}));
+  await view.clickLanguage('zh');
+  panel = await searchReference(view,view.document.querySelector('[data-similar-panel]'));
+  assert.deepEqual(view.requests.find(request => request.url.endsWith('/reference-candidates')).body,
+    {revision:inferred.revision,item_index:1,ingredient_ids:['egg'],preparation:'steamed'});
+  assert.equal(panel.querySelector('[data-similar-candidate]').checked,false);
+  assert.equal(panel.querySelector('[data-similar-accepted]').checked,false);
+  assert.equal(view.document.querySelector('[data-answer]').value,'125');
+  assert.equal(view.$('result').hidden,true);
+});
+
+test('Saved name inference restores guesses without making requests and treats provider text as inert', async t => {
+  const meal = referenceInferenceFixture(unsupportedIngredientMeal());
+  meal.draft[1].reference_inference.reason_en = '<img src=x onerror="window.__injected=true">';
+  const view = await mount(t,{meal,language:'en'});
+  const panel = view.document.querySelector('[data-similar-panel]');
+  assert.equal(panel.hidden,false);
+  assert.equal(panel.querySelector('[data-similar-method]').value,'braised');
+  assert.match(panel.textContent,/<img src=x/);
+  assert.equal(panel.querySelector('img'),null);
+  assert.equal(view.window.__injected,undefined);
+  assert.equal(view.requests.some(request => request.method === 'POST'),false);
+  assert.equal(view.$('result').hidden,true);
+});
+
+test('Name inference preserves manual facts in both panels and unsaved actual ingredient quantities', async t => {
+  const meal = unsupportedIngredientMeal();
+  meal.draft.push({food_id:null,name:'另一份未知菜',grams:80});
+  meal.questions.push({key:'2.food_id',kind:'unsupported',label:'请补充食材。'});
+  const inferred = referenceInferenceFixture(meal);
+  const view = await mount(t,{meal,language:'en',respond:request => {
+    if (request.url.endsWith('/reference-inference')) return {body:inferred};
+    if (request.url.endsWith('/ingredients')) return {body:{...clone(inferred),revision:inferred.revision+1,status:'queued'}};
+  }});
+  view.document.querySelector('[data-build-ingredients="1"]').click();
+  setIngredientRow(view.document,0,'egg','150'); view.$('ingredient-accepted').checked = true;
+  view.document.querySelector('[data-find-similar="2"]').click();
+  let other = view.document.querySelectorAll('[data-similar-panel]')[1]; selectReferenceIngredients(view,other);
+  let panel = openReference(view); selectReferenceIngredients(view,panel);
+  panel.querySelector('[data-similar-remove]').click();
+  const chosen = panel.querySelector('[data-similar-ingredient]'); chosen.value = 'egg';
+  chosen.dispatchEvent(new view.window.Event('change',{bubbles:true}));
+  panel = await inferReference(view,panel);
+  assert.equal(panel.querySelector('[data-similar-method]').value,'boiled');
+  assert.match(panel.querySelector('[data-similar-remove]').textContent,/egg/i);
+  assert.match(panel.textContent,/manual ingredient or preparation entries have been kept/);
+  other = view.document.querySelectorAll('[data-similar-panel]')[1];
+  assert.equal(other.hidden,false);
+  assert.equal(other.querySelector('[data-similar-method]').value,'boiled');
+  assert.match(other.querySelector('[data-similar-remove]').textContent,/chicken/i);
+  assert.equal(view.document.querySelector('[data-ingredient-grams]').value,'150');
+  assert.equal(view.document.querySelector('[data-ingredient-food]').value,'egg');
+  assert.equal(view.$('ingredient-accepted').checked,true);
+  assert.equal(view.$('ingredient-submit').disabled,false);
+  assert.equal(view.$('ingredient-editor-warning').hidden,true);
+  assert.equal(view.requests.some(request => request.url.endsWith('/ingredients')),false);
+  await submitIngredients(view);
+  const sent = view.requests.find(request => request.url.endsWith('/ingredients'));
+  assert.equal(sent.body.revision,inferred.revision);
+  assert.deepEqual(sent.body.ingredients,[{food_id:'egg',grams:150}]);
+});
+
+for (const provider of ['hkust','demo']) {
+  test(`${provider} ambiguous name inference asks for facts without selecting ingredients or requesting candidates`, async t => {
+    const meal = unsupportedIngredientMeal(), inferred = referenceInferenceFixture(meal,'needs_clarification',provider);
+    const view = await mount(t,{meal,language:'en',respond:request => {
+      if (request.url === '/foods') return {body:{provider,catalogue:{foods:clone(foods)}}};
+      if (request.url.endsWith('/reference-inference')) return {body:inferred};
+    }});
+    const panel = await inferReference(view,openReference(view));
+    assert.match(panel.textContent,/name alone is not enough/);
+    assert.equal(panel.querySelector('[data-similar-remove]'),null);
+    assert.equal(panel.querySelector('[data-similar-method]').value,'');
+    assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+    assert.equal(view.requests.filter(request => request.method === 'POST').length,1);
+    assert.equal(view.$('result').hidden,true);
+    panel.querySelector('[data-similar-actual]').click();
+    assert.equal(view.$('ingredient-builder').hidden,false);
+    assert.equal(view.document.querySelector('[data-ingredient-food]').value,'');
+    assert.equal(view.$('ingredient-accepted').checked,false);
+  });
+}
+
+for (const status of [409,403,404,503]) {
+  test(`Name inference handles HTTP ${status} and keeps manual entry available`, async t => {
+    const meal = unsupportedIngredientMeal();
+    meal.questions.unshift({key:'0.grams',kind:'number',min:0.1,max:10000,label:'熟米饭吃了多少克？'});
+    const latest = {...clone(meal),revision:meal.revision+1}; let reads = 0;
+    const view = await mount(t,{meal,language:'en',respond:request => {
+      if (request.url.endsWith('/reference-inference')) return {status,body:{detail:'private-provider-detail'}};
+      if (request.url === '/analyses/' + meal.id && request.method === 'GET') return {body:++reads === 1 ? meal : latest};
+    }});
+    view.document.querySelector('[data-answer]').value = '125';
+    let panel = openReference(view); selectReferenceIngredients(view,panel); panel = await inferReference(view,panel);
+    assert.doesNotMatch(panel.textContent,/private-provider-detail/);
+    assert.match(panel.textContent,status === 409 ? /meal has changed/ : status === 503 ? /AI inference is temporarily unavailable/ : /meal is unavailable/);
+    assert.equal(panel.querySelector('[data-similar-infer]').disabled,status !== 503);
+    assert.equal(panel.querySelector('[data-similar-actual]').disabled,false);
+    assert.equal(panel.querySelector('[data-similar-method]').value,'boiled');
+    assert.equal(view.$('result').hidden,true);
+    if (status === 409) {
+      panel.querySelector('[data-similar-reload]').click(); await flush();
+      panel = view.document.querySelector('[data-similar-panel]');
+      assert.equal(panel.querySelector('[data-similar-infer]').disabled,false);
+      assert.equal(panel.querySelector('[data-similar-method]').value,'boiled');
+      assert.equal(view.document.querySelector('[data-answer]').value,'125');
+      assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+    }
+    assert.equal(view.requests.some(request => request.url.endsWith('/reference-candidates')),false);
+  });
+}
+
+test('A fresh inference clears previous candidate selection and acknowledgement', async t => {
+  const meal = referenceOfferFixture(unsupportedIngredientMeal()), inferred = referenceInferenceFixture(meal);
+  const view = await mount(t,{meal,respond:request => request.url.endsWith('/reference-inference') ? {body:inferred} : undefined});
+  let panel = view.document.querySelector('[data-similar-panel]');
+  panel.querySelector('[data-similar-candidate]').click(); panel.querySelector('[data-similar-accepted]').click();
+  assert.equal(panel.querySelector('[data-similar-continue]').disabled,false);
+  panel = await inferReference(view,panel);
+  assert.equal(panel.querySelector('[data-similar-candidate]'),null);
+  assert.equal(panel.querySelector('[data-similar-accepted]'),null);
+  assert.equal(panel.querySelector('[data-similar-continue]'),null);
+  assert.equal(panel.querySelector('[data-similar-method]').value,'braised');
+  assert.equal(view.$('result').hidden,true);
+});
+
+test('Reloading stale inference drops guesses and answers for a changed food while preserving unchanged food answers', async t => {
+  const meal = referenceInferenceFixture(unsupportedIngredientMeal()); meal.revision += 1;
+  meal.questions.unshift({key:'0.grams',kind:'number',min:0.1,max:10000,label:'熟米饭吃了多少克？'},
+    {key:'1.grams',kind:'number',min:0.1,max:10000,label:'这道菜吃了多少克？'});
+  const latest = clone(meal); latest.revision += 1; latest.draft[1].name = '另一份完全不同的菜';
+  delete latest.draft[1].reference_inference;
+  let reads = 0;
+  const view = await mount(t,{meal,language:'en',respond:request => request.url === '/analyses/' + meal.id && request.method === 'GET'
+    ? {body:++reads === 1 ? meal : latest} : undefined});
+  let panel = view.document.querySelector('[data-similar-panel]');
+  assert.equal(panel.querySelector('[data-similar-infer]').disabled,true);
+  assert.equal(panel.querySelector('[data-similar-search]').disabled,true);
+  view.$('q-0.grams').value = '125'; view.$('q-1.grams').value = '250';
+  panel.querySelector('[data-similar-reload]').click(); await flush();
+  panel = view.document.querySelector('[data-similar-panel]');
+  assert.equal(panel.querySelector('[data-similar-infer]').disabled,false);
+  assert.equal(panel.querySelector('[data-similar-inference]'),null);
+  assert.equal(panel.querySelector('[data-similar-remove]'),null);
+  assert.equal(panel.querySelector('[data-similar-method]').value,'');
+  assert.equal(view.$('q-0.grams').value,'125'); assert.equal(view.$('q-1.grams').value,'');
+  assert.equal(view.requests.some(request => request.method === 'POST'),false);
+});
+
+for (const close of ['cancel','logout']) {
+  test(`Pending name inference survives language switching and ${close} does not reopen private meal content`, async t => {
+    const meal = unsupportedIngredientMeal();
+    meal.questions.unshift({key:'0.grams',kind:'number',min:0.1,max:10000,label:'熟米饭吃了多少克？'});
+    const inferred = referenceInferenceFixture(meal); let release;
+    const view = await mount(t,{meal,respond:request => request.url.endsWith('/reference-inference')
+      ? new Promise(resolve => { release = () => resolve({body:inferred}); }) : undefined});
+    let panel = openReference(view);
+    panel.querySelector('[data-similar-infer]').click(); await flush();
+    assert.equal(panel.getAttribute('aria-busy'),'true');
+    assert.equal(panel.querySelector('[data-similar-infer]').disabled,true);
+    assert.equal(panel.querySelector('[data-similar-search]').disabled,true);
+    assert.equal(panel.querySelector('[data-similar-cancel]').disabled,false);
+    const before = view.requests.length; await view.clickLanguage('en');
+    panel = view.document.querySelector('[data-similar-panel]');
+    assert.match(panel.textContent,/Inferring from the food name/);
+    assert.equal(view.requests.length,before);
+    view.document.querySelector('[data-answer]').value = '145';
+    if (close === 'logout') view.window.dispatchEvent(new view.window.StorageEvent('storage',{key:'nutrichat.auth-change',newValue:'logout'}));
+    else panel.querySelector('[data-similar-cancel]').click();
+    release(); await flush();
+    if (close === 'logout') {
+      assert.equal(view.$('questions').textContent,'');
+      assert.equal(view.$('evidence').textContent,'');
+    } else {
+      panel = view.document.querySelector('[data-similar-panel]');
+      assert.equal(panel.hidden,true);
+      panel = openReference(view);
+      assert.equal(panel.querySelector('[data-similar-method]').value,'braised');
+      assert.match(panel.textContent,/AI guesses from the name/);
+      assert.equal(view.document.querySelector('[data-answer]').value,'145');
+    }
+    assert.equal(view.$('result').hidden,true);
+    assert.equal(view.$('ingredient-builder').hidden,true);
+    assert.equal(view.requests.some(request => request.url.endsWith('/reference-candidates')),false);
+  });
+}

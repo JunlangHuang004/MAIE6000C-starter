@@ -153,9 +153,12 @@ names still require clarification.
 
 ## Unknown dishes and similar references
 
-An unknown dish still withholds meal totals. Optionally select its main ingredients
-and cooking method to request up to three existing recipes as approximate
-references. Nothing is substituted automatically: choose a candidate, acknowledge
+An unknown dish still withholds meal totals. The optional AI-assisted entry can
+suggest possible main ingredients and a cooking method from its name. These are
+editable guesses: review or correct them before requesting up to three existing
+recipes as approximate references. Manual ingredient/method selection remains
+available, and ambiguous names require clarification. Nothing is substituted
+automatically: choose a candidate, acknowledge
 its limitations, then review and accept its ingredient amounts before calculation.
 The original dish name and reference label persist after saving. See the
 [similar-recipe guide](docs/similar-recipe-references.md) for the workflow and limits.
