@@ -2,13 +2,16 @@
 
 NutriChat combines the meal-estimation features from `nutrichat` with independent
 accounts, personal daily references and 30-day tracking on `test`. Catalogue
-**2026-11-23.2 contains 202 USDA ingredient records and 384 editable Chinese
+**2026-11-24.1 contains 202 USDA ingredient records and 384 editable Chinese
 reference recipes**, with English names for all 586 records and bilingual recipe
 methods. The [home-recipe follow-up](docs/home-recipe-expansion.md) adds 34 reference
 recipes while preserving existing ingredient nutrients. The subsequent
 [white-cut chicken correction](docs/white-chicken-reference.md) adds two cooked
 chicken records and corrects one reference formula; it remains a labelled proxy,
 not measured white-cut chicken nutrition.
+Ten dish records now also have [CFS prepared-food references](docs/cfs-prepared-food-references.md)
+for ordinary dish estimates. Their complete source nutrient vectors are separate
+from editable ingredient calculations; historical saved results remain unchanged.
 The `nutrichat` branch, `w07-midterm` and `w13-final` tags, and existing deployments
 remain separate historical snapshots; this follow-up does not deploy the app or rewrite those snapshots.
 
@@ -103,8 +106,8 @@ without limiting coverage.
 
 | Mode | Use case | Missing information |
 | --- | --- | --- |
-| Basic | A quick estimate, such as “一份番茄炒蛋，两个水煮鸡蛋” | Display reference portions, recipes and oil assumptions for supported foods |
-| Advanced | User-supplied weights and preparation details | Ask for edible grams, raw/cooked state, preparation and oil; require recipe review |
+| Basic | A quick estimate, such as “一份番茄炒蛋，两个水煮鸡蛋” | Display reference portions and calculation assumptions; use the CFS prepared-food reference for the ten matched dishes unless ingredient details override it |
+| Advanced | User-supplied weights and preparation details | Choose CFS or ingredient calculation where available; ask for edible grams and relevant details, and review ingredient recipes |
 
 1. Sign in, select a mode and describe the meal.
 2. Wait for background processing, then review the totals, food weights and any
@@ -253,6 +256,7 @@ and do not use the model. Qwen/HKUST run in the cloud and need no local GPU.
 | [API contract](docs/api-contract.md) | Routes, payloads, states and conflicts |
 | [Architecture](docs/architecture.md) | Components, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA provenance and reference-recipe assumptions |
+| [CFS prepared-food references](docs/cfs-prepared-food-references.md) | Ten attributed source vectors, calculation choices and carbohydrate definitions |
 | [Actual ingredient recipes](docs/ingredient-recipes.md) | Explicit ingredients and batch/portion arithmetic |
 | [Dish index](docs/recipe-catalogue.md) | All 384 reference dishes, with Chinese and English names and methods |
 | [Operations](docs/operations.md) | Startup, tests, migrations and troubleshooting |

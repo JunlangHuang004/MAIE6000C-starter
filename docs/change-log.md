@@ -1,5 +1,29 @@
 # NutriChat change log
 
+## 2026-11-24 — Add CFS prepared-food nutrition references
+
+- Attribute ten verified same-name prepared-dish nutrient vectors to the Hong
+  Kong Centre for Food Safety. Preserve source calories, protein, fat and
+  available carbohydrate together; retain trace-fibre qualifiers and source
+  scope. Catalogue `2026-11-24.1` still has 202 ingredients and 384 recipes.
+- Basic uses these source figures for ordinary matched dishes, with existing
+  visible portion assumptions. Advanced offers a choice of prepared reference or
+  ingredient calculation. Explicit ingredients, yield or oil—including zero
+  oil—and custom/similar-reference recipes use ingredient arithmetic. The original
+  formulas are not altered to force agreement with restaurant sample means.
+- Save calculation/source/basis evidence with results. Mixed available and total
+  carbohydrate definitions have separate subtotals rather than an incompatible
+  combined number; energy, protein, fat and confirmation remain available.
+- Validate cooking methods against source-specific compatibility, withhold
+  estimates on conflicts, and preserve old saved nutrition. No database migration
+  or model retraining is required.
+- Pass 2,446 full unit/integration tests and 108 frontend tests. An independent
+  review verifies all ten source vectors and passes 108 overlapping source,
+  routing and API checks. Live browser checks cover CFS estimates, a zero-oil
+  ingredient recipe, mixed carbohydrate definitions and bilingual reload.
+  See [the source and behavior guide](cfs-prepared-food-references.md) and
+  [verification report](evidence/cfs-prepared-reference-verification.md).
+
 ## 2026-11-24 — Require identical main ingredients for references
 
 - Reject candidates with missing or additional main ingredients, including

@@ -1,12 +1,16 @@
 # Chinese food catalogue and clarification dialogue
 
-Version **2026-11-23.2** contains **202 ingredient records and 384 editable Chinese
+Version **2026-11-24.1** contains **202 ingredient records and 384 editable Chinese
 recipe reference templates**, 586 records in total. All records have English names,
 and all recipes have English methods. No model training is required.
 Qwen extracts explicit facts
 and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
 facts; basic mode uses visible reference assumptions where supported. Unresolved
 questions create `needs_input`, not a failed job or a partial calorie total.
+Ten existing dishes also carry attributed CFS prepared-food references. Basic
+uses those full source vectors for ordinary matched dishes; Advanced offers a
+choice of source reference or editable ingredient calculation. See the
+[CFS source and calculation guide](cfs-prepared-food-references.md).
 
 ## Data provenance
 
@@ -27,8 +31,9 @@ The 384 recipe templates in `recipes.json` are **project-authored illustrative
 formulations**, not measurements, authentic standardized recipes, or imports of
 HowToCook/Figshare. Some use simplified ingredients, clearly described by `method`.
 Their nutrient numbers are computed from USDA ingredients; every assumed ingredient
-amount and finished batch weight must be explicitly reviewed/accepted in advanced
-mode. Basic mode uses these reference values as labelled, unconfirmed assumptions.
+amount and finished batch weight must be explicitly reviewed/accepted when using
+the ingredient calculation in advanced mode. For the other 374 dishes, Basic
+continues using these formula values as labelled, unconfirmed assumptions.
 The user can change every existing ingredient amount or set omitted ingredients
 to zero. A custom ingredient recipe provides explicit selection and quantities
 when the reference dish does not describe the meal. Recipe weights refer to the whole batch;
@@ -46,7 +51,9 @@ not laboratory measurements. Generic ingredients may differ from local brands.
 
 Figshare Chinese dish datasets remain research candidates: their serving/whole-
 recipe bases and source ingredient details need further normalization before import.
-Open Food Facts has not been mixed into this CC0 ingredient snapshot.
+Open Food Facts has not been mixed into this CC0 ingredient snapshot. The selected
+CFS factual references have separate provenance and source terms; the combined
+catalogue must not be described as wholly CC0 or wholly laboratory measured.
 
 The 31 October expansion added 62 ingredient records and 100 recipes while preserving
 the original 138 ingredient records and 250 recipes. The

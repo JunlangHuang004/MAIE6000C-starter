@@ -194,8 +194,14 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 
 ## Data, migrations and recovery
 
-Food catalogue `2026-11-23.2` is versioned JSON: 202 ingredients and 384 reference
+Food catalogue `2026-11-24.1` is versioned JSON: 202 ingredients and 384 reference
 recipes. All 586 records have English names, and all recipe methods are bilingual.
+Ten existing dishes include separately attributed CFS prepared-food references;
+all ingredient values and illustrative ingredient formulas are retained. Rebuild
+all API, AI and worker images for the source update. See the
+[CFS guide](cfs-prepared-food-references.md) for calculation routing, carbohydrate
+definitions and source provenance. No database migration or historical-total
+rewrite is required.
 The [home-recipe follow-up](home-recipe-expansion.md) adds 34 project-authored
 reference formulas while preserving earlier ingredient nutrients and 350 recipe
 formulations, with the existing egg-portion metadata retained. Recipe-site URLs

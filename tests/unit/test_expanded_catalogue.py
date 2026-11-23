@@ -36,8 +36,12 @@ def test_each_recipe_estimates_and_requires_advanced_approval(food):
     assert basic['draft'] == draft
     pending = evaluate_mode(draft, 'advanced')
     assert pending['calories'] is None
-    assert [q['key'] for q in pending['questions']] == ['0.recipe']
-    accepted = apply_answers(draft, {'0.recipe': pending['questions'][0]['recipe']})
+    if food.get('measured_reference'):
+        assert [q['key'] for q in pending['questions']] == ['0.calculation_basis']
+        accepted = apply_answers(draft, {'0.calculation_basis': 'measured_reference'})
+    else:
+        assert [q['key'] for q in pending['questions']] == ['0.recipe']
+        accepted = apply_answers(draft, {'0.recipe': pending['questions'][0]['recipe']})
     advanced = evaluate_mode(accepted, 'advanced')
     assert not advanced['questions']
     for nutrient in ('calories', 'protein_g', 'fat_g', 'carbs_g'):
@@ -169,7 +173,8 @@ def test_advanced_bone_weight_requires_actual_edible_grams():
     assert answered[0]['weight_includes_inedible'] is False
     result = evaluate_mode(answered, mode)
     assert result['calories'] is None
-    assert result['questions'][0]['key'] == '0.recipe'
+    assert result['questions'][0]['key'] == (
+        '0.calculation_basis' if food.get('measured_reference') else '0.recipe')
     assert draft[0]['weight_includes_inedible'] is True
 
 
@@ -177,6 +182,9 @@ def test_basic_bone_weight_uses_labelled_rough_estimate_and_preserves_gross_fact
     food = BY_NAME['糖醋排骨']
     draft = [ExtractedItem(food_id=food['id'], name=food['name'], grams=300,
                            weight_basis='cooked', weight_includes_inedible=True).model_dump()]
+    # This test covers ingredient formulas. Measured prepared references require
+    # actual edible weight rather than the illustrative 60% conversion.
+    draft[0]['calculation_basis'] = 'ingredient_recipe'
     result = evaluate_mode(draft, 'basic')
     assert result['calories'] > 0 and not result['questions']
     assert result['details'][0]['grams'] == 180

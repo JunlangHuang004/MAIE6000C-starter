@@ -76,6 +76,8 @@ def recipe_detail(value, foods, nutrient_keys):
              else sum(row.grams for row in recipe.ingredients))
     detail = {
         'kind': 'custom_recipe', 'food_id': None, 'name': recipe.name, 'grams': grams,
+        'calculation_basis': 'custom_recipe', 'carbohydrate_basis': 'total_by_difference',
+        'calculation_evidence': {'recipe': recipe.model_dump()},
         'nutrients': {key: round(value, 1) for key, value in totals.items()},
         'assumptions': [
             '用户填写并确认的食材配方；不是数据库中的实测菜肴记录。',

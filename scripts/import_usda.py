@@ -1,4 +1,4 @@
-"""Rebuild curated CC0 nutrients from the official SR Legacy CSV zip (offline input)."""
+"""Rebuild USDA ingredients and retain attributed prepared-food references (offline input)."""
 import argparse
 import csv
 import io
@@ -9,7 +9,102 @@ import zipfile
 
 DATA = Path(__file__).resolve().parents[1] / 'services/common/data'
 SOURCE = 'https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip'
-VERSION = '2026-11-23.2'
+VERSION = '2026-11-24.1'
+CFS_WORKBOOK_URL = 'https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx'
+CFS_REFERENCE_ROWS = {
+    'dish_004': 351, 'dish_007': 350, 'dish_012': 333, 'dish_064': 375,
+    'dish_110': 346, 'dish_202': 343, 'dish_266': 339, 'dish_269': 355,
+    'dish_339': 386, 'dish_341': 471,
+}
+PREPARED_REFERENCE_PREPARATIONS = {
+    'as_served', 'boiled', 'steamed', 'roasted', 'stir_fried', 'fried', 'braised',
+}
+CFS_REFERENCE_PREPARATIONS = {
+    'dish_004': {'as_served', 'braised'}, 'dish_007': {'as_served', 'stir_fried'},
+    'dish_012': {'as_served', 'stir_fried'}, 'dish_064': {'as_served'},
+    'dish_110': {'as_served', 'steamed'}, 'dish_202': {'as_served', 'braised'},
+    'dish_266': {'as_served'}, 'dish_269': {'as_served', 'fried'},
+    'dish_339': {'as_served', 'stir_fried'}, 'dish_341': {'as_served'},
+}
+
+
+def validate_measured_reference(food):
+    """Keep the reviewed CFS subset distinct from recipe and USDA carbohydrate data."""
+    if 'measured_reference' not in food:
+        return
+    reference = food['measured_reference']
+    row = CFS_REFERENCE_ROWS.get(food['id'])
+
+    def fail():
+        raise ValueError(f'Invalid measured reference: {food["id"]}')
+
+    def number(value, *, positive=False):
+        return (not isinstance(value, bool) and isinstance(value, (int, float))
+                and math.isfinite(value) and (value > 0 if positive else value >= 0))
+
+    if (food.get('kind') != 'recipe' or not row or not isinstance(reference, dict)
+            or reference.get('id') != f'cfs_frl_eng_{row}'
+            or reference.get('version') != '2026-10-02'
+            or reference.get('nutrition_basis') != 'per_100g_cooked_edible'
+            or reference.get('carbohydrate_basis') != 'available'
+            or reference.get('match_scope') != 'same_named_prepared_dish'):
+        fail()
+    preparations = reference.get('compatible_preparations')
+    if (not isinstance(preparations, list) or not preparations
+            or not all(isinstance(value, str) for value in preparations)
+            or len(preparations) != len(set(preparations))
+            or 'as_served' not in preparations
+            or set(preparations) - PREPARED_REFERENCE_PREPARATIONS
+            or set(preparations) != CFS_REFERENCE_PREPARATIONS[food['id']]):
+        fail()
+    nutrients = reference.get('nutrients')
+    if (not isinstance(nutrients, dict)
+            or set(nutrients) != {'calories', 'protein_g', 'fat_g', 'carbs_g'}
+            or not all(number(value) for value in nutrients.values())
+            or not number(nutrients['calories'], positive=True)
+            or nutrients['calories'] > 1000
+            or sum(nutrients[key] for key in ('protein_g', 'fat_g', 'carbs_g')) > 100):
+        fail()
+    source = reference.get('source')
+    if (not isinstance(source, dict) or source.get('id') != f'CFS-FRL-Eng-{row}'
+            or source.get('url') != CFS_WORKBOOK_URL
+            or not all(isinstance(source.get(key), str) and source[key].strip()
+                       for key in ('name', 'license'))
+            or source.get('license') != 'No open licence asserted; CFS copyright notice applies'
+            or source.get('rights_url') != 'https://www.cfs.gov.hk/english/notices/notices.html'):
+        fail()
+    if (not all(isinstance(reference.get(key), str) and reference[key].strip()
+                for key in ('source_name_zh', 'source_name_en', 'notes_zh', 'notes_en',
+                            'preparation_notes_zh', 'preparation_notes_en'))
+            or reference.get('source_workbook_sheet') != 'Eng'
+            or reference.get('source_workbook_range') != f'C{row}:I{row}'
+            or reference.get('source_workbook_sha256') != (
+                '75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d')
+            or reference.get('source_workbook_last_modified') != '2026-10-02T08:00:51Z'
+            or reference.get('retrieved_at') != '2026-11-24'):
+        fail()
+    fibre = reference.get('dietary_fibre')
+    if not isinstance(fibre, dict) or not (
+            (set(fibre) == {'value_g'} and number(fibre['value_g']) and fibre['value_g'] <= 100)
+            or fibre == {'qualifier': 'trace'}):
+        fail()
+    ranges = reference.get('observed_ranges')
+    if ranges is not None:
+        if (food['id'] not in {'dish_012', 'dish_266'} or not isinstance(ranges, dict)
+                or set(ranges) != {'calories', 'fat_g'} or reference.get('sample_count') != 10
+                or reference.get('sample_collection_period') != '2017-03/2017-04'
+                or reference.get('range_source_url') != (
+                    'https://www.cfs.gov.hk/english/programme/programme_rafs/'
+                    'programme_rafs_n_01_23_abstract.html')):
+            fail()
+        for key, bounds in ranges.items():
+            if (not isinstance(bounds, dict) or set(bounds) != {'min', 'max'}
+                    or not all(number(value) for value in bounds.values())
+                    or not bounds['min'] <= nutrients[key] <= bounds['max']):
+                fail()
+    elif any(key in reference for key in (
+            'sample_count', 'sample_collection_period', 'range_source_url')):
+        fail()
 
 
 def validate_catalogue(foods):
@@ -26,6 +121,7 @@ def validate_catalogue(foods):
                 and value <= 10000)
 
     for food in foods:
+        validate_measured_reference(food)
         if food['kind'] == 'ingredient':
             expected = {'calories', 'protein_g', 'fat_g', 'carbs_g'}
             if set(food['nutrients']) != expected or not all(

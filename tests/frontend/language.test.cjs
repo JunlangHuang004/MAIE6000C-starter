@@ -15,6 +15,34 @@ const fixtures = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures/meal-
 const clone = value => JSON.parse(JSON.stringify(value));
 const flush = async () => { for (let i = 0; i < 4; i++) await new Promise(setImmediate); };
 
+// Deliberately different from the live catalogue: saved evidence must survive catalogue updates.
+function cfsReferenceFixture() {
+  return {id:'cfs-saved-chicken',version:'saved-cfs-v1',nutrition_basis:'per_100g_cooked_edible',
+    nutrients:{calories:180,protein_g:26,fat_g:8,carbs_g:0.7},carbohydrate_basis:'available',
+    source_name_zh:'白切鸡（已保存样本）',source_name_en:'White-cut chicken (saved sample)',
+    match_scope:'same_named_prepared_dish',
+    source:{name:'Hong Kong Centre for Food Safety',id:'saved-table-1',license:'Source attribution',
+      url:'https://www.cfs.gov.hk/english/programme/programme_nifl/programme_nifl.html'},
+    notes_zh:['已保存样本说明：包括鸡皮，去骨称重。'],
+    notes_en:['Saved sample note: includes skin; weigh without bones.']};
+}
+function cfsMealFixture() {
+  const meal = clone(fixtures.tomato_egg_dish), reference = cfsReferenceFixture();
+  const nutrients = {calories:360,protein_g:52,fat_g:16,carbs_g:1.4};
+  Object.assign(meal,nutrients,{status:'completed',food_text:'白切鸡200克',
+    conversation:[{role:'user',content:'白切鸡200克'}],
+    carbohydrate_summary:{basis:'available',available_g:1.4,total_by_difference_g:null}});
+  meal.draft=[{food_id:'dish_109',name:'白切鸡',grams:200,weight_basis:'cooked',calculation_basis:'measured_reference'}];
+  meal.details=[{food_id:'dish_109',name:'白切鸡',grams:200,nutrients,
+    calculation_basis:'measured_reference',carbohydrate_basis:'available',measured_reference:reference,
+    calculation_evidence:{catalogue_version:'saved-catalogue-v1',reference_id:reference.id,reference_version:reference.version},
+    quantity_provenance:{kind:'user_grams',input_grams:200,calculated_grams:200},
+    assumptions:['按香港食安中心同名成品的每100g可食部分参考数据计算；不是你的这一份菜肴实测值。',
+      '参考数据已包含样本的油和调味料；不套用可编辑配方的用量或成品重量。',
+      '未说明做法，暂按香港食安中心同名成品参考的加工状态计算。'],sources:[reference.source]}];
+  return meal;
+}
+
 async function mount(t, {meal = null, language, storageBlocked = false, storage = {}, respond} = {}) {
   const virtualConsole=new VirtualConsole();
   virtualConsole.on('jsdomError',error=>{if(!error.message.includes('Not implemented: navigation'))throw error;});
@@ -91,6 +119,290 @@ test('Chinese is the default; English switch updates accessibility and persists 
   assert.equal(document.documentElement.lang, 'zh-CN');
   assert.equal(window.localStorage.getItem('nutrichat.language'), 'zh-CN');
   assert.match($('estimate').textContent, /估算/);
+});
+
+test('CFS results distinguish sample measurements from the eaten meal and translate all issued notes', async t => {
+  const meal = cfsMealFixture(), view = await mount(t,{meal});
+  const {$,clickLanguage} = view;
+  assert.match($('evidence').querySelector('summary').textContent,/按填写克数.*CFS 成品菜参考/);
+  assert.doesNotMatch($('evidence').querySelector('summary').textContent,/参考配方|已核对配方/);
+  assert.match($('estimate-basis').textContent,/不是对你这餐的化验/);
+  assert.equal($('estimate-basis').hidden,false);
+  assert.equal($('evidence').querySelector('details').open,false);
+  assert.match($('carbs_g').parentElement.textContent,/可利用碳水化合物/);
+  assert.equal($('carbs_g').textContent,'1.4');
+  assert.equal($('carbohydrate-summary').hidden,true);
+  const before=view.requests.length;
+  await clickLanguage('en');
+  assert.match($('evidence').textContent,/CFS prepared-dish reference/);
+  assert.match($('evidence').textContent,/CFS per 100g cooked edible portion: 180 kcal/);
+  assert.match($('evidence').textContent,/Available carbohydrate \(excluding dietary fibre\) in this portion: 1\.4g/);
+  assert.match($('evidence').textContent,/already include the sample’s oil and seasonings/);
+  assert.match($('evidence').textContent,/Preparation was not specified.*Hong Kong Centre for Food Safety reference/);
+  assert.match($('estimate-basis').textContent,/Your meal was not laboratory-tested/);
+  assert.doesNotMatch($('evidence').textContent,/[\u3400-\u9fff]/u);
+  assert.equal($('confirm').disabled,false);
+  assert.equal($('calories').textContent,'360');
+  assert.equal(view.requests.length,before);
+});
+
+test('CFS source names, notes, values and links come from saved evidence after a fresh reload', async t => {
+  const meal=cfsMealFixture(); meal.status='confirmed';
+  const current=clone(foods), food=current.find(food=>food.id==='dish_109');
+  food.measured_reference=cfsReferenceFixture();
+  Object.assign(food.measured_reference,{version:'future-reference',source_name_en:'Future source dish',
+    notes_en:['Future sample notes'],nutrients:{calories:999,protein_g:99,fat_g:99,carbs_g:99}});
+  food.measured_reference.source.url='https://www.cfs.gov.hk/future-record';
+  for (const language of ['en','zh-CN']) {
+    const view=await mount(t,{meal,language,respond:r=>r.url==='/foods'?{body:{provider:'qwen',catalogue:{foods:current}}}:undefined});
+    await view.clickLanguage('en');
+    assert.match(view.$('evidence').querySelector('summary').textContent,/White-cut chicken \(saved sample\)/);
+    assert.match(view.$('evidence').textContent,/saved-cfs-v1/);
+    assert.match(view.$('evidence').textContent,/saved-catalogue-v1/);
+    assert.match(view.$('evidence').textContent,/Saved sample note: includes skin/);
+    assert.doesNotMatch(view.$('evidence').textContent,/future|999/i);
+    assert.equal(view.$('evidence').querySelector('a[href]').href,meal.details[0].measured_reference.source.url);
+    assert.equal(view.$('calories').textContent,'360');
+    assert.equal(view.$('confirm').hidden,true);
+    assert.match(view.$('estimate-basis').textContent,/confirmed and saved/);
+    assert.doesNotMatch(view.$('estimate-basis').textContent,/switch to Advanced|Edit the meal/);
+  }
+});
+
+test('CFS estimates retain the separate reference-portion warning for an assumed serving', async t => {
+  const meal=cfsMealFixture();
+  meal.details[0].quantity_provenance={kind:'default_portion',calculated_grams:200};
+  const view=await mount(t,{meal,language:'en'});
+  assert.match(view.$('evidence').querySelector('summary').textContent,/Reference portion.*CFS prepared-dish reference/);
+  assert.doesNotMatch(view.$('evidence').querySelector('summary').textContent,/Entered grams/);
+  assert.match(view.$('estimate-basis').textContent,/not laboratory-tested.*not been individually verified/);
+  assert.equal(view.$('confirm').disabled,false);
+});
+
+test('Mixed carbohydrate definitions show separate subtotals and still confirm the complete energy estimate', async t => {
+  const meal=cfsMealFixture();
+  meal.draft.push({food_id:'rice',name:'白米饭',grams:100});
+  meal.details.push({food_id:'rice',name:'白米饭',grams:100,
+    nutrients:{calories:130,protein_g:2.7,fat_g:0.3,carbs_g:28},sources:[],assumptions:[],
+    calculation_basis:'ingredient_record',carbohydrate_basis:'total_by_difference'});
+  Object.assign(meal,{calories:490,protein_g:54.7,fat_g:16.3,carbs_g:null,
+    carbohydrate_summary:{basis:'mixed',available_g:1.4,total_by_difference_g:28}});
+  let confirmed;
+  const view=await mount(t,{meal,respond:r=>{
+    if(r.url.endsWith('/confirm')) {confirmed={...clone(meal),status:'confirmed',revision:meal.revision+1,consumed_on:r.body.consumed_on}; return {body:confirmed};}
+  }});
+  assert.equal(view.$('carbs_g').textContent,'不合计');
+  assert.match(view.$('carbohydrate-summary').textContent,/可利用碳水（不含膳食纤维）小计：1\.4g/);
+  assert.match(view.$('carbohydrate-summary').textContent,/总碳水（含膳食纤维）小计：28g/);
+  assert.match(view.$('carbohydrate-summary').textContent,/CFS 可利用碳水不含膳食纤维；USDA 总碳水包含膳食纤维/);
+  assert.equal(view.$('confirm').disabled,false);
+  await view.clickLanguage('en');
+  assert.equal(view.$('carbs_g').textContent,'Not combined');
+  assert.match(view.$('carbohydrate-summary').textContent,/no comparable combined carbohydrate total/);
+  assert.match(view.$('carbohydrate-summary').textContent,/CFS available carbohydrate excludes dietary fibre; USDA total carbohydrate includes dietary fibre/);
+  assert.match(view.$('carbohydrate-summary').textContent,/Available carbohydrate \(excluding dietary fibre\) subtotal: 1\.4g/);
+  assert.match(view.$('carbohydrate-summary').textContent,/Total carbohydrate \(including dietary fibre\) subtotal: 28g/);
+  assert.equal(view.$('calories').textContent,'490');
+  assert.equal(view.$('protein_g').textContent,'54.7');
+  assert.equal(view.$('fat_g').textContent,'16.3');
+  view.$('meal-date').value='2026-11-02'; view.$('confirm').click(); await flush();
+  const sent=view.requests.find(r=>r.url.endsWith('/confirm'));
+  assert.equal(sent.body.consumed_on,'2026-11-02');
+  assert.equal(confirmed.calories,490);
+  assert.equal(view.$('confirm').hidden,true);
+  const reloaded=await mount(t,{meal:confirmed,language:'en'});
+  assert.equal(reloaded.$('carbs_g').textContent,'Not combined');
+  assert.equal(reloaded.$('calories').textContent,'490');
+  assert.equal(reloaded.$('carbohydrate-summary').hidden,false);
+});
+
+test('A genuine zero carbohydrate component remains labelled zero without inventing a combined total', async t => {
+  const meal=cfsMealFixture();
+  meal.carbs_g=null; meal.carbohydrate_summary={basis:'mixed',available_g:0,total_by_difference_g:28};
+  const view=await mount(t,{meal,language:'en'});
+  assert.equal(view.$('carbs_g').textContent,'Not combined');
+  assert.match(view.$('carbohydrate-summary').textContent,/Available carbohydrate \(excluding dietary fibre\) subtotal: 0g/);
+  meal.carbohydrate_summary.available_g=null;
+  const unavailable=await mount(t,{meal,language:'en'});
+  assert.match(unavailable.$('carbohydrate-summary').textContent,/Available carbohydrate \(excluding dietary fibre\) subtotal: —g/);
+  assert.doesNotMatch(unavailable.$('carbohydrate-summary').textContent,/subtotal: 0g/);
+});
+
+test('Advanced basis choices and their saved source preview translate without changing the issued answer', async t => {
+  for (const choice of ['measured_reference','ingredient_recipe']) {
+    const meal=cfsMealFixture();
+    meal.status='needs_input'; meal.mode='advanced'; meal.details=[]; meal.carbohydrate_summary=null;
+    meal.questions=[{key:'0.calculation_basis',kind:'choice',
+      label:'白切鸡采用哪种营养计算依据？成品参考来自同名菜肴样本；实际食材用量不同可选择配方计算。',
+      options:[{value:'measured_reference',label:'采用香港食安中心同名成品参考（不代表你的实际配方）'},
+        {value:'ingredient_recipe',label:'按可编辑食材配方计算'}],measured_reference:cfsReferenceFixture()}];
+    const view=await mount(t,{meal,respond:r=>r.url.endsWith('/reply')?{body:meal}:undefined});
+    const select=view.document.querySelector('[data-answer]'); select.value=choice;
+    const before=view.requests.length; await view.clickLanguage('en');
+    assert.equal(select.value,choice);
+    assert.match(view.$('questions').textContent,/choose the estimation basis/);
+    assert.match(view.$('questions').textContent,/Ingredient recipe estimate/);
+    assert.match(view.$('questions').textContent,/saved-cfs-v1/);
+    assert.doesNotMatch(view.$('questions').textContent,/[\u3400-\u9fff]/u);
+    assert.equal(view.requests.length,before);
+    await view.clickLanguage('zh'); assert.equal(select.value,choice);
+    view.$('answer-form').dispatchEvent(new view.window.Event('submit',{bubbles:true,cancelable:true})); await flush();
+    const sent=view.requests.find(r=>r.url.endsWith('/reply'));
+    assert.equal(sent.body.answers['0.calculation_basis'],choice);
+    assert.equal(sent.body.revision,meal.revision);
+  }
+});
+
+test('CFS question source details start closed after the choices and preserve disclosure and answer when translated', async t => {
+  const meal=cfsMealFixture();
+  Object.assign(meal,{status:'needs_input',mode:'advanced',details:[],carbohydrate_summary:null});
+  meal.questions=[{key:'0.calculation_basis',kind:'choice',label:'请选择计算依据。',
+    measured_reference:cfsReferenceFixture(),options:[
+      {value:'measured_reference',label:'采用香港食安中心同名成品参考（不代表你的实际配方）'},
+      {value:'ingredient_recipe',label:'按可编辑食材配方计算'}]}];
+  const view=await mount(t,{meal});
+  const disclosure=view.document.querySelector('details[data-measured-reference]');
+  const select=view.document.querySelector('[data-answer]');
+  assert.ok(disclosure);
+  assert.equal(disclosure.open,false);
+  assert.equal(select.closest('details'),null,'Choosing a basis must not require opening the source details');
+  assert.ok(select.compareDocumentPosition(disclosure)&4,'Options precede optional source details');
+  assert.equal(disclosure.querySelector('summary').textContent,'CFS 参考：180 kcal/100g · 查看来源说明');
+  assert.doesNotMatch(disclosure.querySelector('summary').textContent,/saved-cfs|saved-table|attribution/i);
+  select.value='ingredient_recipe';disclosure.open=true;
+  const before=view.requests.length;await view.clickLanguage('en');
+  assert.equal(view.document.querySelector('[data-measured-reference]'),disclosure);
+  assert.equal(disclosure.open,true);
+  assert.equal(select.value,'ingredient_recipe');
+  assert.equal(disclosure.querySelector('summary').textContent,'CFS reference: 180 kcal/100g · View source details');
+  assert.match(disclosure.querySelector('[data-measured-reference-body]').textContent,/saved-cfs-v1.*Saved sample note/s);
+  assert.equal(disclosure.querySelector('a[href]').href,cfsReferenceFixture().source.url);
+  await view.clickLanguage('zh');
+  assert.equal(disclosure.open,true);
+  assert.equal(select.value,'ingredient_recipe');
+  assert.match(disclosure.querySelector('summary').textContent,/查看来源说明/);
+  disclosure.open=false;await view.clickLanguage('en');
+  assert.equal(disclosure.open,false);
+  assert.equal(select.value,'ingredient_recipe');
+  assert.equal(view.requests.length,before);
+});
+
+for (const mode of ['basic','advanced']) {
+  test(`${mode} CFS preparation mismatches explain the supported choices and withhold every meal total`, async t => {
+    for (const preparation of ['steamed','raw']) {
+      const meal=cfsMealFixture();
+      const reference=clone(foods.find(food=>food.id==='dish_012').measured_reference);
+      Object.assign(meal,{mode,status:'needs_input',calories:null,protein_g:null,fat_g:null,carbs_g:null,
+        carbohydrate_summary:null,details:[],food_text:preparation==='steamed'?'清蒸虾仁鸡蛋100克':'生虾仁鸡蛋100克'});
+      meal.draft=[{food_id:'dish_012',name:'虾仁炒蛋',grams:100,weight_basis:'cooked',preparation,
+        calculation_basis:'measured_reference'}];
+      const label='虾仁炒蛋的香港食安中心成品参考与你描述的做法不同。请选择符合实际的参考做法，或填写实际食材配方。';
+      meal.questions=[{key:'0.preparation',kind:'choice',label,measured_reference:reference,
+        options:[{value:'as_served',label:'按香港食安中心参考成品的加工状态'},{value:'stir_fried',label:'炒'}]}];
+      meal.conversation=[{role:'user',content:meal.food_text},{role:'assistant',content:label}];
+      const view=await mount(t,{meal,respond:r=>r.url.endsWith('/reply')?{body:meal}:undefined});
+      const select=view.document.querySelector('[data-answer]');
+      const withheld=()=>{
+        assert.equal(view.$('result').hidden,true);
+        assert.equal(view.$('confirm').disabled,true);
+        assert.equal(view.$('evidence').textContent,'');
+        assert.deepEqual(['calories','protein_g','fat_g','carbs_g'].map(id=>view.$(id).textContent),['—','—','—','—']);
+      };
+      withheld();
+      assert.match(view.$('questions').textContent,/成品参考与你描述的做法不同/);
+      assert.match(select.textContent,/按香港食安中心参考成品的加工状态.*炒/);
+      assert.deepEqual([...select.options].map(option=>option.value),['','as_served','stir_fried']);
+      select.value='stir_fried';
+      const before=view.requests.length;await view.clickLanguage('en');
+      withheld();
+      assert.match(view.$('questions').textContent,/preparation you described does not match/);
+      assert.match(view.$('questions').textContent,/only if it matches your meal, or enter the actual ingredient recipe/);
+      assert.match(select.textContent,/As prepared in the Hong Kong Centre for Food Safety reference.*Stir-fried/);
+      assert.match(view.$('history').textContent,/preparation you described does not match/);
+      assert.doesNotMatch(view.$('questions').textContent,/[\u3400-\u9fff]/u);
+      assert.equal(select.value,'stir_fried');
+      assert.equal(view.requests.length,before);
+      await view.clickLanguage('zh');withheld();
+      assert.equal(select.value,'stir_fried');
+      view.$('answer-form').dispatchEvent(new view.window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+      const sent=view.requests.find(r=>r.url.endsWith('/reply'));
+      assert.deepEqual(sent.body.answers,{'0.preparation':'stir_fried'});
+    }
+  });
+}
+
+test('Catalogue previews separate CFS values from editable ingredient formulas and leave other recipes unmeasured', async t => {
+  const catalogue=clone(foods);
+  for(const food of catalogue)delete food.measured_reference;
+  catalogue.find(food=>food.id==='dish_109').measured_reference=cfsReferenceFixture();
+  const view=await mount(t,{respond:r=>r.url==='/foods'?{body:{provider:'qwen',catalogue:{foods:catalogue}}}:undefined});
+  const search=value=>{view.$('search').value=value;view.$('search').dispatchEvent(new view.window.Event('input',{bubbles:true}));};
+  search('已保存样本');
+  assert.equal(view.$('food-list').querySelectorAll('details').length,1);
+  assert.match(view.$('food-list').textContent,/CFS 每100g熟制可食部分：180 kcal/);
+  assert.match(view.$('food-list').textContent,/可修改的食材配方/);
+  await view.clickLanguage('en'); search('saved sample');
+  assert.match(view.$('food-list').textContent,/two estimation bases/);
+  assert.match(view.$('food-list').textContent,/Editable ingredient recipe/);
+  assert.match(view.$('food-list').textContent,/Changes to ingredients, oil or finished batch weight use the ingredient recipe/);
+  search('Mapo');
+  assert.match(view.$('food-list').textContent,/Reference recipe/);
+  assert.doesNotMatch(view.$('food-list').textContent,/CFS|laboratory-tested/);
+  search('cooked white rice');
+  assert.match(view.$('food-list').textContent,/total carbohydrate \(including dietary fibre\)/);
+});
+
+test('New ingredient calculations use saved calculation flags and never inherit a CFS badge from the catalogue', async t => {
+  const meal=clone(fixtures.tomato_egg_dish);
+  meal.draft[0].recipe_assumed=true; meal.draft[0].recipe_confirmed=false;
+  Object.assign(meal.details[0],{calculation_basis:'ingredient_recipe',carbohydrate_basis:'total_by_difference',
+    calculation_evidence:{catalogue_version:'recorded-ingredient-v1',recipe_assumed:false}});
+  const catalogue=clone(foods);catalogue.find(food=>food.id===meal.details[0].food_id).measured_reference=cfsReferenceFixture();
+  const view=await mount(t,{meal,language:'en',respond:r=>r.url==='/foods'?{body:{provider:'qwen',catalogue:{foods:catalogue}}}:undefined});
+  assert.match(view.$('evidence').querySelector('summary').textContent,/Reviewed recipe/);
+  assert.match(view.$('evidence').textContent,/recorded-ingredient-v1/);
+  assert.doesNotMatch(view.$('evidence').textContent,/CFS|saved-cfs-v1/);
+  assert.match(view.$('carbs_g').parentElement.textContent,/Total carbohydrate · g/);
+  assert.equal(view.$('estimate-basis').hidden,true);
+  assert.equal(view.$('calories').textContent,String(meal.calories));
+});
+
+test('Legacy saved USDA recipes keep their original nutrition, badge and source after CFS catalogue additions', async t => {
+  const meal=clone(fixtures.tomato_egg_dish); meal.status='confirmed'; meal.draft[0].recipe_confirmed=true;
+  const catalogue=clone(foods);catalogue.find(food=>food.id===meal.details[0].food_id).measured_reference=cfsReferenceFixture();
+  const view=await mount(t,{meal,respond:r=>r.url==='/foods'?{body:{provider:'qwen',catalogue:{foods:catalogue}}}:undefined});
+  const before=view.requests.length;
+  for(const language of ['en','zh','en']) {
+    await view.clickLanguage(language);
+    assert.equal(view.$('calories').textContent,String(meal.calories));
+    assert.equal(view.$('carbs_g').textContent,String(meal.carbs_g));
+    assert.doesNotMatch(view.$('evidence').textContent,/CFS|saved-cfs-v1/);
+    assert.ok([...view.$('evidence').querySelectorAll('a[href]')].every(link=>new URL(link.href).hostname==='fdc.nal.usda.gov'));
+  }
+  assert.match(view.$('evidence').querySelector('summary').textContent,/Reviewed recipe/);
+  assert.equal(view.requests.length,before);
+});
+
+test('Only exact HTTPS USDA and CFS hosts become source links, including in saved measured snapshots', async t => {
+  const meal=clone(fixtures.tomato_egg_dish);
+  const allowed=['https://fdc.nal.usda.gov/food-details/1','https://www.cfs.gov.hk/english/reference.html'];
+  const blocked=['http://www.cfs.gov.hk/english/reference.html','https://www.cfs.gov.hk.evil.example/test',
+    'https://evil.example/www.cfs.gov.hk','https://www.cfs.gov.hk@evil.example/test',
+    'https://user@www.cfs.gov.hk/reference','https://www.cfs.gov.hk:444/reference',
+    'https://fdc.nal.usda.gov.evil.example/reference','javascript:window.__injected=true'];
+  meal.details[0].sources=[...allowed,...blocked].map((url,index)=>({name:'Source '+index,id:index,url,license:'test'}));
+  const view=await mount(t,{meal,language:'en'});
+  assert.deepEqual([...view.$('evidence').querySelectorAll('a[href]')].map(a=>a.href),allowed);
+  for(const link of view.$('evidence').querySelectorAll('a[href]')){
+    assert.equal(link.target,'_blank');assert.equal(link.rel,'noopener noreferrer');
+  }
+  assert.equal(view.$('evidence').querySelectorAll('a:not([href])').length,blocked.length);
+  const measured=cfsMealFixture();measured.details[0].measured_reference.source.url=blocked[1];
+  measured.details[0].measured_reference.notes_en=['<img src=x onerror="window.__injected=true">'];
+  const saved=await mount(t,{meal:measured,language:'en'});
+  assert.equal(saved.$('evidence').querySelector('a[href]'),null);
+  assert.equal(saved.$('evidence').querySelector('img'),null);
+  assert.equal(saved.window.__injected,undefined);
 });
 
 test('Merged daily balance inputs save with intake coverage and remain bilingual', async t => {

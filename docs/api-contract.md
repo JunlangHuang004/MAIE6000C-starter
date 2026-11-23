@@ -1,6 +1,6 @@
 # NutriChat API contract
 
-Current implementation: 2026-11-03, `test`. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
+Current implementation: 2026-11-24, `test`. See the generated `/docs` and `/openapi.json` for exact schemas. The [historical Week 5 evidence](history/week05-api-contract.md) is retained separately.
 
 ## Routes
 
@@ -47,6 +47,26 @@ Analysis fields include `id`, `food_text`, `mode`, `status`, `revision`, timesta
 - `draft`: extracted and user-supplied facts. Basic-mode defaults are not persisted as facts.
 - `questions`: current structured clarification slots, labels and applicable options.
 - `details`: per-food calculation, assumptions and source references.
+- `carbohydrate_summary`: derived from saved details, with `basis` equal to
+  `available`, `total_by_difference` or `mixed`, and the two separately named
+  subtotals. Legacy details retain the USDA total-by-difference interpretation.
+
+For the ten dishes with a CFS prepared-food reference, detail `calculation_basis`
+identifies `measured_reference`, `ingredient_recipe`, `ingredient_record` or
+`custom_recipe`. `carbohydrate_basis`, `measured_reference` where applicable, and
+`calculation_evidence` are saved provenance, not reconstructed from a newer
+catalogue. CFS reference figures are per 100 g cooked edible food; the full source
+nutrient vector is used together. Ingredient or oil edits use ingredient arithmetic.
+
+If complete food details use both carbohydrate definitions, top-level `carbs_g`
+is null and `carbohydrate_summary.basis` is `mixed`; calories, protein and fat remain
+complete. This specifically validated case can be reviewed and confirmed. It is
+not a general exemption for missing nutrients or unanswered meal questions.
+
+Advanced mode can issue `{index}.calculation_basis` with `measured_reference` and
+`ingredient_recipe` options. Answer only a current server-issued choice; source
+selection is separate from final meal confirmation. Basic source use and assumed
+portion sizes remain visibly labelled assumptions.
 
 ## Clarification and corrections
 
@@ -67,7 +87,7 @@ Structured reply example, only if `0.grams` is a current issued question:
 {"revision": 2, "answers": {"0.grams": 180}}
 ```
 
-Exactly one nonblank message or nonempty answers map is required. Messages are limited to 2000 characters and answers to 150 entries. Use server-issued question keys and values; do not manufacture fields or submit nutrition totals. Keys include item index plus `grams`, `weight_basis`, `preparation`, `oil_g`, `food_id`, `resolved` or `recipe`.
+Exactly one nonblank message or nonempty answers map is required. Messages are limited to 2000 characters and answers to 150 entries. Use server-issued question keys and values; do not manufacture fields or submit nutrition totals. Keys include item index plus `grams`, `weight_basis`, `preparation`, `oil_g`, `food_id`, `resolved`, `recipe` or `calculation_basis`.
 
 A recipe answer has the shape `{ingredients: {ingredient_id: grams}, yield_g: finished_batch_grams}`. It must match the issued recipe ingredient set. Set omitted ingredients to zero; describe added ingredients in a natural-language reply. Structured replies validate and update the draft without another Qwen call. Natural-language replies re-extract facts using the saved conversation, so advanced recipes require renewed approval.
 

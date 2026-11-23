@@ -8,6 +8,7 @@ from typing import Annotated, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from services.common.ingredient_recipe import recipe_detail
+from services.common.carbohydrates import carbohydrate_summary
 
 DATA = Path(__file__).with_name('data')
 KEYS = ('calories', 'protein_g', 'carbs_g', 'fat_g')
@@ -63,6 +64,21 @@ def _reference_recipe(food, item):
     return recipe
 
 
+def _calculation_basis(food, item):
+    """A measured prepared dish never overrides a user's ingredient quantities."""
+    if food['kind'] != 'recipe':
+        return 'ingredient_record'
+    if (not food.get('measured_reference')
+            or item.get('calculation_basis') == 'ingredient_recipe'
+            or any(item.get(key) is not None for key in (
+                'recipe', 'recipe_ingredients', 'recipe_yield_g', 'oil_g',
+                'custom_recipe', 'reference_selection', 'reference_template'))
+            or item.get('recipe_confirmed')):
+        return 'ingredient_recipe'
+    return ('measured_reference' if item.get('calculation_basis') == 'measured_reference'
+            else None)
+
+
 def evaluate(draft):
     """Missing information never produces partial meal totals."""
     foods = {f['id']: f for f in catalogue()['foods']}
@@ -81,6 +97,7 @@ def evaluate(draft):
                 detail['assumptions'].insert(0, '用户明确选择了相近参考配方并核对食材；'
                     '原食物仍未准确匹配，结果仅作近似估算。')
             detail['item_index'] = index
+            detail['calculation_evidence']['catalogue_version'] = catalogue()['version']
             for key in KEYS:
                 totals[key] += nutrients[key]
             details.append(detail)
@@ -93,10 +110,26 @@ def evaluate(draft):
                 '及各自克数；不会使用其他食物代替。', 'unsupported'))
             continue
         name = food['name']
+        calculation_basis = _calculation_basis(food, item)
         if item.get('weight_includes_inedible'):
             questions.append(question(prefix+'grams',
                 f'{name}提供的重量包含骨头、壳等不可食部分。请填写实际吃下的可食部分克数，'
                 '不能直接按带骨或带壳重量计算。', min=0.1, max=10000))
+            continue
+        if (calculation_basis == 'measured_reference'
+                and item.get('preparation') is not None
+                and item['preparation'] not in food['measured_reference'].get(
+                    'compatible_preparations', ['as_served'])):
+            preparations = food['measured_reference'].get(
+                'compatible_preparations', ['as_served'])
+            questions.append(question(prefix+'preparation',
+                f'{name}的香港食安中心成品参考与你描述的做法不同。'
+                '请选择符合实际的参考做法，或填写实际食材配方。', 'choice',
+                options=[{'value': preparation,
+                          'label': ('按香港食安中心参考成品的加工状态'
+                                    if preparation == 'as_served' else PREPARATIONS[preparation])}
+                         for preparation in preparations],
+                measured_reference=deepcopy(food['measured_reference'])))
             continue
         if (food['kind'] == 'ingredient' and food.get('preparations')
                 and item.get('preparation') is not None
@@ -113,7 +146,16 @@ def evaluate(draft):
             questions.append(question(prefix+'grams', f'{name}吃了多少克？请填可食部分重量。',
                                       min=0.1, max=10000))
         if food['kind'] == 'recipe':
-            if not item.get('recipe_confirmed'):
+            if calculation_basis is None:
+                questions.append(question(prefix+'calculation_basis',
+                    f'{name}采用哪种营养计算依据？成品参考来自同名菜肴样本；'
+                    '实际食材用量不同可选择配方计算。', 'choice',
+                    options=[
+                        {'value': 'measured_reference',
+                         'label': '采用香港食安中心同名成品参考（不代表你的实际配方）'},
+                        {'value': 'ingredient_recipe', 'label': '按可编辑食材配方计算'},
+                    ], measured_reference=deepcopy(food['measured_reference'])))
+            elif calculation_basis == 'ingredient_recipe' and not item.get('recipe_confirmed'):
                 reference = _reference_recipe(food, item)
                 questions.append(question(prefix+'recipe',
                     f'{name}采用以下参考做法和整锅配方吗？可修改配料克数及成品总重。'
@@ -149,7 +191,20 @@ def evaluate(draft):
         if any(q['key'].startswith(prefix) for q in questions):
             continue
         grams = item['grams']
-        if food['kind'] == 'recipe':
+        carbohydrate_basis = 'total_by_difference'
+        evidence = {'catalogue_version': catalogue()['version']}
+        reference = None
+        if calculation_basis == 'measured_reference':
+            reference = deepcopy(food['measured_reference'])
+            nutrients = {key: reference['nutrients'][key] * grams / 100 for key in KEYS}
+            carbohydrate_basis = reference['carbohydrate_basis']
+            assumptions = [
+                '按香港食安中心同名成品的每100g可食部分参考数据计算；不是你的这一份菜肴实测值。',
+                '参考数据已包含样本的油和调味料；不套用可编辑配方的用量或成品重量。',
+            ]
+            sources = [reference['source']]
+            evidence.update(reference_id=reference['id'], reference_version=reference['version'])
+        elif food['kind'] == 'recipe':
             recipe = item.get('recipe') or food['recipe']
             nutrients = dict.fromkeys(KEYS, 0.0)
             components = []
@@ -166,6 +221,8 @@ def evaluate(draft):
                 ('基础版参考配方，未经逐项确认；不是实测菜肴营养。'
                  if item.get('recipe_assumed') else '参考配方已由用户确认；不是实测菜肴营养。')]
             sources = [foods[fid]['source'] for fid in recipe['ingredients']]
+            evidence.update(method=food['method'], recipe=deepcopy(recipe),
+                            recipe_assumed=bool(item.get('recipe_assumed')))
         else:
             nutrients = {k:food['nutrients'][k]*grams/100 for k in KEYS}
             oil = item.get('oil_g') or 0
@@ -180,16 +237,27 @@ def evaluate(draft):
                 sources.append(foods['oil']['source'])
         for key in KEYS:
             totals[key] += nutrients[key]
-        details.append(dict(name=name, grams=grams, food_id=food['id'], item_index=index,
+        detail = dict(name=name, grams=grams, food_id=food['id'], item_index=index,
+                            calculation_basis=calculation_basis,
+                            carbohydrate_basis=carbohydrate_basis,
+                            calculation_evidence=evidence,
                             nutrients={k:round(v,1) for k,v in nutrients.items()},
-                            assumptions=assumptions, sources=sources,
+                            assumptions=assumptions, sources=deepcopy(sources),
                             quantity_provenance={
                                 'kind':'user_grams', 'input_grams':grams,
                                 'calculated_grams':grams, 'portion_count':None,
                                 'portion_unit':None, 'reference_grams':None,
-                            }))
+                            })
+        if reference is not None:
+            detail['measured_reference'] = reference
+        details.append(detail)
+    summary = carbohydrate_summary(details) if not questions else None
+    result_totals = dict.fromkeys(KEYS) if questions else {
+        key: round(value, 1) for key, value in totals.items()}
+    if summary and summary['basis'] == 'mixed':
+        result_totals['carbs_g'] = None
     return dict(draft=draft, questions=questions, details=details if not questions else [],
-                **(dict.fromkeys(KEYS) if questions else {k:round(v,1) for k,v in totals.items()}),
+                **result_totals,
                 interpreted_food_text='；'.join(f'{d["name"]} {d["grams"]:g}g' for d in details)
                 if not questions else None)
 
@@ -213,6 +281,9 @@ def apply_answers(draft, answers, mode='advanced'):
             if field == 'food_id':
                 item.update(weight_basis=None, preparation=None, oil_g=None,
                             uncertainty=None, recipe_confirmed=False)
+                for old_field in ('calculation_basis', 'recipe', 'recipe_ingredients',
+                                  'recipe_yield_g', 'recipe_assumed'):
+                    item.pop(old_field, None)
         elif q['kind'] == 'number':
             if isinstance(value,bool) or not isinstance(value,(int,float)):
                 raise ValueError('重量必须是数字。')
@@ -259,6 +330,19 @@ def evaluate_mode(draft, mode='advanced'):
         if not food:
             assumptions.append(notes)
             continue
+        measured = (food['kind'] == 'recipe' and food.get('measured_reference')
+                    and _calculation_basis(food, item) != 'ingredient_recipe')
+        if measured:
+            # This is a source selection on the working copy, not a user's approval.
+            item['calculation_basis'] = 'measured_reference'
+            notes.append('基础版采用香港食安中心同名成品参考；样本配方可能与你的菜肴不同。')
+            if item.get('preparation') is None:
+                notes.append('未说明做法，暂按香港食安中心同名成品参考的加工状态计算。')
+            # A known gross weight must never become a measured-reference portion
+            # through the convenience mode's illustrative 60% edible fraction.
+            if item.get('weight_includes_inedible'):
+                assumptions.append(notes)
+                continue
         if item.get('weight_includes_inedible'):
             # Convenience-mode assumption, not an empirical conversion or a user fact.
             if item.get('grams') is not None:
@@ -291,17 +375,17 @@ def evaluate_mode(draft, mode='advanced'):
             item['weight_basis'] = food['state']
             state = {'raw':'生可食重量','cooked':'熟可食重量','as_sold':'可食净重'}[food['state']]
             notes.append(f'未说明重量状态，暂按{state}计算。')
-        if item.get('uncertainty'):
+        if item.get('uncertainty') and not measured:
             notes.append('待核实：'+item['uncertainty'])
             item['uncertainty'] = None
-        if food['kind']=='recipe':
+        if food['kind']=='recipe' and not measured:
             recipe = _reference_recipe(food, item)
             item['recipe'] = item.get('recipe') or recipe
             item['recipe_assumed'] = not item.get('recipe_confirmed', False)
             item['recipe_confirmed'] = True
             if item['recipe_assumed']:
                 notes.append('基础版暂用参考配方及整锅成品重量；未逐项核实，可切换进阶版修改。')
-        else:
+        elif food['kind'] != 'recipe':
             if item.get('preparation') is None:
                 item['preparation'] = 'as_served'
                 notes.append('做法不明确，暂按所选食材条目的加工状态计算；未另加烹调油。')

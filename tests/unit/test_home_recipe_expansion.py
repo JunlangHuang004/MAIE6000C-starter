@@ -25,7 +25,8 @@ def test_expansion_preserves_original_data_except_documented_white_chicken_corre
                    and food['id'] not in {'chicken_skin_stewed', 'chicken_meat_stewed'}]
     assert fingerprint(ingredients) == (
         '23a20d4f62d090b53d83dff33e1d63aa51c791263d25c9c5ad7bbc4a3298330d')
-    originals = [{key: value for key, value in food.items() if key != 'aliases'}
+    originals = [{key: value for key, value in food.items()
+                  if key not in {'aliases', 'measured_reference'}}
                  for food in FOODS
                  if food['id'].startswith('dish_') and int(food['id'][5:]) <= 350
                  and food['id'] != 'dish_109']

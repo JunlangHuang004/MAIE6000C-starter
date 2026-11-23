@@ -3,10 +3,13 @@ from __future__ import annotations
 from datetime import date, datetime, timezone
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, SecretStr, field_validator, model_validator
+from pydantic import (
+    BaseModel, ConfigDict, Field, SecretStr, computed_field, field_validator, model_validator,
+)
 
 from services.common.nutrition import parse_meal
 from services.common.ingredient_recipe import IngredientRecipe
+from services.common.carbohydrates import carbohydrate_summary, complete_mixed_details
 from services.common.models import AnalysisStatus, CaseStatus, JobStatus, JobType
 from services.common.tracking import parse_record_date
 
@@ -395,6 +398,11 @@ class AnalysisRead(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
+    @computed_field
+    @property
+    def carbohydrate_summary(self) -> dict[str, Any] | None:
+        return carbohydrate_summary(self.details)
+
 
 class AnalysisCreateResponse(BaseModel):
     analysis: AnalysisRead
@@ -433,12 +441,31 @@ class NutritionAnalysisResponse(BaseModel):
     carbs_g: float | None = Field(default=None, ge=0.0)
     fat_g: float | None = Field(default=None, ge=0.0)
 
+    @computed_field
+    @property
+    def carbohydrate_summary(self) -> dict[str, Any] | None:
+        return carbohydrate_summary(self.details)
+
     @model_validator(mode="after")
     def complete_or_clarify(self):
         values = [self.calories, self.protein_g, self.carbs_g, self.fat_g]
         if self.questions:
             if any(v is not None for v in values) or not self.draft:
                 raise ValueError("Pending questions cannot have totals")
-        elif any(v is None for v in values):
-            raise ValueError("A completed estimate needs every nutrient")
+        else:
+            summary = self.carbohydrate_summary
+            if (any('carbohydrate_basis' in detail for detail in self.details)
+                    and summary is None):
+                raise ValueError("Carbohydrate details need supported definitions and values")
+            mixed = summary is not None and summary['basis'] == 'mixed'
+            if mixed:
+                if self.carbs_g is not None or not complete_mixed_details(
+                        self.details, self.draft, {
+                            'calories': self.calories, 'protein_g': self.protein_g,
+                            'fat_g': self.fat_g,
+                        }):
+                    raise ValueError(
+                        "Mixed carbohydrate definitions need complete separate details")
+            elif any(v is None for v in values):
+                raise ValueError("A completed estimate needs every nutrient")
         return self

@@ -120,7 +120,46 @@
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
     "category": "egg_tofu",
-    "variant_policy": "one_home_style_reference_per_dish"
+    "variant_policy": "one_home_style_reference_per_dish",
+    "measured_reference": {
+      "id": "cfs_frl_eng_351",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 130,
+        "protein_g": 7.5,
+        "fat_g": 9.2,
+        "carbs_g": 3.7
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-351"
+      },
+      "source_name_zh": "麻婆豆腐",
+      "source_name_en": "Braised bean curd and minced pork in chilli sauce",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名麻婆豆腐；豆腐含水量、肉末肥瘦及辣酱比例会变化；不是本应用简化配方的实测值。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named mapo tofu; tofu moisture, minced-pork fat and chilli sauce proportions vary. This is not a measurement of the app simplified recipe.",
+      "dietary_fibre": {
+        "qualifier": "trace"
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C351:I351",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served",
+        "braised"
+      ],
+      "preparation_notes_zh": "来源英文名称明确为 Braised bean curd；因此支持红烧／焖烧，不从本应用配方推断其他做法。",
+      "preparation_notes_en": "The source names braised bean curd, supporting braised. No additional route is inferred from the app recipe."
+    }
   },
   {
     "id": "dish_005",
@@ -211,7 +250,46 @@
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
     "category": "pork",
-    "variant_policy": "one_home_style_reference_per_dish"
+    "variant_policy": "one_home_style_reference_per_dish",
+    "measured_reference": {
+      "id": "cfs_frl_eng_350",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 200,
+        "protein_g": 8,
+        "fat_g": 17,
+        "carbs_g": 4
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-350"
+      },
+      "source_name_zh": "回锅肉",
+      "source_name_en": "Sauteed pork slices with assorted vegetable in chilli sauce",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名回锅肉；肉的部位、肥瘦、蔬菜及酱汁比例会变化。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named twice-cooked pork; pork cut, fat content, vegetables and sauce proportions vary.",
+      "dietary_fibre": {
+        "value_g": 1.7
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C350:I350",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served",
+        "stir_fried"
+      ],
+      "preparation_notes_zh": "来源英文名称明确为 Sauteed pork slices，对应炒；来源未说明前置煮制过程，因此不把水煮单独视为同一成品。",
+      "preparation_notes_en": "The source names sauteed pork slices, supporting stir_fried. It does not document preliminary boiling, so boiled alone is not treated as the same prepared dish."
+    }
   },
   {
     "id": "dish_008",
@@ -358,7 +436,59 @@
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
     "category": "seafood",
-    "variant_policy": "one_home_style_reference_per_dish"
+    "variant_policy": "one_home_style_reference_per_dish",
+    "measured_reference": {
+      "id": "cfs_frl_eng_333",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 230,
+        "protein_g": 13,
+        "fat_g": 18,
+        "carbs_g": 2.6
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-333"
+      },
+      "source_name_zh": "虾仁炒蛋",
+      "source_name_en": "Scrambled egg with shrimp",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名虾仁炒蛋；鸡蛋与虾仁比例、油及酱汁会变化。所列范围仅为2017年10份餐饮样本的观测范围，不是置信区间。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named scrambled egg with shrimp; egg-to-shrimp ratio, oil and sauces vary. The stated range is the observed range of ten restaurant samples from 2017, not a confidence interval.",
+      "dietary_fibre": {
+        "value_g": 0.0
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C333:I333",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "sample_count": 10,
+      "sample_collection_period": "2017-03/2017-04",
+      "observed_ranges": {
+        "calories": {
+          "min": 180,
+          "max": 330
+        },
+        "fat_g": {
+          "min": 13,
+          "max": 30
+        }
+      },
+      "range_source_url": "https://www.cfs.gov.hk/english/programme/programme_rafs/programme_rafs_n_01_23_abstract.html",
+      "compatible_preparations": [
+        "as_served",
+        "stir_fried"
+      ],
+      "preparation_notes_zh": "来源中文名称为虾仁炒蛋，对应炒；不适用于生食或蒸制版本。",
+      "preparation_notes_en": "The source Chinese name specifies stir-fried shrimp and egg, supporting stir_fried. Raw or steamed versions are different preparations."
+    }
   },
   {
     "id": "dish_013",
@@ -1869,7 +1999,45 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 200
+    "default_portion_g": 200,
+    "measured_reference": {
+      "id": "cfs_frl_eng_375",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 310,
+        "protein_g": 15,
+        "fat_g": 26,
+        "carbs_g": 3
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-375"
+      },
+      "source_name_zh": "蒜泥白肉",
+      "source_name_en": "Sliced Pork with Garlic Sauce",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名蒜泥白肉；五花肉肥瘦、煮后脂肪流失及拌汁比例会变化。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named sliced pork with garlic sauce; pork fat content, cooking losses and dressing proportions vary.",
+      "dietary_fibre": {
+        "qualifier": "trace"
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C375:I375",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源名称仅描述蒜泥白肉／Sliced Pork with Garlic Sauce，未明确烹调路线；仅接受按来源成品状态，不推断水煮。",
+      "preparation_notes_en": "The source names sliced pork with garlic sauce without specifying its cooking route. Only the source prepared state is supported; boiled is not inferred."
+    }
   },
   {
     "id": "dish_065",
@@ -3275,7 +3443,46 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 200
+    "default_portion_g": 200,
+    "measured_reference": {
+      "id": "cfs_frl_eng_346",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 250,
+        "protein_g": 18,
+        "fat_g": 19,
+        "carbs_g": 1.3
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-346"
+      },
+      "source_name_zh": "口水鸡",
+      "source_name_en": "Steamed chicken in chilli oil sauce",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名口水鸡；鸡皮、部位、辣油和配料比例会变化；称重须扣除骨头。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named chicken in chilli oil sauce; skin, cuts, chilli oil and garnish proportions vary. Weighed grams must exclude bones.",
+      "dietary_fibre": {
+        "qualifier": "trace"
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C346:I346",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served",
+        "steamed"
+      ],
+      "preparation_notes_zh": "来源英文名称明确为 Steamed chicken in chilli oil sauce，支持蒸制；本应用原示例配方写水煮，不用于覆盖来源做法。",
+      "preparation_notes_en": "The source explicitly names steamed chicken in chilli oil sauce, supporting steamed. The app illustrative boiled-chicken recipe does not override the source preparation."
+    }
   },
   {
     "id": "dish_111",
@@ -5987,7 +6194,46 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 200
+    "default_portion_g": 200,
+    "measured_reference": {
+      "id": "cfs_frl_eng_343",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 94,
+        "protein_g": 6.3,
+        "fat_g": 6.5,
+        "carbs_g": 2.7
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-343"
+      },
+      "source_name_zh": "红烧豆腐",
+      "source_name_en": "Braised tofu",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名红烧豆腐；豆腐种类、含水量、油及酱汁比例会变化；来源未提供与本应用相同的配方。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named braised tofu; tofu type, moisture, oil and sauce proportions vary. The source does not provide a formula identical to the app recipe.",
+      "dietary_fibre": {
+        "value_g": 1.3
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C343:I343",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served",
+        "braised"
+      ],
+      "preparation_notes_zh": "来源英文名称明确为 Braised tofu，对应红烧／焖烧；不推断煎炸等其他步骤。",
+      "preparation_notes_en": "The source names braised tofu, supporting braised. Frying or other steps are not inferred."
+    }
   },
   {
     "id": "dish_203",
@@ -7981,7 +8227,58 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 200
+    "default_portion_g": 200,
+    "measured_reference": {
+      "id": "cfs_frl_eng_339",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 240,
+        "protein_g": 7.1,
+        "fat_g": 15,
+        "carbs_g": 18
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-339"
+      },
+      "source_name_zh": "菠萝咕噜肉",
+      "source_name_en": "Pork and pineapple with sweet and sour sauce",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名菠萝咕噜肉；肉的肥瘦、裹粉、菠萝、糖醋汁及留油会变化。所列范围仅为2017年10份餐饮样本的观测范围，不是置信区间。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named pork and pineapple with sweet and sour sauce; pork fat, batter, fruit, sauce and retained oil vary. The stated range is the observed range of ten restaurant samples from 2017, not a confidence interval.",
+      "dietary_fibre": {
+        "qualifier": "trace"
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C339:I339",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "sample_count": 10,
+      "sample_collection_period": "2017-03/2017-04",
+      "observed_ranges": {
+        "calories": {
+          "min": 190,
+          "max": 280
+        },
+        "fat_g": {
+          "min": 11,
+          "max": 18
+        }
+      },
+      "range_source_url": "https://www.cfs.gov.hk/english/programme/programme_rafs/programme_rafs_n_01_23_abstract.html",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源名称仅描述菠萝咕噜肉及甜酸汁，未明确裹粉、炸制或后续翻炒路线；仅接受按来源成品状态，不从本应用配方推断煎炸或炒。",
+      "preparation_notes_en": "The source names pork and pineapple with sweet and sour sauce without specifying coating, frying or subsequent stir-frying. Only the source prepared state is supported; fried or stir_fried is not inferred from the app recipe."
+    }
   },
   {
     "id": "dish_267",
@@ -8080,7 +8377,46 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 200
+    "default_portion_g": 200,
+    "measured_reference": {
+      "id": "cfs_frl_eng_355",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 290,
+        "protein_g": 20,
+        "fat_g": 20,
+        "carbs_g": 6.9
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-355"
+      },
+      "source_name_zh": "椒盐排骨",
+      "source_name_en": "Deep fried spare ribs with salt and pepper",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名椒盐排骨；排骨肥瘦、裹粉及留油会变化；每100克指去骨可食部分。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named deep-fried spare ribs with salt and pepper; meat fat, coating and retained oil vary. Per 100 g refers to the edible portion excluding bones.",
+      "dietary_fibre": {
+        "qualifier": "trace"
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C355:I355",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served",
+        "fried"
+      ],
+      "preparation_notes_zh": "来源英文名称明确为 Deep fried spare ribs with salt and pepper，对应煎炸类别中的炸制；不支持蒸制排骨。",
+      "preparation_notes_en": "The source explicitly names deep-fried spare ribs with salt and pepper, supporting the fried enum. Steamed ribs are a different preparation."
+    }
   },
   {
     "id": "dish_270",
@@ -10269,7 +10605,46 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 300
+    "default_portion_g": 300,
+    "measured_reference": {
+      "id": "cfs_frl_eng_386",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 140,
+        "protein_g": 4,
+        "fat_g": 5.1,
+        "carbs_g": 20
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-386"
+      },
+      "source_name_zh": "干炒牛肉河粉",
+      "source_name_en": "Fried flat noodles with sliced beef",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名干炒牛河；河粉含水量、牛肉比例及油量会变化。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named dry-fried flat rice noodles with beef; noodle moisture, beef proportion and oil vary.",
+      "dietary_fibre": {
+        "value_g": 2.2
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C386:I386",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served",
+        "stir_fried"
+      ],
+      "preparation_notes_zh": "来源中文名称为干炒牛肉河粉，明确对应炒；英文 Fried 不解释为深炸。",
+      "preparation_notes_en": "The source Chinese name explicitly specifies dry stir-fried flat noodles with beef, supporting stir_fried. The English word fried is not interpreted as deep-fried."
+    }
   },
   {
     "id": "dish_340",
@@ -10335,7 +10710,45 @@
       "url": null
     },
     "nutrition_basis": "recipe_batch_then_cooked_weight",
-    "default_portion_g": 300
+    "default_portion_g": 300,
+    "measured_reference": {
+      "id": "cfs_frl_eng_471",
+      "version": "2026-10-02",
+      "nutrition_basis": "per_100g_cooked_edible",
+      "nutrients": {
+        "calories": 190,
+        "protein_g": 6.9,
+        "fat_g": 10,
+        "carbs_g": 16
+      },
+      "carbohydrate_basis": "available",
+      "source": {
+        "name": "Hong Kong Centre for Food Safety, Food Research Laboratory (FRL)",
+        "url": "https://www.cfs.gov.hk/resources/Nutrient%20profiles_FRL.xlsx",
+        "license": "No open licence asserted; CFS copyright notice applies",
+        "rights_url": "https://www.cfs.gov.hk/english/notices/notices.html",
+        "id": "CFS-FRL-Eng-471"
+      },
+      "source_name_zh": "鸡丝冷面",
+      "source_name_en": "Cold noodles with shredded chicken",
+      "match_scope": "same_named_prepared_dish",
+      "notes_zh": "香港食安中心同名成品食物的化验基础参考，不代表每一份菜或本应用食材配方。碳水为可利用碳水化合物；能量保留来源公布值，不由已舍入营养素重算。同名鸡丝冷面／凉面；面条含水量、鸡肉、黄瓜及拌酱比例会变化；未核实该来源记录的样本数、采样年份或观测范围。",
+      "notes_en": "Laboratory-based CFS reference for the same named prepared dish, not every serving or the app ingredient recipe. Carbohydrate is available carbohydrate. Published energy is retained rather than recalculated from rounded nutrients. Same named cold noodles with shredded chicken; noodle moisture, chicken, cucumber and dressing proportions vary. Sample count, collection year and observed range for this row have not been verified.",
+      "dietary_fibre": {
+        "value_g": 1.1
+      },
+      "reference_type": "laboratory_based_prepared_food",
+      "source_workbook_sheet": "Eng",
+      "source_workbook_range": "C471:I471",
+      "source_workbook_sha256": "75c77d304a3d2199a1bac3326e9e0458e798f5519e569f4422556b3104ec475d",
+      "source_workbook_last_modified": "2026-10-02T08:00:51Z",
+      "retrieved_at": "2026-11-24",
+      "compatible_preparations": [
+        "as_served"
+      ],
+      "preparation_notes_zh": "来源名称仅描述鸡丝冷面／凉面，未明确鸡肉或面条的烹调路线；仅接受按来源冷面成品状态，不推断水煮或生食。",
+      "preparation_notes_en": "The source names cold noodles with shredded chicken without specifying how the chicken or noodles were cooked. Only the source prepared cold-noodle state is supported; boiled or raw is not inferred."
+    }
   },
   {
     "id": "dish_342",

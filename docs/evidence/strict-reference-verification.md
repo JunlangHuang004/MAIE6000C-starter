@@ -1,5 +1,10 @@
 # Same-main-ingredient reference review — 23–24 November 2026
 
+This is the historical audit before the
+[CFS prepared-food reference update](../cfs-prepared-food-references.md). Its
+ingredient-formula comparisons remain valid for that calculation route; they do
+not describe the new source-based default for the ten enriched dish records.
+
 ## Scope and independent baseline
 
 An independent agent started without the parent conversation history and inspected

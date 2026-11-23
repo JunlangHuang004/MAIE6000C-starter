@@ -694,6 +694,15 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         original:item.reference_selection.original_name,
         reference:I.foodName(item.reference_selection.source_food_id,item.reference_selection.source_name)
       });
+      const measured = row.querySelector('[data-measured-reference]');
+      if (measured && q.measured_reference) {
+        measured.querySelector('summary').textContent = I.t('measuredQuestionPreview',{
+          calories:q.measured_reference.nutrients?.calories ?? '—'
+        });
+        const body = measured.querySelector('[data-measured-reference-body]');
+        body.replaceChildren(); referenceEvidence(q.measured_reference,body);
+        if (q.measured_reference.source) body.append(sourceLinks([q.measured_reference.source]));
+      }
     }
   }
   function renderQuestions() {
@@ -771,6 +780,11 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         adjust.addEventListener('input',() => {
           accept.checked = false; row.dataset.recipeEdited = 'true'; translateQuestions();
         });
+      }
+      if (['calculation_basis','preparation'].includes(q.key.split('.')[1]) && q.measured_reference) {
+        const reference = el('details'); reference.dataset.measuredReference = 'true';
+        const body = el('div'); body.dataset.measuredReferenceBody = 'true';
+        reference.append(el('summary'),body); row.append(reference);
       }
       box.append(row);
     }
@@ -940,6 +954,9 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     if (text) { const origin = el('p',text); origin.className = 'quantity-origin'; block.append(origin); }
   }
   function detailLabel(detail) {
+    if (detail.calculation_basis === 'measured_reference' && detail.measured_reference) {
+      return `${referenceName(detail.measured_reference) || detail.name} · ${detail.grams}g`;
+    }
     if (detail.kind !== 'custom_recipe') return `${I.foodName(detail.food_id,detail.name)} · ${detail.grams}g`;
     const weight = I.t(detail.quantity_provenance?.basis === 'batch' ? 'customConsumedWeight' : 'customIngredientSum',{grams:detail.grams});
     if (detail.reference_selection) return `${detail.reference_selection.original_name || detail.name} · ${weight}`;
@@ -966,9 +983,63 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       (!$('reply-form').hidden && !!$('reply').value.trim()) ||
       (!$('offline-correction').hidden && $('offline-meal').value !== analysis.food_text));
   }
+  function referenceName(reference) {
+    return I.getLanguage() === 'en'
+      ? reference.source_name_en || reference.source_name_zh || ''
+      : reference.source_name_zh || reference.source_name_en || '';
+  }
+  function sourceLinks(records) {
+    const sources = el('p'); sources.className = 'sources';
+    sources.append(document.createTextNode(I.t('sources')));
+    const seen = new Set();
+    for (const source of records || []) {
+      if (!source || seen.has(source.url)) continue;
+      seen.add(source.url);
+      const label = [source.name,source.id != null ? '#' + source.id : '',source.license ? '(' + source.license + ')' : ''].filter(Boolean).join(' ');
+      const link = el('a',label);
+      try {
+        const url = new URL(source.url);
+        if (url.protocol === 'https:' && ['fdc.nal.usda.gov','www.cfs.gov.hk'].includes(url.hostname)
+            && !url.username && !url.password && !url.port) {
+          link.href = url.href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+        }
+      } catch {}
+      sources.append(link,document.createTextNode(' '));
+    }
+    return sources;
+  }
+  function referenceEvidence(reference,block) {
+    block.append(el('p',I.t('measuredReferenceRecord',{
+      name:referenceName(reference),id:reference.id ?? '—',version:reference.version ?? '—'
+    })));
+    const nutrients = reference.nutrients;
+    if (nutrients) block.append(el('p',I.t('measuredReferenceNutrition',{
+      calories:nutrients.calories ?? '—',protein:nutrients.protein_g ?? '—',
+      fat:nutrients.fat_g ?? '—',carbs:nutrients.carbs_g ?? '—'
+    })));
+    block.append(el('p',I.t('measuredReferenceCaveat')));
+    const notes = I.getLanguage() === 'en' ? reference.notes_en || reference.notes_zh : reference.notes_zh || reference.notes_en;
+    for (const note of Array.isArray(notes) ? notes : notes ? [notes] : []) block.append(el('p',note));
+  }
+  function renderCarbohydrates() {
+    const summary = analysis?.carbohydrate_summary;
+    const label = $('carbs_g').parentElement.querySelector('span');
+    const mixed = summary?.basis === 'mixed';
+    label.textContent = I.t(mixed ? 'carbs' : summary?.basis === 'available' ? 'availableCarbs' : 'totalCarbs');
+    $('carbs_g').textContent = mixed ? I.t('carbsNotCombined') : analysis?.carbs_g ?? '—';
+    $('carbohydrate-summary').hidden = !mixed;
+    $('carbohydrate-summary').replaceChildren();
+    if (mixed) {
+      $('carbohydrate-summary').append(el('p',I.t('mixedCarbsHelp')));
+      for (const [key,labelKey] of [['available_g','availableCarbsSubtotal'],['total_by_difference_g','totalCarbsSubtotal']]) {
+        $('carbohydrate-summary').append(el('p',I.t(labelKey,{grams:summary[key] ?? '—'})));
+      }
+    }
+  }
   function renderEvidence() {
     const open = new Map(Array.from($('evidence').children).map(block => [block.dataset.item,block.open]));
     $('evidence').replaceChildren();
+    let otherReference = false;
     for (const [index,detail] of (analysis.details || []).entries()) {
       const block = el('details'); block.dataset.item = detail.food_id + ':' + index;
       block.open = open.get(block.dataset.item) ?? false;
@@ -977,14 +1048,18 @@ $('trend-today').addEventListener('click',()=>loadTracking());
       const item = analysis.draft?.[index] || {};
       const similar = detail.reference_selection || item.reference_selection;
       const referencePortion = ['default_portion','portion_reference'].includes(detail.quantity_provenance?.kind);
-      const recipe = catalogue.find(food => food.id === detail.food_id)?.kind === 'recipe';
-      const referenceRecipe = recipe && (item.recipe_assumed || !item.recipe_confirmed);
+      const measured = detail.calculation_basis === 'measured_reference';
+      const recipe = detail.calculation_basis ? detail.calculation_basis === 'ingredient_recipe'
+        : catalogue.find(food => food.id === detail.food_id)?.kind === 'recipe';
+      const referenceRecipe = recipe && (detail.calculation_evidence?.recipe_assumed ?? (item.recipe_assumed || !item.recipe_confirmed));
       const badgeKeys = [];
       if (referencePortion) badgeKeys.push(['referencePortionBadge',true]);
       else if (detail.quantity_provenance?.kind === 'user_grams') badgeKeys.push(['measuredWeightBadge',false]);
+      if (measured) badgeKeys.push(['measuredReferenceBadge',true]);
       if (recipe) badgeKeys.push([referenceRecipe ? 'referenceRecipeBadge' : 'reviewedRecipeBadge',referenceRecipe]);
       if (similar) badgeKeys.push(['similarRecipeBadge',true]);
       else if (detail.kind === 'custom_recipe') badgeKeys.push(['customRecipeBadge',false]);
+      if (badgeKeys.some(([key,reference]) => reference && key !== 'measuredReferenceBadge')) otherReference = true;
       for (const [key,reference] of badgeKeys) {
         const badge = el('span',I.t(key)); badge.className = 'food-badge' + (reference ? ' reference' : ''); badges.append(badge);
       }
@@ -996,27 +1071,27 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         for (const difference of referenceText(similar,'differences') || []) block.append(el('p',difference));
       }
       quantityEvidence(detail,block);
+      if (measured && detail.measured_reference) referenceEvidence(detail.measured_reference,block);
+      if (detail.calculation_evidence?.catalogue_version) block.append(el('p',I.t('catalogueSnapshot',{version:detail.calculation_evidence.catalogue_version})));
+      block.append(el('p',I.t(detail.carbohydrate_basis === 'available' ? 'availableCarbsDetail' : 'totalCarbsDetail',{
+        grams:detail.nutrients.carbs_g ?? '—'
+      })));
       for (const assumption of detail.assumptions || []) block.append(el('p',I.assumption(assumption,detail.food_id)));
-      const sources = el('p'); sources.className = 'sources';
-      sources.append(document.createTextNode(I.t('sources')));
-      const seen = new Set();
-      for (const source of detail.sources || []) {
-        if (seen.has(source.url)) continue;
-        seen.add(source.url);
-        const link = el('a',`${source.name} #${source.id} (${source.license})`);
-        if (source.url?.startsWith('https://fdc.nal.usda.gov/')) {
-          link.href = source.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
-        }
-        sources.append(link,document.createTextNode(' '));
-      }
-      block.append(sources); $('evidence').append(block);
+      const sources = measured && detail.measured_reference?.source ? [detail.measured_reference.source] : detail.sources;
+      block.append(sourceLinks(sources)); $('evidence').append(block);
     }
     const hasReference = !!$('evidence').querySelector('.food-badge.reference');
     const hasSimilar = (analysis.details || []).some(detail => detail.reference_selection || detail.approximate_reference);
+    const hasMeasured = (analysis.details || []).some(detail => detail.calculation_basis === 'measured_reference');
     $('estimate-basis').hidden = !hasReference;
     $('estimate-basis').textContent = hasReference
       ? I.t(hasSimilar ? (analysis.status === 'confirmed' ? 'confirmedSimilarReferenceBasis' : 'similarReferenceBasis')
         : analysis.status === 'confirmed' ? 'confirmedReferenceBasis' : 'referenceBasis') : '';
+    if (hasMeasured) {
+      $('estimate-basis').textContent = [I.t('measuredReferenceCaveat'),
+        otherReference || hasSimilar ? $('estimate-basis').textContent : '',
+        !otherReference && !hasSimilar && analysis.status === 'confirmed' ? I.t('measuredReferenceSaved') : ''].filter(Boolean).join(' ');
+    }
   }
   function render() {
     const state = analysis?.status;
@@ -1054,6 +1129,7 @@ $('trend-today').addEventListener('click',()=>loadTracking());
         ? analysis.details.map(detailLabel).join(' · ')
         : analysis.interpreted_food_text || '';
       for (const key of ['calories','protein_g','carbs_g','fat_g']) $(key).textContent = analysis[key] ?? '—';
+      renderCarbohydrates();
       $('record').textContent = I.t('record',{id:analysis.id,revision:analysis.revision});
       $('confirm').hidden = state === 'confirmed';
       $('review-help').textContent = I.t(state === 'confirmed' ? 'confirmedHelp' : custom ? 'customReviewHelp' : provider==='demo' ? 'offlineReviewHelp' : 'reviewHelp');
@@ -1218,10 +1294,20 @@ $('confirm').addEventListener('click',()=>{
     const open = new Set(Array.from($('food-list').children).filter(node => node.open).map(node => node.dataset.foodId));
     $('food-list').replaceChildren();
     const matches = catalogue.filter(food => [food.name,...food.aliases,
-      window.NUTRICHAT_EN_CATALOGUE?.[food.id]?.name || ''].join(' ').toLowerCase().includes(search));
+      window.NUTRICHAT_EN_CATALOGUE?.[food.id]?.name || '',
+      food.measured_reference?.source_name_zh || '',food.measured_reference?.source_name_en || ''].join(' ').toLowerCase().includes(search));
     for (const food of matches.slice(0, foodLimit)) {
       const block = el('details'); block.dataset.foodId = food.id; block.open = open.has(food.id);
-      block.append(el('summary',I.foodName(food.id,food.name) + (food.kind === 'recipe' ? ' · ' + I.t('referenceRecipe') : '')));
+      block.append(el('summary',I.foodName(food.id,food.name) + (food.measured_reference ? ' · ' + I.t('measuredReferenceBadge') : food.kind === 'recipe' ? ' · ' + I.t('referenceRecipe') : '')));
+      if (food.measured_reference) {
+        block.append(el('p',I.t('catalogueTwoBases')));
+        referenceEvidence(food.measured_reference,block);
+        if (food.measured_reference.source) block.append(sourceLinks([food.measured_reference.source]));
+        if (food.recipe) block.append(el('p',I.t('ingredientRecipeFormula',{
+          ingredients:Object.entries(food.recipe.ingredients).map(([id,grams]) => I.foodName(id,id) + ' ' + grams + 'g').join(I.getLanguage() === 'en' ? ', ' : '、'),
+          yield:food.recipe.yield_g
+        })));
+      }
       block.append(el('p',food.kind === 'recipe'
         ? I.t('catalogueRecipe',{method:I.method(food.id,food.method).replace(/[.!?。]+$/, '')})
         : I.t('catalogueIngredient',{calories:food.nutrients.calories,protein:food.nutrients.protein_g,

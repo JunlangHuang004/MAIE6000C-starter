@@ -12,6 +12,28 @@
     referenceRecipeBadge: ['参考配方', 'Reference recipe'],
     reviewedRecipeBadge: ['已核对配方', 'Reviewed recipe'],
     measuredWeightBadge: ['按填写克数', 'Entered grams'],
+    measuredReferenceBadge: ['CFS 成品菜参考', 'CFS prepared-dish reference'],
+    measuredReferenceCaveat: ['采用香港食物安全中心同名成品菜样本的营养数据，按本次食用重量换算；不是对你这餐的化验，实际配料、用油和含水量可能不同。', 'Uses Hong Kong Centre for Food Safety data for samples of a same-named prepared dish, scaled to the portion eaten. Your meal was not laboratory-tested; its ingredients, oil and water content may differ.'],
+    measuredReferenceSaved: ['这餐已确认保存；如需修改，请开始新的一餐。', 'This meal is confirmed and saved. Start a new meal to make changes.'],
+    measuredReferenceRecord: ['CFS 来源菜名：{name}；记录 {id} · 版本 {version}。', 'CFS source dish: {name}; record {id} · version {version}.'],
+    catalogueSnapshot: ['本次计算保存的食物目录版本：{version}。', 'Food catalogue version saved with this calculation: {version}.'],
+    measuredReferenceNutrition: ['CFS 每100g熟制可食部分：{calories} kcal，蛋白质 {protein}g，脂肪 {fat}g，可利用碳水化合物 {carbs}g。', 'CFS per 100g cooked edible portion: {calories} kcal, protein {protein}g, fat {fat}g, available carbohydrate {carbs}g.'],
+    catalogueTwoBases: ['此菜有两种估算依据：同名成品菜的 CFS 参考数据，或可修改的食材配方。修改食材、用油或成品重量时，按食材配方计算。', 'This dish has two estimation bases: CFS data for a same-named prepared dish, or an editable ingredient recipe. Changes to ingredients, oil or finished batch weight use the ingredient recipe.'],
+    ingredientRecipeFormula: ['可修改的食材配方：{ingredients}；整锅成品 {yield}g。此配方按食材数据计算。', 'Editable ingredient recipe: {ingredients}; finished batch {yield}g. This formula is calculated from ingredient data.'],
+    calculationBasisQuestion: ['{name}：请选择估算依据。CFS 数据是同名成品菜参考；若要调整食材、用油或成品重量，请选择食材配方。', '{name}: choose the estimation basis. CFS data refer to a same-named prepared dish. Choose the ingredient recipe to adjust ingredients, oil or finished batch weight.'],
+    measuredReferenceOption: ['CFS 成品菜参考 · 按食用重量换算', 'CFS prepared-dish reference · scaled to portion eaten'],
+    measuredQuestionPreview: ['CFS 参考：{calories} kcal/100g · 查看来源说明', 'CFS reference: {calories} kcal/100g · View source details'],
+    ingredientRecipeOption: ['食材配方估算 · 可核对和调整用量', 'Ingredient recipe estimate · review and adjust quantities'],
+    measuredPreparationQuestion: ['{name}的香港食安中心成品参考与你描述的做法不同。请选择符合实际的参考做法，或填写实际食材配方。', '{name}: the preparation you described does not match the Hong Kong Centre for Food Safety reference. Select a reference preparation only if it matches your meal, or enter the actual ingredient recipe.'],
+    measuredPreparationOption: ['按香港食安中心参考成品的加工状态', 'As prepared in the Hong Kong Centre for Food Safety reference'],
+    availableCarbs: ['可利用碳水化合物 · g', 'Available carbohydrate · g'],
+    totalCarbs: ['总碳水化合物 · g', 'Total carbohydrate · g'],
+    carbsNotCombined: ['不合计', 'Not combined'],
+    mixedCarbsHelp: ['CFS 可利用碳水不含膳食纤维；USDA 总碳水包含膳食纤维，两者不合计为一个数值。热量、蛋白质和脂肪仍可合计，可照常确认并记录热量。', 'CFS available carbohydrate excludes dietary fibre; USDA total carbohydrate includes dietary fibre. There is no comparable combined carbohydrate total. Energy, protein and fat can still be totalled, and the meal can be confirmed and recorded.'],
+    availableCarbsSubtotal: ['可利用碳水（不含膳食纤维）小计：{grams}g。', 'Available carbohydrate (excluding dietary fibre) subtotal: {grams}g.'],
+    totalCarbsSubtotal: ['总碳水（含膳食纤维）小计：{grams}g。', 'Total carbohydrate (including dietary fibre) subtotal: {grams}g.'],
+    availableCarbsDetail: ['本份可利用碳水（不含膳食纤维）：{grams}g。', 'Available carbohydrate (excluding dietary fibre) in this portion: {grams}g.'],
+    totalCarbsDetail: ['本份总碳水（含膳食纤维）：{grams}g。', 'Total carbohydrate (including dietary fibre) in this portion: {grams}g.'],
     customRecipeBadge: ['按实际食材', 'Entered ingredients'],
     similarRecipeBadge: ['相似菜参考估算', 'Reference estimate'],
     similarFind: ['查找相似菜作参考', 'Find a similar recipe for reference'],
@@ -129,7 +151,7 @@
     noFoods: ['没有找到匹配的食物。试试其他名称。', 'No matching foods. Try another name.'],
     referenceRecipe: ['参考菜谱', 'Reference recipe'],
     catalogueRecipe: ['{method}；配料及成品重量可在估算时修改。', '{method}. You can edit ingredients and the finished batch weight during estimation.'],
-    catalogueIngredient: ['每100g：{calories} kcal，蛋白质 {protein}g，脂肪 {fat}g，碳水 {carbs}g。来源：USDA SR Legacy #{fdc}，CC0。', 'Per 100g: {calories} kcal, protein {protein}g, fat {fat}g, carbohydrates {carbs}g. Source: USDA SR Legacy #{fdc}, CC0.'],
+    catalogueIngredient: ['每100g：{calories} kcal，蛋白质 {protein}g，脂肪 {fat}g，总碳水（含膳食纤维）{carbs}g。来源：USDA SR Legacy #{fdc}，CC0。', 'Per 100g: {calories} kcal, protein {protein}g, fat {fat}g, total carbohydrate (including dietary fibre) {carbs}g. Source: USDA SR Legacy #{fdc}, CC0.'],
     dialogue: ['餐食对话', 'Meal conversation'],
     basicDialogue: ['餐食记录与补充', 'Meal record and corrections'],
     advancedDialogue: ['进阶版 · 补充餐食信息', 'Advanced · Add meal details'],
@@ -270,6 +292,14 @@
   const states = {raw: 'raw edible weight before cooking', cooked: 'cooked edible weight', as_sold: 'net edible weight as sold'};
   function questionLabel(q, draft = []) {
     if (q.kind === 'unsupported') return t('unsupportedFood', {name:draft[Number(q.key.split('.')[0])]?.name || 'This food'});
+    if (q.key.split('.')[1] === 'preparation' && q.measured_reference) {
+      const item = draft[Number(q.key.split('.')[0])] || {};
+      return t('measuredPreparationQuestion',{name:foodName(item.food_id,item.name)});
+    }
+    if (q.key.split('.')[1] === 'calculation_basis') {
+      const item = draft[Number(q.key.split('.')[0])] || {};
+      return t('calculationBasisQuestion',{name:foodName(item.food_id,item.name)});
+    }
     if (!english()) return q.label;
     const [index, field] = q.key.split('.');
     const item = draft[Number(index)] || {};
@@ -295,6 +325,11 @@
     return systemText(q.label);
   }
   function questionOption(q, option) {
+    if (q.key.split('.')[1] === 'preparation' && q.measured_reference && option.value === 'as_served') return t('measuredPreparationOption');
+    if (q.key.split('.')[1] === 'calculation_basis') {
+      if (option.value === 'measured_reference') return t('measuredReferenceOption');
+      if (option.value === 'ingredient_recipe') return t('ingredientRecipeOption');
+    }
     if (!english()) return option.label;
     if (q.kind === 'food') return foodName(option.value, option.label);
     const field = q.key.split('.')[1];
@@ -303,6 +338,13 @@
     return systemText(option.label);
   }
   const exactEnglish = {
+    '未说明做法，暂按香港食安中心同名成品参考的加工状态计算。': 'Preparation was not specified. Provisionally using the preparation of the Hong Kong Centre for Food Safety reference for a same-named prepared dish.',
+    '按香港食安中心参考成品的加工状态': 'As prepared in the Hong Kong Centre for Food Safety reference',
+    '按香港食安中心同名成品的每100g可食部分参考数据计算；不是你的这一份菜肴实测值。': 'Calculated from Hong Kong Centre for Food Safety reference data per 100g edible portion of a same-named prepared dish. This is not a laboratory measurement of your portion.',
+    '参考数据已包含样本的油和调味料；不套用可编辑配方的用量或成品重量。': 'The reference data already include the sample’s oil and seasonings. Editable recipe quantities and finished batch weight are not applied.',
+    '基础版采用香港食安中心同名成品参考；样本配方可能与你的菜肴不同。': 'Basic mode uses Hong Kong Centre for Food Safety data for a same-named prepared dish. The sample recipe may differ from your meal.',
+    '采用香港食安中心同名成品参考（不代表你的实际配方）': 'Use the Hong Kong Centre for Food Safety reference for a same-named prepared dish; it does not represent your actual recipe.',
+    '按可编辑食材配方计算': 'Calculate from the editable ingredient recipe.',
     '用户明确选择了相近参考配方并核对食材；原食物仍未准确匹配，结果仅作近似估算。': 'The user explicitly selected a similar reference recipe and reviewed its ingredients. The original food is still not an exact match; this result is only an approximate estimate.',
     '用户填写并确认的食材配方；不是数据库中的实测菜肴记录。': 'An ingredient recipe supplied and reviewed by the user, not a measured dish record in the database.',
     '食材按所选记录的生重、熟重或可食净重计算，不自动互换。': 'Ingredient weights use the selected raw, cooked or net edible state. These states are not converted automatically.',
@@ -374,6 +416,8 @@
   }
   function generatedQuestion(text) {
     let m;
+    if ((m = text.match(/^(.+)的香港食安中心成品参考与你描述的做法不同。请选择符合实际的参考做法，或填写实际食材配方。$/))) return t('measuredPreparationQuestion',{name:translatedNames(m[1])});
+    if ((m = text.match(/^(.+)采用哪种营养计算依据？成品参考来自同名菜肴样本；实际食材用量不同可选择配方计算。$/))) return t('calculationBasisQuestion',{name:translatedNames(m[1])});
     if ((m = text.match(/^数据库未找到“(.+)”的对应食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。$/))) return t('unsupportedFood', {name:m[1]});
     if ((m = text.match(/^“(.+)”没有对应的食物记录，暂不能估算。请核对菜名，或在下方提供实际食材及各自克数；不会使用其他食物代替。$/))) return t('unsupportedFood', {name:m[1]});
     if ((m = text.match(/^(.+)吃了多少克？请填可食部分重量。$/))) return `${translatedNames(m[1])}: how many grams did you eat? Enter the edible portion weight.`;
@@ -406,7 +450,7 @@
       const start = message.content.indexOf('{');
       const end = message.content.indexOf('\n当前餐食资料：');
       const answers = JSON.parse(message.content.slice(start, end < 0 ? undefined : end));
-      const names = {grams:'Edible grams', weight_basis:'Weight basis', preparation:'Preparation', oil_g:'Extra oil (g)', resolved:'Food reviewed', recipe:'Recipe', food_id:'Selected food'};
+      const names = {grams:'Edible grams', weight_basis:'Weight basis', preparation:'Preparation', oil_g:'Extra oil (g)', resolved:'Food reviewed', recipe:'Recipe', food_id:'Selected food',calculation_basis:'Estimation basis'};
       const parts = Object.entries(answers).map(([key,value]) => {
         const [index,field] = key.split('.');
         let shown = value;
@@ -414,6 +458,7 @@
         else if (field === 'food_id') shown = foodName(value,value);
         else if (field === 'preparation') shown = preparations[value] || value;
         else if (field === 'weight_basis') shown = states[value] || value;
+        else if (field === 'calculation_basis') shown = value === 'measured_reference' ? t('measuredReferenceOption') : value === 'ingredient_recipe' ? t('ingredientRecipeOption') : value;
         else if (value === true) shown = 'Confirmed';
         return `Item ${Number(index)+1} · ${names[field] || field}: ${shown}`;
       });

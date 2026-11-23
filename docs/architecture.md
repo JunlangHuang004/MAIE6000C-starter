@@ -2,8 +2,10 @@
 
 Current implementation documented: 2026-11-23 follow-up to `test`; historical course checkpoint `w13-final` is unchanged.
 
-Catalogue `2026-11-23.2` contains 202 USDA ingredient records and 384
-project-authored reference recipes. The 23 November follow-up adds 34 recipes;
+Catalogue `2026-11-24.1` contains 202 USDA ingredient records and 384
+project-authored reference recipes. Ten existing recipe identities also carry
+separate CFS prepared-food references. Source-vector calculations and ingredient
+calculations remain distinct. The 23 November follow-up added 34 recipes;
 existing ingredient nutrients, recipe IDs and the preceding 350 formulations are
 unchanged. The earlier 14 November egg-portion metadata remains in place.
 Meishichina supplies dish-name/style evidence, while recipe quantities and yields

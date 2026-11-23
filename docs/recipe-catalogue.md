@@ -1,8 +1,8 @@
 # NutriChat dish index
 
-Catalogue `2026-11-23.2` contains 384 project-authored home-style reference recipes. Chinese and English names and methods below match the application. One reference is maintained per dish; reviewed alternative names share its ID. This is a coverage list, not a popularity ranking or measured nutrition dataset.
+Catalogue `2026-11-24.1` contains 384 project-authored home-style reference recipes. Ten existing records also have separately attributed [CFS prepared-food references](cfs-prepared-food-references.md). Chinese and English names and ingredient-formula methods below match the application. One ingredient formula is maintained per dish; reviewed alternative names share its ID. This index is a coverage list, not a popularity ranking or a claim that every formula is measured.
 
-All ingredient grams, retained oil and cooked edible batch yields are editable assumptions. Advanced mode requires explicit recipe review. Seafood and meat weights exclude shells, bones and other inedible parts; Basic defaults do not become user-supplied facts.
+All ingredient grams, retained oil and cooked edible batch yields are editable assumptions. Advanced ingredient calculations require explicit recipe review; the ten CFS dishes separately offer a prepared-food source choice. Seafood and meat weights exclude shells, bones and other inedible parts; Basic defaults do not become user-supplied facts.
 
 The subsequent [white-cut chicken correction](white-chicken-reference.md) adds two cooked chicken ingredient records and changes only `dish_109`; all other formulas retain their prior values.
 
