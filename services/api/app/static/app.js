@@ -16,7 +16,7 @@
 let profile=null,profileReference=null,profileLoaded=false,profileLoading=false,profileSaving=false,profileDirty=false,profileConflict=false,profileRequest=0;
 let tracking=null,trackingToday=null,trackingLoading=false,trackingRequest=0;
 let dailyRecord=null,dailyLoaded=false,dailyLoading=false,dailySaving=false,dailyDirty=false,dailyConflict=false,dailyRequest=0,mealDateAnalysisId=null;
-const profileFields={age_years:'profile-age',height_cm:'profile-height',weight_kg:'profile-weight',sex:'profile-sex',goal:'profile-goal',activity_level:'profile-activity'};
+const profileFields={age_years:'profile-age',height_cm:'profile-height',weight_kg:'profile-weight',sex:'profile-sex',goal:'profile-goal',activity_level:'profile-activity',strength_training:'profile-training',reference_scope:'profile-scope'};
 const authEventKey='nutrichat.auth-change';
 const stored={get:I.storageGet,set:I.storageSet,remove:I.storageRemove};
 const analysisKey=()=>currentUser?'nutrichat.analysis.user.'+currentUser.id:null;
@@ -208,16 +208,18 @@ const activityNames={sedentary:'久坐',light:'轻度活动',moderate:'中度活
 const profileNumber=(value,digits=0)=>Number.isFinite(value)?value.toLocaleString(I.getLanguage(),{maximumFractionDigits:digits,minimumFractionDigits:0}):'—';
 function renderProfileReference(){const reference=profileReference;$('profile-reference').hidden=!profile||!reference||profileDirty;if(!profile||!reference||profileDirty)return;
  const estimated=reference.status==='estimated';$('profile-target-title').textContent=(profile.goal==='gain_muscle'?A('增肌'):A('减脂'))+A(' · 每日参考');$('profile-targets').hidden=!estimated;$('profile-review').hidden=estimated;
+ $('profile-calculation').hidden=!estimated;
  for(const [id,key] of [['profile-calories','calories'],['profile-protein','protein_g'],['profile-fat','fat_g'],['profile-carbs','carbs_g']])$(id).textContent=estimated?'≈ '+profileNumber(reference[key],key==='calories'?0:1):'—';
  $('profile-energy-basis').textContent=A('采用 Mifflin–St Jeor 公式估计静息需求约 ')+profileNumber(reference.resting_kcal)+A(' kcal / 天；按')+(A(activityNames[profile.activity_level])||A('所选活动量'))+A('（系数 ')+profileNumber(reference.activity_factor,3)+A('）估计，维持当前体重约需 ')+profileNumber(reference.maintenance_kcal)+A(' kcal / 天。');
- $('profile-goal-basis').textContent=profile.goal==='gain_muscle'?A('增肌参考：在估计维持热量上增加约 5%。'):A('减脂参考：在估计维持热量上减少约 10%。');
- $('profile-macro-basis').textContent=A('营养比例暂按蛋白质 25%、脂肪 30%、碳水 45% 的热量分配。这是通用的起点，实际需要会因训练、身体状况和生活习惯而变化。');
+ $('profile-goal-basis').textContent=(profile.goal==='gain_muscle'?A('增肌起点：在估计维持热量上增加 5%。本次约增加 '):A('减脂起点：减少估计维持热量的 15%，最多减少 500 kcal。本次约减少 '))+profileNumber(Math.abs(reference.energy_adjustment_kcal),1)+A(' kcal / 天；目标按 10 kcal 取整。这是项目默认起点，不是保证有效的个人处方。');
+ $('profile-macro-basis').textContent=estimated?A('蛋白质按当前体重 × ')+profileNumber(reference.protein_g_per_kg,1)+A(' g/kg 计算；参考区间 ')+profileNumber(reference.protein_min_g,1)+'–'+profileNumber(reference.protein_max_g,1)+A(' g / 天。该区间不是必须达到的上下限。脂肪占目标热量约 ')+profileNumber(reference.fat_energy_percent,1)+A('%，碳水补足剩余热量；脂肪会在适用范围内调整，避免挤占碳水。'):'';
  $('profile-notes').replaceChildren();for(const note of reference.notes||[])$('profile-notes').append(el('p',A(note)));
- $('profile-review').replaceChildren();if(!estimated){$('profile-review').append(el('strong',A('资料已保存，暂不提供减脂或增肌目标数值。')));const reasons=new Set();for(const code of reference.reason_codes||[]){reasons.add(code==='underweight_fat_loss'?A('按当前身高体重推算，暂不自动生成减脂参考；建议先咨询专业人士。'):A('计算结果超出本工具自动估算范围，请核对资料并咨询专业人士。'));}if(!reasons.size)reasons.add(A('当前资料需要进一步评估，不能仅靠通用公式给出合适目标。'));for(const reason of reasons)$('profile-review').append(el('p',reason));$('profile-review').append(el('p',A('你仍可照常使用餐食估算。')));}
+ const reasonLabels={scope_confirmation_required:'请修改个人资料，确认饮食参考的适用范围。',professional_guidance_required:'你选择了需要专业评估，本工具暂不自动生成营养目标。',training_confirmation_required:'请修改个人资料，确认目前是否规律进行力量训练。',strength_training_required:'增肌参考以规律力量训练为前提；目前暂不生成增肌营养目标。',underweight_reference:'当前身高体重超出本工具的低体重适用范围，增肌和减脂均需先进一步评估。',high_bmi_reference:'当前身高体重超出本工具的自动参考范围，请先核对资料并寻求个别评估。',macro_distribution_out_of_scope:'按体重计算的营养量无法同时满足本工具的分配范围，暂不强行调整或输出目标。'};
+ $('profile-review').replaceChildren();if(!estimated){$('profile-review').append(el('strong',A('资料已保存，暂不提供减脂或增肌目标数值。')));const reasons=new Set();for(const code of reference.reason_codes||[]){reasons.add(A(reasonLabels[code]||'计算结果超出本工具自动估算范围，请核对资料并咨询专业人士。'));}if(!reasons.size)reasons.add(A('当前资料需要进一步评估，不能仅靠通用公式给出合适目标。'));for(const reason of reasons)$('profile-review').append(el('p',reason));$('profile-review').append(el('p',A('你仍可照常使用餐食估算。')));}
 }
 function applyProfile(data){profile=data.profile;profileReference=data.reference;profileLoaded=true;profileDirty=false;profileConflict=false;$('profile-form').reset();
- if(profile)for(const [key,id] of Object.entries(profileFields))$(id).value=profile[key];
- $('profile-editor').open=!profile;$('profile-editor-title').textContent=profile?A('修改个人资料'):A('填写个人资料');$('profile-badge').textContent=!profile?A('尚未填写'):profileReference?.status==='estimated'?A('已保存 · 参考估算'):A('已保存 · 需评估');$('profile-reload').hidden=true;renderProfileReference();
+ if(profile)for(const [key,id] of Object.entries(profileFields))$(id).value=profile[key] == null?'':String(profile[key]);
+ $('profile-editor').open=!profile||profile.strength_training==null||profile.reference_scope==null;$('profile-editor-title').textContent=profile?A('修改个人资料'):A('填写个人资料');$('profile-badge').textContent=!profile?A('尚未填写'):profileReference?.status==='estimated'?A('已保存 · 参考估算'):A('已保存 · 需评估');$('profile-reload').hidden=true;renderProfileReference();
 }
 async function loadProfile(){if(!currentUser||profileSaving)return;const version=sessionVersion,request=++profileRequest;profileLoading=true;$('profile-reference').hidden=true;profileMessage(A('正在读取个人资料…'));profileControls();
  try{const data=await api('/profile');if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(profile?A('已载入当前账号的资料。'):A('填写并保存后，会在这里显示你的每日参考。'));}
@@ -233,7 +235,7 @@ $('profile-reload').addEventListener('click',async()=>{
  }
 });
 $('profile-form').addEventListener('submit',async event=>{event.preventDefault();if(!currentUser||!profileLoaded||profileLoading||profileSaving||profileConflict||!$('profile-form').reportValidity())return;
- const version=sessionVersion,request=++profileRequest;const body={revision:profile?.revision??0};for(const [key,id] of Object.entries(profileFields))body[key]=['age_years','height_cm','weight_kg'].includes(key)?Number($(id).value):$(id).value;
+ const version=sessionVersion,request=++profileRequest;const body={revision:profile?.revision??0};for(const [key,id] of Object.entries(profileFields)){const value=$(id).value;body[key]=['age_years','height_cm','weight_kg'].includes(key)?Number(value):key==='strength_training'?(value===''?null:value==='true'):value;}
  profileSaving=true;profileMessage(A('正在保存并计算…'));profileControls();
  try{const data=await api('/profile','PUT',body);if(version!==sessionVersion||request!==profileRequest)return;applyProfile(data);profileMessage(A('资料已保存。')+(data.reference?.status==='estimated'?A('下方为每日参考值。'):A('请查看下方的适用范围提示。')));if(dailyLoaded&&!dailyDirty)void loadDaily();if(trackingToday)void refreshCurrentTracking();}
  catch(e){if(!e.silent&&version===sessionVersion&&request===profileRequest){if(e.status===409){profileConflict=true;$('profile-badge').textContent=A('资料已在别处更新');profileMessage(A('资料已在其他页面更新。请先载入最新资料，再重新修改；重新载入会替换当前未保存的内容。'),true);$('profile-reload').hidden=false;$('profile-reload').textContent=A('载入最新资料');}else profileMessage(e.message+A(' 当前修改还没有保存，请重试。'),true);}}
@@ -257,7 +259,7 @@ function renderDailyBalance(){
  badge.hidden=!day.balance_type;badge.classList.toggle('complete',!!day.intake_complete);
  badge.textContent=day.intake_complete?A('已自行确认全天记录完整'):A('仅基于已记录食物 · 全天记录未确认完整');
  $('daily-balance-note').textContent=(day.intake_complete?A('完整性由你自行确认，系统无法核实。'):A('尚未核对：')+missing.join(I.getLanguage()==='en'?', ':'、')+(I.getLanguage()==='en'?'. ':'。')+(day.balance_type==='deficit'?A('实际缺口可能小于显示值。'):A('热量收支可能失真。')))+A('按静息消耗 × 1.2 加已记录运动估算；其他日常活动、食物和设备读数都有误差。请勿只凭这个数字决定有氧强度。');
- if(day.baseline_expenditure_kcal==null){$('daily-balance-value').textContent=A('需要个人资料');detail.textContent=A('请先保存适用的个人资料，才能估计日常基础消耗。');return;}
+ if(day.baseline_expenditure_kcal==null){$('daily-balance-value').textContent=A('需要适用的个人资料');detail.textContent=A('请在个人目标中保存资料，并完成训练与适用范围确认。若提示超出范围，暂不提供消耗估计；摄入和体重记录仍会保留。');return;}
  if(day.calories==null){$('daily-balance-value').textContent=A('需要当天摄入');detail.textContent=A('确认当天餐食，或填写并保存当天总热量。');return;}
  if(day.exercise_calories==null){$('daily-balance-value').textContent=A('需要运动记录');detail.textContent=A('填写并保存当天运动消耗；没有运动时请填写 0。');return;}
  const names={surplus:A('热量盈余'),deficit:A('热量缺口'),balanced:A('收支相抵')};
@@ -331,10 +333,10 @@ function drawTrend(containerId,days,key,unit,color){
  const x=index=>left+index/Math.max(1,days.length-1)*plotWidth,y=value=>top+(high-value)/(high-low)*plotHeight;
  const titleId=containerId+'-title',descId=containerId+'-description';const svg=svgNode('svg',{viewBox:'0 0 '+width+' '+height,role:'img','aria-labelledby':titleId+' '+descId});
  svg.append(svgNode('title',{id:titleId},unit==='kg'?A('30 天体重记录'):A('30 天热量摄入记录')));
- svg.append(svgNode('desc',{id:descId},A('从 ')+days[0].date+A(' 到 ')+days[days.length-1].date+A('，共 ')+recorded.length+A(' 个有数据的日期。单位 ')+unit+A('。缺少记录的日期不连接；完整数值可在下方每日明细中查看。')));
+ svg.append(svgNode('desc',{id:descId},A('从 ')+days[0].date+A(' 到 ')+days[days.length-1].date+A('，共 ')+recorded.length+A(' 个有数据的日期。单位 ')+unit+A('。连线跨过无记录日期，仅连接已有数据点，不补算缺失值；完整数值可在下方每日明细中查看。')));
  for(let i=0;i<=4;i++){const value=low+(high-low)*i/4,py=y(value);svg.append(svgNode('line',{x1:left,y1:py,x2:width-right,y2:py,stroke:'#e3e9e1','stroke-width':1}));svg.append(svgNode('text',{x:left-9,y:py+4,'text-anchor':'end',fill:'#587268','font-size':12},profileNumber(value,unit==='kg'?1:0)));}
  const ticks=[0,7,14,21,days.length-1];for(const index of ticks){const px=x(index);svg.append(svgNode('text',{x:px,y:height-12,'text-anchor':index===0?'start':index===days.length-1?'end':'middle',fill:'#587268','font-size':12},days[index].date.slice(5).replace('-','/')));}
- let previous=null;for(const point of points){if(!Number.isFinite(point.value)){previous=null;continue;}if(previous)svg.append(svgNode('line',{x1:x(previous.index),y1:y(previous.value),x2:x(point.index),y2:y(point.value),stroke:color,'stroke-width':2.5}));
+ let previous=null;for(const point of recorded){if(previous)svg.append(svgNode('line',{x1:x(previous.index),y1:y(previous.value),x2:x(point.index),y2:y(point.value),stroke:color,'stroke-width':2.5}));
   const circle=svgNode('circle',{cx:x(point.index),cy:y(point.value),r:4,fill:color,stroke:'#fff','stroke-width':1.5});circle.append(svgNode('title',{},point.date+' · '+profileNumber(point.value,1)+' '+unit));svg.append(circle);previous=point;}
  container.append(svg);
 }
@@ -728,7 +730,8 @@ $('trend-today').addEventListener('click',()=>loadTracking());
     }
     const hasReference = !!$('evidence').querySelector('.food-badge.reference');
     $('estimate-basis').hidden = !hasReference;
-    $('estimate-basis').textContent = hasReference ? I.t('referenceBasis') : '';
+    $('estimate-basis').textContent = hasReference
+      ? I.t(analysis.status === 'confirmed' ? 'confirmedReferenceBasis' : 'referenceBasis') : '';
   }
   function render() {
     const state = analysis?.status;

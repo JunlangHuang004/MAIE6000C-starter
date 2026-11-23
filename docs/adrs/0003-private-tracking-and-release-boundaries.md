@@ -23,7 +23,9 @@ Keep profile references and tracking deterministic in the API. They do not call
 the model or send profile measurements in meal prompts. Migrations 0007–0010 add
 profiles, daily records/meal dates, exercise and intake coverage. Use revision
 checks on mutable records and lock a meal/date after confirmation. A manual daily
-calorie total replaces the confirmed-meal sum; absent records remain gaps.
+calorie total replaces the confirmed-meal sum; absent calorie or weight values
+remain null. Trend lines connect recorded observations without imputing missing
+values or counting missing calorie days in averages.
 
 Calculate approximate daily expenditure as resting energy × 1.2 plus explicitly
 recorded exercise. A blank exercise value is unknown, distinct from zero. Report

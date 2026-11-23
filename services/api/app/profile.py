@@ -38,7 +38,8 @@ def save_profile(
     db: Session = Depends(get_db),
     user: User = Depends(get_current_user),
 ) -> ProfileResponse:
-    values = payload.model_dump(exclude={"revision"})
+    # Older clients omit the new confirmations; only explicit null clears them.
+    values = payload.model_dump(exclude={"revision"}, exclude_unset=True)
     now = utcnow()
     if payload.revision == 0:
         # The primary key prevents concurrent first writes from creating duplicates.

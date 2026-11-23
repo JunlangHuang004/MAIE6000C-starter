@@ -1,0 +1,180 @@
+[
+  {
+    "name": "腐乳烧鸡翅",
+    "display_name_en": "Chicken wings braised with fermented tofu",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-9711.html",
+    "observed_recipe_title": "腐乳烧鸡翅",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_371",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "盐焗鸡",
+    "display_name_en": "Salt-baked chicken",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-80845.html",
+    "observed_recipe_title": "盐焗鸡",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_372",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "盐水鸭",
+    "display_name_en": "Salt-poached duck",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-662527.html",
+    "observed_recipe_title": "盐水鸭",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "deferred_fat_retention_review",
+      "reason": "Unpublished trial withdrawn: raw skin-on duck and assumed cooked yield do not account for drained fat. No finished-dish nutrient estimate is available."
+    }
+  },
+  {
+    "name": "棒棒鸡",
+    "display_name_en": "Bang bang chicken with sesame sauce",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-253892.html",
+    "observed_recipe_title": "棒棒鸡",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_374",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "荷叶饼",
+    "display_name_en": "Steamed folded buns",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-60911.html",
+    "observed_recipe_title": "荷叶饼",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_375",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "奶香馒头",
+    "display_name_en": "Steamed milk buns",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-617835.html",
+    "observed_recipe_title": "奶香馒头",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_376",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "糖三角",
+    "display_name_en": "Steamed triangular sugar buns",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-642919.html",
+    "observed_recipe_title": "糖三角",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_377",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "肉龙",
+    "display_name_en": "Steamed pork-filled bread roll",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-58464.html",
+    "observed_recipe_title": "肉龙",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_378",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "鸡蛋灌饼",
+    "display_name_en": "Egg-filled flatbread",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-387179.html",
+    "observed_recipe_title": "鸡蛋灌饼",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_379",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "拔丝苹果",
+    "display_name_en": "Caramel-coated apples",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-213993.html",
+    "observed_recipe_title": "拔丝苹果",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_380",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "冰糖炖雪梨",
+    "display_name_en": "Pear stewed with rock sugar",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-26877.html",
+    "observed_recipe_title": "冰糖炖雪梨",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "pending_future_review",
+      "reason": "Not selected for the first batch; synonym, ingredient, scope or formula review is still needed."
+    }
+  },
+  {
+    "name": "糖炒栗子",
+    "display_name_en": "Sugar-roasted chestnuts",
+    "english_label_origin": "project_translation_not_from_meishichina",
+    "menu_url": "https://home.meishichina.com/recipe-menu.html",
+    "source_url": "https://home.meishichina.com/recipe-120816.html",
+    "observed_recipe_title": "糖炒栗子",
+    "source_role": "dish_identity_only_not_nutrient_values",
+    "accessed_on": "2026-11-23",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_381",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  }
+]

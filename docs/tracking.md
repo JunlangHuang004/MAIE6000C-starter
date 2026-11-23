@@ -42,15 +42,18 @@ The charts do not apply today's nutrition reference retrospectively to older day
 
 ## Meaning of the chart
 
-- Missing calories or weight are null and shown as gaps, never inferred zeros.
-  An explicitly entered calorie total of zero is preserved as a recorded value.
+- Lines connect successive recorded observations across missing dates, keeping
+  their actual positions on the date axis. Connecting lines do not supply values
+  for unrecorded dates: missing calories or weight remain null and appear as
+  dashes in the table, never inferred zeros. An explicitly entered calorie total
+  of zero is plotted and preserved as a recorded value.
 - A meal-derived total is the sum of confirmed estimates, not evidence of a full
   day's food intake. The form/table shows the source and confirmed meal count.
 - Average calories use only dates with an available calorie total. Missing days
   do not enter the denominator; weight-only days do not count as calorie days.
 - Weight change compares the last and first measurements inside the window. It is
   unavailable with fewer than two recorded dates, and is not a forecast or a rate.
-- No smoothing, gap filling, extrapolation, target-achievement score or automatic
+- No smoothing, missing-value imputation, extrapolation, target-achievement score or automatic
   diet adjustment is applied. The window is 30 days, not a calendar month.
 
 ## Dates and API

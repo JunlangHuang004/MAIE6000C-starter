@@ -1,0 +1,45 @@
+{
+  "method_references": [
+    {
+      "name": "USDA FoodData Central",
+      "url": "https://fdc.nal.usda.gov/",
+      "finding": "USDA identifies its FoodData Central data as public domain, published under CC0 1.0. Existing catalogue ingredient records already retain individual FDC IDs and nutrient sources.",
+      "role": "ingredient_data_and_reuse_basis"
+    },
+    {
+      "name": "Hong Kong CFS Technical Guidance Notes on Nutrition Labelling and Nutrition Claims, paragraphs 43–54",
+      "url": "https://www.cfs.gov.hk/english/food_leg/files/nl_technical_guidance_e.pdf",
+      "finding": "Ingredient-based calculation needs edible ingredient weights, nutrient composition data, cooking retention/yield adjustments, total prepared weight, then conversion to per 100 g. Oil absorption and water changes affect finished nutrient density.",
+      "role": "methodology_reference_not_validation_of_NutriChat_assumptions"
+    }
+  ],
+  "finished_dish_search": {
+    "queries": [
+      "水煮肉片 每100克 蛋白质 脂肪 碳水 热量",
+      "锅包肉 每100克 蛋白质 脂肪 碳水 热量"
+    ],
+    "conclusion": "No authoritative, directly reusable per-100g finished-dish dataset was established for the candidate batch. Search results include AI-assisted estimates, branded packaged foods and unsourced recipe estimates. Do not present any of these as Meishichina nutrient values or authoritative universal values.",
+    "examples_rejected": [
+      {
+        "url": "https://eatcam.whaloom.com/zh/food/guo-bao-rou/",
+        "reason": "Page explicitly labels its values AI-assisted recipe estimates rather than laboratory measurements. Not an independent authoritative benchmark."
+      },
+      {
+        "url": "https://www.hao-kaluli.com/food/%E9%94%85%E5%8C%85%E8%82%89.html",
+        "reason": "Reported energy is not consistent with the displayed protein/fat/carbohydrate values under the usual macro energy factors; no suitable primary nutrient provenance established."
+      },
+      {
+        "url": "https://whaloom.com/eatcam/food/sichuan-boiled-beef/",
+        "reason": "Labels 水煮牛肉 as also 水煮肉片. Beef and pork dishes must not be conflated for NutriChat matching."
+      }
+    ]
+  },
+  "implementation_notes": [
+    "New values must be described as approximate results of project-authored reference recipes, not website-provided measured nutrient values.",
+    "Each ingredient ID must represent the actual essential ingredient and state. Do not use hard tofu for pressed tofu, fresh shrimp for dried shrimp, raw duck egg for century egg, fresh corn for cornmeal, or rice flour for glutinous rice flour.",
+    "Cooked edible yield, retained oil, hydration of dried mushrooms and beans, broth eaten, and discarded bones/shells require explicit assumptions.",
+    "Small optional aromatics may be omitted from the macro calculation when disclosed; signature main ingredients cannot be silently omitted.",
+    "English labels in these evidence files are manual project translations of observed Chinese dish names, not quotations from the recipe website.",
+    "Menu-name evidence and reference-recipe composition evidence are separate. Some observed web recipes are unusual personal variants; selecting a standard project formula does not mean the website supplied its quantities."
+  ]
+}

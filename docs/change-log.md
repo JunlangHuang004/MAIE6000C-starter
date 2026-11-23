@@ -1,5 +1,60 @@
 # NutriChat change log
 
+## 2026-11-23 — Home-recipe coverage, English completion and compact input
+
+- Advance catalogue data to `2026-11-23.1`: 200 unchanged USDA ingredient records
+  and 384 reference recipes, with 34 added project-authored formulas. Preserve
+  the preceding 350 formulas, existing IDs and historical saved estimates.
+- Compare 364 Meishichina menu dish labels after removing 13 navigation labels.
+  Record source links and pending ingredient/formula reviews; the site supplies
+  dish-name/style evidence, not recipe quantities or measured nutrient values.
+- Complete English names for all 584 records and English methods for all 384
+  recipes, including the 162 previously untranslated records. Add reviewed
+  Chinese aliases without duplicating existing dishes, including 水煮鱼 variants
+  for the unchanged `dish_126` fish-and-broth reference.
+- Preserve explicit food weights in compact comma-separated, space-separated and
+  unpunctuated input. Keep exact whole-food identity matching and withhold totals
+  for unresolved foods; no nearest-dish estimate is introduced.
+- Withdraw the unpublished salt-poached-duck trial because its raw-fat and cooked-
+  yield assumptions did not account for drained fat. Retain the unused ID gap.
+- Add [the expansion report](home-recipe-expansion.md), [public provenance files](evidence/home-recipe-expansion-2026-11-23/README.md)
+  and a complete bilingual recipe index. Historical `nutrichat`, `w07-midterm`,
+  `w13-final`, submission evidence and screenshots retain their earlier scope.
+- Correct the confirmed-meal banner in Chinese and English so its guidance
+  reflects the read-only saved meal while preserving the estimate warning.
+- Pass 2,031 backend tests, 62 frontend tests and Ruff; skip two HTTP smoke tests
+  because `SMOKE_BASE_URL` is unset in that run. Sample the rebuilt local HKUST
+  runtime with compact input, an English recipe, unknown-food withholding and a
+  persisted recipe oil edit. Retain one initial failed call among six model calls
+  in the public acceptance summary. Git publication is separate from deployment,
+  and no model retraining is required.
+
+## 2026-11-21 — Personal reference v2 and recorded trend continuity
+
+- Introduce `mifflin-evidence-2026-v2` with explicit general-adult scope and
+  strength-training answers. Migration `20261121_0011` adds nullable fields;
+  existing profiles retain their inputs and require the new confirmations before
+  automatic references resume. Missing answers are never inferred as consent.
+- Retain the Mifflin resting-energy calculation and activity factors. Use a 5%
+  maintenance surplus for eligible muscle-gain profiles with confirmed strength
+  training, and the smaller of 15% of maintenance or 500 kcal/day for fat loss.
+  Select protein from actual weight, goal and training answer; allocate fat and
+  carbohydrate subject to the documented age-specific compatibility checks.
+- Save valid inputs while withholding all energy/macronutrient targets and daily
+  balance when scope, training, BMI, low-energy or macro-distribution guards apply.
+  Keep ordinary meal estimation available. Calculations stay local, with no model
+  calls or transfer of profile values to an AI provider.
+- Add the [source and limitation map](personalization-sources.md) to distinguish
+  research findings from app policies. These are approximate references, not
+  individually validated prescriptions or promises of weight or muscle change.
+- Connect successive recorded trend observations at their actual date positions.
+  Missing dates remain null/dashes and are excluded from calorie averages;
+  explicit zero remains a recorded value. Do not impute, smooth or extrapolate
+  missing measurements or apply automatic diet adjustments.
+- Preserve dated historical screenshots and Week 13 evidence. The v2/profile and
+  trend changes are included with the subsequent 23 November checkpoint; the
+  earlier historical branch and tags retain their original scope.
+
 ## 2026-11-15 — Final milestone package and grounded detail handling
 
 - Add the Week 13 submission, seven-point TA demo, technical brief, concise AI

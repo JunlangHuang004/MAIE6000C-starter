@@ -33,6 +33,7 @@ def save_profile(browser, **changes):
     return browser.put("/profile", json={
         "age_years": 30, "height_cm": 175, "weight_kg": 72,
         "sex": "male", "goal": "gain_muscle", "activity_level": "high",
+        "strength_training": True, "reference_scope": "general_adult",
         "revision": 0, **changes,
     })
 
@@ -150,6 +151,31 @@ def test_balance_requires_intake_exercise_and_eligible_profile(client, db_sessio
     assert blocked["baseline_expenditure_kcal"] is None
 
 
+@pytest.mark.parametrize("scope,training", [
+    (None, None), ("professional_guidance", True), ("general_adult", False),
+])
+def test_profile_review_withholds_balance_preserves_diary_and_reconfirmation_restores_it(
+        client, scope, training):
+    assert save_profile(client).status_code == 200
+    original = save(client, manual_calories=2000, exercise_calories=300,
+                    intake_coverage=COVERAGE).json()
+    assert original["balance_type"] == "deficit"
+    response = save_profile(client, revision=1, reference_scope=scope,
+                            strength_training=training)
+    assert response.status_code == 200, response.text
+    assert response.json()["reference"]["status"] == "needs_review"
+    withheld = client.get(f"/daily-records/{DAY}").json()
+    for field in ("baseline_expenditure_kcal", "total_expenditure_kcal",
+                  "balance_type", "balance_kcal"):
+        assert withheld[field] is None
+    for field in ("revision", "weight_kg", "manual_calories", "calories",
+                  "exercise_calories", "intake_coverage", "intake_complete"):
+        assert withheld[field] == original[field]
+    assert client.get(f"/tracking?end={DAY}").json()["days"][-1] == withheld
+    assert save_profile(client, revision=2).json()["reference"]["status"] == "estimated"
+    assert client.get(f"/daily-records/{DAY}").json() == original
+
+
 @pytest.mark.parametrize("exercise", [-1, 10001, "300", True])
 def test_invalid_exercise_is_rejected_without_changing_record(client, exercise):
     original = save(client, exercise_calories=150).json()
@@ -218,6 +244,7 @@ def test_record_persists_and_weight_does_not_change_profile(client, db_session):
     profile = client.put("/profile", json={
         "age_years": 30, "height_cm": 175, "weight_kg": 72,
         "sex": "male", "goal": "gain_muscle", "activity_level": "moderate",
+        "strength_training": True, "reference_scope": "general_adult",
         "revision": 0,
     }).json()
     result = save(client, weight_kg=70.5, manual_calories=2150)

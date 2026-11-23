@@ -1,0 +1,2774 @@
+{
+  "source_url": "https://home.meishichina.com/recipe-menu.html",
+  "accessed_on": "2026-11-23",
+  "access_method": "public_search_index",
+  "comparison_baseline": "2026-10-31.1: 200 ingredients and 350 reference recipes",
+  "current_catalogue_version": "2026-11-23.1",
+  "current_catalogue_counts": {
+    "foods": 584,
+    "ingredients": 200,
+    "recipes": 384
+  },
+  "dish_label_count": 364,
+  "excluded_navigation_labels": [
+    "首页",
+    "热菜",
+    "凉菜",
+    "汤羹",
+    "主食",
+    "小吃",
+    "西餐",
+    "烘焙",
+    "泡酱腌菜",
+    "自制食材",
+    "家常菜谱",
+    "最新菜谱",
+    "全部菜谱分类"
+  ],
+  "counts": {
+    "covered_current_exact_name_or_alias": 93,
+    "pending_future_review": 235,
+    "added_reference_recipe": 35,
+    "deferred_fat_retention_review": 1
+  },
+  "note": "Counts are observed menu labels, not unique dishes. Synonymous labels can share one ID. Unreviewed labels are not automatically new dishes. Recipe pages supply names/style; included quantities and yields are project assumptions, with nutrients calculated from USDA ingredient records.",
+  "rows": [
+    {
+      "menu_position": 1,
+      "observed_menu_name": "红烧肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_005"
+    },
+    {
+      "menu_position": 2,
+      "observed_menu_name": "红烧排骨",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_068"
+    },
+    {
+      "menu_position": 3,
+      "observed_menu_name": "可乐鸡翅",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_252"
+    },
+    {
+      "menu_position": 4,
+      "observed_menu_name": "糖醋排骨",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_069"
+    },
+    {
+      "menu_position": 5,
+      "observed_menu_name": "水煮鱼",
+      "status": "covered_current_exact_name_or_alias",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_126"
+    },
+    {
+      "menu_position": 6,
+      "observed_menu_name": "红烧鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 7,
+      "observed_menu_name": "凉拌黑木耳",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_166"
+    },
+    {
+      "menu_position": 8,
+      "observed_menu_name": "鱼香肉丝",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_006"
+    },
+    {
+      "menu_position": 9,
+      "observed_menu_name": "水煮肉片",
+      "status": "pending_future_review",
+      "english_name": "Sichuan pork slices in chili broth",
+      "recipe_url": "https://home.meishichina.com/recipe-16009.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients"
+    },
+    {
+      "menu_position": 10,
+      "observed_menu_name": "意大利面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 11,
+      "observed_menu_name": "麻辣小龙虾",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 12,
+      "observed_menu_name": "凉拌木耳",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_166"
+    },
+    {
+      "menu_position": 13,
+      "observed_menu_name": "茶叶蛋",
+      "status": "pending_future_review",
+      "english_name": "Tea-marinated boiled eggs",
+      "recipe_url": "https://home.meishichina.com/recipe-31925.html",
+      "limitation": "Tea; broth absorption must be explicit",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 14,
+      "observed_menu_name": "龙井虾仁",
+      "status": "pending_future_review",
+      "english_name": "Longjing tea shrimp",
+      "recipe_url": "https://home.meishichina.com/recipe-632.html",
+      "limitation": "Brewed Longjing tea / green tea",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 15,
+      "observed_menu_name": "口水鸡",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_110"
+    },
+    {
+      "menu_position": 16,
+      "observed_menu_name": "回锅肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_007"
+    },
+    {
+      "menu_position": 17,
+      "observed_menu_name": "红烧猪蹄",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_273"
+    },
+    {
+      "menu_position": 18,
+      "observed_menu_name": "皮蛋瘦肉粥",
+      "status": "pending_future_review",
+      "english_name": "Century egg and pork congee",
+      "recipe_url": "https://home.meishichina.com/recipe-66483.html",
+      "limitation": "Century egg",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 19,
+      "observed_menu_name": "酸菜鱼",
+      "status": "pending_future_review",
+      "english_name": "Fish soup with pickled mustard greens",
+      "recipe_url": "https://home.meishichina.com/recipe-387149.html",
+      "limitation": "Pickled mustard greens; fish species",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 20,
+      "observed_menu_name": "咖喱牛肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_282"
+    },
+    {
+      "menu_position": 21,
+      "observed_menu_name": "西红柿炒鸡蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_001"
+    },
+    {
+      "menu_position": 22,
+      "observed_menu_name": "辣椒酱",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 23,
+      "observed_menu_name": "麻辣烫",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 24,
+      "observed_menu_name": "辣白菜",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 25,
+      "observed_menu_name": "牛肉酱",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 26,
+      "observed_menu_name": "红烧茄子",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_024"
+    },
+    {
+      "menu_position": 27,
+      "observed_menu_name": "蛋炒饭",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_041"
+    },
+    {
+      "menu_position": 28,
+      "observed_menu_name": "佛跳墙",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 29,
+      "observed_menu_name": "四物汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 30,
+      "observed_menu_name": "固元膏",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 31,
+      "observed_menu_name": "龟苓膏",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 32,
+      "observed_menu_name": "银耳莲子羹",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 33,
+      "observed_menu_name": "酸梅汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 34,
+      "observed_menu_name": "腊肉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 35,
+      "observed_menu_name": "酸辣土豆丝",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_022"
+    },
+    {
+      "menu_position": 36,
+      "observed_menu_name": "煎蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_200"
+    },
+    {
+      "menu_position": 37,
+      "observed_menu_name": "鱼香茄子",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_154"
+    },
+    {
+      "menu_position": 38,
+      "observed_menu_name": "啤酒鸭",
+      "status": "pending_future_review",
+      "english_name": "Beer-braised duck",
+      "recipe_url": "https://home.meishichina.com/recipe-366249.html",
+      "limitation": "Beer and alcohol retention assumptions",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 39,
+      "observed_menu_name": "麻婆豆腐",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_004"
+    },
+    {
+      "menu_position": 40,
+      "observed_menu_name": "宫保鸡丁",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_003"
+    },
+    {
+      "menu_position": 41,
+      "observed_menu_name": "手撕包菜",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_021"
+    },
+    {
+      "menu_position": 42,
+      "observed_menu_name": "剁椒鱼头",
+      "status": "pending_future_review",
+      "english_name": "Steamed fish head with chopped chilies",
+      "recipe_url": "https://home.meishichina.com/recipe-80006.html",
+      "limitation": "Fish head edible portion; pickled chopped chilies",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 43,
+      "observed_menu_name": "粉蒸肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_065"
+    },
+    {
+      "menu_position": 44,
+      "observed_menu_name": "锅包肉",
+      "status": "added_reference_recipe",
+      "english_name": "Guo bao rou (crispy sweet and sour pork)",
+      "recipe_url": "https://home.meishichina.com/recipe-41724.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_351"
+    },
+    {
+      "menu_position": 45,
+      "observed_menu_name": "麻辣香锅",
+      "status": "pending_future_review",
+      "english_name": "Mala dry pot",
+      "recipe_url": "https://home.meishichina.com/recipe-91666.html",
+      "limitation": "Sichuan pepper; chili bean paste or exact seasoning; highly variable composition",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 46,
+      "observed_menu_name": "红烧牛肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_097"
+    },
+    {
+      "menu_position": 47,
+      "observed_menu_name": "辣子鸡",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_104"
+    },
+    {
+      "menu_position": 48,
+      "observed_menu_name": "牛肉炖土豆",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_008"
+    },
+    {
+      "menu_position": 49,
+      "observed_menu_name": "糖醋鲤鱼",
+      "status": "covered_current_exact_name_or_alias",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_122"
+    },
+    {
+      "menu_position": 50,
+      "observed_menu_name": "干煸豆角",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_157"
+    },
+    {
+      "menu_position": 51,
+      "observed_menu_name": "烧茄子",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 52,
+      "observed_menu_name": "炖排骨",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 53,
+      "observed_menu_name": "木须肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_053"
+    },
+    {
+      "menu_position": 54,
+      "observed_menu_name": "香辣虾",
+      "status": "pending_future_review",
+      "english_name": "Spicy stir-fried shrimp",
+      "recipe_url": "https://home.meishichina.com/recipe-89033.html",
+      "limitation": "Review exact chili sauce",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 55,
+      "observed_menu_name": "红烧狮子头",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_080"
+    },
+    {
+      "menu_position": 56,
+      "observed_menu_name": "小鸡炖蘑菇",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 57,
+      "observed_menu_name": "糖醋里脊",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_051"
+    },
+    {
+      "menu_position": 58,
+      "observed_menu_name": "土豆炖牛肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_008"
+    },
+    {
+      "menu_position": 59,
+      "observed_menu_name": "板栗烧鸡",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_103"
+    },
+    {
+      "menu_position": 60,
+      "observed_menu_name": "糖醋鱼",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_122"
+    },
+    {
+      "menu_position": 61,
+      "observed_menu_name": "肉丸",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 62,
+      "observed_menu_name": "梅菜扣肉",
+      "status": "pending_future_review",
+      "english_name": "Steamed pork belly with preserved mustard greens",
+      "recipe_url": "https://home.meishichina.com/recipe-383655.html",
+      "limitation": "Preserved mustard greens",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 63,
+      "observed_menu_name": "京酱肉丝",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_052"
+    },
+    {
+      "menu_position": 64,
+      "observed_menu_name": "红烧带鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 65,
+      "observed_menu_name": "大盘鸡",
+      "status": "pending_future_review",
+      "english_name": "Da pan ji (chicken and potato stew)",
+      "recipe_url": "https://home.meishichina.com/recipe-339602.html",
+      "limitation": "Review spices and beer/noodle variants",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 66,
+      "observed_menu_name": "红烧鸡翅",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_106"
+    },
+    {
+      "menu_position": 67,
+      "observed_menu_name": "醋溜白菜",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_148"
+    },
+    {
+      "menu_position": 68,
+      "observed_menu_name": "香辣蟹",
+      "status": "pending_future_review",
+      "english_name": "Spicy stir-fried crab",
+      "recipe_url": "https://home.meishichina.com/recipe-641915.html",
+      "limitation": "Crab species/edible portion; exact chili seasoning",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 69,
+      "observed_menu_name": "地三鲜",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_023"
+    },
+    {
+      "menu_position": 70,
+      "observed_menu_name": "东坡肉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 71,
+      "observed_menu_name": "葡萄酒",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 72,
+      "observed_menu_name": "鲫鱼豆腐汤",
+      "status": "pending_future_review",
+      "english_name": "Crucian carp and tofu soup",
+      "recipe_url": "https://home.meishichina.com/recipe-368552.html",
+      "limitation": "Crucian carp; similar existing generic fish/tofu soup means defer",
+      "baseline_status": "defer_close_existing_variant"
+    },
+    {
+      "menu_position": 73,
+      "observed_menu_name": "鲫鱼汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 74,
+      "observed_menu_name": "鸡汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 75,
+      "observed_menu_name": "乌鸡汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 76,
+      "observed_menu_name": "鸽子汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 77,
+      "observed_menu_name": "冰糖炖雪梨",
+      "status": "pending_future_review",
+      "english_name": "Pear stewed with rock sugar",
+      "recipe_url": "https://home.meishichina.com/recipe-26877.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review"
+    },
+    {
+      "menu_position": 78,
+      "observed_menu_name": "银耳汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 79,
+      "observed_menu_name": "鱼头豆腐汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 80,
+      "observed_menu_name": "银耳莲子汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 81,
+      "observed_menu_name": "鸡蛋羹",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_014"
+    },
+    {
+      "menu_position": 82,
+      "observed_menu_name": "牛肉汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 83,
+      "observed_menu_name": "山药排骨汤",
+      "status": "pending_future_review",
+      "english_name": "Chinese yam and pork rib soup",
+      "recipe_url": "https://home.meishichina.com/recipe-419406.html",
+      "limitation": "Chinese yam",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 84,
+      "observed_menu_name": "冬瓜汤",
+      "status": "added_reference_recipe",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_384"
+    },
+    {
+      "menu_position": 85,
+      "observed_menu_name": "莲藕排骨汤",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_073"
+    },
+    {
+      "menu_position": 86,
+      "observed_menu_name": "羊肉汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 87,
+      "observed_menu_name": "猪肝汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 88,
+      "observed_menu_name": "罗宋汤",
+      "status": "added_reference_recipe",
+      "english_name": "Chinese-style beef and vegetable borscht",
+      "recipe_url": "https://home.meishichina.com/recipe-379256.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_352"
+    },
+    {
+      "menu_position": 89,
+      "observed_menu_name": "酸辣汤",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_222"
+    },
+    {
+      "menu_position": 90,
+      "observed_menu_name": "臭豆腐",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 91,
+      "observed_menu_name": "清蒸大闸蟹",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 92,
+      "observed_menu_name": "醋溜土豆丝",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 93,
+      "observed_menu_name": "四川泡菜",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 94,
+      "observed_menu_name": "拔丝地瓜",
+      "status": "added_reference_recipe",
+      "english_name": "Caramel-coated sweet potatoes",
+      "recipe_url": "https://home.meishichina.com/recipe-114036.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_361"
+    },
+    {
+      "menu_position": 95,
+      "observed_menu_name": "清蒸鲈鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 96,
+      "observed_menu_name": "孜然羊肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_284"
+    },
+    {
+      "menu_position": 97,
+      "observed_menu_name": "银耳红枣汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 98,
+      "observed_menu_name": "麻辣豆腐",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 99,
+      "observed_menu_name": "西红柿炖牛腩",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 100,
+      "observed_menu_name": "炖鸡",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 101,
+      "observed_menu_name": "排骨汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 102,
+      "observed_menu_name": "关东煮",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 103,
+      "observed_menu_name": "烤鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 104,
+      "observed_menu_name": "香菇油菜",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 105,
+      "observed_menu_name": "毛血旺",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 106,
+      "observed_menu_name": "泡椒凤爪",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 107,
+      "observed_menu_name": "酱牛肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_096"
+    },
+    {
+      "menu_position": 108,
+      "observed_menu_name": "辣子鸡丁",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_104"
+    },
+    {
+      "menu_position": 109,
+      "observed_menu_name": "咖喱鸡",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_256"
+    },
+    {
+      "menu_position": 110,
+      "observed_menu_name": "椒盐虾",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_130"
+    },
+    {
+      "menu_position": 111,
+      "observed_menu_name": "寿司",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 112,
+      "observed_menu_name": "家常豆腐",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_201"
+    },
+    {
+      "menu_position": 113,
+      "observed_menu_name": "司康",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 114,
+      "observed_menu_name": "花卷",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_249"
+    },
+    {
+      "menu_position": 115,
+      "observed_menu_name": "熘肝尖",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_272"
+    },
+    {
+      "menu_position": 116,
+      "observed_menu_name": "戚风蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 117,
+      "observed_menu_name": "牛肉面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 118,
+      "observed_menu_name": "包子",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 119,
+      "observed_menu_name": "燕麦饼干",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 120,
+      "observed_menu_name": "饺子",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 121,
+      "observed_menu_name": "玛格丽特饼干",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 122,
+      "observed_menu_name": "曲奇饼干",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 123,
+      "observed_menu_name": "烧卖",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 124,
+      "observed_menu_name": "慕斯蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 125,
+      "observed_menu_name": "沙拉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 126,
+      "observed_menu_name": "手指饼干",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 127,
+      "observed_menu_name": "珍珠丸子",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed pork meatballs coated in glutinous rice",
+      "recipe_url": "https://home.meishichina.com/recipe-202757.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_358"
+    },
+    {
+      "menu_position": 128,
+      "observed_menu_name": "吐司",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 129,
+      "observed_menu_name": "芝士蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 130,
+      "observed_menu_name": "窝窝头",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 131,
+      "observed_menu_name": "发糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 132,
+      "observed_menu_name": "自制凉皮",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 133,
+      "observed_menu_name": "肉松面包",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 134,
+      "observed_menu_name": "千层肉饼",
+      "status": "added_reference_recipe",
+      "english_name": "Layered pork flatbread",
+      "recipe_url": "https://home.meishichina.com/recipe-484149.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_359"
+    },
+    {
+      "menu_position": 135,
+      "observed_menu_name": "红焖羊肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_285"
+    },
+    {
+      "menu_position": 136,
+      "observed_menu_name": "葱爆羊肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_283"
+    },
+    {
+      "menu_position": 137,
+      "observed_menu_name": "油焖大虾",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 138,
+      "observed_menu_name": "骨头汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 139,
+      "observed_menu_name": "拔丝山药",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 140,
+      "observed_menu_name": "蒜蓉西兰花",
+      "status": "covered_current_exact_name_or_alias",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_017"
+    },
+    {
+      "menu_position": 141,
+      "observed_menu_name": "葱油饼",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_246"
+    },
+    {
+      "menu_position": 142,
+      "observed_menu_name": "南瓜饼",
+      "status": "pending_future_review",
+      "english_name": "Pan-fried pumpkin rice cakes",
+      "recipe_url": "https://home.meishichina.com/recipe-642.html",
+      "limitation": "Glutinous rice flour",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 143,
+      "observed_menu_name": "炸酱面",
+      "status": "pending_future_review",
+      "english_name": "Zhajiang noodles with pork and bean sauce",
+      "recipe_url": "https://home.meishichina.com/recipe-304594.html",
+      "limitation": "Wheat noodles; sweet bean sauce",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 144,
+      "observed_menu_name": "卤肉饭",
+      "status": "added_reference_recipe",
+      "english_name": "Braised pork rice",
+      "recipe_url": "https://home.meishichina.com/recipe-423728.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_360"
+    },
+    {
+      "menu_position": 145,
+      "observed_menu_name": "咖喱饭",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 146,
+      "observed_menu_name": "豆腐脑",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 147,
+      "observed_menu_name": "南瓜粥",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_049"
+    },
+    {
+      "menu_position": 148,
+      "observed_menu_name": "汉堡",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 149,
+      "observed_menu_name": "饭团",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 150,
+      "observed_menu_name": "鸡蛋饼",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_247"
+    },
+    {
+      "menu_position": 151,
+      "observed_menu_name": "方便面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 152,
+      "observed_menu_name": "馒头",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_248"
+    },
+    {
+      "menu_position": 153,
+      "observed_menu_name": "土豆泥",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 154,
+      "observed_menu_name": "甜甜圈",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 155,
+      "observed_menu_name": "酸辣粉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 156,
+      "observed_menu_name": "炒年糕",
+      "status": "pending_future_review",
+      "english_name": "Stir-fried rice cakes",
+      "recipe_url": "https://home.meishichina.com/recipe-408655.html",
+      "limitation": "Rice cakes",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 157,
+      "observed_menu_name": "双皮奶",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 158,
+      "observed_menu_name": "炒面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 159,
+      "observed_menu_name": "鸡蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 160,
+      "observed_menu_name": "糖炒栗子",
+      "status": "added_reference_recipe",
+      "english_name": "Sugar-roasted chestnuts",
+      "recipe_url": "https://home.meishichina.com/recipe-120816.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_381"
+    },
+    {
+      "menu_position": 161,
+      "observed_menu_name": "油条",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 162,
+      "observed_menu_name": "豆沙包",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_347"
+    },
+    {
+      "menu_position": 163,
+      "observed_menu_name": "奶黄包",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 164,
+      "observed_menu_name": "披萨",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 165,
+      "observed_menu_name": "八宝粥",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_327"
+    },
+    {
+      "menu_position": 166,
+      "observed_menu_name": "蛋挞",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 167,
+      "observed_menu_name": "乳酪蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 168,
+      "observed_menu_name": "全麦面包",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 169,
+      "observed_menu_name": "芝士面包",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 170,
+      "observed_menu_name": "糯米藕",
+      "status": "added_reference_recipe",
+      "english_name": "Sweet lotus root stuffed with glutinous rice",
+      "recipe_url": "https://home.meishichina.com/recipe-233266.html",
+      "limitation": "Sugar syrup absorption",
+      "baseline_status": "needs_review_or_ingredient",
+      "catalogue_id": "dish_366"
+    },
+    {
+      "menu_position": 171,
+      "observed_menu_name": "生日蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 172,
+      "observed_menu_name": "毛毛虫面包",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 173,
+      "observed_menu_name": "菠菜鸡蛋汤",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_213"
+    },
+    {
+      "menu_position": 174,
+      "observed_menu_name": "泡芙",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 175,
+      "observed_menu_name": "冰激凌",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 176,
+      "observed_menu_name": "酸奶蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 177,
+      "observed_menu_name": "电饭锅蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 178,
+      "observed_menu_name": "布朗尼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 179,
+      "observed_menu_name": "派",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 180,
+      "observed_menu_name": "马芬",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 181,
+      "observed_menu_name": "巧克力蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 182,
+      "observed_menu_name": "菊花酥",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 183,
+      "observed_menu_name": "酥饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 184,
+      "observed_menu_name": "椰蓉球",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 185,
+      "observed_menu_name": "黑森林蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 186,
+      "observed_menu_name": "豆沙面包",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 187,
+      "observed_menu_name": "提拉米苏",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 188,
+      "observed_menu_name": "海绵蛋糕",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 189,
+      "observed_menu_name": "冰皮月饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 190,
+      "observed_menu_name": "酥皮月饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 191,
+      "observed_menu_name": "五仁月饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 192,
+      "observed_menu_name": "苏式月饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 193,
+      "observed_menu_name": "疙瘩汤",
+      "status": "added_reference_recipe",
+      "english_name": "Tomato and egg dough-drop soup",
+      "recipe_url": "https://home.meishichina.com/recipe-628926.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_367"
+    },
+    {
+      "menu_position": 194,
+      "observed_menu_name": "糖不甩",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 195,
+      "observed_menu_name": "秋梨膏",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 196,
+      "observed_menu_name": "三杯鸡",
+      "status": "pending_future_review",
+      "english_name": "Three-cup chicken",
+      "recipe_url": "https://home.meishichina.com/recipe-341933.html",
+      "limitation": "Rice wine; alcohol retention; basil if used",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 197,
+      "observed_menu_name": "锅贴",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_349"
+    },
+    {
+      "menu_position": 198,
+      "observed_menu_name": "苦瓜炒肉片",
+      "status": "added_reference_recipe",
+      "english_name": "Bitter melon and pork stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-637343.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_364"
+    },
+    {
+      "menu_position": 199,
+      "observed_menu_name": "拍黄瓜",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_016"
+    },
+    {
+      "menu_position": 200,
+      "observed_menu_name": "宫保虾球",
+      "status": "added_reference_recipe",
+      "english_name": "Kung Pao shrimp",
+      "recipe_url": "https://home.meishichina.com/recipe-547627.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_356"
+    },
+    {
+      "menu_position": 201,
+      "observed_menu_name": "尖椒土豆片",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 202,
+      "observed_menu_name": "炸茄盒",
+      "status": "pending_future_review",
+      "english_name": "Deep-fried pork-stuffed eggplant",
+      "recipe_url": "https://home.meishichina.com/recipe-381924.html",
+      "limitation": "Existing pan-fried pork-stuffed eggplant is closely related; not a primary new gap",
+      "baseline_status": "defer_close_existing_variant"
+    },
+    {
+      "menu_position": 203,
+      "observed_menu_name": "苦瓜酿肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_084"
+    },
+    {
+      "menu_position": 204,
+      "observed_menu_name": "荷叶饼",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed folded buns",
+      "recipe_url": "https://home.meishichina.com/recipe-60911.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_375"
+    },
+    {
+      "menu_position": 205,
+      "observed_menu_name": "芹菜炒香干",
+      "status": "pending_future_review",
+      "english_name": "Celery and pressed tofu stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-557166.html",
+      "limitation": "Pressed tofu",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 206,
+      "observed_menu_name": "炸耦合",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 207,
+      "observed_menu_name": "焦糖布丁",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 208,
+      "observed_menu_name": "白菜炖豆腐",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_029"
+    },
+    {
+      "menu_position": 209,
+      "observed_menu_name": "蚂蚁上树",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_076"
+    },
+    {
+      "menu_position": 210,
+      "observed_menu_name": "盐水鸭",
+      "status": "deferred_fat_retention_review",
+      "english_name": "Salt-poached duck",
+      "recipe_url": "https://home.meishichina.com/recipe-662527.html",
+      "limitation": "Deferred before publication: the trial retained all fat from raw skin-on duck despite poaching and discarding liquid, yielding about 474 kcal and 45.8 g fat per 100 g. A suitable cooked ingredient source or evidence-based fat-retention model is needed; roasted duck is not an equivalent replacement.",
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "review_detail": "pending_fat_retention_evidence",
+      "reason": "The unpublished trial used raw skin-on duck and an assumed cooked yield without accounting for fat discarded with the poaching liquid. No supported finished-dish value is published."
+    },
+    {
+      "menu_position": 211,
+      "observed_menu_name": "韭菜炒香干",
+      "status": "pending_future_review",
+      "english_name": "Garlic chives and pressed tofu stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-599358.html",
+      "limitation": "Garlic chives; pressed tofu",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 212,
+      "observed_menu_name": "肉夹馍",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 213,
+      "observed_menu_name": "奶茶",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 214,
+      "observed_menu_name": "爆米花",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 215,
+      "observed_menu_name": "紫菜包饭",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 216,
+      "observed_menu_name": "苹果醋",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 217,
+      "observed_menu_name": "豆角焖面",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_344"
+    },
+    {
+      "menu_position": 218,
+      "observed_menu_name": "打卤面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 219,
+      "observed_menu_name": "香卤鹌鹑蛋",
+      "status": "pending_future_review",
+      "english_name": "Soy-braised quail eggs",
+      "recipe_url": "https://home.meishichina.com/recipe-55863.html",
+      "limitation": "Broth absorption and cooked yield",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 220,
+      "observed_menu_name": "老醋花生",
+      "status": "pending_future_review",
+      "english_name": "Peanuts in sweet vinegar dressing",
+      "recipe_url": "https://home.meishichina.com/recipe-64736.html",
+      "limitation": "Aged vinegar differs from distilled vinegar; declared proxy if used",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 221,
+      "observed_menu_name": "麻辣鸭脖",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 222,
+      "observed_menu_name": "盐水花生",
+      "status": "added_reference_recipe",
+      "english_name": "Salt-boiled peanuts",
+      "recipe_url": "https://home.meishichina.com/recipe-593459.html",
+      "limitation": "Use shelled edible cooked mass and water uptake",
+      "baseline_status": "needs_review_or_ingredient",
+      "catalogue_id": "dish_363"
+    },
+    {
+      "menu_position": 223,
+      "observed_menu_name": "油泼鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 224,
+      "observed_menu_name": "西湖牛肉羹",
+      "status": "added_reference_recipe",
+      "english_name": "West Lake beef soup",
+      "recipe_url": "https://home.meishichina.com/recipe-479850.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_362"
+    },
+    {
+      "menu_position": 225,
+      "observed_menu_name": "麻团",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 226,
+      "observed_menu_name": "宫保豆腐",
+      "status": "added_reference_recipe",
+      "english_name": "Kung Pao tofu",
+      "recipe_url": "https://home.meishichina.com/recipe-58126.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_357"
+    },
+    {
+      "menu_position": 227,
+      "observed_menu_name": "菠菜塔",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 228,
+      "observed_menu_name": "自制剁椒",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 229,
+      "observed_menu_name": "手撕杏鲍菇",
+      "status": "pending_future_review",
+      "english_name": "Shredded king oyster mushroom salad",
+      "recipe_url": "https://home.meishichina.com/recipe-461395.html",
+      "limitation": "King oyster mushrooms",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 230,
+      "observed_menu_name": "蓑衣黄瓜",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 231,
+      "observed_menu_name": "剁椒鸡丁",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 232,
+      "observed_menu_name": "麻酱豆角",
+      "status": "added_reference_recipe",
+      "english_name": "Long beans with sesame dressing",
+      "recipe_url": "https://home.meishichina.com/recipe-71923.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_353"
+    },
+    {
+      "menu_position": 233,
+      "observed_menu_name": "上校鸡块",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 234,
+      "observed_menu_name": "红烧鸡爪",
+      "status": "pending_future_review",
+      "english_name": "Red-braised chicken feet",
+      "recipe_url": "https://home.meishichina.com/recipe-21270.html",
+      "limitation": "Chicken feet edible portion",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 235,
+      "observed_menu_name": "自制酸奶",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 236,
+      "observed_menu_name": "松仁玉米",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_182"
+    },
+    {
+      "menu_position": 237,
+      "observed_menu_name": "红烧冬瓜",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_150"
+    },
+    {
+      "menu_position": 238,
+      "observed_menu_name": "牛肉干",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 239,
+      "observed_menu_name": "冬瓜排骨汤",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_071"
+    },
+    {
+      "menu_position": 240,
+      "observed_menu_name": "凉面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 241,
+      "observed_menu_name": "猪肉脯",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 242,
+      "observed_menu_name": "珍珠圆子",
+      "status": "added_reference_recipe",
+      "candidate_name": "珍珠丸子",
+      "baseline_status": "same_candidate_name_variant",
+      "catalogue_id": "dish_358"
+    },
+    {
+      "menu_position": 243,
+      "observed_menu_name": "肉末酸豆角",
+      "status": "pending_future_review",
+      "english_name": "Pickled long beans with minced pork",
+      "recipe_url": "https://home.meishichina.com/recipe-277763.html",
+      "limitation": "Pickled long beans",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 244,
+      "observed_menu_name": "蛤蜊蒸蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_138"
+    },
+    {
+      "menu_position": 245,
+      "observed_menu_name": "玉米饼",
+      "status": "pending_future_review",
+      "english_name": "Pan-fried corn cakes",
+      "recipe_url": "https://home.meishichina.com/recipe-618139.html",
+      "limitation": "Cornmeal for observed recipe; fresh-corn variant needs its own evidence",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 246,
+      "observed_menu_name": "菠菜炒鸡蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_193"
+    },
+    {
+      "menu_position": 247,
+      "observed_menu_name": "西芹百合",
+      "status": "pending_future_review",
+      "english_name": "Celery and lily bulb stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-85988.html",
+      "limitation": "Lily bulb",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 248,
+      "observed_menu_name": "白灼芥蓝",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_143"
+    },
+    {
+      "menu_position": 249,
+      "observed_menu_name": "炒西瓜皮",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 250,
+      "observed_menu_name": "叫花鸡",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 251,
+      "observed_menu_name": "盐焗鸡",
+      "status": "added_reference_recipe",
+      "english_name": "Salt-baked chicken",
+      "recipe_url": "https://home.meishichina.com/recipe-80845.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_372"
+    },
+    {
+      "menu_position": 252,
+      "observed_menu_name": "冰糖湘莲",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 253,
+      "observed_menu_name": "鸭血粉丝汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 254,
+      "observed_menu_name": "青椒土豆丝",
+      "status": "added_reference_recipe",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_383"
+    },
+    {
+      "menu_position": 255,
+      "observed_menu_name": "棒棒鸡",
+      "status": "added_reference_recipe",
+      "english_name": "Bang bang chicken with sesame sauce",
+      "recipe_url": "https://home.meishichina.com/recipe-253892.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_374"
+    },
+    {
+      "menu_position": 256,
+      "observed_menu_name": "锅塌豆腐",
+      "status": "added_reference_recipe",
+      "english_name": "Egg-coated pan-fried tofu in sauce",
+      "recipe_url": "https://home.meishichina.com/recipe-48046.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_354"
+    },
+    {
+      "menu_position": 257,
+      "observed_menu_name": "水晶虾饺",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 258,
+      "observed_menu_name": "拔丝苹果",
+      "status": "added_reference_recipe",
+      "english_name": "Caramel-coated apples",
+      "recipe_url": "https://home.meishichina.com/recipe-213993.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_380"
+    },
+    {
+      "menu_position": 259,
+      "observed_menu_name": "茄汁带鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 260,
+      "observed_menu_name": "荷叶粉蒸肉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 261,
+      "observed_menu_name": "石锅拌饭",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 262,
+      "observed_menu_name": "爆炒腰花",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_275"
+    },
+    {
+      "menu_position": 263,
+      "observed_menu_name": "辣椒油",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 264,
+      "observed_menu_name": "韭菜盒子",
+      "status": "pending_future_review",
+      "english_name": "Pan-fried garlic chive and egg pockets",
+      "recipe_url": "https://home.meishichina.com/recipe-173230.html",
+      "limitation": "Garlic chives",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 265,
+      "observed_menu_name": "香辣酥",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 266,
+      "observed_menu_name": "蒜薹炒肉",
+      "status": "pending_future_review",
+      "english_name": "Pork and garlic scape stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-431904.html",
+      "limitation": "Garlic scapes",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 267,
+      "observed_menu_name": "蒜蓉油麦菜",
+      "status": "pending_future_review",
+      "english_name": "Garlic stir-fried youmai lettuce",
+      "recipe_url": "https://home.meishichina.com/recipe-49374.html",
+      "limitation": "Youmai lettuce; review specific lettuce source",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 268,
+      "observed_menu_name": "腐乳烧鸡翅",
+      "status": "added_reference_recipe",
+      "english_name": "Chicken wings braised with fermented tofu",
+      "recipe_url": "https://home.meishichina.com/recipe-9711.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_371"
+    },
+    {
+      "menu_position": 269,
+      "observed_menu_name": "奶香馒头",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed milk buns",
+      "recipe_url": "https://home.meishichina.com/recipe-617835.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_376"
+    },
+    {
+      "menu_position": 270,
+      "observed_menu_name": "炒饼",
+      "status": "added_reference_recipe",
+      "english_name": "Stir-fried shredded flatbread",
+      "recipe_url": "https://home.meishichina.com/recipe-425959.html",
+      "limitation": "Flatbread from a declared flour/oil/water subrecipe",
+      "baseline_status": "needs_review_or_ingredient",
+      "catalogue_id": "dish_370"
+    },
+    {
+      "menu_position": 271,
+      "observed_menu_name": "蛋包饭",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_337"
+    },
+    {
+      "menu_position": 272,
+      "observed_menu_name": "牛奶炖蛋",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed milk and egg custard",
+      "recipe_url": "https://home.meishichina.com/recipe-352842.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_368"
+    },
+    {
+      "menu_position": 273,
+      "observed_menu_name": "鸡蛋灌饼",
+      "status": "added_reference_recipe",
+      "english_name": "Egg-filled flatbread",
+      "recipe_url": "https://home.meishichina.com/recipe-387179.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_379"
+    },
+    {
+      "menu_position": 274,
+      "observed_menu_name": "荷塘小炒",
+      "status": "added_reference_recipe",
+      "english_name": "Lotus root and snow pea stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-201972.html",
+      "limitation": null,
+      "baseline_status": "candidate_existing_ingredients",
+      "catalogue_id": "dish_369"
+    },
+    {
+      "menu_position": 275,
+      "observed_menu_name": "木耳炒肉",
+      "status": "added_reference_recipe",
+      "english_name": "Wood ear mushroom and pork stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-454397.html",
+      "limitation": "Hydrated wood ear mass must not be treated as dried mass",
+      "baseline_status": "needs_review_or_ingredient",
+      "catalogue_id": "dish_365"
+    },
+    {
+      "menu_position": 276,
+      "observed_menu_name": "脆皮炸鲜奶",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 277,
+      "observed_menu_name": "铜锣烧",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 278,
+      "observed_menu_name": "扬州炒饭",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_233"
+    },
+    {
+      "menu_position": 279,
+      "observed_menu_name": "照烧鸡",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 280,
+      "observed_menu_name": "自制豆腐",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 281,
+      "observed_menu_name": "芙蓉虾",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 282,
+      "observed_menu_name": "琥珀核桃",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 283,
+      "observed_menu_name": "酱油炒饭",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_334"
+    },
+    {
+      "menu_position": 284,
+      "observed_menu_name": "葱花饼",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_246"
+    },
+    {
+      "menu_position": 285,
+      "observed_menu_name": "虎皮青椒",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_158"
+    },
+    {
+      "menu_position": 286,
+      "observed_menu_name": "可乐饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 287,
+      "observed_menu_name": "奥尔良烤翅",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 288,
+      "observed_menu_name": "咸蛋黄焗南瓜",
+      "status": "pending_future_review",
+      "english_name": "Pumpkin coated in salted egg yolk",
+      "recipe_url": "https://home.meishichina.com/recipe-128750.html",
+      "limitation": "Salted duck egg yolk",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 289,
+      "observed_menu_name": "上汤娃娃菜",
+      "status": "pending_future_review",
+      "english_name": "Baby napa cabbage in savory broth",
+      "recipe_url": "https://home.meishichina.com/recipe-276499.html",
+      "limitation": "Century egg / salted duck egg in typical variant; use explicit chosen formula",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 290,
+      "observed_menu_name": "肉饼蒸蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_015"
+    },
+    {
+      "menu_position": 291,
+      "observed_menu_name": "赛肘花",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 292,
+      "observed_menu_name": "蒜泥茄子",
+      "status": "covered_current_exact_name_or_alias",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_153"
+    },
+    {
+      "menu_position": 293,
+      "observed_menu_name": "虎皮凤爪",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 294,
+      "observed_menu_name": "芒果布丁",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 295,
+      "observed_menu_name": "香辣烤鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 296,
+      "observed_menu_name": "把子肉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 297,
+      "observed_menu_name": "奶昔",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 298,
+      "observed_menu_name": "铁板鱿鱼",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_289"
+    },
+    {
+      "menu_position": 299,
+      "observed_menu_name": "芝心虾球",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 300,
+      "observed_menu_name": "白灼虾",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_128"
+    },
+    {
+      "menu_position": 301,
+      "observed_menu_name": "木瓜椰奶冻",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 302,
+      "observed_menu_name": "农家小炒肉",
+      "status": "pending_future_review",
+      "english_name": "Hunan-style pork and chili stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-12480.html",
+      "limitation": "Fermented black beans in some variants",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 303,
+      "observed_menu_name": "薯片",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 304,
+      "observed_menu_name": "烤羊肉串",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 305,
+      "observed_menu_name": "手抓饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 306,
+      "observed_menu_name": "阳春面",
+      "status": "pending_future_review",
+      "english_name": "Yangchun noodle soup",
+      "recipe_url": "https://home.meishichina.com/recipe-620000.html",
+      "limitation": "Wheat noodles and lard; existing egg noodles are not exact",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 307,
+      "observed_menu_name": "松鼠鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 308,
+      "observed_menu_name": "叉烧肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_267"
+    },
+    {
+      "menu_position": 309,
+      "observed_menu_name": "肉皮冻",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 310,
+      "observed_menu_name": "朝鲜冷面",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 311,
+      "observed_menu_name": "味增汤",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 312,
+      "observed_menu_name": "麻辣千张",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 313,
+      "observed_menu_name": "香椿鱼儿",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 314,
+      "observed_menu_name": "咖喱牛腩",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 315,
+      "observed_menu_name": "白灼菜心",
+      "status": "pending_future_review",
+      "english_name": "Blanched choy sum",
+      "recipe_url": "https://home.meishichina.com/recipe-549011.html",
+      "limitation": "Choy sum; do not substitute bok choy/gai lan",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 316,
+      "observed_menu_name": "沙琪玛",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 317,
+      "observed_menu_name": "麻辣肉片",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 318,
+      "observed_menu_name": "糟溜鱼片",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 319,
+      "observed_menu_name": "面茶",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 320,
+      "observed_menu_name": "自来红",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 321,
+      "observed_menu_name": "韭菜炒鱿鱼",
+      "status": "pending_future_review",
+      "english_name": "Squid and garlic chive stir-fry",
+      "recipe_url": "https://home.meishichina.com/recipe-14585.html",
+      "limitation": "Garlic chives",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 322,
+      "observed_menu_name": "大列巴",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 323,
+      "observed_menu_name": "艾窝窝",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 324,
+      "observed_menu_name": "馄饨",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 325,
+      "observed_menu_name": "糖三角",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed triangular sugar buns",
+      "recipe_url": "https://home.meishichina.com/recipe-642919.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_377"
+    },
+    {
+      "menu_position": 326,
+      "observed_menu_name": "糖渍金桔",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 327,
+      "observed_menu_name": "腊八粥",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 328,
+      "observed_menu_name": "五香毛豆",
+      "status": "pending_future_review",
+      "english_name": "Five-spice boiled edamame",
+      "recipe_url": "https://home.meishichina.com/recipe-556510.html",
+      "limitation": "Spice broth absorption; edible shelled mass",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 329,
+      "observed_menu_name": "炸香椿鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 330,
+      "observed_menu_name": "杏仁豆腐",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 331,
+      "observed_menu_name": "肉龙",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed pork-filled bread roll",
+      "recipe_url": "https://home.meishichina.com/recipe-58464.html",
+      "limitation": null,
+      "baseline_status": "researched_candidate_pending_recipe_review",
+      "catalogue_id": "dish_378"
+    },
+    {
+      "menu_position": 332,
+      "observed_menu_name": "凉拌海带丝",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_167"
+    },
+    {
+      "menu_position": 333,
+      "observed_menu_name": "春卷",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 334,
+      "observed_menu_name": "九转大肠",
+      "status": "pending_future_review",
+      "english_name": "Jiu zhuan da chang (sweet and sour braised pork intestines)",
+      "recipe_url": "https://home.meishichina.com/recipe-15060.html",
+      "limitation": "Cooking loss and retained frying oil",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 335,
+      "observed_menu_name": "东北乱炖",
+      "status": "added_reference_recipe",
+      "english_name": "Northeastern Chinese mixed stew",
+      "recipe_url": "https://home.meishichina.com/recipe-60015.html",
+      "limitation": "Select and state a fixed pork-and-vegetable formula",
+      "baseline_status": "needs_review_or_ingredient",
+      "catalogue_id": "dish_382"
+    },
+    {
+      "menu_position": 336,
+      "observed_menu_name": "黄桥烧饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 337,
+      "observed_menu_name": "葱烧海参",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 338,
+      "observed_menu_name": "清蒸武昌鱼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 339,
+      "observed_menu_name": "蒜泥白肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_064"
+    },
+    {
+      "menu_position": 340,
+      "observed_menu_name": "腊味合蒸",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 341,
+      "observed_menu_name": "四喜丸子",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_080"
+    },
+    {
+      "menu_position": 342,
+      "observed_menu_name": "赛螃蟹",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 343,
+      "observed_menu_name": "盐水虾",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 344,
+      "observed_menu_name": "煎饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 345,
+      "observed_menu_name": "青椒炒鸡蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_031"
+    },
+    {
+      "menu_position": 346,
+      "observed_menu_name": "萝卜汤",
+      "status": "added_reference_recipe",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review",
+      "catalogue_id": "dish_385"
+    },
+    {
+      "menu_position": 347,
+      "observed_menu_name": "肉片炒青椒",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 348,
+      "observed_menu_name": "黄瓜炒鸡蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_194"
+    },
+    {
+      "menu_position": 349,
+      "observed_menu_name": "酸辣白菜",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_148"
+    },
+    {
+      "menu_position": 350,
+      "observed_menu_name": "红烧豆腐",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_202"
+    },
+    {
+      "menu_position": 351,
+      "observed_menu_name": "紫菜蛋花汤",
+      "status": "pending_future_review",
+      "english_name": "Nori and egg drop soup",
+      "recipe_url": "https://home.meishichina.com/recipe-617777.html",
+      "limitation": "Dried laver/nori; dried shrimp if used",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 352,
+      "observed_menu_name": "馒头片",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 353,
+      "observed_menu_name": "苦瓜炒鸡蛋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_026"
+    },
+    {
+      "menu_position": 354,
+      "observed_menu_name": "皮蛋豆腐",
+      "status": "pending_future_review",
+      "english_name": "Tofu with century egg",
+      "recipe_url": "https://home.meishichina.com/recipe-474172.html",
+      "limitation": "Century egg",
+      "baseline_status": "needs_review_or_ingredient"
+    },
+    {
+      "menu_position": 355,
+      "observed_menu_name": "卤牛肉",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_096"
+    },
+    {
+      "menu_position": 356,
+      "observed_menu_name": "酱爆鸡丁",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_exact_name_or_existing_alias",
+      "catalogue_id": "dish_114"
+    },
+    {
+      "menu_position": 357,
+      "observed_menu_name": "青椒炒肉丝",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_002"
+    },
+    {
+      "menu_position": 358,
+      "observed_menu_name": "炒莴笋",
+      "status": "covered_current_exact_name_or_alias",
+      "baseline_status": "covered_same_dish_name_review",
+      "catalogue_id": "dish_301"
+    },
+    {
+      "menu_position": 359,
+      "observed_menu_name": "粉蒸排骨",
+      "status": "added_reference_recipe",
+      "english_name": "Steamed pork ribs coated in rice meal",
+      "recipe_url": "https://home.meishichina.com/recipe-627395.html",
+      "limitation": "Rice meal can be modeled from raw rice; bone-free weight must be explicit",
+      "baseline_status": "needs_review_or_ingredient",
+      "catalogue_id": "dish_355"
+    },
+    {
+      "menu_position": 360,
+      "observed_menu_name": "百财登门",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 361,
+      "observed_menu_name": "锅煲菜",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 362,
+      "observed_menu_name": "花样泡芙",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 363,
+      "observed_menu_name": "春天的沙拉",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    },
+    {
+      "menu_position": 364,
+      "observed_menu_name": "早餐蛋饼",
+      "status": "pending_future_review",
+      "note": "Not automatically declared a new dish: may need synonym, scope, ingredient, or recipe review.",
+      "baseline_status": "not_in_first_batch_requires_review"
+    }
+  ]
+}

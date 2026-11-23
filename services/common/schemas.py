@@ -57,6 +57,8 @@ class ProfileFields(BaseModel):
     sex: Literal["male", "female"]
     goal: Literal["gain_muscle", "lose_fat"]
     activity_level: Literal["sedentary", "light", "moderate", "high"]
+    strength_training: bool | None = None
+    reference_scope: Literal["general_adult", "professional_guidance"] | None = None
 
 
 class ProfileUpdate(ProfileFields):

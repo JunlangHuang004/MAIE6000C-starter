@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-31.1",
+  "version": "2026-11-23.1",
   "aliases": {
     "rice": [
       "Cooked white rice",
@@ -1210,167 +1210,596 @@
     "dish_250": [
       "Mung bean congee"
     ],
-    "pork_heart": [],
-    "pork_kidney": [],
-    "pork_intestine": [],
-    "pork_stomach": [],
-    "pork_ear": [],
-    "pork_feet": [],
-    "pork_feet_cooked": [],
-    "pork_liver_cooked": [],
-    "chicken_gizzard": [],
-    "chicken_heart": [],
-    "chicken_liver": [],
-    "duck_skin": [],
-    "duck_roast": [],
-    "goose": [],
-    "rabbit": [],
-    "lamb_leg": [],
-    "shrimp_cooked": [],
-    "octopus": [],
-    "octopus_cooked": [],
-    "quail_egg": [],
-    "amaranth": [],
-    "mustard_greens": [],
-    "water_spinach": [],
-    "celtuce": [],
-    "watercress": [],
-    "yardlong_bean": [],
-    "asparagus": [],
-    "chayote": [],
-    "jicama": [],
-    "bamboo_cooked": [],
-    "rice_flour": [],
-    "glutinous_cooked": [],
-    "lotus_seed_dried": [],
-    "potato_cooked": [],
-    "corn_cooked": [],
-    "taro_cooked": [],
-    "lotus_cooked": [],
-    "oats_cooked": [],
-    "curry_powder": [],
-    "cumin": [],
-    "chili_powder": [],
-    "white_pepper": [],
-    "fish_sauce": [],
-    "peanut_butter": [],
-    "peanut_oil": [],
-    "canola_oil": [],
-    "olive_oil": [],
-    "cola": [],
-    "peach": [],
-    "lychee": [],
-    "longan": [],
-    "papaya": [],
-    "pomelo": [],
-    "mandarin": [],
-    "grapefruit": [],
-    "blueberry": [],
-    "skim_milk": [],
-    "millet_cooked": [],
-    "sweet_potato_cooked": [],
-    "lotus_seed_fresh": [],
-    "shiitake_dried": [],
-    "ham": [],
-    "dish_251": [],
-    "dish_252": [],
-    "dish_253": [],
-    "dish_254": [],
-    "dish_255": [],
-    "dish_256": [],
-    "dish_257": [],
-    "dish_258": [],
-    "dish_259": [],
-    "dish_260": [],
-    "dish_261": [],
-    "dish_262": [],
-    "dish_263": [],
-    "dish_264": [],
-    "dish_265": [],
-    "dish_266": [],
-    "dish_267": [],
-    "dish_268": [],
-    "dish_269": [],
-    "dish_270": [],
-    "dish_271": [],
-    "dish_272": [],
-    "dish_273": [],
-    "dish_274": [],
-    "dish_275": [],
-    "dish_276": [],
-    "dish_277": [],
-    "dish_278": [],
-    "dish_279": [],
-    "dish_280": [],
-    "dish_281": [],
-    "dish_282": [],
-    "dish_283": [],
-    "dish_284": [],
-    "dish_285": [],
-    "dish_286": [],
-    "dish_287": [],
-    "dish_288": [],
-    "dish_289": [],
-    "dish_290": [],
-    "dish_291": [],
-    "dish_292": [],
-    "dish_293": [],
-    "dish_294": [],
-    "dish_295": [],
-    "dish_296": [],
-    "dish_297": [],
-    "dish_298": [],
-    "dish_299": [],
-    "dish_300": [],
-    "dish_301": [],
-    "dish_302": [],
-    "dish_303": [],
-    "dish_304": [],
-    "dish_305": [],
-    "dish_306": [],
-    "dish_307": [],
-    "dish_308": [],
-    "dish_309": [],
-    "dish_310": [],
-    "dish_311": [],
-    "dish_312": [],
-    "dish_313": [],
-    "dish_314": [],
-    "dish_315": [],
-    "dish_316": [],
-    "dish_317": [],
-    "dish_318": [],
-    "dish_319": [],
-    "dish_320": [],
-    "dish_321": [],
-    "dish_322": [],
-    "dish_323": [],
-    "dish_324": [],
-    "dish_325": [],
-    "dish_326": [],
-    "dish_327": [],
-    "dish_328": [],
-    "dish_329": [],
-    "dish_330": [],
-    "dish_331": [],
-    "dish_332": [],
-    "dish_333": [],
-    "dish_334": [],
-    "dish_335": [],
-    "dish_336": [],
-    "dish_337": [],
-    "dish_338": [],
-    "dish_339": [],
-    "dish_340": [],
-    "dish_341": [],
-    "dish_342": [],
-    "dish_343": [],
-    "dish_344": [],
-    "dish_345": [],
-    "dish_346": [],
-    "dish_347": [],
-    "dish_348": [],
-    "dish_349": [],
-    "dish_350": []
+    "pork_heart": [
+      "Raw pork heart"
+    ],
+    "pork_kidney": [
+      "Raw pork kidney"
+    ],
+    "pork_intestine": [
+      "Raw pork large intestine"
+    ],
+    "pork_stomach": [
+      "Raw pork stomach"
+    ],
+    "pork_ear": [
+      "Frozen raw pig ears"
+    ],
+    "pork_feet": [
+      "Raw pig's feet (edible portion, bones removed)"
+    ],
+    "pork_feet_cooked": [
+      "Stewed pig's feet (edible portion, bones removed)"
+    ],
+    "pork_liver_cooked": [
+      "Braised pork liver"
+    ],
+    "chicken_gizzard": [
+      "Raw chicken gizzards"
+    ],
+    "chicken_heart": [
+      "Raw chicken hearts"
+    ],
+    "chicken_liver": [
+      "Raw chicken liver"
+    ],
+    "duck_skin": [
+      "Raw duck meat and skin (bones removed)"
+    ],
+    "duck_roast": [
+      "Roasted duck meat and skin (bones removed)"
+    ],
+    "goose": [
+      "Raw goose meat and skin (bones removed)"
+    ],
+    "rabbit": [
+      "Raw domestic rabbit meat (bones removed)"
+    ],
+    "lamb_leg": [
+      "Raw lamb leg meat with some fat (bones removed)"
+    ],
+    "shrimp_cooked": [
+      "Cooked peeled shrimp (mixed species; may contain moisture-retaining additives)"
+    ],
+    "octopus": [
+      "Raw common octopus (edible portion)"
+    ],
+    "octopus_cooked": [
+      "Boiled common octopus (edible portion)"
+    ],
+    "quail_egg": [
+      "Raw whole quail egg (without shell)"
+    ],
+    "amaranth": [
+      "Raw amaranth leaves"
+    ],
+    "mustard_greens": [
+      "Raw mustard greens"
+    ],
+    "water_spinach": [
+      "Raw water spinach"
+    ],
+    "celtuce": [
+      "Raw celtuce stem"
+    ],
+    "watercress": [
+      "Raw watercress"
+    ],
+    "yardlong_bean": [
+      "Raw yardlong beans (edible pods)"
+    ],
+    "asparagus": [
+      "Raw asparagus"
+    ],
+    "chayote": [
+      "Raw chayote"
+    ],
+    "jicama": [
+      "Raw peeled jicama"
+    ],
+    "bamboo_cooked": [
+      "Boiled bamboo shoots (drained, without salt)"
+    ],
+    "rice_flour": [
+      "Dry white rice flour (unenriched)"
+    ],
+    "glutinous_cooked": [
+      "Cooked white glutinous rice"
+    ],
+    "lotus_seed_dried": [
+      "Dried lotus seeds"
+    ],
+    "potato_cooked": [
+      "Peeled boiled potatoes (without salt)"
+    ],
+    "corn_cooked": [
+      "Boiled sweetcorn kernels (drained, without salt)"
+    ],
+    "taro_cooked": [
+      "Cooked taro (without salt)"
+    ],
+    "lotus_cooked": [
+      "Boiled lotus root (drained, without salt)"
+    ],
+    "oats_cooked": [
+      "Cooked oatmeal (water, without salt, unenriched)"
+    ],
+    "curry_powder": [
+      "Curry powder"
+    ],
+    "cumin": [
+      "Cumin seeds"
+    ],
+    "chili_powder": [
+      "Ground red chili pepper (red or cayenne)"
+    ],
+    "white_pepper": [
+      "Ground white pepper"
+    ],
+    "fish_sauce": [
+      "Fish sauce"
+    ],
+    "peanut_butter": [
+      "Smooth salted peanut butter"
+    ],
+    "peanut_oil": [
+      "Peanut oil"
+    ],
+    "canola_oil": [
+      "Low-erucic-acid rapeseed oil (canola oil)"
+    ],
+    "olive_oil": [
+      "Olive oil"
+    ],
+    "cola": [
+      "Sugar-sweetened cola"
+    ],
+    "peach": [
+      "Fresh yellow peach flesh"
+    ],
+    "lychee": [
+      "Fresh lychee flesh"
+    ],
+    "longan": [
+      "Fresh longan flesh"
+    ],
+    "papaya": [
+      "Fresh papaya flesh"
+    ],
+    "pomelo": [
+      "Pomelo flesh"
+    ],
+    "mandarin": [
+      "Mandarin orange flesh"
+    ],
+    "grapefruit": [
+      "Grapefruit flesh"
+    ],
+    "blueberry": [
+      "Fresh blueberries"
+    ],
+    "skim_milk": [
+      "Skim milk (without added vitamins A and D)"
+    ],
+    "millet_cooked": [
+      "Cooked millet"
+    ],
+    "sweet_potato_cooked": [
+      "Peeled boiled sweet potato"
+    ],
+    "lotus_seed_fresh": [
+      "Raw fresh lotus seeds"
+    ],
+    "shiitake_dried": [
+      "Dried shiitake mushrooms"
+    ],
+    "ham": [
+      "Regular sliced ham (luncheon meat)"
+    ],
+    "dish_251": [
+      "Soy sauce chicken"
+    ],
+    "dish_252": [
+      "Cola-braised chicken wings"
+    ],
+    "dish_253": [
+      "Teriyaki chicken thigh"
+    ],
+    "dish_254": [
+      "Chicken with spring onion oil"
+    ],
+    "dish_255": [
+      "Shredded chicken and cucumber salad",
+      "Hand-shredded chicken",
+      "Hand-torn chicken",
+      "Shredded chicken salad"
+    ],
+    "dish_256": [
+      "Chicken curry"
+    ],
+    "dish_257": [
+      "Crispy fried chicken strips"
+    ],
+    "dish_258": [
+      "Salt-and-pepper chicken pieces"
+    ],
+    "dish_259": [
+      "Spicy chicken gizzard stir-fry"
+    ],
+    "dish_260": [
+      "Chicken heart and green pepper stir-fry"
+    ],
+    "dish_261": [
+      "Soy-braised duck meat"
+    ],
+    "dish_262": [
+      "Duck and lotus root stew"
+    ],
+    "dish_263": [
+      "Duck and potato braise"
+    ],
+    "dish_264": [
+      "Red-braised rabbit"
+    ],
+    "dish_265": [
+      "Ginger and spring onion rabbit stir-fry"
+    ],
+    "dish_266": [
+      "Sweet and sour pork with pineapple"
+    ],
+    "dish_267": [
+      "Char siu pork"
+    ],
+    "dish_268": [
+      "Crispy fried pork tenderloin"
+    ],
+    "dish_269": [
+      "Salt-and-pepper pork ribs"
+    ],
+    "dish_270": [
+      "Steamed pork patty with shiitake mushrooms"
+    ],
+    "dish_271": [
+      "Pork liver and green pepper stir-fry"
+    ],
+    "dish_272": [
+      "Pork liver stir-fry with cucumber and wood ear mushrooms"
+    ],
+    "dish_273": [
+      "Red-braised pig's feet"
+    ],
+    "dish_274": [
+      "Pig's feet and soybean stew"
+    ],
+    "dish_275": [
+      "Pork kidney stir-fry"
+    ],
+    "dish_276": [
+      "Pork intestine stir-fry"
+    ],
+    "dish_277": [
+      "Pig ear and cucumber salad"
+    ],
+    "dish_278": [
+      "Pork stomach soup with white pepper"
+    ],
+    "dish_279": [
+      "Soy-braised pork heart"
+    ],
+    "dish_280": [
+      "Cumin beef stir-fry"
+    ],
+    "dish_281": [
+      "Beef and cilantro salad"
+    ],
+    "dish_282": [
+      "Beef curry"
+    ],
+    "dish_283": [
+      "Lamb and spring onion stir-fry"
+    ],
+    "dish_284": [
+      "Cumin lamb stir-fry"
+    ],
+    "dish_285": [
+      "Red-braised lamb"
+    ],
+    "dish_286": [
+      "Lamb and white radish stew"
+    ],
+    "dish_287": [
+      "Lamb and winter melon soup"
+    ],
+    "dish_288": [
+      "Salt-and-pepper squid"
+    ],
+    "dish_289": [
+      "Sizzling squid with onion"
+    ],
+    "dish_290": [
+      "Steamed fish with spring onion oil"
+    ],
+    "dish_291": [
+      "Crispy fried fish pieces"
+    ],
+    "dish_292": [
+      "Shrimp in tomato sauce"
+    ],
+    "dish_293": [
+      "Typhoon shelter shrimp"
+    ],
+    "dish_294": [
+      "Spicy clam stir-fry"
+    ],
+    "dish_295": [
+      "Steamed crab"
+    ],
+    "dish_296": [
+      "Crab and scrambled eggs"
+    ],
+    "dish_297": [
+      "Asparagus and shrimp stir-fry"
+    ],
+    "dish_298": [
+      "Garlic water spinach"
+    ],
+    "dish_299": [
+      "Stir-fried amaranth greens"
+    ],
+    "dish_300": [
+      "Garlic watercress"
+    ],
+    "dish_301": [
+      "Stir-fried celtuce"
+    ],
+    "dish_302": [
+      "Celtuce and pork stir-fry"
+    ],
+    "dish_303": [
+      "Celtuce salad"
+    ],
+    "dish_304": [
+      "Stir-fried asparagus"
+    ],
+    "dish_305": [
+      "Asparagus and scrambled eggs"
+    ],
+    "dish_306": [
+      "Stir-fried chayote"
+    ],
+    "dish_307": [
+      "Chayote and pork stir-fry"
+    ],
+    "dish_308": [
+      "Stir-fried yardlong beans"
+    ],
+    "dish_309": [
+      "Yardlong beans with minced pork"
+    ],
+    "dish_310": [
+      "Potato curry"
+    ],
+    "dish_311": [
+      "Pan-fried potato pancakes"
+    ],
+    "dish_312": [
+      "Garlic roasted potatoes"
+    ],
+    "dish_313": [
+      "Loofah and scrambled eggs"
+    ],
+    "dish_314": [
+      "Loofah and shrimp stir-fry"
+    ],
+    "dish_315": [
+      "Pork-stuffed tofu"
+    ],
+    "dish_316": [
+      "Shrimp and tofu casserole"
+    ],
+    "dish_317": [
+      "Pan-fried pork-stuffed eggplant"
+    ],
+    "dish_318": [
+      "Garlic roasted eggplant"
+    ],
+    "dish_319": [
+      "Spinach and pork liver soup"
+    ],
+    "dish_320": [
+      "Pork liver and lean pork soup"
+    ],
+    "dish_321": [
+      "Watercress and pork rib soup"
+    ],
+    "dish_322": [
+      "Lotus root and peanut soup"
+    ],
+    "dish_323": [
+      "Kelp and mung bean sweet soup"
+    ],
+    "dish_324": [
+      "White radish and duck soup"
+    ],
+    "dish_325": [
+      "Lotus seed and adzuki bean sweet soup"
+    ],
+    "dish_326": [
+      "Lotus seed and peanut sweet soup"
+    ],
+    "dish_327": [
+      "Eight-treasure congee"
+    ],
+    "dish_328": [
+      "Pumpkin and millet congee"
+    ],
+    "dish_329": [
+      "Chicken congee"
+    ],
+    "dish_330": [
+      "Fish congee"
+    ],
+    "dish_331": [
+      "Shrimp congee"
+    ],
+    "dish_332": [
+      "Pork liver congee"
+    ],
+    "dish_333": [
+      "Lean pork congee"
+    ],
+    "dish_334": [
+      "Soy sauce fried rice"
+    ],
+    "dish_335": [
+      "Ham and egg fried rice"
+    ],
+    "dish_336": [
+      "Pineapple and shrimp fried rice"
+    ],
+    "dish_337": [
+      "Omurice (omelette-wrapped fried rice)"
+    ],
+    "dish_338": [
+      "Chicken curry with rice"
+    ],
+    "dish_339": [
+      "Beef chow fun"
+    ],
+    "dish_340": [
+      "Singapore-style fried rice noodles"
+    ],
+    "dish_341": [
+      "Cold chicken noodles with sesame sauce"
+    ],
+    "dish_342": [
+      "Dan dan noodles"
+    ],
+    "dish_343": [
+      "Hot-oil chili noodles"
+    ],
+    "dish_344": [
+      "Pork and green bean braised noodles"
+    ],
+    "dish_345": [
+      "Steamed pork buns"
+    ],
+    "dish_346": [
+      "Steamed shiitake and bok choy buns"
+    ],
+    "dish_347": [
+      "Steamed red bean paste buns"
+    ],
+    "dish_348": [
+      "Sheng jian bao (pan-fried pork buns)"
+    ],
+    "dish_349": [
+      "Pork and napa cabbage potstickers"
+    ],
+    "dish_350": [
+      "Glutinous rice shumai"
+    ],
+    "dish_351": [
+      "Guo bao rou (crispy sweet and sour pork)"
+    ],
+    "dish_352": [
+      "Chinese-style beef and vegetable borscht"
+    ],
+    "dish_353": [
+      "Long beans with sesame dressing"
+    ],
+    "dish_354": [
+      "Egg-coated pan-fried tofu in sauce"
+    ],
+    "dish_355": [
+      "Steamed pork ribs coated in rice meal"
+    ],
+    "dish_356": [
+      "Kung Pao shrimp"
+    ],
+    "dish_357": [
+      "Kung Pao tofu"
+    ],
+    "dish_358": [
+      "Steamed pork meatballs coated in glutinous rice"
+    ],
+    "dish_359": [
+      "Layered pork-filled flatbread"
+    ],
+    "dish_360": [
+      "Braised pork belly over rice"
+    ],
+    "dish_361": [
+      "Caramel-coated sweet potatoes"
+    ],
+    "dish_362": [
+      "West Lake beef and egg-white soup"
+    ],
+    "dish_363": [
+      "Salt-boiled peanuts"
+    ],
+    "dish_364": [
+      "Pork slices stir-fried with bitter melon"
+    ],
+    "dish_365": [
+      "Pork stir-fried with wood ear mushrooms"
+    ],
+    "dish_366": [
+      "Lotus root stuffed with sweet glutinous rice"
+    ],
+    "dish_367": [
+      "Tomato and egg dough-drop soup"
+    ],
+    "dish_368": [
+      "Steamed milk and egg custard"
+    ],
+    "dish_369": [
+      "Lotus root and mixed vegetable stir-fry"
+    ],
+    "dish_370": [
+      "Flatbread strips stir-fried with vegetables"
+    ],
+    "dish_371": [
+      "Chicken wings braised with fermented tofu"
+    ],
+    "dish_372": [
+      "Salt-baked chicken"
+    ],
+    "dish_374": [
+      "Bang bang chicken with sesame sauce"
+    ],
+    "dish_375": [
+      "Steamed folded buns"
+    ],
+    "dish_376": [
+      "Steamed milk buns"
+    ],
+    "dish_377": [
+      "Steamed triangular sugar buns"
+    ],
+    "dish_378": [
+      "Steamed pork-filled bread roll"
+    ],
+    "dish_379": [
+      "Egg-filled flatbread"
+    ],
+    "dish_380": [
+      "Caramel-coated apples"
+    ],
+    "dish_381": [
+      "Sugar-roasted chestnuts"
+    ],
+    "dish_382": [
+      "Northeastern pork and vegetable stew"
+    ],
+    "dish_383": [
+      "Shredded potato and green pepper stir-fry"
+    ],
+    "dish_384": [
+      "Winter melon soup"
+    ],
+    "dish_385": [
+      "White radish soup"
+    ]
   }
 }

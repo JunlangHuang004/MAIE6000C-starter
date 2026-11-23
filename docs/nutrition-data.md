@@ -1,7 +1,8 @@
 # Chinese food catalogue and clarification dialogue
 
-Version **2026-10-31.1** contains **200 ingredient records and 350 editable Chinese
-recipe reference templates**, 550 records in total. No model training is required.
+Version **2026-11-23.1** contains **200 ingredient records and 384 editable Chinese
+recipe reference templates**, 584 records in total. All records have English names,
+and all recipes have English methods. No model training is required.
 Qwen extracts explicit facts
 and catalogue IDs; Python calculates nutrients. Advanced mode asks about missing
 facts; basic mode uses visible reference assumptions where supported. Unresolved
@@ -22,7 +23,7 @@ Chinese labels and aliases are project-maintained mappings and may be refined.
 - Reproduce: `python scripts/import_usda.py /path/to/official-sr-legacy.zip`
 - Runtime snapshot: `services/common/data/catalogue.json` (included in Python package)
 
-The 350 recipe templates in `recipes.json` are **project-authored illustrative
+The 384 recipe templates in `recipes.json` are **project-authored illustrative
 formulations**, not measurements, authentic standardized recipes, or imports of
 HowToCook/Figshare. Some use simplified ingredients, clearly described by `method`.
 Their nutrient numbers are computed from USDA ingredients; every assumed ingredient
@@ -47,7 +48,7 @@ Figshare Chinese dish datasets remain research candidates: their serving/whole-
 recipe bases and source ingredient details need further normalization before import.
 Open Food Facts has not been mixed into this CC0 ingredient snapshot.
 
-The latest expansion adds 62 ingredient records and 100 recipes while preserving
+The 31 October expansion added 62 ingredient records and 100 recipes while preserving
 the original 138 ingredient records and 250 recipes. The
 [ingredient source map](evidence/ingredient-expansion-source-map.json) records the
 new USDA selections; the [recipe expansion manifest](evidence/recipe-expansion-manifest.json)
@@ -59,9 +60,20 @@ pending. See the [expansion verification](evidence/chinese-expansion-verificatio
 for checks and unresolved limits rather than treating a larger catalogue as
 measured nutrition or validated model recognition.
 
+The [23 November home-recipe expansion](home-recipe-expansion.md) adds 34 recipes
+without changing the 200 ingredient nutrient records or the preceding 350 recipe
+formulations. Meishichina supplies observed dish names and cooking-style evidence;
+it does not supply these recipes' quantities, cooked yields or nutrient values.
+The new formulas are project-authored assumptions calculated with existing USDA
+records. The [public evidence](evidence/home-recipe-expansion-2026-11-23/README.md)
+separates included, already-covered and deferred entries. This is a first batch,
+not complete coverage of the site's menu. Salt-poached duck was withdrawn before
+publication because the raw skin-on duck and assumed cooked yield did not support
+a useful estimate without a drained-fat model.
+
 ## Dish coverage policy
 
-Coverage is finite: **200 ingredient records and 350 reference recipes**. The
+Coverage is finite: **200 ingredient records and 384 reference recipes**. The
 catalogue does not include every common Chinese dish, regional name, restaurant
 recipe or branded ingredient. Soy-sauce chicken (`豉油鸡` / `酱油鸡`) is now
 recorded as `dish_251`; it must resolve to its own reviewed reference recipe,
@@ -69,10 +81,11 @@ never steamed carp. Synthetic unknown names such as `月球紫晶兽肉` remain
 unsupported rather than being mapped to a familiar dish.
 
 Reviewed matching names are stored in `services/common/data/matching_aliases.json`,
-separately from nutrient data. They include the original 388 English display
-names and narrowly reviewed additional aliases. The new entries prioritize
-Chinese coverage; absent English display translations fall back to Chinese.
-Matching aliases do not train model weights or change ingredient nutrient values.
+separately from nutrient data. All 584 records have English display names and
+reviewed English matching names; all 384 recipes have English reference methods.
+The previous 162 missing translations are now present. Additional Chinese aliases
+share existing IDs instead of creating duplicate recipes. Matching aliases do not
+train model weights or change ingredient nutrient values.
 
 Food identity must be grounded in the user's complete food mention and an exact
 normalized recorded name or reviewed alias. A model-selected ID being present
@@ -99,7 +112,7 @@ Maintain one home-style reference formulation per dish. Alternative names share
 one ID, rather than adding regional editions of the same dish. Distinct preparations
 such as steamed versus braised fish can remain separate dishes. This is a curated
 coverage list, not a measured ranking of the most popular Chinese dishes. See the
-[dish index](recipe-catalogue.md) for all 350 names and their reference methods.
+[dish index](recipe-catalogue.md) for all 384 Chinese/English names and reference methods.
 
 Existing ingredient and dish IDs remain stable; historical saved totals and
 evidence are not recalculated by a catalogue update. Earlier expansion decisions
@@ -153,6 +166,15 @@ Explicit differences in preparation, ingredients or quantities must remain
 available for clarification and editing. A shortlist candidate is not permission
 to substitute that food for an unsupported complete dish name. Retrieval bounds
 prompt size; it does not establish perfect extraction or a measured latency target.
+
+The reviewed names `水煮鱼`, `水煮魚` and `水煮魚片` resolve to the existing
+`dish_126` fish-in-broth reference. Its method and ingredients remain unchanged;
+the alias does not claim every restaurant fish broth uses that formulation.
+Explicit gram amounts remain grounded in their adjacent complete food names,
+including compact comma-separated, space-separated and unpunctuated input such
+as `米饭100克,番茄炒蛋150克`, `米饭100克 番茄炒蛋150克` and
+`米饭100克番茄炒蛋150克`. Unsupported names still prevent totals; the separator
+handling does not authorize substring matching or an inferred portion weight.
 
 Explicit changes such as no peanuts or 5g oil for the whole batch must populate
 `recipe_ingredients`, not only an uncertainty message. Batch oil is distinct from

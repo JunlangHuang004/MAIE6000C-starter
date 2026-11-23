@@ -14,6 +14,7 @@
     measuredWeightBadge: ['按填写克数', 'Entered grams'],
     customRecipeBadge: ['按实际食材', 'Entered ingredients'],
     referenceBasis: ['这是参考估算：标注的份量或配方尚未逐项核实，可能与你实际吃的不同。可以修改这餐或切换进阶版。', 'This is a reference estimate: labelled portions or recipes have not been individually verified and may differ from your meal. Edit the meal or switch to Advanced.'],
+    confirmedReferenceBasis: ['这是参考估算：标注的份量或配方尚未逐项核实，可能与你实际吃的不同。这餐已确认保存；如需修改，请开始新的一餐。', 'This is a reference estimate: labelled portions or recipes have not been individually verified and may differ from your meal. This meal is confirmed and saved. Start a new meal to make changes.'],
     recipeAdjust: ['查看或调整整锅用量', 'Review or adjust batch quantities'],
     recipePreview: ['整锅参考配方：{ingredients}；做熟后约 {yield} 克。请核对后勾选；与实际不同可展开调整。', 'Reference batch: {ingredients}; about {yield} g after cooking. Review before accepting; expand to adjust any differences.'],
     recipePreviewEdited: ['当前整锅配方：{ingredients}；做熟后 {yield} 克。修改用量后请重新核对并勾选。', 'Current batch: {ingredients}; {yield} g after cooking. Review and accept again after editing.'],

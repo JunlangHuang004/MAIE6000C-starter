@@ -161,21 +161,19 @@ test('Switch preserves meal, reply and search text and selected estimation mode'
   assert.equal(requests.length, before);
 });
 
-test('Existing English display names remain intact; Chinese additions use their original names', async t => {
+test('Every catalogue food has an English display name and every recipe has an English method', async t => {
   const {window} = await mount(t);
   const entries = window.NUTRICHAT_EN_CATALOGUE;
-  assert.equal(Object.keys(entries).length,388,'Keep the previously translated catalogue');
+  assert.equal(Object.keys(entries).length,foods.length,'Cover the complete current catalogue');
   assert.ok(Object.keys(entries).every(id => foods.some(food => food.id === id)));
   window.NutriI18n.setLanguage('en');
   for (const food of foods) {
-    if (!entries[food.id]) {
-      assert.equal(window.NutriI18n.foodName(food.id,food.name),food.name);
-      continue;
-    }
+    assert.ok(entries[food.id],food.id+' needs an English display entry');
     assert.ok(entries[food.id].name.trim(), food.id + ' needs an English name');
     assert.doesNotMatch(entries[food.id].name, /[\u3400-\u9fff]/u, food.id);
     if (food.kind === 'recipe') {
       assert.ok(entries[food.id].method.trim(), food.id + ' needs an English method');
+      assert.doesNotMatch(entries[food.id].method, /[\u3400-\u9fff]/u, food.id);
     }
   }
   assert.match(entries.chicken.name, /raw/i);
@@ -857,9 +855,10 @@ test('Changing a search query clears the old selected ingredient and acceptance,
 });
 
 const profileFixture = () => ({
-  profile:{age_years:25,height_cm:175,weight_kg:70,sex:'male',goal:'gain_muscle',activity_level:'moderate',revision:1},
+  profile:{age_years:25,height_cm:175,weight_kg:70,sex:'male',goal:'gain_muscle',activity_level:'moderate',strength_training:true,reference_scope:'general_adult',revision:1},
   reference:{status:'estimated',resting_kcal:1673.8,maintenance_kcal:2594.3,activity_factor:1.55,
-    calories:2720,protein_g:170,fat_g:90.7,carbs_g:306,reason_codes:[],
+    calories:2720,protein_g:112,fat_g:90.7,carbs_g:364,reason_codes:[],energy_adjustment_kcal:129.7,
+    protein_g_per_kg:1.6,protein_min_g:112,protein_max_g:154,fat_energy_percent:30,
     notes:['这是根据所填资料推算的每日参考，并非测量值或必须达到的指标。']},
 });
 const trackingFixture = () => {
@@ -892,12 +891,86 @@ test('Profile fields, goal and draft values survive bilingual switching and save
 });
 
 test('A profile review boundary withholds targets in both languages and leaves meal estimation available',async t=>{
-  const profile=profileFixture();profile.reference.status='needs_review';profile.reference.reason_codes=['underweight_fat_loss'];
+  const profile=profileFixture();profile.reference.status='needs_review';profile.reference.reason_codes=['underweight_reference'];
   profile.reference.calories=null;profile.profile.goal='lose_fat';
   const {$,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
   assert.equal($('profile-targets').hidden,true);assert.equal($('profile-review').hidden,false);
   assert.equal($('estimate').disabled,false);
   await clickLanguage('en');assert.match($('profile-review').textContent,/withheld|outside/);
+  assert.doesNotMatch($('profile-review').textContent,/[\u3400-\u9fff]/u);
+});
+
+test('Legacy profiles require explicit eligibility and training without defaulting to yes',async t=>{
+  const profile=profileFixture();
+  Object.assign(profile.profile,{strength_training:null,reference_scope:null});
+  Object.assign(profile.reference,{status:'needs_review',calories:null,protein_g:null,fat_g:null,carbs_g:null,
+    reason_codes:['scope_confirmation_required','training_confirmation_required']});
+  const {window,$,requests,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
+  assert.equal($('profile-editor').open,true);
+  assert.equal($('profile-training').value,'');assert.equal($('profile-scope').value,'');
+  assert.equal($('profile-targets').hidden,true);assert.equal($('profile-calculation').hidden,true);
+  $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  assert.equal(requests.filter(r=>r.url==='/profile'&&r.method==='PUT').length,0,'Unconfirmed required fields cannot save');
+  await clickLanguage('en');
+  assert.match($('profile-review').textContent,/confirm nutrition reference eligibility/);
+  assert.match($('profile-review').textContent,/confirm whether.*resistance training/);
+  assert.doesNotMatch($('profile-review').textContent,/[\u3400-\u9fff]/u);
+  assert.equal($('profile-training').value,'');assert.equal($('profile-scope').value,'');
+});
+
+test('Training No survives language switches and saves a boolean false, not an empty or truthy value',async t=>{
+  const profile=profileFixture();
+  const {window,$,requests,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
+  $('profile-goal').value='lose_fat';$('profile-training').value='false';
+  $('profile-training').dispatchEvent(new window.Event('input',{bubbles:true}));
+  await clickLanguage('en');
+  assert.equal($('profile-training').value,'false');assert.equal($('profile-scope').value,'general_adult');
+  assert.equal($('profile-reference').hidden,true,'Edited profile must not display old reference');
+  $('profile-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
+  const sent=requests.find(r=>r.url==='/profile'&&r.method==='PUT');
+  assert.equal(sent.body.strength_training,false);assert.equal(sent.body.reference_scope,'general_adult');
+  assert.equal(sent.body.goal,'lose_fat');
+});
+
+test('Energy calculation is visible and protein follows weight-based references in both languages',async t=>{
+  const profile=profileFixture();
+  const {$,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
+  assert.equal($('profile-calculation').hidden,false);
+  assert.equal($('profile-calculation').closest('details'),null,'Resting and maintenance explanation is not collapsed');
+  assert.match($('profile-energy-basis').textContent,/1,674.*1\.55.*2,594/);
+  assert.match($('profile-goal-basis').textContent,/5%.*129\.7/);
+  assert.match($('profile-protein').textContent,/112/);
+  assert.match($('profile-macro-basis').textContent,/1\.6.*112–154/);
+  await clickLanguage('en');
+  assert.match($('profile-goal-basis').textContent,/5%.*129\.7.*default starting point/);
+  assert.match($('profile-macro-basis').textContent,/1\.6.*112–154.*not a mandatory/);
+  assert.doesNotMatch($('profile-reference').textContent,/[\u3400-\u9fff]/u);
+});
+
+test('Fat-loss explanation describes the bounded deficit rather than the retired ten percent policy',async t=>{
+  const profile=profileFixture();profile.profile.goal='lose_fat';
+  Object.assign(profile.reference,{calories:2210,protein_g:126,fat_g:73.7,carbs_g:260.8,
+    energy_adjustment_kcal:-389.1,protein_g_per_kg:1.8});
+  const {$,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
+  assert.match($('profile-goal-basis').textContent,/15%.*500.*389\.1/);
+  await clickLanguage('en');
+  assert.match($('profile-goal-basis').textContent,/15%.*500.*389\.1/);
+  assert.doesNotMatch($('profile-goal-basis').textContent,/10%/);
+  assert.match($('profile-calories').textContent,/2,210/);
+});
+
+test('Professional guidance and training scope notices explain withheld targets while meal tools remain usable',async t=>{
+  const profile=profileFixture();
+  Object.assign(profile.profile,{strength_training:false,reference_scope:'professional_guidance'});
+  Object.assign(profile.reference,{status:'needs_review',calories:null,protein_g:null,fat_g:null,carbs_g:null,
+    reason_codes:['professional_guidance_required','strength_training_required']});
+  const {$,clickLanguage}=await mount(t,{respond:r=>r.url==='/profile'?{body:profile}:undefined});
+  assert.equal($('profile-training').value,'false');
+  assert.equal($('profile-targets').hidden,true);assert.equal($('profile-calculation').hidden,true);
+  assert.equal($('estimate').disabled,false);
+  await clickLanguage('en');
+  assert.match($('profile-review').textContent,/professional assessment/);
+  assert.match($('profile-review').textContent,/require regular resistance training/);
   assert.doesNotMatch($('profile-review').textContent,/[\u3400-\u9fff]/u);
 });
 
@@ -914,13 +987,22 @@ test('A stale profile revision preserves entered values and requires reloading b
   assert.equal(requests.filter(r=>r.url==='/profile'&&r.method==='PUT').length,1);
 });
 
-test('Daily manual zero remains data, gaps stay blank, charts do not connect missing days, and switching preserves edits',async t=>{
+test('Trend lines bridge missing dates without adding data, manual zero remains data, and switching preserves edits',async t=>{
   const tracking=trackingFixture();
   const view=await mount(t,{respond:r=>r.url.startsWith('/tracking')?{body:tracking}:undefined});
   const {window,$,document,requests,clickLanguage}=view;
   assert.equal($('trend-table-body').children.length,30);
-  assert.equal($('calorie-chart').querySelectorAll('circle').length,2);
-  assert.equal($('calorie-chart').querySelectorAll('line[stroke="#246149"]').length,0);
+  for(const [id,color] of [['calorie-chart','#246149'],['weight-chart','#477f9b']]){
+    const points=$(id).querySelectorAll('circle'),lines=$(id).querySelectorAll(`line[stroke="${color}"]`);
+    assert.equal(points.length,2,'Only recorded dates get points');
+    assert.equal(lines.length,1,'Connect the two records across the missing date');
+    for(const [attribute,point,coordinate] of [['x1',0,'cx'],['y1',0,'cy'],['x2',1,'cx'],['y2',1,'cy']])
+      assert.equal(lines[0].getAttribute(attribute),points[point].getAttribute(coordinate));
+    assert.ok(Number(points[1].getAttribute('cx'))>Number(points[0].getAttribute('cx')));
+  }
+  assert.equal($('calorie-chart').querySelector('circle').getAttribute('cy'),'200','Explicit zero stays on the baseline');
+  assert.equal($('trend-recorded').textContent,'2 / 30 天');
+  assert.equal($('trend-average').textContent,'77.5');
   assert.equal($('trend-table-body').children[0].children[1].textContent,'0');
   assert.equal($('trend-table-body').children[1].children[1].textContent,'—');
   $('daily-calories').value='0';$('daily-weight').value='68.5';
@@ -928,6 +1010,8 @@ test('Daily manual zero remains data, gaps stay blank, charts do not connect mis
   const count=requests.length;await clickLanguage('en');
   assert.equal($('daily-calories').value,'0');assert.equal($('daily-weight').value,'68.5');
   assert.match($('tracking-title').textContent,/Daily check-in/);assert.match(document.querySelector('svg title').textContent,/30-day/);
+  assert.match($('calorie-chart').querySelector('desc').textContent,/across missing dates without filling missing values/);
+  assert.match(document.querySelector('.trend-note').textContent,/excluded from average calories.*zero values are included/);
   assert.equal(requests.length,count);
   $('daily-form').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));await flush();
   const sent=requests.find(r=>r.method==='PUT'&&r.url.startsWith('/daily-records/'));
@@ -1132,6 +1216,38 @@ test('Reviewed recipes and entered ingredient quantities have distinct badges wi
   const custom = await mount(t,{meal:ingredientRecipeFixture(),language:'en'});
   assert.match(custom.$('evidence').querySelector('summary').textContent,/Entered ingredients/);
   assert.equal(custom.$('estimate-basis').hidden,true);
+});
+
+test('Confirming a reference estimate preserves its warning but only suggests actions available on a saved meal',async t=>{
+  const meal = clone(fixtures.tomato_egg_dish);
+  meal.draft[0].recipe_assumed = true;
+  const {$,requests,clickLanguage} = await mount(t,{meal,respond:request =>
+    request.url.endsWith('/confirm')
+      ? {body:{...meal,status:'confirmed',revision:meal.revision+1,
+        consumed_on:request.body.consumed_on}} : undefined});
+  assert.equal($('edit-meal').hidden,false);
+  assert.equal($('switch-mode').hidden,false);
+  assert.match($('estimate-basis').textContent,/可以修改这餐或切换进阶版/);
+  await clickLanguage('en');
+  assert.match($('estimate-basis').textContent,/Edit the meal or switch to Advanced/);
+  $('meal-date').value = '2026-10-27';
+  $('confirm').click();
+  await flush();
+  assert.equal(requests.filter(request => request.url.endsWith('/confirm')).length,1);
+  assert.equal($('edit-meal').hidden,true);
+  assert.equal($('switch-mode').hidden,true);
+  assert.equal($('estimate-basis').hidden,false);
+  assert.match($('estimate-basis').textContent,/not been individually verified.*confirmed and saved.*Start a new meal/i);
+  assert.doesNotMatch($('estimate-basis').textContent,/Edit the meal|switch to Advanced/i);
+  const requestCount = requests.length;
+  await clickLanguage('zh');
+  assert.match($('estimate-basis').textContent,/尚未逐项核实.*已确认保存.*开始新的一餐/);
+  assert.doesNotMatch($('estimate-basis').textContent,/可以修改这餐|切换进阶版/);
+  await clickLanguage('en');
+  assert.equal(requests.length,requestCount,'Changing saved-meal copy must not send new requests');
+  assert.match($('estimate-basis').textContent,/Start a new meal/);
+  assert.equal($('calories').textContent,String(meal.calories));
+  assert.equal($('evidence').querySelector('details').open,false);
 });
 
 test('Opening a saved meal returns to its visible workspace, then new meal focuses input',async t=>{

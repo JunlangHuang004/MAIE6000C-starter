@@ -1,0 +1,24 @@
+[
+  {
+    "name": "青椒土豆丝",
+    "source_url": "https://home.meishichina.com/recipe-78331.html",
+    "accessed_on": "2026-11-23",
+    "source_role": "dish_name_and_main_ingredients_only",
+    "difference_from_project_reference": "The observed example includes vinegar, sugar and starch. The project reference explicitly chooses a no-vinegar home variant; its quantities and yield are not taken from this page."
+  },
+  {
+    "name": "萝卜汤",
+    "source_url": "https://home.meishichina.com/recipe-312502.html",
+    "observed_recipe_title": "萝卜丝汤",
+    "accessed_on": "2026-11-23",
+    "source_role": "dish_name_and_main_ingredients_only",
+    "difference_from_project_reference": "The observed vegetarian radish soup uses radish, spring onion, salt, sesame oil and water. Project quantities, yield and optional ginger are independent assumptions."
+  },
+  {
+    "name": "冬瓜汤",
+    "source_url": "https://home.meishichina.com/recipe-menu.html",
+    "accessed_on": "2026-11-23",
+    "source_role": "menu_dish_name_only",
+    "difference_from_project_reference": "The project explicitly chooses a vegetarian clear-water reference, without meat, seafood, stock or tomato. The menu does not establish a particular ingredient formula or nutrient value."
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-31.1",
+  "version": "2026-11-23.1",
   "foods": [
     {
       "id": "rice",
@@ -1140,6 +1140,14 @@
         "steamed"
       ],
       "default_portion_g": 50,
+      "portion_weights_g": {
+        "piece": 50
+      },
+      "portion_reference": {
+        "description": "1 large hard-cooked egg, shell removed",
+        "source": "USDA ARS, Nutritive Value of Foods (2002), Table 9, food 146, page 22",
+        "url": "https://www.ars.usda.gov/ARSUserFiles/oc/np/NutritiveValueofFoods/NutritiveValueofFoods.pdf"
+      },
       "kind": "ingredient",
       "nutrients": {
         "calories": 155.0,
@@ -1155,14 +1163,6 @@
         "url": "https://fdc.nal.usda.gov/food-details/173424/nutrients",
         "description": "Egg, whole, cooked, hard-boiled",
         "download": "https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_csv_2018-04.zip"
-      },
-      "portion_weights_g": {
-        "piece": 50
-      },
-      "portion_reference": {
-        "description": "1 large hard-cooked egg, shell removed",
-        "source": "USDA ARS, Nutritive Value of Foods (2002), Table 9, food 146, page 22",
-        "url": "https://www.ars.usda.gov/ARSUserFiles/oc/np/NutritiveValueofFoods/NutritiveValueofFoods.pdf"
       }
     },
     {
@@ -5621,7 +5621,9 @@
       "name": "青椒肉丝",
       "aliases": [
         "青椒肉絲",
-        "青椒肉丝"
+        "青椒肉丝",
+        "青椒炒肉丝",
+        "青椒炒肉絲"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -5803,7 +5805,8 @@
       "name": "土豆炖牛肉",
       "aliases": [
         "土豆燉牛肉",
-        "土豆炖牛肉"
+        "土豆炖牛肉",
+        "牛肉炖土豆"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -6005,7 +6008,9 @@
       "name": "肉末蒸蛋",
       "aliases": [
         "肉沫蒸蛋",
-        "肉末蒸蛋"
+        "肉末蒸蛋",
+        "肉饼蒸蛋",
+        "肉餅蒸蛋"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -6065,7 +6070,9 @@
       "name": "清炒西兰花",
       "aliases": [
         "清炒西蘭花",
-        "清炒西兰花"
+        "清炒西兰花",
+        "蒜蓉西兰花",
+        "蒜蓉西蘭花"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -6324,7 +6331,8 @@
       "name": "苦瓜炒蛋",
       "aliases": [
         "苦瓜炒蛋",
-        "苦瓜炒雞蛋"
+        "苦瓜炒雞蛋",
+        "苦瓜炒鸡蛋"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -6469,7 +6477,8 @@
       "name": "青椒炒蛋",
       "aliases": [
         "青椒炒雞蛋",
-        "青椒炒蛋"
+        "青椒炒蛋",
+        "青椒炒鸡蛋"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -8638,7 +8647,9 @@
       "id": "dish_104",
       "name": "辣子鸡",
       "aliases": [
-        "辣子鸡"
+        "辣子鸡",
+        "辣子鸡丁",
+        "辣子雞丁"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -9173,7 +9184,9 @@
       "id": "dish_122",
       "name": "糖醋鱼",
       "aliases": [
-        "糖醋鱼"
+        "糖醋鱼",
+        "糖醋鲤鱼",
+        "糖醋鯉魚"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -9291,7 +9304,10 @@
       "id": "dish_126",
       "name": "水煮鱼片",
       "aliases": [
-        "水煮鱼片"
+        "水煮鱼片",
+        "水煮鱼",
+        "水煮魚",
+        "水煮魚片"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -10088,7 +10104,8 @@
       "id": "dish_153",
       "name": "凉拌茄子",
       "aliases": [
-        "凉拌茄子"
+        "凉拌茄子",
+        "蒜泥茄子"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -10475,7 +10492,9 @@
       "id": "dish_166",
       "name": "凉拌木耳",
       "aliases": [
-        "凉拌木耳"
+        "凉拌木耳",
+        "凉拌黑木耳",
+        "涼拌黑木耳"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -11259,7 +11278,9 @@
       "id": "dish_193",
       "name": "菠菜炒蛋",
       "aliases": [
-        "菠菜炒蛋"
+        "菠菜炒蛋",
+        "菠菜炒鸡蛋",
+        "菠菜炒雞蛋"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -11288,7 +11309,9 @@
       "id": "dish_194",
       "name": "黄瓜炒蛋",
       "aliases": [
-        "黄瓜炒蛋"
+        "黄瓜炒蛋",
+        "黄瓜炒鸡蛋",
+        "黃瓜炒雞蛋"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -11840,7 +11863,9 @@
       "id": "dish_213",
       "name": "菠菜蛋花汤",
       "aliases": [
-        "菠菜蛋花汤"
+        "菠菜蛋花汤",
+        "菠菜鸡蛋汤",
+        "菠菜雞蛋湯"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -14615,7 +14640,9 @@
       "aliases": [
         "清炒莴笋",
         "清炒莴苣笋",
-        "清炒萵筍"
+        "清炒萵筍",
+        "炒莴笋",
+        "炒萵筍"
       ],
       "kind": "recipe",
       "state": "cooked",
@@ -16219,6 +16246,1333 @@
         "piece": 45,
         "serving": 180
       }
+    },
+    {
+      "id": "dish_351",
+      "name": "锅包肉",
+      "aliases": [
+        "锅包肉",
+        "鍋包肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪里脊薄片裹玉米淀粉糊炸熟，再拌白醋糖汁；此参考采用玉米淀粉版本，油按成品留油估计，不含整锅炸油",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "pork": 400.0,
+          "starch": 70.0,
+          "oil": 35.0,
+          "sugar": 40.0,
+          "vinegar": 40.0,
+          "carrot": 30.0,
+          "ginger": 10.0,
+          "spring_onion": 15.0,
+          "water": 80.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-41724.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_352",
+      "name": "罗宋汤",
+      "aliases": [
+        "罗宋汤",
+        "羅宋湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "牛肉与番茄、卷心菜、土豆、胡萝卜和洋葱煮汤；选不含红菜头的家常番茄版本，水为清水，按汤菜一同吃下估算",
+      "recipe": {
+        "yield_g": 1900.0,
+        "ingredients": {
+          "beef_chunk": 300.0,
+          "tomato": 300.0,
+          "cabbage": 200.0,
+          "potato": 200.0,
+          "carrot": 100.0,
+          "onion": 100.0,
+          "ketchup": 40.0,
+          "butter": 15.0,
+          "water": 900.0,
+          "salt": 4.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-379256.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_353",
+      "name": "麻酱豆角",
+      "aliases": [
+        "麻酱豆角",
+        "麻醬豆角"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "长豇豆煮熟沥水后拌纯芝麻酱、蒜和白醋；参考不含花生酱，水为调酱所留水量",
+      "recipe": {
+        "yield_g": 440.0,
+        "ingredients": {
+          "yardlong_bean": 400.0,
+          "sesame_paste": 40.0,
+          "garlic": 15.0,
+          "vinegar": 15.0,
+          "soy_sauce": 15.0,
+          "sesame_oil": 5.0,
+          "water": 25.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-71923.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_354",
+      "name": "锅塌豆腐",
+      "aliases": [
+        "锅塌豆腐",
+        "鍋塌豆腐"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "硬豆腐裹面粉和蛋液煎制，再加清水与葱姜酱汁短焖；不使用未计量高汤，油按成品留油估计",
+      "recipe": {
+        "yield_g": 600.0,
+        "ingredients": {
+          "tofu": 400.0,
+          "egg_raw": 100.0,
+          "wheat_flour": 25.0,
+          "oil": 25.0,
+          "water": 120.0,
+          "spring_onion": 15.0,
+          "ginger": 10.0,
+          "soy_sauce": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-48046.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_355",
+      "name": "粉蒸排骨",
+      "aliases": [
+        "粉蒸排骨"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "排骨可食肉裹自制炒米粉蒸熟；大米按磨粉前干重，排骨和成品均不含骨，水为米粉吸收水；此参考不含酒或豆瓣酱",
+      "recipe": {
+        "yield_g": 600.0,
+        "ingredients": {
+          "pork_ribs": 400.0,
+          "rice_raw": 80.0,
+          "water": 140.0,
+          "soy_sauce": 25.0,
+          "ginger": 15.0,
+          "oil": 10.0,
+          "sugar": 8.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-627395.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_356",
+      "name": "宫保虾球",
+      "aliases": [
+        "宫保虾球",
+        "宮保蝦球",
+        "宫保虾仁"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "seafood",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "去壳虾仁配花生、辣椒与糖醋酱汁炒制；家常简化参考不含酒、豆瓣酱，未计微量花椒等辛香料；虾按去壳可食生重",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "shrimp": 400.0,
+          "peanut": 50.0,
+          "spring_onion": 30.0,
+          "chili": 10.0,
+          "garlic": 10.0,
+          "ginger": 10.0,
+          "soy_sauce": 20.0,
+          "vinegar": 15.0,
+          "sugar": 15.0,
+          "starch": 10.0,
+          "oil": 20.0,
+          "water": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-547627.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_357",
+      "name": "宫保豆腐",
+      "aliases": [
+        "宫保豆腐",
+        "宮保豆腐"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "硬豆腐煎后配花生、黄瓜、辣椒和糖醋汁炒匀；简化参考不含肉、酒或豆瓣酱，未计微量花椒等辛香料；油为成品留油",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "tofu": 400.0,
+          "peanut": 50.0,
+          "cucumber": 150.0,
+          "chili": 10.0,
+          "spring_onion": 20.0,
+          "garlic": 10.0,
+          "soy_sauce": 20.0,
+          "vinegar": 20.0,
+          "sugar": 15.0,
+          "starch": 8.0,
+          "oil": 25.0,
+          "water": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-58126.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_358",
+      "name": "珍珠丸子",
+      "aliases": [
+        "珍珠丸子",
+        "珍珠圆子",
+        "珍珠圓子"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "猪肉末配荸荠做丸子，裹泡过的糯米蒸熟；糯米按浸泡前干重，水含糯米吸收水，不含蘸汁",
+      "recipe": {
+        "yield_g": 650.0,
+        "ingredients": {
+          "pork_ground": 350.0,
+          "glutinous": 100.0,
+          "water_chestnut": 100.0,
+          "egg_raw": 50.0,
+          "water": 100.0,
+          "soy_sauce": 20.0,
+          "ginger": 10.0,
+          "sesame_oil": 5.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-202757.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_359",
+      "name": "千层肉饼",
+      "aliases": [
+        "千层肉饼",
+        "千層肉餅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面粉和水制皮，折叠包入猪肉葱馅后煎熟；不含另配蘸汁，油按饼中留存量计",
+      "recipe": {
+        "yield_g": 950.0,
+        "ingredients": {
+          "wheat_flour": 350.0,
+          "water": 210.0,
+          "pork_ground": 350.0,
+          "spring_onion": 60.0,
+          "soy_sauce": 25.0,
+          "oil": 25.0,
+          "ginger": 10.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-484149.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 180
+    },
+    {
+      "id": "dish_360",
+      "name": "卤肉饭",
+      "aliases": [
+        "卤肉饭",
+        "滷肉飯",
+        "卤肉米饭"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "五花肉切丁以酱油和糖焖煮，浇在已煮熟白米饭上；此参考不含卤蛋、酸菜、油葱酥或酒，肉汁随饭食用",
+      "recipe": {
+        "yield_g": 1100.0,
+        "ingredients": {
+          "pork_belly": 300.0,
+          "rice": 650.0,
+          "soy_sauce": 40.0,
+          "sugar": 20.0,
+          "ginger": 15.0,
+          "garlic": 15.0,
+          "water": 220.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-423728.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_361",
+      "name": "拔丝地瓜",
+      "aliases": [
+        "拔丝地瓜",
+        "拔丝红薯",
+        "拔絲地瓜",
+        "拔絲紅薯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "红薯去皮切块炸熟，再裹糖浆；油和糖均按成品中留存量估计，不含锅内弃去的炸油或糖浆",
+      "recipe": {
+        "yield_g": 470.0,
+        "ingredients": {
+          "sweet_potato": 500.0,
+          "oil": 35.0,
+          "sugar": 80.0,
+          "water": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-114036.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 150
+    },
+    {
+      "id": "dish_362",
+      "name": "西湖牛肉羹",
+      "aliases": [
+        "西湖牛肉羹"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "牛肉末、香菇与清水煮羹，勾芡后加蛋清和香菜；此参考不含未计量高汤或豆腐，按汤料一起食用估算",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "beef_lean": 250.0,
+          "shiitake": 100.0,
+          "egg_white": 100.0,
+          "starch": 30.0,
+          "water": 850.0,
+          "cilantro": 15.0,
+          "sesame_oil": 5.0,
+          "white_pepper": 1.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-479850.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_363",
+      "name": "盐水花生",
+      "aliases": [
+        "盐水花生",
+        "鹽水花生",
+        "水煮花生"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "花生仁浸泡后以盐水煮熟沥水；花生按去壳干燥生仁重量，成品包括吸入水分，所列盐为估计留存盐，不含弃去盐水",
+      "recipe": {
+        "yield_g": 450.0,
+        "ingredients": {
+          "peanut": 300.0,
+          "water": 180.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-593459.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 100
+    },
+    {
+      "id": "dish_364",
+      "name": "苦瓜炒肉片",
+      "aliases": [
+        "苦瓜炒肉片",
+        "苦瓜炒肉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "苦瓜去籽切片，与猪里脊片及蒜炒熟；此参考不含豆豉或未计量酱料",
+      "recipe": {
+        "yield_g": 530.0,
+        "ingredients": {
+          "bitter_melon": 350.0,
+          "pork": 250.0,
+          "garlic": 15.0,
+          "soy_sauce": 20.0,
+          "starch": 8.0,
+          "oil": 20.0,
+          "water": 30.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-637343.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_365",
+      "name": "木耳炒肉",
+      "aliases": [
+        "木耳炒肉",
+        "木耳炒肉片"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "干木耳泡发后与猪里脊片、胡萝卜炒制；木耳按干重，所列水含泡发吸收水，不能把泡发木耳克数当作干重",
+      "recipe": {
+        "yield_g": 560.0,
+        "ingredients": {
+          "pork": 300.0,
+          "wood_ear": 20.0,
+          "water": 180.0,
+          "carrot": 100.0,
+          "garlic": 15.0,
+          "soy_sauce": 20.0,
+          "starch": 8.0,
+          "oil": 20.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-454397.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_366",
+      "name": "糯米藕",
+      "aliases": [
+        "糯米藕"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "莲藕去皮后填入泡过的糯米煮熟；糯米按干重，水包含吸入水，糖只计假设随成品吃下的量，不含弃掉的糖水",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "lotus": 500.0,
+          "glutinous": 120.0,
+          "sugar": 80.0,
+          "water": 180.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-233266.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 150
+    },
+    {
+      "id": "dish_367",
+      "name": "疙瘩汤",
+      "aliases": [
+        "疙瘩汤",
+        "疙瘩湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "小麦面粉加水做面疙瘩，和番茄、蛋液煮汤；成品含面疙瘩及汤水，无未计量高汤",
+      "recipe": {
+        "yield_g": 1450.0,
+        "ingredients": {
+          "wheat_flour": 200.0,
+          "tomato": 250.0,
+          "egg_raw": 100.0,
+          "water": 1050.0,
+          "spring_onion": 15.0,
+          "oil": 10.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-628926.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_368",
+      "name": "牛奶炖蛋",
+      "aliases": [
+        "牛奶炖蛋",
+        "牛奶燉蛋"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "egg_tofu",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "全脂牛奶与鸡蛋液、糖拌匀隔水蒸成甜蛋羹；不含奶油、炼乳或额外浇汁",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "milk": 350.0,
+          "egg_raw": 150.0,
+          "sugar": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-352842.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 180
+    },
+    {
+      "id": "dish_369",
+      "name": "荷塘小炒",
+      "aliases": [
+        "荷塘小炒"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "莲藕、荷兰豆、胡萝卜与泡发木耳清炒；木耳列干重，水包括泡发吸收水；此参考不含百合",
+      "recipe": {
+        "yield_g": 620.0,
+        "ingredients": {
+          "lotus": 250.0,
+          "snow_pea": 180.0,
+          "carrot": 100.0,
+          "wood_ear": 10.0,
+          "water": 100.0,
+          "garlic": 10.0,
+          "oil": 15.0,
+          "starch": 5.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-201972.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_370",
+      "name": "炒饼",
+      "aliases": [
+        "炒饼",
+        "炒餅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "先用小麦面粉、水和油制薄饼，再切丝与包菜、胡萝卜炒制；配方包含制饼及炒制全部用料，不含肉或额外酱汁",
+      "recipe": {
+        "yield_g": 800.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "water": 180.0,
+          "cabbage": 300.0,
+          "carrot": 100.0,
+          "oil": 30.0,
+          "soy_sauce": 25.0,
+          "garlic": 15.0,
+          "salt": 2.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-425959.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 250
+    },
+    {
+      "id": "dish_371",
+      "name": "腐乳烧鸡翅",
+      "aliases": [
+        "腐乳烧鸡翅",
+        "腐乳燒雞翅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡翅可食肉配腐乳、酱油和糖焖熟；鸡翅与成品重量均不含骨，腐乳按现有通用腐乳记录，特殊品牌需核对",
+      "recipe": {
+        "yield_g": 520.0,
+        "ingredients": {
+          "chicken_wing": 500.0,
+          "fermented_tofu": 40.0,
+          "soy_sauce": 15.0,
+          "sugar": 15.0,
+          "ginger": 15.0,
+          "oil": 10.0,
+          "water": 140.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-9711.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_372",
+      "name": "盐焗鸡",
+      "aliases": [
+        "盐焗鸡",
+        "鹽焗雞"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "带皮鸡肉以姜和盐焗熟；按去骨可食生肉及熟肉计，盐只列估计留在食物中的量，不计包裹鸡肉的整锅粗盐",
+      "recipe": {
+        "yield_g": 410.0,
+        "ingredients": {
+          "chicken_skin": 500.0,
+          "ginger": 15.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-80845.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_374",
+      "name": "棒棒鸡",
+      "aliases": [
+        "棒棒鸡",
+        "棒棒雞"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "poultry",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "鸡胸煮熟撕丝，配黄瓜和芝麻酱、辣椒、蒜调成的酱汁；此参考有芝麻酱，与无麻酱凉拌鸡丝分开，重量为去骨可食部分",
+      "recipe": {
+        "yield_g": 610.0,
+        "ingredients": {
+          "chicken": 400.0,
+          "cucumber": 180.0,
+          "sesame_paste": 40.0,
+          "soy_sauce": 25.0,
+          "vinegar": 20.0,
+          "sugar": 10.0,
+          "chili": 10.0,
+          "garlic": 15.0,
+          "sesame_oil": 10.0,
+          "water": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-253892.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_375",
+      "name": "荷叶饼",
+      "aliases": [
+        "荷叶饼",
+        "荷葉餅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "小麦面粉发酵后刷少量油，折成荷叶形蒸熟；本参考为不加菜汁的白面版本，不含夹入的肉菜",
+      "recipe": {
+        "yield_g": 490.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "water": 175.0,
+          "yeast": 3.0,
+          "sugar": 10.0,
+          "oil": 10.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-60911.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 100
+    },
+    {
+      "id": "dish_376",
+      "name": "奶香馒头",
+      "aliases": [
+        "奶香馒头",
+        "奶香饅頭"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "小麦面粉与全脂牛奶、酵母和少量糖制发酵面团后蒸熟；不含奶粉或炼乳，牛奶用量可编辑",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "wheat_flour": 300.0,
+          "milk": 210.0,
+          "yeast": 3.0,
+          "sugar": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-617835.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 120
+    },
+    {
+      "id": "dish_377",
+      "name": "糖三角",
+      "aliases": [
+        "糖三角"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "发酵小麦面皮包白砂糖与少量面粉馅，捏成三角后蒸熟；本参考为白糖馅，不用白糖替代红糖版本",
+      "recipe": {
+        "yield_g": 560.0,
+        "ingredients": {
+          "wheat_flour": 320.0,
+          "water": 185.0,
+          "yeast": 3.0,
+          "sugar": 80.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-642919.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 120
+    },
+    {
+      "id": "dish_378",
+      "name": "肉龙",
+      "aliases": [
+        "肉龙",
+        "肉龍"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "发酵小麦面皮铺猪肉葱馅后卷起蒸熟；不含额外蘸汁，所有原料均为整条肉龙用量",
+      "recipe": {
+        "yield_g": 1000.0,
+        "ingredients": {
+          "wheat_flour": 350.0,
+          "water": 210.0,
+          "yeast": 4.0,
+          "pork_ground": 350.0,
+          "spring_onion": 50.0,
+          "soy_sauce": 25.0,
+          "ginger": 10.0,
+          "sesame_oil": 10.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-58464.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 180
+    },
+    {
+      "id": "dish_379",
+      "name": "鸡蛋灌饼",
+      "aliases": [
+        "鸡蛋灌饼",
+        "雞蛋灌餅"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "面粉和水制薄饼煎鼓后灌入蛋液再煎熟；配方含饼皮和蛋，不含香肠、肉、菜或未列酱料，油为估计留存量",
+      "recipe": {
+        "yield_g": 620.0,
+        "ingredients": {
+          "wheat_flour": 250.0,
+          "water": 150.0,
+          "egg_raw": 200.0,
+          "oil": 30.0,
+          "spring_onion": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-387179.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_380",
+      "name": "拔丝苹果",
+      "aliases": [
+        "拔丝苹果",
+        "拔絲蘋果"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "带皮苹果去核切块，裹玉米淀粉炸熟并裹糖；苹果按带皮可食部分计，油和糖为假设随成品吃下的留存量",
+      "recipe": {
+        "yield_g": 500.0,
+        "ingredients": {
+          "apple": 400.0,
+          "starch": 40.0,
+          "sugar": 80.0,
+          "oil": 30.0,
+          "water": 30.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-213993.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 150
+    },
+    {
+      "id": "dish_381",
+      "name": "糖炒栗子",
+      "aliases": [
+        "糖炒栗子"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "staple",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "板栗烤炒至熟，少量糖留在栗仁上；栗子按去壳可食仁计，糖只列实际留存的参考量，不计锅中糖砂或外壳",
+      "recipe": {
+        "yield_g": 430.0,
+        "ingredients": {
+          "chestnut": 500.0,
+          "sugar": 15.0,
+          "water": 20.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-120816.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 100
+    },
+    {
+      "id": "dish_382",
+      "name": "东北乱炖",
+      "aliases": [
+        "东北乱炖",
+        "東北亂燉"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "pork",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "固定为五花肉、土豆、四季豆、茄子和番茄的家常炖菜；此参考不含粉条、玉米或豆瓣酱，汤菜按同比例一起食用",
+      "recipe": {
+        "yield_g": 1400.0,
+        "ingredients": {
+          "pork_belly": 250.0,
+          "potato": 250.0,
+          "green_bean": 250.0,
+          "eggplant": 250.0,
+          "tomato": 200.0,
+          "soy_sauce": 30.0,
+          "ginger": 15.0,
+          "garlic": 15.0,
+          "oil": 10.0,
+          "water": 400.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-60015.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_383",
+      "name": "青椒土豆丝",
+      "aliases": [
+        "青椒土豆丝",
+        "青椒土豆絲"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "vegetable",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "土豆切丝与青椒炒熟；本参考不加醋，与酸辣土豆丝分开，油量为留在菜中的参考量",
+      "recipe": {
+        "yield_g": 480.0,
+        "ingredients": {
+          "potato": 400.0,
+          "pepper": 150.0,
+          "garlic": 10.0,
+          "oil": 20.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-78331.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 200
+    },
+    {
+      "id": "dish_384",
+      "name": "冬瓜汤",
+      "aliases": [
+        "冬瓜汤",
+        "冬瓜湯"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "冬瓜去皮去籽与清水煮汤，以葱和少量芝麻油调味；本参考不含肉、海鲜或高汤，按汤菜一起吃下估算",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "winter_melon": 500.0,
+          "water": 850.0,
+          "spring_onion": 15.0,
+          "sesame_oil": 5.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
+    },
+    {
+      "id": "dish_385",
+      "name": "萝卜汤",
+      "aliases": [
+        "萝卜汤",
+        "蘿蔔湯",
+        "白萝卜汤"
+      ],
+      "kind": "recipe",
+      "state": "cooked",
+      "category": "soup",
+      "variant_policy": "one_home_style_reference_per_dish",
+      "method": "白萝卜与清水煮汤，以葱姜和少量芝麻油调味；本参考不含肉、海鲜或高汤，按汤菜一起食用",
+      "recipe": {
+        "yield_g": 1200.0,
+        "ingredients": {
+          "radish": 500.0,
+          "water": 850.0,
+          "spring_onion": 15.0,
+          "ginger": 10.0,
+          "sesame_oil": 5.0,
+          "salt": 3.0
+        }
+      },
+      "source": {
+        "name": "NutriChat 可编辑参考配方 v4（项目自建假设，非实测营养）",
+        "license": "Project-authored",
+        "url": null,
+        "discovery_urls": [
+          "https://home.meishichina.com/recipe-menu.html",
+          "https://home.meishichina.com/recipe-312502.html"
+        ],
+        "accessed_on": "2026-11-23",
+        "discovery_scope": "dish_names_and_style_only_not_recipe_quantities_or_nutrients",
+        "quantity_origin": "project_authored_assumptions"
+      },
+      "nutrition_basis": "recipe_batch_then_cooked_weight",
+      "default_portion_g": 300
     }
   ]
 }

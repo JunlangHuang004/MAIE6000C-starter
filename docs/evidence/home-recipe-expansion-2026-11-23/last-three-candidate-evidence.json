@@ -1,0 +1,43 @@
+[
+  {
+    "name": "青椒土豆丝",
+    "display_name_en": "Shredded potato and green pepper stir-fry",
+    "source_url": "https://home.meishichina.com/recipe-78331.html",
+    "observed_recipe_title": "青椒土豆丝",
+    "note": "Same ingredients as sliced potato-green pepper, but distinguish cut and lighter stir-fry if included; new entry needs meaningful formula distinction.",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_383",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "萝卜汤",
+    "display_name_en": "White radish soup",
+    "source_url": "https://home.meishichina.com/recipe-312502.html",
+    "observed_recipe_title": "萝卜丝汤",
+    "note": "Observed simple recipe uses white radish, spring onion, salt, sesame oil and water.",
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_385",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  },
+  {
+    "name": "冬瓜汤",
+    "display_name_en": "Winter melon soup",
+    "source_url": "https://home.meishichina.com/recipe-menu.html",
+    "observed_recipe_title": null,
+    "note": "Menu confirms dish name. Exact-name recipe-174258 uses bones and dried scallops, so do not present it as the source of a plain vegetable soup formula. A project-authored plain soup variant must be labelled as such.",
+    "alternative_observed_recipe": {
+      "title": "西红柿冬瓜汤",
+      "url": "https://home.meishichina.com/recipe-438598.html",
+      "note": "This is a different specific tomato-winter-melon soup, not an alias for all winter melon soups."
+    },
+    "final_disposition": {
+      "status": "added_reference_recipe",
+      "catalogue_id": "dish_384",
+      "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+    }
+  }
+]

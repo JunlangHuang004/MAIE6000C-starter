@@ -1,8 +1,9 @@
 # HKUST GenAI setup for the merged application
 
 The `test` branch combines accounts, personal references and
-tracking with the `nutrichat` catalogue: **200 ingredients and 350 reference
-recipes**. HKUST supplies meal-fact extraction. Python calculates nutrients from
+tracking with catalogue `2026-11-23.1`: **200 ingredients and 384 reference
+recipes**, all with English display names. The [home-recipe follow-up](home-recipe-expansion.md)
+adds 34 reference recipes without changing prior formulations. HKUST supplies meal-fact extraction. Python calculates nutrients from
 that catalogue; profiles and daily records do not require model calls.
 
 Use the [integration guide](integration.md) for the current verification record.

@@ -417,7 +417,7 @@ button.example-chip{font-size:11px;min-height:32px}
 <div id="trend-results" hidden>
 <div class="tracking-summary"><div class="tracking-stat"><span>有热量记录</span><strong id="trend-recorded">—</strong><span>仅统计有数据的日期</span></div><div class="tracking-stat"><span>记录日均热量</span><strong id="trend-average">—</strong><span>kcal / 记录日</span></div><div class="tracking-stat"><span>首末次体重变化</span><strong id="trend-weight-change">—</strong><span id="trend-weight-count">至少需要两次记录</span></div></div>
 <div class="trend-charts"><div class="trend-chart"><h4>热量摄入 · kcal</h4><p>已确认餐食汇总，或你填写的当天总量。</p><div id="calorie-chart"></div></div><div class="trend-chart"><h4>体重 · kg</h4><p>按实际填写的日期绘制，纵轴随记录范围调整。</p><div id="weight-chart"></div></div></div>
-<p class="muted trend-note">没有记录的日期留空，不作为 0 计算，也不会自动补齐。图中的断开表示日期之间缺少数据；数值仅反映已记录的内容。</p>
+<p class="muted trend-note">连线连接前后已有记录，不代表缺失日期的数值。未记录的日期仍留空，不计入平均热量；明确记录的 0 会计入。</p>
 <details><summary>查看每日明细</summary><div class="trend-table-wrap"><table class="trend-table"><caption id="trend-table-caption">30 天记录。— 表示没有数据。</caption><thead><tr><th scope="col">日期</th><th scope="col">热量（kcal）</th><th scope="col">来源</th><th scope="col">已确认餐食</th><th scope="col">运动（kcal）</th><th scope="col">收支（kcal）</th><th scope="col">完整性</th><th scope="col">体重（kg）</th></tr></thead><tbody id="trend-table-body"></tbody></table></div></details>
 </div>
 </section>
@@ -433,8 +433,12 @@ button.example-chip{font-size:11px;min-height:32px}
 <div><label for="profile-sex">性别（公式参数）</label><select id="profile-sex" name="sex" required aria-describedby="profile-sex-help" disabled><option value="">请选择</option><option value="male">男性系数</option><option value="female">女性系数</option></select></div>
 <div><label for="profile-goal">你的目标</label><select id="profile-goal" name="goal" required disabled><option value="">请选择</option><option value="gain_muscle">增肌</option><option value="lose_fat">减脂</option></select></div>
 <div class="profile-wide"><label for="profile-activity">日常活动量</label><select id="profile-activity" name="activity_level" required aria-describedby="profile-activity-help" disabled><option value="">请选择活动量</option><option value="sedentary">久坐 · 日常很少走动或运动</option><option value="light">轻度 · 日常走动或轻量运动</option><option value="moderate">中度 · 日常较活跃并规律运动</option><option value="high">高度 · 体力工作或经常高强度运动</option></select></div>
+<div class="profile-wide"><label for="profile-training">目前是否规律进行力量训练？</label><select id="profile-training" name="strength_training" required aria-describedby="profile-training-help" disabled><option value="">请选择</option><option value="true">是 · 规律进行抗阻或力量训练</option><option value="false">否 · 目前没有规律力量训练</option></select></div>
+<div class="profile-wide"><label for="profile-scope">饮食参考适用范围</label><select id="profile-scope" name="reference_scope" required aria-describedby="profile-scope-help" disabled><option value="">请选择</option><option value="general_adult">一般健康成人 · 无需专业饮食管理</option><option value="professional_guidance">需要专业饮食管理，或不确定</option></select></div>
 </div>
 <p id="profile-activity-help" class="profile-hint muted">结合日常工作、走动和运动选择。活动系数只是近似参考，不代表精确的消耗测量。</p>
+<p id="profile-training-help" class="profile-hint muted">力量训练包括抗阻器械、负重或自重训练；走路和日常活动不能自动视为力量训练。增肌参考以规律力量训练为前提。</p>
+<p id="profile-scope-help" class="profile-hint muted">孕期、哺乳期、饮食失调，或有需要医生／营养师管理饮食的情况，请选择需要专业饮食管理。本选项只是适用范围确认，不是健康评估。</p>
 <p id="profile-sex-help" class="profile-hint muted">这个公式只提供男性、女性两组系数，用于粗略计算，不代表性别认同；不确定适用系数时，可先跳过本功能。</p>
 <div class="profile-actions"><button id="profile-save" type="submit" disabled>保存并计算参考</button></div>
 </form></details>
@@ -444,7 +448,8 @@ button.example-chip{font-size:11px;min-height:32px}
 <h3 id="profile-target-title">每天的大概参考</h3>
 <div id="profile-targets" class="metrics"><div class="metric"><b id="profile-calories">—</b><span>热量 · kcal / 天</span></div><div class="metric"><b id="profile-protein">—</b><span>蛋白质 · g / 天</span></div><div class="metric"><b id="profile-fat">—</b><span>脂肪 · g / 天</span></div><div class="metric"><b id="profile-carbs">—</b><span>碳水 · g / 天</span></div></div>
 <div id="profile-review" class="profile-notice" role="status" hidden></div>
-<details class="profile-assumptions"><summary>计算依据与适用范围</summary><p id="profile-energy-basis"></p><p id="profile-goal-basis"></p><p id="profile-macro-basis"></p><div id="profile-notes"></div><p class="sources">来源：<a href="https://pubmed.ncbi.nlm.nih.gov/2305711/" target="_blank" rel="noopener noreferrer">Mifflin–St Jeor 静息能量公式</a> · <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html" target="_blank" rel="noopener noreferrer">成人营养素热量占比参考范围</a>。本项目的具体营养比例与增肌、减脂调整为简化假设。</p></details>
+<div id="profile-calculation" class="profile-hint"><p id="profile-energy-basis"></p><p id="profile-goal-basis"></p></div>
+<details class="profile-assumptions"><summary>计算依据与适用范围</summary><p id="profile-macro-basis"></p><div id="profile-notes"></div><p class="sources">来源：<a href="https://pubmed.ncbi.nlm.nih.gov/2305711/" target="_blank" rel="noopener noreferrer">Mifflin–St Jeor 静息能量公式</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10620361/" target="_blank" rel="noopener noreferrer">增肌热量盈余研究</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/21558571/" target="_blank" rel="noopener noreferrer">减重速度与力量训练研究</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/34623696/" target="_blank" rel="noopener noreferrer">热量缺口与肌肉变化研究</a> · <a href="https://pubmed.ncbi.nlm.nih.gov/28698222/" target="_blank" rel="noopener noreferrer">力量训练与蛋白质汇总研究</a> · <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC13665703/" target="_blank" rel="noopener noreferrer">ISSN 减重营养立场</a> · <a href="https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-macronutrients.html" target="_blank" rel="noopener noreferrer">营养素参考范围</a>。具体起始值和适用边界是参考这些依据后的项目选择，不是研究证明适合每个人的处方。</p></details>
 </div>
 <p class="profile-hint muted">适用于 18–80 岁一般健康成人的粗略参考。孕期、哺乳期或有临床饮食需求时，请由专业人员评估；这些数值不保证增肌或减脂效果。</p>
 </section>

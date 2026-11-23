@@ -14,22 +14,25 @@ with checkpoint tag `w13-final`. The merge identifiers above describe the origin
 
 | Area | Integrated behavior |
 | --- | --- |
-| Food data | 200 USDA ingredients and 350 reference recipes; retained food identities/nutrients with later egg-portion metadata |
+| Food data | Catalogue 2026-11-23.1: 200 USDA ingredients and 384 reference recipes; existing nutrients/formulations retained |
 | Estimation | Basic/Advanced, Chinese descriptions, strict supported-name matching, clarification and correction |
 | Unknown food | No substitute dish or partial meal total; explicit actual-ingredient recipe editor |
-| Languages | Chinese/English controls, with Chinese fallback for catalogue entries without translations |
+| Languages | Chinese/English controls; English names for all 584 records and English methods for all 384 recipes |
 | Accounts | Register, sign in/out, revocable sessions, private meal history and ownership checks |
 | Personal reference | Age, height, weight, formula sex coefficient, activity and goal; deterministic daily energy/macronutrient reference |
 | Diary | Dated confirmed meals, optional manual calorie total, weight, exercise and intake coverage; manual total replaces the meal sum |
 | Trends | 30-day calorie/weight charts; missing dates stay blank |
 | Models | Qwen and HKUST adapters share exact identity checks; Ollama remains experimental |
 
-The current catalogue retains the `nutrichat` records, food identities and nutrient
-values. The 14 November follow-up adds explicit 50 g portion/source metadata for
-one large peeled hard-boiled egg, so current files are not byte-for-byte identical
-to the earlier catalogue. The merge does not import the older `test` food catalogue
-or train a model. The catalogue contains reference assumptions, not measurements
-of every Chinese dish.
+The current catalogue preserves the `nutrichat` ingredient nutrients and existing
+350 recipe formulations, including the later egg-portion metadata. The
+[23 November follow-up](home-recipe-expansion.md) adds 34 reference recipes,
+reviewed aliases and the 162 missing English translations. Meishichina supplies
+only dish-name/style evidence; quantities and finished yields are project-authored
+assumptions, with nutrients calculated from USDA ingredients. This
+follow-up does not deploy the app and does not change `nutrichat`,
+`w13-final` or saved historical estimates. It does not train a model or claim
+measured nutrition for every Chinese dish.
 
 ## Start an isolated preview
 

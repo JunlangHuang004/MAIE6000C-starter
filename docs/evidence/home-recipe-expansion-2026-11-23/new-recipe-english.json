@@ -1,0 +1,138 @@
+{
+  "dish_351": {
+    "name": "Guo bao rou (crispy sweet and sour pork)",
+    "method": "Deep-fry pork loin slices in a cornstarch batter and coat with a white-vinegar and sugar sauce. This reference uses cornstarch; oil is the assumed amount retained in the food, not the frying bath."
+  },
+  "dish_352": {
+    "name": "Chinese-style beef and vegetable borscht",
+    "method": "Simmer beef with tomato, cabbage, potato, carrot and onion in water. This is a tomato-based Chinese home-style reference without beetroot; the consumed portion includes both broth and solids."
+  },
+  "dish_353": {
+    "name": "Long beans with sesame dressing",
+    "method": "Boil and drain long beans, then dress with pure sesame paste, garlic and white vinegar. This reference contains no peanut butter; the listed water is retained in the dressing."
+  },
+  "dish_354": {
+    "name": "Egg-coated pan-fried tofu in sauce",
+    "method": "Coat firm tofu in flour and egg, pan-fry, then briefly simmer with water, spring onion, ginger and soy sauce. No uncounted stock is used; oil is the assumed retained amount."
+  },
+  "dish_355": {
+    "name": "Steamed pork ribs coated in rice meal",
+    "method": "Coat edible pork rib meat with meal made by toasting and grinding dry rice, then steam. Rice is weighed dry, all rib and finished weights exclude bones, and water represents retained moisture. This reference contains no cooking wine or chili bean paste."
+  },
+  "dish_356": {
+    "name": "Kung Pao shrimp",
+    "method": "Stir-fry shelled shrimp with peanuts, chili and a sweet-and-sour soy sauce. This simplified home-style reference omits wine and chili bean paste; trace spices such as Sichuan pepper are not modeled. Shrimp weights are raw edible flesh without shells."
+  },
+  "dish_357": {
+    "name": "Kung Pao tofu",
+    "method": "Pan-fry firm tofu and stir-fry with peanuts, cucumber, chili and a sweet-and-sour sauce. This simplified reference contains no meat, wine or chili bean paste; trace spices such as Sichuan pepper are not modeled. Oil is the assumed retained amount."
+  },
+  "dish_358": {
+    "name": "Steamed pork meatballs coated in glutinous rice",
+    "method": "Make pork and water-chestnut meatballs, coat in soaked glutinous rice and steam. Rice is weighed dry before soaking; water includes retained moisture. No dipping sauce is included."
+  },
+  "dish_359": {
+    "name": "Layered pork-filled flatbread",
+    "method": "Make a flour-and-water dough, fold it around a pork and spring-onion filling and pan-fry. Oil is the assumed retained amount; no separate dipping sauce is included."
+  },
+  "dish_360": {
+    "name": "Braised pork belly over rice",
+    "method": "Braise diced pork belly with soy sauce and sugar and serve with cooked white rice. This reference contains no egg, pickled vegetables, fried shallots or wine; the sauce is eaten with the rice."
+  },
+  "dish_361": {
+    "name": "Caramel-coated sweet potatoes",
+    "method": "Deep-fry peeled sweet-potato pieces and coat with caramel. Oil and sugar are assumed retained amounts; discarded frying oil and syrup are excluded."
+  },
+  "dish_362": {
+    "name": "West Lake beef and egg-white soup",
+    "method": "Simmer minced lean beef and shiitake mushrooms in water, thicken with cornstarch and add egg white and cilantro. This reference contains no uncounted stock or tofu; portions include broth and solids."
+  },
+  "dish_363": {
+    "name": "Salt-boiled peanuts",
+    "method": "Soak shelled raw peanuts, boil in salted water and drain. Peanut grams refer to raw kernels; the cooked yield includes absorbed water. Salt is the assumed retained amount; discarded brine is excluded."
+  },
+  "dish_364": {
+    "name": "Pork slices stir-fried with bitter melon",
+    "method": "Remove the bitter-melon seeds, slice and stir-fry with pork loin and garlic. This reference contains no fermented black beans or uncounted sauces."
+  },
+  "dish_365": {
+    "name": "Pork stir-fried with wood ear mushrooms",
+    "method": "Rehydrate dried wood ear mushrooms and stir-fry with pork loin and carrot. Wood ear is weighed dry; the listed water includes absorbed moisture. Hydrated mushroom grams must not be entered as dry grams."
+  },
+  "dish_366": {
+    "name": "Lotus root stuffed with sweet glutinous rice",
+    "method": "Fill peeled lotus root with soaked glutinous rice and simmer until cooked. Rice is weighed dry; water includes absorbed moisture. Sugar is the assumed amount eaten with the finished food, excluding discarded syrup."
+  },
+  "dish_367": {
+    "name": "Tomato and egg dough-drop soup",
+    "method": "Make small dough pieces from wheat flour and water, then cook in a tomato and egg soup. The finished yield includes both dough and broth; no uncounted stock is used."
+  },
+  "dish_368": {
+    "name": "Steamed milk and egg custard",
+    "method": "Steam whole milk, egg and sugar into a sweet custard. This reference contains no cream, condensed milk or additional toppings."
+  },
+  "dish_369": {
+    "name": "Lotus root and mixed vegetable stir-fry",
+    "method": "Stir-fry lotus root, snow peas, carrot and rehydrated wood ear mushrooms. Wood ear is weighed dry and water includes absorbed moisture. This reference contains no lily bulbs."
+  },
+  "dish_370": {
+    "name": "Flatbread strips stir-fried with vegetables",
+    "method": "Make flatbread from wheat flour, water and oil, cut into strips and stir-fry with cabbage and carrot. The recipe includes the bread ingredients and all stir-frying oil; no meat or additional sauce is included."
+  },
+  "dish_371": {
+    "name": "Chicken wings braised with fermented tofu",
+    "method": "Braise edible chicken-wing meat with fermented tofu, soy sauce and sugar. Wing and finished weights exclude bones. The existing generic fermented-tofu record is used; specific brands require review."
+  },
+  "dish_372": {
+    "name": "Salt-baked chicken",
+    "method": "Salt-bake skin-on chicken with ginger. Raw and cooked weights refer to boneless edible meat. Salt is the assumed amount retained in the food, not the bed of coarse salt used for cooking."
+  },
+  "dish_374": {
+    "name": "Bang bang chicken with sesame sauce",
+    "method": "Poach and shred chicken breast and serve with cucumber and a sesame-paste, chili and garlic sauce. This reference includes sesame paste and is distinct from plain dressed shredded chicken; all weights are boneless edible portions."
+  },
+  "dish_375": {
+    "name": "Steamed folded buns",
+    "method": "Make a risen wheat-flour dough, brush with a little oil, fold and steam. This project reference is the plain white-flour version without vegetable juice; no sandwich filling is included."
+  },
+  "dish_376": {
+    "name": "Steamed milk buns",
+    "method": "Steam a risen dough made with wheat flour, whole milk, yeast and a little sugar. No milk powder or condensed milk is included; the milk quantity is editable."
+  },
+  "dish_377": {
+    "name": "Steamed triangular sugar buns",
+    "method": "Fill risen wheat-flour dough with white sugar mixed with a little flour, shape into triangles and steam. This reference is explicitly the white-sugar filling version, not a substitute for a brown-sugar recipe."
+  },
+  "dish_378": {
+    "name": "Steamed pork-filled bread roll",
+    "method": "Spread a pork and spring-onion filling over risen wheat dough, roll up and steam. All quantities describe the whole roll; no separate dipping sauce is included."
+  },
+  "dish_379": {
+    "name": "Egg-filled flatbread",
+    "method": "Pan-fry a wheat-flour flatbread until it puffs, fill it with egg and cook through. The reference includes bread and egg only, without sausage, meat, vegetables or unlisted sauces; oil is the assumed retained amount."
+  },
+  "dish_380": {
+    "name": "Caramel-coated apples",
+    "method": "Core skin-on apples, coat in cornstarch, deep-fry and cover with caramel. Apple grams refer to the edible skin-on portion. Oil and sugar are the assumed amounts retained and eaten."
+  },
+  "dish_381": {
+    "name": "Sugar-roasted chestnuts",
+    "method": "Roast chestnuts with a small retained sugar coating. Chestnut weights refer to edible shelled kernels. Sugar is the assumed retained amount, excluding discarded sugar, roasting sand and shells."
+  },
+  "dish_382": {
+    "name": "Northeastern pork and vegetable stew",
+    "method": "Use a fixed home-style mixture of pork belly, potato, green beans, eggplant and tomato. This reference contains no noodles, corn or bean paste; portions include broth and solids in the batch proportions."
+  },
+  "dish_383": {
+    "name": "Shredded potato and green pepper stir-fry",
+    "method": "Stir-fry shredded potato with green pepper. This reference contains no vinegar and is distinct from hot-and-sour shredded potatoes. Oil is the assumed amount retained in the dish."
+  },
+  "dish_384": {
+    "name": "Winter melon soup",
+    "method": "Simmer peeled, deseeded winter melon in water with spring onion and a little sesame oil. This reference contains no meat, seafood or stock; the portion includes both broth and melon."
+  },
+  "dish_385": {
+    "name": "White radish soup",
+    "method": "Simmer white radish in water with spring onion, ginger and a little sesame oil. This reference contains no meat, seafood or stock; the portion includes both broth and radish."
+  }
+}

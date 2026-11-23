@@ -1,0 +1,1673 @@
+{
+  "research_date": "2026-11-23",
+  "catalogue_baseline": {
+    "version": "2026-10-31.1",
+    "total_foods": 550,
+    "ingredients": 200,
+    "dishes": 350
+  },
+  "access_note": "Direct requests to recipe-menu.html returned HTTP 403. Public search indexing showed the menu and recipe pages; no access controls were bypassed.",
+  "sources_policy": "Only observed dish names, URLs, and ingredient identity facts are retained. No recipe prose or photos are copied. English names are project translations. Recipe pages do not provide authoritative per-100g nutrient data.",
+  "candidates": [
+    {
+      "candidate_number": 1,
+      "name": "水煮肉片",
+      "display_name_en": "Sichuan pork slices in chili broth",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Sichuan pork slices in chili broth"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "水煮肉片",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-16009.html",
+        "observed_recipe_title": "水煮肉片",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Not selected for the first batch; synonym, ingredient, scope or formula review is still needed."
+      }
+    },
+    {
+      "candidate_number": 2,
+      "name": "龙井虾仁",
+      "display_name_en": "Longjing tea shrimp",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Longjing tea shrimp"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "龙井虾仁",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-632.html",
+        "observed_recipe_title": "龙井虾仁",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Brewed Longjing tea / green tea",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Brewed Longjing tea / green tea"
+      }
+    },
+    {
+      "candidate_number": 3,
+      "name": "皮蛋瘦肉粥",
+      "display_name_en": "Century egg and pork congee",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Century egg and pork congee"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "皮蛋瘦肉粥",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-66483.html",
+        "observed_recipe_title": "皮蛋瘦肉粥",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Century egg",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Century egg"
+      }
+    },
+    {
+      "candidate_number": 4,
+      "name": "酸菜鱼",
+      "display_name_en": "Fish soup with pickled mustard greens",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Fish soup with pickled mustard greens"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "酸菜鱼",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-387149.html",
+        "observed_recipe_title": "酸菜鱼",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Pickled mustard greens; fish species",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Pickled mustard greens; fish species"
+      }
+    },
+    {
+      "candidate_number": 5,
+      "name": "蒜薹炒肉",
+      "display_name_en": "Pork and garlic scape stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Pork and garlic scape stir-fry"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "蒜薹炒肉",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-431904.html",
+        "observed_recipe_title": "蒜薹炒肉",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Garlic scapes",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Garlic scapes"
+      }
+    },
+    {
+      "candidate_number": 6,
+      "name": "啤酒鸭",
+      "display_name_en": "Beer-braised duck",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Beer-braised duck"
+      ],
+      "category": "poultry",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "啤酒鸭",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-366249.html",
+        "observed_recipe_title": "啤酒鸭",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Beer and alcohol retention assumptions",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Beer and alcohol retention assumptions"
+      }
+    },
+    {
+      "candidate_number": 7,
+      "name": "剁椒鱼头",
+      "display_name_en": "Steamed fish head with chopped chilies",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Steamed fish head with chopped chilies"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "剁椒鱼头",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-80006.html",
+        "observed_recipe_title": "剁椒鱼头",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Fish head edible portion; pickled chopped chilies",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Fish head edible portion; pickled chopped chilies"
+      }
+    },
+    {
+      "candidate_number": 8,
+      "name": "锅包肉",
+      "display_name_en": "Guo bao rou (crispy sweet and sour pork)",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Guo bao rou (crispy sweet and sour pork)"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "锅包肉",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-41724.html",
+        "observed_recipe_title": "锅包肉",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_351",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 9,
+      "name": "梅菜扣肉",
+      "display_name_en": "Steamed pork belly with preserved mustard greens",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Steamed pork belly with preserved mustard greens"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "梅菜扣肉",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-383655.html",
+        "observed_recipe_title": "梅菜扣肉",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Preserved mustard greens",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Preserved mustard greens"
+      }
+    },
+    {
+      "candidate_number": 10,
+      "name": "大盘鸡",
+      "display_name_en": "Da pan ji (chicken and potato stew)",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Da pan ji (chicken and potato stew)"
+      ],
+      "category": "poultry",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "大盘鸡",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-339602.html",
+        "observed_recipe_title": "大盘鸡",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Review spices and beer/noodle variants",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Review spices and beer/noodle variants"
+      }
+    },
+    {
+      "candidate_number": 11,
+      "name": "罗宋汤",
+      "display_name_en": "Chinese-style beef and vegetable borscht",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Chinese-style beef and vegetable borscht"
+      ],
+      "category": "soup",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "罗宋汤",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-379256.html",
+        "observed_recipe_title": "罗宋汤",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_352",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 12,
+      "name": "三杯鸡",
+      "display_name_en": "Three-cup chicken",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Three-cup chicken"
+      ],
+      "category": "poultry",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "三杯鸡",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-341933.html",
+        "observed_recipe_title": "三杯鸡",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Rice wine; alcohol retention; basil if used",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Rice wine; alcohol retention; basil if used"
+      }
+    },
+    {
+      "candidate_number": 13,
+      "name": "芹菜炒香干",
+      "display_name_en": "Celery and pressed tofu stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Celery and pressed tofu stir-fry"
+      ],
+      "category": "tofu",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "芹菜炒香干",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-557166.html",
+        "observed_recipe_title": "芹菜炒香干",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Pressed tofu",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Pressed tofu"
+      }
+    },
+    {
+      "candidate_number": 14,
+      "name": "韭菜炒香干",
+      "display_name_en": "Garlic chives and pressed tofu stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Garlic chives and pressed tofu stir-fry"
+      ],
+      "category": "tofu",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "韭菜炒香干",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-599358.html",
+        "observed_recipe_title": "韭菜炒香干",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Garlic chives; pressed tofu",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Garlic chives; pressed tofu"
+      }
+    },
+    {
+      "candidate_number": 15,
+      "name": "老醋花生",
+      "display_name_en": "Peanuts in sweet vinegar dressing",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Peanuts in sweet vinegar dressing"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "老醋花生",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-64736.html",
+        "observed_recipe_title": "老醋花生",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Aged vinegar differs from distilled vinegar; declared proxy if used",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Aged vinegar differs from distilled vinegar; declared proxy if used"
+      }
+    },
+    {
+      "candidate_number": 16,
+      "name": "麻酱豆角",
+      "display_name_en": "Long beans with sesame dressing",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Long beans with sesame dressing"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "麻酱豆角",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-71923.html",
+        "observed_recipe_title": "麻酱豆角",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_353",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 17,
+      "name": "锅塌豆腐",
+      "display_name_en": "Egg-coated pan-fried tofu in sauce",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Egg-coated pan-fried tofu in sauce"
+      ],
+      "category": "tofu",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "锅塌豆腐",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-48046.html",
+        "observed_recipe_title": "锅塌豆腐",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_354",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 18,
+      "name": "韭菜盒子",
+      "display_name_en": "Pan-fried garlic chive and egg pockets",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Pan-fried garlic chive and egg pockets"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "韭菜盒子",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-173230.html",
+        "observed_recipe_title": "韭菜盒子",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Garlic chives",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Garlic chives"
+      }
+    },
+    {
+      "candidate_number": 19,
+      "name": "上汤娃娃菜",
+      "display_name_en": "Baby napa cabbage in savory broth",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Baby napa cabbage in savory broth"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "上汤娃娃菜",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-276499.html",
+        "observed_recipe_title": "上汤娃娃菜",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Century egg / salted duck egg in typical variant; use explicit chosen formula",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Century egg / salted duck egg in typical variant; use explicit chosen formula"
+      }
+    },
+    {
+      "candidate_number": 20,
+      "name": "农家小炒肉",
+      "display_name_en": "Hunan-style pork and chili stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Hunan-style pork and chili stir-fry"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "农家小炒肉",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-12480.html",
+        "observed_recipe_title": "农家小炒肉",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Fermented black beans in some variants",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Fermented black beans in some variants"
+      }
+    },
+    {
+      "candidate_number": 21,
+      "name": "阳春面",
+      "display_name_en": "Yangchun noodle soup",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Yangchun noodle soup"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "阳春面",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-620000.html",
+        "observed_recipe_title": "阳春面",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Wheat noodles and lard; existing egg noodles are not exact",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Wheat noodles and lard; existing egg noodles are not exact"
+      }
+    },
+    {
+      "candidate_number": 22,
+      "name": "皮蛋豆腐",
+      "display_name_en": "Tofu with century egg",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Tofu with century egg"
+      ],
+      "category": "tofu",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "皮蛋豆腐",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-474172.html",
+        "observed_recipe_title": "皮蛋豆腐",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Century egg",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Century egg"
+      }
+    },
+    {
+      "candidate_number": 23,
+      "name": "紫菜蛋花汤",
+      "display_name_en": "Nori and egg drop soup",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Nori and egg drop soup"
+      ],
+      "category": "soup",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "紫菜蛋花汤",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-617777.html",
+        "observed_recipe_title": "紫菜蛋花汤",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Dried laver/nori; dried shrimp if used",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Dried laver/nori; dried shrimp if used"
+      }
+    },
+    {
+      "candidate_number": 24,
+      "name": "粉蒸排骨",
+      "display_name_en": "Steamed pork ribs coated in rice meal",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Steamed pork ribs coated in rice meal"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "粉蒸排骨",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-627395.html",
+        "observed_recipe_title": "粉蒸排骨",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Rice meal can be modeled from raw rice; bone-free weight must be explicit",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_355",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 25,
+      "name": "宫保虾球",
+      "display_name_en": "Kung Pao shrimp",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Kung Pao shrimp"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "宫保虾球",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-547627.html",
+        "observed_recipe_title": "宫保虾球",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_356",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 26,
+      "name": "宫保豆腐",
+      "display_name_en": "Kung Pao tofu",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Kung Pao tofu"
+      ],
+      "category": "tofu",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "宫保豆腐",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-58126.html",
+        "observed_recipe_title": "宫保豆腐",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_357",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 27,
+      "name": "珍珠丸子",
+      "display_name_en": "Steamed pork meatballs coated in glutinous rice",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Steamed pork meatballs coated in glutinous rice"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "珍珠丸子",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-202757.html",
+        "observed_recipe_title": "珍珠丸子",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_358",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 28,
+      "name": "千层肉饼",
+      "display_name_en": "Layered pork flatbread",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Layered pork flatbread"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "千层肉饼",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-484149.html",
+        "observed_recipe_title": "千层肉饼（简易版）",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_359",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 29,
+      "name": "炸酱面",
+      "display_name_en": "Zhajiang noodles with pork and bean sauce",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Zhajiang noodles with pork and bean sauce"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "炸酱面",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-304594.html",
+        "observed_recipe_title": "炸酱面",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Wheat noodles; sweet bean sauce",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Wheat noodles; sweet bean sauce"
+      }
+    },
+    {
+      "candidate_number": 30,
+      "name": "卤肉饭",
+      "display_name_en": "Braised pork rice",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Braised pork rice"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "卤肉饭",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-423728.html",
+        "observed_recipe_title": "卤肉饭",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_360",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 31,
+      "name": "南瓜饼",
+      "display_name_en": "Pan-fried pumpkin rice cakes",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Pan-fried pumpkin rice cakes"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "南瓜饼",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-642.html",
+        "observed_recipe_title": "南瓜饼",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Glutinous rice flour",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Glutinous rice flour"
+      }
+    },
+    {
+      "candidate_number": 32,
+      "name": "茶叶蛋",
+      "display_name_en": "Tea-marinated boiled eggs",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Tea-marinated boiled eggs"
+      ],
+      "category": "egg",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "茶叶蛋",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-31925.html",
+        "observed_recipe_title": "茶叶蛋",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Tea; broth absorption must be explicit",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Tea; broth absorption must be explicit"
+      }
+    },
+    {
+      "candidate_number": 33,
+      "name": "麻辣香锅",
+      "display_name_en": "Mala dry pot",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Mala dry pot"
+      ],
+      "category": "mixed",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "麻辣香锅",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-91666.html",
+        "observed_recipe_title": "麻辣香锅",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Sichuan pepper; chili bean paste or exact seasoning; highly variable composition",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Sichuan pepper; chili bean paste or exact seasoning; highly variable composition"
+      }
+    },
+    {
+      "candidate_number": 34,
+      "name": "香辣虾",
+      "display_name_en": "Spicy stir-fried shrimp",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Spicy stir-fried shrimp"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "香辣虾",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-89033.html",
+        "observed_recipe_title": "香辣虾",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Review exact chili sauce",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Review exact chili sauce"
+      }
+    },
+    {
+      "candidate_number": 35,
+      "name": "香辣蟹",
+      "display_name_en": "Spicy stir-fried crab",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Spicy stir-fried crab"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "香辣蟹",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-641915.html",
+        "observed_recipe_title": "香辣蟹",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Crab species/edible portion; exact chili seasoning",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Crab species/edible portion; exact chili seasoning"
+      }
+    },
+    {
+      "candidate_number": 36,
+      "name": "鲫鱼豆腐汤",
+      "display_name_en": "Crucian carp and tofu soup",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Crucian carp and tofu soup"
+      ],
+      "category": "soup",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "鲫鱼豆腐汤",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-368552.html",
+        "observed_recipe_title": "鲫鱼豆腐汤",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "defer_close_existing_variant",
+      "limitation": "Crucian carp; similar existing generic fish/tofu soup means defer",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Crucian carp; similar existing generic fish/tofu soup means defer"
+      }
+    },
+    {
+      "candidate_number": 37,
+      "name": "山药排骨汤",
+      "display_name_en": "Chinese yam and pork rib soup",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Chinese yam and pork rib soup"
+      ],
+      "category": "soup",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "山药排骨汤",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-419406.html",
+        "observed_recipe_title": "山药排骨汤",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Chinese yam",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Chinese yam"
+      }
+    },
+    {
+      "candidate_number": 38,
+      "name": "拔丝地瓜",
+      "display_name_en": "Caramel-coated sweet potatoes",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Caramel-coated sweet potatoes"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "拔丝地瓜",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-114036.html",
+        "observed_recipe_title": "拔丝地瓜",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_361",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 39,
+      "name": "西湖牛肉羹",
+      "display_name_en": "West Lake beef soup",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "West Lake beef soup"
+      ],
+      "category": "soup",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "西湖牛肉羹",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-479850.html",
+        "observed_recipe_title": "西湖牛肉羹",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_362",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 40,
+      "name": "手撕杏鲍菇",
+      "display_name_en": "Shredded king oyster mushroom salad",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Shredded king oyster mushroom salad"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "手撕杏鲍菇",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-461395.html",
+        "observed_recipe_title": "手撕杏鲍菇",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "King oyster mushrooms",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "King oyster mushrooms"
+      }
+    },
+    {
+      "candidate_number": 41,
+      "name": "肉末酸豆角",
+      "display_name_en": "Pickled long beans with minced pork",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Pickled long beans with minced pork"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "肉末酸豆角",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-277763.html",
+        "observed_recipe_title": "肉末酸豆角",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Pickled long beans",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Pickled long beans"
+      }
+    },
+    {
+      "candidate_number": 42,
+      "name": "盐水花生",
+      "display_name_en": "Salt-boiled peanuts",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Salt-boiled peanuts"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "盐水花生",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-593459.html",
+        "observed_recipe_title": "盐水花生",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Use shelled edible cooked mass and water uptake",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_363",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 43,
+      "name": "五香毛豆",
+      "display_name_en": "Five-spice boiled edamame",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Five-spice boiled edamame"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "五香毛豆",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-556510.html",
+        "observed_recipe_title": "五香毛豆",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Spice broth absorption; edible shelled mass",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Spice broth absorption; edible shelled mass"
+      }
+    },
+    {
+      "candidate_number": 44,
+      "name": "苦瓜炒肉片",
+      "display_name_en": "Bitter melon and pork stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Bitter melon and pork stir-fry"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "苦瓜炒肉片",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-637343.html",
+        "observed_recipe_title": "苦瓜炒肉",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_364",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 45,
+      "name": "木耳炒肉",
+      "display_name_en": "Wood ear mushroom and pork stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Wood ear mushroom and pork stir-fry"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "木耳炒肉",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-454397.html",
+        "observed_recipe_title": "木耳炒肉",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Hydrated wood ear mass must not be treated as dried mass",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_365",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 46,
+      "name": "糯米藕",
+      "display_name_en": "Sweet lotus root stuffed with glutinous rice",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Sweet lotus root stuffed with glutinous rice"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "糯米藕",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-233266.html",
+        "observed_recipe_title": "糯米藕",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Sugar syrup absorption",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_366",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 47,
+      "name": "疙瘩汤",
+      "display_name_en": "Tomato and egg dough-drop soup",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Tomato and egg dough-drop soup"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "疙瘩汤",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-628926.html",
+        "observed_recipe_title": "疙瘩汤",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_367",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 48,
+      "name": "牛奶炖蛋",
+      "display_name_en": "Steamed milk and egg custard",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Steamed milk and egg custard"
+      ],
+      "category": "egg",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "牛奶炖蛋",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-352842.html",
+        "observed_recipe_title": "牛奶炖蛋",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_368",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 49,
+      "name": "玉米饼",
+      "display_name_en": "Pan-fried corn cakes",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Pan-fried corn cakes"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "玉米饼",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-618139.html",
+        "observed_recipe_title": "玉米饼",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Cornmeal for observed recipe; fresh-corn variant needs its own evidence",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Cornmeal for observed recipe; fresh-corn variant needs its own evidence"
+      }
+    },
+    {
+      "candidate_number": 50,
+      "name": "荷塘小炒",
+      "display_name_en": "Lotus root and snow pea stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Lotus root and snow pea stir-fry"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "荷塘小炒",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-201972.html",
+        "observed_recipe_title": "荷塘小炒",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "candidate_existing_ingredients",
+      "limitation": null,
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_369",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 51,
+      "name": "炸茄盒",
+      "display_name_en": "Deep-fried pork-stuffed eggplant",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Deep-fried pork-stuffed eggplant"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "炸茄盒",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-381924.html",
+        "observed_recipe_title": "炸茄盒",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "defer_close_existing_variant",
+      "limitation": "Existing pan-fried pork-stuffed eggplant is closely related; not a primary new gap",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Existing pan-fried pork-stuffed eggplant is closely related; not a primary new gap"
+      }
+    },
+    {
+      "candidate_number": 52,
+      "name": "咸蛋黄焗南瓜",
+      "display_name_en": "Pumpkin coated in salted egg yolk",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Pumpkin coated in salted egg yolk"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "咸蛋黄焗南瓜",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-128750.html",
+        "observed_recipe_title": "咸蛋黄焗南瓜",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Salted duck egg yolk",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Salted duck egg yolk"
+      }
+    },
+    {
+      "candidate_number": 53,
+      "name": "韭菜炒鱿鱼",
+      "display_name_en": "Squid and garlic chive stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Squid and garlic chive stir-fry"
+      ],
+      "category": "seafood",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "韭菜炒鱿鱼",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-14585.html",
+        "observed_recipe_title": "韭菜炒鱿鱼",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Garlic chives",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Garlic chives"
+      }
+    },
+    {
+      "candidate_number": 54,
+      "name": "九转大肠",
+      "display_name_en": "Jiu zhuan da chang (sweet and sour braised pork intestines)",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Jiu zhuan da chang (sweet and sour braised pork intestines)"
+      ],
+      "category": "pork",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "九转大肠",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-15060.html",
+        "observed_recipe_title": "鲁菜“九转大肠”",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Cooking loss and retained frying oil",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Cooking loss and retained frying oil"
+      }
+    },
+    {
+      "candidate_number": 55,
+      "name": "东北乱炖",
+      "display_name_en": "Northeastern Chinese mixed stew",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Northeastern Chinese mixed stew"
+      ],
+      "category": "mixed",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "东北乱炖",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-60015.html",
+        "observed_recipe_title": "东北乱炖",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Select and state a fixed pork-and-vegetable formula",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_382",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 56,
+      "name": "炒年糕",
+      "display_name_en": "Stir-fried rice cakes",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Stir-fried rice cakes"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "炒年糕",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-408655.html",
+        "observed_recipe_title": "炒年糕",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Rice cakes",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Rice cakes"
+      }
+    },
+    {
+      "candidate_number": 57,
+      "name": "炒饼",
+      "display_name_en": "Stir-fried shredded flatbread",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Stir-fried shredded flatbread"
+      ],
+      "category": "staple",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "炒饼",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-425959.html",
+        "observed_recipe_title": "炒饼",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Flatbread from a declared flour/oil/water subrecipe",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "added_reference_recipe",
+        "catalogue_id": "dish_370",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 58,
+      "name": "肉饼蒸蛋",
+      "display_name_en": "Steamed egg custard over minced pork",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Steamed egg custard over minced pork"
+      ],
+      "category": "egg",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "肉饼蒸蛋",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-14951.html",
+        "observed_recipe_title": "肉饼蒸蛋",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "covered_existing",
+      "limitation": "Existing dish_015 equivalent; do not add a separate record",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "covered_existing",
+        "catalogue_id": "dish_015",
+        "nutrition_source": "Project-authored amounts and cooked edible yield; calculated using existing USDA ingredient records. Recipe URLs supply names/style only."
+      }
+    },
+    {
+      "candidate_number": 59,
+      "name": "香卤鹌鹑蛋",
+      "display_name_en": "Soy-braised quail eggs",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Soy-braised quail eggs"
+      ],
+      "category": "egg",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "香卤鹌鹑蛋",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-55863.html",
+        "observed_recipe_title": "香卤鹌鹑蛋",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Broth absorption and cooked yield",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Broth absorption and cooked yield"
+      }
+    },
+    {
+      "candidate_number": 60,
+      "name": "西芹百合",
+      "display_name_en": "Celery and lily bulb stir-fry",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Celery and lily bulb stir-fry"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "西芹百合",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-85988.html",
+        "observed_recipe_title": "西芹百合",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Lily bulb",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Lily bulb"
+      }
+    },
+    {
+      "candidate_number": 61,
+      "name": "白灼菜心",
+      "display_name_en": "Blanched choy sum",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Blanched choy sum"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "白灼菜心",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-549011.html",
+        "observed_recipe_title": "白灼菜心",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Choy sum; do not substitute bok choy/gai lan",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Choy sum; do not substitute bok choy/gai lan"
+      }
+    },
+    {
+      "candidate_number": 62,
+      "name": "蒜蓉油麦菜",
+      "display_name_en": "Garlic stir-fried youmai lettuce",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Garlic stir-fried youmai lettuce"
+      ],
+      "category": "vegetable",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "蒜蓉油麦菜",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-49374.html",
+        "observed_recipe_title": "蒜蓉油麦菜",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Youmai lettuce; review specific lettuce source",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Youmai lettuce; review specific lettuce source"
+      }
+    },
+    {
+      "candidate_number": 63,
+      "name": "红烧鸡爪",
+      "display_name_en": "Red-braised chicken feet",
+      "english_label_origin": "project_translation_not_from_meishichina",
+      "english_aliases": [
+        "Red-braised chicken feet"
+      ],
+      "category": "poultry",
+      "menu_url": "https://home.meishichina.com/recipe-menu.html",
+      "observed_menu_name": "红烧鸡爪",
+      "source": {
+        "url": "https://home.meishichina.com/recipe-21270.html",
+        "observed_recipe_title": "红烧鸡爪",
+        "access_method": "public_search_index",
+        "accessed_on": "2026-11-23",
+        "role": "dish_identity_and_ingredient_style_only_not_nutrient_values"
+      },
+      "status": "needs_review_or_ingredient",
+      "limitation": "Chicken feet edible portion",
+      "nutrition_method": "If included, calculate a project reference recipe from sourced ingredient records and an explicitly assumed cooked edible yield. No reliable finished-dish per-100g values were found in these recipe records.",
+      "final_disposition": {
+        "status": "pending_future_review",
+        "reason": "Chicken feet edible portion"
+      }
+    }
+  ]
+}

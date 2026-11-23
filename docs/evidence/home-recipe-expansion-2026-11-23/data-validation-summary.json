@@ -1,0 +1,145 @@
+{
+  "record_counts": {
+    "ingredient": 200,
+    "recipe": 384
+  },
+  "new_recipe_ids_names": {
+    "dish_351": "锅包肉",
+    "dish_352": "罗宋汤",
+    "dish_353": "麻酱豆角",
+    "dish_354": "锅塌豆腐",
+    "dish_355": "粉蒸排骨",
+    "dish_356": "宫保虾球",
+    "dish_357": "宫保豆腐",
+    "dish_358": "珍珠丸子",
+    "dish_359": "千层肉饼",
+    "dish_360": "卤肉饭",
+    "dish_361": "拔丝地瓜",
+    "dish_362": "西湖牛肉羹",
+    "dish_363": "盐水花生",
+    "dish_364": "苦瓜炒肉片",
+    "dish_365": "木耳炒肉",
+    "dish_366": "糯米藕",
+    "dish_367": "疙瘩汤",
+    "dish_368": "牛奶炖蛋",
+    "dish_369": "荷塘小炒",
+    "dish_370": "炒饼",
+    "dish_371": "腐乳烧鸡翅",
+    "dish_372": "盐焗鸡",
+    "dish_374": "棒棒鸡",
+    "dish_375": "荷叶饼",
+    "dish_376": "奶香馒头",
+    "dish_377": "糖三角",
+    "dish_378": "肉龙",
+    "dish_379": "鸡蛋灌饼",
+    "dish_380": "拔丝苹果",
+    "dish_381": "糖炒栗子",
+    "dish_382": "东北乱炖",
+    "dish_383": "青椒土豆丝",
+    "dish_384": "冬瓜汤",
+    "dish_385": "萝卜汤"
+  },
+  "new_chinese_aliases_for_existing_records": {
+    "dish_002": [
+      "青椒炒肉丝",
+      "青椒炒肉絲"
+    ],
+    "dish_008": [
+      "牛肉炖土豆"
+    ],
+    "dish_015": [
+      "肉饼蒸蛋",
+      "肉餅蒸蛋"
+    ],
+    "dish_017": [
+      "蒜蓉西兰花",
+      "蒜蓉西蘭花"
+    ],
+    "dish_026": [
+      "苦瓜炒鸡蛋"
+    ],
+    "dish_031": [
+      "青椒炒鸡蛋"
+    ],
+    "dish_104": [
+      "辣子鸡丁",
+      "辣子雞丁"
+    ],
+    "dish_122": [
+      "糖醋鲤鱼",
+      "糖醋鯉魚"
+    ],
+    "dish_126": [
+      "水煮鱼",
+      "水煮魚",
+      "水煮魚片"
+    ],
+    "dish_153": [
+      "蒜泥茄子"
+    ],
+    "dish_166": [
+      "凉拌黑木耳",
+      "涼拌黑木耳"
+    ],
+    "dish_193": [
+      "菠菜炒鸡蛋",
+      "菠菜炒雞蛋"
+    ],
+    "dish_194": [
+      "黄瓜炒鸡蛋",
+      "黃瓜炒雞蛋"
+    ],
+    "dish_213": [
+      "菠菜鸡蛋汤",
+      "菠菜雞蛋湯"
+    ],
+    "dish_301": [
+      "炒莴笋",
+      "炒萵筍"
+    ]
+  },
+  "existing_record_alias_count": 27,
+  "new_recipe_chinese_labels": 69,
+  "new_recipe_english_aliases": 34,
+  "blocked_examples": [
+    "三杯鸡: rice wine/alcohol retention; basil where used",
+    "皮蛋瘦肉粥 and 皮蛋豆腐: century egg",
+    "酸菜鱼: pickled mustard greens and fish species",
+    "芹菜炒香干: pressed tofu",
+    "韭菜炒香干 and 韭菜盒子: garlic chives",
+    "老醋花生: aged vinegar",
+    "阳春面: wheat noodle/lard provenance",
+    "紫菜蛋花汤: dried laver",
+    "蒜薹炒肉: garlic scapes",
+    "啤酒鸭: beer/alcohol retention",
+    "盐水鸭: evidence-based cooked fat retention or suitable cooked nutrient source"
+  ],
+  "previous_validation": {
+    "unit_tests": 750,
+    "integration_tests": 14,
+    "ruff": "passed",
+    "official_usda_rebuild": "200 ingredients + 385 recipes",
+    "snapshot_matches_authoring": true
+  },
+  "validation": {
+    "targeted_data_tests_passed": 527,
+    "full_backend_tests_passed": 2031,
+    "full_backend_tests_skipped": 2,
+    "full_backend_warnings": 8,
+    "duration_seconds": 98.63,
+    "ruff": "passed",
+    "ruff_scope": [
+      "services",
+      "scripts",
+      "tests/unit",
+      "tests/integration"
+    ],
+    "runtime": "Python 3.11",
+    "settings": "dotenv disabled; demo provider; live smoke target unset",
+    "snapshot_matches_authoring": true,
+    "logs": [
+      "backend-full-after-duck-deferral.log",
+      "ruff-after-duck-deferral.log"
+    ]
+  }
+}

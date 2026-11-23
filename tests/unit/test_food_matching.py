@@ -62,6 +62,95 @@ def test_unique_exact_record_overrides_wrong_model_id_without_using_a_substitute
     assert [item.food_id for item in items] == ['dish_144']
 
 
+@pytest.mark.parametrize('mode', ['basic', 'advanced'])
+@pytest.mark.parametrize('text,chicken_g,rice_g', [
+    ('500g手撕鸡200g米饭', 500, 200),
+    ('500g手撕鸡 200g米饭', 500, 200),
+    ('500g 手撕鸡   200g 米饭', 500, 200),
+    ('500g手撕鸡\t200g米饭', 500, 200),
+    ('500.5g手撕鸡200.25g米饭', 500.5, 200.25),
+    ('５００ｇ手撕鸡２００ｇ米饭', 500, 200),
+    ('我吃了500克手撕鸡200克米饭', 500, 200),
+    ('0.5kg手撕鸡0.2公斤米饭', 500, 200),
+])
+def test_quantity_led_lists_ground_both_foods_without_punctuation(
+        monkeypatch, mode, text, chicken_g, rice_g):
+    result = extract(monkeypatch, text, [
+        {'name':'手撕鸡','source_text':'手撕鸡','food_id':'dish_255','grams':chicken_g},
+        {'name':'米饭','source_text':'米饭','food_id':'rice','grams':rice_g},
+    ], mode)
+    assert [item['food_id'] for item in result.draft] == ['dish_255', 'rice']
+    assert [item['grams'] for item in result.draft] == [chicken_g, rice_g]
+    assert not any(q['kind'] == 'unsupported' for q in result.questions)
+    if mode == 'basic':
+        assert result.calories is not None and result.calories > 0
+        assert len(result.details) == 2
+    else:
+        assert result.calories is None
+        assert any(q['kind'] == 'recipe' for q in result.questions)
+
+
+@pytest.mark.parametrize('text', [
+    '250g Kung Pao chicken 200g cooked white rice',
+    '250g tomato-and-egg stir-fry 200g cooked white rice',
+])
+def test_compact_lists_preserve_whole_multiword_english_food_names(text):
+    source = text[5:text.index(' 200g')]
+    expected = 'dish_003' if source == 'Kung Pao chicken' else 'dish_001'
+    items = ground_food_items([
+        ExtractedItem(name=source, source_text=source, grams=250),
+        ExtractedItem(name='cooked white rice', source_text='cooked white rice', grams=200),
+    ], text)
+    assert [item.food_id for item in items] == [expected, 'rice']
+
+
+@pytest.mark.parametrize('text,mention', [
+    ('500g火星手撕鸡200g米饭', '手撕鸡'),
+    ('100g番茄炒蛋200g米饭', '番茄'),
+    ('100g番茄炒蛋200g米饭', '蛋'),
+    ('200g fried cooked white rice100g水煮鸡蛋', 'cooked white rice'),
+    ('500g手撕鸡-200g米饭', '米饭'),
+    ('500g手撕鸡2.5.0g米饭', '米饭'),
+])
+def test_compact_list_fallback_does_not_authorize_partial_names_or_bad_mass(text, mention):
+    items = ground_food_items([ExtractedItem(name=mention, source_text=mention)], text)
+    assert items[0].food_id is None
+
+
+@pytest.mark.parametrize('text', [
+    '500g火星手撕鸡200g米饭',
+    '200g米饭500g火星手撕鸡',
+    '200g米饭 500g未知蔬菜',
+])
+def test_compact_list_cannot_drop_unknown_siblings(monkeypatch, text):
+    result = extract(monkeypatch, text, [
+        {'name':'米饭','source_text':'米饭','food_id':'rice','grams':200},
+    ])
+    assert result.calories is None and result.details == []
+    assert any(q['kind'] == 'unsupported' for q in result.questions)
+
+
+@pytest.mark.parametrize('text', [
+    '500g手撕鸡200g米饭', '100g米饭200g米饭',
+    '500g手撕鸡200g未知食物',
+])
+def test_compact_multi_food_source_is_not_collapsed_into_one_record(text):
+    items = ground_food_items([ExtractedItem(name=text, source_text=text, food_id='rice')],
+                             text)
+    assert items[0].food_id is None
+
+
+def test_compact_explicit_replacement_keeps_latest_meal_and_discards_old_identity(monkeypatch):
+    text = '改成500g手撕鸡200g米饭'
+    result = extract(monkeypatch, '100g火星豉油鸡', [
+        {'name':'手撕鸡','source_text':'手撕鸡','food_id':'dish_255','grams':500},
+        {'name':'米饭','source_text':'米饭','food_id':'rice','grams':200},
+    ], history=[{'role':'user','content':'100g火星豉油鸡'},
+                {'role':'user','content':text}])
+    assert [item['food_id'] for item in result.draft] == ['dish_255','rice']
+    assert result.calories == 847.4
+
+
 @pytest.mark.parametrize('text,source,food_id', [
     ('200克番茄炒蛋熟重', '番茄炒蛋', 'dish_001'),
     ('我吃了一份西红柿炒鸡蛋', '西红柿炒鸡蛋', 'dish_001'),

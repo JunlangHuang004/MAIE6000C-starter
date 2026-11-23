@@ -5,7 +5,7 @@ from datetime import date, datetime, timezone
 from enum import StrEnum
 
 from sqlalchemy import (
-    JSON, CheckConstraint, Date, DateTime, Float, ForeignKey, Index, Integer, String, Text,
+    JSON, Boolean, CheckConstraint, Date, DateTime, Float, ForeignKey, Index, Integer, String, Text,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -87,6 +87,10 @@ class UserProfile(Base):
             "activity_level IN ('sedentary', 'light', 'moderate', 'high')",
             name="ck_user_profiles_activity",
         ),
+        CheckConstraint(
+            "reference_scope IN ('general_adult', 'professional_guidance')",
+            name="ck_user_profiles_reference_scope",
+        ),
         CheckConstraint("revision >= 1", name="ck_user_profiles_revision"),
     )
 
@@ -99,6 +103,9 @@ class UserProfile(Base):
     sex: Mapped[str] = mapped_column(String(10), nullable=False)
     goal: Mapped[str] = mapped_column(String(20), nullable=False)
     activity_level: Mapped[str] = mapped_column(String(20), nullable=False)
+    # NULL preserves unknown legacy answers instead of assuming eligibility.
+    strength_training: Mapped[bool | None] = mapped_column(Boolean, nullable=True)
+    reference_scope: Mapped[str | None] = mapped_column(String(24), nullable=True)
     revision: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=utcnow, nullable=False,

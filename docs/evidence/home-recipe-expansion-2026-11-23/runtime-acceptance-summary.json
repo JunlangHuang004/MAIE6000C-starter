@@ -1,0 +1,88 @@
+{
+  "checked_on": "2026-11-23",
+  "catalogue_version": "2026-11-23.1",
+  "scope": "Sampled browser acceptance against the rebuilt local preview, not the public deployment or a universal recognition benchmark.",
+  "runtime": {
+    "provider": "HKUST",
+    "model": "gemini-2.5-flash-lite",
+    "local_preview_port": 8008
+  },
+  "model_calls": {
+    "total": 6,
+    "failed": 1,
+    "structured_recipe_edit": 0
+  },
+  "cases": [
+    {
+      "case": "compact_chinese_without_separators",
+      "input": "500g手撕鸡200g米饭",
+      "outcome": "Both complete food identities and adjacent explicit quantities retained.",
+      "displayed_total": {
+        "energy_kcal": 847.4,
+        "protein_g": 90.5,
+        "fat_g": 21.4,
+        "carbohydrate_g": 67.0
+      }
+    },
+    {
+      "case": "compact_chinese_with_spaces",
+      "input": "500g手撕鸡 200g米饭",
+      "outcome": "Same food quantities and totals as the version without separators.",
+      "displayed_total": {
+        "energy_kcal": 847.4,
+        "protein_g": 90.5,
+        "fat_g": 21.4,
+        "carbohydrate_g": 67.0
+      }
+    },
+    {
+      "case": "mixed_known_unknown_foods",
+      "unknown_food": "酸甜娃娃菜",
+      "outcome": "Unknown dish remained unresolved and all whole-meal totals were withheld."
+    },
+    {
+      "case": "new_pork_recipe_initial_attempt",
+      "input": "锅包肉150g",
+      "mode": "Advanced",
+      "outcome": "Generic failure shown. AI service returned HTTP 502 after upstream HTTP 200.",
+      "failure_limit": "The exact rejected output field was not established; no more specific cause is asserted."
+    },
+    {
+      "case": "new_pork_recipe_cooked_weight_retry_and_edit",
+      "input": "锅包肉150克熟重",
+      "mode": "Advanced",
+      "outcome": "Retry succeeded. After explicit recipe review, batch oil was changed from 35 g to 25 g; edited recipe was confirmed and persisted after reopening.",
+      "food_id": "dish_351",
+      "consumed_cooked_g": 150,
+      "cooked_edible_batch_g": 520,
+      "oil_g_before": 35,
+      "oil_g_after": 25,
+      "displayed_total_after_edit": {
+        "energy_kcal": 320.4,
+        "protein_g": 24.4,
+        "fat_g": 9.8,
+        "carbohydrate_g": 31.6
+      },
+      "additional_model_calls_for_structured_edit": 0
+    },
+    {
+      "case": "english_new_recipe_and_rice",
+      "input": "150g Kung Pao shrimp 200g cooked white rice",
+      "outcome": "Recognized dish_356 and cooked white rice with their explicit quantities.",
+      "displayed_total": {
+        "energy_kcal": 527.1,
+        "protein_g": 26.5,
+        "fat_g": 15.3,
+        "carbohydrate_g": 69.8
+      }
+    }
+  ],
+  "limits": [
+    "Six model calls include the initial failed pork-recipe attempt; the successful explicit cooked-weight retry does not erase that failure.",
+    "The structured recipe edit recalculates using stored ingredient nutrients and made no additional model call.",
+    "After the final API rebuild, both languages showed read-only confirmed-meal guidance; the new recipe showed English preparation and ingredient details. A confirmed test meal was persisted once in the selected date, and remained read-only after reopening.",
+    "Displayed nutrients remain approximate reference-recipe calculations, not measured food composition.",
+    "Only food-level inputs and outcomes are published. Account identifiers, personal conversations, private paths, screenshots and raw runtime logs are excluded.",
+    "Historical screenshots and tags retain their original scope. Git checkpoint publication is separate from deployment."
+  ]
+}

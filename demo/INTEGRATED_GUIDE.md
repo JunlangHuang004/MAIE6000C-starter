@@ -3,7 +3,11 @@
 Use the [current setup](README.md), then register/sign in. The merged preview uses
 port **8005** with a configured model; the key-free integration preview uses
 **8006**. Meals, Daily diary, Trends and My goals share the same private account.
-The catalogue remains 200 ingredients and 350 reference recipes.
+Catalogue `2026-11-23.1` contains 200 ingredients and 384 reference recipes, with
+English names for all 584 records and English methods for every recipe. The
+[23 November catalogue follow-up](../docs/home-recipe-expansion.md) records the
+34 added reference recipes, reviewed aliases and remaining coverage limits.
+The screenshots below retain their original dates and do not verify this expansion.
 
 The meal screenshots show the
 [14 November recipe-usability follow-up](../docs/qa/reports/2026-11-14-recipe-usability.md).
@@ -109,25 +113,35 @@ is also here; opening a record returns to Meals for review.
 
 Open the separate Trends panel and choose an end date for 30 consecutive days.
 Review calorie and weight charts, recorded-day statistics and expandable daily
-details, including exercise, balance and coverage. Missing dates remain gaps and
-do not count as zero in averages. The charts describe recorded data, not a complete
-measurement of every day.
+details, including exercise, balance and coverage. Lines connect recorded points
+across missing dates without adding values for those dates. Missing calorie dates
+are excluded from averages; explicitly recorded zero values are included. The
+charts describe recorded data, not a complete measurement of every day.
 
 ![Separate Trends panel on desktop, from the earlier 14 November workspace pass](images/2026-11-14/03-trends-desktop.png)
 
 ## 4. Optionally fill in My goals
 
 Save age, height, current weight, the formula sex coefficient, activity and a
-muscle-gain or fat-loss goal. Python calculates approximate daily energy and macro
-references without a model call. Review the assumptions and scope; some inputs
-require professional review instead of an automatic target. A profile is optional
-for meal estimation.
+muscle-gain or fat-loss goal. Also confirm whether you do regular resistance
+training and whether general-adult dietary references apply. The current v2 form
+leaves these answers blank for older profiles; explicitly answer them and save.
+Muscle-gain output requires resistance training. Python calculates approximate daily
+energy and macro references without a model call. The result shows resting energy,
+maintenance energy and the goal adjustment; expand its assumptions for weight-based
+protein, sources and limitations. Some inputs require review instead of an automatic
+target. A profile is optional for meal estimation. See the current
+[calculation guide](../docs/personalization.md) and
+[source map](../docs/personalization-sources.md).
 
 If another page updates the profile, reload its latest version before saving again.
 Reloading refreshes dependent saved diary/trend data and preserves unsaved diary
 changes.
 
-![My goals panel with optional personal reference, from the earlier 14 November workspace pass](images/2026-11-14/04-profile-desktop.png)
+The image below is historical: it predates the 21 November v2 training/eligibility
+fields and revised nutrition calculations. Follow the current instructions above.
+
+![Earlier My goals panel before the v2 reference update, captured 14 November](images/2026-11-14/04-profile-desktop.png)
 
 ## 5. Navigate, switch languages and return later
 

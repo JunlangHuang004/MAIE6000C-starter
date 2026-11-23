@@ -3,8 +3,9 @@
 The merged application supports Qwen and HKUST GenAI as cloud extraction adapters.
 Use [the integrated preview](integration.md) for the complete account, meal and
 tracking workflow. This optional lab isolates provider experiments from that
-preview. Its catalogue is the same **200 ingredients and 350 reference recipes**
-retained from `nutrichat`.
+preview. It uses catalogue `2026-11-23.1`: **200 ingredients and 384 reference
+recipes**, with English names for all 584 records. The [home-recipe follow-up](home-recipe-expansion.md)
+adds 34 recipes while retaining existing ingredient nutrients and recipe formulations.
 
 The [2026-10-30 provider report](evidence/local-model-verification.md) records
 successful HKUST checkpoints on the earlier account preview and failed application

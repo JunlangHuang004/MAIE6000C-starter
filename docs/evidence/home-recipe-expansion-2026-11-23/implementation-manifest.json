@@ -1,0 +1,121 @@
+{
+  "version": "2026-11-23.1",
+  "baseline": {
+    "ingredient_sha256": "23a20d4f62d090b53d83dff33e1d63aa51c791263d25c9c5ad7bbc4a3298330d",
+    "original_recipe_without_aliases_sha256": "9852bf75d22c68d53c388370ec7157194846f62909de07497f374fd9f27c0485"
+  },
+  "new_recipe_ids": [
+    "dish_351",
+    "dish_352",
+    "dish_353",
+    "dish_354",
+    "dish_355",
+    "dish_356",
+    "dish_357",
+    "dish_358",
+    "dish_359",
+    "dish_360",
+    "dish_361",
+    "dish_362",
+    "dish_363",
+    "dish_364",
+    "dish_365",
+    "dish_366",
+    "dish_367",
+    "dish_368",
+    "dish_369",
+    "dish_370",
+    "dish_371",
+    "dish_372",
+    "dish_374",
+    "dish_375",
+    "dish_376",
+    "dish_377",
+    "dish_378",
+    "dish_379",
+    "dish_380",
+    "dish_381",
+    "dish_382",
+    "dish_383",
+    "dish_384",
+    "dish_385"
+  ],
+  "new_recipe_count": 34,
+  "ingredient_count": 200,
+  "recipe_count": 384,
+  "chinese_alias_additions": {
+    "dish_002": [
+      "青椒炒肉丝",
+      "青椒炒肉絲"
+    ],
+    "dish_008": [
+      "牛肉炖土豆"
+    ],
+    "dish_015": [
+      "肉饼蒸蛋",
+      "肉餅蒸蛋"
+    ],
+    "dish_017": [
+      "蒜蓉西兰花",
+      "蒜蓉西蘭花"
+    ],
+    "dish_026": [
+      "苦瓜炒鸡蛋"
+    ],
+    "dish_031": [
+      "青椒炒鸡蛋"
+    ],
+    "dish_104": [
+      "辣子鸡丁",
+      "辣子雞丁"
+    ],
+    "dish_122": [
+      "糖醋鲤鱼",
+      "糖醋鯉魚"
+    ],
+    "dish_126": [
+      "水煮鱼",
+      "水煮魚",
+      "水煮魚片"
+    ],
+    "dish_153": [
+      "蒜泥茄子"
+    ],
+    "dish_166": [
+      "凉拌黑木耳",
+      "涼拌黑木耳"
+    ],
+    "dish_193": [
+      "菠菜炒鸡蛋",
+      "菠菜炒雞蛋"
+    ],
+    "dish_194": [
+      "黄瓜炒鸡蛋",
+      "黃瓜炒雞蛋"
+    ],
+    "dish_213": [
+      "菠菜鸡蛋汤",
+      "菠菜雞蛋湯"
+    ],
+    "dish_301": [
+      "炒莴笋",
+      "炒萵筍"
+    ]
+  },
+  "source_policy": "Meishichina supplies discovery and style evidence; quantities and cooked yields are original project assumptions. Nutrition is calculated from unchanged CC0 USDA SR Legacy ingredients, not copied from recipe pages.",
+  "arithmetic": "sum(ingredient_grams * nutrient_per_100g / 100) * 100 / cooked_yield_g",
+  "limitations": [
+    "No measured finished-dish nutrients",
+    "No nutrient-retention, drained-fat or alcohol-loss model",
+    "Oil, water uptake, sugar retention and yields are editable assumptions",
+    "Advanced mode requires explicit recipe approval"
+  ],
+  "deferred_candidates": [
+    {
+      "name": "盐水鸭",
+      "reserved_unpublished_id": "dish_373",
+      "reason": "Deferred before publication: the trial retained all fat from raw skin-on duck despite poaching and discarding liquid, yielding about 474 kcal and 45.8 g fat per 100 g. A suitable cooked ingredient source or evidence-based fat-retention model is needed; roasted duck is not an equivalent replacement."
+    }
+  ],
+  "chinese_alias_addition_count": 27
+}

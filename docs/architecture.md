@@ -1,12 +1,15 @@
 # NutriChat architecture
 
-Current implementation documented: 2026-11-15, `test`; final checkpoint `w13-final`.
+Current implementation documented: 2026-11-23 follow-up to `test`; historical course checkpoint `w13-final` is unchanged.
 
-The merged application retains the `nutrichat` catalogue's 200 USDA ingredient
-records, 350 project-authored reference recipes, food identities and nutrient values.
-The 14 November follow-up adds an explicit 50 g reference and source metadata for
-one large peeled hard-boiled egg; the catalogue is therefore not byte-for-byte
-identical. Data and validation updates do not train model weights.
+Catalogue `2026-11-23.1` contains 200 USDA ingredient records and 384
+project-authored reference recipes. The 23 November follow-up adds 34 recipes;
+existing ingredient nutrients, recipe IDs and the preceding 350 formulations are
+unchanged. The earlier 14 November egg-portion metadata remains in place.
+Meishichina supplies dish-name/style evidence, while recipe quantities and yields
+are project assumptions and nutrient calculations use USDA ingredients. See
+[home-recipe provenance](home-recipe-expansion.md). Data and validation updates do
+not train model weights. Publishing this follow-up does not deploy the app or change historical tags.
 Account/profile/tracking migrations extend the application schema separately.
 The merged build is published on `test`; `nutrichat`, the Week 7 tag and the
 public deployment remain unchanged.
@@ -94,11 +97,10 @@ with the Python application, loaded in that order and served with `no-cache` so
 the browser revalidates after an update. Authenticated HTML and private API responses use `no-store`. No frontend build service is required.
 
 `i18n.js` translates controls, status messages, structured questions and evidence.
-The English display catalogue retains names for the original 138 ingredients and
-250 recipes, plus those recipes' reference methods. The 62 new ingredients and
-100 new recipes prioritize Chinese; missing English mappings fall back to Chinese
-names and methods. Catalogue search checks Chinese and available English display
-names. User descriptions and free-form model notes retain their
+The English display catalogue covers all 584 records and all 384 recipe methods,
+including the 162 previously untranslated entries. Catalogue search checks Chinese
+and English display names. Reviewed English names are also exact matching aliases;
+translation alone does not authorize other English synonyms. User descriptions and free-form model notes retain their
 original language. Display language is separate from matching: recognition is
 restricted to recorded names and explicitly reviewed aliases, regardless of the
 selected interface language.
@@ -145,6 +147,12 @@ and nutrient calculation. The backend resolves each complete user-provided food
 mention to a unique recorded name or reviewed alias. This exact lookup determines
 the ID even if the model proposes a different one; it never selects the nearest
 food. An existing catalogue ID alone is not evidence of a correct match.
+Explicit gram amounts are recovered from the adjacent complete recorded food
+mention in comma-separated, space-separated or unpunctuated compact input. This
+fallback preserves user-supplied quantities when model extraction omits them; it
+does not infer a weight or accept an unsupported name. The reviewed fish names
+`水煮鱼`, `水煮魚` and `水煮魚片` share existing `dish_126` and its disclosed
+reference formulation.
 Names copied from assistant suggestions or generated catalogue labels are not
 independent user evidence. Similar-looking names or ingredient substrings must
 not authorize a different dish.
@@ -214,7 +222,7 @@ The API readiness probe checks PostgreSQL. AI readiness reports service availabi
 
 ## Current limitations
 
-Food coverage is limited to 200 ingredient records and 350 reference recipes;
+Food coverage is limited to 200 ingredient records and 384 reference recipes;
 this is not a general food database. Unlisted foods, names and variants need
 clarification or catalogue additions instead of a substitute estimate.
 

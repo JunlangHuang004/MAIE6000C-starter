@@ -152,6 +152,41 @@ def _detail_clause(value):
     ) is not None
 
 
+_NUMERIC_MASS = re.compile(
+    r'(?<![\d.+-])\d+(?:\.\d+)?\s*(?:千克|公斤|kg|grams?|克|g|斤)(?![a-z])',
+    re.I,
+)
+
+
+def _quantity_led_chunks(text):
+    """Recognize adjacent quantity-led items without splitting food-name words.
+
+    This is only a grounding fallback, not an input rewrite or a quantity parser.
+    Keep original text for whole-meal coverage, recipe facts and corrections.
+    Numeric mass units delimit these lists; portion words such as 三杯 must not
+    split a dish name like 三杯鸡. A trailing weight/detail is not a new item.
+    """
+    amounts = list(_NUMERIC_MASS.finditer(text))
+    if len(amounts) < 2 or not _wrapper(
+            _SPLIT.split(text[:amounts[0].start()])[-1], _PREFIX):
+        return []
+    ends = [amount.start() for amount in amounts[1:]] + [len(text)]
+    if any(_detail_clause(text[amount.end():end])
+           for amount, end in zip(amounts, ends)):
+        return []
+    starts = [0] + [amount.start() for amount in amounts[1:]]
+    return [text[start:end] for start, end in zip(starts, ends)]
+
+
+def _wrapped_mention(needle, text):
+    for match in re.finditer(re.escape(needle), text):
+        left = _SPLIT.split(text[:match.start()])[-1]
+        right = _SPLIT.split(text[match.end():])[0]
+        if _wrapper(left, _PREFIX) and _detail_clause(right):
+            return True
+    return False
+
+
 def is_user_mention(mention, texts):
     """Require the complete named food, not a substring of another dish.
 
@@ -163,11 +198,10 @@ def is_user_mention(mention, texts):
         return False
     for text in texts:
         text = unicodedata.normalize('NFKC', text).casefold()
-        for match in re.finditer(re.escape(needle), text):
-            left = _SPLIT.split(text[:match.start()])[-1]
-            right = _SPLIT.split(text[match.end():])[0]
-            if _wrapper(left, _PREFIX) and _detail_clause(right):
-                return True
+        if _wrapped_mention(needle, text):
+            return True
+        if any(_wrapped_mention(needle, chunk) for chunk in _quantity_led_chunks(text)):
+            return True
     return False
 
 

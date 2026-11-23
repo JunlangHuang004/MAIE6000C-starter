@@ -1,0 +1,35 @@
+{
+  "checked_on": "2026-11-23",
+  "catalogue_version": "2026-11-23.1",
+  "foods": 584,
+  "ingredients": 200,
+  "recipes": 384,
+  "english_names": 584,
+  "english_recipe_methods": 384,
+  "backend": {
+    "passed": 2031,
+    "skipped": 2,
+    "skip_reason": "HTTP smoke tests were not run because SMOKE_BASE_URL was unset"
+  },
+  "frontend": {
+    "passed": 62,
+    "includes": "Confirmed-meal read-only banner regression in Chinese and English"
+  },
+  "ruff": "passed",
+  "coverage_notes": [
+    "Backend total includes all-record normalized English alias retrieval/grounding checks.",
+    "The earlier 236-test targeted compact-parser run is a subset, not an additional full-suite total.",
+    "Counts are automated checks, not evidence of real-food nutrient accuracy."
+  ],
+  "runtime_acceptance": {
+    "status": "sampled_browser_acceptance_completed_with_one_initial_model_failure",
+    "summary": "runtime-acceptance-summary.json",
+    "provider": "HKUST",
+    "model": "gemini-2.5-flash-lite",
+    "model_calls": 6,
+    "failed_model_calls": 1,
+    "structured_recipe_edit_model_calls": 0,
+    "limit": "Sampled workflows only; not full-account or universal model acceptance. Both-language confirmed-meal banner and English new-recipe details were also checked after the final API rebuild."
+  },
+  "deployment_scope": "Git checkpoint publication does not deploy the public application or change historical tags."
+}

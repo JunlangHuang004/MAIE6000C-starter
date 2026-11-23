@@ -1,12 +1,13 @@
 # NutriChat
 
 NutriChat combines the meal-estimation features from `nutrichat` with independent
-accounts, personal daily references and 30-day tracking on `test`. It keeps
-**the `nutrichat` catalogue's 200 USDA ingredient records and 350 editable
-Chinese reference recipes**, with their nutrient values unchanged. The current
-follow-up adds an explicit 50 g reference for one large shelled hard-boiled egg.
-The `nutrichat` branch, `w07-midterm` submission tag and existing deployments remain
-separate snapshots.
+accounts, personal daily references and 30-day tracking on `test`. Catalogue
+**2026-11-23.1 contains 200 USDA ingredient records and 384 editable Chinese
+reference recipes**, with English names for all 584 records and bilingual recipe
+methods. The [home-recipe follow-up](docs/home-recipe-expansion.md) adds 34 reference
+recipes while preserving existing ingredient nutrients and recipe formulations.
+The `nutrichat` branch, `w07-midterm` and `w13-final` tags, and existing deployments
+remain separate historical snapshots; this follow-up does not deploy the app or rewrite those snapshots.
 
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions.
 Qwen or HKUST GenAI interprets foods and quantities; Python calculates from the
@@ -142,18 +143,24 @@ are disabled to avoid losing their facts. This is not a personal recipe library.
 
 Use **中文 / English** to switch the interface without changing saved nutrients or
 submitting a model request. Original user text and free-form model notes keep their
-wording. The original 388 records have English display mappings; the 162 newer
-records prioritize Chinese and fall back to Chinese where translations are absent.
-English display names do not guarantee recognition of every English food name.
+wording. All 584 catalogue records have English display names, and all 384 recipes
+have English reference methods. This includes the 162 previously untranslated
+records. Reviewed English names also support exact matching; unlisted English food
+names still require clarification.
 
 ## Personal references and tracking
 
 A profile in **My goals** is optional for meal estimation. Save age, height, current
-weight, the formula sex coefficient, activity level and a muscle-gain or fat-loss goal to obtain
-approximate daily energy and macronutrient references. The versioned Python formula
-uses explicit assumptions; profile inputs are not sent to the model. Some inputs
-are saved without generating a target when the automatic-output guards apply.
-See [calculation assumptions and scope](docs/personalization.md).
+weight, the formula sex coefficient, activity level and a muscle-gain or fat-loss
+goal, then explicitly confirm resistance training and general-adult eligibility.
+The v2 reference uses a 5% gain surplus or a 15% loss deficit capped at 500 kcal/day,
+with protein based on body weight and training rather than a fixed energy share.
+These are starting policies informed by research, not individualized prescriptions.
+The page distinguishes resting energy, estimated maintenance and the goal adjustment.
+Profile inputs are not sent to the model. Old profiles need the two new confirmations;
+ineligible profiles retain their data without displaying targets. See
+[calculation assumptions and scope](docs/personalization.md) and the
+[evidence and limitations map](docs/personalization-sources.md).
 
 In **Daily diary**, choose a date to save weight and exercise energy. Expand the
 manual-total control only when replacing the confirmed-meal sum, and expand the
@@ -164,8 +171,10 @@ surplus or deficit from recorded intake versus baseline expenditure plus exercis
 This is approximate and should not alone set cardio intensity. Without a manual
 total, the diary sums that date's confirmed meals. A manual total **replaces** the
 sum; clearing it and saving restores automatic aggregation. **Trends** keeps two
-charts and a detail table in a separate panel for 30 consecutive days. Missing dates
-remain gaps, and averages use recorded calorie days only. Dates use Hong Kong time.
+charts and a detail table in a separate panel for 30 consecutive days. Lines connect
+recorded observations across missing dates without filling in missing values.
+Averages use recorded calorie days only, including explicitly recorded zero values.
+Dates use Hong Kong time.
 Daily weights do not automatically change the
 profile or its reference. See [the tracking guide](docs/tracking.md).
 
@@ -227,7 +236,7 @@ and do not use the model. Qwen/HKUST run in the cloud and need no local GPU.
 | [Architecture](docs/architecture.md) | Components, persistence and boundaries |
 | [Nutrition data](docs/nutrition-data.md) | USDA provenance and reference-recipe assumptions |
 | [Actual ingredient recipes](docs/ingredient-recipes.md) | Explicit ingredients and batch/portion arithmetic |
-| [Dish index](docs/recipe-catalogue.md) | All 350 reference dishes |
+| [Dish index](docs/recipe-catalogue.md) | All 384 reference dishes, with Chinese and English names and methods |
 | [Operations](docs/operations.md) | Startup, tests, migrations and troubleshooting |
 | [Cloud deployment](docs/cloud-deployment.md) | Separate future deployment procedure |
 | [Change log](docs/change-log.md) | Changes and dated evidence |

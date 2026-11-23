@@ -1,6 +1,6 @@
 # NutriChat operations
 
-Current instructions: 2026-11-15, the `test` final package (`w13-final`). The app separates
+Current instructions: 2026-11-23 follow-up; `w13-final` remains the historical course package. The app separates
 Meals, Daily diary, Trends and My goals while retaining meal estimation, daily
 balance, intake review and the Chinese-meal evaluator. Existing deployments remain
 separate snapshots. See [integration setup](integration.md) and the
@@ -154,7 +154,7 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 - **403 on writes:** check `X-NutriChat-Request: 1` and exact `Origin` matching.
   Do not remove these checks to make a cross-origin client work.
 - **No corresponding food record:** coverage is limited to 200 ingredients and
-  350 reference recipes with reviewed names/aliases. Correct the name or select
+  384 reference recipes with reviewed names/aliases. Correct the name or select
   actual supported ingredients. Keep all totals empty while any item is unresolved.
 - **`needs_input`:** normal clarification, with a successfully completed job.
   Answer the issued questions or use the ingredient builder for an unknown item.
@@ -182,10 +182,14 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 
 ## Data, migrations and recovery
 
-The food catalogue is versioned JSON: 200 ingredients and 350 reference recipes.
-It retains the `nutrichat` food identities and nutrient values, with the later
-explicit 50 g reference/source metadata for one large peeled hard-boiled egg.
-Do not use byte-for-byte equality with the earlier catalogue as a release check.
+Food catalogue `2026-11-23.1` is versioned JSON: 200 ingredients and 384 reference
+recipes. All 584 records have English names, and all recipe methods are bilingual.
+The [home-recipe follow-up](home-recipe-expansion.md) adds 34 project-authored
+reference formulas while preserving earlier ingredient nutrients and 350 recipe
+formulations, with the existing egg-portion metadata retained. Recipe-site URLs
+are discovery evidence, not nutrient measurements. Do not use byte-for-byte
+equality with the earlier catalogue as a release check. Git publication is separate from deployment; historical tags and deployments
+remain unchanged.
 The application database is PostgreSQL. The merged preview starts a separate volume;
 it does not automatically combine records from existing deployments.
 

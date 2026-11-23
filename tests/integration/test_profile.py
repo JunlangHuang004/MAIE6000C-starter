@@ -17,6 +17,8 @@ PROFILE = {
     "sex": "male",
     "goal": "gain_muscle",
     "activity_level": "moderate",
+    "strength_training": True,
+    "reference_scope": "general_adult",
     "revision": 0,
 }
 
@@ -62,6 +64,8 @@ def test_profile_and_reference_survive_a_new_database_session(client, db_session
     with session_factory() as fresh_db:
         persisted = fresh_db.get(UserProfile, user_id)
         assert persisted.weight_kg == 70
+        assert persisted.strength_training is True
+        assert persisted.reference_scope == "general_adult"
         assert persisted.revision == 1
         assert fresh_db.query(UserProfile).count() == 1
     assert db_session.query(Job).count() == 0
@@ -79,6 +83,89 @@ def test_update_recomputes_reference_without_creating_another_profile(client, db
     assert updated["profile"]["updated_at"] >= first["profile"]["updated_at"]
     assert client.get("/profile").json() == updated
     assert db_session.query(UserProfile).count() == 1
+
+
+def test_legacy_profile_requires_confirmation_without_inventing_answers(client, db_session):
+    legacy = {key: value for key, value in PROFILE.items()
+              if key not in {"strength_training", "reference_scope"}}
+    response = client.put("/profile", json=legacy)
+    assert response.status_code == 200, response.text
+    saved = response.json()
+    assert saved["profile"]["strength_training"] is None
+    assert saved["profile"]["reference_scope"] is None
+    assert saved["reference"]["status"] == "needs_review"
+    assert saved["reference"]["reason_codes"] == [
+        "scope_confirmation_required", "training_confirmation_required",
+    ]
+    assert all(saved["reference"][key] is None for key in (
+        "calories", "protein_g", "fat_g", "carbs_g",
+    ))
+    assert client.get("/profile").json() == saved
+    row = db_session.get(UserProfile, client.get("/auth/me").json()["id"])
+    assert row.strength_training is None
+    assert row.reference_scope is None
+    confirmed = save(client, revision=1)
+    assert confirmed.status_code == 200, confirmed.text
+    assert confirmed.json()["reference"]["status"] == "estimated"
+    assert confirmed.json()["reference"]["formula_version"] == "mifflin-evidence-2026-v2"
+
+
+def test_old_client_update_preserves_saved_confirmations(client):
+    original = save(client).json()
+    payload = {key: value for key, value in PROFILE.items()
+               if key not in {"strength_training", "reference_scope"}}
+    payload.update(revision=1, weight_kg=72)
+    response = client.put("/profile", json=payload)
+    assert response.status_code == 200, response.text
+    saved = response.json()
+    assert saved["profile"]["weight_kg"] == 72
+    for field in ("strength_training", "reference_scope"):
+        assert saved["profile"][field] == original["profile"][field]
+    assert saved["reference"]["status"] == "estimated"
+
+
+@pytest.mark.parametrize("field,reason", [
+    ("strength_training", "training_confirmation_required"),
+    ("reference_scope", "scope_confirmation_required"),
+])
+def test_explicit_null_clears_confirmation_and_withholds_targets(client, field, reason):
+    save(client)
+    response = save(client, revision=1, **{field: None})
+    assert response.status_code == 200, response.text
+    saved = response.json()
+    assert saved["profile"][field] is None
+    assert saved["reference"]["status"] == "needs_review"
+    assert reason in saved["reference"]["reason_codes"]
+    assert all(saved["reference"][key] is None for key in (
+        "calories", "protein_g", "fat_g", "carbs_g",
+    ))
+    assert client.get("/profile").json() == saved
+
+
+def test_professional_guidance_profile_is_saved_without_automatic_targets(client):
+    response = save(client, reference_scope="professional_guidance")
+    assert response.status_code == 200, response.text
+    saved = response.json()
+    assert saved["profile"]["reference_scope"] == "professional_guidance"
+    assert saved["reference"]["reason_codes"] == ["professional_guidance_required"]
+    assert saved["reference"]["status"] == "needs_review"
+    assert all(saved["reference"][key] is None for key in (
+        "calories", "protein_g", "fat_g", "carbs_g",
+    ))
+    assert client.get("/profile").json() == saved
+
+
+def test_false_training_answer_is_preserved_and_only_blocks_muscle_gain(client):
+    first = save(client, strength_training=False)
+    assert first.status_code == 200, first.text
+    saved = first.json()
+    assert saved["profile"]["strength_training"] is False
+    assert saved["reference"]["reason_codes"] == ["strength_training_required"]
+    assert saved["reference"]["status"] == "needs_review"
+    second = save(client, revision=1, goal="lose_fat", strength_training=False)
+    assert second.status_code == 200, second.text
+    assert second.json()["profile"]["strength_training"] is False
+    assert second.json()["reference"]["status"] == "estimated"
 
 
 @pytest.mark.parametrize("method", ["get", "put"])
@@ -184,6 +271,9 @@ def test_two_browser_edits_of_same_account_cannot_silently_overwrite(client_fact
     {"height_cm": "175"}, {"height_cm": True}, {"weight_kg": False},
     {"weight_kg": 251}, {"sex": "unknown"}, {"goal": "maintain"},
     {"activity_level": "extreme"}, {"revision": True}, {"revision": "1"},
+    {"strength_training": "true"}, {"strength_training": "false"},
+    {"strength_training": 1}, {"strength_training": 0},
+    {"reference_scope": "unknown"}, {"reference_scope": True},
 ])
 def test_invalid_profile_edits_do_not_mutate_existing_record(client, changes):
     saved = save(client).json()

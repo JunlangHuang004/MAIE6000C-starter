@@ -19,6 +19,9 @@ SYSTEM_PROMPT = '''你是餐食信息提取器。只返回 JSON {"items":[...]}�
 recipe_ingredients, recipe_yield_g, portion_count, portion_unit, weight_includes_inedible。
 food_id 必须来自下方目录；无法精确匹配则 null，name 保留原食物描述。
 source_text 必须逐字复制用户原文中完整的食物名称（保留菜名的食材和做法，不含克数）。
+相邻的“数值+重量单位+食物名称”各是一项，即使中间没有标点或只有空格。
+例如“500g手撕鸡200g米饭”和“500g手撕鸡 200g米饭”都提取手撕鸡500克、米饭200克两项。
+不要把多个食物名称合并进一个source_text，也不要把前一项的克数移给后一项。
 不得把 source_text 翻译成目录名称，不得截取其他菜名里的一个食材充当匹配。
 匹配只允许目录名称或给出的 aliases/matching_aliases；未列出的名称填 food_id=null。
 食物身份在基础版也不能猜测。不存在的“月球紫晶兽肉”必须为null，绝不能映射为鸡肉或鱼肉。

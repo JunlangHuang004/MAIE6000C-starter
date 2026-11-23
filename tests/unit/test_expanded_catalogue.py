@@ -17,7 +17,7 @@ BY_NAME = {food['name']: food for food in RECIPES}
 
 def test_snapshot_matches_authoring_sources_and_has_unique_dishes():
     validate_catalogue(FOODS)
-    assert len(RECIPES) == 350
+    assert len(RECIPES) == 384
     assert len(FOODS) - len(RECIPES) == 200
     assert RECIPES == json.loads((DATA / 'recipes.json').read_text())
     selection = json.loads((DATA / 'usda_selection.json').read_text())
