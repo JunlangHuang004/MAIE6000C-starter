@@ -4,7 +4,7 @@ For the final course submission, start with the [Week 13 package](../submissions
 and its [seven-point TA walkthrough](../submissions/week13/DEMO.md). Check out
 `w13-final` to reproduce the submitted release; branch HEAD may advance later.
 
-This checkout combines the `nutrichat` food workflow with accounts, personal
+The default `nutrichat` branch combines the food workflow with accounts, personal
 references and daily tracking. The frozen `w07-midterm` tag remains a separate
 meal-only submission; do not use its no-login instructions for this checkout.
 
@@ -12,11 +12,11 @@ meal-only submission; do not use its no-login instructions for this checkout.
 
 Follow [integrated setup](../docs/integration.md) to select Qwen or HKUST, start an
 isolated project and open <http://localhost:8005/app>. Register/sign in before
-creating meals. The catalogue retains **200 ingredients
-and 350 recipes**, with unchanged food identities and nutrient values. The later
-50 g reference/source metadata for one large peeled boiled egg is an explicit
-addition, so the catalogue is not byte-for-byte unchanged. No private model key
-is included in Git.
+creating meals. The current catalogue contains **202 ingredients and 384 editable
+reference recipes**, including **16 attributed CFS prepared-food references**
+for ordinary dish estimates. See [nutrition updates](../docs/cfs-prepared-food-references.md)
+and [reference-recipe limits](../docs/similar-recipe-references.md). No private model
+key is included in Git.
 
 Suggested review sequence:
 

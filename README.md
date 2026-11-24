@@ -1,7 +1,8 @@
 # NutriChat
 
-NutriChat combines the meal-estimation features from `nutrichat` with independent
-accounts, personal daily references and 30-day tracking on `test`. Catalogue
+NutriChat provides meal estimation, independent accounts, personal daily
+references and 30-day tracking. The default **`nutrichat`** branch contains the
+integrated application; **`test`** remains available for development. Catalogue
 **2026-11-24.2 contains 202 USDA ingredient records and 384 editable Chinese
 reference recipes**, with English names for all 586 records and bilingual recipe
 methods. The [home-recipe follow-up](docs/home-recipe-expansion.md) adds 34 reference
@@ -12,8 +13,9 @@ not measured white-cut chicken nutrition.
 Sixteen dish records now also have [CFS prepared-food references](docs/cfs-prepared-food-references.md)
 for ordinary dish estimates. Their complete source nutrient vectors are separate
 from editable ingredient calculations; historical saved results remain unchanged.
-The `nutrichat` branch, `w07-midterm` and `w13-final` tags, and existing deployments
-remain separate historical snapshots; this follow-up does not deploy the app or rewrite those snapshots.
+The `w07-midterm` and `w13-final` tags preserve the submitted course snapshots.
+The earlier meal-focused `nutrichat` version is retained at
+`archive-nutrichat-7c9525d`. Branch publication does not update existing deployments.
 
 NutriChat estimates calories, protein, fat and carbohydrates from meal descriptions.
 Qwen or HKUST GenAI interprets foods and quantities; Python calculates from the

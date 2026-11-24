@@ -2,11 +2,13 @@
 
 This checkout merges `nutrichat` at `7c9525d` and `test` at `5af1780` on
 `integrate/nutrichat-test` as merge commit `cdd4c9c`. After validation, the merged
-implementation is published on **`test`**. The original `test` commits remain in
-its history; `nutrichat` and the `w07-midterm` tag are unchanged. The public ECS
-deployment is not updated by this publication.
+implementation was developed on **`test`** and has now been promoted to the
+default **`nutrichat`** branch. The original commits remain in its history, and
+`test` remains available for development. The earlier meal-focused branch is
+retained at `archive-nutrichat-7c9525d`; course tags remain unchanged. The public
+ECS deployment is not updated by this branch publication.
 
-The current `test` final package is [Week 13](../submissions/week13/README.md),
+The submitted final package is [Week 13](../submissions/week13/README.md),
 with checkpoint tag `w13-final`. The merge identifiers above describe the original
 3 November integration; subsequent changes and checks have their own dated evidence.
 
@@ -14,9 +16,9 @@ with checkpoint tag `w13-final`. The merge identifiers above describe the origin
 
 | Area | Integrated behavior |
 | --- | --- |
-| Food data | Catalogue 2026-11-23.2: 202 USDA ingredients and 384 reference recipes; existing nutrients/formulations retained |
+| Food data | Catalogue 2026-11-24.2: 202 USDA ingredients and 384 reference recipes; 16 dishes also have attributed CFS prepared-food references |
 | Estimation | Basic/Advanced, Chinese descriptions, strict supported-name matching, clarification and correction |
-| Unknown food | No substitute dish or partial meal total; explicit actual-ingredient recipe editor |
+| Unknown food | No automatic substitute or partial meal total; optional reviewed similar-recipe references and an actual-ingredient editor |
 | Languages | Chinese/English controls; English names for all 586 records and English methods for all 384 recipes |
 | Accounts | Register, sign in/out, revocable sessions, private meal history and ownership checks |
 | Personal reference | Age, height, weight, formula sex coefficient, activity and goal; deterministic daily energy/macronutrient reference |
@@ -24,15 +26,14 @@ with checkpoint tag `w13-final`. The merge identifiers above describe the origin
 | Trends | 30-day calorie/weight charts; missing dates stay blank |
 | Models | Qwen and HKUST adapters share exact identity checks; Ollama remains experimental |
 
-The current catalogue preserves the `nutrichat` ingredient nutrients and existing
-350 recipe formulations, including the later egg-portion metadata. The
-[23 November follow-up](home-recipe-expansion.md) adds 34 reference recipes,
-reviewed aliases and the 162 missing English translations. Meishichina supplies
-only dish-name/style evidence; quantities and finished yields are project-authored
-assumptions, with nutrients calculated from USDA ingredients. This
-follow-up does not deploy the app and does not change `nutrichat`,
-`w13-final` or saved historical estimates. It does not train a model or claim
-measured nutrition for every Chinese dish.
+The [23 November follow-up](home-recipe-expansion.md) added 34 reference recipes,
+reviewed aliases and missing English translations. Meishichina supplies only
+dish-name/style evidence; editable recipe quantities and finished yields are
+project-authored assumptions, with nutrients calculated from USDA ingredients.
+The [white-cut chicken correction](white-chicken-reference.md) and
+[CFS prepared-food references](cfs-prepared-food-references.md) document subsequent
+nutrition updates. Saved historical estimates and `w13-final` remain unchanged.
+The app does not train a model or claim measured nutrition for every Chinese dish.
 
 ## Start an isolated preview
 
@@ -98,7 +99,10 @@ in Git. See [provider setup](local-hkust.md) and [data limits](nutrition-data.md
 2. Choose Basic or Advanced and describe a supported meal. Review interpreted
    foods, portions and assumptions. Answer missing-detail questions when needed.
 3. If a food has no record, correct its name or explicitly select its actual
-   ingredients and weights. The app must not invent a similar dish.
+   ingredients and weights. Alternatively, request a similar-recipe reference,
+   review the main ingredients and method, and explicitly accept the approximate
+   reference before reviewing its quantities. Ambiguous names require clarification;
+   the app must not substitute a dish automatically.
 4. Correct the result while unconfirmed. Choose the consumption date, then
    confirm. Confirmed meals are locked and contribute to that date's calorie sum.
 5. In **Daily diary**, choose a date and save weight and exercise; zero means no
