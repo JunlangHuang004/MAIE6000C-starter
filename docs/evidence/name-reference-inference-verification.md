@@ -64,3 +64,86 @@ allergy checker. The available catalogue can miss an otherwise reasonable
 reference, and a similar recipe is not evidence of nutritional equivalence.
 See [the workflow and limits](../similar-recipe-references.md) and
 [nutrition-data assumptions](../nutrition-data.md).
+
+## 2026-11-24: name grounding and preparation safeguards
+
+This follow-up covers the local `test` working tree based on `2e4e021`, using
+HKUST `gemini-2.5-flash-lite` at `http://localhost:8008`. The food catalogue and
+the `nutrichat` branch were not changed by this fix.
+
+The shared inference guard now checks the stored dish name in both the AI service
+and API. It rejects unsupported or contradictory ingredient types, unmentioned
+main ingredients, omitted named ingredients and ambiguous methods. Longest phrase
+matching distinguishes seasoning compounds, ingredient cuts and explicit states;
+a single ambiguous noun cannot become multiple ingredient variants. Unexplained
+name text produces a clarification question with no proposed facts. Explicit
+Chinese, Traditional Chinese and English cooking verbs are supported. Negated
+verbs are ignored: `烧（非油炸版）` now matches braising rather than frying.
+
+Final automated verification:
+
+- **2,670 backend unit/integration tests passed**, using
+  `NUTRITION_PROVIDER=demo LLM_PROVIDER=heuristic`.
+- **108 frontend tests passed**; the public response shape and editable
+  clarification interface remain unchanged.
+- Ruff and whitespace checks passed. All six changed application modules matched
+  the rebuilt API, AI and worker containers by SHA-256.
+- An initial backend run inherited the local cloud-provider settings and failed
+  eight offline-parser expectations. That run is retained separately; the final
+  properly configured run above passed. Automated tests made no intentional live
+  provider requests.
+
+An independent agent then entered 20 distinct names as `<name>200g`, with no
+ingredient corrections in the initial name-assisted path. The initial batch
+produced three exact catalogue matches, three candidate successes, twelve
+clarifications, one ranking error and one inference error. It also tested two
+explicit manual clarifications: the shrimp example reached an acknowledged
+reference selection, while the thigh example returned a ranking error. These
+first errors were retained rather than silently retried.
+
+| Case | Observed behavior |
+| --- | --- |
+| 香煎豆腐 | Suggested tofu/frying and recommended 蒜香煎豆腐. |
+| 家常烧豆腐 | Suggested tofu with seasonings, without invented pork; recommended 红烧豆腐. |
+| 蒜香炒芦笋 | Recommended 清炒芦笋. |
+| 蒜香牛肉粒 / 蚝油杏鲍菇 | Requested clarification; did not retain ground-beef or enoki substitutions. |
+| 凉拌手撕鸡 / 蒜香鸡腿 / 番茄牛腩煲 | Requested actual ingredient/cut/method information. |
+| 翡翠白玉汤 / 赛螃蟹 / 招牌私房菜 | Requested clarification rather than constructing an assumed recipe. |
+| 蚂蚁上树 / 豉油鸡 / 蒜蓉粉丝蒸虾 | Correctly recognized existing catalogue records before inference. |
+| 香辣虾, after explicit actual shrimp/chili and frying were supplied | Recommended 椒盐虾仁 and reached an acknowledged, unaccepted ingredient template. |
+
+Three diagnostic provider requests identified two avoidable formatting problems:
+the inference prose validator interpreted the English dish title "Three Cup
+Chicken" as a quantity, and a completed ranking response was not valid JSON.
+The provider wire contract was consequently reduced to facts/IDs only. The
+server now creates every displayed question, explanation and difference; the
+public schemas retain their existing strict checks. Malformed and incomplete
+provider output is still rejected, not repaired.
+
+After rebuilding, an independent agent made exactly three targeted HTTP checks
+against the final AI service, without another meal extraction:
+
+| Previously failing path | Final targeted result |
+| --- | --- |
+| 酱烧茄子 ranking | HTTP 200; 红烧茄子 (`dish_024`) and 鱼香茄子 (`dish_154`), with catalogue-derived explanations. |
+| 三杯鸡 inference | HTTP 200; normal clarification, empty ingredients and null method. |
+| 蒜香鸡腿 ranking after actual skinless thigh/garlic and frying were supplied | HTTP 200 with no candidates. The response contract passed, but the expectation of a nonempty recovery was **not met**. |
+
+The final three checks resolve the observed transport/format errors for those
+requests, but do not demonstrate successful reference recovery for the thigh
+example or constitute a rerun of the entire 20-name batch after the last change.
+The model may decline a mechanically compatible shortlist; a useful reference
+is not guaranteed. No ingredient-equality rule was relaxed to force a result.
+
+There were **49 live model calls** in total: 43 in the independent batch/manual
+checks, three diagnostic calls and three post-fix checks. There were no automatic
+retries. All three acknowledgement guards rejected selection without acceptance
+and allowed it with acceptance, while retaining the unknown identity, missing
+totals and an unaccepted ingredient template. All 20 synthetic analyses remained
+unconfirmed, with zero confirmed/dated meals and zero daily records. The test
+session was revoked. Account-specific evidence remains outside Git in
+`outputs/dish-name-fix-2026-11-24/` in the parent workspace.
+
+These checks evaluate software behavior and observed model responses, not the
+nutritional accuracy of an actual dish. Catalogue coverage and conservative
+name evidence still limit how many dishes receive suggestions.

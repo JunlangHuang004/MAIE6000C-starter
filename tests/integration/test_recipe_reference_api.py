@@ -67,9 +67,10 @@ def reference_flow(client, db_session, monkeypatch):
                         lambda: make_session_factory(db_session.get_bind()))
 
     def seed(mode='basic', extra_unknown=False, rice_grams=100,
-             weight_basis='cooked', weight_includes_inedible=None):
+             weight_basis='cooked', weight_includes_inedible=None,
+             original_name=ORIGINAL_NAME):
         draft = [
-            ExtractedItem(name=ORIGINAL_NAME, source_text=ORIGINAL_NAME,
+            ExtractedItem(name=original_name, source_text=original_name,
                           grams=200, weight_basis=weight_basis,
                           weight_includes_inedible=weight_includes_inedible).model_dump(),
             ExtractedItem(name='米饭', source_text='米饭', food_id='rice', grams=rice_grams,
@@ -80,8 +81,8 @@ def reference_flow(client, db_session, monkeypatch):
         state = evaluate_mode(draft, mode)
         row = Analysis(
             user_id=client.get('/auth/me').json()['id'],
-            food_text=ORIGINAL_NAME + '配米饭', mode=mode, status='needs_input',
-            conversation=[{'role': 'user', 'content': ORIGINAL_NAME + '配米饭'}], **state)
+            food_text=original_name + '配米饭', mode=mode, status='needs_input',
+            conversation=[{'role': 'user', 'content': original_name + '配米饭'}], **state)
         db_session.add(row)
         db_session.commit()
         return '/analyses/' + row.id, deepcopy(draft)
@@ -150,7 +151,8 @@ def test_name_inference_is_editable_advice_and_only_reviewed_facts_drive_ranking
         client, db_session, reference_flow, inference_gateway):
     seed, _, _, rank_calls = reference_flow
     _, calls = inference_gateway
-    path, original = seed(extra_unknown=True)
+    original_name = '鸡胸肉炒花生'
+    path, original = seed(extra_unknown=True, original_name=original_name)
     before = client.get(path).json()
     state = request_inference(client, path)
     item = state['draft'][0]
@@ -165,7 +167,7 @@ def test_name_inference_is_editable_advice_and_only_reviewed_facts_drive_ranking
     assert inferred['ingredient_ids'] == ['chicken', 'peanut']
     assert inferred['preparation'] == 'stir_fried'
     assert all(state[key] is None for key in KEYS) and state['details'] == []
-    assert calls == [{'original_name': ORIGINAL_NAME}] and rank_calls == []
+    assert calls == [{'original_name': original_name}] and rank_calls == []
     assert db_session.scalar(select(func.count(Job.id))) == 0
 
     # The user supplies the missing cucumber before explicitly requesting candidates.
@@ -176,7 +178,7 @@ def test_name_inference_is_editable_advice_and_only_reviewed_facts_drive_ranking
     offered = response.json()
     assert offered['draft'][0]['reference_inference'] == inferred
     assert offered['draft'][0]['reference_suggestions']['ingredient_ids'] == reviewed_ids
-    assert rank_calls == [{'original_name': ORIGINAL_NAME,
+    assert rank_calls == [{'original_name': original_name,
                            'ingredient_ids': reviewed_ids, 'preparation': 'stir_fried'}]
     selected = request_selection(client, path, offered)
     assert selected['draft'][0]['reference_selection']['ingredient_ids'] == reviewed_ids
@@ -201,6 +203,75 @@ def test_name_inference_clarification_has_no_assumed_facts_or_candidates(
     assert item == original[0]
     assert all(state[key] is None for key in KEYS)
     assert len(calls) == 1 and rank_calls == []
+
+
+@pytest.mark.parametrize('original_name,ingredient_ids,preparation', [
+    ('牛肉块炖土豆', ['beef', 'potato'], 'braised'),
+    ('清蒸杏鲍菇', ['enoki'], 'steamed'),
+    ('家常红烧豆腐', ['tofu', 'pork_ground'], 'braised'),
+    ('红烧豆腐', ['tofu', 'tofu_soft'], 'braised'),
+    ('芦笋炒虾仁加蟹棒', ['asparagus', 'shrimp'], 'stir_fried'),
+    ('芦笋西兰花炒虾仁', ['asparagus', 'shrimp'], 'stir_fried'),
+    ('蒜香鸡腿', ['chicken_thigh', 'garlic'], 'roasted'),
+    ('蒜香鸡腿肉', ['chicken_thigh', 'garlic'], 'roasted'),
+    ('Garlic chicken thigh', ['chicken_thigh', 'garlic'], 'roasted'),
+    ('清蒸茄子', ['eggplant'], 'fried'),
+    ('翡翠白玉汤', ['tofu', 'spinach', 'bok_choy', 'egg_raw'], 'boiled'),
+])
+def test_ungrounded_gateway_inference_becomes_clarification_without_assumed_facts(
+        client, db_session, reference_flow, inference_gateway,
+        original_name, ingredient_ids, preparation):
+    seed, _, _, rank_calls = reference_flow
+    gateway, calls = inference_gateway
+    gateway.update(ingredient_ids=ingredient_ids, preparation=preparation)
+    path, original = seed(extra_unknown=True, original_name=original_name)
+    before = client.get(path).json()
+
+    state = request_inference(client, path)
+
+    item = deepcopy(state['draft'][0])
+    inferred = item.pop('reference_inference')
+    assert inferred['status'] == 'needs_clarification'
+    assert inferred['ingredient_ids'] == [] and inferred['preparation'] is None
+    assert inferred['reason_zh'] and inferred['reason_en']
+    assert inferred['reason_zh'] != gateway['reason_zh']
+    assert inferred['reason_en'] != gateway['reason_en']
+    assert inferred['issued_revision'] == state['revision'] == before['revision'] + 1
+    assert inferred['provider'] == 'qwen' and inferred['inferred'] is True
+    assert item == original[0] and state['draft'][1:] == original[1:]
+    assert state['food_text'] == before['food_text']
+    assert state['conversation'] == before['conversation']
+    assert all(state[key] is None for key in KEYS) and state['details'] == []
+    assert calls == [{'original_name': original_name}] and rank_calls == []
+    assert db_session.scalar(select(func.count(Job.id))) == 0
+    assert client.get(path).json() == state
+
+
+@pytest.mark.parametrize('original_name,ingredient_ids,preparation', [
+    ('蒜香西兰花炒虾仁', ['broccoli', 'shrimp', 'garlic'], 'stir_fried'),
+    ('家常红烧豆腐', ['tofu'], 'braised'),
+    ('紅燒豆腐', ['tofu'], 'braised'),
+    ('牛肉块炖土豆', ['beef_chunk', 'potato'], 'braised'),
+    ('Garlic stir-fried broccoli and shrimp', ['broccoli', 'shrimp', 'garlic'],
+     'stir_fried'),
+])
+def test_literal_name_inference_remains_editable_without_requesting_references(
+        client, reference_flow, inference_gateway, original_name, ingredient_ids, preparation):
+    seed, _, _, rank_calls = reference_flow
+    gateway, calls = inference_gateway
+    gateway.update(ingredient_ids=ingredient_ids, preparation=preparation)
+    path, original = seed(original_name=original_name)
+
+    state = request_inference(client, path)
+
+    item = deepcopy(state['draft'][0])
+    inferred = item.pop('reference_inference')
+    assert inferred['status'] == 'suggested'
+    assert inferred['ingredient_ids'] == ingredient_ids
+    assert inferred['preparation'] == preparation
+    assert item == original[0] and state['draft'][1:] == original[1:]
+    assert all(state[key] is None for key in KEYS) and state['details'] == []
+    assert calls == [{'original_name': original_name}] and rank_calls == []
 
 
 def test_reinference_invalidates_previous_reference_offer_selection_and_template(

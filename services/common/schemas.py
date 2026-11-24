@@ -329,13 +329,39 @@ class RecipeRecommendationResponse(BaseModel):
     candidates: list[RecipeRankCandidate] = Field(max_length=3)
 
 
-class RecipeInferenceResponse(BaseModel):
+class RecipeReferenceId(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)
 
-    provider: Literal['demo', 'qwen', 'hkust', 'ollama']
+    food_id: str = Field(min_length=1, max_length=100)
+
+
+class RecipeReferenceRanking(BaseModel):
+    """Provider-only wire format; display explanations come from the catalogue."""
+    model_config = ConfigDict(extra='forbid', strict=True)
+
+    candidates: list[RecipeReferenceId] = Field(max_length=3)
+
+
+class RecipeInferenceFacts(BaseModel):
+    """Provider-only facts; no generated prose, amounts or nutrition claims."""
+    model_config = ConfigDict(extra='forbid', strict=True)
+
     status: Literal['suggested', 'needs_clarification']
     ingredient_ids: list[str] = Field(max_length=8)
     preparation: ReferencePreparation | None
+
+    @model_validator(mode='after')
+    def coherent_inference(self):
+        if self.status == 'suggested':
+            if not self.ingredient_ids or self.preparation in (None, 'other'):
+                raise ValueError('An inferred suggestion needs ingredients and a concrete method')
+        elif self.ingredient_ids or self.preparation is not None:
+            raise ValueError('Clarification must not retain unsubstantiated guesses')
+        return self
+
+
+class RecipeInferenceResponse(RecipeInferenceFacts):
+    provider: Literal['demo', 'qwen', 'hkust', 'ollama']
     reason_zh: str = Field(min_length=1, max_length=240)
     reason_en: str = Field(min_length=1, max_length=400)
 
@@ -364,16 +390,6 @@ class RecipeInferenceResponse(BaseModel):
                 value, re.I):
             raise ValueError('Inference explanations must not supply amounts or scores')
         return value
-
-    @model_validator(mode='after')
-    def coherent_inference(self):
-        if self.status == 'suggested':
-            if not self.ingredient_ids or self.preparation in (None, 'other'):
-                raise ValueError('An inferred suggestion needs ingredients and a concrete method')
-        elif self.ingredient_ids or self.preparation is not None:
-            raise ValueError('Clarification must not retain unsubstantiated guesses')
-        return self
-
 
 class AnalysisRead(BaseModel):
     mode: Literal["basic", "advanced"] = "advanced"

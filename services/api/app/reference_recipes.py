@@ -92,7 +92,8 @@ def reference_inference(
     try:
         request = RecipeInferenceRequest(
             original_name=original.get('original_name') or original['name'])
-        result = validated_reference_inference(request_reference_inference(request, settings))
+        result = validated_reference_inference(request_reference_inference(request, settings),
+                                               original_name=request.original_name)
         if result['provider'] != settings.effective_nutrition_provider:
             raise ValueError('Inference provider differs from configured provider')
     except (RuntimeError, ValueError, TypeError, KeyError) as exc:

@@ -1,8 +1,8 @@
 """Explicit approximate references, separate from exact food identity matching."""
-import re
 from copy import deepcopy
 
 from services.common.meal_engine import catalogue
+from services.common.preparations import preparation_steps
 from services.common.schemas import RecipeInferenceResponse, RecipeRecommendationResponse
 
 
@@ -26,22 +26,30 @@ def validate_reference_ingredients(ingredient_ids):
 
 
 def _method_matches(food, preparation):
-    if food.get('preparations'):
-        return preparation in food['preparations']
-    text = food['method']
-    patterns = {
-        'raw': r'生食', 'as_served': r'凉拌|拌匀|拌醋|糖拌',
-        'boiled': r'煮|焯|汆|氽', 'steamed': r'蒸', 'roasted': r'烤|焗',
-        'stir_fried': r'炒', 'fried': r'煎|炸', 'braised': r'炖|焖|红烧|卤|烧制',
-    }
     if preparation == 'other':
         # "Other" does not establish a compatible cooking method.
         return False
-    if preparation in {'boiled', 'raw', 'as_served'} and re.search(r'煎|炸|烤|焗', text):
+    if 'preparations' in food:
+        return preparation in (food['preparations'] or ())
+    steps = preparation_steps(food['method'])
+    methods = {method for method, _ in steps}
+    if preparation not in methods:
         return False
-    if preparation == 'stir_fried' and re.search(r'蒸|煮汤|炖|焖|煎|炸|烤', text):
+    incompatible = {
+        'raw': {'boiled', 'steamed', 'roasted', 'stir_fried', 'fried', 'braised'},
+        'as_served': {'roasted', 'stir_fried', 'fried', 'braised'},
+        'boiled': {'steamed', 'roasted', 'stir_fried', 'fried', 'braised'},
+        'steamed': {'roasted', 'fried', 'braised'},
+        'stir_fried': {'steamed', 'roasted', 'fried', 'braised'},
+        'braised': {'roasted', 'fried'},
+    }
+    if methods & incompatible.get(preparation, set()):
         return False
-    return re.search(patterns[preparation], text) is not None
+    # Boiling/blanching can precede a stir-fry; boiling or steaming can
+    # precede a cold dressing. Mixing before cooking is not a cold dish.
+    if preparation in {'as_served', 'stir_fried'} and steps[-1][0] != preparation:
+        return False
+    return True
 
 
 def reference_shortlist(ingredient_ids, preparation):
@@ -102,13 +110,17 @@ def validated_reference_candidates(value, ingredient_ids, preparation):
     return {'provider': response.provider, 'candidates': candidates}
 
 
-def validated_reference_inference(value):
+def validated_reference_inference(value, original_name=None):
     """Treat inferred ingredients as reviewable suggestions, never observed facts."""
     response = RecipeInferenceResponse.model_validate(value)
     validate_reference_ingredients(response.ingredient_ids)
     if response.status == 'suggested' and not set(response.ingredient_ids) - SEASONINGS:
         raise ValueError('An inferred suggestion needs at least one main ingredient')
-    return response.model_dump()
+    result = response.model_dump()
+    if original_name is not None:
+        from services.common.name_inference import grounded_inference
+        result = grounded_inference(result, original_name, SEASONINGS)
+    return result
 
 
 def validate_reference_selection(selection):
