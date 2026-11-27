@@ -1,20 +1,27 @@
 # NutriChat architecture
 
-Current implementation documented: 2026-11-23 follow-up to `test`; historical course checkpoint `w13-final` is unchanged.
+Implementation baseline: `nutrichat` at
+`1d17a66ffa445a5dc6a4d699e408c6772929ea79`. `nutrichat` is the default integrated
+branch; `test` remains available for development. Remote `main` branches were
+removed after preservation under archive tags. The refreshed final package uses
+`w13-final`; its earlier checkpoint is preserved at `archive-w13-final-6b87aef`,
+resolving to `6b87aef772f7cfde139a383c866e5576ea955cb3`. See the exact release
+boundaries in [integration](integration.md). Publishing the release does not
+resubmit Canvas or establish a deployment of the current code to ECS.
 
 Catalogue `2026-11-24.2` contains 202 USDA ingredient records and 384
 project-authored reference recipes. Sixteen existing recipe identities also carry
 separate CFS prepared-food references. Source-vector calculations and ingredient
-calculations remain distinct. The 23 November follow-up added 34 recipes;
-existing ingredient nutrients, recipe IDs and the preceding 350 formulations are
-unchanged. The earlier 14 November egg-portion metadata remains in place.
-Meishichina supplies dish-name/style evidence, while recipe quantities and yields
-are project assumptions and nutrient calculations use USDA ingredients. See
-[home-recipe provenance](home-recipe-expansion.md). Data and validation updates do
-not train model weights. Publishing this follow-up does not deploy the app or change historical tags.
-Account/profile/tracking migrations extend the application schema separately.
-The merged build is published on `test`; `nutrichat`, the Week 7 tag and the
-public deployment remain unchanged.
+calculations remain distinct. The 23 November expansion added 34 recipes and
+preserved the previous formulas at that step; the later
+[white-cut chicken correction](white-chicken-reference.md) changed that dish's
+reference and added two cooked-chicken ingredient records. The current catalogue
+must not be described as preserving every original formulation.
+Meishichina supplies dish-name/style evidence, while editable recipe quantities
+and yields are project assumptions. See [home-recipe provenance](home-recipe-expansion.md)
+and [CFS source boundaries](cfs-prepared-food-references.md). Data and validation
+updates do not train model weights. Account/profile/tracking migrations extend
+the application schema separately.
 
 ## Services and data flow
 
@@ -31,7 +38,21 @@ Browser -> [optional HTTPS proxy] -> FastAPI API + account sessions
                                               extraction   catalogue arithmetic
 ```
 
-The API atomically saves an analysis and pending job. A separate worker claims the job, calls the internal AI service and persists the result or questions. The browser polls the API and renders saved state. PostgreSQL is the source of truth; localStorage remembers the last analysis ID per internal user ID and the browser’s interface-language preference. It does not store authoritative records, profile measurements or session tokens.
+The diagram shows the main asynchronous meal-analysis path: the API atomically
+saves an analysis and pending PostgreSQL job; a separate worker claims the job,
+calls the internal AI service and persists the result or questions. The browser
+polls the API and renders saved state. PostgreSQL is the source of truth;
+localStorage remembers the last analysis ID per internal user ID and the browser's
+interface-language preference. It does not store authoritative records, profile
+measurements or session tokens.
+
+Profile and tracking calculations are synchronous API operations without AI calls.
+The optional `reference-inference` and `reference-candidates` operations are also
+synchronous: the API calls the AI service directly with `httpx`, validates and
+saves the response, and returns the updated analysis without creating a job.
+Candidate requests with missing facts or no compatible shortlist do not call the
+model. `reference-selection` only saves an unaccepted template. Acceptance through
+`/ingredients` then queues the ordinary deterministic worker calculation.
 
 - API: accounts, authorization, profiles/references, diary/trends, validation, revision/state checks, saved records, catalogue and HTML UI.
 - Worker: asynchronous orchestration and job/error bookkeeping.
@@ -41,12 +62,27 @@ The API atomically saves an analysis and pending job. A separate worker claims t
 
 ## Personal profile calculation
 
-The authenticated API stores one current profile per user. A synchronous Python
-calculator derives versioned energy and macro references without calling the worker,
-AI service or Qwen. Profile input never joins meal-extraction prompts. Conditional
-revision updates prevent stale tabs from overwriting newer data. Migration 0007
-adds `user_profiles` without changing meals, accounts or sessions. See
-[personalization](personalization.md).
+The authenticated API stores one current profile per user. The synchronous
+`mifflin-evidence-2026-v2` calculator derives approximate energy and macro references
+without calling the worker, AI service or any model. It uses age, height, weight,
+formula sex coefficient, activity, goal, and explicit strength-training and adult
+scope answers. Profile input never joins meal-extraction or reference prompts.
+
+Valid inputs are saved even when references are withheld. Missing scope/training
+answers, a professional-guidance scope, muscle gain without strength training,
+BMI below 18.5 or at least 40, low proposed energy, energy below estimated resting
+expenditure, or an out-of-scope macro distribution return `needs_review` with all
+four target values null. Daily balance is also withheld for an ineligible profile;
+ordinary meals and diary recording remain available. These are product eligibility
+rules, not a clinical assessment. See [personalization](personalization.md) for
+formulas, source limits and the exact guard codes.
+
+Conditional revisions prevent stale tabs from overwriting newer data. Migration
+0007 creates `user_profiles`; `20261121_0011` adds nullable `strength_training`
+and `reference_scope` without defaults or consent backfills. Historical profiles
+therefore need explicit answers before targets return. Omitted new fields preserve
+existing answers on update; explicit null clears them. Only current inputs are
+stored, with references computed on read; historical target snapshots are absent.
 
 ## Daily records and trends
 
@@ -181,7 +217,23 @@ Basic mode applies labelled defaults to a calculation copy: reference portions, 
 
 Advanced mode asks for grams, weight state, preparation and consumed oil as needed. Recipe calculations require explicit acceptance of editable ingredient quantities and finished batch yield. Unmatched foods or contradictory raw/cooked/preparation facts can require questions in either mode. Pending questions leave every nutrient total null.
 
-Nutrients equal the sum of ingredient grams multiplied by their per-100g data. Recipe portions scale the whole-batch nutrients by consumed cooked weight divided by finished batch weight. Data provenance, limits and exceptions are detailed in [nutrition data](nutrition-data.md).
+Ingredient calculations sum grams multiplied by the corresponding per-100-g
+nutrient data. Recipe portions scale the whole-batch nutrients by consumed cooked
+edible weight divided by finished batch weight. The separate CFS prepared-food
+path scales the complete source vector by cooked edible portion; it never mixes
+source calories with recipe macros. Basic mode uses that source path for an
+ordinary eligible match; Advanced mode offers source or ingredient calculation.
+Explicit ingredient, yield or oil details use ingredients, including zero oil.
+Raw or gross bone/shell weights need clarification before a prepared-food source
+can be used. Actual-ingredient and similar-reference recipes always use their
+accepted ingredients. See [CFS routing](cfs-prepared-food-references.md).
+
+CFS available carbohydrate and USDA total carbohydrate by difference keep their
+source definitions. Mixed-definition meals show separate labelled carbohydrate
+subtotals, with the combined carbohydrate field null; energy, protein and fat
+remain available and the meal can still be confirmed. Saved source versions,
+basis and caveats are retained with the result. Data provenance, limits and
+exceptions are detailed in [nutrition data](nutrition-data.md).
 
 The [explicit ingredient builder](ingredient-recipes.md) can replace one unresolved
 draft item with a user-accepted recipe. `POST /analyses/{id}/ingredients` enforces authenticated ownership and validates
@@ -197,14 +249,16 @@ answers, mode changes and final confirmation retain the ordinary revision rules.
 
 ## Persistence and concurrency
 
-Analysis states are `queued`, `needs_input`, `completed`, `failed`, `confirmed`. Jobs track `pending`, `claimed`, `completed`, `failed`. A question is a completed worker operation, not a failed job. User correction/reply/mode-switch requests check the current revision and state; confirmation locks completed records. The [API contract](api-contract.md) defines the payloads and transitions.
+Analysis states are `queued`, `needs_input`, `completed`, `failed`, `confirmed`. Jobs track `pending`, `claimed`, `completed`, `failed`. Worker-generated clarification completes its job without failing; synchronous reference clarification can occur without a job. User correction/reply/mode-switch requests check the current revision and state; confirmation locks completed records. The [API contract](api-contract.md) defines the payloads and transitions.
 
 Alembic migrations add the analysis workflow, revision/confirmation fields (0003), JSON dialogue and evidence (0004), and mode (0005). Existing analyses receive `advanced` as their default mode. Migration 0006 adds users/sessions and nullable owners; ownerless historical
 records remain preserved but inaccessible to new accounts. Migration 0007 adds
 profiles; 0008 adds daily records and backfills older confirmed meal dates using
 Hong Kong confirmation dates. Migrations 0009 and 0010 add exercise and intake
-coverage respectively; the current head is `20261030_0010`. These migrations do
-not overwrite saved nutrient results or food catalogue files. API startup runs migrations before the worker starts.
+coverage respectively. Migration 0011 adds nullable profile scope/training answers;
+the current head is `20261121_0011`. These migrations do not overwrite saved
+nutrient results or food catalogue files. API startup runs migrations before the
+worker starts.
 
 ## Deployment boundaries
 
@@ -216,7 +270,8 @@ The separate offline demo defaults to project `nutrichat-integrated-demo` and po
 
 Cloud Compose remains a separate deployment procedure. Optional public Compose
 adds Nginx on 80/443; authentication and ownership are enforced by the API, not the
-old shared-password gateway. Existing ECS has not been redeployed. Secrets,
+old shared-password gateway. These documents do not establish that ECS is running
+the current candidate. Secrets,
 certificates and backups remain external files excluded from Git. See
 [the integration guide](integration.md) and [cloud deployment](cloud-deployment.md).
 
@@ -246,11 +301,16 @@ are correct. Users must review interpreted foods and assumptions before confirmi
 See [ADR 0001](adrs/0001-baseline-stack.md) for the starter stack,
 [ADR 0002](adrs/0002-source-backed-dual-mode.md) for the nutrition design and
 [ADR 0003](adrs/0003-private-tracking-and-release-boundaries.md) for account-private
-tracking and release boundaries. Current evidence is in
-[Week 13 verification](evidence/week13-verification.md); the
-[14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md)
-records the most recent earlier meal/browser review, after the
-[14 November workspace review](qa/reports/2026-11-14-fresh-review.md).
+tracking and release boundaries. The latest recorded application checks are
+[24 November name-reference verification](evidence/name-reference-inference-verification.md):
+2,670 backend and 108 frontend tests, plus 49 bounded live model calls with the
+failures and limitations retained. The final three live checks were targeted, not
+a rerun of the entire earlier 20-name batch; the thigh example still returned no
+candidates. The [CFS pilot review](evidence/cfs-pilot20-review.md) records the
+separate source-reference work. [Week 13 verification](evidence/week13-verification.md)
+and the [14 November meal/browser review](qa/reports/2026-11-14-recipe-usability.md)
+remain historical evidence for their own snapshots. No test or smoke rerun is
+claimed by this documentation refresh.
 
 ## Worker contract and state ownership
 
@@ -282,16 +342,17 @@ sequenceDiagram
 | --- | --- | --- | --- |
 | `queued` / `pending` | API | Valid input; both rows committed together; attempts 0 | Accepted, waiting for worker |
 | `queued` / `claimed` | Worker | Pending job selected with `FOR UPDATE SKIP LOCKED`; claim time and attempts increment committed | Processing visible through Job; Analysis has no separate processing state |
-| `completed` / `completed` | Worker | Valid complete result; all four totals and job completion timestamp saved | Ready for review; user may correct, switch mode or confirm |
+| `completed` / `completed` | Worker | Valid result and job completion timestamp saved; combined carbohydrate may be null for mixed definitions | Ready for review; user may correct, switch mode or confirm |
 | `needs_input` / `completed` | Worker | Draft/questions saved; all totals null; job completion timestamp saved | Clarification required, not a failed processing attempt |
 | `failed` / `failed` | Worker | Caught exception; generic analysis error, bounded job error and completion timestamp saved | Correct/reply to enqueue a new job after resolving the cause |
 | `queued` / new `pending` job | API | Revision/state checked correction, reply or mode switch; old totals cleared | New work; previous job remains historical evidence |
 | `confirmed` / previous job unchanged | API | Current completed revision confirmed; timestamp saved | Locked; start another analysis for changes |
 
-The client cannot directly set lifecycle states. The AI component receives only the
-analysis ID, meal text, mode, bounded conversation and draft from the worker, and
-returns structured extraction/evaluation results. It does not write analysis/job
-rows or confirm user records. There is no scheduler in this implementation.
+The client cannot directly set lifecycle states. On this worker path, the AI
+component receives the analysis ID, meal text, mode, bounded conversation and
+draft, and returns structured extraction/evaluation results. The direct reference
+operations below use their own restricted payloads. The AI service does not write
+analysis/job rows or confirm user records. There is no scheduler in this implementation.
 
 ### Timeout, failure, retry and idempotency decisions
 
@@ -324,8 +385,9 @@ isolated Compose project so existing local and public demos keep running.
 
 ## Historical Week 7 evidence
 
-The following reports describe their labelled source snapshots. Final-release
-validation is recorded separately in [Week 13 verification](evidence/week13-verification.md).
+The following reports describe their labelled source snapshots. The historical
+course package has separate [Week 13 verification](evidence/week13-verification.md);
+the later name-reference and CFS reports above cover newer implementation work.
 
 The [midterm artifact](../submissions/week07/README.md) records the submitted historical scope and
 team responsibilities. A [fresh rehearsal](evidence/week07-verification.md) captures
@@ -348,15 +410,32 @@ every newer commit or provider interpretation has passed the same live checks.
 
 The [similar-recipe workflow](similar-recipe-references.md) adds owner-scoped
 inference, candidate and selection endpoints. Optional name inference proposes
-supported ingredient IDs and a preparation as editable guesses. It persists in
-`reference_inference` and requires user review before requesting candidates;
-it never fills the unknown item's exact identity or nutrition. The AI service ranks a bounded server
+supported ingredient IDs and a preparation as editable guesses. Both the AI
+service and API ground these facts in the stored unknown name: extra or omitted
+main ingredients, unsupported cuts/species/states, unexplained name text and
+unsupported cooking methods produce clarification. Longest-phrase matching and
+negated-verb handling prevent ingredient compounds or excluded methods from
+becoming facts. This conservative guard does not establish what was actually eaten.
+
+The inference model wire response has only `status`, `ingredient_ids` and
+`preparation`; candidate ranking returns only candidate IDs. The server generates
+bilingual questions, reasons and ingredient differences. Malformed, incomplete,
+duplicate or out-of-shortlist output is rejected without silent repair.
+
+Inference persists in `reference_inference` and requires user review before a
+separate candidate request; it never fills the unknown item's exact identity,
+selects a recipe or supplies nutrition. The AI service ranks a bounded server
 shortlist with identical main-ingredient sets and compatible methods. Missing or
 additional main ingredients are rejected before ranking and again on selection;
-classified seasonings may differ. Display explanations are built from catalogue
-ingredients, without trusting model assertions about ingredient contents. The API
-validates candidate IDs and persists the offer against the meal
-revision and catalogue version. Explicit user selection creates an unaccepted
-ingredient template, not a calorie total. The existing ingredient endpoint and
-worker calculate only after review; original identity and approximation
-provenance remain in the JSON draft and details. No schema migration is needed.
+classified seasonings may differ. The model may still return no candidates.
+
+These inference and candidate requests synchronously call AI from the API and
+create no worker jobs. Ownership and revision/state checks run again after a
+potentially slow request. Offers are bound to a revision and catalogue version.
+Explicit selection requires `accepted: true` but saves only an unaccepted
+ingredient template with the original unknown identity and missing totals.
+Only subsequent acceptance of reviewed amounts, yield and consumed portion through
+`/ingredients` queues worker recalculation, without another model interpretation.
+The final meal still requires separate confirmation. Original identity and
+approximation provenance remain in the JSON draft and details. No schema migration
+is needed for these reference endpoints.

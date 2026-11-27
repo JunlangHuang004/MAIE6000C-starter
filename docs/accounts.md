@@ -5,9 +5,13 @@ and account-owned meal histories. It also includes
 [private profiles and daily references](personalization.md), plus
 [daily calorie/weight records and 30-day trends](tracking.md). Google login is not
 implemented.
-The merged features are published on `test`; the `nutrichat` branch and
-`w07-midterm` submission snapshot remain unchanged.
-No public ECS deployment is included in this increment.
+The integrated implementation is on default branch `nutrichat`, with baseline
+`1d17a66ffa445a5dc6a4d699e408c6772929ea79`; `test` remains for development.
+Remote `main` branches were removed after preservation under archive tags.
+`w07-midterm` remains historical. The refreshed final package uses `w13-final`;
+the earlier `6b87aef772f7cfde139a383c866e5576ea955cb3` checkpoint is preserved at
+`archive-w13-final-6b87aef`. Publishing this release does not establish a current
+ECS deployment or Canvas resubmission. See [integration and release boundaries](integration.md).
 
 ## Run the merged preview
 
@@ -83,6 +87,21 @@ them outside Git and restrict access. The worker and AI service remain internal
 trusted services. Queue retries, crash recovery and request idempotency are still
 separate future work.
 
+The current migration head is `20261121_0011`. Profiles have explicit nullable
+strength-training and adult-reference-scope answers; migration does not infer or
+backfill either answer for existing users. Profile v2 saves valid inputs while
+withholding targets for missing confirmations, professional-guidance scope,
+muscle gain without training, BMI/energy eligibility guards or incompatible macro
+allocation. Withheld targets also withhold daily balance, but do not block meals
+or diary records. See [profile privacy and eligibility](personalization.md).
+
+Meal analyses and accepted ingredient recipes use worker jobs. Profiles and
+tracking calculate synchronously in the API without sending personal measurements
+to a model. Optional name inference and candidate search call the internal AI
+service directly from the API; every request still checks account ownership,
+revision and state. Reference selection does not create a job or calculate a meal:
+it stores an unaccepted ingredient template for the user's further review.
+
 ## Verification
 
 Use the current commands in [operations](operations.md) and the
@@ -92,5 +111,10 @@ Smoke checks require an offline stack and create synthetic accounts/records; the
 require open registration or explicit smoke-account credentials. These checks do
 not establish model accuracy or public deployment security.
 
-The [2026-10-27 account report](evidence/accounts-verification.md) remains historical
-evidence for its source snapshot, not a result for this merged checkout.
+The latest [name-reference verification](evidence/name-reference-inference-verification.md)
+records 2,670 backend and 108 frontend tests plus 49 bounded live model calls,
+including failures, clarifications and targeted follow-ups. These counts do not
+establish that every feature was retested live on the current documentation
+candidate. The [2026-10-27 account report](evidence/accounts-verification.md) and
+earlier smoke checks remain historical evidence for their own snapshots. No new
+tests, live calls or deployment checks were run for this documentation refresh.

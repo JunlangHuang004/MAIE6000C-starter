@@ -1,125 +1,188 @@
 # NutriChat — Final technical brief and postmortem
 
-**Team:** NutriChat · **Prepared:** 2026-11-15 · **Checkpoint:** `w13-final` on `test`
+**Team:** NutriChat · **Updated:** 2026-11-27 · **Release:** `w13-final`
+
+Application source baseline: `1d17a66ffa445a5dc6a4d699e408c6772929ea79`.
+Resolve `w13-final^{commit}` for the release including these final documents.
+The earlier package at `6b87aef772f7cfde139a383c866e5576ea955cb3` is preserved
+under `archive-w13-final-6b87aef`; its evidence retains its original scope.
 
 ## 1. System and audience
 
 NutriChat helps students and everyday home-food eaters estimate meal nutrients,
-especially for Chinese dishes, then review confirmed meals across days. The final
-slice is **sign in → describe → persist/enqueue → interpret/calculate → clarify or
-correct → confirm/reload → private diary/trends**. Users can inspect the quantities,
-reference recipes and sources behind an estimate. The product supports awareness;
-it does not measure a meal's nutrients or prescribe a clinical diet.
+especially for Chinese dishes, then review confirmed meals across days. The
+implemented workflow is **sign in → describe → persist/enqueue → interpret and
+calculate → clarify or correct → confirm/reload → private diary/trends**. Users
+can inspect quantities, calculation choices and sources behind an estimate.
+Unknown dishes have optional, explicitly reviewed reference-recipe recovery.
+The product supports awareness; it does not measure the user's meal or prescribe
+a clinical diet.
 
-## 2. Final architecture
+## 2. Architecture and implemented features
 
-The browser calls a FastAPI API. The API commits an account-owned analysis and
-pending job together in PostgreSQL, then returns without waiting for model work.
-A separate worker claims the pending job and calls the internal AI service over
-HTTP. Qwen/HKUST extracts structured food facts; strict identity checks and Python
-arithmetic determine results or missing-information questions. The worker saves
-the outcome; browser polling reads saved state. The API owns review revisions and
-confirmation. Confirmed meals and their consumption dates are locked.
+The plain JavaScript browser calls a FastAPI API. The API commits an account-owned
+analysis and pending job together in PostgreSQL, then returns without waiting for
+model work. A separate worker claims the job and calls the internal AI service
+over HTTP. The configured Qwen/HKUST model extracts structured meal facts; strict
+identity checks and deterministic Python calculation produce results or questions.
+The worker saves the outcome, and browser polling reads saved state. The API owns
+review revisions and confirmation. Confirmed meals and consumption dates are locked.
 
-PostgreSQL also holds users, hashed sessions, profiles and daily records. Alembic
-migrations through `20261030_0010` support exercise and intake coverage alongside
-accounts/profile/tracking. Profile references and diary/balance aggregation are
-synchronous deterministic API work; profile measurements are not sent to the model.
-The plain JavaScript interface separates Meals, Daily diary, Trends and My goals.
-See [architecture](../../docs/architecture.md) and [ADRs](../../docs/adrs/).
+PostgreSQL also stores users, hashed sessions, profiles and daily records. Alembic
+migrations run through **`20261121_0011`**, which adds nullable training and reference
+scope answers without inventing answers for old profiles. The current profile
+formula is **`mifflin-evidence-2026-v2`**. It uses explicit adult inputs, activity,
+goal and training, with eligibility checks that withhold all targets when the
+inputs fall outside the automatic-output policy. Missing answers are not false
+answers, and successful arithmetic is not evidence of individual suitability.
+Profile calculations run locally in Python; profile measurements are not sent to
+the model. See [personalization](../../docs/personalization.md).
 
-## 3. AI's bounded role
+The bilingual interface has four panels: **Meals, Daily diary, Trends and My goals**.
+Diary calories come from confirmed meals or a manual total that replaces the meal
+sum. Weight, exercise and five-category intake coverage are separately recorded;
+blank exercise is unknown, while zero records none. Approximate balance needs an
+applicable profile, intake and explicit exercise. Completeness is self-reported.
+Dates use **Asia/Hong_Kong**. Trends covers 30 consecutive dates, averages only
+recorded calorie dates and compares the first and last recorded weights. Lines
+connect observations at their date positions without filling missing values;
+missing dates remain null, while explicit zero remains a record. Daily weight
+does not update the profile. Current-profile changes can alter historical displayed
+balances; historical target snapshots are not stored. See
+[tracking](../../docs/tracking.md), [architecture](../../docs/architecture.md)
+and [ADRs](../../docs/adrs/).
 
-The model interprets text, quantities, preparation and corrections using bounded
-catalogue context. It is not the nutrition database, cannot approve a recipe and
-does not write user records directly. Supported identities resolve through exact
-names/reviewed aliases; an unverified item blocks all meal totals. Users can supply
-actual known ingredients through a structured editor instead of trusting an
-invented decomposition.
+## 3. Nutrition provenance and AI boundaries
 
-The catalogue has 200 USDA ingredient records and 350 reference recipes. Nutrient
-values and identities are retained from `nutrichat`; explicit 50 g peeled-egg
-portion/source metadata was added later. Basic mode labels defaults; Advanced
-requires missing facts and recipe acceptance. Updating data/prompts does not train
-model weights. The six-food offline fixture demonstrates the service path without
-cloud access; it does not demonstrate real AI interpretation.
+Catalogue **`2026-11-24.2`** contains **202 USDA ingredient records and 384
+editable reference recipes**. All records have English names and all recipes have
+English methods. USDA ingredient records retain source IDs and CC0 provenance.
+The reference recipes are project-authored assumptions about composition, amounts
+and cooked yield. The white-cut chicken correction uses an explicitly labelled
+cooked-chicken proxy rather than the earlier raw-meat/yield assumption.
+
+**Sixteen existing dishes** also carry attributed Hong Kong Centre for Food Safety
+(CFS) prepared-food vectors. Basic uses the complete source vector scaled by cooked
+edible weight for an ordinary matched dish. Advanced exposes a source-reference
+versus editable-ingredient choice. Explicit ingredient/oil/yield facts, including
+zero oil, use ingredient arithmetic; the app does not subtract oil from a CFS
+average or mix its calories with recipe macros. The other 368 dishes have no CFS
+vector in this catalogue and retain illustrative formulas. Saved basis/source
+snapshots preserve historical results across catalogue changes. CFS averages are
+not measurements of the user's dish, and the combined catalogue is not wholly CC0.
+
+CFS available carbohydrate differs from USDA total carbohydrate. Mixed-definition
+meals show separate labelled subtotals instead of a misleading combined number;
+energy, protein and fat can still be reviewed and the meal confirmed. See
+[nutrition data](../../docs/nutrition-data.md),
+[CFS references](../../docs/cfs-prepared-food-references.md) and the
+[20-dish source pilot](../../docs/evidence/cfs-pilot20-review.md).
+
+The model interprets language; it is not the nutrition database, cannot approve
+a recipe and cannot write user records directly. Exact supported names/reviewed
+aliases establish identity. An unresolved food blocks all meal totals, including
+known items' contributions. Basic defaults remain labelled assumptions; Advanced
+requires missing facts and explicit ingredient-recipe review.
+
+For an unknown name, the user can separately request optional name inference,
+review/edit the guessed ingredients and method, and then request similar recipes.
+Candidates must have **exactly the same main-ingredient IDs** and a compatible
+method; species, cuts and raw/cooked states are not interchangeable. Seasonings
+may differ. A valid response may contain no candidates. Selection requires an
+approximation acknowledgement, then opens an **unaccepted ingredient draft**.
+Ingredient acceptance, Python calculation and final meal confirmation are separate
+steps; original names and reference provenance remain visible. Users can instead
+enter known actual ingredients directly.
+
+On this reference path, the model returns compact facts/IDs only. The server
+generates display explanations, questions and ingredient differences from the
+catalogue and reviewed facts. It rejects malformed/incomplete output without
+repairing it into an accepted answer. Name inference and candidate ranking use
+synchronous API-to-AI requests; the meal calculation still uses the durable worker
+path. The latest recorded live provider is
+**HKUST `gemini-2.5-flash-lite`**; Qwen and experimental Ollama alternatives are
+separately configured. Updating prompts/data does not train model weights.
+The six-food offline fixture proves the service path, not Chinese interpretation.
+See [reference workflow](../../docs/similar-recipe-references.md).
 
 ## 4. Evidence-based evaluation
 
-| Dimension | Evidence and practical conclusion |
+| Evidence | Observed result and practical limit |
 | --- | --- |
-| Final verification | 1,230 backend, 56 frontend and 2 service smoke tests passed, plus fresh startup, migrations, durable lifecycle and restart checks. Independent live replay: 105 passed, 0 failed, 1 unmet assertion; 14 provider requests across both phases. See [final verification](../../docs/evidence/week13-verification.md) for source identity and limits. |
-| Functionality | [14 November recipe follow-up](../../docs/qa/reports/2026-11-14-recipe-usability.md) records 1,208 backend tests, 56 frontend tests, eight successful exact replays after fixes, and a completed correction/confirmation journey. These are dated earlier checks. |
-| Reliability | Controlled tests cover validation, ownership, revisions and arithmetic; live review retains failed extractions and unresolved wording. No overall model success rate or all-350-recipe accuracy sweep is claimed. |
-| Performance | Async enqueue keeps model latency outside the immediate submission request. Finite provider/worker timeouts bound waits, but no throughput, load-capacity or latency service-level claim has been established. |
-| Reproducibility | Docker Compose, migrations, versioned data and a no-key durable harness allow local reproduction. The required tag identifies the submitted source; logs identify their tested version. |
-| Operations | Health probes, structured job-ID logs and an internal AI request counter make processing observable. Readiness alone does not validate model credentials/quota or end-to-end interpretation. |
-| Privacy baseline | API ownership checks, opaque hashed sessions, private responses and server-side provider credentials separate accounts. Old ownerless meals remain inaccessible. This is not a production security audit. |
+| [24 November final automated checks](../../docs/evidence/name-reference-inference-verification.md#2026-11-24-name-grounding-and-preparation-safeguards) | **2,670 backend and 108 frontend tests passed**; Ruff and whitespace checks passed. The backend used the explicit offline configuration. These controlled checks do not measure live-provider or nutritional accuracy. |
+| Hosted CI for application baseline | Checks passed for `1d17a66ffa445a5dc6a4d699e408c6772929ea79` in the [primary repository](https://github.com/JunlangHuang004/MAIE6000C-starter/actions?query=sha%3A1d17a66ffa445a5dc6a4d699e408c6772929ea79) and [mirror](https://github.com/JunlangHuang004/Maie-6000c-starter-Junlang-Huang/actions?query=sha%3A1d17a66ffa445a5dc6a4d699e408c6772929ea79). This does not establish CI for a later documentation/submission SHA. |
+| 24 November live name/reference review | **49 model calls total**: 43 batch/manual calls, three diagnostics and three targeted post-fix calls. The initial 20 names produced three exact matches, three candidate successes, twelve clarifications and two errors. Manual shrimp clarification reached an acknowledged template; the thigh path initially errored. |
+| After the final compact-output change | Three direct AI HTTP checks returned 200: eggplant ranking offered `dish_024`/`dish_154`; Three Cup Chicken inference clarified; thigh ranking returned no candidates. The expected nonempty thigh recovery was **not met**. These three checks are not a full rerun of the 20-name batch or of the browser workflow after the last change. |
+| Source/reference checks | [CFS verification](../../docs/evidence/cfs-prepared-reference-verification.md), the [20-dish pilot](../../docs/evidence/cfs-pilot20-review.md) and [strict-reference audit](../../docs/evidence/strict-reference-verification.md) document different dated scopes. The strict audit's ingredient arithmetic predates the CFS default and must not be presented as current source-vector results. |
+| [15 November historical package](../../docs/evidence/week13-verification.md) | 1,230 backend, 56 frontend and two service smoke tests, fresh migrations to the then-current `0010`, durable lifecycle and retained-volume restart checks. Independent live assertions: 105 passed, 0 failed, 1 unmet; 14 provider requests, plus a separate browser request. These are historical evidence, not reruns of this candidate. |
 
-The [earlier 14 November workspace review](../../docs/qa/reports/2026-11-14-fresh-review.md)
-and [3 November integration verification](../../docs/evidence/integration-verification.md)
-retain different test scopes. Counts are never added across checkpoints. Saved
-reference arithmetic is distinct from measured nutritional ground truth.
+The latest 20 synthetic name-review meals remained unconfirmed, with no confirmed
+dates or daily records, and the session was revoked. Failed attempts were retained;
+there were no automatic retries. Counts across dates/subsets are not additive.
+Account-specific 24 November transcripts remain outside Git; the repository holds
+the sanitized report. The [15 November screenshots](DEMO.md#captured-synthetic-browser-examples)
+are historical and predate the new features. No current full walkthrough or
+independent human-team rehearsal is claimed by this documentation refresh.
 
-## 5. Engineering trade-offs
+Durable enqueue keeps model latency outside the immediate submission request.
+Health probes, job-ID logs and an internal AI request counter expose processing;
+readiness does not prove provider quota or interpretation quality. Ownership,
+opaque hashed sessions and server-side credentials provide an application privacy
+baseline, not a production security audit. No load-capacity, laboratory-nutrition
+or all-384-recipe recognition result is established.
 
-**Language flexibility versus verifiable arithmetic.** Models are useful for meal
-interpretation, while recorded food identities and Python calculation provide a
-reviewable boundary. Exact matching can reject valid but unlisted synonyms; that
-cost is preferable to silently substituting a different dish.
+## 5. Engineering trade-offs and postmortem
 
-**Convenience versus uncertainty.** Basic mode supplies labelled reference portions.
-Advanced review allows explicit weights and recipe edits, but does not make
-uncertain inputs accurate. Unsupported count units now ask for edible grams rather
-than treating every piece as a full default serving.
+**Language flexibility and identity.** Earlier reviews showed that a valid
+model-selected catalogue ID could still misidentify a food. Exact name grounding,
+preserved unknown names and explicit reference acceptance make that boundary
+reviewable. Conservative ingredient/method checks also reject valid but ambiguous
+names and can leave a reasonable reference unavailable.
 
-**Durability versus operational completeness.** PostgreSQL jobs survive API request
-completion and expose lifecycle evidence. The small prototype attempts a job once;
-it lacks retry policy, lease recovery and idempotency. A worker crash after claim
-can leave a job stuck. These gaps remain explicit rather than being hidden by reruns.
+**Reference convenience and source quality.** A consistent recipe calculation can
+be far from a prepared-food sample. External source review prompted the cooked
+chicken correction and CFS vectors rather than treating arithmetic tests as food
+validation. CFS source selection, explicit ingredient edits and carbohydrate
+definitions now remain separate and visible. Reference averages and assumed
+portions still do not establish actual-meal accuracy.
 
-**Personalization versus overclaiming.** Private profiles support approximate adult
-references. Manual daily calories replace meal totals; missing days stay gaps.
-Exercise must be explicit, and self-reported intake coverage cannot verify omissions.
-Current profiles can change historical displayed balances; historical target
-snapshots and measured expenditure are out of scope.
+**Model output and application text.** Live checks exposed invented ingredients,
+wrong cuts/methods, an English dish title misread as a quantity and incomplete
+ranking JSON. Name checks now preserve ambiguity; the reference model returns
+facts/IDs while the server creates explanations. Targeted checks repaired the
+observed response-format failures, but the final thigh no-match demonstrates that
+a valid response need not be a useful recommendation.
 
-## 6. Postmortem
+**Durability and operational completeness.** Stored jobs survive request completion,
+but the prototype attempts a job once. It has finite timeouts and no automatic
+retry, idempotency key or interrupted-claim recovery. A stopped worker can process
+pending work later; a crash after claim can leave that job stuck. Use one worker.
 
-The starter's case/API/database/worker structure became a meal-review product, then
-an account-private diary with four focused panels. The main correction to the
-initial design was to make uncertainty and food identity visible: a model-selected
-catalogue ID was insufficient evidence that it matched the user's food.
+**Personalization and uncertainty.** v2 requires explicit scope/training answers
+and withholds targets outside its policy. Diary overrides, unknown-versus-zero
+values and recorded-day averages avoid fabricated observations. Self-reported
+coverage and approximate expenditure still cannot establish a complete day or
+predict weight change.
 
-Dated reviews found false extra foods from explanatory phrases, unsupported count
-units becoming oversized portions, stale dependent balance displays and lost or
-hidden correction state. Fixes narrowed interpretation rules, required explicit
-unit references, refreshed dependent saved state and kept unsubmitted changes
-visible. Recipe previews now precede optional edits; editing a batch clears its
-acceptance. Evidence distinguishes repaired exact cases from unreplayed failures.
+The team cut image-based estimation. Password recovery, account deletion, reusable
+personal recipe libraries, automatic job recovery, historical target snapshots
+and a new public deployment remain outside this candidate. Broth-only consumption,
+household wording and model response validity remain imperfect. Historical review
+also retains a cold-cucumber weight-state question and unverified millilitre
+conversion; no later comprehensive resolution is claimed. A large controlled test
+suite or a successful targeted replay does not remove those limits.
 
-The team cut image-based estimation. Reusable personal recipes, password recovery,
-account deletion, automatic retries/claim recovery and a new public deployment
-remain outside this release. Broth-only consumption, household wording and model
-response validity remain imperfect. Final review also retains a cold-cucumber
-cooked-weight prompt and unverified millilitre conversion as explicit limitations. A successful retry or a large controlled test
-suite does not prove those issues generally solved.
+## 6. Release verification and next work
 
-The practical lesson is to evaluate each boundary separately: input identity,
-model extraction, calculation, persistence, visible review and operations. Tests
-are most useful when they preserve an observed failure and its expected outcome;
-a smooth demo alone would conceal the remaining uncertainty.
+The [Week 13 README](README.md) records the agreed responsibilities, release
+identity and artifact index. Resolve the refreshed `w13-final` tag, record its
+full commit SHA and inspect hosted checks for that SHA. Use the
+[seven-point demo](DEMO.md) from the same release. Earlier checks remain attributed
+to their application baseline; the revised walkthrough is not a new runtime
+observation. Canvas hand-in remains a separate team action.
 
-## 7. Next work with limited additional time
-
-1. Add bounded error categories, idempotency and claimed-job recovery with
-   interruption/duplicate/concurrent PostgreSQL tests before enabling retries.
-2. Expand a fixed live evaluation set for unresolved household wording, selective
-   consumption and count units; report every attempt without success-only reruns.
-3. Rehearse backup/restore and review security/ownership/session controls before a
-   separately authorized public deployment.
-4. Have the team manually rehearse the seven-point demo and review the final
-   evidence/tag before submitting Canvas; this package does not claim that occurred.
-
-See the [final demo](DEMO.md), [operations](../../docs/operations.md) and
+With additional engineering time, prioritize bounded error categories, idempotency
+and claimed-job recovery with interruption/concurrency checks; a fixed live set
+that retains every attempt; and backup/restore plus security review before a new
+public deployment. See [operations](../../docs/operations.md) and the
 [AI Use Statement](AI_USE_STATEMENT.md).

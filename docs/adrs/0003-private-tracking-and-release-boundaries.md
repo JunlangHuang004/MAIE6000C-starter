@@ -4,6 +4,14 @@
 
 Accepted for the `test` final package, 2026-11-15.
 
+The release-routing decision below was superseded on 2026-11-27: `nutrichat` is
+the current default/release branch, and `w13-final` identifies the updated
+[final package](../../submissions/week13/README.md). The original checkpoint at
+`6b87aef772f7cfde139a383c866e5576ea955cb3` is preserved with its annotated tag
+object under `archive-w13-final-6b87aef`. The dated decisions and scope below
+remain a historical record; current implementation details are in
+[architecture](../architecture.md).
+
 ## Context
 
 The meal-estimation prototype needed independent accounts and a way to review

@@ -1,8 +1,11 @@
 # Run and inspect the integrated demo
 
 For the final course submission, start with the [Week 13 package](../submissions/week13/README.md)
-and its [seven-point TA walkthrough](../submissions/week13/DEMO.md). Check out
-`w13-final` to reproduce the submitted release; branch HEAD may advance later.
+and its [seven-point TA walkthrough](../submissions/week13/DEMO.md). The refreshed
+`w13-final` release includes application baseline `1d17a66` and updated final
+documentation. Its earlier `6b87aef` checkpoint is preserved under
+`archive-w13-final-6b87aef`. Follow the walkthrough's tag-refresh commands and
+record the resolved full commit SHA for assessment.
 
 The default `nutrichat` branch combines the food workflow with accounts, personal
 references and daily tracking. The frozen `w07-midterm` tag remains a separate
@@ -41,9 +44,12 @@ Suggested review sequence:
 
 [Integrated screenshots](INTEGRATED_GUIDE.md) show accounts, profile and trends.
 [Meal screenshots](SCREENSHOT_GUIDE.md) illustrate the preserved estimation
-workflow and identify their capture versions. See [Week 13 verification](../docs/evidence/week13-verification.md)
-for final checks. The [14 November recipe-usability follow-up](../docs/qa/reports/2026-11-14-recipe-usability.md)
-is the latest earlier meal/browser review, following the
+workflow and identify their capture versions. See the
+[24 November name/reference review](../docs/evidence/name-reference-inference-verification.md#2026-11-24-name-grounding-and-preparation-safeguards)
+for the latest recorded automated and targeted model checks. The
+[15 November verification](../docs/evidence/week13-verification.md) retains the
+earlier final-checkpoint scope. The [14 November recipe-usability follow-up](../docs/qa/reports/2026-11-14-recipe-usability.md)
+records an earlier meal/browser review, following the
 [14 November workspace review](../docs/qa/reports/2026-11-14-fresh-review.md). The
 [3 November integration record](../docs/evidence/integration-verification.md)
 retains its original merged-build scope.

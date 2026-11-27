@@ -13,7 +13,8 @@ not measured white-cut chicken nutrition.
 Sixteen dish records now also have [CFS prepared-food references](docs/cfs-prepared-food-references.md)
 for ordinary dish estimates. Their complete source nutrient vectors are separate
 from editable ingredient calculations; historical saved results remain unchanged.
-The `w07-midterm` and `w13-final` tags preserve the submitted course snapshots.
+The `w07-midterm` tag preserves the midterm snapshot. The refreshed final package
+uses `w13-final`; its earlier checkpoint is retained at `archive-w13-final-6b87aef`.
 The earlier meal-focused `nutrichat` version is retained at
 `archive-nutrichat-7c9525d`. Branch publication does not update existing deployments.
 
@@ -22,12 +23,17 @@ Qwen or HKUST GenAI interprets foods and quantities; Python calculates from the
 versioned food data. Users review, correct and confirm the saved estimate, then
 track confirmed meals and weight measurements privately. No model training is required.
 
-The final course package is [Week 13 — `w13-final`](submissions/week13/README.md),
-with a [seven-point TA demo](submissions/week13/DEMO.md),
-[technical brief](submissions/week13/final-technical-brief.md) and
-[AI Use Statement](submissions/week13/AI_USE_STATEMENT.md). The
-[Week 13 verification record](docs/evidence/week13-verification.md) separates final
-checks from earlier dated evidence.
+The updated final package is [Week 13](submissions/week13/README.md),
+with a [seven-point TA demo](submissions/week13/DEMO.md) and
+[technical brief](submissions/week13/final-technical-brief.md).
+The [AI Use Statement](submissions/week13/AI_USE_STATEMENT.md) distinguishes
+development assistance from runtime AI. Resolve `w13-final^{commit}` for the full
+release SHA; the tag includes the application and refreshed final documents.
+See the release-status section for fetching the updated tag and recording a SHA
+for Canvas. Publishing this package does not submit it to Canvas.
+The [latest hardening evidence](docs/evidence/name-reference-inference-verification.md)
+and [historical Week 13 verification](docs/evidence/week13-verification.md)
+retain their separate tested versions.
 
 Start with [the integration guide](docs/integration.md) for the merged preview and
 verification. [The demo folder](demo/README.md) provides a self-guided workflow and
@@ -264,7 +270,7 @@ and do not use the model. Qwen/HKUST run in the cloud and need no local GPU.
 | [Operations](docs/operations.md) | Startup, tests, migrations and troubleshooting |
 | [Cloud deployment](docs/cloud-deployment.md) | Separate future deployment procedure |
 | [Change log](docs/change-log.md) | Changes and dated evidence |
-| [Week 13 final package](submissions/week13/README.md) | Final workflow, demo, evidence, responsibilities and `w13-final` hand-in |
+| [Week 13 final package](submissions/week13/README.md) | Current final scope, demo, evidence and release identity |
 | [Week 7 milestone](submissions/week07/README.md) | Historical submission scope at `w07-midterm` |
 
 ## Current limitations

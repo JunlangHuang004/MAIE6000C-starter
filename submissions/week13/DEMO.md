@@ -1,23 +1,36 @@
 # Week 13 — Seven-point TA demo
 
-This walkthrough demonstrates the seven final engineering-contract points on
-`w13-final`. It combines a reproducible **offline engineering check** with a
-separately labelled **real Qwen/HKUST meal workflow**. Expected outcomes below are
-acceptance checks, not a claim that a new TA run has already passed. Actual release
-results are in [final verification](../../docs/evidence/week13-verification.md).
+This final-release walkthrough covers the seven engineering-contract points
+and the implemented features at source baseline
+`1d17a66ffa445a5dc6a4d699e408c6772929ea79` (documentation updated 27 November 2026).
+It combines a reproducible **offline engineering check** with a separately labelled
+**real-provider meal workflow**. Expected outcomes are rehearsal checks, not a
+claim that this revised walkthrough has been run.
 
-## Prepare the tagged checkout and two isolated local projects
+The refreshed package uses `w13-final`. Its earlier checkpoint is preserved at
+`archive-w13-final-6b87aef`, resolving to
+`6b87aef772f7cfde139a383c866e5576ea955cb3`.
+The [24 November checks](../../docs/evidence/name-reference-inference-verification.md#2026-11-24-name-grounding-and-preparation-safeguards)
+and [15 November verification](../../docs/evidence/week13-verification.md) have
+different scopes and must remain separately dated.
+
+## Prepare the exact source and two isolated local projects
 
 Use a clean checkout of the submitted repository, Docker running, Docker Compose
 2.24.4+ and host Python 3.10+. From the repository root:
 
 ```sh
-git fetch origin --tags
-git checkout --detach w13-final
-git rev-parse 'w13-final^{commit}'
+git fetch origin +refs/tags/w13-final:refs/tags/w13-final
+git checkout --detach 'w13-final^{commit}'
+git rev-parse HEAD
 python3 demo/run.py start
 python3 demo/run.py check
 ```
+
+These commands refresh the previously moved assessment tag and reproduce the
+application with its final documentation. Record the printed `HEAD` and compare it
+with the full SHA submitted for assessment; use that submitted SHA if checking a
+different historical hand-in. A later branch HEAD may differ from the tagged release.
 
 The harness uses project `nutrichat-integrated-demo`, loopback port **8006**, a
 separate PostgreSQL volume and **no private `.env` or model key**. It creates a
@@ -39,7 +52,9 @@ test -f .env || cp .env.example .env
 
 Set up **one** real Qwen or HKUST provider using the exact variables in the
 [integration guide](../../docs/integration.md#select-a-model), including a worker
-timeout longer than the model timeout. Then run:
+timeout longer than the model timeout. The latest recorded live review used
+**HKUST `gemini-2.5-flash-lite`**; changing provider creates a different observation.
+Then run:
 
 ```sh
 docker compose -p nutrichat-merged-qwen --env-file .env \
@@ -123,31 +138,42 @@ not evidence of an external language-model call; that is the next point.
 In the real-provider app at **8005**, select **Meals → Basic** and submit exactly:
 
 ```text
-番茄炒蛋200克，熟米饭150克
+虾仁炒蛋200克，熟米饭150克
 ```
 
 Wait for saved completion or questions. Expand the food evidence and review the
-interpreted identities/weights. **Expected semantic check:** tomato-and-egg stir-fry
-200 g and cooked rice 150 g, with visible reference-recipe assumptions. With the
-unmodified reference recipe, the project's arithmetic yields **405.2 kcal**
-(210.2 + 195.0). A question may legitimately require clarification; a provider
-failure is not a successful estimate and must not show fabricated totals.
+interpreted identities/weights. **Expected semantic check:** scrambled egg with
+shrimp (`dish_012`), 200 g cooked edible portion, and cooked rice, 150 g. The dish
+uses its attributed **CFS prepared-food reference** in Basic mode; rice uses its
+USDA record. Check that the dish's energy, protein and fat each equal its saved
+per-100-g source value multiplied by two, with rice scaled by 1.5 before the meal
+sum. Do not substitute a remembered screenshot total for this source check.
+CFS available carbohydrate and USDA total carbohydrate are different definitions:
+expect separately labelled subtotals, not one combined carbohydrate number. This
+does not block the otherwise complete meal from review/confirmation. A question
+may legitimately require clarification; a provider failure is not a successful
+estimate and must not show fabricated totals.
 
-While unconfirmed, switch to **Advanced**. Supply any required cooked/edible weight,
-preparation or oil information. Inspect the whole-batch preview, then expand
-**Review or adjust batch quantities**. Change the cooking oil from **15 g to 5 g**
-in the reference batch and check that acceptance clears and the preview changes.
+While unconfirmed, switch to **Advanced**. Inspect the explicit choice between
+the CFS prepared-food reference and the editable ingredient calculation. For the
+editing demonstration choose the **ingredient** route, supply any required
+cooked/edible weight or preparation information, and inspect the whole-batch
+preview. Expand **Review or adjust batch quantities**. Change the reference batch
+oil from **15 g to 5 g** and check that acceptance clears and the preview changes.
 Switch to Chinese and back; the unsaved quantity and unchecked acceptance should
-remain. Explicitly accept the reviewed recipe and submit the answers. With the
-remaining batch unchanged, the expected saved total is **361.0 kcal** (166.0 for
-the dish + 195.0 for rice). Review any provider interpretation or extra question
-before accepting; a different result must be investigated, not silently relabelled.
+remain. Explicitly accept the reviewed recipe and submit the answers. Check the
+saved basis and quantities against the reviewed preview: ingredient nutrients
+are summed for the batch and scaled by consumed cooked weight / finished batch
+weight. The rice stays unchanged. This is a new ingredient calculation; the app
+must not subtract oil from a CFS average or keep CFS calories with ingredient
+macros. Review any provider interpretation or extra question before accepting.
 
 Qwen/HKUST interprets natural language; Python supplies the nutrient calculation.
-Structured answers use saved facts without another model call. Health probes or
-a metric from the offline project alone cannot demonstrate this real AI step.
-For dated examples and retained failures, see the
-[14 November recipe review](../../docs/qa/reports/2026-11-14-recipe-usability.md).
+Structured clarification/quantity answers use saved facts without another model
+call. Optional name inference and reference ranking are separate explicit model
+requests, covered in point 7. Health probes or a metric from the offline project
+alone cannot demonstrate a real AI step. See the
+[CFS source guide](../../docs/cfs-prepared-food-references.md) and its dated evidence.
 
 ## 5. Output surfaced or stored
 
@@ -178,22 +204,33 @@ six-food fixture values; do not present them as validation of live model extract
 
 In the real app, verify the four panels and private tracking:
 
-- **My goals:** save synthetic adult inputs: age **30**, height **175 cm**,
-  weight **75 kg**, male formula coefficient, light activity, muscle-gain goal.
-  Expected daily energy reference: **2450 kcal**, with approximate assumptions
-  shown. Profile entry is optional; these are test values, not dietary advice.
+- **My goals:** save synthetic adult inputs: age **25**, height **175 cm**,
+  weight **70 kg**, male formula coefficient, moderate activity, muscle-gain goal,
+  strength training **Yes**, and the **general adult** reference scope. Expected
+  v2 energy reference: **2720 kcal**, with the calculation basis, sources and assumptions
+  shown. Select and save the professional-guidance/uncertain scope to demonstrate
+  that targets are withheld, then restore the general-adult answer. The browser
+  requires both selections; older saved profiles with missing answers need these
+  confirmations too; blank is not a negative training answer. Profile entry is
+  optional; these are test inputs, not dietary advice.
 - **Daily diary:** today's confirmed meal should contribute to the automatic sum.
   Save weight **74.8 kg** and exercise **0**. Expand the manual-total control, save
-  **2100 kcal**, and check that it replaces the **361 kcal** meal sum. Clear it and save to restore
-  aggregation. Review the five-category intake checklist; mark categories only as
+  **2100 kcal**, and check that it replaces the current meal sum. Clear it and save
+  to restore aggregation, then save **2100 kcal** again for the fixed trend check
+  below. Review the five-category intake checklist; mark categories only as
   a synthetic demonstration of self-reporting. A blank exercise value is unknown,
   while zero explicitly records none. Balance requires applicable profile/intake/
   exercise inputs and remains approximate.
-- **Trends:** to make a two-date chart, first save yesterday's diary with weight
-  **75.2 kg**, manual calories **2100**, and exercise **150**. Select today as the
+- **Trends:** to make a two-date chart with a missing day between observations,
+  save the diary for **two days before today** with weight **75.2 kg**, manual
+  calories **2300**, and exercise **150**. Leave yesterday empty. Select today as the
   trend end date. With no other records in this fresh account, expect **2/30**
-  calorie days, average **1230.5 kcal**, and weight change **−0.4 kg**. The other
-  dates remain gaps. Daily weight does not update the profile automatically.
+  calorie days, average **2200 kcal**, and weight change **−0.4 kg**. The average
+  divides by the two recorded calorie dates, not 30. Lines connect the recorded
+  points at their actual date positions; yesterday stays null in the detail table,
+  not zero or an interpolated value. Explicit zero would count as a recorded value.
+  Dates use Asia/Hong_Kong, and the window is 30 days rather than a calendar month.
+  Daily weight does not update the profile automatically.
 - Before signing out, expand the confirmed meal's record details and copy its ID.
   Sign out and register a second synthetic account. Its meals, profile and tracking
   start independently. In a new tab, open
@@ -251,9 +288,28 @@ passed. Retain the exact wording, state and runtime version.
 
 Explain the trade-off: exact supported-name matching can reject unlisted valid
 synonyms, but it avoids an unsupported substitute estimate. Coverage is finite at
-200 ingredients and 350 reference recipes. The user can use **Build from actual
-ingredients** only when the ingredients and amounts are known; the app does not
-invent the composition of the unknown dish.
+**202 USDA ingredients and 384 reference recipes**, with attributed CFS vectors
+on **16** of those recipes. Source averages do not measure this user's meal.
+The user can use **Build from actual ingredients** when ingredients and amounts
+are known; the app does not invent the composition of the unknown dish.
+
+To demonstrate the optional recovery path, create a separate unconfirmed meal
+`香煎豆腐200g` and expand **Find a similar recipe**. Explicitly request name
+inference, inspect the editable guessed ingredients/method, then separately
+request candidates after reviewing them. A clarification or no-match result is
+valid. Any offered recipe must have exactly the same main-ingredient IDs and a
+compatible cooking method; seasonings may differ. The model returns facts/IDs;
+the server creates the displayed explanations from catalogue evidence.
+
+If a candidate is offered, selection requires an approximation acknowledgement.
+It opens an **unaccepted ingredient draft**, still without meal totals. Review
+ingredients, grams, batch yield and consumed portion, then accept that recipe.
+Only Python calculation produces nutrients; confirming the meal is a later,
+separate action. Keep this example unconfirmed so it does not alter the diary
+check. The original unknown name and approximate-reference provenance remain.
+Do not force a candidate or turn a failed provider request into a successful
+demonstration. The [latest name review](../../docs/evidence/name-reference-inference-verification.md#2026-11-24-name-grounding-and-preparation-safeguards)
+retains a thigh example whose final request succeeded but returned no candidates.
 
 Also state the operational limit plainly: jobs have finite timeouts and no automatic
 retry, idempotency key or interrupted-claim recovery. A stopped worker can resume
@@ -265,11 +321,12 @@ update the older public ECS deployment.
 
 ## Captured synthetic browser examples
 
-These captures were made during final-package preparation on **15 November 2026**
-using synthetic account/profile/meal records. They illustrate the observed local
+These **historical** captures were made during the earlier package preparation on
+**15 November 2026** using synthetic account/profile/meal records. They illustrate the observed local
 system behavior, not measured food intake, a nutrition study or manual rehearsal
-by every team member. The final verification record identifies the tested source
-and any later regression fix separately.
+by every team member. They predate the v2 profile, catalogue expansion, CFS choices,
+reference workflow and later trend changes. Their numbers describe that old run;
+they are not current acceptance expectations or new screenshots of this candidate.
 
 | View | Captured check |
 | --- | --- |
@@ -290,7 +347,7 @@ docker compose -p nutrichat-merged-qwen --env-file .env \
 ```
 
 Both commands retain database volumes. Do not use `down -v` as routine cleanup.
-Use the [Week 13 README](README.md) for the artifact index and full tagged commit
-for Canvas. Fresh observations, failed attempts and any missing provider access
+Use the [Week 13 README](README.md) for the artifact index and release status.
+Record the exact submitted commit for Canvas. Fresh observations, failed attempts and any missing provider access
 must remain separate from earlier recorded results. This runbook does not claim
 that every team member has independently rehearsed it.

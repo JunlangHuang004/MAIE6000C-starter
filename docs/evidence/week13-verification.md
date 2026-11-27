@@ -11,9 +11,13 @@ All accounts, profiles and meals created for these checks were synthetic.
 The source began at `c5a9ebd02aa358ea68a07832c3ba3dcaec296c4c`. Final review added
 bounded phrase handling in `services/common/food_matching.py` and regressions in
 `tests/unit/test_food_matching.py`; the release also packages documentation and
-evidence. The tag `w13-final` identifies the final committed package. Resolve its
-commit using `git rev-parse 'w13-final^{commit}'`; the annotated tag object is not
-the source commit.
+evidence. This report covers the original 15 November package at
+`6b87aef772f7cfde139a383c866e5576ea955cb3`, preserved with its original annotated
+tag object under `archive-w13-final-6b87aef`. Resolve that historical source using
+`git rev-parse 'archive-w13-final-6b87aef^{commit}'`; the annotated tag object is
+not the source commit. The updated `w13-final` package is described in the
+[current release record](../../submissions/week13/README.md). Its publication
+does not rerun or extend the dated evidence below.
 
 - Fresh offline project: `nutrichat-w13-20261115`, localhost **8013**, new isolated
   PostgreSQL volume. Before first use, users, analyses, jobs and daily records were
@@ -124,5 +128,8 @@ redeployment are not represented by these checks.
 Local results do not establish hosted CI for a later commit. Verify the submitted
 SHA in [fork Actions](https://github.com/JunlangHuang004/MAIE6000C-starter/actions)
 and [mirror Actions](https://github.com/JunlangHuang004/Maie-6000c-starter-Junlang-Huang/actions).
-The published `test` branches and `w13-final` tags must resolve to the same release
-commit. Canvas submission remains a separate team action.
+The original release required the published `test` branches and then-current
+`w13-final` tags to resolve to the same commit. Reproduce this historical package
+from `archive-w13-final-6b87aef`; current branch/tag requirements are in the
+[current release record](../../submissions/week13/README.md). Canvas submission
+remains a separate team action.

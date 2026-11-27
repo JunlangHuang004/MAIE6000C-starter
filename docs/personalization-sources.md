@@ -72,4 +72,6 @@ Those checks cannot establish a person's true resting expenditure, maintenance
 energy, future adherence or changes in weight and muscle. The app does not convert
 a nominal calorie deficit into a guaranteed weekly loss, and it does not claim
 that references are accurate to the displayed decimal place. Historical
-`w13-final` evidence describes the earlier version and remains unchanged.
+15 November evidence describes the earlier version preserved as
+`archive-w13-final-6b87aef` and remains unchanged. The updated `w13-final` package
+includes v2; see the [current release record](../submissions/week13/README.md).

@@ -1,27 +1,42 @@
-# Week 13 — NutriChat final team project
+# Week 13 — NutriChat final project package
 
 - **Team:** NutriChat
 - **Repository:** [MAIE6000C-starter](https://github.com/JunlangHuang004/MAIE6000C-starter)
-- **Repository mirror:** [Maie-6000c-starter-Junlang-Huang](https://github.com/JunlangHuang004/Maie-6000c-starter-Junlang-Huang)
-- **Release branch:** `test`
-- **Required checkpoint tag:** `w13-final`
-- **Prepared:** 2026-11-15
-- **Release verification:** [final check record](../../docs/evidence/week13-verification.md)
+- **Mirror:** [Maie-6000c-starter-Junlang-Huang](https://github.com/JunlangHuang004/Maie-6000c-starter-Junlang-Huang)
+- **Current default/release branch:** `nutrichat`; `test` remains a development branch.
+- **Documentation revised:** 2026-11-27
+- **Application baseline:** `1d17a66ffa445a5dc6a4d699e408c6772929ea79`
+- **Assessment release tag:** `w13-final` — application and refreshed final documents.
 
-Use the required tag for assessment; branch HEAD may advance later. Resolve the
-commit referenced by the tag, not the annotated tag object's SHA:
+## 1. Version and hand-in status
+
+This updated final package includes the implemented accounts, tracking, expanded
+food data, personal references and similar-recipe features on `nutrichat`.
+It supersedes the earlier final-document scope on this branch.
+
+The 27 November release aligns `w13-final` in both repositories with this expanded
+package on `nutrichat`. The earlier checkpoint is preserved at
+**`archive-w13-final-6b87aef`**, resolving to
+`6b87aef772f7cfde139a383c866e5576ea955cb3`. Its dated evidence keeps that older scope.
+
+Because the assessment tag was updated, an existing clone may still hold its old
+value. Refresh this specific tag, check out the release and record its full commit
+SHA. The annotated tag object's ID is not the commit SHA:
 
 ```sh
-git fetch origin --tags
+git fetch origin +refs/tags/w13-final:refs/tags/w13-final
+git checkout --detach 'w13-final^{commit}'
+git rev-parse HEAD
 git rev-parse 'w13-final^{commit}'
 ```
 
-Use that full commit SHA, the repository URL and `w13-final` in the Canvas hand-in.
-The primary artifacts are this README, the root README, architecture, operations
-and ADRs. Publishing Git branches/tags does not submit Canvas. The existing
-`nutrichat` branch, `w07-midterm` tag and public ECS deployment remain separate
-snapshots; the final package is a local reproducible application, not a new
-public deployment.
+The application baseline above identifies the code reviewed for this revision;
+the release commit also includes the refreshed documentation. Use the same resolved
+release commit in the team hand-in and inspect hosted CI for that SHA. A later
+branch HEAD may differ from the assessment tag. Git publication does not deploy ECS
+or submit or change a Canvas hand-in.
+
+## 2. Team responsibilities
 
 | Member | Agreed responsibility |
 | --- | --- |
@@ -30,145 +45,92 @@ public deployment.
 | Zhou Ran | Documentation and deployment |
 | Yixing Huang | Testing and validation |
 
-These are the team representative's assigned responsibilities. Recorded
-assistant-run checks do not establish that each member personally ran them.
+These are the agreed project responsibilities. The evidence below distinguishes
+assistant-run checks from individual human-team validation.
 
-## 1. Final supported workflow
+## 3. Implemented final scope
 
-NutriChat helps users estimate calories, protein, fat and carbohydrates from meal
-descriptions, especially Chinese meals. A signed-in user describes a meal; the
-API persists its input and job; a separate worker calls the internal AI service;
-Qwen or HKUST interprets the text; deterministic Python validates identities and
-calculates from versioned food data. The user reviews assumptions, answers
-questions, corrects the estimate and confirms a meal/date that is then locked.
-
-Basic mode uses labelled reference portions/recipes for supported foods. Advanced
-mode requests missing weights, preparation/oil details and explicit recipe review.
-Unknown food identity or required unanswered questions withhold all meal totals.
-A structured actual-ingredient editor can replace an unknown item when the user
-knows its ingredients and weights. It is not a reusable personal recipe library.
-
-The catalogue has **200 USDA ingredient records and 350 reference recipes**. Food
-identities and nutrient values are retained from `nutrichat`; later metadata adds
-an explicit 50 g reference for one large peeled hard-boiled egg. This is not a
-byte-for-byte catalogue preservation claim or a measurement of a user's portion.
-
-Four panels separate Meals, Daily diary, Trends and My goals. Accounts have private
-meal history, profiles and dated records. Optional deterministic profile formulas
-provide approximate daily references. Diary supports confirmed-meal sums, manual
-totals that replace those sums, weight, exercise, intake coverage and approximate
-energy balance. Trends shows 30 days with gaps for absent records. Panel/language
-switches preserve unsaved entries without submitting them; save before reloading.
-
-## 2. Exact final demo order
-
-Follow [DEMO.md](DEMO.md) for commands, browser inputs and expected checks:
-
-1. Input entering the system: register/sign in and submit a meal through the API/UI.
-2. Persistence of state: inspect queued analysis and pending job rows in PostgreSQL.
-3. Background processing: observe the separate worker's claim/completion evidence.
-4. AI-enabled workflow: run a real Qwen/HKUST interpretation, clearly separated
-   from the deterministic six-food offline fixture.
-5. Output surfaced or stored: review, correct, confirm and reload saved results;
-   inspect account-private diary/trends.
-6. Operational signals: inspect readiness, matching structured logs and the internal
-   AI request counter.
-7. Honest limitation/failure/trade-off: demonstrate unsupported-food blocking and
-   explain catalogue uncertainty, provider failures and absent automatic recovery.
-
-## 3. System components
-
-| Component | Responsibility |
+| Area | Current behavior |
 | --- | --- |
-| Browser, plain JavaScript | Bilingual four-panel workspace, polling, reviewed edits and charts |
-| FastAPI API | Authentication/ownership, validation, durable enqueue, revision checks, confirmation, deterministic profile/tracking work |
-| PostgreSQL / Alembic | Users/sessions, profiles/daily records, analyses and durable jobs; migration head `20261030_0010` |
-| Worker | Claims pending jobs, calls internal AI HTTP endpoint, persists results/questions/errors |
-| Internal AI service | Qwen/HKUST extraction, strict catalogue identity checks and Python calculation; key-free fixture or experimental Ollama alternatives |
-| Docker Compose | Isolated reproducible local deployment with internal database/AI network boundaries |
+| Estimation | Chinese/English descriptions; Basic uses labelled supported-food reference portions/recipes, Advanced requests missing facts and explicit recipe review |
+| Data | Catalogue `2026-11-24.2`: **202 USDA ingredients and 384 editable reference recipes**, English names for all 586 records; **16 existing dishes** also have attributed CFS prepared-food references |
+| Calculation | Python computes from versioned source vectors or accepted ingredient recipes; the model does not invent nutrient totals |
+| Unknown foods | Remain unresolved with no whole-meal total; users can correct names, enter actual ingredients or explicitly request similar-recipe assistance |
+| Similar references | Name inference, ingredient/method checks, clarification, exact main-ingredient-set filtering, reference acknowledgement and separate ingredient/meal acceptance |
+| Accounts | Registration, sign-in/out, expiring revocable sessions and account-owned meal/profile/diary records |
+| Personal references | Age, height, weight, formula sex coefficient, activity and gain/loss goal; versioned eligibility/training checks may withhold a target; calculation is deterministic |
+| Diary | Consumption-date aggregation of confirmed meals, optional manual calorie replacement, weight, exercise and self-reported intake coverage |
+| Trends | 30-day window; lines connect recorded observations, missing values remain null and are excluded from recorded-day averages; explicit zero remains a recorded value |
+| Interface | Four bilingual panels: Meals, Daily diary, Trends and My goals; panel/language changes preserve unsaved values |
 
-## 4. Testing and verification
+The 16 CFS references overlap the 384 dishes; they are not additional food records.
+CFS source vectors and editable recipe calculations retain separate provenance and
+carbohydrate semantics. Most recipes remain illustrative estimates, not measured
+dishes. Catalogue updates do not recalculate saved historical meals. See
+[data sources](../../docs/nutrition-data.md), [CFS references](../../docs/cfs-prepared-food-references.md)
+and [reference boundaries](../../docs/similar-recipe-references.md).
 
-Final local checks passed: **1,230 backend tests, 56 frontend tests, 2 service
-smoke tests**, Ruff, clean-start migrations, the durable lifecycle harness and
-retained-volume restart checks. The independent live review made 14 provider
-requests across initial attempts and deliberate post-fix replays, with no automatic
-retries. Post-fix assertions: **105 passed, 0 failed, 1 unmet** (cold-cucumber
-completed arithmetic). Mixed-volume input remains outside verified support.
+## 4. Workflow and architecture
 
-The implementing reviewer separately verified the visible browser workflow and
-captured seven screenshots. These are assistant-run checks, not a claim of team
-rehearsal or measured nutrition accuracy. See the
-[Week 13 verification record](../../docs/evidence/week13-verification.md) and
-[evidence directory](../../docs/evidence/week13/) for source fingerprints, failures,
-repairs and practical limits. Hosted CI must be checked for the submitted SHA.
+1. A signed-in user submits a meal. FastAPI commits an account-owned analysis and
+   pending job together in PostgreSQL, then returns their IDs.
+2. A separate worker claims the job, calls the internal AI service and saves the
+   outcome. Qwen/HKUST interprets language; identity checks and Python arithmetic
+   produce a reviewable result or questions.
+3. Browser polling reads saved state. Users clarify or correct the estimate.
+   A completed job can still leave its analysis needing user input.
+4. Users confirm a completed revision and consumption date. The locked record
+   survives reload and contributes to that account's dated intake.
+5. Profiles and tracking are synchronous deterministic API work. Name inference
+   and reference ranking synchronously call the internal AI service without worker
+   jobs. Selection saves only an unaccepted template; accepting actual ingredients
+   enters the existing recalculation path. Meal confirmation is still separate.
 
-The strongest earlier evidence is separately dated:
+The queue is the PostgreSQL `jobs` table, not Redis/Celery. Nutrition records are
+versioned JSON; PostgreSQL holds user/application state. Alembic head is
+**`20261121_0011`**. Compose separates API, worker, AI and database; only AI receives
+private provider credentials. See [architecture](../../docs/architecture.md).
 
-| Evidence | Scope and limitation |
+## 5. Verification and limits
+
+| Evidence | What it establishes |
 | --- | --- |
-| [14 November recipe-usability follow-up](../../docs/qa/reports/2026-11-14-recipe-usability.md) | 1,208 backend and 56 frontend tests; eight exact post-fix recipe replays; real browser review/correction/confirmation; unresolved model/language cases retained |
-| [Earlier 14 November workspace review](../../docs/qa/reports/2026-11-14-fresh-review.md) | Four panels, account/profile/tracking checks, 117 final HTTP assertions and separate browser observations on its labelled runtime |
-| [3 November integration verification](../../docs/evidence/integration-verification.md) | Earlier merge tests, PostgreSQL upgrade, account ownership and live provider/restart evidence |
+| Latest automated checks | **2,670 backend unit/integration tests and 108 frontend tests passed**, plus Ruff and whitespace checks; see the [hardening report](../../docs/evidence/name-reference-inference-verification.md#2026-11-24-name-grounding-and-preparation-safeguards) |
+| Hosted CI at baseline | Both repositories passed at `1d17a66`: [primary](https://github.com/JunlangHuang004/MAIE6000C-starter/actions/runs/45432657799), [mirror](https://github.com/JunlangHuang004/Maie-6000c-starter-Junlang-Huang/actions/runs/45432571920) |
+| Bounded live audit | 20 names, two manual follow-ups, diagnostics and three post-fix AI checks: **49 provider calls**, no automatic retries; first failures retained |
+| Final targeted checks | Eggplant returned references; Three Cup Chicken requested clarification; thigh ranking returned valid empty candidates, so its nonempty-recovery expectation remained unmet |
+| Historical checkpoint | [15 November verification](../../docs/evidence/week13-verification.md): 1,230 backend, 56 frontend and two smoke tests, plus durable/restart checks, for its earlier source; not rerun by this documentation update |
 
-Counts from different versions are not additive. Controlled tests validate code
-and arithmetic; offline checks validate durable boundaries; live samples test
-specific model interactions. None establishes all-food accuracy, measured
-nutrition, load capacity, a security audit or successful hosted CI for a later SHA.
+The whole 20-name batch was not replayed after the last compact-output change.
+All 20 audit analyses remained unconfirmed with zero diary intake. These are
+assistant-run checks, not proof of individual human-team rehearsal. Counts across
+versions are not additive. Controlled responses, offline fixtures, real model calls
+and measured nutritional ground truth are distinct forms of evidence.
 
-## 5. Reproducibility and operations
+Remaining limits include finite coverage, imperfect interpretation, conservative
+no-match results, uncertain portions/oil/yields, unsupported volume-to-mass
+assumptions and incomplete intake. There is no image analysis, model training,
+Google login, password-reset flow, account-deletion UI, reusable personal recipe
+library or historical target snapshot. Jobs have no automatic retry, interrupted-
+claim recovery or idempotency key; use one worker. Health checks do not prove
+provider access/quota. New public ECS deployment and production load/security
+validation are not established by these checks.
 
-Start with the [root README](../../README.md) and [operations](../../docs/operations.md).
-Docker Compose 2.24.4+ runs API, worker, AI and PostgreSQL. The ordinary integrated
-preview is project `nutrichat-merged-qwen` on loopback port **8005**; the separate
-key-free check defaults to `nutrichat-integrated-demo` on **8006**. A second copy
-needs both a distinct project and a free port. Preserve `.env` and database volumes.
-
-Real Chinese interpretation requires private valid Qwen/HKUST configuration,
-network access and quota. No credentials are distributed. The six-food offline
-fixture accepts explicit English gram inputs and does not interpret Chinese or
-free-text corrections. Health checks do not prove model access.
-
-## 6. Known limitations
-
-- Coverage is finite; unlisted foods/synonyms cannot receive a substitute dish's
-  totals. Portion defaults, recipe composition and energy formulas are assumptions.
-- Model extraction can fail or misread quantities/preparation. Provider timeout,
-  invalid output, access and quota errors can produce failed jobs without totals.
-- Mixed millilitre/gram wording was not accepted or repaired in the final review;
-  supply edible grams rather than assuming a liquid's millilitres equal grams.
-  Some cold reference dishes still require weight-state clarification.
-- Jobs have no automatic retry, interrupted-claim recovery or idempotency key.
-  A repeated submission creates a separate record/job. Use one worker.
-- No password recovery, Google login, account deletion, personal recipe library or
-  historical target snapshot. Old shared meals retain null ownership.
-- Profile references and daily balance are approximate. Incomplete intake can
-  exaggerate a deficit; exercise zero differs from unknown. Daily weight does not
-  update the profile automatically.
-- Final source publication does not update the older public ECS service. New public
-  deployment, broad security/load review and independent human-team rehearsal are
-  not claimed by this package.
-
-## 7. Final artifact index
+## 6. Artifact index and release preparation
 
 | Artifact | Purpose |
 | --- | --- |
-| [Root README](../../README.md) | Product scope, setup and current workflow |
-| [Architecture](../../docs/architecture.md) | Components, state ownership, privacy and failure boundaries |
-| [Operations](../../docs/operations.md) | Run, verify, diagnose, migrate and retain data |
-| [ADRs](../../docs/adrs/) | Starter stack, source-backed nutrition and private-tracking/release decisions |
-| [Seven-point demo](DEMO.md) | Exact TA workflow and expected checks |
-| [Final technical brief and postmortem](final-technical-brief.md) | Evaluation, trade-offs, changes and remaining work |
-| [Final verification](../../docs/evidence/week13-verification.md) | Release checks and linked raw evidence |
-| [Final browser examples](DEMO.md#captured-synthetic-browser-examples) | 15 November synthetic local meal, diary, trends, profile and responsive captures |
-| [Earlier illustrated walkthrough](../../demo/INTEGRATED_GUIDE.md) | Dated earlier browser captures, with their original scope |
-| [AI Use Statement](AI_USE_STATEMENT.md) | Tools, material influence, verification and responsibility |
+| [Root README](../../README.md) | Current features and quick start |
+| [Seven-point demo](DEMO.md) | Input, persistence, worker, AI, saved output, signals and limitations |
+| [Architecture](../../docs/architecture.md) / [ADRs](../../docs/adrs/) | Components, boundaries and trade-offs |
+| [Operations](../../docs/operations.md) / [integration setup](../../docs/integration.md) | Configure, migrate, run, inspect and retain data |
+| [Technical brief](final-technical-brief.md) | Design decisions, evaluation and postmortem |
+| [Name/reference verification](../../docs/evidence/name-reference-inference-verification.md) | Dated audit, fixes, failures and targeted checks |
+| [Historical verification](../../docs/evidence/week13-verification.md) | Earlier checkpoint evidence |
+| [AI Use Statement](AI_USE_STATEMENT.md) | Development assistance, runtime AI, verification and responsibility |
 
-## 8. AI use and responsibility
-
-OpenAI Codex assisted implementation, tests, debugging, documentation and evidence
-collection. Qwen/HKUST provide runtime meal interpretation; nutrient calculation is
-versioned Python arithmetic. The team specified scope and responsibilities and
-remains responsible for understanding and submitting the work. See the concise
-[AI Use Statement](AI_USE_STATEMENT.md); it does not claim unrecorded manual team
-verification or rehearsal.
+Follow the guides for an isolated offline project on port 8006 and real-model
+preview on port 8005. A second copy requires a distinct project name and free port.
+Preserve private `.env` files and database volumes. Verify the final submitted
+SHA/tag and its hosted CI before hand-in. Expected demo outcomes
+and historical screenshots must remain separate from newly observed results.

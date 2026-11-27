@@ -1,12 +1,18 @@
 # NutriChat operations
 
-Current instructions: 2026-11-23 follow-up; `w13-final` remains the historical course package. The app separates
-Meals, Daily diary, Trends and My goals while retaining meal estimation, daily
-balance, intake review and the Chinese-meal evaluator. Existing deployments remain
-separate snapshots. See [integration setup](integration.md) and the
-[14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md).
-The [earlier 14 November workspace review](qa/reports/2026-11-14-fresh-review.md)
-remains separate dated evidence.
+These instructions document `nutrichat` implementation baseline
+`1d17a66ffa445a5dc6a4d699e408c6772929ea79`, the default integrated branch.
+`test` remains for development; remote `main` branches were removed after archive
+tags were preserved. The refreshed final release uses `w13-final`; the previous
+checkpoint at `6b87aef772f7cfde139a383c866e5576ea955cb3` is preserved under
+`archive-w13-final-6b87aef`. Publishing this release does not establish a Canvas
+resubmission or current ECS deployment. See [integration and release boundaries](integration.md).
+
+The app includes Meals, Daily diary, Trends and My goals, optional name-assisted
+reference recovery, CFS prepared-food references and profile v2 eligibility checks.
+The latest recorded automated/model checks are in
+[name-reference verification](evidence/name-reference-inference-verification.md);
+earlier browser and smoke records retain their own dated scope.
 
 ## Startup and isolation
 
@@ -32,6 +38,12 @@ as described in [integration](integration.md). `LLM_PROVIDER`, when nonempty,
 overrides `NUTRITION_PROVIDER`. Provider selection must agree across API/AI/worker.
 The worker HTTP timeout must exceed the model timeout. The integrated overlay
 defaults to 210 seconds for the worker; a model timeout of 180 seconds fits inside it.
+Main meal submissions use the durable PostgreSQL job/worker path. Profile and
+tracking calculations run synchronously without AI. Name inference and candidate
+requests also run synchronously, calling the internal AI service directly; the API
+uses the maximum configured worker/model timeout plus five seconds for these calls.
+They create no job to poll. Selection only saves an unaccepted template; accepted
+ingredient amounts then enter the usual worker calculation.
 
 Do not reuse an existing Docker project name from a different checkout. A port
 change alone does not isolate services or database volumes. Stop/resume with the
@@ -80,6 +92,16 @@ account and contains bounded operational errors; it is not a substitute for
 reviewing sanitized logs.
 
 ## Automated and live checks
+
+The latest recorded run reports **2,670 backend** and **108 frontend** tests and
+Ruff/whitespace checks. The accompanying **49 live model calls** cover an
+independent batch and manual checks, diagnostics and three final targeted requests.
+They are not 49 successful recoveries: errors and clarifications were retained,
+the entire 20-name batch was not rerun after the last fix, and the final thigh
+ranking returned no candidates. See the exact scope in
+[name-reference verification](evidence/name-reference-inference-verification.md).
+Those historical results are not fresh smoke, CI or deployment results for this
+documentation refresh, and counts from different runs must not be added together.
 
 Build the current source first. Unit/integration tests use isolated test databases
 and controlled model responses, with no private model credentials required:
@@ -158,9 +180,12 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
   actual supported ingredients. Keep all totals empty while any item is unresolved.
 - **Unknown name with recognizable cooking clues:** the optional similar-recipe
   panel can ask the configured model to suggest editable ingredients and a method.
-  Review them before requesting reference candidates. An ambiguous name, offline
-  demo, provider failure or invalid response still requires manual details; none
-  of these cases authorizes a substitute or a partial whole-meal total.
+  Both API and AI validate those guesses against the stored name; unsupported
+  cuts/species/states, missing named ingredients and ambiguous methods require
+  clarification. The model returns facts/IDs only; the server creates display
+  prose. Review the facts before separately requesting candidates. An ambiguous
+  name, offline demo, provider failure or invalid response still requires manual
+  details; none authorizes a substitute or partial whole-meal total.
 - **No reference with the same main ingredients:** this is an expected result.
   The complete set of selected main ingredient IDs must equal the recipe's main
   ingredient IDs, with a compatible cooking method. Missing noodles, added meat,
@@ -168,8 +193,11 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
   Review the selected facts or enter the actual ingredient recipe; do not remove
   real ingredients just to obtain a match. Oil, salt and other classified
   seasonings can differ, and their differences still require review.
-- **`needs_input`:** normal clarification, with a successfully completed job.
-  Answer the issued questions or use the ingredient builder for an unknown item.
+- **`needs_input`:** normal clarification. On the main worker path, the job has
+  completed successfully; synchronous reference requests may update this state
+  without a new job. Answer the questions or use the ingredient builder. Reference
+  acknowledgement opens an unaccepted template, so review and accept its amounts
+  before expecting calculation; confirmation remains a separate step.
 - **`failed`:** inspect the owned job and logs; check provider region/model/key,
   quota, output format and timeouts. Correct or submit anew after resolving the cause.
 - **Long-lived `queued`:** inspect whether its job is pending or claimed. A stopped
@@ -185,6 +213,16 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
   Removed-shell and no-extra-oil details must not appear as unsupported foods.
   If reproducing this issue, record the exact wording and runtime version, and
   rebuild the AI service after changes to food matching.
+- **Profile saved but targets/balance absent:** profile v2 keeps valid inputs but
+  withholds all four targets for unanswered scope/training, professional-guidance
+  scope, muscle gain without strength training, BMI/energy eligibility guards or
+  incompatible macro allocation. Existing profiles have null new answers after
+  migration 0011 and need explicit confirmation. Read the displayed reasons;
+  profile eligibility is not inferred from diary data. See [profile rules](personalization.md).
+- **Carbohydrate total absent in an otherwise completed meal:** CFS available
+  carbohydrate and USDA total carbohydrate have different definitions. Mixed
+  meals show their separate labelled subtotals, not an invented combined figure;
+  energy/protein/fat and confirmation remain available.
 - **Unexpected diary total:** only confirmed meals for the selected Hong Kong date
   count. A manual total replaces the meal sum; clear it to restore aggregation.
   Unrecorded days remain blank, not zero. Daily weight does not update the profile.
@@ -196,25 +234,31 @@ HKUST or Ollama; use the merged workflow checks described in [integration](integ
 
 Food catalogue `2026-11-24.2` is versioned JSON: 202 ingredients and 384 reference
 recipes. All 586 records have English names, and all recipe methods are bilingual.
-Sixteen existing dishes include separately attributed CFS prepared-food references;
-all ingredient values and illustrative ingredient formulas are retained. Rebuild
-all API, AI and worker images for the source update. See the
-[CFS guide](cfs-prepared-food-references.md) for calculation routing, carbohydrate
-definitions and source provenance. No database migration or historical-total
-rewrite is required.
-The [home-recipe follow-up](home-recipe-expansion.md) adds 34 project-authored
-reference formulas while preserving earlier ingredient nutrients and 350 recipe
-formulations, with the existing egg-portion metadata retained. Recipe-site URLs
-are discovery evidence, not nutrient measurements. Do not use byte-for-byte
-equality with the earlier catalogue as a release check. Git publication is separate from deployment; historical tags and deployments
-remain unchanged.
+Sixteen existing dishes include separately attributed CFS prepared-food references.
+Their complete source vectors remain separate from editable ingredient calculations;
+explicit ingredients, yield or oil details use ingredient arithmetic. Mixed source
+carbohydrate definitions remain separately labelled. Rebuild all API, AI and worker
+images for the source update. See the [CFS guide](cfs-prepared-food-references.md)
+for routing and provenance. Catalogue changes require no database migration or
+historical-total rewrite.
+
+The [home-recipe expansion](home-recipe-expansion.md) added 34 project-authored
+formulas. A subsequent [white-cut chicken correction](white-chicken-reference.md)
+changed that reference to a disclosed cooked-chicken proxy and added two USDA
+cooked-chicken records. Do not claim every original formulation is unchanged or
+use equality with the older catalogue as a release check. Recipe-site URLs are
+dish-name/style evidence, not nutrient measurements. Git publication is separate
+from deployment. The older final snapshot remains available under
+`archive-w13-final-6b87aef` after the deliberate `w13-final` update.
 The application database is PostgreSQL. The merged preview starts a separate volume;
 it does not automatically combine records from existing deployments.
 
 API startup runs `alembic upgrade head` before the worker starts. Migrations 0006–0008
 add users/sessions/ownership, profiles, daily records and meal dates; 0009 adds
-exercise calories and 0010 adds intake coverage. The expected head is
-`20261030_0010`. Old ownerless meals/cases are preserved but inaccessible through account APIs; they are not
+exercise calories, 0010 adds intake coverage and 0011 adds profile scope/training.
+The expected head is `20261121_0011`. Its two profile fields are nullable with no
+default or backfill; existing profiles must explicitly answer them before eligible
+targets return. Old ownerless meals/cases are preserved but inaccessible through account APIs; they are not
 assigned to the first registrant. Existing confirmed meals receive a Hong Kong date
 from their confirmation timestamp, with creation time as fallback. Saved meal
 nutrients are not recalculated against newer catalogue data.
@@ -237,22 +281,29 @@ cloud deployment is performed by a Git push or this local merge. Follow the sepa
 
 ## Evidence and submission snapshots
 
-Final checks and their exact scope are recorded in
-[Week 13 verification](evidence/week13-verification.md). The latest earlier meal
-review is the [14 November recipe-usability follow-up](qa/reports/2026-11-14-recipe-usability.md);
-the [earlier 14 November workspace review](qa/reports/2026-11-14-fresh-review.md)
-and [3 November integration verification](evidence/integration-verification.md)
-retain their own runtime versions and results.
+The latest recorded automated/model checks and limitations are in
+[name-reference verification](evidence/name-reference-inference-verification.md),
+with separate [CFS source-reference evidence](evidence/cfs-pilot20-review.md).
+[Week 13 verification](evidence/week13-verification.md), the
+[14 November recipe-usability review](qa/reports/2026-11-14-recipe-usability.md),
+[earlier workspace review](qa/reports/2026-11-14-fresh-review.md) and
+[3 November integration verification](evidence/integration-verification.md)
+retain their own runtime versions and results. Earlier smoke passes are historical;
+this documentation update did not rerun a smoke check or make live provider calls.
 The [Week 6 workflow](async-workflow.md), [Week 7 artifact](../submissions/week07/README.md),
 [original screenshot guide](../demo/SCREENSHOT_GUIDE.md) and dated reports describe
 their labelled versions. Reproduce historical course scripts from their original
 commit/tag; do not silently reinterpret them as authenticated merged workflows.
 
-CI includes `main`, `nutrichat`, `test` and `integrate/**` pushes plus pull requests.
-It checks Python/Ruff, PostgreSQL migrations and frontend tests. Inspect the run for
-the actual pushed SHA; local results do not establish remote CI success.
-The final hand-in uses `w13-final` on `test`; see the
-[Week 13 package](../submissions/week13/README.md) and its seven-point
-[TA demo](../submissions/week13/DEMO.md). `w07-midterm` remains the historical
-submission snapshot. Publishing Git branches/tags does not submit Canvas or deploy
-the public server. Test counts from separate versions must not be added together.
+CI's configured push filter still lists `main`, `nutrichat`, `test` and
+`integrate/**`, plus pull requests; that filter does not mean remote `main` still
+exists. It checks Python/Ruff, PostgreSQL migrations and frontend tests. Inspect
+the run for the actual pushed SHA; local results do not establish remote CI success.
+
+The [Week 13 package](../submissions/week13/README.md) and
+[TA demo](../submissions/week13/DEMO.md) describe the `w13-final` release built
+from the implementation SHA pinned above and refreshed documentation. The earlier
+final checkpoint is retained at `archive-w13-final-6b87aef`; `w07-midterm` is also
+historical. Follow the Week 13 tag-refresh commands before resolving the full
+release commit, then inspect CI for that SHA. Git publication does not record
+a new Canvas submission or ECS deployment.

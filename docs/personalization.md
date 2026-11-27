@@ -233,9 +233,11 @@ new answers; rolling back `0007` drops profiles and their data. Back up data bef
 a real rollback.
 
 Only the latest input snapshot is stored; reference values are computed on read
-with the versioned calculator. The v2 change does not rewrite the `w13-final`
-snapshot or its historical evidence. Changing current profile weight does **not**
-create a daily weight log. Use [daily tracking](tracking.md) to record measurements
+with the versioned calculator. The v2 change does not rewrite the original
+15 November snapshot, preserved as `archive-w13-final-6b87aef`, or its historical
+evidence. The updated `w13-final` package includes v2; see the
+[current release record](../submissions/week13/README.md). Changing current profile
+weight does **not** create a daily weight log. Use [daily tracking](tracking.md) to record measurements
 independently and view 30-day calorie/weight trends. Changing a daily weight does
 not update the profile or recalculate its reference. Target history, medical
 history, Google login and password recovery remain separate future work.

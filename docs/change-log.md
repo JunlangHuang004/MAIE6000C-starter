@@ -1,5 +1,21 @@
 # NutriChat change log
 
+## 2026-11-27 — Refresh the final package on nutrichat
+
+- Update the final README, seven-point demo, technical brief and AI Use Statement
+  to match the integrated application at `1d17a66`: accounts, personal references,
+  diary/trends, expanded food data, CFS sources and bounded similar-recipe assistance.
+- Align architecture, operations and setup guides with current execution paths,
+  migration 0011 and separately dated verification evidence. Preserve the limits
+  of historical screenshots, offline checks and targeted live-model replays.
+- Publish the refreshed package on both repositories' `nutrichat` branches and
+  align `w13-final` with that release. Preserve the original annotated checkpoint
+  at `archive-w13-final-6b87aef` (commit `6b87aef`). Update existing-clone fetch
+  instructions and historical evidence references for this deliberate tag change.
+- This update changes documentation only. It does not deploy ECS or change a
+  Canvas submission. Hosted checks must be inspected for the release commit;
+  dated application evidence remains attributed to its original source.
+
 ## 2026-11-24 — Review a 20-dish CFS pilot
 
 - Review twenty previously unreferenced common dishes against the CFS FRL
